@@ -1,21 +1,123 @@
-# Introduction {#intro}
+# Getting Started {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+## Hello World in `R`
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
+Go ahead and open up `RStudio`. It should look something like this
+
+```{r rstudio, fig.cap='RStudio', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
+knitr::include_graphics("_bookdown_files/pics/rstudio.png")
 ```
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+I changed my "Editor Theme" from the default to "Cobalt" because it's easier on my eyes. If you are opening everything for the first time, you probably see a lot more white. You can play around with the theme, if you wish, after going to `Tools -> Global Options -> Appearance`.
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
+The **console**, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the `print()` function.  
+
+```{r}
+print('hello R world')
 ```
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+In this class, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a **script**. Click `File -> New File -> R Script` to create a new script. It should appear at the top left of the `RStudio` window (see Figure \@ref(fig:rstudio) ) . After that, copy and paste the following code into your script window. 
+
+```{r, eval=FALSE}
+print('hello world')
+print('this program')
+print('is not incredibly interesting')
+print('but it would be a pain')
+print('to type it all directly into the console')
+```
+
+Save this file wherever you want on your hard drive. Call it `awesomeScript.R`. Personally, I saved it to my desktop. 
+
+After we have a saved script, we can run it by sending all the lines of code over to the console. One way to do that is by clicking the `Source` button at the top right of the script window (see Figure \@ref(fig:rstudio) ). 
+
+Another way is that we can use `R`'s `source()` function. We can run the following code in the console. 
+
+```{r, eval=FALSE}
+# anything coming after the pound/hash-tag symbol is a comment to the human programmer
+# these lines are ignored by R
+setwd("/home/taylor/Desktop/")
+source("awesomeScript.R")
+```
+
+The first line changes the *working directory* to `Desktop/`. TODO what is the defn. of working directory? You should change this line by replacing `Desktop/` to whichever folder you chose to save `awesomeScript.R` in. If you would like to find out what your working directory is currently set to, you can use `getwd()`.
+
+```{block, type='rmd-details'}
+Every computer has a different folder/directory structure--that is why it is highly recommended you refer to file locations as little as possible. This makes your code more *portable.* When you send your file to someone else (e.g. your instructor), (s)he will have to remove or change every mention of any folder or directory because those folders/directories (probably) won't exist on his/her machine. They just exist on your machine. 
+```
+
+
+The second line calls `source()`. This function finds the script file and executes all the commands found in that file sequentially. 
+
+A third way is to tell `R` to run `awesomeScript.R` from the command line. We will describe this approach in more detail in chapter TODO. 
+
+## Hello World in `Python`
+
+This section will assume you installed Python by installing the Anaconda distribution mentioned in \@ref(Preface).
+
+First, start by opening *Anaconda Navigator*. It should look something like this:
+
+```{r anaconda-navigator, fig.cap='Anaconda Navigator', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
+knitr::include_graphics("_bookdown_files/pics/anaconda_navigator.png")
+```
+
+We will exclusively use *Spyder* for this course. Open that up now. It should look something like this:
+
+```{r spyder, fig.cap='Spyder', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
+knitr::include_graphics("_bookdown_files/pics/spyder_screenshot.png")
+```
+
+It looks a lot like `RStudio`, right?! The script window is still on the left hand side, but it takes up the whole height of the window this time. However, you will notice that the console window has moved. It's over on the bottom right now. 
+
+Again, you might notice a lot more white when you open this for the first time. Just like last time, I changed my color scheme. You can change yours by going to `Tools -> Preferences` and then exploring the options available under the `Appearances` tab.
+
+Try typing the following line of code into the console.
+
+```{python}
+# this looks like R code but it's Python code!
+print('hello Python world')
+```
+
+Already we have two similarities between our two languages. Both `R` and `Python` have a `print()` function, and they both use the same symbol to start a comment: `#`. We will also show below that both `Python` and `R` share the same three ways to run scripts. Nice!
+
+Let's try writing our first `Python` script. `R` scripts end in `.r` or `.R`, while `Python` scripts end in `.py`. Call this file `awesomeScript.py`.
+
+```{python, eval=FALSE}
+# save this as awesomeScript.py
+print('hello world')
+print('this program')
+print('is pretty similar to the last program')
+print('it is not incredibly interesting, either')
+```
+
+Just like `RStudio`, `Spyder` has a button that runs the entire script from start to finish. It's the green triangle button (see Figure \@ref(fig:spyder) ). 
+
+You can also write code to run `awesomeScript.py`. There are a few ways to do this, but here's the easiest.
+
+```{python, eval=FALSE}
+import os
+os.chdir('/home/taylor/Desktop')
+runfile("awesomeScript.py")
+```
+
+This is also pretty similar to the `R` code from before. `os.chdir()` sets our working directory to the `Desktop`. Then `runfile()` runs all of the lines in our program, sequentially, from start to finish. 
+
+The first line is new, though. We will talk more about `import`ing modules in section TODO. Suffice it to say that if we imported the `os` module to make available the `chdir()`.
+
+Third, A third way is to tell `R` to run `awesomeScript.R` from the command line. We will describe this approach in more detail in chapter TODO. 
+
+## Understanding File Paths
+
+File paths (e.g. `/home/taylor/Desktop`) look different on different operating systems. Mac and Linux machines tend to have forward slashes (i.e. `/`), while Windows machines tend to use backslashes (the other way `\`). Depending on what kind of operating system is running your code, you will need to change the file paths.
+
+The directory repeatedly mentioned in the code above was `/home/taylor/Desktop`. This is a directory on my machine which is running Ubuntu Linux. The leading forward slash is the *root directory*. Inside that is the directory `home/`, and inside that is `taylor`, and inside that is `Desktop/`. 
+
+If you are running MacOS things will look very similar. Perhaps something like this:
+
+```
+/Users/taylor
+```
+
+Again, the leading forward slash is the *root directory*. Inside that is the directory `Users/`, and inside that is `taylor`. 
+
+On Windows, things are a bit different. TODO
