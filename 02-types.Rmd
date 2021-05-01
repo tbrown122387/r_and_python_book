@@ -2,7 +2,7 @@
 
 "It's all just 0s and 1s!" You might have heard that before. For the most part TODO quantum computing, it's true. Computers have binary digits (bits), and that's how they store more complicated pieces of data and instructions.
 
-Fortunately, we will not ever have to think about how the computer handles those low level details. We must, however, be concerned with the different *types* of data our `R` and `Python` programs can use in programs.
+Fortunately, we will never have to think about how the computer handles those low level details. We must, however, be concerned with the different *types* of data in our `R` and `Python` programs. Different types are suitable in different situations, and take care of all the low level details for us.
 
 There will be similarities between `Python`'s types and `R`s types. However, `Python` wasn't expressly created for data analysis, so many of the `Python` types that are similar to `R` types will be defined in third party libraries/modules.
 
@@ -13,7 +13,7 @@ TODO Test [@R-bookdown]
 
 ## Integers, Strings and Floating Point Numbers
 
-In `Python`, the simplest types are `str` (short for string), `int` (short for integer), and `float` (short for floating point). 
+In `Python`, the simplest types are `str` (short for string), `int` (short for integer), `float` (short for floating point) and `bool` (short for Boolean). 
 
 ```{python}
 # in python
@@ -46,8 +46,11 @@ This section is for describing the data types that let us store collections of e
 Recycling
 Filtering The extraction of subsets of vectors
 Vectorization
+`c`
+mention the word "tensor"
+Mention `NULL` versus `NA` versus `None` versus `numpy.nan`
 
-## `R` lists versus `Python` lists
+## `R` lists versus `Python` lists, tuples and `dict`s and `set`s
 
 When you need to store elements in a container, but you can't guarantee that these elements all have the same type, you need a `list`. Both `R` and `Python` have lists. 
 
@@ -60,3 +63,92 @@ When you need to store elements in a container, but you can't guarantee that the
 ## Classes in `R` and `Python`
 
 ## Exercises
+
+All answers to questions related to `R` should be written in a file named `data_types_exercises.R`. All answers to questions related to `Python` should be written in a file named `data_types_exercises.py`.
+
+
+1. Which `Python` type is appropriate for each piece of data?
+
+  a. TODO
+  b. TODO
+  
+  
+2. In `R`, say you have a vector of prices of some financial asset:
+
+```{r}
+prices <- c(100.10, 95.98, 100.01, 99.87)
+```
+
+a.
+Convert this vector into a vector of *log returns*. Call the variable `log_returns`. If $p_t$ is the price at time $t$, the log return ending at time $t$ is 
+$$ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}$$
+
+b.
+Do the same for *arithmetic returns*. These are regular percent changes if you scale by $100$. Call the variable `arith_returns`. The mathematical formula you need is
+
+$$ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 $$
+
+3. Assume we are interested in the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$.
+
+a. Evaluate this probability exactly in `R` and assign it to the variable `exactExceedanceProb` 
+
+b. Evaluate this probability exactly in `Python` and assign it to the variable `exact_exceedance_prob`
+
+c. In `R`, use the *Monte Carlo* (TODO cite) method to estimate the probability. Assign it to the variable `approxExceedanceProb`
+
+d. In `Python`, use the *Monte Carlo* (TODO cite) method to estimate the probability. Assign it to the variable `approx_exceedance_prob`
+
+
+4. For a collection of random variables $X_1, \ldots, X_n$, a *covariance matrix* arranges all of the covariances between every possible pair of random variables:
+
+$$
+\begin{bmatrix}
+\text{Cov}(X_1, X_1) & \text{Cov}(X_1, X_2) & \cdots & \text{Cov}(X_1, X_n) \\
+\text{Cov}(X_2, X_1) & \text{Cov}(X_2, X_2) & \cdots & \text{Cov}(X_2, X_n) \\
+\vdots & \vdots & \ddots & \vdots\\
+\text{Cov}(X_n, X_1) & \text{Cov}(X_n, X_2) & \cdots & \text{Cov}(X_n, X_n) \\
+\end{bmatrix}
+$$
+where 
+$$\text{Cov}(X_i, X_j) = \mathbb{E}\left[(X_i - \mathbb{E}[X_i])((X_j - \mathbb{E}[X_j])\right]$$
+ is the covariance between $X_i$ and $X_j$ resting in row $i$ and column $j$. 
+ 
+ Using this definition, it is easy to show that $\text{Cov}(X_i, X_i) = \mathbb{E}\left[(X_i - \mathbb{E}[X_i])^2\right] = \text{Var}(X_i)$.
+
+An **exchangeable** covariance matrix for a random vector is one that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. 
+
+a. In `R`, generate $10$ $4 \times 4$ exchangeable covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,.01,.02, ..., .09.$  Store these $10$ covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $10$ matrices you have. Name this array `myCovMats`
+
+b. Do the same thing in `Python`, but call the variable `my_cov_mats`
+
+5. In `R`, read in the `cars.csv` data set using `read.table()` (more on IO in chapter TODO). Find the average `EngineSize`, `Cylinders`, `Horsepower`, `MPG_City`, `MPG_Highway`, `Weight`, `Wheelbase` and `Length` **for each type of vehicle** (i.e. `Hybrid` `Sedan` `Sports`, `SUV`, `Truck` and `Wagon`). Which of these averages is an `NA`? How many observations in that column are missing? 
+
+6. In `Python` (TODO finish this question), read in the `cars.csv` data set using `read.table()` (more on IO in chapter TODO). Find the average `EngineSize`, `Cylinders`, `Horsepower`, `MPG_City`, `MPG_Highway`, `Weight`, `Wheelbase` and `Length` **for each type of vehicle** (i.e. `Hybrid` `Sedan` `Sports`, `SUV`, `Truck` and `Wagon`). Which of these averages is an `NA`? How many observations in that column are missing? 
+
+
+6.  Here are two lists in `R`:
+
+```{r}
+l1 <- list(first="a", second=1)
+l2 <- list(first=c(1,2,3), second = "statistics")
+```
+
+
+
+a. Make a new `list` that is these two lists above "squished together." It has to be length $4$, and each element is one of the elements of $l1$ and $l2$. Call this list `l3`.
+
+b. Delete all the "tags" or "names" of these four elements.
+
+c. Make a `vector` of all the unique single digit numbers in both of the lists. You should end up with the vector with elements `1`, `2`, and `3`.
+
+
+7.  Here are two `dict`s in `Python`:
+
+```{Python}
+d1 = { "first" : "a", "second" : 1}
+d2 = { "first" : [1,2,3], "second" : "statistics"}
+```
+
+
+
+a. Make a new `list` that is these two `dict`s above "squished together" (why can't it be another `dict`?) It has to be length $4$, and each value is one of the values of $d1$ and $d2$. Call this list `l3`.
