@@ -1,7 +1,6 @@
 # Getting Started {#intro}
 
-Now that you have both `R` and `Python` installed, we can get started by taking a tour of our two different development environments `RStudio` and `Spyder`.
-
+Now that you have both `R` and `Python` installed, we can get started by taking a tour of our two different development environments `RStudio` and `Spyder`. 
 
 ## Hello World in `R`
 
@@ -9,10 +8,10 @@ Now that you have both `R` and `Python` installed, we can get started by taking 
 Go ahead and open up `RStudio`. It should look something like this
 
 ```{r rstudio, fig.cap='RStudio', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
-knitr::include_graphics("_bookdown_files/pics/rstudio.png")
+knitr::include_graphics("pics/rstudio.png")
 ```
 
-I changed my "Editor Theme" from the default to "Cobalt" because it's easier on my eyes. If you are opening everything for the first time, you probably see a lot more white. You can play around with the theme, if you wish, after going to `Tools -> Global Options -> Appearance`.
+I changed my "Editor Theme" from the default to "Cobalt" because it's easier on my eyes. If you are opening `RStudio` for the first time, you probably see a lot more white. You can play around with the theme, if you wish, after going to `Tools -> Global Options -> Appearance`.
 
 The **console**, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the `print()` function.  
 
@@ -24,11 +23,17 @@ In this class, we will write more complicated code. Complicated code is usually 
 
 ```{r, eval=FALSE}
 print('hello world')
-print('this program')
+print("this program")
 print('is not incredibly interesting')
 print('but it would be a pain')
 print('to type it all directly into the console')
+myName <- "Taylor"
+print(myName)
 ```
+
+This script will run five print statements, and then create a variable called `myName`. The print statements are of no use to the computer and will not affect how the program runs. They just display messages to the human running the code. 
+
+The variable created on the last line is more important because it is used by the computer, and so it can affect how the program runs. The operator `<-` is the [**assignment operator**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html). It takes the character constant `"Taylor"`, which is on the right, and stores it under the name `myName`. If we added lines to this program, we could refer to the variable `myName` in subsequent calculations.
 
 Save this file wherever you want on your hard drive. Call it `awesomeScript.R`. Personally, I saved it to my desktop. 
 
@@ -43,10 +48,10 @@ setwd("/home/taylor/Desktop/")
 source("awesomeScript.R")
 ```
 
-The first line changes the *working directory* to `Desktop/`. TODO what is the defn. of working directory? You should change this line by replacing `Desktop/` to whichever folder you chose to save `awesomeScript.R` in. If you would like to find out what your working directory is currently set to, you can use `getwd()`.
+The first line changes the [**working directory**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/getwd.html) to `Desktop/`. TODO Link to section below about filepaths You should change this line by replacing `Desktop/` to whichever folder you chose to save `awesomeScript.R` in. If you would like to find out what your working directory is currently set to, you can use `getwd()`.
 
 ```{block, type='rmd-details'}
-Every computer has a different folder/directory structure--that is why it is highly recommended you refer to file locations as seldom as possible in your scripts. This makes your code more *portable.* When you send your file to someone else (e.g. your instructor), (s)he will have to remove or change every mention of any folder or directory because those folders/directories (probably) won't exist on his/her machine. They just exist on your machine. 
+Every computer has a different folder/directory structure--that is why it is highly recommended you refer to file locations as seldom as possible in your scripts. This makes your code more *portable.* When you send your file to someone else (e.g. your instructor or your boss), she will have to remove or change every mention of any directory. This is because those directories (probably) won't exist on her machine. 
 ```
 
 
@@ -54,20 +59,25 @@ The second line calls `source()`. This function finds the script file and execut
 
 A third way is to tell `R` to run `awesomeScript.R` from the command line. We will describe this approach in more detail in chapter TODO. 
 
+<!---
+---------------------------------------------------------------------------
+-->
+
+
 ## Hello World in `Python`
 
-This section will assume you installed Python by installing the Anaconda distribution mentioned in \@ref(Preface).
+This section will assume you already have `Python` installed. If you don't, you might need to go back to \@ref(preface).
 
 First, start by opening *Anaconda Navigator*. It should look something like this:
 
 ```{r anaconda-navigator, fig.cap='Anaconda Navigator', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
-knitr::include_graphics("_bookdown_files/pics/anaconda_navigator.png")
+knitr::include_graphics("pics/anaconda_navigator.png")
 ```
 
 We will exclusively use *Spyder* for this course. Open that up now. It should look something like this:
 
 ```{r spyder, fig.cap='Spyder', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
-knitr::include_graphics("_bookdown_files/pics/spyder_screenshot.png")
+knitr::include_graphics("pics/spyder_screenshot.png")
 ```
 
 It looks a lot like `RStudio`, right?! The script window is still on the left hand side, but it takes up the whole height of the window this time. However, you will notice that the console window has moved. It's over on the bottom right now. 
@@ -78,20 +88,27 @@ Try typing the following line of code into the console.
 
 ```{python}
 # this looks like R code but it's Python code!
-print('hello Python world')
+print("hello Python world")
 ```
 
-Already we have two similarities between our two languages. Both `R` and `Python` have a `print()` function, and they both use the same symbol to start a comment: `#`. We will also show below that both `Python` and `R` share the same three ways to run scripts. Nice!
+Already we have many similarities between our two languages. Both `R` and `Python` have a `print()` function, and they both use the same symbol to start a comment: `#`. Finally, they both define character/string constants with quotation marks In both languages, you can use either single or double quotes.
+
+We will also show below that both languages share the same three ways to run scripts. Nice!
 
 Let's try writing our first `Python` script. `R` scripts end in `.r` or `.R`, while `Python` scripts end in `.py`. Call this file `awesomeScript.py`.
 
 ```{python, eval=FALSE}
 # save this as awesomeScript.py
 print('hello world')
-print('this program')
+print("this program")
 print('is pretty similar to the last program')
 print('it is not incredibly interesting, either')
+my_name = "Taylor"
+print(myName)
 ```
+
+Notice that the assignment operator is different in `Python`. It's an `=`^[You can use this symbol in `R`, too, but it is less common.].
+
 
 Just like `RStudio`, `Spyder` has a button that runs the entire script from start to finish. It's the green triangle button (see Figure \@ref(fig:spyder) ). 
 
@@ -105,32 +122,67 @@ runfile("awesomeScript.py")
 
 This is also pretty similar to the `R` code from before. `os.chdir()` sets our working directory to the `Desktop`. Then `runfile()` runs all of the lines in our program, sequentially, from start to finish. 
 
-The first line is new, though. We will talk more about `import`ing modules in section TODO. Suffice it to say that if we imported the `os` module to make available the `chdir()`.
+The first line is new, though. We did not mention anything like this in `R`, yet. We will talk more about `import`ing modules in section TODO. Suffice it to say that we imported the `os` module to make the `chdir()` function available to us.
 
-Third, A third way is to tell `R` to run `awesomeScript.R` from the command line. We will describe this approach in more detail in chapter TODO. 
+Third, we can tell `Python` to run `awesomeScript.py` from the command line. We will describe this approach in more detail in chapter TODO. 
 
-## Sorting Out Confusion
+## Getting Help
 
-### Getting Help by Viewing Documentation
 
-Getting help in `R` is easy. If you want to know more about a function, type the name of the function with a leading question mark into the console. For example, `?print` or `?setwd`. You can also use `help()` and `help.search()` to find out more about functions. Sometimes you will need to put quotation marks around the name of the function (e.g. `?":"`).
+### Reading Documentation
 
-In `Python`, the question mark comes after the name of the function (e.g. `print?`), and you can use `help(print)` just as in `R`. In Spyder, if you want the documentation to appear in the Help window (it looks prettier), then you can type the name of the function, and then `Ctrl-i` (mac keyboards TODO).
+Programming is not about memorization. Nobody can memorize, for example, every function and all of its arguments. Nobody can do that. Not even close. So what do programmers do when they get stuck? The primary way is to read the documentation. 
+
+#### In `R` 
+
+Getting help in `R` is easy. If you want to know more about a function, type into the console the name of the function with a leading question mark. For example, `?print` or `?setwd`. You can also use `help()` and `help.search()` to find out more about functions (e.g. `help(print)`). Sometimes you will need to put quotation marks around the name of the function (e.g. `?":"`). 
+
+This will not open a separate web browser window, which is very convenient. If you are using `RStudio`, you have some extra benefits. Everything will look very pretty, and you can search through the text by typing phrases into the search bar in the "Help" window.
+
+#### In `Python` 
+
+In `Python`, the question mark comes *after* the name of the function^[If you did not install `Anaconda`, then this may not work for you because this is an IPython (https://ipython.org) feature.] (e.g. `print?`), and you can use `help(print)` just as in `R`. 
+
+In Spyder, if you want the documentation to appear in the Help window (it looks prettier), then you can type the name of the function, and then `Ctrl-i` (mac keyboards TODO).
 
 ### Understanding File Paths
 
-File paths (e.g. `/home/taylor/Desktop`) look different on different operating systems. Mac and Linux machines tend to have forward slashes (i.e. `/`), while Windows machines tend to use backslashes (the other way `\`). Depending on what kind of operating system is running your code, you will need to change the file paths.
+File paths look different on different operating systems. Mac and Linux machines tend to have forward slashes (i.e. `/`), while Windows machines tend to use backslashes (i.e. `\`). 
 
-The directory repeatedly mentioned in the code above was `/home/taylor/Desktop`. This is a directory on my machine which is running Ubuntu Linux. The leading forward slash is the *root directory*. Inside that is the directory `home/`, and inside that is `taylor`, and inside that is `Desktop/`. 
+Depending on what kind of operating system is running your code, you will need to change the file paths. It is important for everyone writing `R` and `Python` code to understand how things work on both types of machines--just because you're writing code on a Windows machine doesn't mean that it won't be run on a Mac, or vice versa.
 
-If you are running MacOS things will look very similar. Perhaps something like this:
+#### *nix Machines
 
+The directory repeatedly mentioned in the code above was `/home/taylor/Desktop`. This is a directory on my machine which is running Ubuntu Linux. The leading forward slash is the *root directory*. Inside that is the directory `home/`, and inside that is `taylor/`, and inside that is `Desktop/`. If you are running MacOS, these file paths will look very similar. The folder `home/` will most likely be replaced with `Users/`. 
+
+#### Windows Machines
+
+On Windows, things are a bit different. For one, a full path starts with a drive (e.g. `C:`). Second, there are backslashes (not forward slashes) to separate directory names (e.g `C:\Users\taylor\Desktop`). 
+
+Unfortunately, backslashes are a special character in both `R` and `Python`. Whenever you type a `\`, it will change the meaning of whatever comes after it. This is what is known as an **escape character**. 
+
+```{block, type='rmd-details'}
+In both `R` and `Python`, the backslash character is used to start an "escape" sequence. You can see some examples in `R` by clicking [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html), and some examples in `Python` by clicking [here](https://docs.python.org/3/reference/lexical_analysis.html). In `Python` it may also be used to [allow long lines of code to take up more than one line in a text file.](https://docs.python.org/3/reference/lexical_analysis.html#explicit-line-joining)
 ```
-/Users/taylor
-```
 
-Again, the leading forward slash is the *root directory*. Inside that is the directory `Users/`, and inside that is `taylor`. 
+The recommended way of handling this is to just use forward slashes instead. For example, if you are running Windows, `C:/Users/taylor/Desktop/myScript.R` will work in `R`, and `C:/Users/taylor/Desktop/myScript.py` will work in `Python`. 
 
-On Windows, things are a bit different. TODO
+You may also use "raw string constants" (e.g. `r'C:\Users\taylor\Desktop\my_file.txt'` ), or you can "escape" the backslashes by replacing each single backslash with a double backslash. 
 
 ## Exercises
+
+
+1. Create an `R` script called `my_script.R`. Inside that file, 
+    + create a variable called `myName` and assign your name to it. 
+    + create another variable called `myFavNum` and assign to it your favorite number.
+    + `print` the following statement "camelCase is cool for naming variables in R"
+  
+2. Create a `Python` script called `my_script.py`. Inside that file
+    + create a variable called `my_name` and assign your name to it. 
+    + create another variable called `my_fav_num` and assign to it your favorite number.
+    + `print`^[More suggestions on writing stylish Python code can be found [here](https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds). Regarding my suggesting camel case, [other style guides](https://style.tidyverse.org/syntax.html#object-names) disagree with this. Don't worry about this too much, though--after all "a foolish consistency is the hobgoblin of little minds."] the following statement "snake_case is cool for naming variables in Python"
+  
+3. What are some similarities between `R` and `Python`? Which of these are you most thankful for? Which of them are you most concerned about?
+
+4. What are some major differences between `R` and `Python`? What do you think about these differences?
+  

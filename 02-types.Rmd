@@ -1,28 +1,31 @@
 # Data Types 
 
-"It's all just 0s and 1s!" You might have heard that before. For the most part TODO quantum computing, it's true. Computers have binary digits (bits), and that's how they store more complicated pieces of data and instructions.
+In every programming language, data is stored in different ways. Writing a program that manipulates data requires understanding all of the choices. That is why we must be concerned with the different **types** of data in our `R` and `Python` programs. Different types are suitable for different purposes.
 
-Fortunately, we will never have to think about how the computer handles those low level details. We must, however, be concerned with the different *types* of data in our `R` and `Python` programs. Different types are suitable in different situations, and take care of all the low level details for us.
+There are similarities between `Python`'s and `R`'s type systems. However, there are may  differences as well. Be prepared for these differences. There are many more of them in this chapter than there were in the previous chapter!
 
-There will be similarities between `Python`'s types and `R`s types. However, `Python` wasn't expressly created for data analysis, so many of the `Python` types that are similar to `R` types will be defined in third party libraries/modules.
-
-If you're ever unsure what type a variable has, use `type()` (in `Python`) or `typeof()` (in `R`) to query it.
+If you're ever unsure what type a variable has, use `type()` (in `Python`) or `typeof()` (in `R`) to query it. 
 
 TODO Test [@R-bookdown]
 
 
 ## Integers, Strings and Floating Point Numbers
 
+Storing an individual piece of information is simple in both languages. However, while `Python` has scalar types, `R`'s situation is more complicated.
+
+### In `Python`
+
 In `Python`, the simplest types are `str` (short for string), `int` (short for integer), `float` (short for floating point) and `bool` (short for Boolean). 
 
 ```{python}
-# in python
 print(type('a'))
 print(type(1))
 print(type(1.3))
 ```
 
-We will write much more complicated programs, so we will need to save different values as *variables*. We create them by using the assignment operator `=`. The name of the variable goes on the left of the assignment operator.
+Strings are useful for processing text data such as names of people/places/things and messages (e.g. texts, tweets and emails). If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow (TODO which section).
+
+We will write much more complicated programs than the one below, so we will need to save different values as variables. This was mentioned in the previous chapter. We create them by using the assignment operator `=`. The name of the variable goes on the left of the assignment operator.
 
 ```{Python}
 # in python
@@ -30,17 +33,36 @@ my_name = 'Charlie'
 print('Hello! My name is ', my_name, '.', sep = '')
 ```
 
+### In `R`
+
+In `R`, the names of these simple types are a little different. They are `logical` (instead of `bool`), `integer` (instead of `int`), `double` (instead of `float`), `complex`, and `character` (instead of `str`). There is also `complex` and `raw`, but we will use these less often in this textbook.
+
+Additionally, `R` uses the same type to store many elements of the same type. It does not have any scalar type. This is very different than `Python`. `Python` has base types of individual elements, and it uses a separate types as containers for many elements. In `R`, if you are looking at single number/string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
+
+TODO constants versus literals?
+
+https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
+
+
 In `R`, there are no scalar types like this! If we wanted to make a "string", we would need to make a length $1$ character `vector`. 
 
 ```{r}
-# in R
-print(mode('a'))
+print(typeof('a'))
+print(typeof(1))
+print(typeof(1.3))
 ```
+
 
 
 ## `R` vectors, matrices and arrays versus `numpy` arrays 
 
-This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works.
+This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works
+
+### In `R`
+
+I mentioned earlier that `R` does not have scalar types--it just has vectors. So whether I wanted to store one number, or many numbers, I would be using a `vector`. 
+
+.
 
 
 Recycling
@@ -152,3 +174,6 @@ d2 = { "first" : [1,2,3], "second" : "statistics"}
 
 
 a. Make a new `list` that is these two `dict`s above "squished together" (why can't it be another `dict`?) It has to be length $4$, and each value is one of the values of $d1$ and $d2$. Call this list `l3`.
+
+
+8. How might you explain the difference between `Python` and `R`'s type systems? What do you know about the historical development of these languages that might assist your explanation?
