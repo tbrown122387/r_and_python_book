@@ -2,6 +2,12 @@
 
 Now that you have both `R` and `Python` installed, we can get started by taking a tour of our two different development environments `RStudio` and `Spyder`. 
 
+In addition, I will also discuss a few topics superficially, so that we can get our feet wet:
+
+- printing, 
+- creating variables, and
+- calling functions.
+
 ## Hello World in `R`
 
 
@@ -13,13 +19,17 @@ knitr::include_graphics("pics/rstudio.png")
 
 I changed my "Editor Theme" from the default to "Cobalt" because it's easier on my eyes. If you are opening `RStudio` for the first time, you probably see a lot more white. You can play around with the theme, if you wish, after going to `Tools -> Global Options -> Appearance`.
 
-The **console**, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the `print()` function.  
+The **console**, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the `print()` function. 
+
+```{block, type='rmd-details'}
+In `R`, functions are objects (TODO cite and link to data types section on functions). We can refer to the name of a function without asking it to do anything. However, when we *do* want to use it, we put parentheses after the name. This is called **calling** the function or **invoking** the function. If a function call takes any **arguments** (aka inputs), then the programmer supplies them between the two parentheses. A function may **return** values to be subsequently used, or it may just display things (e.g. printing or charting).
+```
 
 ```{r}
 print('hello R world')
 ```
 
-In this class, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a **script**. Click `File -> New File -> R Script` to create a new script. It should appear at the top left of the `RStudio` window (see Figure \@ref(fig:rstudio) ) . After that, copy and paste the following code into your script window. 
+During the semester, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a **script**. Click `File -> New File -> R Script` to create a new script. It should appear at the top left of the `RStudio` window (see Figure \@ref(fig:rstudio) ) . After that, copy and paste the following code into your script window. 
 
 ```{r, eval=FALSE}
 print('hello world')
@@ -42,8 +52,9 @@ After we have a saved script, we can run it by sending all the lines of code ove
 Another way is that we can use `R`'s `source()` function. We can run the following code in the console. 
 
 ```{r, eval=FALSE}
-# anything coming after the pound/hash-tag symbol is a comment to the human programmer
-# these lines are ignored by R
+# Anything coming after the pound/hash-tag symbol 
+# is a comment to the human programmer.
+# These lines are ignored by R
 setwd("/home/taylor/Desktop/")
 source("awesomeScript.R")
 ```

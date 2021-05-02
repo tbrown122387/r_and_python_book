@@ -9,72 +9,191 @@ If you're ever unsure what type a variable has, use `type()` (in `Python`) or `t
 TODO Test [@R-bookdown]
 
 
-## Integers, Strings and Floating Point Numbers
+## Basic Types
 
-Storing an individual piece of information is simple in both languages. However, while `Python` has scalar types, `R`'s situation is more complicated.
+Storing an individual piece of information is simple in both languages. However, while `Python` has scalar types, `R`'s situation is a little more complicated.
 
 ### In `Python`
 
-In `Python`, the simplest types are `str` (short for string), `int` (short for integer), `float` (short for floating point) and `bool` (short for Boolean). 
+In `Python`, the simplest types we frequently use are `str` (short for string), `int` (short for integer), `float` (short for floating point) and `bool` (short for Boolean). This list is not exhaustive, but these are a good collection to start thinking about. For a complete list of built-in types in `Python`, click [here](https://docs.python.org/3/library/stdtypes.html).
 
-```{python}
-print(type('a'))
-print(type(1))
-print(type(1.3))
+```{python, collapse = TRUE}
+print(type('a'), type(1), type(1.3))
 ```
 
 Strings are useful for processing text data such as names of people/places/things and messages (e.g. texts, tweets and emails). If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow (TODO which section).
 
-We will write much more complicated programs than the one below, so we will need to save different values as variables. This was mentioned in the previous chapter. We create them by using the assignment operator `=`. The name of the variable goes on the left of the assignment operator.
+#### Type Conversions
 
-```{Python}
-# in python
-my_name = 'Charlie'
-print('Hello! My name is ', my_name, '.', sep = '')
+We will often have to convert between types in a `Python` program. This is called **type conversion**, and it can be either implicitly or explicitly done. 
+For example, `int`s are often implicitly converted to `float`s, so that arithmetic operations work. 
+```{python, collapse = TRUE}
+my_int = 1
+my_float = 3.2
+my_sum = my_int + my_float
+print("my_int's type", type(my_int))
+print("my_float's type", type(my_float))
+print(my_sum)
+print("my_sum's type", type(my_sum))
+```
+
+You might be disappointed if you always count on this behavior, though.
+```{python, error = TRUE, collapse=TRUE}
+3.2 + "3.2"
+```
+
+Explicit conversions occur when we as programmers are explicitly asking `Python` to perform the conversion. You will do this with the functions `int()`, `str()`, `float()`, `bool()`, and the like. 
+
+```{python, collapse = TRUE}
+my_date = "5/2/2021"
+month_day_year = my_date.split('/')
+my_year = int(month_day_year[-1]) 
+print('my_year is equal to ', my_year, 'and its type is ', type(my_year))
 ```
 
 ### In `R`
 
-In `R`, the names of these simple types are a little different. They are `logical` (instead of `bool`), `integer` (instead of `int`), `double` (instead of `float`), `complex`, and `character` (instead of `str`). There is also `complex` and `raw`, but we will use these less often in this textbook.
+In `R`, the names of these basic types are only slightly different. They are `logical` (instead of `bool`), `integer` (instead of `int`), `double` (instead of `float`)^["double" is short for "double precision floating point." In the programming language `C`, which is what both `R` and `Python` are written in, the programmer has more control on how many decimal points of precision he wants.], and `character` (instead of `str`). There is also `complex` and `raw`, but we will use these less often in this textbook.
 
-Additionally, `R` uses the same type to store many elements of the same type. It does not have any scalar type. This is very different than `Python`. `Python` has base types of individual elements, and it uses a separate types as containers for many elements. In `R`, if you are looking at single number/string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
+```{R, collapse = TRUE}
+# cat() is kind of like print()
+cat(typeof('a'), typeof(1), typeof(1.3))
+```
 
-TODO constants versus literals?
+In this case `R` automatically upgraded `1` to a double. If you wanted to force it to be an integer, you can add a capital "L" to the end of the number.
 
-https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
-
-
-In `R`, there are no scalar types like this! If we wanted to make a "string", we would need to make a length $1$ character `vector`. 
-
-```{r}
-print(typeof('a'))
-print(typeof(1))
-print(typeof(1.3))
+```{R, collapse = TRUE}
+# cat() is kind of like print()
+cat(typeof('a'), typeof(1L), typeof(1.3))
 ```
 
 
+#### Type Conversions
 
-## `R` vectors, matrices and arrays versus `numpy` arrays 
+You can explicitly and implicitly convert types in `R` just as you did in `Python`. Implicit conversion looks like this.
+
+```{R, collapse = TRUE}
+myInt = 1
+myDouble = 3.2
+mySum = myInt + myDouble
+print(paste0("my_int's type is ", typeof(myInt)))
+print(paste0("my_float's type is ", typeof(myDouble)))
+print(mySum)
+print(paste0("my_sum's type is ", typeof(mySum)))
+```
+
+Explicit conversion can be achieved with functions such as `as.integer`, `as.logical`, `as.double`, etc.
+
+```{R, collapse = TRUE}
+print(typeof(1))
+print(typeof(as.logical(1)))
+```
+
+
+#### What was the weird thing about `R` you mentioned?
+
+The basic types of `R` are a little different than the basic types of `Python`. `R` uses the same type to store many elements. It does not have any scalar type. On the other hand, `Python` has base types for individual elements, and it uses separate types as containers for storing many elements. In `R`, if you are looking at single number or character string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
+
+TODO constants versus literals?
+
+
+
+## `R` vectors versus `numpy` arrays 
 
 This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works
 
 ### In `R`
 
-I mentioned earlier that `R` does not have scalar types--it just has vectors. So whether I wanted to store one number, or many numbers, I would be using a `vector`. 
+I mentioned earlier that `R` does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
+). So, whether you want to store one number, or many numbers, you will need a `vector`. 
 
-.
+How do we create one of these? There are many ways. The most common is to extract them from a column of a `data.frame`, but we will describe those in section TODO. Here are some examples of generating `vector`s from code instead of external data sets.
 
+```{R, collapse = TRUE}
+1:10
+seq(1,10,2)
+rep(2,5)
+c("5/2/2021", "5/3/2021", "5/4/2021")
+rnorm(10)
+```
+
+`c` is short for "combine". `seq` and `rep` are short for "sequence" and "replicate", respectively. `rnorm` samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
+
+### In `Python`
+
+If you want to store many elements of the same type in `Python`, you will need a Numpy `array`. Numpy is a third party library [@harris2020array]
+
+There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the above examples.
+
+```{python, collapse = TRUE}
+import numpy as np
+print(np.array([1,2,3]))
+print(np.arange(1,12,2))
+print(np.random.normal(size=3))
+```
+
+TODO pick up here
+#1:10
+#seq(1,10,2)
+#rep(2,5)
+#c("5/2/2021", "5/3/2021", "5/4/2021")
+#rnorm(10)
+
+
+#### Vectorization in `R`
+
+An operation is **vectorized** if it applies to all of the elements of a `vector` at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is easier to read, and quite often it runs much faster.
+
+Arithmetic (e.g. `+`, `-`, `*`, `/`, `^`, `%%`, `%/`, etc.) and logical (e.g. `!`, `|`, `&`, `>`, `>=`, `<`, `<=`, `==`, etc.) operators  are commonly applied on single vectors or between two vectors. Numeric vectors are converted to logical vectors if they need to be. Many functions work on vectors **elementwise** as well (except functions like `sum` or `length`, etc.). Operator precedence is important to understand if you seek to minimize your use of parentheses. Here are some examples.
+
+```{r, collapse = TRUE}
+(1:3) * (1:3)
+(1:3) == rev(1:3)
+sin( (2*pi/3)*(1:5))
+```
+
+In the last example, there is **recycling** happening. `(2*pi/3)` is taking three length-one vectors and producing another length-one vector. That gets multiplied by length five vector `1:5`. The single element in the length one vector gets recycled so that its value is multiplied by every element of `1:5`. 
+This makes sense most of the time, but sometimes it can be tricky. Notice that this does not produce an error--just a warning.
+```{r, collapse = TRUE}
+(1:3) * (1:4)
+```
+
+#### Indexing in `R`
+
+It is very common to want only a subset of elements in a vector. There are a few ways to do this. All of them involve the square bracket operator (e.g. `[]`). Feel free to retrieve the documentation by typing `?'['`.
+
+
+```{R, collapse = TRUE}
+allElements <- 1:100
+evens <- allElements[seq(2,100,2)]
+odds <- allElements[-seq(2,100,2)]
+biggerThan20 <- allElements[allElements > 20]
+```
+
+To access the first element, we use the index `1`. To access th second, we use `2`, and so on. Also, the `-` sign tells `R` to remove elements. Both of these functionalities are *very different* from `Python`, as we will see shortly.
+
+We can use names to access elements elements, too, but only if the elements are named.
+
+```{R, collapse = TRUE}
+sillyVec <- c("favorite"=1, "least favorite" = 2)
+sillyVec['favorite']
+```
 
 Recycling
 Filtering The extraction of subsets of vectors
 Vectorization
 `c`
-mention the word "tensor"
+
 Mention `NULL` versus `NA` versus `None` versus `numpy.nan`
+
+## `numpy` arrays versus `R`'s matrices and arrays
+
+mention the word "tensor"
 
 ## `R` lists versus `Python` lists, tuples and `dict`s and `set`s
 
 When you need to store elements in a container, but you can't guarantee that these elements all have the same type, you need a `list`. Both `R` and `Python` have lists. 
+
 
 
 
@@ -97,7 +216,7 @@ All answers to questions related to `R` should be written in a file named `data_
   
 2. In `R`, say you have a vector of prices of some financial asset:
 
-```{r}
+```{R, collapse = TRUE}
 prices <- c(100.10, 95.98, 100.01, 99.87)
 ```
 
@@ -150,7 +269,7 @@ b. Do the same thing in `Python`, but call the variable `my_cov_mats`
 
 6.  Here are two lists in `R`:
 
-```{r}
+```{R, collapse = TRUE}
 l1 <- list(first="a", second=1)
 l2 <- list(first=c(1,2,3), second = "statistics")
 ```
@@ -166,7 +285,7 @@ c. Make a `vector` of all the unique single digit numbers in both of the lists. 
 
 7.  Here are two `dict`s in `Python`:
 
-```{Python}
+```{python, collapse = TRUE}
 d1 = { "first" : "a", "second" : 1}
 d2 = { "first" : [1,2,3], "second" : "statistics"}
 ```
