@@ -6,12 +6,15 @@ There are similarities between `Python`'s and `R`'s type systems. However, there
 
 If you're ever unsure what type a variable has, use `type()` (in `Python`) or `typeof()` (in `R`) to query it. 
 
-TODO Test [@R-bookdown]
+
+<!---
+---------------------------------------------------------------------------
+-->
 
 
 ## Basic Types
 
-Storing an individual piece of information is simple in both languages. However, while `Python` has scalar types, `R`'s situation is a little more complicated.
+Storing an individual piece of information is simple in both languages. However, while `Python` has scalar types, `R`'s situation is a little more complicated (TODO word choice).
 
 ### In `Python`
 
@@ -22,6 +25,8 @@ print(type('a'), type(1), type(1.3))
 ```
 
 Strings are useful for processing text data such as names of people/places/things and messages (e.g. texts, tweets and emails). If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow (TODO which section).
+
+In the next section we will discuss the Numpy library. This library has a [broader collection](https://numpy.org/doc/stable/user/basics.types.html) of basic types. 
 
 #### Type Conversions
 
@@ -96,18 +101,21 @@ The basic types of `R` are a little different than the basic types of `Python`. 
 
 TODO constants versus literals?
 
+<!---
+---------------------------------------------------------------------------
+-->
 
 
 ## `R` vectors versus `numpy` arrays 
 
 This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works
 
-### In `R`
+### Overview of `R`
 
 I mentioned earlier that `R` does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
 ). So, whether you want to store one number, or many numbers, you will need a `vector`. 
 
-How do we create one of these? There are many ways. The most common is to extract them from a column of a `data.frame`, but we will describe those in section TODO. Here are some examples of generating `vector`s from code instead of external data sets.
+How do we create one of these? There are many ways. One common is to read in elements from an external data set, perhaps extracting them from a column of a `data.frame`, but we will describe those in section TODO. Here are some examples of generating `vector`s from code instead of external data sets.
 
 ```{R, collapse = TRUE}
 1:10
@@ -119,32 +127,25 @@ rnorm(10)
 
 `c` is short for "combine". `seq` and `rep` are short for "sequence" and "replicate", respectively. `rnorm` samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
 
-### In `Python`
+### Overview of `Python`
 
-If you want to store many elements of the same type in `Python`, you will need a Numpy `array`. Numpy is a third party library [@harris2020array]
+If you want to store many elements of the same type in `Python`, you will need a Numpy `array`. Numpy is a very highly-regarded third party library [@harris2020array]
 
 There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the above examples.
 
 ```{python, collapse = TRUE}
 import numpy as np
-print(np.array([1,2,3]))
-print(np.arange(1,12,2))
-print(np.random.normal(size=3))
+np.array([1,2,3])
+np.arange(1,12,2)
+np.random.normal(size=3)
 ```
 
-TODO pick up here
-#1:10
-#seq(1,10,2)
-#rep(2,5)
-#c("5/2/2021", "5/3/2021", "5/4/2021")
-#rnorm(10)
 
-
-#### Vectorization in `R`
+### Vectorization in `R`
 
 An operation is **vectorized** if it applies to all of the elements of a `vector` at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is easier to read, and quite often it runs much faster.
 
-Arithmetic (e.g. `+`, `-`, `*`, `/`, `^`, `%%`, `%/`, etc.) and logical (e.g. `!`, `|`, `&`, `>`, `>=`, `<`, `<=`, `==`, etc.) operators  are commonly applied on single vectors or between two vectors. Numeric vectors are converted to logical vectors if they need to be. Many functions work on vectors **elementwise** as well (except functions like `sum` or `length`, etc.). Operator precedence is important to understand if you seek to minimize your use of parentheses. Here are some examples.
+Arithmetic (e.g. `+`, `-`, `*`, `/`, `^`, `%%`, `%/%`, etc.) and logical (e.g. `!`, `|`, `&`, `>`, `>=`, `<`, `<=`, `==`, etc.) operators  are commonly applied on single vectors or between two vectors. Numeric vectors are converted to logical vectors if they need to be. Many functions work on vectors **element-wise** as well (except functions like `sum` or `length`, etc.). Operator precedence is important to understand if you seek to minimize your use of parentheses. Here are some examples.
 
 ```{r, collapse = TRUE}
 (1:3) * (1:3)
@@ -158,19 +159,47 @@ This makes sense most of the time, but sometimes it can be tricky. Notice that t
 (1:3) * (1:4)
 ```
 
-#### Indexing in `R`
+### Vectorization in `Python`
 
-It is very common to want only a subset of elements in a vector. There are a few ways to do this. All of them involve the square bracket operator (e.g. `[]`). Feel free to retrieve the documentation by typing `?'['`.
+`Python`'s Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or `ufunc` for short. Some `ufunc`s can be invoked using the same syntax as in `R` (e.g. `+`). You can also refer to function by name (e.g. `np.sum`). Mixing and matching is allowed, too.
+
+`ufunc`s are called unary if they take in one array, and binary if they take in two. I reproduce a portion of the very nice table found in [@py_ds_handbook] 
+
+| Operator |	Equivalent `ufunc` |
+|-----------|-------------------|
+`+`	| `np.add`	
+`-`	| `np.subtract`	
+`-`	| `np.negative`	
+`*` |	`np.multiply`	
+`/`	| `np.divide`	
+`//` |	`np.floor_divide`	
+`**`	| `np.power`	
+`%` |	`np.mod`
+
+For an exhaustive list of Numpy's universal functions, [click here.](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs) Here are some examples.
 
 
-```{R, collapse = TRUE}
-allElements <- 1:100
-evens <- allElements[seq(2,100,2)]
-odds <- allElements[-seq(2,100,2)]
-biggerThan20 <- allElements[allElements > 20]
+```{python, collapse=TRUE}
+np.arange(1,4)*np.arange(1,4)
+np.zeros(5) > np.arange(-3,2)
+np.exp( -.5 * np.linspace(-3, 3, 10)**2) / np.sqrt( 2 * np.pi)
 ```
 
-To access the first element, we use the index `1`. To access th second, we use `2`, and so on. Also, the `-` sign tells `R` to remove elements. Both of these functionalities are *very different* from `Python`, as we will see shortly.
+Instead of calling it "recycling", `Python` calls it [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in `R`, but in general, `Python` is stricter and disallows more scenarios. 
+
+### Indexing `vector`s in `R`
+
+It is very common to want to extract or change only a subset of elements in a vector. There are a few ways to do this. All of them involve the square bracket operator (e.g. `[]`). Feel free to retrieve the documentation by typing `?'['`.
+
+TODO 
+```{R, collapse = TRUE}
+allElements <- 1:6
+allElements[seq(2,6,2)] # evens
+allElements[-seq(2,6,2)] <- 99 # replace all odds with 99
+allElements[allElements > 2] # bigger than 20
+```
+
+To access the first element, we use the index `1`. To access the second, we use `2`, and so on. Also, the `-` sign tells `R` to remove elements. Both of these functionalities are *very different* from `Python`, as we will see shortly.
 
 We can use names to access elements elements, too, but only if the elements are named.
 
@@ -179,15 +208,41 @@ sillyVec <- c("favorite"=1, "least favorite" = 2)
 sillyVec['favorite']
 ```
 
-Recycling
-Filtering The extraction of subsets of vectors
-Vectorization
-`c`
 
-Mention `NULL` versus `NA` versus `None` versus `numpy.nan`
+### Indexing Numpy arrays
 
-## `numpy` arrays versus `R`'s matrices and arrays
+[Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in `R`. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
 
+For one, indexing is 0-based in `Python`. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in `R`, but rather to count backwards. Third, using `:`inside square brackets is more flexible in `Python` (e.g. you can get **striding** functionality without using `seq`).
+
+```{python, collapse=TRUE}
+one_through_ten = np.arange(1, 11)
+one_through_ten[np.array([2,3])]
+one_through_ten[1:10:2] # evens
+one_through_ten[-2] = 99 # second to last
+one_through_ten
+one_through_ten[one_through_ten > 3] # bigger than three
+```
+
+
+### How do `R` and `Python` handle missing values?
+
+`R` has `NA`, `NULL`, and `NaN`. `Python` has `None`, `np.nan`
+
+#### (Being and) Nothingness
+
+`R`'s `NULL` and `Python`'s `None` are similar. Both represent nothingness. 
+
+
+falsy
+
+
+## Numpy's `ndarray`s versus `R`'s matrices and arrays
+
+You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). 
+
+
+is special case of `ndarray` https://numpy.org/doc/stable/reference/arrays.html
 mention the word "tensor"
 
 ## `R` lists versus `Python` lists, tuples and `dict`s and `set`s
@@ -231,13 +286,19 @@ $$ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 $$
 
 3. Assume we are interested in the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$.
 
+We will make use of the *Monte Carlo* (TODO cite) method below. It is a technique to approximate expectations and probabilities. If $n$ is a large number, then the right hand side of 
+$$
+\mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbb{1}(X_i > 6)
+$$
+is an accurate approximation. 
+
 a. Evaluate this probability exactly in `R` and assign it to the variable `exactExceedanceProb` 
 
 b. Evaluate this probability exactly in `Python` and assign it to the variable `exact_exceedance_prob`
 
-c. In `R`, use the *Monte Carlo* (TODO cite) method to estimate the probability. Assign it to the variable `approxExceedanceProb`
+c. In `R`, use the Monte Carlo method to estimate the probability. Use one thousand samples. Assign it to the variable `approxExceedanceProb`
 
-d. In `Python`, use the *Monte Carlo* (TODO cite) method to estimate the probability. Assign it to the variable `approx_exceedance_prob`
+d. In `Python`, use the Monte Carlo method to estimate the probability. Use one thousand samples. Assign it to the variable `approx_exceedance_prob`
 
 
 4. For a collection of random variables $X_1, \ldots, X_n$, a *covariance matrix* arranges all of the covariances between every possible pair of random variables:
@@ -296,3 +357,6 @@ a. Make a new `list` that is these two `dict`s above "squished together" (why ca
 
 
 8. How might you explain the difference between `Python` and `R`'s type systems? What do you know about the historical development of these languages that might assist your explanation?
+
+
+9. Example on underflow and overflow.
