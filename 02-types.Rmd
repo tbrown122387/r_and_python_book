@@ -95,6 +95,7 @@ print(typeof(as.logical(1)))
 ```
 
 
+
 #### What was the weird thing about `R` you mentioned?
 
 The basic types of `R` are a little different than the basic types of `Python`. `R` uses the same type to store many elements. It does not have any scalar type. On the other hand, `Python` has base types for individual elements, and it uses separate types as containers for storing many elements. In `R`, if you are looking at single number or character string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
@@ -106,7 +107,7 @@ TODO constants versus literals?
 -->
 
 
-## `R` vectors versus `numpy` arrays 
+## `R` vectors versus `numpy` arrays (and Pandas `Series`)
 
 This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works
 
@@ -129,7 +130,7 @@ rnorm(10)
 
 ### Overview of `Python`
 
-If you want to store many elements of the same type in `Python`, you will need a Numpy `array`. Numpy is a very highly-regarded third party library [@harris2020array]
+If you want to store many elements of the same type (and size) in `Python`, you will need a Numpy `array`. Numpy is a very highly-regarded third party library [@harris2020array]
 
 There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the above examples.
 
@@ -140,6 +141,7 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
+Another choice in `Python` is to use [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series). These are made available through the Pandas library. The benefit of these is that they play nicely with Pandas Data frames (TODO link), and that they have more flexibility with accessing elements by name (cite book https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array).
 
 ### Vectorization in `R`
 
@@ -160,6 +162,8 @@ This makes sense most of the time, but sometimes it can be tricky. Notice that t
 ```
 
 ### Vectorization in `Python`
+
+TODO add pandas series
 
 `Python`'s Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or `ufunc` for short. Some `ufunc`s can be invoked using the same syntax as in `R` (e.g. `+`). You can also refer to function by name (e.g. `np.sum`). Mixing and matching is allowed, too.
 
@@ -189,14 +193,13 @@ Instead of calling it "recycling", `Python` calls it [**broadcasting**](https://
 
 ### Indexing `vector`s in `R`
 
-It is very common to want to extract or change only a subset of elements in a vector. There are a few ways to do this. All of them involve the square bracket operator (e.g. `[]`). Feel free to retrieve the documentation by typing `?'['`.
+It is very common to want to extract or modify a subset of elements in a vector. There are a few ways to do this. All of them involve the square bracket operator (e.g. `[]`). Feel free to retrieve the documentation by typing `?'['`.
 
-TODO 
 ```{R, collapse = TRUE}
 allElements <- 1:6
-allElements[seq(2,6,2)] # evens
+allElements[seq(2,6,2)] # extract evens
 allElements[-seq(2,6,2)] <- 99 # replace all odds with 99
-allElements[allElements > 2] # bigger than 20
+allElements[allElements > 2] # get nums bigger than 20
 ```
 
 To access the first element, we use the index `1`. To access the second, we use `2`, and so on. Also, the `-` sign tells `R` to remove elements. Both of these functionalities are *very different* from `Python`, as we will see shortly.
@@ -224,37 +227,192 @@ one_through_ten
 one_through_ten[one_through_ten > 3] # bigger than three
 ```
 
+### Some Gotchas
+
+
+#### Shallow versus Deep Copies
+
+In `R`, assignment usually produces a **deep copy.** In the code below, we create `b` from `a`. If we modify `b`, these changes don't affect `a`. This takes up more memory, but our program is easier to follow as we don't have to keep track of connections between objects. 
+
+```{r, collapse = TRUE}
+# in R
+a <- c(1,2,3)
+b <- a
+b[1] <- 999
+a # still the same!
+```
+
+With Numpy arrays in `Python`, each copy is typically a **shallow copy.** In the code below, `b` is a **reference** for `a`. They both point to the same data in memory. We make a change to `b`, and it *does* affect `a`. This can make the program more confusing, although it can improve computational efficiency. 
+
+```{python, collapse = TRUE}
+# in python
+a = np.array([1,2,3])
+b = a
+b[0] = 999
+a # two names for the same object in memory
+```
+
+If you want a deep copy in `Python`, use `np.copy`.
+
+```{python, collapse = TRUE}
+# in python
+a = np.array([1,2,3])
+b = np.copy(a)
+b[0] = 999
+a 
+```
+
 
 ### How do `R` and `Python` handle missing values?
 
-`R` has `NA`, `NULL`, and `NaN`. `Python` has `None`, `np.nan`
+`R` has `NULL`,  `NaN`, and `NA`. `Python` has `None`, `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
 
-#### (Being and) Nothingness
+`R`'s `NULL` and `Python`'s `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more on functions in TODO) anything meaningful. 
 
-`R`'s `NULL` and `Python`'s `None` are similar. Both represent nothingness. 
+In `R`, for example, if a function fails to , then it returns a `NULL`. 
+
+```{r, collapse = TRUE, warning=TRUE}
+NULL==FALSE
+NULL==NULL
+doNothingFunc <- function(a){}
+thing <- doNothingFunc()
+is.null(thing)
+typeof(NULL)
+```
+
+In `Python`, we have the following.
+
+```{python, collapse = TRUE}
+None == False
+None == None
+def do_nothing_func():
+  pass
+thing = do_nothing_func()
+if thing is None:
+  print("thing is None!")
+type(None)
+```
+
+`NaN` stands for "not a number." It is an object of type `double` in `R`, and type `float` in `Python`. It can come in handy when you have $0/0$ or $\infty / -\infty$.
+
+```{r, collapse = TRUE}
+# in R
+0/0
+Inf/Inf
+is.na(0/0)
+```
+```{python, collapse = TRUE, error = TRUE}
+# in Python
+0/0
+import numpy as np
+np.inf/np.inf
+np.isnan(np.nan)
+```
+
+"NA" is short for "not available." Missing data is a fact of life in data science. Observations are often missing in data sets, or introduced after joining/merging data sets together (more on this in chapter TODO). There are many techniques designed to estimate quantities in the presence of missing data. When you code them up, you'll need to make sure you deal with `NA`s properly. 
+
+```{r, collapse = TRUE}
+# in R
+babyData <- c(0,-1,9,NA,21)
+NA == TRUE 
+is.na(babyData)
+typeof(NA)
+```
 
 
-falsy
+Unfortunately `Python`s support of an `NA`-like object is more limited. There is no `NA` object in base `Python`. And often `NaN`s will appear in place of an `NA`. There are a few useful tools, though. The Numpy library offers ["masked arrays"](https://numpy.org/devdocs/reference/maskedarray.html), for one. 
 
+Also, as of version `1.0.0`, the [Pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." We will discuss `Pandas` in chapter TODO.
+
+```{python, collapse = TRUE}
+import numpy as np
+import numpy.ma as ma
+baby_data = ma.array([0,-1,9,-9999, 21]) # -9999 "stands for" missing
+baby_data[3] = ma.masked
+np.average(baby_data)
+```
+
+```{block, type='rmd-caution'}
+Be careful of using extreme values to stand in for what should be an `NA`. Failing to mark the above missing value correctly would lead to extremely wrong calculations!
+```
+
+<!---
+---------------------------------------------------------------------------
+-->
 
 ## Numpy's `ndarray`s versus `R`'s matrices and arrays
 
-You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). 
+Sometimes you want a collection of elements that are all the same type, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you needed to use tensors for a computer vision project you're working on. 
+
+### In `Python`
+
+In `Python`, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). Each array will come with an enormous amount of methods and attributes (more on OOP TODO) attached to it. A few are demonstrated below. 
+
+```{python, collapse = TRUE}
+import numpy as np
+a = np.array([[1,2],[3,4]], np.float)
+a
+a.shape
+a.ndim
+a.dtype
+a.max()
+a.resize((1,4)) # modification is **in place**
+a
+```
 
 
-is special case of `ndarray` https://numpy.org/doc/stable/reference/arrays.html
-mention the word "tensor"
+### In `R`
 
-## `R` lists versus `Python` lists, tuples and `dict`s and `set`s
+TODO (cite matloff book)
 
-When you need to store elements in a container, but you can't guarantee that these elements all have the same type, you need a `list`. Both `R` and `Python` have lists. 
+## `R` lists versus `Python` lists
+
+When you need to store elements in a container, but you can't guarantee that these elements all have the same type, or you can't guarantee that they all have the same size, then you need a `list`. Both `R` and `Python` have lists, but they have some differences.
+
+### Lists In `R`
+
+`list`s are one of the most flexible data types in `R`. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type. 
+
+```{r, collapse = TRUE}
+myList <- list(c(1,2,3), "May 5th, 2021", c(TRUE, TRUE, FALSE))
+myList[1] # length-1 list; first element is length 3 vector
+myList[[1]] # length-3 vector
+```
+
+If you want to extract an element, you need to decide between using single square brackets or double square brackets. The former returns a `list`, while the second returns the type of the individual element.
+
+You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below. The `lm()` function estimates a linear regression model. It returns a `list` with plenty of components. 
+
+```{r, collapse = TRUE, echo=TRUE, results='hide'}
+dataSet <- read.csv("data/cars.csv")
+results <- lm(log(Horsepower) ~ Type, data = dataSet)
+length(results)
+names(results)
+results$contrasts
+results['rank']
+results[['terms']]
+```
 
 
+### Lists In `Python`
 
+[`Python` `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing elements of lists in `Python`--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with `R` `list`s. 
+
+Unlike in `R`, you can't name elements of lists. If you want a container that allows you to access elements by name, look into `Python` [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) or Pandas `Series` objects (TODO more about this earlier).
+
+From the example below, you can see that we've been introduced to lists already. We have been constructing Numpy arrays from them.
+
+```{python, collapse = TRUE}
+another_list = [np.array([1,2,3]), "May 5th, 2021", True, [42,42]]
+another_list[2]
+```
+
+## `R` factors and tables versus ?
 
 ## `R` data frames versus `Pandas` data frames
 
-## `R` factors and tables versus ?
+As data scientists, most of the time, our data set will be stored as a data frame. https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects
+
 
 ## Classes in `R` and `Python`
 
