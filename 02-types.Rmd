@@ -130,9 +130,9 @@ rnorm(10)
 
 ### Overview of `Python`
 
-If you want to store many elements of the same type (and size) in `Python`, you will need a Numpy `array`. Numpy is a very highly-regarded third party library [@harris2020array]
+If you want to store many elements of the same type (and size) in `Python`, you will need a Numpy `array`. Numpy is a highly-regarded third party library [@harris2020array] for `Python`.
 
-There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the above examples.
+There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the examples from above.
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -141,7 +141,16 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
-Another choice in `Python` is to use [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series). These are made available through the Pandas library. The benefit of these is that they play nicely with Pandas Data frames (TODO link), and that they have more flexibility with accessing elements by name (cite book https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array).
+Another choice in `Python` is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `Pandas` library. The benefit of these is that they play nicely with Pandas data frames (TODO link), and that they have more flexibility with accessing elements by name (cite book https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array).
+
+```{python, collapse = TRUE}
+import pandas as pd
+first = pd.Series([2, 4, 6])
+second = pd.Series([2, 4, 6], index = ['a','b','c'])
+print(first[0])
+print(second['c'])
+```
+
 
 ### Vectorization in `R`
 
@@ -242,7 +251,7 @@ b[1] <- 999
 a # still the same!
 ```
 
-With Numpy arrays in `Python`, each copy is typically a **shallow copy.** In the code below, `b` is a **reference** for `a`. They both point to the same data in memory. We make a change to `b`, and it *does* affect `a`. This can make the program more confusing, although it can improve computational efficiency. 
+With Numpy arrays in `Python`, each copy is typically a **shallow copy.** In the code below, `b` is a **reference** for `a`. They both point to the same data in memory. We make a change to `b`, and it *does* affect `a`. This can make the program more confusing, although it can improve computational efficiency. More details on how `Python` treats the assignment operator can be found in \@ref(passing-by-assignment-in-python).
 
 ```{python, collapse = TRUE}
 # in python
@@ -634,7 +643,7 @@ silly_function.__code__.co_nlocals # number of local variables
 silly_function.__code__.co_varnames # names of local variables
 ```
 
-"*Enclosing*" refers to variables that were defined in the enclosing namespace. In the example below, there is no local `a` variable for `inner_func`. But there is a global one and one in the enclosing namespace. It chooses the one in the enclosing namespace.
+"*Enclosing*" refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called **free variables.** In the example below, there is no local `a` variable for `inner_func`. But there is a global one and one in the enclosing namespace. It chooses the one in the enclosing namespace. 
 
 ```{python, collapse = TRUE}
 a = "outside both"
@@ -666,7 +675,11 @@ Just like in `R`, `Python` functions **cannot** necessarily find variables in an
 
 ### Dynamic Lookup 
 
-In general, it is not a good idea to define functions, in either language, that refer to variables in the global environment/namespace. Consider the code below. 
+In general, it is not a good idea to define functions, in either language, that refer to variables in the global environment/namespace. 
+
+#### In `R`
+
+Consider the code below. 
 
 ```{r, collapse=TRUE}
 # R
@@ -686,7 +699,7 @@ There are more situations where this code could be problematic. Consider what co
 
 - you or your collaborators aren't sure what `everythingIsSafe` will return because you don't understand dynamic lookup, or 
 - it's difficult to visually keep track of all assignments to `missileLaunchCodesAreSet` (e.g. your script is quite long), or
-- you are not running code sequentially (e.g. you are testing chunks at a time instead of `source`ing from scratch over and over again).
+- you are not running code sequentially (e.g. you are testing chunks at a time instead of `source()`ing from scratch over and over again).
 
 Another reason that this could be troublesome is if you define a function that refers to a nonexistent variable. Defining the function won't throw an error. `R` will assume that variable is defined in the global environment. Calling the function might, unless you (accidentally?) defined the variable (later on?).
 
@@ -696,6 +709,9 @@ myFunc <- function(){
   return(varigbleNameWithTypo)
 }
 ```
+
+#### In `Python`
+
 
 It's the same situation in `Python`. Consider `everything_is_safe`, a function that is analogous to `everythingIsSafe`.
 
@@ -717,25 +733,245 @@ def my_func():
   return varigble_name_with_typo
 ```
 
-So stay away from referring to variables outside the body of your function!
+So stay away from referring to variables outside the body of your function! 
 
 <!-- ```{block, type='rmd-details'} -->
 <!-- Sometimes, in `R`, functions are called *closures* to emphasize that they are capturing variables from the parent environment in which they were created.  -->
 <!-- ``` -->
 
+### Modifying a Function's Arguments
+
+Can/should we modify a function's argument? The flexibility to do this sounds empowering; however, not being able to do it at all can be helpful because it makes programs easier to reason about. 
+
+For example, in \@ref(dynamic-lookup), we mentioned that code that *accessed* global variables can be tricky. If a function *modifies* global variables, it can compound all of those aforementioned problems.
+
+So, is it possible to do? Is it easy to do? Does the answer to this question remain the same for both programming languages? In short: it's complicated.
+
+#### In `R`
+
+In `R`, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this. The only one that I won't avoid discussing is *environments*, but I will save this for section TODO] Consider the following code.
+
+```{r, collapse=TRUE}
+a <- 1
+f <- function(arg){
+  arg <- 2
+  return(arg)
+}
+print(a)
+print(f(a))
+print(a)
+```
+
+The function `f` has an argument called `arg`. When `f(a)` is performed, changes are made to a *copy* of `a`. When a function constructs a copy of all input variables inside its body, this is called **pass-by-value** semantics. This copy is a temporary intermediate value that only serves as a starting point for the function to produce a return value of `2`.
+
+`arg` could have been called `a`, and the same behavior will take place. However, giving these two things different names is helpful.
+
+It is still possible to modify `a`, but I don't recommend doing it. You can use the *super assignment operator* (`<<-`).
+
+```{r, collapse=TRUE}
+a <- 1
+f <- function(arg){
+  arg <- 2
+  a <<- arg
+  # return(arg) # no return value
+}
+print(a)
+print(f(a))
+print(a)
+```
+
+In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. Then it takes that `2` and writes it to the global variable in the parent environment. Notice that the function can take in different inputs, but the global assignment is hard-coded. Environments will be discussed in more detail in TODO. 
+
+
+#### Passing By Assignment In `Python`
+
+The story is more complicated in `Python`. `Python` functions have **pass-by-assignment** semantics. This is something that is very unique to `Python`. What this means is that the behavior depends on 
+
+- what the type of the argument is, and
+- what you're trying to do to it. 
+
+We will go throw some examples first, and then explain why this works the way it does. Here is some code that is analogous to the example above. 
+
+```{python, collapse=TRUE}
+a = 1
+def f(arg):
+  arg = 2
+  return arg
+
+print(type(a))
+print(a)
+print(f(a))
+print(a)
+```
+
+In this case, `a` is not modified. That is because `a` is an `int`. `int`s are **immutable** in `Python`, which means that their [value](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types) cannot be changed after they are created, either inside or outside of the function's scope. However, consider the case when `a` is a `list`, which is a **mutable** type. A mutable type is one that can have its value changed after its created. 
+
+```{python, collapse=TRUE}
+a = [999]
+def f(arg):
+  arg[0] = 2
+  return arg
+
+print(type(a))
+print(a)
+print(f(a))
+print(a)
+```
+
+In this case `a` *is* modified. Changing the value of the argument *inside* the function effects changes to that variable outside of the function. 
+
+Ready to be confused? What happens if we take in a list, but try to do something else with it. 
+
+```{python, collapse=TRUE}
+a = [999]
+def f(arg):
+  arg = [2]
+  return arg
+
+print(a)
+print(f(a))
+print(a)
+```
+
+That time `a` did not permanently change in the global scope. Why does this happen? I thought `list`s were mutable!
+
+The reason behind all of this doesn't even have anything to do with functions, per se. Rather, it has to do with how `Python` manages, [objects, values, and types](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types). It also has to do with what happens during [assignment](https://docs.python.org/3/reference/executionmodel.html#naming-and-binding).
+
+Let's revisit the above code, but bring everything out of a function. `Python` is pass-by-assignment, so all we have to do is understand how assignment works. Starting with the immutable `int` example, we have the following.
+
+```{python, collapse=TRUE}
+# old code: 
+# a = 1
+# def f(arg):
+#   arg = 2
+#   return arg
+a = 1    # still done in global scope
+arg = a  # arg is a name that is bound to the object a refers to
+arg = 2  # arg is a name that is bound to the object 2
+print(arg is a)
+print(id(a), id(arg))
+print(a)
+```
+
+```{block, type='rmd-details'}
+The [`id()`](https://docs.python.org/3/library/functions.html#id) function returns the **identity** of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, `a` and `b` say, have the same identity, `a is b` will evaluate to `True`. Otherwise, it will evaluate to `False`.
+```
+
+In the first line, the *name* `a` is bound to the *object* `1`. In the second line, the name `arg` is bound to the *object* that is referred to by the *name* `a`. After the second line finishes, `arg` and `a` are two names for the same object (a fact that you can confirm by inserting `arg is a` immediately after this line). 
+
+In the third line, `arg` is bound to `2`. The variable `arg` can be changed, but only by re-binding it with a separate object. Re-binding `arg` does not change the value referred to by `a` because `a` still refers to `1`, an object separate from `2`. There is no reason to re-bind `a` because it wasn't mentioned at all in the third line. 
+
+If we go back to the first function example, it's basically the same idea. The only difference, however, is that `arg` is in its own scope. Let's look at a simplified version of our second code chunk that uses a mutable list.
+
+```{python, collapse=TRUE}
+a = [999]
+# old code:
+# def f(arg):
+#   arg[0] = 2
+#   return arg
+arg = a
+arg[0] = 2
+print(arg)
+print(a)
+print(arg is a)
+```
+
+In this example, when we run `arg = a`, the name `arg` is bound to the same object that is bound to `a`. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of `arg` is done "in place", and all variables can access the mutated object.
+
+Why did the third example produce unexpected results? 
+
+```{python, collapse=TRUE}
+a = [999]
+# old code
+# def f(arg):
+#   arg = [2]
+#   return arg
+arg = a
+arg = [2]
+print(arg is a)
+print(a)
+print(arg)
+```
+
+The difference is in the line `arg = [2]`. This rebinds the name `arg` to a different variable. `list`s are still mutable, but this has nothing to do with re-binding--re-binding a name works no matter what type of object you're binding it to. In this case we are re-binding `arg` to a completely different list.  
+
+Finally, there is something in `Python` that is like `R`'s super assignment operator (`<<-`). It is the `global` keyword. This will let you *modify* global variables. 
+
+```{block, type='rmd-details'}
+Referring to global variables *without* modifying them was always allowed, even without using the `global` keyword. This keyword should be used sparingly, and when it is used, it identifies that a function causes **side effects**, which are changes in some variable defined outside of the function's scope.
+```
+
+```{python, collapse = TRUE}
+a = 1
+def increment_a():
+  global a
+  a += 1
+increment_a()
+increment_a()
+increment_a()
+print(a)
+```
+
+
+Here's a last example that will be important for us in particular. Notice that Numpy `array`s are mutable.
+
+```{python, collapse = TRUE}
+import numpy as np
+my_array = np.array([1,2,3])
+def make_calc(arr):
+  arr[0] = np.average(my_array)
+  return 2*arr
+result = make_calc(my_array)
+print(result)
+print(my_array) # watch out: side effect
+```
 
 
 
 
 
-## `R` factors and tables versus ?
+## Categorical Data 
+
+
+### Categorical Data in `R`
+
+Categorical data is typically stored in [`factor`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) variable in `R`. For example, say we asked ten people how much they liked programming, and they could only respond "love it", "hate it", or "it's okay". The data might look something like this.
+
+```{r, collapse = TRUE}
+responses <- factor(c("love it", "it's okay", "love it", 
+                      "love it", "it's okay", "love it", 
+                      "love it", "love it", "it's okay", 
+                      "it's okay"), 
+                    levels = c("love it", "hate it", "it's okay"))
+levels(responses)
+contrasts(responses)
+```
+
+`factor`s have a `levels` attribute, which are all the possible values that each response could be. They also have a `contrasts` attribute, which will be important once you start using `factor`s as inputs to functions such as `lm`. In this case, the `factor` would tell `lm` *how* to create the dummy predictors in a linear regression model. 
+
+```{block, type='rmd-caution'}
+In the above example, nobody hated programming! If you haven't read the documentation for `factor` already, you should know that if we did not specify a `levels` argument, there would only be two levels. This is a common source of bugs!
+```
+
+
+TODO tables?
+TODO ordered?
+### Categorical Data in `R`
+
+TODO question on likert scales
+
+
+
+http://pandas-docs.github.io/pandas-docs-travis/user_guide/categorical.html
 
 ## `R` data frames versus `Pandas` data frames
 
 As data scientists, most of the time, our data set will be stored as a data frame. https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects
 
 
-## Classes in `R` and `Python`
+## Environments versus Namespaces
+
+https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces
 
 ## Exercises
 
