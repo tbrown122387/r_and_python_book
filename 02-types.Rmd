@@ -7,6 +7,12 @@ There are similarities between `Python`'s and `R`'s type systems. However, there
 If you're ever unsure what type a variable has, use `type()` (in `Python`) or `typeof()` (in `R`) to query it. 
 
 
+
+```{r setup, include =FALSE}
+library(reticulate)
+use_condaenv("base")
+```
+
 <!---
 ---------------------------------------------------------------------------
 -->
@@ -225,16 +231,18 @@ sillyVec['favorite']
 
 [Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in `R`. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
 
-For one, indexing is 0-based in `Python`. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in `R`, but rather to count backwards. Third, using `:`inside square brackets is more flexible in `Python` (e.g. you can get **striding** functionality without using `seq`).
+For one, indexing is 0-based in `Python`. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in `R`, but rather to count backwards. Third, using one or two `:` inside square brackets is more flexible in `Python`. This is syntactic sugar for using the `slice()` function, which is similar to `R`'s `seq()` function. 
 
 ```{python, collapse=TRUE}
 one_through_ten = np.arange(1, 11)
 one_through_ten[np.array([2,3])]
 one_through_ten[1:10:2] # evens
+one_through_ten[::-1] # reversed
 one_through_ten[-2] = 99 # second to last
 one_through_ten
 one_through_ten[one_through_ten > 3] # bigger than three
 ```
+
 
 ### Some Gotchas
 
@@ -345,6 +353,8 @@ np.average(baby_data)
 Be careful of using extreme values to stand in for what should be an `NA`. Failing to mark the above missing value correctly would lead to extremely wrong calculations!
 ```
 
+
+complete.cases versus dropna
 <!---
 ---------------------------------------------------------------------------
 -->
@@ -935,40 +945,194 @@ print(my_array) # watch out: side effect
 
 ### Categorical Data in `R`
 
-Categorical data is typically stored in [`factor`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) variable in `R`. For example, say we asked ten people how much they liked programming, and they could only respond "love it", "hate it", or "it's okay". The data might look something like this.
+Categorical data is typically stored in a [`factor`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) variable in `R`. For example, say we asked three people what their favorite season was. The data might look something like this.
+
+```{r, collapse = TRUE}
+responses <- factor(c("autumn", "summer", "summer"), 
+                    levels = c("autumn", "summer", "spring", "winter"))
+levels(responses)
+contrasts(responses)
+is.factor(responses)
+is.ordered(responses)
+```
+
+`factor`s have a `levels` attribute, which is comprised of all the possible values that each response could be. They also have a `contrasts` attribute, which will be important once you start using `factor`s as inputs to functions such as `lm`. In the case of using `factor`s as inputs to `lm()`, the `factor` would tell `lm()` *how* to create the dummy predictors in a linear regression model. It's perfectly fine if you're rusty on regression--the reason I mention this is that in `Python`, dummy variable construction is done more explicitly/manually.
+
+```{block, type='rmd-caution'}
+In the above example, there wasn't at least one person who prefers each season (that's a confusing sentence). Here, if we did not specify a `levels` argument, there would only be two levels. This is a common source of bugs! Another source of bugs: what if some people say "autumn" and others say "fall"?
+```
+
+`factor`s can be ordered or unordered. Ordered `factor`s are for ordinal data. As another example, say we asked ten people how much they liked programming, and they could only respond "love it", "hate it", or "it's okay". The data might look something like this.
 
 ```{r, collapse = TRUE}
 responses <- factor(c("love it", "it's okay", "love it", 
                       "love it", "it's okay", "love it", 
                       "love it", "love it", "it's okay", 
                       "it's okay"), 
-                    levels = c("love it", "hate it", "it's okay"))
+                    levels = c("hate it", "it's okay", "love it"),
+                    ordered = TRUE)
 levels(responses)
 contrasts(responses)
+is.factor(responses)
+is.ordered(responses)
 ```
 
-`factor`s have a `levels` attribute, which are all the possible values that each response could be. They also have a `contrasts` attribute, which will be important once you start using `factor`s as inputs to functions such as `lm`. In this case, the `factor` would tell `lm` *how* to create the dummy predictors in a linear regression model. 
+Whether a `factor` is ordered or not can affect its `contrasts` and the behavior of functions it is fed into. Intuitively, it should be clear when to impose ordering or not. In the first example, there isn't a clear ordering of the seasons (which one should come first?). In the second example, we are looking at responses to a "how much" question. 
 
-```{block, type='rmd-caution'}
-In the above example, nobody hated programming! If you haven't read the documentation for `factor` already, you should know that if we did not specify a `levels` argument, there would only be two levels. This is a common source of bugs!
+Here's a third example. We can take non-categorical data, and `cut` it into something categorical. 
+
+```{r, collapse = TRUE}
+stockReturns <- rnorm(10) # not categorical here
+typeOfDay <- cut(stockReturns, breaks = c(-Inf, 0, Inf)) 
+typeOfDay
+levels(typeOfDay)
+is.factor(typeOfDay)
+is.ordered(typeOfDay)
+```
+
+### Categorical Data in `Python`
+
+[Categorical data can be handled with the Pandas' library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from `R`. We've talked about `Series` objects before in TODO, and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in `R`), and whether it's ordered or not.
+
+
+```{python, collapse = TRUE}
+import pandas as pd
+from pandas.api.types import CategoricalDtype
+
+cat_type = CategoricalDtype(categories=["autumn", "summer", "spring", "winter"], 
+                            ordered=False)
+responses = pd.Series(["autumn", "summer", "summer"], 
+                      dtype = cat_type)
+responses
+responses.cat.categories
+responses.cat.ordered
+```
+
+Pandas also provides a `pd.cut()` function, which can return either of these types, or even a regular Numpy array.
+
+```{python, collapse = TRUE}
+stock_returns = np.random.normal(size=10) # not categorical here
+type_of_day = pd.cut(stock_returns, [-np.inf, 0, np.inf], labels = ['bad day', 'good day']) 
+type_of_day
+type(type_of_day)
+type_of_day = pd.Series(type_of_day)
+type(type_of_day)
+type_of_day.cat.categories
+type_of_day.cat.ordered
 ```
 
 
-TODO tables?
-TODO ordered?
-### Categorical Data in `R`
+```{block, type='rmd-details'}
+You'll notice that, in this instance, `pd.cut` did not return a `Series` object. It can, but `pd.cut`'s return type will depend on the inputs you feed in. In this case, it returned a [`Categorical`](http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical), which is not the same thing as a `Series`. In the code above, I had to convert it back before accessing the `cat` attribute.
+```
 
 TODO question on likert scales
+TODO question with cut that induces NAs
 
 
+## Data Frames
 
-http://pandas-docs.github.io/pandas-docs-travis/user_guide/categorical.html
+As data scientists, most of the time, our data set will be stored as a data frame.
 
-## `R` data frames versus `Pandas` data frames
+### Data Frames in `R`
 
-As data scientists, most of the time, our data set will be stored as a data frame. https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects
+Let's consider as an example Fisher's "Iris" data set. We will read this data set in from a comma separated file (more on input/output in chapter TODO). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
 
 
+```{r, collapse=TRUE}
+irisData <- read.csv("data/iris.csv", header = F)
+head(irisData)
+typeof(irisData)
+class(irisData) # we'll talk more about classes later
+dim(irisData)
+nrow(irisData)
+ncol(irisData)
+```
+
+There are some exceptions, but most data sets can be stored as a `data.frame`. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation. 
+
+[A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. 
+
+Often times you will need to extract pieces of information from a `data.frame`. This can be done in many ways. If you the columns have names, you can use the `$` operator to access a single column. You can also use the `[` operator to access multiple columns by name.  
+
+```{r, collapse=TRUE}
+colnames(irisData) <- c("sepal.length", "sepal.width", "petal.length","petal.width", "species")
+firstCol <- irisData$sepal.length
+head(firstCol)
+firstTwoCols <- irisData[c("sepal.length", "sepal.width")] 
+head(firstTwoCols)
+```
+
+The `[` operator is also useful for selecting rows and columns by index numbers, or by some logical criteria.
+
+```{r, collapse=TRUE}
+# specify rows/cols by number
+topLeft <- irisData[1,1]
+topLeft
+firstThreeRows <- irisData[1:3,]
+firstThreeRows
+setosaOnly <- irisData[irisData$species == "Iris-setosa",]
+head(setosaOnly)
+```
+
+In the code above, `irisData$species == "Iris-setosa"` creates a logical vector (try it!) using the vectorized `==` operator. The `[` operator selects the rows for which the corresponding element of this logical vector is `TRUE`. 
+
+```{block, type='rmd-details'}
+Be careful: depending on how you use the square brackets, you can either get a `data.frame` or a `vector.` As an example, try both `class(irisData[,1])` and `class(irisData[,c(1,2)])`. 
+```
+
+### Data Frames in `Python`
+
+
+The Pandas library in `Python` has data frames that are modeled after `R`'s. 
+
+```{python, collapse=TRUE}
+import pandas as pd
+iris_data = pd.read_csv("data/iris.csv", header = None)
+iris_data.head()
+iris_data.shape
+len(iris_data) # num rows
+len(iris_data.columns) # num columns
+```
+
+The structure is very similar to that of `R`'s data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to `R`'s situation. [Each `DataFrame` has many useful attributes and methods, too.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#)
+
+Just like in `R`, you can access columns by name. You do that using square brackets. Observe how similar this code is to the corresponding `R` code above.
+
+```{python, collapse=TRUE}
+iris_data.columns = ["sepal.length", "sepal.width", "petal.length",
+                     "petal.width", "species"]
+first_col = iris_data['sepal.length']
+first_col[:3]
+first_two_cols = iris_data[["sepal.length", "sepal.width"]]
+first_two_cols.head()
+```
+
+You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is short for "integer location." 
+
+```{python, collapse=TRUE}
+# specify rows/cols by number
+top_left = iris_data.iloc[0,0]
+top_left
+first_three_rows = iris_data.iloc[:3,]
+first_three_rows
+#setosa_only = iris_data[irisData$species == "Iris-setosa",]  # easieriwith loc?
+#head(setosaOnly)
+```
+
+Selecting columns by anything besides integer number can be done with the [`.loc()` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html). Here are some examples. 
+
+```{python, collapse=TRUE}
+sepal_w_to_pedal_w = iris_data.loc['sepal.width':'pedal.width']
+sepal_w_to_pedal_w
+setosa_only = iris_data.loc[iris_data['species'] == "Iris-setosa",]
+setosa_only.head()
+```
+
+Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator.
+
+TODO mention indexes
+TODO getting versus setting
 ## Environments versus Namespaces
 
 https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces
