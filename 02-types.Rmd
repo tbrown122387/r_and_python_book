@@ -354,7 +354,7 @@ Be careful of using extreme values to stand in for what should be an `NA`. Faili
 ```
 
 
-complete.cases versus dropna
+TODO complete.cases versus dropna
 <!---
 ---------------------------------------------------------------------------
 -->
@@ -528,7 +528,6 @@ There is a lot more information about environments that isn't provided in this t
 
 ### More details on `Python`'s user-defined functions
 
-TODO Python Namespace, Module, Library versus R Environments, Namespaces, Packages
 
 `Python` functions have the same things `R` functions have: a **formal parameter list**, a body, and they are enclosed a TODO. These three concepts are analogous to those in `R`. The names are just a bit different sometimes, and it isn't organized in the same way. 
 
@@ -790,7 +789,7 @@ print(f(a))
 print(a)
 ```
 
-In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. Then it takes that `2` and writes it to the global variable in the parent environment. Notice that the function can take in different inputs, but the global assignment is hard-coded. Environments will be discussed in more detail in TODO. 
+In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. Then it takes that `2` and writes it to the global variable in the parent environment. Notice that the function can take in different inputs, but the global assignment is hard-coded.
 
 
 #### Passing By Assignment In `Python`
@@ -1051,7 +1050,7 @@ ncol(irisData)
 
 There are some exceptions, but most data sets can be stored as a `data.frame`. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation. 
 
-[A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. 
+[A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. This is one of the biggest differences between data frames and `matrix`s. They are both two-dimensional, but a `matrix` needs elements to be all the same type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. 
 
 Often times you will need to extract pieces of information from a `data.frame`. This can be done in many ways. If you the columns have names, you can use the `$` operator to access a single column. You can also use the `[` operator to access multiple columns by name.  
 
@@ -1066,12 +1065,11 @@ head(firstTwoCols)
 The `[` operator is also useful for selecting rows and columns by index numbers, or by some logical criteria.
 
 ```{r, collapse=TRUE}
-# specify rows/cols by number
-topLeft <- irisData[1,1]
+topLeft <- irisData[1,1] # first row, first col
 topLeft
-firstThreeRows <- irisData[1:3,]
+firstThreeRows <- irisData[1:3,] # rows 1-3, all cols
 firstThreeRows
-setosaOnly <- irisData[irisData$species == "Iris-setosa",]
+setosaOnly <- irisData[irisData$species == "Iris-setosa",] # rows where species column is setosa
 head(setosaOnly)
 ```
 
@@ -1079,6 +1077,16 @@ In the code above, `irisData$species == "Iris-setosa"` creates a logical vector 
 
 ```{block, type='rmd-details'}
 Be careful: depending on how you use the square brackets, you can either get a `data.frame` or a `vector.` As an example, try both `class(irisData[,1])` and `class(irisData[,c(1,2)])`. 
+```
+
+
+In `R`, `data.frame`s have row names. You can get/set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. Personally, I don't typically use this functionality that often.
+
+```{r, collapse = TRUE}
+head(rownames(irisData))
+rownames(irisData) <- as.numeric(rownames(irisData)) + 1000
+head(rownames(irisData))
+irisData["1002",]
 ```
 
 ### Data Frames in `Python`
@@ -1093,9 +1101,11 @@ iris_data.head()
 iris_data.shape
 len(iris_data) # num rows
 len(iris_data.columns) # num columns
+iris_data.dtypes
 ```
 
-The structure is very similar to that of `R`'s data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to `R`'s situation. [Each `DataFrame` has many useful attributes and methods, too.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#)
+The structure is very similar to that of `R`'s data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to `R`'s situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `array`s and `DataFrame`s.
+
 
 Just like in `R`, you can access columns by name. You do that using square brackets. Observe how similar this code is to the corresponding `R` code above.
 
@@ -1103,12 +1113,17 @@ Just like in `R`, you can access columns by name. You do that using square brack
 iris_data.columns = ["sepal.length", "sepal.width", "petal.length",
                      "petal.width", "species"]
 first_col = iris_data['sepal.length']
-first_col[:3]
+first_col.head()
 first_two_cols = iris_data[["sepal.length", "sepal.width"]]
 first_two_cols.head()
 ```
 
-You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is short for "integer location." 
+
+```{block, type='rmd-details'}
+Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Panda's `DataFrame`. This behavior is similar to what happened in `R`'s. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
+```
+
+You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is (probably) short for "integer location." 
 
 ```{python, collapse=TRUE}
 # specify rows/cols by number
@@ -1120,7 +1135,7 @@ first_three_rows
 #head(setosaOnly)
 ```
 
-Selecting columns by anything besides integer number can be done with the [`.loc()` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html). Here are some examples. 
+Selecting columns by anything besides integer number can be done with the [`.loc()` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html). You should generally prefer this method to access columns because accessing things by *name* instead of *number* is more readable. Here are some examples. 
 
 ```{python, collapse=TRUE}
 sepal_w_to_pedal_w = iris_data.loc['sepal.width':'pedal.width']
@@ -1129,13 +1144,217 @@ setosa_only = iris_data.loc[iris_data['species'] == "Iris-setosa",]
 setosa_only.head()
 ```
 
-Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator.
+Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator. The second example filters out the rows where the `"species"` column elements are equal to `"Iris-setosa"`.
 
-TODO mention indexes
-TODO getting versus setting
-## Environments versus Namespaces
+Each `DataFrame` in Pandas comes with an `.index` attribute. This is analogous to a row name in `R`, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
+
+```{python, collapse = TRUE}
+iris_data.index
+iris_data = iris_data.set_index(iris_data.index[::-1]) # reverse the index
+iris_data.head(2)
+iris_data.tail(2)
+iris_data.loc[0]
+iris_data.iloc[0] 
+```
+
+`iris_data.loc[0]` selects the `0`th index. The second line reversed the indexes, so this is actually the last row. If you want the first row, use `iris_data.iloc[0]`.
+
+<!-- [`DataFrame`s have a huge amount  many useful attributes and methods, too.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#) -->
+
+### Row Names and Indexes
+
+In `Python`, Pandas `DataFrame`s have an 
+
+```{python, collapse = TRUE}
+iris_data.index
+
+```
+
+
+
+
+### Getting Versus Setting
+
+
+## Using Third-Party Software
+
+
+I will cover how to use third-party libraries in both `R` and `Python`. Here will be sufficient information for using third-party code, but there is much more to learn if you are interested in creating your own packages.
+
+
+### Installing Packages In `R` 
+
+
+Before it can be used, third party software must be installed. 
+
+In `R`, there are thousands of user-created **packages.** You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). This is very easy to do. Just use the `install.packages()` function. This can be run inside your `R` console, so there is no need to type things into the command line.
+
+```{r, eval = FALSE}
+install.packages("thePackage")
+```
+
+### Installing Packages In `Python` 
+
+In `Python`, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because `Python` is used in more fields besides data science.
+
+If you followed the suggestions provided in \@ref(installing-python-by-installing-anaconda), then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/). Point-and-click interfaces are made available as well. 
+
+```{bash, eval=FALSE}
+conda install the_package
+```
+
+There are some packages that will not be available using this method. For more information on that situation, see [here.](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#install-non-conda-packages)
+
+### Loading Packages In `R` 
+
+After they are installed on your machine, third-party code will need to be "loaded" into your `R` or `Python` session. 
+
+Loading in a package is relatively simple in `R`, however complications can arise when different variables share the same name. This happens relatively often because
+
+- it's easy to create a variable in the global environment that has the same name as another object you don't know about, and
+- different packages you load in sometimes share names accidentally.
+
+Starting off with the basics, here's how to load in a package of third-party code. Just type the following into your `R` console.
+
+```{r, eval = FALSE}
+library(thePackage)
+```
+
+You can also use the `require()` function, which has slightly different behavior when the requested package is not found. 
+
+To understand this more deeply, we need to talk about **environments** again. We discussed these before in  \@ref(more-details-on-rs-user-defined-functions), but only in the context of user-defined functions. When we load in a package with `library()`, we make its contents available by putting it all in an environment for that package. 
+
+An [environment](https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects) holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in `R` pre-loaded have their own environment. 
+
+```{block, type='rmd-details'}
+Formally, each environment is pair of two things: a **frame** and an **enclosure**. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you've heard of a *linked list* in a computer science class, it's the same thing. 
+```
+
+Moreover, all of these environments are connected in a chain-like structure.  To see what environments are loaded on your machine, and what order they were loaded in, use the `search()` function. This displays the [**search path**](https://cran.r-project.org/doc/manuals/R-lang.html#Search-path), or the ordered sequence of all of your environments.
+
+```{r, collapse=TRUE}
+search()
+```
+
+Alternatively, if you're using RStudio, the search path, and the contents of each of its environments, are displayed in the "Environment" window. You can choose which environment you'd like to look at by selecting it from the dropdown menu. This allows you to see all of the variables in that particular environment. The **global environment** (i.e. `".GlobalEnv"`) is displayed by default, because that is where you store all the objects you are creating in the console.
+
+```{r rstudio, fig.cap='RStudio', out.width='80%', fig.asp=.75, fig.align='center', echo=F}
+knitr::include_graphics("pics/environments_display_rstudio.png")
+```
+
+When you call `library(thePackage)`, the package has an environment created for it, and it is *inserted between the global environment, and the most recently loaded package.* When you want to access an object by name, `R` will first search the global environment, and then it will traverse the environments in the search path in order. These has a few important implications.
+
+ - First, **don't define variables in the global environment that are already named in another environment.** There are many variables that come pre-loaded in the `base` package (to see them, type `ls("package:base")`), and if you like using a lot of packages, you're increasing the number of names you should avoid using. 
+
+ - Second, **don't `library` in a package unless you need it, and if you do, be aware of all the names it will mask it packages you loaded in before**. The good news is that `library` will often print warnings letting you know which names have been masked. The bad news is that it's somewhat out of your control--if you need two packages, then they might have a shared name, and the only thing you can do about it is watch the ordering you load them in.
+ 
+ - Third, don't use `library()` inside code that is `source`'d in other files. For example, if you attach a package to the search path from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
+
+All is not lost if there is a name conflict. The variables haven't disappeared. It's just slightly more difficult to refer to them. For instance, if I load in `Hmisc`, I get the warning warning that `format.pval` and `units` are now masked because they were names that were in `"package:base"`. I can still refer to these masked variables with the double colon operator (`::`).
+
+```{r, collapse = TRUE}
+library(Hmisc)
+format.pval # refers to Hmisc's format.pval because it was loaded more recently
+Hmisc::format.pval # same as above
+base::format.pval # this is the only way you can get base's
+```
+
+
+
+### Loading Packages In `Python` 
+
+In `Python`, you use the `import` statement to access objects defined in another file. It is slightly more complicated than `R`'s `library()` function, but it is also more flexible. To make the contents of a package called, say, `the_package` available, type *one of the following* inside a `Python` session. 
+
+```{python, eval = FALSE}
+import the_package
+import the_package as tp 
+from the_package import *
+```
+
+To describe the difference between these three approaches, as well as to highlight the important takeaways and compare them with the important takeaways in the last section, we need to discuss what a `Python` module is, what a package is, and what a `Python` namespace is.^[I am avoiding any mention of *`R`'s* namespaces and modules. These are things that exist, but they are different from `Python`'s namespaces and modules, and are not within the scope of this text.] 
+
+ - A `Python` [**`module`**](https://docs.python.org/3/tutorial/modules.html) is a separate (when I say separate, I mean separate from the script file you're currently editing) `.py` file with function and/or object definitions in it.^[The scripts you write are modules. They come with the intention of being run from start to finish. Other non-script modules are just a bag of definitions to be used in other places.]
+ 
+ - A [package](https://docs.python.org/3/tutorial/modules.html#packages) is a group of modules.^[Sometimes a package is called a *library* but I will avoid this terminology.] 
+ 
+ - A [**namespace**](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) is "a mapping from names to objects."
+ 
+With these definitions, we can define `import`ing. According to the [`Python` documentation](https://docs.python.org/3/reference/import.html#the-import-system), "[t]he import statement combines two operations; it searches for the named module, then it binds the results of that search to a name in the local scope." 
+
+We described LEGB in the context of functions before in \@ref(function-scope-in-python). The good news is that scope in modules works the same way. 
+
+`Python` also has a search path, just like `R`, but it is a little different. It is not a list of places to look for variables, it's a list of places to look for *modules*.
+
+There are a few differences between this system and `R`'s:
+
+1. Unlike in `R`, there is absolutely no relationship between names in different modules. In other words, there is no *masking* and you don't have to worry about the order of `import`ing things.
+
+2. `Python` namespaces are unlike `R` environments in that they are not arranged into a sorted list.
+
+These two things tend to explain why `Python` packages are larger than `R` packages. 
+
+
+
+Modules can be `import`ed into a namespace, and so can **packages**. 
+
+
+But what is namespace?  , and unlike `R`, when modules are `import`ed, they are not sorted in a list like environments are in `R`.
+
+`Python` packages tend to be much larger.
+
+
+### `import`ing Examples
+
+In the example below, we import the entire `numpy` package in a way that lets us refer to it as `np`. We then use the `normal()` function. This function is in the [`random` sub-module](https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random), which collects all of the pseudorandom number generation functionality together.   
+
+```{python, collapse = TRUE}
+import numpy as np # import all of numpy
+np.random.normal(size=10)
+```
+
+This is one use of the dot operator (`.`). `normal` is *inside of* `random`, which it itself inside of `np`. 
+
+As a second example, suppose we were interested in the [`stats` sub-module](https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html) found inside the `scipy` package. We could import all of `scipy`, but that means we would need to consistently refer to variables like `scipy.stats.norm`. Inside, let's import the sub-module (or sub-package) and ignore the rest of `scipy`.
+
+
+```{python, collapse = TRUE}
+from scipy import stats
+normal_object = stats.norm(location=2)
+normal_object
+normal_object.rvs(size=10)
+```
+
+Finally, if you were writing a short script, and you needed to simulate random variates from a normal distribution, and you were sure that TODO
+
+```{python, collapse = TRUE}
+from numpy.random import normal as normal
+normal(size=10)
+```
+
+
+
+
 
 https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces
+
+
+
+
+
+
+
+The difference between the three is how they load things into the current . Suppose, as an example, there was some variable defined as `a` in the package `the_package`. The first would make `a` available in the current module as `the_package.a`. The second would make it available as `tp.a`. And the third would make it available as `a`. The second option is the most common because it shortens the amount of characters you have to type while still preventing name clashes. 
+
+
+### How Scope Works
+
+#### In `R` 
+
+#### In `Python` 
+
+TODO Python Namespace, Module, Library versus R Environments, Namespaces, Packages
+
+
 
 ## Exercises
 
