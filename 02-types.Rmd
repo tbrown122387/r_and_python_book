@@ -1292,3 +1292,57 @@ a. Make a new `list` that is these two `dict`s above "squished together" (why ca
 
 
 9. Example on underflow and overflow.
+
+10.  Let $X_t$ be the price of a stock at time $t$. A *call (or put) option* is a type of derivative contract you can buy or sell. It's called a derivative because its value derives from the value of a stock. A single call contract (or put) gives the owner the right to buy (or sell) stock ($100$ shares) at a certain price. This certain price written into an options contract ($s$) is called the *strike price*. The day the option expires    is called the *expiration date*. If a holder of the option uses his/her right to buy or sell the underlying stock, he/she is said to have *exercised* the option.
+
+The price and value of options floats around randomly through time just like a stock does. Part of the value of an option is its *intrinsic value*. It is not the same as the overall value of an option, or its "fair price"--rather, the intrinsic value represents how much money its possible to guarantee at the current moment, if you exercised the option, and then liquidated the resulting position in the underlying.
+
+For example, call owners hope the stock rises above the strike price so that they can buy the stock for a low price, and immediately sell it for a high price. If $X_t > s$, they could buy at $s$, and sell at $X_t$. In other words, the intrinsic value of a call option is 
+
+$$
+C^s_t = 100 \times \max(X_t - s, 0)
+$$
+as long as $t$ is before the expiration date. If $X_t < s$, then the owner doesn't have to buy the stock, so the call at that time is intrinsically worthless. 
+
+Put owners hope the stock price falls below the strike price, because a put's intrinsic value is
+
+$$
+P^s_t = 100 \times \max(s - X_t, 0)
+$$
+
+Sometimes people buy and sell multiple contracts (with the same expiration date) at the same time. If they do, the intrinsic value of the entire position is additive. For example, if you bought two of the same put option as the one above, then you just double the above expression to get the intrinsic value.
+
+As another example, if you buy (you can also sell) a *call spread*, you buy one call, and then sell another call with the same expiration and a higher strike price. Assuming $s_1 < s_2$ the intrinsic value is of the call spread with strikes $s_1$ and $s_2$ is
+$$
+100 \times \max(X_t - s_1, 0) - 100\times\max(X_t - s_2, 0)
+$$
+
+a. In `R`, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
+
+Because the arguments may only take on certain values, and because the function to be returned has a certain signature, a template has been provided below. 
+
+```{r, eval=F}
+getIntrinsicValueFunc <-function(dirs, strikes, contractType, numContracts){
+  stopifnot(all(dirs %in% c("buy", "sell")))
+  stopifnot(all(contractType %in% c("call", "put")))
+  stopifnot(all(is.integer(strikes)))
+  stopifnot(all(is.integer(numContracts)))
+  stopifnot( (length(dirs) == length(strikes)) && (length(dirs) == length(contractType)))
+  
+  usefulFunc <- function(prices){
+    # TODO
+  }
+  return(usefulFunc)
+} 
+```
+
+b. Create an intrinsic value plot. The x-axis should be a grid of values: let's say from $100$ to $200$. On the y-axis plot the intrinsic value of buying a call spread with strikes $110$ and $120$. 
+
+c. Do the same thing as above but show what happens when you sell the same call spread. 
+
+d. Plot the intrinsic value of a bought put spread with strikes $110$ and $120$. 
+
+e. Plot the intrinsic value of a sold put spread with strikes $110$ and $120$. What is the difference between all four plots?
+
+
+11. Do the same thing, but in `Python`!
