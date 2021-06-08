@@ -1,10 +1,10 @@
 # Data Types 
 
-In every programming language, data is stored in different ways. Writing a program that manipulates data requires understanding all of the choices. That is why we must be concerned with the different **types** of data in our R and Python programs. Different types are suitable for different purposes.
+In every programming language, data is stored in different ways. Writing a program that manipulates data requires understanding all of the choices. That is why we must be concerned with the different **types** of data in our `R` and Python programs. Different types are suitable for different purposes.
 
-There are similarities between Python's and R's type systems. However, there are may  differences as well. Be prepared for these differences. There are many more of them in this chapter than there were in the previous chapter!
+There are similarities between Python's and `R`'s type systems. However, there are may  differences as well. Be prepared for these differences. There are many more of them in this chapter than there were in the previous chapter!
 
-If you're ever unsure what type a variable has, use `type()` (in Python) or `typeof()` (in R) to query it. 
+If you're ever unsure what type a variable has, use `type()` (in Python) or `typeof()` (in `R`) to query it. 
 
 
 
@@ -20,7 +20,7 @@ use_condaenv("base")
 
 ## Basic Types
 
-Storing an individual piece of information is simple in both languages. However, while Python has scalar types, R's situation is a little more complicated.
+Storing an individual piece of information is simple in both languages. However, while Python has scalar types, `R`'s situation is a little more complicated.
 
 ### In Python
 
@@ -62,16 +62,16 @@ my_year = int(month_day_year[-1])
 print('my_year is equal to ', my_year, 'and its type is ', type(my_year))
 ```
 
-### In R
+### In `R`
 
-In R, the names of these basic types are only slightly different. They are `logical` (instead of `bool`), `integer` (instead of `int`), `double` (instead of `float`)^["double" is short for "double precision floating point." In the programming language `C`, which is what both R and Python are written in, the programmer has more control on how many decimal points of precision he wants.], and `character` (instead of `str`). There is also `complex` and `raw`, but we will use these less often in this textbook.
+In `R`, the names of these basic types are only slightly different. They are `logical` (instead of `bool`), `integer` (instead of `int`), `double` (instead of `float`)^["double" is short for "double precision floating point." In the programming language `C`, which is what both `R` and Python are written in, the programmer has more control on how many decimal points of precision he wants.], and `character` (instead of `str`). There is also `complex` and `raw`, but we will use these less often in this textbook.
 
 ```{R, collapse = TRUE}
 # cat() is kind of like print()
 cat(typeof('a'), typeof(1), typeof(1.3))
 ```
 
-In this case R automatically upgraded `1` to a double. If you wanted to force it to be an integer, you can add a capital "L" to the end of the number.
+In this case `R` automatically upgraded `1` to a double. If you wanted to force it to be an integer, you can add a capital "L" to the end of the number.
 
 ```{R, collapse = TRUE}
 # cat() is kind of like print()
@@ -81,7 +81,7 @@ cat(typeof('a'), typeof(1L), typeof(1.3))
 
 #### Type Conversions
 
-You can explicitly and implicitly convert types in R just as you did in Python. Implicit conversion looks like this.
+You can explicitly and implicitly convert types in `R` just as you did in Python. Implicit conversion looks like this.
 
 ```{R, collapse = TRUE}
 myInt = 1
@@ -102,9 +102,9 @@ print(typeof(as.logical(1)))
 
 
 
-#### What was the weird thing about R you mentioned?
+#### What was the weird thing about `R` you mentioned?
 
-The basic types of R are a little different than the basic types of Python. R uses the same type to store many elements. It does not have any scalar type. On the other hand, Python has base types for individual elements, and it uses separate types as containers for storing many elements. In R, if you are looking at single number or character string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
+The basic types of `R` are a little different than the basic types of Python. `R` uses the same type to store many elements. It does not have any scalar type. On the other hand, Python has base types for individual elements, and it uses separate types as containers for storing many elements. In `R`, if you are looking at single number or character string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
 
 TODO constants versus literals?
 
@@ -113,13 +113,13 @@ TODO constants versus literals?
 -->
 
 
-## R vectors versus `numpy` arrays (and Pandas `Series`)
+## `R` vectors versus `numpy` arrays (and Pandas `Series`)
 
 This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works
 
-### Overview of R
+### Overview of `R`
 
-I mentioned earlier that R does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
+I mentioned earlier that `R` does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
 ). So, whether you want to store one number, or many numbers, you will need a `vector`. 
 
 How do we create one of these? There are many ways. One common is to read in elements from an external data set, perhaps extracting them from a column of a `data.frame`, but we will describe those in section TODO. Here are some examples of generating `vector`s from code instead of external data sets.
@@ -158,7 +158,7 @@ print(second['c'])
 ```
 
 
-### Vectorization in R
+### Vectorization in `R`
 
 An operation is **vectorized** if it applies to all of the elements of a `vector` at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is easier to read, and quite often it runs much faster.
 
@@ -180,7 +180,7 @@ This makes sense most of the time, but sometimes it can be tricky. Notice that t
 
 TODO add pandas series
 
-Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or `ufunc` for short. Some `ufunc`s can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by name (e.g. `np.sum`). Mixing and matching is allowed, too.
+Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or `ufunc` for short. Some `ufunc`s can be invoked using the same syntax as in `R` (e.g. `+`). You can also refer to function by name (e.g. `np.sum`). Mixing and matching is allowed, too.
 
 `ufunc`s are called *unary* if they take in one array, and *binary* if they take in two. I reproduce a portion of the very nice table found in [@py_ds_handbook] 
 
@@ -204,9 +204,9 @@ np.zeros(5) > np.arange(-3,2)
 np.exp( -.5 * np.linspace(-3, 3, 10)**2) / np.sqrt( 2 * np.pi)
 ```
 
-Instead of calling it "recycling", Python calls it [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. 
+Instead of calling it "recycling", Python calls it [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in `R`, but in general, Python is stricter and disallows more scenarios. 
 
-### Indexing `vector`s in R
+### Indexing `vector`s in `R`
 
 It is very common to want to extract or modify a subset of elements in a vector. There are a few ways to do this. All of them involve the square bracket operator (e.g. `[]`). Feel free to retrieve the documentation by typing `?'['`.
 
@@ -217,7 +217,7 @@ allElements[-seq(2,6,2)] <- 99 # replace all odds with 99
 allElements[allElements > 2] # get nums bigger than 20
 ```
 
-To access the first element, we use the index `1`. To access the second, we use `2`, and so on. Also, the `-` sign tells R to remove elements. Both of these functionalities are *very different* from Python, as we will see shortly.
+To access the first element, we use the index `1`. To access the second, we use `2`, and so on. Also, the `-` sign tells `R` to remove elements. Both of these functionalities are *very different* from Python, as we will see shortly.
 
 We can use names to access elements elements, too, but only if the elements are named.
 
@@ -229,9 +229,9 @@ sillyVec['favorite']
 
 ### Indexing Numpy arrays
 
-[Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in R. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
+[Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in `R`. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
 
-For one, indexing is 0-based in Python. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in R, but rather to count backwards. Third, using one or two `:` inside square brackets is more flexible in Python. This is syntactic sugar for using the `slice()` function, which is similar to R's `seq()` function. 
+For one, indexing is 0-based in Python. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in `R`, but rather to count backwards. Third, using one or two `:` inside square brackets is more flexible in Python. This is syntactic sugar for using the `slice()` function, which is similar to `R`'s `seq()` function. 
 
 ```{python, collapse=TRUE}
 one_through_ten = np.arange(1, 11)
@@ -249,7 +249,7 @@ one_through_ten[one_through_ten > 3] # bigger than three
 
 #### Shallow versus Deep Copies
 
-In R, assignment usually produces a **deep copy.** In the code below, we create `b` from `a`. If we modify `b`, these changes don't affect `a`. This takes up more memory, but our program is easier to follow as we don't have to keep track of connections between objects. 
+In `R`, assignment usually produces a **deep copy.** In the code below, we create `b` from `a`. If we modify `b`, these changes don't affect `a`. This takes up more memory, but our program is easier to follow as we don't have to keep track of connections between objects. 
 
 ```{r, collapse = TRUE}
 # in R
@@ -280,13 +280,13 @@ a
 ```
 
 
-### How do R and Python handle missing values?
+### How do `R` and Python handle missing values?
 
-R has `NULL`,  `NaN`, and `NA`. Python has `None`, `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
+`R` has `NULL`,  `NaN`, and `NA`. Python has `None`, `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
 
-R's `NULL` and Python's `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more on functions in TODO) anything meaningful. 
+`R`'s `NULL` and Python's `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more on functions in TODO) anything meaningful. 
 
-In R, for example, if a function fails to return anything, then it returns a `NULL`. 
+In `R`, for example, if a function fails to return anything, then it returns a `NULL`. 
 
 ```{r, collapse = TRUE, warning=TRUE}
 NULL==FALSE
@@ -310,7 +310,7 @@ if thing is None:
 type(None)
 ```
 
-`NaN` stands for "not a number." It is an object of type `double` in R, and type `float` in Python. It can come in handy when you have $0/0$ or $\infty / -\infty$.
+`NaN` stands for "not a number." It is an object of type `double` in `R`, and type `float` in Python. It can come in handy when you have $0/0$ or $\infty / -\infty$.
 
 ```{r, collapse = TRUE}
 # in R
@@ -359,7 +359,7 @@ TODO complete.cases versus dropna
 ---------------------------------------------------------------------------
 -->
 
-## Numpy's `ndarray`s versus R's matrices and arrays
+## Numpy's `ndarray`s versus `R`'s matrices and arrays
 
 Sometimes you want a collection of elements that are all the same type, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you needed to use tensors for a computer vision project you're working on. 
 
@@ -380,17 +380,17 @@ a
 ```
 
 
-### In R
+### In `R`
 
 TODO (cite matloff book)
 
-## R's lists versus Python's lists and dictionaries
+## `R`'s lists versus Python's lists and dictionaries
 
-When you need to store elements in a container, but you can't guarantee that these elements all have the same type, or you can't guarantee that they all have the same size, then you need a `list` in R. In Python, you might need a `list` or `dict` (short for dictionary). 
+When you need to store elements in a container, but you can't guarantee that these elements all have the same type, or you can't guarantee that they all have the same size, then you need a `list` in `R`. In Python, you might need a `list` or `dict` (short for dictionary). 
 
-### Lists In R
+### Lists In `R`
 
-`list`s are one of the most flexible data types in R. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type. 
+`list`s are one of the most flexible data types in `R`. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type. 
 
 ```{r, collapse = TRUE}
 myList <- list(c(1,2,3), "May 5th, 2021", c(TRUE, TRUE, FALSE))
@@ -415,9 +415,9 @@ results[['terms']]
 
 ### Lists In Python
 
-[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R `list`s. 
+[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with `R` `list`s. 
 
-Unlike in R, you can't name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) or Pandas `Series` objects (TODO more about this earlier).
+Unlike in `R`, you can't name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) or Pandas `Series` objects (TODO more about this earlier).
 
 From the example below, you can see that we've been introduced to lists already. We have been constructing Numpy arrays from them.
 
@@ -429,24 +429,24 @@ another_list[2]
 
 TODO
 
-## User-defined functions in R and Python
+## User-defined functions in `R` and Python
 
-Why are functions important in statistical programming? In both R and Python (and every other programming language), functions are used to perform calculations. This is a pretty obvious statement.
+Why are functions important in statistical programming? In both `R` and Python (and every other programming language), functions are used to perform calculations. This is a pretty obvious statement.
 
-This text has already covered how to *use* functions that come to us pre-made. At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python. 
+This text has already covered how to *use* functions that come to us pre-made. At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both `R` and Python. 
 In this section we take a look at how to define our own functions. This will help us understand pre-made functions. It will also be useful if we need some functionality that isn't already written for us. 
 
 Writing our own functions is also useful (sometimes it is essential) for "packaging up" computations (more on *functional programming* in TODO). Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the "best" one?
 
-Thankfully, R functions are very similar to Python functions. In both languages, functions are **first-class objects**. This means that, no matter which of these two languages you're using, functions
+Thankfully, `R` functions are very similar to Python functions. In both languages, functions are **first-class objects**. This means that, no matter which of these two languages you're using, functions
 
 - can be passed as arguments to other functions, 
 - they can be returned as values from other functions, and 
 - they can be assigned to variables and stored in containers [@struc_and_interp]
 
-### Defining R Functions
+### Defining `R` Functions
 
-To create a function in R, we need another function called `function`. We give the output of `function` a name in the same way we give names to any other variable in R, by using the assignment operator `<-`. Here's an example of a toy function called `addOne`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
+To create a function in `R`, we need another function called `function`. We give the output of `function` a name in the same way we give names to any other variable in `R`, by using the assignment operator `<-`. Here's an example of a toy function called `addOne`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
 
 ```{r, collapse = TRUE}
 addOne <- function(myInput){  # define the function
@@ -468,9 +468,9 @@ We get the desired answer, and all the unnecessary intermediate variables are cl
 
 ### Defining Python Functions
 
-To create a function in Python, we use the `def` statement (instead of the `function` function in R). The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in R. 
+To create a function in Python, we use the `def` statement (instead of the `function` function in `R`). The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in `R`. 
 
-Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and `return` isn't a function like it is in R, so there is no need to use parentheses after it. There is one addition, though--we need a colon (`:`). 
+Defining a function in Python is a little more concise. There is no assignment operator like there is in `R`, there are no curly braces, and `return` isn't a function like it is in `R`, so there is no need to use parentheses after it. There is one addition, though--we need a colon (`:`). 
 
 Here is an example of a toy function called `add_one`.
 
@@ -490,10 +490,10 @@ Below the definition, the function is called with an input of `41`. When this ha
 
 We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away. 
 
-### More details on R's user-defined functions
+### More details on `R`'s user-defined functions
 
 
-Technically, in R, functions are [defined as three things bundled together](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Function-objects): 
+Technically, in `R`, functions are [defined as three things bundled together](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Function-objects): 
 
  1. a **formal argument list** (also known as *formals*), 
  2. a **body**, and 
@@ -522,7 +522,7 @@ addNumber <- function(myInput, whichNumber = 1){
 body(addNumber)
 ```
 
-Every function you create also has a  *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in `C`. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. To understand functions well in R, these examples are important to understand, so I provide more detail in \@ref(function-scope-in-r).
+Every function you create also has a  *parent environment*^[Primitive functions are functions that contain no `R` code and are internally implemented in `C`. These are the only type of function in `R` that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in `R`, you are primarily using **lexical scoping**. To understand functions well in `R`, these examples are important to understand, so I provide more detail in \@ref(function-scope-in-r).
 
 ```{block, type='rmd-details'}
 There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
@@ -532,7 +532,7 @@ There is a lot more information about environments that isn't provided in this t
 ### More details on Python's user-defined functions
 
 
-Python functions have the same things R functions have: a **formal parameter list**, a body, and they are enclosed a TODO. These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn't organized in the same way. 
+Python functions have the same things `R` functions have: a **formal parameter list**, a body, and they are enclosed a TODO. These three concepts are analogous to those in `R`. The names are just a bit different sometimes, and it isn't organized in the same way. 
 
 Below is a table, taken straight from [the documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types), of all each user-defined function's *special attributes*. 
 
@@ -550,7 +550,7 @@ Below is a table, taken straight from [the documentation](https://docs.python.or
 `__annotations__` | A dict containing annotations of parameters. The keys of the dict are the parameter names, and 'return' for the return annotation, if provided.
 `__kwdefaults__` | A dict containing defaults for keyword-only parameters.
 
-So take the  *formal parameter list* of a user-defined function, which is, again, the list of inputs a function takes. Just like in R, this is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created.^[You might have noticed that Python uses two different words to prevent confusion--unlike R, Python uses the word "parameter" (instead of "argument") to refer to the inputs a function takes, and "arguments" to the specific values a user plugs in.] Below we have another function that takes a **default argument** called `which_number`. If the user of the function doesn't specify how much she wants to add to `my_input`, `add_number` will use `1` as the default. This default value can be obtained with `add_number.__defaults__`.
+So take the  *formal parameter list* of a user-defined function, which is, again, the list of inputs a function takes. Just like in `R`, this is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created.^[You might have noticed that Python uses two different words to prevent confusion--unlike `R`, Python uses the word "parameter" (instead of "argument") to refer to the inputs a function takes, and "arguments" to the specific values a user plugs in.] Below we have another function that takes a **default argument** called `which_number`. If the user of the function doesn't specify how much she wants to add to `my_input`, `add_number` will use `1` as the default. This default value can be obtained with `add_number.__defaults__`.
 
 ```{python, collapse = TRUE}
 def add_number(my_input, which_number = 1):
@@ -568,11 +568,11 @@ Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) o
 
 
 
-### Function Scope in R
+### Function Scope in `R`
 
-R uses **lexical scoping**.
+`R` uses **lexical scoping**.
 
-R functions can use variables that are defined in the function body, and variables that were defined in the environment that the function itself was defined in. R functions **cannot** necessarily find variables in an environment where the function was *called* in. Code outside the body of a function cannot access variables inside the body of a function.
+`R` functions can use variables that are defined in the function body, and variables that were defined in the environment that the function itself was defined in. `R` functions **cannot** necessarily find variables in an environment where the function was *called* in. Code outside the body of a function cannot access variables inside the body of a function.
 
 ```{r, collapse = TRUE}
 a <- 3
@@ -626,14 +626,14 @@ myFunc()
 ```
 
 ```{block, type='rmd-details'}
-Sometimes, in R, functions are called **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with. 
+Sometimes, in `R`, functions are called **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with. 
 ```
 
 
 
 ### Function Scope in Python
 
-Python uses **lexical scoping** just like R! There's a famous acronym for the concept in Python: **LEGB**.
+Python uses **lexical scoping** just like `R`! There's a famous acronym for the concept in Python: **LEGB**.
 
 - L: Local, 
 - E: Enclosing, 
@@ -682,14 +682,14 @@ outer_func()
 ```
 
 
-Just like in R, Python functions **cannot** necessarily find variables in an environment where the function was *called* in. TODO check Code outside the body of a function cannot access variables inside the body of a function.
+Just like in `R`, Python functions **cannot** necessarily find variables in an environment where the function was *called* in. TODO check Code outside the body of a function cannot access variables inside the body of a function.
 
 
 ### Dynamic Lookup 
 
 In general, it is not a good idea to define functions, in either language, that refer to variables in the global environment/namespace. 
 
-#### In R
+#### In `R`
 
 Consider the code below. 
 
@@ -705,7 +705,7 @@ missileLaunchCodesSet <- FALSE
 
 `everythingIsSafe` is created in the global environment, and the global environment contains a  Boolean variable called `missileLaunchCodesAreSet`. 
 
-As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." Imagine sharing some code with a collaborator. Imagine, further, that your collaborator is the subject-matter expert, and knows little about R programming. Suppose that he finds a variable changes a global variable in the script. Shouldn't this be a relatively trivial change to the code? Wouldn't it be ideal if no one had to worry about 
+As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." Imagine sharing some code with a collaborator. Imagine, further, that your collaborator is the subject-matter expert, and knows little about `R` programming. Suppose that he finds a variable changes a global variable in the script. Shouldn't this be a relatively trivial change to the code? Wouldn't it be ideal if no one had to worry about 
 
 There are more situations where this code could be problematic. Consider what could happen if any of the following (very typical) conditions are true:
 
@@ -713,7 +713,7 @@ There are more situations where this code could be problematic. Consider what co
 - it's difficult to visually keep track of all assignments to `missileLaunchCodesAreSet` (e.g. your script is quite long), or
 - you are not running code sequentially (e.g. you are testing chunks at a time instead of `source()`ing from scratch over and over again).
 
-Another reason that this could be troublesome is if you define a function that refers to a nonexistent variable. Defining the function won't throw an error. R will assume that variable is defined in the global environment. Calling the function might, unless you (accidentally?) defined the variable (later on?).
+Another reason that this could be troublesome is if you define a function that refers to a nonexistent variable. Defining the function won't throw an error. `R` will assume that variable is defined in the global environment. Calling the function might, unless you (accidentally?) defined the variable (later on?).
 
 ```{r, collapse = TRUE}
 # R
@@ -748,7 +748,7 @@ def my_func():
 So stay away from referring to variables outside the body of your function! 
 
 <!-- ```{block, type='rmd-details'} -->
-<!-- Sometimes, in R, functions are called *closures* to emphasize that they are capturing variables from the parent environment in which they were created.  -->
+<!-- Sometimes, in `R`, functions are called *closures* to emphasize that they are capturing variables from the parent environment in which they were created.  -->
 <!-- ``` -->
 
 ### Modifying a Function's Arguments
@@ -759,9 +759,9 @@ For example, in \@ref(dynamic-lookup), we mentioned that code that *accessed* gl
 
 So, is it possible to do? Is it easy to do? Does the answer to this question remain the same for both programming languages? In short: it's complicated.
 
-#### In R
+#### In `R`
 
-In R, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this. The only one that I won't avoid discussing is *environments*, but I will save this for section TODO] Consider the following code.
+In `R`, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this. The only one that I won't avoid discussing is *environments*, but I will save this for section TODO] Consider the following code.
 
 ```{r, collapse=TRUE}
 a <- 1
@@ -907,7 +907,7 @@ print(arg)
 
 The difference is in the line `arg = [2]`. This rebinds the name `arg` to a different variable. `list`s are still mutable, but this has nothing to do with re-binding--re-binding a name works no matter what type of object you're binding it to. In this case we are re-binding `arg` to a completely different list.  
 
-Finally, there is something in Python that is like R's super assignment operator (`<<-`). It is the `global` keyword. This will let you *modify* global variables. 
+Finally, there is something in Python that is like `R`'s super assignment operator (`<<-`). It is the `global` keyword. This will let you *modify* global variables. 
 
 ```{block, type='rmd-details'}
 Referring to global variables *without* modifying them was always allowed, even without using the `global` keyword. This keyword should be used sparingly, and when it is used, it identifies that a function causes **side effects**, which are changes in some variable defined outside of the function's scope.
@@ -945,9 +945,9 @@ print(my_array) # watch out: side effect
 ## Categorical Data 
 
 
-### Categorical Data in R
+### Categorical Data in `R`
 
-Categorical data is typically stored in a [`factor`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) variable in R. For example, say we asked three people what their favorite season was. The data might look something like this.
+Categorical data is typically stored in a [`factor`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) variable in `R`. For example, say we asked three people what their favorite season was. The data might look something like this.
 
 ```{r, collapse = TRUE}
 responses <- factor(c("autumn", "summer", "summer"), 
@@ -994,7 +994,7 @@ is.ordered(typeOfDay)
 
 ### Categorical Data in Python
 
-[Categorical data can be handled with the Pandas' library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. We've talked about `Series` objects before in TODO, and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in R), and whether it's ordered or not.
+[Categorical data can be handled with the Pandas' library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from `R`. We've talked about `Series` objects before in TODO, and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in `R`), and whether it's ordered or not.
 
 
 ```{python, collapse = TRUE}
@@ -1036,7 +1036,7 @@ TODO question with cut that induces NAs
 
 As data scientists, most of the time, our data set will be stored as a data frame.
 
-### Data Frames in R
+### Data Frames in `R`
 
 Let's consider as an example Fisher's "Iris" data set. We will read this data set in from a comma separated file (more on input/output in chapter TODO). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
 
@@ -1083,7 +1083,7 @@ Be careful: depending on how you use the square brackets, you can either get a `
 ```
 
 
-In R, `data.frame`s have row names. You can get/set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. Personally, I don't typically use this functionality that often.
+In `R`, `data.frame`s have row names. You can get/set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. Personally, I don't typically use this functionality that often.
 
 ```{r, collapse = TRUE}
 head(rownames(irisData))
@@ -1095,7 +1095,7 @@ irisData["1002",]
 ### Data Frames in Python
 
 
-The Pandas library in Python has data frames that are modeled after R's. 
+The Pandas library in Python has data frames that are modeled after `R`'s. 
 
 ```{python, collapse=TRUE}
 import pandas as pd
@@ -1107,10 +1107,10 @@ len(iris_data.columns) # num columns
 iris_data.dtypes
 ```
 
-The structure is very similar to that of R's data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to R's situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `array`s and `DataFrame`s.
+The structure is very similar to that of `R`'s data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to `R`'s situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `array`s and `DataFrame`s.
 
 
-Just like in R, you can access columns by name. You do that using square brackets. Observe how similar this code is to the corresponding R code above.
+Just like in `R`, you can access columns by name. You do that using square brackets. Observe how similar this code is to the corresponding `R` code above.
 
 ```{python, collapse=TRUE}
 iris_data.columns = ["sepal.length", "sepal.width", "petal.length",
@@ -1123,7 +1123,7 @@ first_two_cols.head()
 
 
 ```{block, type='rmd-details'}
-Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Panda's `DataFrame`. This behavior is similar to what happened in R's. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
+Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Panda's `DataFrame`. This behavior is similar to what happened in `R`'s. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
 ```
 
 You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is (probably) short for "integer location." 
@@ -1149,7 +1149,7 @@ setosa_only.head()
 
 Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator. The second example filters out the rows where the `"species"` column elements are equal to `"Iris-setosa"`.
 
-Each `DataFrame` in Pandas comes with an `.index` attribute. This is analogous to a row name in R, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
+Each `DataFrame` in Pandas comes with an `.index` attribute. This is analogous to a row name in `R`, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
 
 ```{python, collapse = TRUE}
 iris_data.index
@@ -1183,7 +1183,7 @@ iris_data.index
 
 ## Exercises
 
-All answers to questions related to R should be written in a file named `data_types_exercises.R`. All answers to questions related to Python should be written in a file named `data_types_exercises.py`.
+All answers to questions related to `R` should be written in a file named `data_types_exercises.R`. All answers to questions related to Python should be written in a file named `data_types_exercises.py`.
 
 
 1. Which Python type is appropriate for each piece of data?
@@ -1192,7 +1192,7 @@ All answers to questions related to R should be written in a file named `data_ty
   b. TODO
   
   
-2. In R, say you have a vector of prices of some financial asset:
+2. In `R`, say you have a vector of prices of some financial asset:
 
 ```{R, collapse = TRUE}
 prices <- c(100.10, 95.98, 100.01, 99.87)
@@ -1224,11 +1224,11 @@ $$
 \end{cases}.
 $$
 
-a. Evaluate this probability exactly in R and assign it to the variable `exactExceedanceProb` 
+a. Evaluate this probability exactly in `R` and assign it to the variable `exactExceedanceProb` 
 
 b. Evaluate this probability exactly in Python and assign it to the variable `exact_exceedance_prob`
 
-c. In R, use the Monte Carlo method to estimate the probability. Use one thousand samples. Assign it to the variable `approxExceedanceProb`
+c. In `R`, use the Monte Carlo method to estimate the probability. Use one thousand samples. Assign it to the variable `approxExceedanceProb`
 
 d. In Python, use the Monte Carlo method to estimate the probability. Use one thousand samples. Assign it to the variable `approx_exceedance_prob`
 
@@ -1251,16 +1251,16 @@ $$\text{Cov}(X_i, X_j) = \mathbb{E}\left[(X_i - \mathbb{E}[X_i])((X_j - \mathbb{
 
 An **exchangeable** covariance matrix for a random vector is one that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. 
 
-a. In R, generate $10$ $4 \times 4$ exchangeable covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,.01,.02, ..., .09.$  Store these $10$ covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $10$ matrices you have. Name this array `myCovMats`
+a. In `R`, generate $10$ $4 \times 4$ exchangeable covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,.01,.02, ..., .09.$  Store these $10$ covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $10$ matrices you have. Name this array `myCovMats`
 
 b. Do the same thing in Python, but call the variable `my_cov_mats`
 
-5. In R, read in the `cars.csv` data set using `read.table()` (more on IO in chapter TODO). Find the average `EngineSize`, `Cylinders`, `Horsepower`, `MPG_City`, `MPG_Highway`, `Weight`, `Wheelbase` and `Length` **for each type of vehicle** (i.e. `Hybrid` `Sedan` `Sports`, `SUV`, `Truck` and `Wagon`). Which of these averages is an `NA`? How many observations in that column are missing? 
+5. In `R`, read in the `cars.csv` data set using `read.table()` (more on IO in chapter TODO). Find the average `EngineSize`, `Cylinders`, `Horsepower`, `MPG_City`, `MPG_Highway`, `Weight`, `Wheelbase` and `Length` **for each type of vehicle** (i.e. `Hybrid` `Sedan` `Sports`, `SUV`, `Truck` and `Wagon`). Which of these averages is an `NA`? How many observations in that column are missing? 
 
 6. In Python (TODO finish this question), read in the `cars.csv` data set using `read.table()` (more on IO in chapter TODO). Find the average `EngineSize`, `Cylinders`, `Horsepower`, `MPG_City`, `MPG_Highway`, `Weight`, `Wheelbase` and `Length` **for each type of vehicle** (i.e. `Hybrid` `Sedan` `Sports`, `SUV`, `Truck` and `Wagon`). Which of these averages is an `NA`? How many observations in that column are missing? 
 
 
-6.  Here are two lists in R:
+6.  Here are two lists in `R`:
 
 ```{R, collapse = TRUE}
 l1 <- list(first="a", second=1)
@@ -1288,7 +1288,7 @@ d2 = { "first" : [1,2,3], "second" : "statistics"}
 a. Make a new `list` that is these two `dict`s above "squished together" (why can't it be another `dict`?) It has to be length $4$, and each value is one of the values of $d1$ and $d2$. Call this list `l3`.
 
 
-8. How might you explain the difference between Python and R's type systems? What do you know about the historical development of these languages that might assist your explanation?
+8. How might you explain the difference between Python and `R`'s type systems? What do you know about the historical development of these languages that might assist your explanation?
 
 
 9. Example on underflow and overflow.
@@ -1317,7 +1317,7 @@ $$
 100 \times \max(X_t - s_1, 0) - 100\times\max(X_t - s_2, 0)
 $$
 
-a. In R, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
+a. In `R`, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
 
 Because the arguments may only take on certain values, and because the function to be returned has a certain signature, a template has been provided below. 
 

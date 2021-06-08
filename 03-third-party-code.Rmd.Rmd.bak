@@ -1,12 +1,12 @@
 # Using Third-Party Code
 
-Before using third-party code, it must first be installed. After it is installed, it must be "loaded in" to your session. I will describe both of these steps in R and Python.
+Before using third-party code, it must first be installed. After it is installed, it must be "loaded in" to your session. I will describe both of these steps in `R` and Python.
 
 
-### Installing Packages In R 
+### Installing Packages In `R` 
 
 
-In R, there are thousands of user-created **packages.** You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). This is very easy to do. Just use the `install.packages()` function. This can be run inside your R console, so there is no need to type things into the command line.
+In `R`, there are thousands of user-created **packages.** You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). This is very easy to do. Just use the `install.packages()` function. This can be run inside your `R` console, so there is no need to type things into the command line.
 
 ```{r, eval = FALSE}
 install.packages("thePackage")
@@ -14,7 +14,7 @@ install.packages("thePackage")
 
 ### Installing Packages In Python 
 
-In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.
+In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than `R` in fields other than data science.
 
 If you followed the suggestions provided in \@ref(installing-python-by-installing-anaconda), then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/). Point-and-click interfaces are made available as well. 
 
@@ -24,16 +24,16 @@ conda install the_package
 
 There are some packages that will not be available using this method. For more information on that situation, see [here.](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#install-non-conda-packages)
 
-### Loading Packages In R 
+### Loading Packages In `R` 
 
-After they are installed on your machine, third-party code will need to be "loaded" into your R or Python session. 
+After they are installed on your machine, third-party code will need to be "loaded" into your `R` or Python session. 
 
-Loading in a package is relatively simple in R, however complications can arise when different variables share the same name. This happens relatively often because
+Loading in a package is relatively simple in `R`, however complications can arise when different variables share the same name. This happens relatively often because
 
 - it's easy to create a variable in the global environment that has the same name as another object you don't know about, and
 - different packages you load in sometimes share names accidentally.
 
-Starting off with the basics, here's how to load in a package of third-party code. Just type the following into your R console.
+Starting off with the basics, here's how to load in a package of third-party code. Just type the following into your `R` console.
 
 ```{r, eval = FALSE}
 library(thePackage)
@@ -43,7 +43,7 @@ You can also use the `require()` function, which has slightly different behavior
 
 To understand this more deeply, we need to talk about **environments** again. We discussed these before in  \@ref(more-details-on-rs-user-defined-functions), but only in the context of user-defined functions. When we load in a package with `library()`, we make its contents available by putting it all in an environment for that package. 
 
-An [environment](https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects) holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in R pre-loaded have their own environment. 
+An [environment](https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects) holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in `R` pre-loaded have their own environment. 
 
 ```{block, type='rmd-details'}
 Formally, each environment is pair of two things: a **frame** and an **enclosure**. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you've heard of a *linked list* in a computer science class, it's the same thing. 
@@ -61,7 +61,7 @@ Alternatively, if you're using RStudio, the search path, and the contents of eac
 knitr::include_graphics("pics/environments_display_rstudio.png")
 ```
 
-When you call `library(thePackage)`, the package has an environment created for it, and it is *inserted between the global environment, and the most recently loaded package.* When you want to access an object by name, R will first search the global environment, and then it will traverse the environments in the search path in order. These has a few important implications.
+When you call `library(thePackage)`, the package has an environment created for it, and it is *inserted between the global environment, and the most recently loaded package.* When you want to access an object by name, `R` will first search the global environment, and then it will traverse the environments in the search path in order. These has a few important implications.
 
  - First, **don't define variables in the global environment that are already named in another environment.** There are many variables that come pre-loaded in the `base` package (to see them, type `ls("package:base")`), and if you like using a lot of packages, you're increasing the number of names you should avoid using. 
 
@@ -82,7 +82,7 @@ library(Hmisc)
 
 ### Loading Packages In Python 
 
-In Python, you use the `import` statement to access objects defined in another file. It is slightly more complicated than R's `library()` function, but it is also more flexible. To make the contents of a package called, say, `the_package` available, type *one of the following* inside a Python session. 
+In Python, you use the `import` statement to access objects defined in another file. It is slightly more complicated than `R`'s `library()` function, but it is also more flexible. To make the contents of a package called, say, `the_package` available, type *one of the following* inside a Python session. 
 
 ```{python, eval = FALSE}
 import the_package
@@ -90,7 +90,7 @@ import the_package as tp
 from the_package import *
 ```
 
-To describe the difference between these three approaches, as well as to highlight the important takeaways and compare them with the important takeaways in the last section, we need to discuss what a Python module is, what a package is, and what a Python namespace is.^[I am avoiding any mention of *R's* namespaces and modules. These are things that exist, but they are different from Python's namespaces and modules, and are not within the scope of this text.] 
+To describe the difference between these three approaches, as well as to highlight the important takeaways and compare them with the important takeaways in the last section, we need to discuss what a Python module is, what a package is, and what a Python namespace is.^[I am avoiding any mention of *`R`'s* namespaces and modules. These are things that exist, but they are different from Python's namespaces and modules, and are not within the scope of this text.] 
 
  - A Python [**`module`**](https://docs.python.org/3/tutorial/modules.html) is a separate (when I say separate, I mean separate from the script file you're currently editing) `.py` file with function and/or object definitions in it.^[The scripts you write are modules. They come with the intention of being run from start to finish. Other non-script modules are just a bag of definitions to be used in other places.]
  
@@ -100,19 +100,19 @@ To describe the difference between these three approaches, as well as to highlig
  
 With these definitions, we can define `import`ing. According to the [Python documentation](https://docs.python.org/3/reference/import.html#the-import-system), "[t]he import statement combines two operations; it searches for the named module, then it binds the results of that search to a name in the local scope." 
 
-The sequence of places Python looks for a module is called the search path. This is not the same as R's search path, though. In Python, the search path is a list of places to look for *modules*, not a list of places to look for variables. To see it, `import sys`, then type `sys.path`.
+The sequence of places Python looks for a module is called the search path. This is not the same as `R`'s search path, though. In Python, the search path is a list of places to look for *modules*, not a list of places to look for variables. To see it, `import sys`, then type `sys.path`.
 
 After a module is found, the variable names in the found module become available in the `import`ing module. These variables are available in the global scope, but the names you use to access them will depend on what kind of `import` statement you used. From there, you are using the same scoping rules that we described in \@ref(function-scope-in-python), which means the LEGB acronym still applies. 
 
 Here are a few important takeaways that might not be readily apparent:
 
- - Python namespaces are unlike R environments in that they are not arranged into a sorted list.
+ - Python namespaces are unlike `R` environments in that they are not arranged into a sorted list.
  
- - Unlike in R, there is no *masking*, and you don't have to worry about the *order* of `import`ing things. 
+ - Unlike in `R`, there is no *masking*, and you don't have to worry about the *order* of `import`ing things. 
 
  - However, you do have to worry about *how* you're `import`ing things. If you use the `from the_package import thingone, thingtwo` format of `import`ing, you are at risk of re-assigning either `thingone` or `thingtwo`, if they already exist. As a rule of thumb, **you should never use this form of `import`ing**.
  
-- These differences might explain why Python packages tend to be larger than R packages. 
+- These differences might explain why Python packages tend to be larger than `R` packages. 
 
 #### `import`ing Examples
 

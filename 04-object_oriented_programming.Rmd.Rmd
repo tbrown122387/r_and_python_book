@@ -10,7 +10,7 @@ Here are a few abstract concepts that will help thinking about OOP. They are not
 
 - **Inheritance** takes place when an object can be considered to be of multiple types. For example, an analysis of variance linear regression model might be a special case of a general linear model. 
 
- - **Polymorphism** is the idea that the programmer can use the same code on objects of different types. For example, built-in functions in both R and Python can work on arguments of a wide variety of different types. 
+ - **Polymorphism** is the idea that the programmer can use the same code and get different behavior depending on what the code is being used on. For example, built-in functions in both R and Python can work on arguments of a wide variety of different types. 
 
  - **Encapsulation** is another word for complexity hiding. Do you have to understand every line of code in a package you're using? No, because a lot of details are hidden from you. 
  
@@ -174,74 +174,32 @@ class RunningCI(RunningMean):
 The parentheses in the first line signal that this new class definition is inheriting from `RunningMean`. Inside the definition of this new class, when I refer to `self.current_xbar` it knows what I'm talking about because these are defined in the base class. Last, I am using `super()` to access the parent class, which lets me use the parent class' methods, such as `__init__`.
 
 ```{python, collapse = TRUE}
-my_ci = RunningCI(1) # create running average object
-my_ci.get_current_xbar() # no data yet!
-my_ci.update(1.) 
-my_ci.get_current_interval() 
-my_ci.update(3.)  
-my_ci.get_current_interval()  
+my_ave = RunningCI(1) # create running average object
+my_ave.get_current_xbar() # no data yet!
+my_ave.update(1.) 
+my_ave.get_current_interval() 
+my_ave.update(3.)  
+my_ave.get_current_interval()  
 ```
 
-This example also demonstrates **polymorphism.** Polymorphism comes from the Greek for "many forms." "Forms" means "type" or "class" in this case. If the same code (usually a function or method) works on objects of different types, that's polymorphic. Here, the `update` method worked on an object of class `RunningCI`, as well as an object of `RunningMean`.
-
-Why is this useful? Consider this example. 
-
-```{python, collapse = TRUE, eval = FALSE}
-for datum in time_series:
-  for thing in obj_list:
-    thing.update(xt)
-```
-
-Inside the inner `for` loop, there is no need for include conditional logic that tests for what kind of type each `thing` is. We can iterate through time more succinctly.
-
-```{python, collapse = TRUE, eval = FALSE}
-for datum in time_series:
-  for thing in obj_list:
-    if isinstance(thing, class1):
-      thing.updatec1(xt)
-    if isinstance(thing, class2):
-      thing.updatec2(xt)
-    if isinstance(thing, class3):
-      thing.updatec3(xt)
-    if isinstance(thing, class4):
-      thing.updatec4(xt)
-    if isinstance(thing, class5):
-      thing.updatec5(xt)
-    if isinstance(thing, class6):
-      thing.updatec6(xt)
-```
-
-If you add a new class `class7`, then you need to change this inner `for` loop, as well as provide new code for the class. 
 
 
-## OOP In R
+## In R
 
-R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! For simplicity, I will only discuss `S3` and `S4` classes. `S4` classes are more similar to Python's classes, but I will describe `S3` classes first, as they are simpler and form the base of how `S4` classes work. 
+R, unlike Python, has many different types of classes. I will only discuss `S3` classes, and `S4` classes. 
 
-Regardless of whether you're using `S3` or `S4` classes, class methods are not *owned* by a class like they are in Python. Instead, "high-level" functions, that an end-user is more likely to be using, will look at its input, and choose the most appropriate function to call, based on what kind of type the input has. In Python,  another function will choose another function to work on can be associated to different classes but in a different way than how it works in Python. 
+In R's class system, there aren't functions (methods) that *belong* to a class. Instead, some functions behave differently depending on what type of object is passed into them. These decision-making functions are called **generic functions**--when you call them, they decide on another function to call. 
 
-The primary goal of R's OOP is *polymorphism*. We want functions like `print`, `summary` and `plot` to behave differently when objects of a different type are passed in to them. Printing a linaer model should look a lot different than printing a data frame, right?
-
-A **generic function** is a function that looks at the type of its first argument, and then calls a specialized function depending on what type it is. Not all functions in `R` are generic, but `print`, `summary` and `plot` are the most famous ones. 
-
-The person using these generic functions is using an *interface*. There is a smaller barrier to entry for using this function, because he does not need to concern himself with the details going on behind the scenes. `print`, `summary`, `plot`, and `mean` are generic functions. 
+The person using these generic functions is using an *interface*. He/she does not care about all the details going on behind the scenes, and there is a smaller barrier to entry to getting things done. `print`, `summary`, and `plot` are generic functions. 
 
 ```{r}
 plot
 ```
 
-The body of this function is one-line. It calls something called `UseMethod`. A **method** is a specialized function that gets chosen by the generic function for a particular type of input. When the generic function chooses a particular method, this is called **method dispatch**. You can see the methods for the generic function `plot` by typing the following. 
+The body of this function is one-line. It calls something called `UseMethod`. A **method** is a function that gets chosen by the generic function for a particular type of input. You can see the methods for the generic function `plot` by typing the following. 
 
 ```{r}
 methods(plot)
-```
-
-As an example, let's try to run `plot(thing)`. What hqppens?
-
-```{r}
-thing <- matrix(rnorm(100), nrow = 10)
-class(thing)
-plot(thing)
 ```
 
 
