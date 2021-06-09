@@ -220,9 +220,9 @@ R, unlike Python, has many different kinds of classes. In R, there is not only o
 
 Regardless of whether you're using `S3` or `S4` classes, class methods are not *owned* by a class like they are in Python. Instead, "high-level" functions, that an end-user is more likely to be using, will look at its input, and choose the most appropriate function to call, based on what kind of type the input has. In Python,  another function will choose another function to work on can be associated to different classes but in a different way than how it works in Python. 
 
-The primary goal of R's OOP is *polymorphism*. We want functions like `print`, `summary` and `plot` to behave differently when objects of a different type are passed in to them. Printing a linaer model should look a lot different than printing a data frame, right?
+The primary goal of R's OOP is *polymorphism*. We want functions like `print`, `summary` and `plot` to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right?
 
-A **generic function** is a function that looks at the type of its first argument, and then calls a specialized function depending on what type it is. Not all functions in `R` are generic, but `print`, `summary` and `plot` are the most famous ones. 
+A [**generic function**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Method-dispatching) is a function that looks at the type of its first argument, and then calls a specialized function depending on what type it is. Not all functions in `R` are generic, but `print`, `summary` and `plot` are the most famous ones. 
 
 The person using these generic functions is using an *interface*. There is a smaller barrier to entry for using this function, because he does not need to concern himself with the details going on behind the scenes. `print`, `summary`, `plot`, and `mean` are generic functions. 
 
@@ -230,13 +230,13 @@ The person using these generic functions is using an *interface*. There is a sma
 plot
 ```
 
-The body of this function is one-line. It calls something called `UseMethod`. A **method** is a specialized function that gets chosen by the generic function for a particular type of input. When the generic function chooses a particular method, this is called **method dispatch**. You can see the methods for the generic function `plot` by typing the following. 
+The body of this function is one-line. It calls something called `UseMethod`. A **method** is a specialized function that gets chosen by the generic function for a particular type of input. The method is the *implementation*. When the generic function chooses a particular method, this is called **method dispatch**. You can see the methods that are available for the generic function `plot` by typing the following. 
 
 ```{r}
 methods(plot)
 ```
 
-As an example, let's try to run `plot(thing)`. What hqppens?
+As an example, let's try to run `plot(thing)`. What happens?
 
 ```{r}
 thing <- matrix(rnorm(100), nrow = 10)
@@ -249,13 +249,30 @@ plot(thing)
 This dot-notation is nothing like Python's dot-notation! Functions do not *belong* to types/classes in R like they do in Python!
 ```
 
-Which `plot` method gets chosen depends on what the argument is. Specificaly it depends on what `class` the object has. More on that below TODO
+Which `plot` method gets chosen depends on what the argument is. Specifically it depends on what `class` the object has. More on that below TODO
 
 Let's look at what the `plot.data.frame` function looks like TODO
 
 
 ### S3 objects
 
+An object may or may not have a set of [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are created from `vector`s do (e.g. run `attributes(factor(1:3))` and `attributes(matrix(1:4))`).
+
+S3 objects have a `class` attribute that is set. This is the attribute that is used for method dispatch. It is easy to get and set this attribute, so creating an S3 class is as easy as setting a character string to 
+
+```{r, collapse = TRUE}
+myThing <- 1:3
+attributes(myThing)
+class(myThing) <- "CoolClass"
+attributes(myThing) # alternatively class(myThing)
+```
+
+`myThing` is now an instance of `CoolClass`, even though I did not define what a `CoolClass` anywhere yet. This is very flexible, but also, kind of scary, because you can change the `class`es of existing objects.
+
+
+
+
+An S3 object is 
 
 https://cran.r-project.org/doc/manuals/R-lang.html#Object_002doriented-programming
 
