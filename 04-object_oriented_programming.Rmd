@@ -211,68 +211,130 @@ for datum in time_series:
       thing.updatec6(xt)
 ```
 
-If you add a new class `class7`, then you need to change this inner `for` loop, as well as provide new code for the class. 
+If, in the future, you add a new class called `class7`, then you need to change this inner `for` loop, as well as provide new code for the class. 
+
+
+
+
+
+
+
+
+
+
 
 
 ## OOP In R
 
-R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! For simplicity, I will only discuss `S3` and `S4` classes. `S4` classes are more similar to Python's classes, but I will describe `S3` classes first, as they are simpler and form the base of how `S4` classes work. 
+R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! For simplicity, I will only discuss *S3 classes* and *Reference Classes.* Reference classes are more similar to Python's classes than S3 classes, but I will describe `S3` classes first, as they are simpler and form the base of how `S4` classes work. 
 
-Regardless of whether you're using `S3` or `S4` classes, class methods are not *owned* by a class like they are in Python. Instead, "high-level" functions, that an end-user is more likely to be using, will look at its input, and choose the most appropriate function to call, based on what kind of type the input has. In Python,  another function will choose another function to work on can be associated to different classes but in a different way than how it works in Python. 
+TODO wrong!
+Regardless of whether you're using `S3` or Reference Classes, class methods are not *owned* by a class like they are in Python. Instead, "high-level" functions, that an end-user is more likely to be using, will look at its input, and choose the most appropriate function to call, based on what kind of type the input has. In Python,  another function will choose another function to work on can be associated to different classes but in a different way than how it works in Python. 
 
 The primary goal of R's OOP is *polymorphism*. We want functions like `print`, `summary` and `plot` to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right?
 
-A [**generic function**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Method-dispatching) is a function that looks at the type of its first argument, and then calls a specialized function depending on what type it is. Not all functions in `R` are generic, but `print`, `summary` and `plot` are the most famous ones. 
 
-The person using these generic functions is using an *interface*. There is a smaller barrier to entry for using this function, because he does not need to concern himself with the details going on behind the scenes. `print`, `summary`, `plot`, and `mean` are generic functions. 
+
+### S3 objects
+
+An object may or may not have a set of  [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are "embellished" versions of a `vector` might (e.g. run `attributes(factor(1:3))` and `attributes(matrix(1:4))`).
+
+S3 objects have a `class` attribute that is set. This is the attribute that is used for method dispatch. Not all objects are S3 objects, though. To find out if an object `x` is an S3 object, use `is.object(x)`.
+
+```{block, type='rmd-caution'}
+`class` will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with `is.object` first. 
+```
+
+A [**generic function**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Method-dispatching) is a function that looks at the type of its first argument, and then calls a specialized function depending on what type it is. Not all functions in `R` are generic, but some are. `print`, `summary` and `plot` are the most famous generic functions. 
+
+The programmer using these generic functions is using an *interface*. There is a smaller barrier to entry for using this function, because he does not need to concern himself with the details going on behind the scenes.
+
+Again, `plot` is a generic function, so let's look at its definition.
 
 ```{r}
 plot
 ```
 
-The body of this function is one-line. It calls something called `UseMethod`. A **method** is a specialized function that gets chosen by the generic function for a particular type of input. The method is the *implementation*. When the generic function chooses a particular method, this is called **method dispatch**. You can see the methods that are available for the generic function `plot` by typing the following. 
+The body of this function is only one-line. It calls another function called `UseMethod`. That's it.
+
+A **method** is a specialized function that gets chosen by the generic function for a particular type of input. The method is the *implementation*. When the generic function chooses a particular method, this is called **method dispatch**. You can see the methods that are available for the generic function `plot` by typing the following. 
 
 ```{r}
 methods(plot)
 ```
 
-As an example, let's try to run `plot(thing)`. What happens?
+All of the methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (`.`), then the name of the class that they are specifically written to be used with. 
 
-```{r}
-thing <- matrix(rnorm(100), nrow = 10)
-class(thing)
-plot(thing)
+As an example, let's try to `plot` some specific objects. 
+
+```{r, collapse = TRUE, out.width="50%"}
+aDF <- data.frame(matrix(rnorm(100), nrow = 10))
+is.object(aDF) # is this s3?
+class(aDF)
+plot(aDF)
 ```
 
+Because `aDF` has `class` set to `data.frame`, this causes `plot` to try to find a `plot.data.frame` method. If this method was not found, R would attempt to find/use a `plot.default` method. If no default method existed, an error would be thrown. 
+
+Next, we'll play around with objects created with the `ecdf` function. This function computes an *empirical cumulative distribution function*, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input^[It's defined as $\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)$.]
+
+```{r, collapse = TRUE, out.width="50%"}
+myECDF <- ecdf(rnorm(100))
+is.object(myECDF)
+class(myECDF)
+plot(myECDF)
+```
+
+This is how *inheritance* works in R. It's much simpler than it was in Python! The `ecdf` class inherits from the `stepfun` class, which in turn inherits from the `function` class. When you call `plot(myECDF)`, ultimately `plot.ecdf` is used on this object.
 
 ```{block, type='rmd-caution'}
-This dot-notation is nothing like Python's dot-notation! Functions do not *belong* to types/classes in R like they do in Python!
+R's dot-notation is nothing like Python's dot-notation! In R, functions do not *belong* to types/classes like they do in Python!
 ```
 
-Which `plot` method gets chosen depends on what the argument is. Specifically it depends on what `class` the object has. More on that below TODO
 
-Let's look at what the `plot.data.frame` function looks like TODO
-
-
-### S3 objects
-
-An object may or may not have a set of [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are created from `vector`s do (e.g. run `attributes(factor(1:3))` and `attributes(matrix(1:4))`).
-
-S3 objects have a `class` attribute that is set. This is the attribute that is used for method dispatch. It is easy to get and set this attribute, so creating an S3 class is as easy as setting a character string to 
+It is easy to get and set this attribute yourself, so creating an S3 class is as easy as setting a character string. Admittedly, you won't need to do this very often. However, if for instance you are writing an R package, you might have functions return objects of a special/custom S3 class. Here is an example of creating an object of `CoolClass`.
 
 ```{r, collapse = TRUE}
 myThing <- 1:3
 attributes(myThing)
 class(myThing) <- "CoolClass"
-attributes(myThing) # alternatively class(myThing)
+attributes(myThing) # also try class(myThing)
 ```
 
-`myThing` is now an instance of `CoolClass`, even though I did not define what a `CoolClass` anywhere yet. This is very flexible, but also, kind of scary, because you can change the `class`es of existing objects.
+`myThing` is now an instance of `CoolClass`, even though I never defined what a `CoolClass` was ahead of time. If you're used to Python, this should seem very strange. Compared to Python, this approach is very flexible, but also, kind of dangerous, because you can change the `class`es of existing objects.
+
+If you are writing a package, and you are returning results as an S3 object, you can write your own methods associated with these objects. That way, when a user of your package uses typical generic functions, such as `summary`, you can control what interesting things will happen to the user of your package.
+
+```{r, collapse = TRUE, echo=FALSE}
+# the user does not see this function
+summary.CoolClass <- function(object,...){
+  print("No summary available!")
+  print("Cool Classes are too cool for summaries!")
+  print(":)")
+}
+```
+
+```{r, collapse = TRUE}
+summary(myThing)
+```
+
+The `summary` method I wrote for this class is the following. 
+
+```{r, collapse = TRUE, eval=F}
+# the user does not see this function
+summary.CoolClass <- function(object,...){
+  print("No summary available!")
+  print("Cool Classes are too cool for summaries!")
+  print(":)")
+}
+```
+When writing this, I kept the signature the same as `summary`'s.
+
+
+### Reference Classes
 
 
 
-
-An S3 object is 
 
 https://cran.r-project.org/doc/manuals/R-lang.html#Object_002doriented-programming
 
@@ -345,4 +407,10 @@ plt.scatter(x_array[:,1], y_array)
 
 
 Here is an example class definition, and then its use. The class  holds onto
+
+
+3. Come up with a list of Python classes that are written in third party libraries, and that you will find useful in the future!
+
+
+4. Come up with a list of R classes that are written in third party libraries, and that you will find useful in the future!
 
