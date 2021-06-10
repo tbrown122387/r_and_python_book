@@ -1,4 +1,4 @@
-# Object-Oriented Programming
+# An Introduction to Object-Oriented Programming
 
 **Object-Oriented Programming (OOP)** is a way of thinking about how to organize programs. This way of thinking focuses on objects. We already know about objects from the last chapter, so what's new here?
 
@@ -226,44 +226,76 @@ If, in the future, you add a new class called `class7`, then you need to change 
 
 ## OOP In R
 
-R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! For simplicity, I will only discuss *S3 classes* and *Reference Classes.* Reference classes are more similar to Python's classes than S3 classes, but I will describe `S3` classes first, as they are simpler and form the base of how `S4` classes work. 
+R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! This list isn't exhaustive, but I will discuss 
 
-TODO wrong!
-Regardless of whether you're using `S3` or Reference Classes, class methods are not *owned* by a class like they are in Python. Instead, "high-level" functions, that an end-user is more likely to be using, will look at its input, and choose the most appropriate function to call, based on what kind of type the input has. In Python,  another function will choose another function to work on can be associated to different classes but in a different way than how it works in Python. 
+- S3 classes
+- S4 classes
+- Reference classes, and
+- R6 classes.
 
-The primary goal of R's OOP is *polymorphism*. We want functions like `print`, `summary` and `plot` to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right?
+If you like how Python does OOP, you will like reference classes and R6 classes, while S3 and S4 classes will feel strange to you. 
 
+It's best to learn about them chronologically, in my opinion. S3 classes came first, S4 classes sought to improve upon those. Reference classes rely on S4 classes, and R6 classes are an improved version of Reference classes. 
 
+### S3 objects: The Big Picture
 
-### S3 objects
+With S3 (and S4) objects, calling a method `func` will not look like this.
 
-An object may or may not have a set of  [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are "embellished" versions of a `vector` might (e.g. run `attributes(factor(1:3))` and `attributes(matrix(1:4))`).
+```
+my_obj.print(input)
+```
+Instead, it will look like this:
 
-S3 objects have a `class` attribute that is set. This is the attribute that is used for method dispatch. Not all objects are S3 objects, though. To find out if an object `x` is an S3 object, use `is.object(x)`.
-
-```{block, type='rmd-caution'}
-`class` will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with `is.object` first. 
+```
+print(my_obj, input)
 ```
 
-A [**generic function**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Method-dispatching) is a function that looks at the type of its first argument, and then calls a specialized function depending on what type it is. Not all functions in `R` are generic, but some are. `print`, `summary` and `plot` are the most famous generic functions. 
+The primary goal of S3 is *polymorphism*. We want functions like `print`, `summary` and `plot` to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right? So we can write code like the following, we only have to remember fewer functions as an end-user, and the "right" thing will always happen. If you're writing a package, it's also nice for your users that they're able to use the regular functions that they're familiar with.
 
-The programmer using these generic functions is using an *interface*. There is a smaller barrier to entry for using this function, because he does not need to concern himself with the details going on behind the scenes.
+```{r, eval=FALSE}
+print(myObj)
+print(myObjOfADifferentClass)
+print(aThirdClassObject)
+```
 
-Again, `plot` is a generic function, so let's look at its definition.
+This works because these "high-level" functions (like `print`), will look at its input and choose the most appropriate function to call, based on what kind of type the input has. `print` is the high-level function. When you run some of the above code, it might not be obvious which specific function `print` chooses for each input. You can't see that happening, yet.
+
+Last, recall that this discussion only applies to S3 objects. Not all objects are S3 objects, though. To find out if an object `x` is an S3 object, use `is.object(x)`.
+
+
+### Using pre-made S3 objects
+
+Using S3 objects is so easy that you probably don't even know that you're actually using them. You can just try to call functions on objects, look at the output, and if you're happy with it, you're good. However, if you've ever asked yourself: "why does `print` (for another function) do different things all the time?" then this section will be useful for you to read. 
+
+`print` is a [**generic function**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Method-dispatching) which is a function that looks at the type of its first argument, and then calls another, more specialized function depending on what type that argument is. Not all functions in `R` are generic, but some are. In addition to `print`, `summary` and `plot` are the most ubiquitous generic functions. Generic functions are an *interface*, because the user does not need to concern himself with the details going on behind the scenes.
+
+A **method** is a specialized function that gets chosen by the generic function for a particular type of input. The method is the *implementation*. When the generic function chooses a particular method, this is called **method dispatch**. 
+
+If you look at the definition of a generic function, let's take `plot` for instance, it has a single line that calls `UseMethod`.
 
 ```{r}
 plot
 ```
 
-The body of this function is only one-line. It calls another function called `UseMethod`. That's it.
-
-A **method** is a specialized function that gets chosen by the generic function for a particular type of input. The method is the *implementation*. When the generic function chooses a particular method, this is called **method dispatch**. You can see the methods that are available for the generic function `plot` by typing the following. 
+`UseMethod` performs method dispatch. Which methods can be dispatched to? To see that, use the `methods` function.
 
 ```{r}
 methods(plot)
 ```
 
-All of the methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (`.`), then the name of the class that they are specifically written to be used with. 
+All of these S3 class methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (`.`), then the name of the class that they are specifically written to be used with. 
+
+```{block, type='rmd-caution'}
+R's dot-notation is nothing like Python's dot-notation! In R, functions do not *belong* to types/classes like they do in Python!
+```
+
+Method dispatch works by looking at the `class` attribute of an S3 object argument. An object in R may or may not have a set of  [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are "embellished" versions of a `vector` might (e.g. run `attributes(factor(1:3))`).
+
+```{block, type='rmd-caution'}
+`class` will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with `is.object` first. 
+```
+
+Also, these methods are not *encapsulated* inside a class definition like they are in Python, either. They just look like loose functions--the method definition for a particular class is not defined inside the class. These class methods can be defined just as ordinary functions, out on their own, in whatever file you think is appropriate to define functions in.  
 
 As an example, let's try to `plot` some specific objects. 
 
@@ -274,9 +306,10 @@ class(aDF)
 plot(aDF)
 ```
 
-Because `aDF` has `class` set to `data.frame`, this causes `plot` to try to find a `plot.data.frame` method. If this method was not found, R would attempt to find/use a `plot.default` method. If no default method existed, an error would be thrown. 
+Because `aDF` has its `class` set to `data.frame`, this causes `plot` to try to find a `plot.data.frame` method. If this method was not found, R would attempt to find/use a `plot.default` method. If no default method existed, an error would be thrown. 
 
-Next, we'll play around with objects created with the `ecdf` function. This function computes an *empirical cumulative distribution function*, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input^[It's defined as $\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)$.]
+As another example, we can play around with objects created with the `ecdf` function. This function computes an *empirical cumulative distribution function*, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input^[It's defined as $\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)$.]
+
 
 ```{r, collapse = TRUE, out.width="50%"}
 myECDF <- ecdf(rnorm(100))
@@ -285,14 +318,13 @@ class(myECDF)
 plot(myECDF)
 ```
 
-This is how *inheritance* works in R. It's much simpler than it was in Python! The `ecdf` class inherits from the `stepfun` class, which in turn inherits from the `function` class. When you call `plot(myECDF)`, ultimately `plot.ecdf` is used on this object.
+This is how *inheritance* works in R. The `ecdf` class inherits from the `stepfun` class, which in turn inherits from the `function` class. When you call `plot(myECDF)`, ultimately `plot.ecdf` is used on this object. However, if `plot.ecdf` did not exist, `plot.stepfun` would be tried. S3 inheritance in R is much simpler than Python's inheritance! 
 
-```{block, type='rmd-caution'}
-R's dot-notation is nothing like Python's dot-notation! In R, functions do not *belong* to types/classes like they do in Python!
-```
+### Creating your own S3 objects
 
+Creating an S3 object is very easy, and is a nice way to spruce up some bundled up object that you're returning from a function, say. All you have to do is tag an object by changing its class attribute. Just assign a character `vector` to it!
 
-It is easy to get and set this attribute yourself, so creating an S3 class is as easy as setting a character string. Admittedly, you won't need to do this very often. However, if for instance you are writing an R package, you might have functions return objects of a special/custom S3 class. Here is an example of creating an object of `CoolClass`.
+Here is an example of creating an object of `CoolClass`.
 
 ```{r, collapse = TRUE}
 myThing <- 1:3
@@ -301,9 +333,9 @@ class(myThing) <- "CoolClass"
 attributes(myThing) # also try class(myThing)
 ```
 
-`myThing` is now an instance of `CoolClass`, even though I never defined what a `CoolClass` was ahead of time. If you're used to Python, this should seem very strange. Compared to Python, this approach is very flexible, but also, kind of dangerous, because you can change the `class`es of existing objects.
+`myThing` is now an instance of `CoolClass`, even though I never defined what a `CoolClass` was ahead of time! If you're used to Python, this should seem very strange. Compared to Python, this approach is very flexible, but also, kind of dangerous, because you can change the `class`es of existing objects. You shouldn't do that, but you could if you wanted to.
 
-If you are writing a package, and you are returning results as an S3 object, you can write your own methods associated with these objects. That way, when a user of your package uses typical generic functions, such as `summary`, you can control what interesting things will happen to the user of your package.
+After you start creating your own S3 objects, you can write your own methods associated with these objects. That way, when a user of your code uses typical generic functions, such as `summary`, on your S3 object, you can control what interesting things will happen to the user of your package. Here's an example.
 
 ```{r, collapse = TRUE, echo=FALSE}
 # the user does not see this function
@@ -321,7 +353,6 @@ summary(myThing)
 The `summary` method I wrote for this class is the following. 
 
 ```{r, collapse = TRUE, eval=F}
-# the user does not see this function
 summary.CoolClass <- function(object,...){
   print("No summary available!")
   print("Cool Classes are too cool for summaries!")
@@ -330,6 +361,150 @@ summary.CoolClass <- function(object,...){
 ```
 When writing this, I kept the signature the same as `summary`'s.
 
+
+### S4 objects: The Big Picture
+
+S4 was developed after S3 in TODO. If you look at your search path (`search()`), you will see `package:methods`. That's where all the code you need to do S4 is.
+
+Here are the differences between S3 and S4:
+
+- multiple dispatch
+- class definitions are stricter
+- you can't change an S4 object's class after it's created
+- there's a special `@` operator
+
+### Using pre-made S4 objects
+
+S4 objects are popular in packages hosted on [Bioconductor](https://www.bioconductor.org/), but are used more sparingly than S3 in CRAN packages. One CRAN package that uses S4 is the [Matrix package.](
+https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf) 
+
+slots
+
+```{r, collapse = TRUE}
+library(Matrix)
+M <- Matrix(10 + 1:28, 4, 7)
+isS4(M)
+M
+M@Dim
+```
+
+
+Bioconductor is kind of like CRAN, but has software with a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided [here](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
+
+
+
+https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf
+
+### Creating your own S4 objects
+
+
+
+Here are the key takeaways
+
+- create a new S4 class with `setClass`
+- create a new S4 object with `new`
+- S4 classes have a fixed amount of slots, a name, a fixed inheritance structure
+
+Let's do an example that mirrors the example we did in Python, where we defined a `RunningMean` class and a `RunningCI` class.
+
+```{r, collapse = TRUE}
+setClass("RunningMean",
+         slots = list(n = "integer", 
+                      currentXbar = "numeric"))
+setClass("RunningCI",
+         slots = list(knownVar = "numeric"),
+         contains = "RunningMean")
+```
+
+Here, unlike in S3 class's, we actually have to define a class with `setClass`. New objects can be created with the `new` function after this is accomplished.
+
+```{r, eval=F}
+new("RunningMean", n = 0L, currentXbar = 0)
+new("RunningCI", n = 0L, currentXbar = 0, knownVar = 1.0)
+```
+
+In the parlance of S4, `slots` are a class' data members, and `contains` signals that one class inherits from another (even though it kind of sounds like *composition*).
+
+In the Python example, each class had its own update method. Let's set one of those up. To achieve *polymorphism* we want this `update` method to be generic, and it will work on objects of type "RunningMean" as well as 
+
+Next we want to define an `update` generic function that will work on objects of both types. As well as specialized methods for objects of class "RunningMean" and "RunningCI".
+
+```{r, collapse=TRUE}
+setGeneric("update", function(oldMean, newNum) {
+  standardGeneric("update")
+})
+setMethod("update",
+          c(oldMean = "RunningMean", newNum = "numeric"),
+          function(oldMean, newNum) {
+            oldN <- oldMean@n
+            oldAve <- oldMean@currentXbar
+            newAve <- (oldAve*oldN + newNum)/(oldN + 1)
+            newN <- oldN + 1L
+            return(new("RunningMean", n = newN, currentXbar = newAve))
+          }
+)
+setMethod("update",
+          c(oldMean = "RunningCI", newNum = "numeric"),
+          function(oldMean, newNum) {
+            oldN <- oldMean@n
+            oldAve <- oldMean@currentXbar
+            newAve <- (oldAve*oldN + newNum)/(oldN + 1)
+            newN <- oldN + 1L
+            return(new("RunningCI", n = newN, currentXbar = newAve, knownVar = oldMean@knownVar))
+          }
+)
+```
+
+
+Here's a demonstration of using these two classes that mirrors the example in TODO.
+
+```{r, collapse=TRUE}
+myAve <- new("RunningMean", n = 0L, currentXbar = 0)
+myAve <- update(myAve, 3)
+myAve
+myAve <- update(myAve, 1)
+myAve
+
+myCI <- new("RunningCI", n = 0L, currentXbar = 0, knownVar = 1.0)
+myCI <- update(myCI, 3)
+myCI
+myCI <- update(myCI, 1)
+myCI
+```
+
+It's hard to get something stateful here. 
+
+
+### Reference Classes: The Big Picture
+
+If we wanted to make an example that was more like the Python example, we might use [**Reference Classes.**](https://www.rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses) These are built on top of S4 classes. 
+
+<!-- Now we can create a new object -->
+
+<!-- ```{r, collapse = TRUE} -->
+<!-- myAve <- new("RunningMean", n = 0, currentXbar = 0.0) -->
+<!-- ``` -->
+
+<!-- my_ave = RunningMean() # create running average object -->
+<!-- my_ave.get_current_xbar() # no data yet! -->
+<!-- my_ave.update(1.) # first data point -->
+<!-- my_ave.get_current_xbar() # xbar_1 -->
+<!-- my_ave.update(3.)  # second data point -->
+<!-- my_ave.get_current_xbar()  #xbar_2 -->
+<!-- my_ave.n   # my_ave.n instead of self.n -->
+
+<!-- import numpy as np -->
+<!-- class RunningCI(RunningMean): -->
+<!--   """Updates a running average and gives you a known-variance confidence interval""" -->
+<!--   def __init__(self, known_var): -->
+<!--     super().__init__() -->
+<!--     self.known_var = known_var -->
+<!--   def get_current_interval(self): -->
+<!--     if self.n == 0: -->
+<!--       return None -->
+<!--     else: -->
+<!--       half_width = 1.96 * np.sqrt(self.known_var / self.n)   -->
+<!--       return np.array([self.current_xbar - half_width, self.current_xbar + half_width]) -->
 
 ### Reference Classes
 
