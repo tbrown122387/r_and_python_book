@@ -239,7 +239,7 @@ It's best to learn about them chronologically, in my opinion. S3 classes came fi
 
 ### S3 objects: The Big Picture
 
-With S3 (and S4) objects, calling a method `func` will not look like this.
+With S3 (and S4) objects, calling a method `print` will not look like this.
 
 ```
 my_obj.print(input)
@@ -263,7 +263,7 @@ This works because these "high-level" functions (like `print`), will look at its
 Last, recall that this discussion only applies to S3 objects. Not all objects are S3 objects, though. To find out if an object `x` is an S3 object, use `is.object(x)`.
 
 
-### Using pre-made S3 objects
+### Using S3 objects
 
 Using S3 objects is so easy that you probably don't even know that you're actually using them. You can just try to call functions on objects, look at the output, and if you're happy with it, you're good. However, if you've ever asked yourself: "why does `print` (for another function) do different things all the time?" then this section will be useful for you to read. 
 
@@ -320,7 +320,7 @@ plot(myECDF)
 
 This is how *inheritance* works in R. The `ecdf` class inherits from the `stepfun` class, which in turn inherits from the `function` class. When you call `plot(myECDF)`, ultimately `plot.ecdf` is used on this object. However, if `plot.ecdf` did not exist, `plot.stepfun` would be tried. S3 inheritance in R is much simpler than Python's inheritance! 
 
-### Creating your own S3 objects
+### Creating S3 objects
 
 Creating an S3 object is very easy, and is a nice way to spruce up some bundled up object that you're returning from a function, say. All you have to do is tag an object by changing its class attribute. Just assign a character `vector` to it!
 
@@ -364,7 +364,7 @@ When writing this, I kept the signature the same as `summary`'s.
 
 ### S4 objects: The Big Picture
 
-S4 was developed after S3 in TODO. If you look at your search path (`search()`), you will see `package:methods`. That's where all the code you need to do S4 is.
+S4 was developed after S3 in TODO. If you look at your search path (type `search()`), you will see `package:methods`. That's where all the code you need to do S4 is.
 
 Here are the similarities and differences between S3 and S4:
 
@@ -377,7 +377,7 @@ Here are the similarities and differences between S3 and S4:
 Much more information about S4 classes can be obtained by reading [Chapter 15 in Hadley Wickham's book.](https://adv-r.hadley.nz/s4.html)
 
 
-### Using pre-made S4 objects
+### Using S4 objects
 
 One CRAN package that uses S4 is the [Matrix package.](
 https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf) S4 objects are also extremely popular in packages hosted on [Bioconductor](https://www.bioconductor.org/). 
@@ -394,9 +394,9 @@ M@Dim
 Bioconductor is kind of like CRAN, but its software hqw a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided [here](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
 ```
 
-Inside an S4 object, data members are called **slots**, and they are accessed with the `@` operator (instead of the `$` operator). Objects can be tested if they are S4 with the function `isS4`.
+Inside an S4 object, data members are called **slots**, and they are accessed with the `@` operator (instead of the `$` operator). Objects can be tested if they are S4 with the function `isS4`. Otherwise, they look and feel just like S3 objects. 
 
-### Creating your own S4 objects
+### Creating S4 objects
 
 Here are the key takeaways
 
@@ -404,7 +404,7 @@ Here are the key takeaways
 - create a new S4 object with `new`
 - S4 classes have a fixed amount of slots, a name, a fixed inheritance structure
 
-Let's do an example that mirrors the example we did in Python, where we defined a `RunningMean` class and a `RunningCI` class.
+Let's do an example that resembles the example we did in Python, where we defined a `RunningMean` class and a `RunningCI` class.
 
 ```{r, collapse = TRUE}
 setClass("RunningMean",
@@ -415,18 +415,21 @@ setClass("RunningCI",
          contains = "RunningMean")
 ```
 
-Here, unlike in S3 class's, we actually have to define a class with `setClass`. New objects can be created with the `new` function after this is accomplished.
+Here, unlike in S3 class's, we actually have to define a class with `setClass`. In the parlance of S4, `slots` are a class' data members, and `contains` signals that one class inherits from another (even though it kind of sounds like *composition*).
+
+New objects can be created with the `new` function after this is accomplished.
 
 ```{r, eval=F}
 new("RunningMean", n = 0L, currentXbar = 0)
 new("RunningCI", n = 0L, currentXbar = 0, knownVar = 1.0)
 ```
 
-In the parlance of S4, `slots` are a class' data members, and `contains` signals that one class inherits from another (even though it kind of sounds like *composition*).
 
-In the Python example, each class had its own update method. Let's set one of those up. To achieve *polymorphism* we want this `update` method to be generic, and it will work on objects of type "RunningMean" as well as 
+Let's set one of those up. To achieve we want this `update` method to be generic, and it will work on objects of type "RunningMean" and "RunningCI".
 
-Next we want to define an `update` generic function that will work on objects of both types. As well as specialized methods for objects of class "RunningMean" and "RunningCI".
+Next we want to define an `update` generic function that will work on objects of both types. This is what gives us *polymorphism* . The generic `update` will call specialized methods for objects of class "RunningMean" and "RunningCI". 
+
+Recall that in the Python example, each class had its own update method. Here, we still have a specialized method for each class, but S4 methods don't have to be defined inside the class definition, as we can see below. 
 
 ```{r, collapse=TRUE}
 setGeneric("update", function(oldMean, newNum) {
@@ -471,17 +474,11 @@ myCI <- update(myCI, 1)
 myCI
 ```
 
-It's hard to get something stateful here. 
+This looks more *functional* (TODO link) than the Python example because the `update` function does not change a *mutable* object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this aproach is that the assignment operator (`<-`) signals to us that something is changing. However, there is more copying involved.
 
+The big takeaway here is that S3 and S4 dont' feel like Python's encapsulated OOP. If we wanted to write stateful programs, we might consider using Reference Classes, or R6 classes. 
 
 ### Reference Classes: The Big Picture
-
-
-https://cran.r-project.org/doc/manuals/R-lang.html#Object_002doriented-programming
-
-https://adv-r.hadley.nz/oo.html
-
-
 
 [**Reference Classes.**](https://www.rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses) are built on top of S4 classes, and were released in [late 2010](https://stat.ethz.ch/pipermail/r-announce/2010/000529.html). They feel very different from S3 and S4 classes, and they more closely resemble Python classes, because 
 
@@ -494,9 +491,79 @@ Regarding 1, that means code will look like TODO instead of TODO
 
 Regarding 2, that means functions can have side effects (see TODO).
 
-### R6 Classes
 
-R6 are a more recent class 
+### Creating Reference Classes
+
+Creating reference classes is done with the function `setRefClass`. I create a class called `RunningMean` that has the same functionality in example TODO. 
+
+```{r, collapse=T}
+RunningMeanRC <- setRefClass("RunningMeanRC", 
+                           fields = list(current_xbar = "numeric", 
+                                         n = "integer"),
+                           methods = list(
+                             update = function(new_x){
+                               n <<- n + 1L
+                               current_xbar <<- (current_xbar*(n - 1) + new_x) / n
+                              }))
+```
+
+This tells us a few things. First, data members are called *fields* now. Second, changing class variables is done with the `<<-`. 
+We can use it just as before. 
+
+```{r, collapse = TRUE}
+my_ave <- RunningMeanRC$new(current_xbar=0, n=0L)
+my_ave
+my_ave$update(1.) 
+my_ave$current_xbar
+my_ave$n   
+my_ave$update(3.)  
+my_ave$current_xbar
+my_ave$n   
+```
+
+So far, this looks exactly like 
+
+### Creating R6 Classes
+
+I quickly implement the above example as an R6 class. A more detailed introduction to R6 classes is provided in [the vignette from the package authors.](https://r6.r-lib.org/articles/Introduction.html) 
+
+You'll notice the reappearance of the `self` keyword. R6 classes have a `self` keyword just like in Python. They are similar to reference classes, but there are a few differences:
+
+1. they have [better performance than reference classes](https://r6.r-lib.org/articles/Performance.html)
+2. you don't have to use the `<<-` operator
+
+
+```{r, collapse = TRUE}
+library(R6)
+
+RunningMeanR6 <- R6Class("RunningMeanR6",
+                  public = list(
+                    current_xbar = NULL,
+                    n = NULL,
+                    initialize = function(current_xbar = NA, n = NA) {
+                      self$current_xbar <- current_xbar
+                      self$n <- n
+                    },
+                    update = function(new_x) {
+                      self$n <- self$n + 1L
+                      self$current_xbar <- (self$current_xbar*(self$n - 1) + new_x) / self$n
+                    }
+                  )
+)
+my_r6_ave <- RunningMeanR6$new(current_xbar=0, n=0L)
+my_r6_ave
+my_r6_ave$update(1.) 
+my_r6_ave$current_xbar
+my_r6_ave$n   
+my_r6_ave$update(3.)  
+my_r6_ave$current_xbar
+my_r6_ave$n   
+```
+
+
+a more detailed 
+
+https://adv-r.hadley.nz/r6.html
 
 
 https://adv-r.hadley.nz/r6.html#why-r6
@@ -603,3 +670,4 @@ Here is an example class definition, and then its use. The class  holds onto
 
 4. Come up with a list of R classes that are written in third party libraries, and that you will find useful in the future!
 
+5. Finish the R6 class example by adding a method `get_current_xbar` that takes no arguments, and returns `NULL` if `n` is equal to $0$, and $n$ otherwise. This class should behave exactly the same as the Python class that goes by the same name. 
