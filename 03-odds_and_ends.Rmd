@@ -2,7 +2,7 @@
 
 ## Input and Output
 
-So far we have been created small pieces of data within our scripts. This is primarily for pedagogical purposes. In real life, we can have 
+So far we have been creating small pieces of data within our scripts. This is primarily for pedagogical purposes. In real life, we can have 
 
 - data read in from a data set saved on our machine's hard drive (e.g. `my_data.csv`),
 - data read in from a data base (e.g. MySQL, PostgreSQL, etc.), or
@@ -168,6 +168,78 @@ This is very bad, because now you cannot use the `sum` function that was named i
 
 
 ## Control Flow
+
+### Conditional Logic
+
+We discussed boolean objects in \@ref(basic-types). We used these for
+
+- counting up number of times a condition appeared, and 
+- subsetting.
+
+Another way to use them is to conditionally execute code, depending on whether or truth condition of a boolean. 
+
+#### A Long-Running Example
+
+An example of an algorithm that uses conditional logic is the **accept-reject sampling method** (TODO cite). This is useful for when we want to sample from a target probability density $p(x)$, using another distribution $q(x)$. 
+
+$q(x)$ is probably a distribution that is easy to sample from (e.g. a uniform distirbution has functions `runif` in R and `np.random.uniform` in Python). $p(x)$ is generally more "complicated." One common ways a distribution can be "complicated" is that it can have a **normalizing constant** that is difficult or impossible to solve using calculus. We might write down 
+$$
+p(x) = \frac{f(x)}{\int f(x) dx},
+$$
+and this is guaranteed to be a probability density function as long as $f(x) \ge 0$, but we might have no idea how to solve the denominator. So we have three functions:
+
+* $p(x)$ is our target density:
+    - it's nonnegative and it integrates to $1$
+    - we can't evaluate it at any $x$
+    - we can't sample from it
+* $q(x)$ is our proposal density:
+    - it's nonnegative and it integrates to $1$
+    - we can sample from it
+    - we can evaluate it at any $x$
+* $f(x)$ is the unnormalized target
+    - it doesn't integrate to $1$
+    - but it is nonnegative
+    - we can evaluate it at any $x$ input
+
+
+Let's be specific now. Let's say our target^[This is the density of a $\text{Beta}(3,2)$ random variable, if you're curious.] is 
+$$
+p(x) = 
+\begin{cases}
+\frac{x^2(1-x)}{\int_0^1 x^2(1-x) dx} & 0 < x < 1 \\
+0 & \text{otherwise}
+\end{cases}.
+$$
+The denominator, $\int_0^1 x^2(1-x) dx$, is the target's normalizing constant. You might know how to solve this integral, but let's pretend for the sake of our example that it's too difficult. We want to sample from $p$ while only being able to evaluate (not sample) from its normalized version.
+
+Next, let's choose a uniform distribution for our proposal distribution: 
+$$
+q(x) = 
+\begin{cases}
+1 & 0 < x < 1 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+We can plot all three functions.
+
+```{r, echo=F, out.width='80%'}
+xGrid <- seq(0,1,by=.01)
+f <- function(x) x^2*(1-x)
+plot(xGrid, dbeta(xGrid,3,2), xlab = "x", type = "l", col = "black")
+lines(xGrid, f(xGrid), col = "red")
+lines(xGrid, rep(1, length(xGrid)), col = "green")
+legend("topright", c("p(x)","f(x)", "q(x)"), col = c("black", "red", "green"), pch = 4)
+```
+
+These can be used to conditionally execute code. 
+
+```{r}
+nextSample <- function(oldSample){
+        
+}
+```
+
+
 
 R:
 if
