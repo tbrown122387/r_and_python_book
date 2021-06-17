@@ -30,11 +30,11 @@ In Python, the simplest types we frequently use are `str` (short for string), `i
 print(type('a'), type(1), type(1.3))
 ```
 
-Strings are useful for processing text data such as names of people/places/things and messages (e.g. texts, tweets and emails). If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow (TODO which section).
+Strings are useful for processing text data such as names of people/places/things and messages (e.g. texts, tweets and emails). If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section \@ref(control-flow).
 
 In the next section we will discuss the Numpy library. This library has a [broader collection](https://numpy.org/doc/stable/user/basics.types.html) of basic types. 
 
-#### Type Conversions
+#### Type Conversions in Python
 
 We will often have to convert between types in a Python program. This is called **type conversion**, and it can be either implicitly or explicitly done. 
 For example, `int`s are often implicitly converted to `float`s, so that arithmetic operations work. 
@@ -79,7 +79,7 @@ cat(typeof('a'), typeof(1L), typeof(1.3))
 ```
 
 
-#### Type Conversions
+#### Type Conversions in R
 
 You can explicitly and implicitly convert types in R just as you did in Python. Implicit conversion looks like this.
 
@@ -104,7 +104,7 @@ print(typeof(as.logical(1)))
 
 #### What was the weird thing about R you mentioned?
 
-The basic types of R are a little different than the basic types of Python. R uses the same type to store many elements. It does not have any scalar type. On the other hand, Python has base types for individual elements, and it uses separate types as containers for storing many elements. In R, if you are looking at single number or character string, it's actually a length $1$ `vector`. More information about `vector`s in TODO.
+The basic types of R are a little different than the basic types of Python. R uses the same type to store many elements. It does not have any scalar type. On the other hand, Python has base types for individual elements, and it uses separate types as containers for storing many elements. In R, if you are looking at single number or character string, it's actually a length $1$ `vector`. More information about `vector`s can be found in section \@ref(r-vectors-versus-numpy-arrays-and-pandas-series).
 
 TODO constants versus literals?
 
@@ -113,16 +113,16 @@ TODO constants versus literals?
 -->
 
 
-## R vectors versus `numpy` arrays (and Pandas `Series`)
+## R vectors versus Numpy `array`s (and Pandas `Series`)
 
-This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works
+This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works.
 
 ### Overview of R
 
 I mentioned earlier that R does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
 ). So, whether you want to store one number, or many numbers, you will need a `vector`. 
 
-How do we create one of these? There are many ways. One common is to read in elements from an external data set, perhaps extracting them from a column of a `data.frame`, but we will describe those in section TODO. Here are some examples of generating `vector`s from code instead of external data sets.
+How do we create one of these? There are many ways. One common is to read in elements from an external data set, perhaps extracting them from a column of a `data.frame`, but we will describe those in section \@ref(data-frames). Here are some examples of generating `vector`s from code instead of grabbing them from an external data set after it is read in.
 
 ```{R, collapse = TRUE}
 1:10
@@ -147,7 +147,7 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
-Another choice in Python is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `Pandas` library. The benefit of these is that they play nicely with Pandas data frames (TODO link), and that they have more flexibility with accessing elements by name (cite book https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array).
+Another choice in Python is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `Pandas` library. The benefit of these is that they play nicely with Pandas data frames (more information about Pandas data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( TODO cite book https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array).
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -284,9 +284,9 @@ a
 
 R has `NULL`,  `NaN`, and `NA`. Python has `None`, `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
 
-R's `NULL` and Python's `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more on functions in TODO) anything meaningful. 
+R's `NULL` and Python's `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more information on functions can be found in section \@ref(user-defined-functions-in-r-and-python)) anything meaningful. 
 
-In R, for example, if a function fails to return anything, then it returns a `NULL`. 
+In R, for example, if a function fails to return anything, then it actually returns a `NULL`. 
 
 ```{r, collapse = TRUE, warning=TRUE}
 NULL==FALSE
@@ -326,7 +326,7 @@ np.inf/np.inf
 np.isnan(np.nan)
 ```
 
-"NA" is short for "not available." Missing data is a fact of life in data science. Observations are often missing in data sets, or introduced after joining/merging data sets together (more on this in chapter TODO). There are many techniques designed to estimate quantities in the presence of missing data. When you code them up, you'll need to make sure you deal with `NA`s properly. 
+"NA" is short for "not available." Missing data is a fact of life in data science. Observations are often missing in data sets, or introduced after joining/merging data sets together (more on this in section \@ref(merging-or-joining-data-sets)). There are many techniques designed to estimate quantities in the presence of missing data. When you code them up, you'll need to make sure you deal with `NA`s properly. 
 
 ```{r, collapse = TRUE}
 # in R
@@ -339,7 +339,7 @@ typeof(NA)
 
 Unfortunately Pythons support of an `NA`-like object is more limited. There is no `NA` object in base Python. And often `NaN`s will appear in place of an `NA`. There are a few useful tools, though. The Numpy library offers ["masked arrays"](https://numpy.org/devdocs/reference/maskedarray.html), for one. 
 
-Also, as of version `1.0.0`, the [Pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." We will discuss `Pandas` in chapter TODO.
+Also, as of version `1.0.0`, the [Pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." 
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -365,7 +365,7 @@ Sometimes you want a collection of elements that are all the same type, but you 
 
 ### In Python
 
-In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). Each array will come with an enormous amount of [methods](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods) and [attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes) (more on OOP TODO) attached to it. A few are demonstrated below. 
+In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). Each array will come with an enormous amount of [methods](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods) and [attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes) (more on object-oriented program in chapter \@ref(an-introduction-to-object-oriented-programming)) attached to it. A few are demonstrated below. 
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -415,9 +415,9 @@ results[['terms']]
 
 ### Lists In Python
 
-[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R `list`s. 
+[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R's `list`s. 
 
-Unlike in R, you can't name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) or Pandas `Series` objects (TODO more about this earlier).
+Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) (see section \@ref(dictionaries-in-python)) or Pandas `Series` objects (see section \@ref(overview-of-python)).
 
 From the example below, you can see that we've been introduced to lists already. We have been constructing Numpy arrays from them.
 
@@ -425,9 +425,30 @@ From the example below, you can see that we've been introduced to lists already.
 another_list = [np.array([1,2,3]), "May 5th, 2021", True, [42,42]]
 another_list[2]
 ```
+
 ### Dictionaries In Python
 
-TODO
+[**Dictionaries**](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) in Python provide a container of key-value pairs. The keys are *unique*, and they must be *immutable*. `string`s are the most common key type, but `int`s can be used as well. 
+
+Here is an example of creating a `dict` that stores the current price of a few popular cryptocurrencies. Accessing an individual element's value using its key is dont with the square bracket operator (i.e. `[]`), and deleting elements is done with the `del` keyword.
+
+```{python, collapse = TRUE}
+current_crypto_prices = {'BTC': 38657.14, 'ETH': 2386.54, 'DOGE': .308122}
+current_crypto_prices['DOGE'] # get the current price of Dogecoin
+del current_crypto_prices['BTC'] # remove the current price of Bitcoin
+current_crypto_prices.keys()
+current_crypto_prices.values()
+```
+
+You can also create `dict`s using **dictionary comprehensions** 
+
+```{python, collapse= TRUE}
+incr_cryptos = {key:val*1.1 for (key,val) in current_crypto_prices.items()}
+incr_cryptos
+```
+
+
+
 
 ## User-defined functions in R and Python
 
@@ -1051,11 +1072,23 @@ nrow(irisData)
 ncol(irisData)
 ```
 
+```{block, type='rmd-caution'}
+Do not rely on the default arguments of `read.csv` or `read.table`! After you read in a data frame, always check the first few rows to make sure that 
+
+1. The number of columns is correct because the correct column *separator* was used (c.f. `sep=`),
+2. column names were parsed correctly, if there were some in the raw text file,
+3. the first row of data wasn't used as a column name sequence, if there weren't column names in the text file, and
+4. the last few rows aren't reading in empty spaces
+5. character columns are read in correctly (c.f. `stringsAsFactors=`), and
+6. special characters signifying missing data were correctly identified (c.f. `na.strings=`).
+```
+
+
 There are some exceptions, but most data sets can be stored as a `data.frame`. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation. 
 
-[A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. This is one of the biggest differences between data frames and `matrix`s. They are both two-dimensional, but a `matrix` needs elements to be all the same type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. 
+[A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. This is one of the biggest differences between data frames and `matrix`s. They are both two-dimensional, but a `matrix` needs elements to be all the same type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. In other words, the `data.frame` is not a "*ragged*" list.
 
-Often times you will need to extract pieces of information from a `data.frame`. This can be done in many ways. If you the columns have names, you can use the `$` operator to access a single column. You can also use the `[` operator to access multiple columns by name.  
+Often times you will need to extract pieces of information from a `data.frame`. This can be done in many ways. If the columns have names, you can use the `$` operator to access a single column. Accessing a single column might be followed up by creating a new vector. You can also use the `[` operator to access multiple columns by name.  
 
 ```{r, collapse=TRUE}
 colnames(irisData) <- c("sepal.length", "sepal.width", "petal.length","petal.width", "species")
@@ -1353,3 +1386,5 @@ e. Plot the intrinsic value of a sold put spread with strikes $110$ and $120$. W
 13. setter methods in R
 
 14. Python functions that have return types specified
+
+15. log-sum-exp trick problem

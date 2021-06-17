@@ -266,6 +266,21 @@ Loop tips:
 4. Don't hardcode variables. In the example above, the  `myLength` or `my_length` variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you *did* hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes. Be kind to yourself and don't give yourself extra work! 
 ```
 
+Python provides an alternative way to construct lists similar to the one we constructed in the above example. They are called [**list comprehensions**](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions). You can incorporate iteration and conditional logic in one line of code. 
+
+```{python, collapse = TRUE}
+[3*i for i in range(10) if i%2 == 0]
+```
+You might also have a look at [*generator expressions*](https://www.python.org/dev/peps/pep-0289/) and [*dictionary comprehensions*](https://www.python.org/dev/peps/pep-0274/).
+
+R can come close to replicating the above behavior with vectorization, but the conditional part is hard to achieve without subsetting.
+
+```{r, collapse = TRUE}
+3*seq(0,9)[seq(0,9)%%2 == 0]
+```
+
+
+
 
 ### A Longer Example
 
@@ -298,6 +313,8 @@ Below is one step of the accept-reject algorithm.
 5. Otherwise, return nothing
 
 ******
+
+Multiple samples will be required, so this process needs to be iterated many times. There are two ways to do this. If you want to iterate a fixed number of times, you can use a `for` loop. However, in that case, you will end up with a random number of samples. On the other hand, if you want a nonrandom number of samples, you will probably want a `while` loop. This is the approach the example below takes. The `while` loop will continue iterating until a condition is false. In our case, we want to loop until we receive the total number of samples we requested. 
 
 #### A Specific Example
 
@@ -354,7 +371,7 @@ def sample_from_target(num_times):
     """sample num_times from the target distribution"""
     samps = []
     while len(samps) < num_times:
-        potential_samp = attempt_ar_samp()
+        potential_samp = attempt_one_samp()
         if potential_samp is not None:
             samps.append(potential_samp)
     return samps
@@ -365,11 +382,14 @@ def sample_from_target(num_times):
 2. We are following the [Python style guide](https://www.python.org/dev/peps/pep-0008/#other-recommendations) and using the `is not` keyword to check if something is `None` 
 
 
-R:
-if
-if/else
-if/else if/else
-for loops
+In chapter TODO, we'll show you the code that you can use to generate the plot below. 
+```{r, collapse = TRUE, echo=F}
+samps <- rbeta(10000,3,2)
+xGrid <- seq(min(samps), max(samps), length.out = 100)
+hist(samps, main = "", xlab = "x", probability = T)
+lines(xGrid, dbeta(xGrid,3,2), type = "l", col = "red")
+```
+
 
 Python:
 if 
@@ -378,7 +398,110 @@ if/elif/else
 for loops
 list comprehensions
 
+
+
 ## Reshaping and Combining Data Sets
+
+
+### Ordering and Sorting Data
+
+Sorting a data set, in ascending order, say, is a common task. You might need to do it because 
+
+1. ordering and ranking is commonly done in *nonparametric statistics*, 
+2. you want to inspect the most "extreme" observations in a data set, 
+3. it's a pre-processing step before generating visualizations.
+
+In R, it all starts with `vector`s. There are two common functions you should know: `sort` and `order`. `sort` returns the sorted *data*, while `order` returns the *order indexes*. 
+
+```{r, collapse = TRUE}
+sillyData <- rnorm(5)
+print(sillyData)
+sort(sillyData)
+order(sillyData)
+```
+
+`order` is useful if you're sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the `MSRP` (a `character` vector) a little first. We use the function `gsub` to find patterns in the text, and replace them with the empty string. 
+
+```{r}
+carData <- read.csv("data/cars.csv")
+noDollarSignMSRP <- gsub("$", "", carData$MSRP, fixed = TRUE)
+carData$cleanMSRP <- as.numeric(gsub(",", "", noDollarSignMSRP, fixed = TRUE))
+rowIndices <- order(carData$cleanMSRP, decreasing = TRUE)[1:5]
+carData[rowIndices,c("Make", "Model", "MSRP", "cleanMSRP")]
+```
+
+In Python, Numpy has [`np.argsort`](https://numpy.org/doc/stable/reference/generated/numpy.argsort.html) and [`np.sort`](https://numpy.org/doc/stable/reference/generated/numpy.sort.html).
+
+```{python, collapse = TRUE}
+import numpy as np
+silly_data = np.random.normal(size=5)
+print(silly_data)
+np.sort(silly_data)
+np.argsort(silly_data)
+```
+
+For Pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation. This is discussed more in TODO.
+
+```{python, collapse = TRUE}
+import pandas as pd
+car_data = pd.read_csv("data/cars.csv")
+car_data['no_dlr_msrp'] = car_data['MSRP'].str.replace("$", "", regex = False)
+car_data['clean_MSRP'] = car_data['no_dlr_msrp'].str.replace(",","").astype(float)
+car_data = car_data.sort_values(by='clean_MSRP', ascending = False)
+car_data[["Make", "Model", "MSRP", "clean_MSRP"]].head(5)
+```
+
+Pandas `DataFrame`s and `Series` have a [`replace`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series` column before we used it. After the string was processed, we converted it to a `Series` of `float`s with the `astype` method. 
+
+Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e. raw subsetting by row indexes), but there is a built in method called `sort_values` that will do it for us. 
+
+
+### Stacking Data Sets and Placing them Shoulder to Shoulder
+
+
+Stacking data sets on top of each other is a common task. You might need to do it if 
+
+1. if you receive new data, and you need to add it to a data frame, 
+2. you recombine data sets (e.g. recombine a train/test split), or 
+3 some linear algebra routines. 
+
+In R, this can be done with `rbind` (short for "row bind")
+
+```{r, collapse = TRUE}
+realEstate <- read.csv("data/albemarle_real_estate.csv")
+train <- realEstate[-1,]
+test <- realEstate[1,]
+head(rbind(test, train))
+sum(rbind(test, train) != realEstate)
+```
+
+`rbind` also works with `matrix` objects.
+
+```{r, collapse=TRUE}
+rbind(matrix(1,nrow = 2, ncol = 3), 
+      matrix(2,nrow = 2, ncol = 3))
+```
+
+
+In Python, you can stack data frames with [`pd.concat`](https://www.google.com/search?client=safari&rls=en&q=pandas+concat&ie=UTF-8&oe=UTF-8). It has a lot of options, so feel free to peruse those. You can also replace the call to `pd.concat` below with [`test.append(train)`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html). 
+
+
+```{python, collapse = TRUE}
+import pandas as pd
+real_estate = pd.read_csv("data/albemarle_real_estate.csv")
+train = real_estate.iloc[1:,]
+test = real_estate.iloc[[0],] # need the extra brackets!
+pd.concat([test,train], axis=0).head() # also 
+(pd.concat([test,train], axis=0) != real_estate).sum().sum()
+```
+
+Take note of the extra square brackets when we create `test`. If you use `real_estate.iloc[0,]` instead, it will return a `Series` with all the elements coerced to the same type, and this won't `pd.concat` properly with the rest of the data! 
+
+### Merging or Joining Data Sets
+
+
+
+Sometimes we want to stack one data set on top of another. For instance, if we have a multvariate time series, and later on we receive another piece of information, we might need to do this. 
 
 R:
 cbind
