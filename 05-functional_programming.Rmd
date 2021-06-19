@@ -1,10 +1,97 @@
 # Functional Programming
 
-As aspiring data scientists and statisticians, we tend to write code at a higher level than someone that writes code in, say, C. This chapter provides an overview of common patterns.
+Even though this book only discusses one of our languages, the motivation for **functional programming** in both R and Python is clearly in [Advanced R](https://adv-r.hadley.nz/fp.html):
 
-## Higher-Order  Programming in R
+> A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.
 
-All else constant, writing less code is better than writing more code. If you have to change or fix anything, there's less work to do. Here are a few examples in 
+This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it's hard to give a one-line definition that is also succinct. Also, even with a definition, it's not immediately obvious why the pieces of that definition would be conducive to the above goals. 
+
+Here is my definition: 
+
+- a functional programming style is a style of programming that favors using functions that are both *first-class* and *pure*. 
+
+Neither R nor Python is a 100% pure functional language. So for us, it's a style that we can choose to let us guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use elements discussed in \@ref(an-introduction-to-object-oriented-programming). Some people unilaterally prefer one to the other, but others prefer to decide which to use depending on the task at hand. 
+
+1. **First class functions** are functions that can be passed as arguments to other functions, can be returned from other functions, and can be assigned to variables or stored in data structures. TODO quote. 
+
+Functions in both R and Python are first class. Many of the examples we discuss in this chapter would not exist if they were not. 
+
+2. **Pure functions** return the same output if they are given the same input, and they do not produce **side-effects**. 
+
+Side-effects are (more permanent) changes made to non-temporary variables. If your function refers to or modifies global variables, or if it modifies arguments passed in, then it is more difficult to understand. As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable 
+
+a.) by itself in isolation, or 
+
+b.) without knowing how many times it is called. 
+
+Regarding a.), we discussed examples where changing the value of a single global variable can completely change the behavior of an entire program (not just a single function!). Regarding b.) a variable has **referential transparency** if it can be replaced with a single value without changing the program's behavior. 
+
+3. **Recursion versus Iteration**
+
+4. **Lazy versus Strict Evaluation**
+
+
+
+```{block, type='rmd-details'}
+imperative versus procedural
+```
+
+
+
+#### `*apply` functions in R
+
+There are several functions in R whose names end in "apply". The ones we discuss are `sapply`, `lapply`, `apply` and `tapply`. The second argument of these functions is itself a function. This is possible because R has "first-class functions."
+
+
+```{r, echo=F}
+myDFrows <- 10
+myDFcols <- 100
+myDF <- data.frame(matrix(rnorm(myDFrows*myDFcols), ncol = myDFcols))
+```
+
+Suppose we have a `data.frame` that has `r nrow(myDF)` rows and `r ncol(myDF)` columns. What if we want to take the mean of each column?
+
+An amateurish way to do this would be something like the following.
+
+```{r, eval=F}
+myFirstMean <- mean(myDF[,1])
+mySecondMean <- mean(myDF[,2])
+myThirdMean <- mean(myDF[,3])
+# so on and so forth
+```
+
+You need one line of code for each column in this data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns...terrible things happen. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.  TODO cite DRY
+
+Instead, prefer the use of `sapply` in this situation. The "s" in `sapply` is stands for "simplified." In this bit of code `mean` is called on each column of th data frame. `sapply` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
+
+```{r, collapse=TRUE}
+myMeans <- sapply(myDF, mean)
+head(myMeans)
+```
+
+Each call to `mean` returns a `double` `vector` of length $1$. This is necessary if you want to collect all the results into a `vector`--remember, all elements of a `vector` have to have the same type. To get the same behavior, you might also consider using `vapply(myDF, mean, numeric(1))`.
+
+In the above case, "simplify" referred to how one-hundred length-$1$ vectors were simplified into one length-$100$ vector. However, "simplified" does not necessarily imply that all elements will be stored in a vector. Consider the `summary` function, which returns a `double` `vector` of length $6$. In this case, one-hundred length-$6$ vectors were simplified into one $6 \times 100$ matrix.
+
+```{r, collapse = TRUE}
+mySummaries <- sapply(myDF, summary)
+is.matrix(mySummaries)
+dim(mySummaries)
+```
+
+
+For functions that don't return amenable types that fit into a `vector`, `matrix` or `array`, they might need to be stored in `list`. In this situation, you would need `lapply`. The "l" in `lapply` stands for "list". `lapply` always returns a `list` of the same length as the `input`.
+
+```{r, collapse = TRUE}
+regress <- function(y){ lm(y ~ 1) }
+myRegs <- lapply(myDF, regress)
+length(myRegs)
+class(myRegs[[1]])
+summary(myRegs[[12]])
+```
+
+This is a list 
+
 
 
 #### `*apply` functions in R
