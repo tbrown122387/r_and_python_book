@@ -1,10 +1,12 @@
 # Functional Programming
 
+## FP Background
+
 Even though this book only discusses one of our languages, the motivation for **functional programming** in both R and Python is clearly in [Advanced R](https://adv-r.hadley.nz/fp.html):
 
 > A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.
 
-This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it's hard to give a one-line definition that is also succinct. Also, even with a definition, it's not immediately obvious why the pieces of that definition would be conducive to the above goals. 
+This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it's hard to give a one-line definition that is also comprehensive. Even with a definition, it isn't immediately obvious why the pieces of that definition would be conducive to the above goals. 
 
 Here is my definition: 
 
@@ -18,11 +20,11 @@ Functions in both R and Python are first class. Many of the examples we discuss 
 
 2. **Pure functions** return the same output if they are given the same input, and they do not produce **side-effects**. 
 
-Side-effects are (more permanent) changes made to non-temporary variables. If your function refers to or modifies global variables, or if it modifies arguments passed in, then it is more difficult to understand. As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable 
+Side-effects are changes made to non-temporary variables, to the "state" of the program. If your function refers to or modifies global variables, or if it modifies arguments passed in, then it is more difficult to understand. As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable 
 
-a.) by itself in isolation, or 
+|   a.) by itself in isolation, or 
 
-b.) without knowing how many times it is called. 
+|   b.) without knowing how many times it is called. 
 
 Regarding a.), we discussed examples where changing the value of a single global variable can completely change the behavior of an entire program (not just a single function!). Regarding b.) a variable has **referential transparency** if it can be replaced with a single value without changing the program's behavior. 
 
@@ -38,9 +40,9 @@ imperative versus procedural
 
 
 
-#### `*apply` functions in R
+## `*apply` functions in R
 
-There are several functions in R whose names end in "apply". The ones we discuss are `sapply`, `lapply`, `apply` and `tapply`. The second argument of these functions is itself a function. This is possible because R has "first-class functions."
+There are several functions in R whose names end in "apply". The ones we discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. This is possible because R has first-class functions.
 
 
 ```{r, echo=F}
@@ -60,9 +62,9 @@ myThirdMean <- mean(myDF[,3])
 # so on and so forth
 ```
 
-You need one line of code for each column in this data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns...terrible things happen. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.  TODO cite DRY
+You need one line of code for each column in this data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.  TODO cite DRY
 
-Instead, prefer the use of `sapply` in this situation. The "s" in `sapply` is stands for "simplified." In this bit of code `mean` is called on each column of th data frame. `sapply` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
+Instead, prefer the use of `sapply` in this situation. The "s" in `sapply` stands for "simplified." In this bit of code `mean` is called on each column of th data frame. `sapply` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
 
 ```{r, collapse=TRUE}
 myMeans <- sapply(myDF, mean)
@@ -90,15 +92,126 @@ class(myRegs[[1]])
 summary(myRegs[[12]])
 ```
 
-This is a list 
+I use `sapply` and `lapply` the most, personally. The next most common function I use is `apply`. I use it to apply functions to *rows* instead of columns, although, it can also apply functions over columns, just as the other functions we discussed can. 
+
+```{r, collapse = TRUE}
+dim(myDF)
+apply(myDF, 1, mean)
+```
+
+`tapply` can be very handy when you need it. First, we've alluded to the definition before in TODO, but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply`. Rather, I let `tapply` construct the ragged array for me. The first argument it expects is "typically vector-like", while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
+
+If I wanted the average home price for each city, I could use something like this.
+```{r, collapse = TRUE}
+albRealEstate <- read.csv("data/albemarle_real_estate.csv")
+head(albRealEstate)
+unique(albRealEstate$City)
+tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)
+```
+You might be wondering why we put `albRealEstate$City` into a `list`. That seems kind of unnecessary. This is because `tapply` can be used with multiple `factor`s--this will break down the `vector` input into a finer partition. The second argument must be one object, though, so all of these `factor`s must be collected into a `list`. The following code produces a "pivot table."
+
+```{r, collapse = TRUE}
+tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Condition), mean)
+```
+
+The [documentation of `mapply`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply` is a multivariate version of `sapply`. `sapply` worked with univariate functions: the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply`. 
+
+Here is a short example. Regarding the `n=` argument of `rnorm`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample a.) three times from a mean $0$ normal, b.) twice from a mean $100$ normal, and c.) once from a mean $-100$ normal distribution.
+
+```{r}
+rnorm(n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
+mapply(rnorm, n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
+```
+
+
+Consider another less contrived example. Suppose we want to plot a bivariate Gaussian distribution. 
+
+$$
+f(x,y) = \frac{1}{2 \pi}  \exp\left[ -\frac{x ^2 + y^2}{2}     \right]
+$$
+The random elements $x$ and $y$, in this particular case, are uncorrelated, each have unit variance, and zero mean. This density is a surface in 3-d dimensional space. To visualize this, we would need to
+
+1. generate a "grid" of points in $\mathbb{R}^2$, 
+2. evaluate our function on each point, and then
+3. call some plotting function that takes this all and makes a pretty picture.
+
+There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use `mapply`, we need the function to take two arguments.
+
+```{r, collapse = TRUE}
+fTwoArgs <- function(x,y){
+  exp(-.5*(x^2 + y^2)) / 2 / pi
+}
+```
+
+We can construct every possible point on a grid with the `expand.grid` function.
+
+```{r, collapse = TRUE}
+xGrid <- seq(-3,3,.1)
+yGrid <- seq(-3,3,.1)
+grid <- expand.grid(xGrid, yGrid)
+head(grid)
+```
+
+`mapply` would take `fTwoArgs`, and effectively call it on every row pair. The pairs do not need to be organized in a `data.frame`, though.
+
+```{r, collapse=TRUE}
+funcOut1 <- mapply(fTwoArgs, grid[,1], grid[,2])
+head(funcOut1)
+rectangularOutput <- matrix(funcOut1, ncol = length(xGrid))
+persp(xGrid, yGrid, rectangularOutput, 
+      zlab = "f(x,y)", xlab = "x", ylab = "y")
+```
+
+If you prefer using `apply`, that is also possible, but you would need to rewrite the function to take one (length-two) argument. 
+
+```{r, collapse=T}
+fOneArg <- function(vec){
+  exp(-sum(vec^2)/2)/2/pi
+} 
+funcOut2 <- apply(grid, 1, fOneArg)
+moreRectOut <- matrix(funcOut2, ncol = length(xGrid))
+contour(xGrid, yGrid, moreRectOut, xlab = "x", ylab = "y")
+```
 
 
 
-#### `*apply` functions in R
+## Apply functions over Numpy arrays
 
-`lapply`, `sapply`, `apply`, `map`, 
+Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate programming in a functional style. 
 
-Optimization example
+https://numpy.org/doc/stable/reference/generated/numpy.apply_over_axes.html
+https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html
+
+```{python}
+import numpy as np
+my_rows = 10
+my_cols = 100
+my_array = np.random.normal(size=(my_rows,my_cols))
+np.apply_along_axis(np.average, 0, my_array).shape # along 
+np.apply_along_axis(np.average, 1, my_array).shape
+np.apply_over_axes(np.average, my_array, 0).shape # along 
+np.apply_over_axes(np.average, my_array, 1).shape
+```
+
+Pandas `DataFrame`s have an [`.apply` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply` in R. 
+
+```{python}
+import pandas as pd
+import numpy as np
+my_rows = 10
+my_cols = 100
+
+#myDF <- data.frame(matrix(rnorm(myDFrows*myDFcols), ncol = myDFcols))
+#np.random.normal(size=)
+#alb_real_est = pd.read_csv("data/albemarle_real_estate.csv")
+#alb_real_est.apply(len, axis=1)
+```
+
+
+### Exercises
+
+
+Optimization example 
 
 Importance sampling example
 
