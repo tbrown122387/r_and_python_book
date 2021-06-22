@@ -40,7 +40,7 @@ imperative versus procedural
 
 
 
-## `*apply` functions in R
+## Apply Functions in R
 
 There are several functions in R whose names end in "apply". The ones we discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. This is possible because R has first-class functions.
 
@@ -114,6 +114,8 @@ You might be wondering why we put `albRealEstate$City` into a `list`. That seems
 tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Condition), mean)
 ```
 
+For situations where TODO, you also have `by` and `aggregate`.
+
 The [documentation of `mapply`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply` is a multivariate version of `sapply`. `sapply` worked with univariate functions: the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply`. 
 
 Here is a short example. Regarding the `n=` argument of `rnorm`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample a.) three times from a mean $0$ normal, b.) twice from a mean $100$ normal, and c.) once from a mean $-100$ normal distribution.
@@ -175,41 +177,95 @@ contour(xGrid, yGrid, moreRectOut, xlab = "x", ylab = "y")
 
 
 
-## Apply functions over Numpy arrays
+## Selected Apply Functions in Python
 
-Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate programming in a functional style. 
 
-https://numpy.org/doc/stable/reference/generated/numpy.apply_over_axes.html
-https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html
+Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate working with `np.ndarray`s in a functional style. For example, [`np.apply_along_axis`](https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html) is similar to R's `apply`. `apply` had a `MARGIN` argument (`1` sums rows, `2` sums columns), whereas this function has a `axis=` argument (`0` sums columns, `1` sums rows). 
 
-```{python}
+```{python, collapse = TRUE}
 import numpy as np
-my_rows = 10
-my_cols = 100
-my_array = np.random.normal(size=(my_rows,my_cols))
-np.apply_along_axis(np.average, 0, my_array).shape # along 
-np.apply_along_axis(np.average, 1, my_array).shape
-np.apply_over_axes(np.average, my_array, 0).shape # along 
-np.apply_over_axes(np.average, my_array, 1).shape
+my_array = np.arange(6).reshape((2,3))
+my_array
+np.apply_along_axis(sum, 0, my_array) # summing columns
+np.apply_along_axis(sum, 1, my_array) # summing rows
 ```
 
-Pandas `DataFrame`s have an [`.apply` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply` in R. 
 
-```{python}
+
+```{python, collapse = TRUE}
+my_array = np.random.normal(size=(10,1000))
+np.apply_along_axis(sum, 0, my_array).shape 
+np.apply_along_axis(sum, 1, my_array).shape
+```
+
+Pandas `DataFrame`s have an [`.apply` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply` in R,^[You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as `DataFrame` methods. For instance, `.mean` would allow you to do something like `my_df.mean()`.] but again, just like the above function, you have to think about an `axis=` argument instead of a `MARGIN=` argument. 
+
+```{python, collapse = TRUE}
 import pandas as pd
-import numpy as np
-my_rows = 10
-my_cols = 100
-
-#myDF <- data.frame(matrix(rnorm(myDFrows*myDFcols), ncol = myDFcols))
-#np.random.normal(size=)
-#alb_real_est = pd.read_csv("data/albemarle_real_estate.csv")
-#alb_real_est.apply(len, axis=1)
+alb_real_est = pd.read_csv("data/albemarle_real_estate.csv")
+alb_real_est.shape
+alb_real_est.apply(len, axis=0) # length of columns
+type(alb_real_est.apply(len, axis=1)) # length of rows
 ```
+
+Another thing to keep in mind is that `DataFrame`s, unlike `ndarray`s, don't have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before `.apply`ing a function to rows. Here is an example of computing each property's "score". 
+
+```{python, collapse = TRUE}
+import pandas as pd
+# alb_real_est.apply(sum, axis=1) # can't add letters to numbers!
+def get_prop_score(row):
+  return 2*row[0] + 3*row[1]
+alb_real_est['Score'] = alb_real_est[['FinSqFt','LotSize']].apply(get_prop_score, 1)
+alb_real_est[['FinSqFt','LotSize','Score']].head(2)
+```
+
+`.apply` also works with more than one function at a time.
+
+```{python, collapse = TRUE}
+alb_real_est[['FinSqFt','LotSize']].apply([sum, len])
+```
+
+If you do not want to waste two lines defining a function with `def`, you can use an anonymous (unnamed) [**lambda function**](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions). Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
+
+```{python, collapse = TRUE}
+alb_real_est[['FinSqFt','LotSize']].apply(lambda row : sum(row*[2,3]), 1)[:4]
+```
+
+
+If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with [`.applymap`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap).
+
+```{python, collapse = TRUE}
+alb_real_est[['FinSqFt','LotSize']].applymap(lambda e : e + 1).head(2)
+```
+
+
+Last, we have a [`.groupby`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html) method, which can be used to mirror the behavior of R's `tapply`, `aggregate` or `by`. It can take the `DataFrame` it belongs to, and group its rows into multiple sub-`DataFrame`s. The collection of sub-`DataFrames` has a lot of the same methods that an individual `DataFrame` has (e.g. the subsetting operators,  and the `.apply` method), which can all be used in a second step of calculating things on each sub-`DataFrame`.
+
+```{python, collapse = TRUE}
+type(alb_real_est.groupby(['City']))
+type(alb_real_est.groupby(['City'])['TotalValue'])
+```
+
+Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which `City` they are in, extracts the `TotalValue` column in each sub-`DataFrame`, and then `.apply`s the `np.average` function on the sole column found in each sub-`DataFrame`. The second applys a lambda function to each sub-`DataFrame` directly. 
+
+```{python, collapse = TRUE}
+alb_real_est.groupby(['City'])['TotalValue'].apply(np.average)
+alb_real_est.groupby(['City']).apply(lambda df : np.average(df['TotalValue']))
+```
+
+More tips on this programming pattern can be found [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html).
+
+
+## Reduce
+
+Both R and Python have reduce functions. R has `Reduce`, while Python has `reduce`.
+
+
 
 
 ### Exercises
 
+.apply with weird predicate function
 
 Optimization example 
 
