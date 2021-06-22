@@ -2,7 +2,7 @@
 
 ### Overview 
 
-Click here to read the textbook for free online.
+Click [here](https://tbrown122387.github.io/r_and_python_book/) to read the textbook for free online.
 
 This is all the code associated with the text--the book is built with [bookdown](https://bookdown.org). 
 
