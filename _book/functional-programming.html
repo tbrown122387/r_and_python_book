@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: a Side By Side Approach</title>
+  <meta name="description" content="Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: a Side By Side Approach" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: a Side By Side Approach" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="tbrown122387/r_and_python_book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: a Side By Side Approach" />
+  
+  
+  
+
+<meta name="author" content="Taylor R. Brown" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="an-introduction-to-object-oriented-programming.html"/>
+
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to R and Python For Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-sample-course"><i class="fa fa-check"></i>A Sample Course</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#automatic-grading"><i class="fa fa-check"></i>Automatic Grading</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#licensing"><i class="fa fa-check"></i>Licensing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-the-required-software"><i class="fa fa-check"></i>Installing the Required Software</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-python-by-installing-anaconda"><i class="fa fa-check"></i>Installing Python by Installing Anaconda</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#hello-world-in-r"><i class="fa fa-check"></i><b>1.1</b> Hello World in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#hello-world-in-python"><i class="fa fa-check"></i><b>1.2</b> Hello World in Python</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#reading-documentation"><i class="fa fa-check"></i><b>1.3.1</b> Reading Documentation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#understanding-file-paths"><i class="fa fa-check"></i><b>1.3.2</b> Understanding File Paths</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>2</b> Data Types</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-types.html"><a href="data-types.html#basic-types"><i class="fa fa-check"></i><b>2.1</b> Basic Types</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-types.html"><a href="data-types.html#in-python-1"><i class="fa fa-check"></i><b>2.1.1</b> In Python</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-types.html"><a href="data-types.html#in-r-1"><i class="fa fa-check"></i><b>2.1.2</b> In R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-types.html"><a href="data-types.html#r-vectors-versus-numpy-arrays-and-pandas-series"><i class="fa fa-check"></i><b>2.2</b> R vectors versus Numpy <code>array</code>s (and Pandas <code>Series</code>)</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-types.html"><a href="data-types.html#overview-of-r"><i class="fa fa-check"></i><b>2.2.1</b> Overview of R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-types.html"><a href="data-types.html#overview-of-python"><i class="fa fa-check"></i><b>2.2.2</b> Overview of Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-types.html"><a href="data-types.html#vectorization-in-r"><i class="fa fa-check"></i><b>2.2.3</b> Vectorization in R</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-types.html"><a href="data-types.html#vectorization-in-python"><i class="fa fa-check"></i><b>2.2.4</b> Vectorization in Python</a></li>
+<li class="chapter" data-level="2.2.5" data-path="data-types.html"><a href="data-types.html#indexing-vectors-in-r"><i class="fa fa-check"></i><b>2.2.5</b> Indexing <code>vector</code>s in R</a></li>
+<li class="chapter" data-level="2.2.6" data-path="data-types.html"><a href="data-types.html#indexing-numpy-arrays"><i class="fa fa-check"></i><b>2.2.6</b> Indexing Numpy arrays</a></li>
+<li class="chapter" data-level="2.2.7" data-path="data-types.html"><a href="data-types.html#some-gotchas"><i class="fa fa-check"></i><b>2.2.7</b> Some Gotchas</a></li>
+<li class="chapter" data-level="2.2.8" data-path="data-types.html"><a href="data-types.html#how-do-r-and-python-handle-missing-values"><i class="fa fa-check"></i><b>2.2.8</b> How do R and Python handle missing values?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-types.html"><a href="data-types.html#numpys-ndarrays-versus-rs-matrices-and-arrays"><i class="fa fa-check"></i><b>2.3</b> Numpy’s <code>ndarray</code>s versus R’s matrices and arrays</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-types.html"><a href="data-types.html#in-python-2"><i class="fa fa-check"></i><b>2.3.1</b> In Python</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-types.html"><a href="data-types.html#in-r-2"><i class="fa fa-check"></i><b>2.3.2</b> In R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-types.html"><a href="data-types.html#rs-lists-versus-pythons-lists-and-dictionaries"><i class="fa fa-check"></i><b>2.4</b> R’s lists versus Python’s lists and dictionaries</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-types.html"><a href="data-types.html#lists-in-r"><i class="fa fa-check"></i><b>2.4.1</b> Lists In R</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-types.html"><a href="data-types.html#lists-in-python"><i class="fa fa-check"></i><b>2.4.2</b> Lists In Python</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-types.html"><a href="data-types.html#dictionaries-in-python"><i class="fa fa-check"></i><b>2.4.3</b> Dictionaries In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="data-types.html"><a href="data-types.html#user-defined-functions-in-r-and-python"><i class="fa fa-check"></i><b>2.5</b> User-defined functions in R and Python</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="data-types.html"><a href="data-types.html#defining-r-functions"><i class="fa fa-check"></i><b>2.5.1</b> Defining R Functions</a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-types.html"><a href="data-types.html#defining-python-functions"><i class="fa fa-check"></i><b>2.5.2</b> Defining Python Functions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="data-types.html"><a href="data-types.html#more-details-on-rs-user-defined-functions"><i class="fa fa-check"></i><b>2.5.3</b> More details on R’s user-defined functions</a></li>
+<li class="chapter" data-level="2.5.4" data-path="data-types.html"><a href="data-types.html#more-details-on-pythons-user-defined-functions"><i class="fa fa-check"></i><b>2.5.4</b> More details on Python’s user-defined functions</a></li>
+<li class="chapter" data-level="2.5.5" data-path="data-types.html"><a href="data-types.html#function-scope-in-r"><i class="fa fa-check"></i><b>2.5.5</b> Function Scope in R</a></li>
+<li class="chapter" data-level="2.5.6" data-path="data-types.html"><a href="data-types.html#function-scope-in-python"><i class="fa fa-check"></i><b>2.5.6</b> Function Scope in Python</a></li>
+<li class="chapter" data-level="2.5.7" data-path="data-types.html"><a href="data-types.html#dynamic-lookup"><i class="fa fa-check"></i><b>2.5.7</b> Dynamic Lookup</a></li>
+<li class="chapter" data-level="2.5.8" data-path="data-types.html"><a href="data-types.html#modifying-a-functions-arguments"><i class="fa fa-check"></i><b>2.5.8</b> Modifying a Function’s Arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="data-types.html"><a href="data-types.html#categorical-data"><i class="fa fa-check"></i><b>2.6</b> Categorical Data</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="data-types.html"><a href="data-types.html#categorical-data-in-r"><i class="fa fa-check"></i><b>2.6.1</b> Categorical Data in R</a></li>
+<li class="chapter" data-level="2.6.2" data-path="data-types.html"><a href="data-types.html#categorical-data-in-python"><i class="fa fa-check"></i><b>2.6.2</b> Categorical Data in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="data-types.html"><a href="data-types.html#data-frames"><i class="fa fa-check"></i><b>2.7</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="data-types.html"><a href="data-types.html#data-frames-in-r"><i class="fa fa-check"></i><b>2.7.1</b> Data Frames in R</a></li>
+<li class="chapter" data-level="2.7.2" data-path="data-types.html"><a href="data-types.html#data-frames-in-python"><i class="fa fa-check"></i><b>2.7.2</b> Data Frames in Python</a></li>
+<li class="chapter" data-level="2.7.3" data-path="data-types.html"><a href="data-types.html#row-names-and-indexes"><i class="fa fa-check"></i><b>2.7.3</b> Row Names and Indexes</a></li>
+<li class="chapter" data-level="2.7.4" data-path="data-types.html"><a href="data-types.html#getting-versus-setting"><i class="fa fa-check"></i><b>2.7.4</b> Getting Versus Setting</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="data-types.html"><a href="data-types.html#exercises-1"><i class="fa fa-check"></i><b>2.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>3</b> Odds and Ends</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#input-and-output"><i class="fa fa-check"></i><b>3.1</b> Input and Output</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#reading-in-text-files"><i class="fa fa-check"></i><b>3.1.1</b> Reading In Text Files</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="odds-and-ends.html"><a href="odds-and-ends.html#using-third-party-code"><i class="fa fa-check"></i><b>3.2</b> Using Third-Party Code</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#installing-packages-in-r"><i class="fa fa-check"></i><b>3.2.1</b> Installing Packages In R</a></li>
+<li class="chapter" data-level="3.2.2" data-path="odds-and-ends.html"><a href="odds-and-ends.html#installing-packages-in-python"><i class="fa fa-check"></i><b>3.2.2</b> Installing Packages In Python</a></li>
+<li class="chapter" data-level="3.2.3" data-path="odds-and-ends.html"><a href="odds-and-ends.html#loading-packages-in-r"><i class="fa fa-check"></i><b>3.2.3</b> Loading Packages In R</a></li>
+<li class="chapter" data-level="3.2.4" data-path="odds-and-ends.html"><a href="odds-and-ends.html#loading-packages-in-python"><i class="fa fa-check"></i><b>3.2.4</b> Loading Packages In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="odds-and-ends.html"><a href="odds-and-ends.html#control-flow"><i class="fa fa-check"></i><b>3.3</b> Control Flow</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#conditional-logic"><i class="fa fa-check"></i><b>3.3.1</b> Conditional Logic</a></li>
+<li class="chapter" data-level="3.3.2" data-path="odds-and-ends.html"><a href="odds-and-ends.html#loops"><i class="fa fa-check"></i><b>3.3.2</b> Loops</a></li>
+<li class="chapter" data-level="3.3.3" data-path="odds-and-ends.html"><a href="odds-and-ends.html#a-longer-example"><i class="fa fa-check"></i><b>3.3.3</b> A Longer Example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="odds-and-ends.html"><a href="odds-and-ends.html#reshaping-and-combining-data-sets"><i class="fa fa-check"></i><b>3.4</b> Reshaping and Combining Data Sets</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#ordering-and-sorting-data"><i class="fa fa-check"></i><b>3.4.1</b> Ordering and Sorting Data</a></li>
+<li class="chapter" data-level="3.4.2" data-path="odds-and-ends.html"><a href="odds-and-ends.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder"><i class="fa fa-check"></i><b>3.4.2</b> Stacking Data Sets and Placing them Shoulder to Shoulder</a></li>
+<li class="chapter" data-level="3.4.3" data-path="odds-and-ends.html"><a href="odds-and-ends.html#merging-or-joining-data-sets"><i class="fa fa-check"></i><b>3.4.3</b> Merging or Joining Data Sets</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="odds-and-ends.html"><a href="odds-and-ends.html#visualization"><i class="fa fa-check"></i><b>3.5</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#base-r-plotting"><i class="fa fa-check"></i><b>3.5.1</b> Base R Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="odds-and-ends.html"><a href="odds-and-ends.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>4</b> An Introduction to Object-Oriented Programming</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-python"><i class="fa fa-check"></i><b>4.1</b> OOP In Python</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#overview"><i class="fa fa-check"></i><b>4.1.1</b> Overview</a></li>
+<li class="chapter" data-level="4.1.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#a-first-example"><i class="fa fa-check"></i><b>4.1.2</b> A First Example</a></li>
+<li class="chapter" data-level="4.1.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-inheritance"><i class="fa fa-check"></i><b>4.1.3</b> Adding Inheritance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-r"><i class="fa fa-check"></i><b>4.2</b> OOP In R</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s3-objects-the-big-picture"><i class="fa fa-check"></i><b>4.2.1</b> S3 objects: The Big Picture</a></li>
+<li class="chapter" data-level="4.2.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s3-objects"><i class="fa fa-check"></i><b>4.2.2</b> Using S3 objects</a></li>
+<li class="chapter" data-level="4.2.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s3-objects"><i class="fa fa-check"></i><b>4.2.3</b> Creating S3 objects</a></li>
+<li class="chapter" data-level="4.2.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s4-objects-the-big-picture"><i class="fa fa-check"></i><b>4.2.4</b> S4 objects: The Big Picture</a></li>
+<li class="chapter" data-level="4.2.5" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s4-objects"><i class="fa fa-check"></i><b>4.2.5</b> Using S4 objects</a></li>
+<li class="chapter" data-level="4.2.6" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s4-objects"><i class="fa fa-check"></i><b>4.2.6</b> Creating S4 objects</a></li>
+<li class="chapter" data-level="4.2.7" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#reference-classes-the-big-picture"><i class="fa fa-check"></i><b>4.2.7</b> Reference Classes: The Big Picture</a></li>
+<li class="chapter" data-level="4.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>4.2.8</b> Creating Reference Classes</a></li>
+<li class="chapter" data-level="4.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>4.2.9</b> Creating R6 Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-3"><i class="fa fa-check"></i><b>4.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>5</b> Functional Programming</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functional-programming.html"><a href="functional-programming.html#fp-background"><i class="fa fa-check"></i><b>5.1</b> FP Background</a></li>
+<li class="chapter" data-level="5.2" data-path="functional-programming.html"><a href="functional-programming.html#apply-functions-in-r"><i class="fa fa-check"></i><b>5.2</b> Apply Functions in R</a></li>
+<li class="chapter" data-level="5.3" data-path="functional-programming.html"><a href="functional-programming.html#selected-apply-functions-in-python"><i class="fa fa-check"></i><b>5.3</b> Selected Apply Functions in Python</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="functional-programming.html"><a href="functional-programming.html#exercises-4"><i class="fa fa-check"></i><b>5.3.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to R and Python For Data Analysis: a Side By Side Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="functional-programming" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Functional Programming</h1>
+<div id="fp-background" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> FP Background</h2>
+<p>Even though this book only discusses one of our languages, the motivation for <strong>functional programming</strong> in both R and Python is clearly in <a href="https://adv-r.hadley.nz/fp.html">Advanced R</a>:</p>
+<blockquote>
+<p>A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.</p>
+</blockquote>
+<p>This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it’s hard to give a one-line definition that is also comprehensive. Even with a definition, it isn’t immediately obvious why the pieces of that definition would be conducive to the above goals.</p>
+<p>Here is my definition:</p>
+<ul>
+<li>a functional programming style is a style of programming that favors using functions that are both <em>first-class</em> and <em>pure</em>.</li>
+</ul>
+<p>Neither R nor Python is a 100% pure functional language. So for us, it’s a style that we can choose to let us guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use elements discussed in <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">4</a>. Some people unilaterally prefer one to the other, but others prefer to decide which to use depending on the task at hand.</p>
+<ol style="list-style-type: decimal">
+<li><strong>First class functions</strong> are functions that can be passed as arguments to other functions, can be returned from other functions, and can be assigned to variables or stored in data structures. TODO quote.</li>
+</ol>
+<p>Functions in both R and Python are first class. Many of the examples we discuss in this chapter would not exist if they were not.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Pure functions</strong> return the same output if they are given the same input, and they do not produce <strong>side-effects</strong>.</li>
+</ol>
+<p>Side-effects are changes made to non-temporary variables, to the “state” of the program. If your function refers to or modifies global variables, or if it modifies arguments passed in, then it is more difficult to understand. As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable</p>
+<div class="line-block">  a.) by itself in isolation, or</div>
+<div class="line-block">  b.) without knowing how many times it is called.</div>
+<p>Regarding a.), we discussed examples where changing the value of a single global variable can completely change the behavior of an entire program (not just a single function!). Regarding b.) a variable has <strong>referential transparency</strong> if it can be replaced with a single value without changing the program’s behavior.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p><strong>Recursion versus Iteration</strong></p></li>
+<li><p><strong>Lazy versus Strict Evaluation</strong></p></li>
+</ol>
+<div class="rmd-details">
+<p>
+imperative versus procedural
+</p>
+</div>
+</div>
+<div id="apply-functions-in-r" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Apply Functions in R</h2>
+<p>There are several functions in R whose names end in “apply.” The ones we discuss are <code>sapply</code>, <code>vapply</code>, <code>lapply</code>, <code>apply</code>, <code>tapply</code> and <code>mapply</code>. Each of these takes a function as one of its arguments. This is possible because R has first-class functions.</p>
+<p>Suppose we have a <code>data.frame</code> that has 10 rows and 100 columns. What if we want to take the mean of each column?</p>
+<p>An amateurish way to do this would be something like the following.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="functional-programming.html#cb1-1" aria-hidden="true" tabindex="-1"></a>myFirstMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">1</span>])</span>
+<span id="cb1-2"><a href="functional-programming.html#cb1-2" aria-hidden="true" tabindex="-1"></a>mySecondMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">2</span>])</span>
+<span id="cb1-3"><a href="functional-programming.html#cb1-3" aria-hidden="true" tabindex="-1"></a>myThirdMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">3</span>])</span>
+<span id="cb1-4"><a href="functional-programming.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># so on and so forth</span></span></code></pre></div>
+<p>You need one line of code for each column in this data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code. TODO cite DRY</p>
+<p>Instead, prefer the use of <code>sapply</code> in this situation. The “s” in <code>sapply</code> stands for “simplified.” In this bit of code <code>mean</code> is called on each column of th data frame. <code>sapply</code> applies the function over columns, instead of rows, because data frames are internally a <code>list</code> of columns.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="functional-programming.html#cb2-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
+<span id="cb2-2"><a href="functional-programming.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
+<span id="cb2-3"><a href="functional-programming.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">##           X1           X2           X3           X4           X5           X6 </span></span>
+<span id="cb2-4"><a href="functional-programming.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -0.521741408 -0.242435100  0.163367204 -0.345935228  0.117494988  0.008854217</span></span></code></pre></div>
+<p>Each call to <code>mean</code> returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(1\)</span>. This is necessary if you want to collect all the results into a <code>vector</code>–remember, all elements of a <code>vector</code> have to have the same type. To get the same behavior, you might also consider using <code>vapply(myDF, mean, numeric(1))</code>.</p>
+<p>In the above case, “simplify” referred to how one-hundred length-<span class="math inline">\(1\)</span> vectors were simplified into one length-<span class="math inline">\(100\)</span> vector. However, “simplified” does not necessarily imply that all elements will be stored in a vector. Consider the <code>summary</code> function, which returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(6\)</span>. In this case, one-hundred length-<span class="math inline">\(6\)</span> vectors were simplified into one <span class="math inline">\(6 \times 100\)</span> matrix.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="functional-programming.html#cb3-1" aria-hidden="true" tabindex="-1"></a>mySummaries <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, summary)</span>
+<span id="cb3-2"><a href="functional-programming.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(mySummaries)</span>
+<span id="cb3-3"><a href="functional-programming.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb3-4"><a href="functional-programming.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mySummaries)</span>
+<span id="cb3-5"><a href="functional-programming.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]   6 100</span></span></code></pre></div>
+<p>For functions that don’t return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply</code>. The “l” in <code>lapply</code> stands for “list.” <code>lapply</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="functional-programming.html#cb4-1" aria-hidden="true" tabindex="-1"></a>regress <span class="ot">&lt;-</span> <span class="cf">function</span>(y){ <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>) }</span>
+<span id="cb4-2"><a href="functional-programming.html#cb4-2" aria-hidden="true" tabindex="-1"></a>myRegs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(myDF, regress)</span>
+<span id="cb4-3"><a href="functional-programming.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(myRegs)</span>
+<span id="cb4-4"><a href="functional-programming.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 100</span></span>
+<span id="cb4-5"><a href="functional-programming.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myRegs[[<span class="dv">1</span>]])</span>
+<span id="cb4-6"><a href="functional-programming.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;lm&quot;</span></span>
+<span id="cb4-7"><a href="functional-programming.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myRegs[[<span class="dv">12</span>]])</span>
+<span id="cb4-8"><a href="functional-programming.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-9"><a href="functional-programming.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb4-10"><a href="functional-programming.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ 1)</span></span>
+<span id="cb4-11"><a href="functional-programming.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-12"><a href="functional-programming.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb4-13"><a href="functional-programming.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb4-14"><a href="functional-programming.html#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -1.0535 -0.6146 -0.1574  0.4884  1.2996 </span></span>
+<span id="cb4-15"><a href="functional-programming.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-16"><a href="functional-programming.html#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb4-17"><a href="functional-programming.html#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span id="cb4-18"><a href="functional-programming.html#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   0.2289     0.2671   0.857    0.414</span></span>
+<span id="cb4-19"><a href="functional-programming.html#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-20"><a href="functional-programming.html#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 0.8446 on 9 degrees of freedom</span></span></code></pre></div>
+<p>I use <code>sapply</code> and <code>lapply</code> the most, personally. The next most common function I use is <code>apply</code>. I use it to apply functions to <em>rows</em> instead of columns, although, it can also apply functions over columns, just as the other functions we discussed can.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="functional-programming.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(myDF)</span>
+<span id="cb5-2"><a href="functional-programming.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  10 100</span></span>
+<span id="cb5-3"><a href="functional-programming.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(myDF, <span class="dv">1</span>, mean)</span>
+<span id="cb5-4"><a href="functional-programming.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.08261550 -0.01924344 -0.04970586  0.05735103 -0.01003091  0.07836143</span></span>
+<span id="cb5-5"><a href="functional-programming.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -0.02825023  0.09330024  0.06243732 -0.10074101</span></span></code></pre></div>
+<p><code>tapply</code> can be very handy when you need it. First, we’ve alluded to the definition before in TODO, but a <strong>ragged array</strong> is a collection of arrays that all have potentially different lengths. I don’t typically construct such an object and then pass it to <code>tapply</code>. Rather, I let <code>tapply</code> construct the ragged array for me. The first argument it expects is “typically vector-like,” while the second tells us how to break that <code>vector</code> into chunks. The third argument is a function that gets applied to each <code>vector</code> chunk.</p>
+<p>If I wanted the average home price for each city, I could use something like this.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="functional-programming.html#cb6-1" aria-hidden="true" tabindex="-1"></a>albRealEstate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
+<span id="cb6-2"><a href="functional-programming.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(albRealEstate)</span>
+<span id="cb6-3"><a href="functional-programming.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath</span></span>
+<span id="cb6-4"><a href="functional-programming.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3</span></span>
+<span id="cb6-5"><a href="functional-programming.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2</span></span>
+<span id="cb6-6"><a href="functional-programming.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1</span></span>
+<span id="cb6-7"><a href="functional-programming.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1</span></span>
+<span id="cb6-8"><a href="functional-programming.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1</span></span>
+<span id="cb6-9"><a href="functional-programming.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1</span></span>
+<span id="cb6-10"><a href="functional-programming.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb6-11"><a href="functional-programming.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        0         10   5.000     409900      CROZET</span></span>
+<span id="cb6-12"><a href="functional-programming.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb6-13"><a href="functional-programming.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb6-14"><a href="functional-programming.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4        0          3  50.648     620700      CROZET</span></span>
+<span id="cb6-15"><a href="functional-programming.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5        0          6   3.880     162500      CROZET</span></span>
+<span id="cb6-16"><a href="functional-programming.html#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6        0          6   8.838     167200      CROZET</span></span>
+<span id="cb6-17"><a href="functional-programming.html#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
+<span id="cb6-18"><a href="functional-programming.html#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;    </span></span>
+<span id="cb6-19"><a href="functional-programming.html#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
+<span id="cb6-20"><a href="functional-programming.html#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
+<span id="cb6-21"><a href="functional-programming.html#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN </span></span>
+<span id="cb6-22"><a href="functional-programming.html#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8 </span></span>
+<span id="cb6-23"><a href="functional-programming.html#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="do">##     SCOTTSVILLE </span></span>
+<span id="cb6-24"><a href="functional-programming.html#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="do">##        268407.4</span></span></code></pre></div>
+<p>You might be wondering why we put <code>albRealEstate$City</code> into a <code>list</code>. That seems kind of unnecessary. This is because <code>tapply</code> can be used with multiple <code>factor</code>s–this will break down the <code>vector</code> input into a finer partition. The second argument must be one object, though, so all of these <code>factor</code>s must be collected into a <code>list</code>. The following code produces a “pivot table.”</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="functional-programming.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City, albRealEstate<span class="sc">$</span>Condition), mean)</span>
+<span id="cb7-2"><a href="functional-programming.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                  Average Excellent     Fair     Good      Poor Substandard</span></span>
+<span id="cb7-3"><a href="functional-programming.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE 337913.4  491702.4 229336.2 444325.5 202420.00      457500</span></span>
+<span id="cb7-4"><a href="functional-programming.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## CROZET          342133.4  552081.6 198009.5 390657.7 203806.25       53450</span></span>
+<span id="cb7-5"><a href="functional-programming.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## EARLYSVILLE     365990.6  652387.4 230646.2 470554.7 372442.86      160400</span></span>
+<span id="cb7-6"><a href="functional-programming.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## KESWICK         392998.6  871719.8 172790.9 672510.7 100337.50          NA</span></span>
+<span id="cb7-7"><a href="functional-programming.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## NORTH GARDEN    241187.7  966528.6 131997.0 440503.1 151187.50          NA</span></span>
+<span id="cb7-8"><a href="functional-programming.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## SCOTTSVILLE     214046.9  502273.8 157438.0 374600.4  95377.78          NA</span></span></code></pre></div>
+<p>For situations where TODO, you also have <code>by</code> and <code>aggregate</code>.</p>
+<p>The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html">documentation of <code>mapply</code></a> states <code>mapply</code> is a multivariate version of <code>sapply</code>. <code>sapply</code> worked with univariate functions: the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use <code>mapply</code>.</p>
+<p>Here is a short example. Regarding the <code>n=</code> argument of <code>rnorm</code>, the documentation explains, “[i]f <code>length(n) &gt; 1</code>, the length is taken to be the number required.” This would be a problem if we want to sample a.) three times from a mean <span class="math inline">\(0\)</span> normal, b.) twice from a mean <span class="math inline">\(100\)</span> normal, and c.) once from a mean <span class="math inline">\(-100\)</span> normal distribution.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="functional-programming.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
+<pre><code>## [1]    0.01721898  100.00766134 -100.00393362</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="functional-programming.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapply</span>(rnorm, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] -0.0172947233  0.0007884491 -0.0063097813
+## 
+## [[2]]
+## [1] 99.99352 99.98986
+## 
+## [[3]]
+## [1] -99.99313</code></pre>
+<p>Consider another less contrived example. Suppose we want to plot a bivariate Gaussian distribution.</p>
+<p><span class="math display">\[
+f(x,y) = \frac{1}{2 \pi}  \exp\left[ -\frac{x ^2 + y^2}{2}     \right]
+\]</span>
+The random elements <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, in this particular case, are uncorrelated, each have unit variance, and zero mean. This density is a surface in 3-d dimensional space. To visualize this, we would need to</p>
+<ol style="list-style-type: decimal">
+<li>generate a “grid” of points in <span class="math inline">\(\mathbb{R}^2\)</span>,</li>
+<li>evaluate our function on each point, and then</li>
+<li>call some plotting function that takes this all and makes a pretty picture.</li>
+</ol>
+<p>There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use <code>mapply</code>, we need the function to take two arguments.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="functional-programming.html#cb12-1" aria-hidden="true" tabindex="-1"></a>fTwoArgs <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y){</span>
+<span id="cb12-2"><a href="functional-programming.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">5</span><span class="sc">*</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">/</span> pi</span>
+<span id="cb12-3"><a href="functional-programming.html#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>We can construct every possible point on a grid with the <code>expand.grid</code> function.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="functional-programming.html#cb13-1" aria-hidden="true" tabindex="-1"></a>xGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,.<span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="functional-programming.html#cb13-2" aria-hidden="true" tabindex="-1"></a>yGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,.<span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="functional-programming.html#cb13-3" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(xGrid, yGrid)</span>
+<span id="cb13-4"><a href="functional-programming.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(grid)</span>
+<span id="cb13-5"><a href="functional-programming.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Var1 Var2</span></span>
+<span id="cb13-6"><a href="functional-programming.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 -3.0   -3</span></span>
+<span id="cb13-7"><a href="functional-programming.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 -2.9   -3</span></span>
+<span id="cb13-8"><a href="functional-programming.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 -2.8   -3</span></span>
+<span id="cb13-9"><a href="functional-programming.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 -2.7   -3</span></span>
+<span id="cb13-10"><a href="functional-programming.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 -2.6   -3</span></span>
+<span id="cb13-11"><a href="functional-programming.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 -2.5   -3</span></span></code></pre></div>
+<p><code>mapply</code> would take <code>fTwoArgs</code>, and effectively call it on every row pair. The pairs do not need to be organized in a <code>data.frame</code>, though.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="functional-programming.html#cb14-1" aria-hidden="true" tabindex="-1"></a>funcOut1 <span class="ot">&lt;-</span> <span class="fu">mapply</span>(fTwoArgs, grid[,<span class="dv">1</span>], grid[,<span class="dv">2</span>])</span>
+<span id="cb14-2"><a href="functional-programming.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(funcOut1)</span>
+<span id="cb14-3"><a href="functional-programming.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.964128e-05 2.638072e-05 3.508008e-05 4.618400e-05 6.019766e-05</span></span>
+<span id="cb14-4"><a href="functional-programming.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] 7.768277e-05</span></span>
+<span id="cb14-5"><a href="functional-programming.html#cb14-5" aria-hidden="true" tabindex="-1"></a>rectangularOutput <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut1, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
+<span id="cb14-6"><a href="functional-programming.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(xGrid, yGrid, rectangularOutput, </span>
+<span id="cb14-7"><a href="functional-programming.html#cb14-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">zlab =</span> <span class="st">&quot;f(x,y)&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>If you prefer using <code>apply</code>, that is also possible, but you would need to rewrite the function to take one (length-two) argument.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="functional-programming.html#cb15-1" aria-hidden="true" tabindex="-1"></a>fOneArg <span class="ot">&lt;-</span> <span class="cf">function</span>(vec){</span>
+<span id="cb15-2"><a href="functional-programming.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(vec<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span><span class="sc">/</span>pi</span>
+<span id="cb15-3"><a href="functional-programming.html#cb15-3" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb15-4"><a href="functional-programming.html#cb15-4" aria-hidden="true" tabindex="-1"></a>funcOut2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(grid, <span class="dv">1</span>, fOneArg)</span>
+<span id="cb15-5"><a href="functional-programming.html#cb15-5" aria-hidden="true" tabindex="-1"></a>moreRectOut <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut2, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
+<span id="cb15-6"><a href="functional-programming.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(xGrid, yGrid, moreRectOut, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="selected-apply-functions-in-python" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Selected Apply Functions in Python</h2>
+<p>Numpy provides a <a href="https://numpy.org/doc/stable/reference/routines.functional.html">number of functions</a> that facilitate working with <code>np.ndarray</code>s in a functional style. For example, <a href="https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html"><code>np.apply_along_axis</code></a> is similar to R’s <code>apply</code>. <code>apply</code> had a <code>MARGIN</code> argument (<code>1</code> sums rows, <code>2</code> sums columns), whereas this function has a <code>axis=</code> argument (<code>0</code> sums columns, <code>1</code> sums rows).</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="functional-programming.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href="functional-programming.html#cb16-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape((<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb16-3"><a href="functional-programming.html#cb16-3" aria-hidden="true" tabindex="-1"></a>my_array</span>
+<span id="cb16-4"><a href="functional-programming.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[0, 1, 2],</span></span>
+<span id="cb16-5"><a href="functional-programming.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">##        [3, 4, 5]])</span></span>
+<span id="cb16-6"><a href="functional-programming.html#cb16-6" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">0</span>, my_array) <span class="co"># summing columns</span></span>
+<span id="cb16-7"><a href="functional-programming.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([3, 5, 7])</span></span>
+<span id="cb16-8"><a href="functional-programming.html#cb16-8" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">1</span>, my_array) <span class="co"># summing rows</span></span>
+<span id="cb16-9"><a href="functional-programming.html#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 3, 12])</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="functional-programming.html#cb17-1" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.random.normal(size<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">1000</span>))</span>
+<span id="cb17-2"><a href="functional-programming.html#cb17-2" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">0</span>, my_array).shape </span>
+<span id="cb17-3"><a href="functional-programming.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">## (1000,)</span></span>
+<span id="cb17-4"><a href="functional-programming.html#cb17-4" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">1</span>, my_array).shape</span>
+<span id="cb17-5"><a href="functional-programming.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (10,)</span></span></code></pre></div>
+<p>Pandas <code>DataFrame</code>s have an <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html"><code>.apply</code> method</a> that is very similar to <code>apply</code> in R,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> but again, just like the above function, you have to think about an <code>axis=</code> argument instead of a <code>MARGIN=</code> argument.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="functional-programming.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb18-2"><a href="functional-programming.html#cb18-2" aria-hidden="true" tabindex="-1"></a>alb_real_est <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
+<span id="cb18-3"><a href="functional-programming.html#cb18-3" aria-hidden="true" tabindex="-1"></a>alb_real_est.shape</span>
+<span id="cb18-4"><a href="functional-programming.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">## (27943, 12)</span></span>
+<span id="cb18-5"><a href="functional-programming.html#cb18-5" aria-hidden="true" tabindex="-1"></a>alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">0</span>) <span class="co"># length of columns</span></span>
+<span id="cb18-6"><a href="functional-programming.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">## YearBuilt        27943</span></span>
+<span id="cb18-7"><a href="functional-programming.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## YearRemodeled    27943</span></span>
+<span id="cb18-8"><a href="functional-programming.html#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Condition        27943</span></span>
+<span id="cb18-9"><a href="functional-programming.html#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">## NumStories       27943</span></span>
+<span id="cb18-10"><a href="functional-programming.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">## FinSqFt          27943</span></span>
+<span id="cb18-11"><a href="functional-programming.html#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Bedroom          27943</span></span>
+<span id="cb18-12"><a href="functional-programming.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">## FullBath         27943</span></span>
+<span id="cb18-13"><a href="functional-programming.html#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">## HalfBath         27943</span></span>
+<span id="cb18-14"><a href="functional-programming.html#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">## TotalRooms       27943</span></span>
+<span id="cb18-15"><a href="functional-programming.html#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">## LotSize          27943</span></span>
+<span id="cb18-16"><a href="functional-programming.html#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">## TotalValue       27943</span></span>
+<span id="cb18-17"><a href="functional-programming.html#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">## City             27943</span></span>
+<span id="cb18-18"><a href="functional-programming.html#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb18-19"><a href="functional-programming.html#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">1</span>)) <span class="co"># length of rows</span></span>
+<span id="cb18-20"><a href="functional-programming.html#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
+<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply</code>ing a function to rows. Here is an example of computing each property’s “score.”</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="functional-programming.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="functional-programming.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alb_real_est.apply(sum, axis=1) # can&#39;t add letters to numbers!</span></span>
+<span id="cb19-3"><a href="functional-programming.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_prop_score(row):</span>
+<span id="cb19-4"><a href="functional-programming.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>row[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>row[<span class="dv">1</span>]</span>
+<span id="cb19-5"><a href="functional-programming.html#cb19-5" aria-hidden="true" tabindex="-1"></a>alb_real_est[<span class="st">&#39;Score&#39;</span>] <span class="op">=</span> alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>(get_prop_score, <span class="dv">1</span>)</span>
+<span id="cb19-6"><a href="functional-programming.html#cb19-6" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>,<span class="st">&#39;Score&#39;</span>]].head(<span class="dv">2</span>)</span>
+<span id="cb19-7"><a href="functional-programming.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">##    FinSqFt  LotSize     Score</span></span>
+<span id="cb19-8"><a href="functional-programming.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1922    5.000  3859.000</span></span>
+<span id="cb19-9"><a href="functional-programming.html#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     1848   61.189  3879.567</span></span></code></pre></div>
+<p><code>.apply</code> also works with more than one function at a time.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="functional-programming.html#cb20-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>([<span class="bu">sum</span>, <span class="bu">len</span>])</span>
+<span id="cb20-2"><a href="functional-programming.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">##       FinSqFt     LotSize</span></span>
+<span id="cb20-3"><a href="functional-programming.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">## sum  55559801  97856.8384</span></span>
+<span id="cb20-4"><a href="functional-programming.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">## len     27943  27943.0000</span></span></code></pre></div>
+<p>If you do not want to waste two lines defining a function with <code>def</code>, you can use an anonymous (unnamed) <a href="https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions"><strong>lambda function</strong></a>. Be careful, though–if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="functional-programming.html#cb21-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>(<span class="kw">lambda</span> row : <span class="bu">sum</span>(row<span class="op">*</span>[<span class="dv">2</span>,<span class="dv">3</span>]), <span class="dv">1</span>)[:<span class="dv">4</span>]</span>
+<span id="cb21-2"><a href="functional-programming.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    3859.000</span></span>
+<span id="cb21-3"><a href="functional-programming.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    3879.567</span></span>
+<span id="cb21-4"><a href="functional-programming.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    2501.280</span></span>
+<span id="cb21-5"><a href="functional-programming.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    2639.944</span></span>
+<span id="cb21-6"><a href="functional-programming.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
+<p>If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap"><code>.applymap</code></a>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="functional-programming.html#cb22-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].applymap(<span class="kw">lambda</span> e : e <span class="op">+</span> <span class="dv">1</span>).head(<span class="dv">2</span>)</span>
+<span id="cb22-2"><a href="functional-programming.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">##    FinSqFt  LotSize</span></span>
+<span id="cb22-3"><a href="functional-programming.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1923    6.000</span></span>
+<span id="cb22-4"><a href="functional-programming.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     1849   62.189</span></span></code></pre></div>
+<p>Last, we have a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html"><code>.groupby</code></a> method, which can be used to mirror the behavior of R’s <code>tapply</code>, <code>aggregate</code> or <code>by</code>. It can take the <code>DataFrame</code> it belongs to, and group its rows into multiple sub-<code>DataFrame</code>s. The collection of sub-<code>DataFrames</code> has a lot of the same methods that an individual <code>DataFrame</code> has (e.g. the subsetting operators, and the <code>.apply</code> method), which can all be used in a second step of calculating things on each sub-<code>DataFrame</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="functional-programming.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.groupby([<span class="st">&#39;City&#39;</span>]))</span>
+<span id="cb23-2"><a href="functional-programming.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">## pandas.core.groupby.generic.DataFrameGroupBy</span></span>
+<span id="cb23-3"><a href="functional-programming.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.groupby([<span class="st">&#39;City&#39;</span>])[<span class="st">&#39;TotalValue&#39;</span>])</span>
+<span id="cb23-4"><a href="functional-programming.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">## pandas.core.groupby.generic.SeriesGroupBy</span></span></code></pre></div>
+<p>Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which <code>City</code> they are in, extracts the <code>TotalValue</code> column in each sub-<code>DataFrame</code>, and then <code>.apply</code>s the <code>np.average</code> function on the sole column found in each sub-<code>DataFrame</code>. The second applys a lambda function to each sub-<code>DataFrame</code> directly.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="functional-programming.html#cb24-1" aria-hidden="true" tabindex="-1"></a>alb_real_est.groupby([<span class="st">&#39;City&#39;</span>])[<span class="st">&#39;TotalValue&#39;</span>].<span class="bu">apply</span>(np.average)</span>
+<span id="cb24-2"><a href="functional-programming.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">## City</span></span>
+<span id="cb24-3"><a href="functional-programming.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">## CHARLOTTESVILLE    381932.962760</span></span>
+<span id="cb24-4"><a href="functional-programming.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">## CROZET             380425.678927</span></span>
+<span id="cb24-5"><a href="functional-programming.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">## EARLYSVILLE        439140.987124</span></span>
+<span id="cb24-6"><a href="functional-programming.html#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">## KESWICK            540532.605905</span></span>
+<span id="cb24-7"><a href="functional-programming.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">## NORTH GARDEN       366597.750865</span></span>
+<span id="cb24-8"><a href="functional-programming.html#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">## SCOTTSVILLE        268407.384615</span></span>
+<span id="cb24-9"><a href="functional-programming.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: TotalValue, dtype: float64</span></span>
+<span id="cb24-10"><a href="functional-programming.html#cb24-10" aria-hidden="true" tabindex="-1"></a>alb_real_est.groupby([<span class="st">&#39;City&#39;</span>]).<span class="bu">apply</span>(<span class="kw">lambda</span> df : np.average(df[<span class="st">&#39;TotalValue&#39;</span>]))</span>
+<span id="cb24-11"><a href="functional-programming.html#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">## City</span></span>
+<span id="cb24-12"><a href="functional-programming.html#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">## CHARLOTTESVILLE    381932.962760</span></span>
+<span id="cb24-13"><a href="functional-programming.html#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">## CROZET             380425.678927</span></span>
+<span id="cb24-14"><a href="functional-programming.html#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">## EARLYSVILLE        439140.987124</span></span>
+<span id="cb24-15"><a href="functional-programming.html#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">## KESWICK            540532.605905</span></span>
+<span id="cb24-16"><a href="functional-programming.html#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">## NORTH GARDEN       366597.750865</span></span>
+<span id="cb24-17"><a href="functional-programming.html#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co">## SCOTTSVILLE        268407.384615</span></span>
+<span id="cb24-18"><a href="functional-programming.html#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
+<p>More tips on this programming pattern can be found <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html">here</a>.</p>
+<div id="exercises-4" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Exercises</h3>
+<p>Optimization example</p>
+<p>Importance sampling example</p>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as <code>DataFrame</code> methods. For instance, <code>.mean</code> would allow you to do something like <code>my_df.mean()</code>.<a href="functional-programming.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="an-introduction-to-object-oriented-programming.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/05-functional_programming.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["r_and_python_book.pdf", "r_and_python_book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
