@@ -39,7 +39,9 @@ jobs:
       - name: Install packages
         run: |
           R -e 'install.packages("renv")'
-          R -e 'renv::restore()'
+          R -e 'renv::restore()
+          R -e 'install.packages("devtools")'
+          R -e 'devtools::install_github("reticulate")'
 
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
