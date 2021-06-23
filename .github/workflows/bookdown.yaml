@@ -40,8 +40,9 @@ jobs:
         run: |
           R -e 'install.packages("renv")'
           R -e 'renv::restore()'
-          R -e 'install.packages("devtools")'
-          R -e 'devtools::install_github("rstudio/reticulate")'
+    
+      - name: change ownership thing
+        run: sudo chown 501:20 /usr/local/miniconda/pkgs/cache/b89cf7bf.json
 
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
