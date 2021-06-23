@@ -44,8 +44,9 @@ jobs:
           R -e 'renv::restore()'
     
       - name: Build site
-        run: sudo chown 501:20 /usr/local/miniconda/pkgs/cache/b89cf7bf.json
-        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+        run: |
+         sudo chown 501:20 /usr/local/miniconda/pkgs/cache/b89cf7bf.json
+         Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
 
       - name: Install npm
         uses: actions/setup-node@v1
