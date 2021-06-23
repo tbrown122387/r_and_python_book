@@ -3,7 +3,7 @@ on:
      branches:
        - master
 
-  
+
 
 name: renderbook
 
@@ -15,15 +15,27 @@ jobs:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc@v1
-      - name: Install rmarkdown
-        run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
+      - name: Cache renv
+        uses: actions/cache@v2
+        with:
+          path: ~/Library/Application Support/renv
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
+      - name: Install tinytext
+        uses: r-lib/actions/setup-tinytex@v1
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("index.Rmd")'
+        run: Rscript -e 'rmarkdown::render_site(encoding = "UTF-8")'
       - uses: actions/upload-artifact@v1
         with:
           name: _book
           path: _book/
-  
+
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
 # and also add secrets for a GH_PAT and EMAIL to the repository
@@ -40,12 +52,13 @@ jobs:
          # Artifact name
          name: _book # optional
          # Destination path
-         path: _book # optional
+         path: _site # optional
      - name: Deploy to GitHub Pages
-       uses: Cecilapp/GitHub-Pages-deploy@master
+       uses: Cecilapp/GitHub-Pages-deploy@v3
        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: _book/                     # "_site/" by default
-    
- 
+         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+       with:
+         email: ${{ secrets.EMAIL }}
+         build_dir: _site/
+
+
