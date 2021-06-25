@@ -6,7 +6,7 @@ Click [here](https://randpythonbook.netlify.app) to read the textbook for free o
 
 This is all the code associated with the text--the book is built with [bookdown](https://bookdown.org). 
 
-## Become a Contributor {-}
+## Become a Contributor
 
 Spot a typo, or have a suggestion? Feel free to post an [**issue here**](https://github.com/tbrown122387/r_and_python_book/issues). You may also submit pull requests through Github. I'll be happy to take a look.
 
