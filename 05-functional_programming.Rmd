@@ -28,21 +28,15 @@ Side-effects are changes made to non-temporary variables, to the "state" of the 
 
 Regarding a.), we discussed examples where changing the value of a single global variable can completely change the behavior of an entire program (not just a single function!). Regarding b.) a variable has **referential transparency** if it can be replaced with a single value without changing the program's behavior. 
 
-3. **Recursion versus Iteration**
+One of the biggest tip-offs that you should be using functional programming is if you need to evaluate a single function many times, or in many different ways. This can happen in a great number of ways. Instead of copy/pasting similar-looking lines of code, you might consider *higher-order* functions that take your function as an input, and intelligently call it in all the many ways you want it to. A third option, not as heavily-discussed in this section, is to use a loop structure (c.f. \@ref(loops)).
 
-4. **Lazy versus Strict Evaluation**
-
-
-
-```{block, type='rmd-details'}
-imperative versus procedural
-```
+Another tip-off is if you need many different functions that are all resembling one another. Should you define each function separately, using excessive copy/paste-ing? Or should you write a function that can elegantly generate any function you need?
 
 
+## Functions as Function Inputs in R
 
-## Apply Functions in R
 
-There are several functions in R whose names end in "apply". The ones we discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. This is possible because R has first-class functions.
+Many of the most commonly-used functionals in R have names that end in "apply". The ones I discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. This is possible because R has first-class functions.
 
 
 ```{r, echo=F}
@@ -81,8 +75,11 @@ is.matrix(mySummaries)
 dim(mySummaries)
 ```
 
+```{block, type='rmd-details'}
+Another function that is worth mentioning is `replicate`--it is a wrapper for `sapply`. Consider a situation where you want to call a function many times with the same inputs. You might try something like `sapply(1:100, function(elem) {  return(myFunc(someInput)) } )`. Another, more readable, way to do this is `replicate(100, myFunc(someInput))`. 
+```
 
-For functions that don't return amenable types that fit into a `vector`, `matrix` or `array`, they might need to be stored in `list`. In this situation, you would need `lapply`. The "l" in `lapply` stands for "list". `lapply` always returns a `list` of the same length as the `input`.
+For functions that do not return amenable types that fit into a `vector`, `matrix` or `array`, they might need to be stored in `list`. In this situation, you would need `lapply`. The "l" in `lapply` stands for "list". `lapply` always returns a `list` of the same length as the `input`.
 
 ```{r, collapse = TRUE}
 regress <- function(y){ lm(y ~ 1) }
@@ -114,7 +111,10 @@ You might be wondering why we put `albRealEstate$City` into a `list`. That seems
 tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Condition), mean)
 ```
 
-For situations where TODO, you also have `by` and `aggregate`.
+
+```{block, type='rmd-details'}
+For functions that return higher-dimensional output, you will have to use something like `by` or `aggregate` in place of `tapply`.
+```
 
 The [documentation of `mapply`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply` is a multivariate version of `sapply`. `sapply` worked with univariate functions: the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply`. 
 
@@ -125,6 +125,7 @@ rnorm(n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 mapply(rnorm, n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 ```
 
+## Another Example in R
 
 Consider another less contrived example. Suppose we want to plot a bivariate Gaussian distribution. 
 
@@ -175,10 +176,61 @@ moreRectOut <- matrix(funcOut2, ncol = length(xGrid))
 contour(xGrid, yGrid, moreRectOut, xlab = "x", ylab = "y")
 ```
 
+## Functions as Function Inputs in Base Python
+
+I discuss two functions from base Python that take functions as input. Neither return a `list` or a `np.array`, but they do return different kinds of **iterables**, which are ["object\[s\] capable of returning \[their\] members one at a time."](https://docs.python.org/3/glossary.html) `map`, the function, will return objects of type `map`. `filter`, the function, will return objects of type `filter`. Often times we will just convert these to the container we are more familiar with.
+
+### `map`
+
+[`map`](https://docs.python.org/3/library/functions.html#map) can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a *spline* function, which can be useful for coming up with predictors in regression models.
+
+```{python, collapse=TRUE}
+import numpy as np
+my_inputs = np.linspace(start = 0, stop = 2*np.pi)
+def spline(x):
+    knot = 3.0
+    if x >= knot:
+        return x-knot
+    else:
+        return 0.0
+output = list(map(spline, my_inputs))
+```
+
+We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization is given in TODO. 
+
+```{python, collapse = TRUE, out.width = '70%', echo=F}
+import matplotlib.pyplot as plt
+plt.plot(my_inputs, output)
+```
+
+`map` can also be used like `mapply`. In other words, you can apply it to two containers,
+
+```{python, collapse=TRUE}
+import numpy as np
+x = np.linspace(start = -1., stop = 1.0)
+y = np.linspace(start = -1., stop = 1.0)
+def f(x):
+    np.log(x**2 + y**2)
+output = list(map(spline, my_inputs))
+```
 
 
-## Selected Apply Functions in Python
+### `filter`
 
+
+[`filter`](https://docs.python.org/3/library/functions.html#filter) is useful for **predicate functions.** Predicate functions return a boolean. Repeatedly calling a predicate on different inputs of any iterable container can be done as follows. 
+
+```{python, collapse = TRUE}
+raw_data = np.arange(0,1.5,.01)
+for elem in filter(lambda x : x**2 > 2, raw_data):
+    print(elem)
+```
+
+This function is similar to `which` in `R`. The only difference is that `which` does not accept a function, just a `logical vector`. 
+
+
+
+## Selected Numpy Functionals
 
 Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate working with `np.ndarray`s in a functional style. For example, [`np.apply_along_axis`](https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html) is similar to R's `apply`. `apply` had a `MARGIN` argument (`1` sums rows, `2` sums columns), whereas this function has a `axis=` argument (`0` sums columns, `1` sums rows). 
 
@@ -191,12 +243,14 @@ np.apply_along_axis(sum, 1, my_array) # summing rows
 ```
 
 
-
 ```{python, collapse = TRUE}
 my_array = np.random.normal(size=(10,1000))
 np.apply_along_axis(sum, 0, my_array).shape 
 np.apply_along_axis(sum, 1, my_array).shape
 ```
+
+
+## Functional Methods in Pandas
 
 Pandas `DataFrame`s have an [`.apply` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply` in R,^[You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as `DataFrame` methods. For instance, `.mean` would allow you to do something like `my_df.mean()`.] but again, just like the above function, you have to think about an `axis=` argument instead of a `MARGIN=` argument. 
 
@@ -256,9 +310,11 @@ alb_real_est.groupby(['City']).apply(lambda df : np.average(df['TotalValue']))
 More tips on this programming pattern can be found [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html).
 
 
-## Reduce
+## Functions as Function Outputs in R
 
-Both R and Python have reduce functions. R has `Reduce`, while Python has `reduce`.
+## Functions as Function Outputs in Python
+
+TODO Both R and Python have reduce functions. R has `Reduce`, while Python has `reduce`.
 
 In R
 
@@ -266,13 +322,82 @@ In R
 
 ```
 
+reduce,
+
+
+[`np.vectorize`](https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html#numpy.vectorize) is something that I use quite often.     
+
 
 
 ### Exercises
+
+1.  Let $X_t$ be the price of a stock at time $t$. A *call (or put) option* is a type of derivative contract you can buy or sell. It's called a derivative because its value derives from the value of a stock. A single call contract (or put) gives the owner the right to buy (or sell) stock ($100$ shares) at a certain price. This certain price written into an options contract ($s$) is called the *strike price*. The day the option expires    is called the *expiration date*. If a holder of the option uses his/her right to buy or sell the underlying stock, he/she is said to have *exercised* the option.
+
+The price and value of options floats around randomly through time just like a stock does. Part of the value of an option is its *intrinsic value*. It is not the same as the overall value of an option, or its "fair price"--rather, the intrinsic value represents how much money its possible to guarantee at the current moment, if you exercised the option, and then liquidated the resulting position in the underlying.
+
+For example, call owners hope the stock rises above the strike price so that they can buy the stock for a low price, and immediately sell it for a high price. If $X_t > s$, they could buy at $s$, and sell at $X_t$. In other words, the intrinsic value of a call option is 
+
+$$
+C^s_t = 100 \times \max(X_t - s, 0)
+$$
+as long as $t$ is before the expiration date. If $X_t < s$, then the owner doesn't have to buy the stock, so the call at that time is intrinsically worthless. 
+
+Put owners hope the stock price falls below the strike price, because a put's intrinsic value is
+
+$$
+P^s_t = 100 \times \max(s - X_t, 0)
+$$
+
+Sometimes people buy and sell multiple contracts (with the same expiration date) at the same time. If they do, the intrinsic value of the entire position is additive. For example, if you bought two of the same put option as the one above, then you just double the above expression to get the intrinsic value.
+
+As another example, if you buy (you can also sell) a *call spread*, you buy one call, and then sell another call with the same expiration and a higher strike price. Assuming $s_1 < s_2$ the intrinsic value is of the call spread with strikes $s_1$ and $s_2$ is
+$$
+100 \times \max(X_t - s_1, 0) - 100\times\max(X_t - s_2, 0)
+$$
+
+a. In R, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. Functions that create and return other functions are sometimes called **function factories.** These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
+
+Because the arguments may only take on certain values, and because the function to be returned has a certain signature, a template has been provided below. 
+
+```{r, eval=F}
+getIntrinsicValueFunc <-function(dirs, strikes, contractType, numContracts){
+  stopifnot(all(dirs %in% c("buy", "sell")))
+  stopifnot(all(contractType %in% c("call", "put")))
+  stopifnot(all(is.integer(strikes)))
+  stopifnot(all(is.integer(numContracts)))
+  stopifnot( (length(dirs) == length(strikes)) && (length(dirs) == length(contractType)))
+  
+  usefulFunc <- function(prices){
+    # TODO
+  }
+  return(usefulFunc)
+} 
+```
+
+b. Create an intrinsic value plot. The x-axis should be a grid of values: let's say from $100$ to $200$. On the y-axis plot the intrinsic value of buying a call spread with strikes $110$ and $120$. 
+
+c. Do the same thing as above but show what happens when you sell the same call spread. 
+
+d. Plot the intrinsic value of a bought put spread with strikes $110$ and $120$. 
+
+e. Plot the intrinsic value of a sold put spread with strikes $110$ and $120$. What is the difference between all four plots?
+
+
+2. Do the same thing, but in Python!
+
+
+
+creating row masks in a data frame
 
 .apply with weird predicate function
 
 Optimization example 
 
 Importance sampling example
+
+bootstrap
+
+numerical integration
+
+
 
