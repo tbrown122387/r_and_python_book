@@ -139,7 +139,7 @@ import numpy as np # import all of numpy
 np.random.normal(size=10)
 ```
 
-This is one use of the dot operator (`.`). We will also use it in TODO, but don't worry about that for now. `normal` is *inside of* `random`, which it itself inside of `np`. 
+This is one use of the dot operator (`.`). It is also used to access attributes and methods of objects (more information on that will come later in chapter \@ref(an-introduction-to-object-oriented-programming)). `normal` is *inside of* `random`, which it itself inside of `np`. 
 
 As a second example, suppose we were interested in the [`stats` sub-module](https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html) found inside the `scipy` package. We could import all of `scipy`, but just like the above example, that would mean we would need to consistently refer to a variable's module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type `scipy.stats.norm` over and over again. Instead, let's import the sub-module (or sub-package) and ignore the rest of `scipy`.
 
@@ -257,13 +257,16 @@ r
 ```{block, type='rmd-caution'}
 Loop tips:
 
-1. If you find yourself copy/paste-ing code, maybe changing a small portion on each line, you should consider using a loop, 
-2. If a `for` loop works for something you're trying to do, first try to find a replacement function that does what you want. The examples above just made a `vector`/`list` of consecutive integers. There are many built in functions that accomplish this. Avoiding loops in this case would make your program shorter, easier to read, and (probably much) faster. Also check out `apply`-ish functions/methods (TODO link)
+1. If you find yourself copy/paste-ing code, changing only a small portion of text on each line of code, you should consider using a loop, 
+2. If a `for` loop works for something you are trying to do, first try to find a replacement function that does what you want. The examples above just made a `vector`/`list` of consecutive integers. There are many built in functions that accomplish this. Avoiding loops in this case would make your program shorter, easier to read, and (potentially) much faster. 
+3. A third option between looping, and a built-in function, is to try the functional approach. This will be explained more in the last chapter. 
 3. Watch out for [**off-by-one** errors](https://en.wikipedia.org/wiki/Off-by-one_error). Iterating over the wrong sequence is a common mistake, considering 
     * Python starts counting from $0$, while R starts counting from $1$
     * sometimes iteration `i` references the `i-1`th element of a container
     * The behavior of loops is sometimes more difficult to understand if they're using `break` or `continue`/`next` statements
-4. Don't hardcode variables. In the example above, the  `myLength` or `my_length` variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you *did* hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes. Be kind to yourself and don't give yourself extra work! 
+4. *Don't hardcode variables.* Minimize the number of places you have to make changes to your code. You will change your code consistently, so save your future self some time. 
+
+In the example above, the  `myLength` or `my_length` variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you *did* hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes. 
 ```
 
 Python provides an alternative way to construct lists similar to the one we constructed in the above example. They are called [**list comprehensions**](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions). You can incorporate iteration and conditional logic in one line of code. 
@@ -286,7 +289,7 @@ R can come close to replicating the above behavior with vectorization, but the c
 
 #### Description of Accept-Reject Sampling
 
-An example of an algorithm that uses conditional logic is the **accept-reject sampling method** (TODO cite). This is useful for when we want to sample from a *target probability density* $p(x)$, using another distribution called a *proposal ditribution* $q(x)$. 
+An example of an algorithm that uses conditional logic is the **accept-reject sampling method** [@monte-carlo-stat-methods]. This is useful for when we want to sample from a *target probability density* $p(x)$, using another distribution called a *proposal ditribution* $q(x)$. 
 
 $q(x)$ is probably a distribution that is easy to sample from and is easy to evaluate pointwise. For example, a uniform distribution satisfies these criteria because both R and Python have functions that accomplish these two things (e.g. sampling can be done with `runif` in R and `np.random.uniform` in Python). $p(x)$ is generally more "complicated." If it wasn't, we would try to find some built-in function for it. 
 
@@ -382,22 +385,13 @@ def sample_from_target(num_times):
 2. We are following the [Python style guide](https://www.python.org/dev/peps/pep-0008/#other-recommendations) and using the `is not` keyword to check if something is `None` 
 
 
-In chapter TODO, we'll show you the code that you can use to generate the plot below. 
+In chapter \@ref(visualization), we'll show you the code that you can use to generate the plot below. 
 ```{r, collapse = TRUE, echo=F}
 samps <- rbeta(10000,3,2)
 xGrid <- seq(min(samps), max(samps), length.out = 100)
 hist(samps, main = "", xlab = "x", probability = T)
 lines(xGrid, dbeta(xGrid,3,2), type = "l", col = "red")
 ```
-
-
-Python:
-if 
-if/else
-if/elif/else
-for loops
-list comprehensions
-
 
 
 ## Reshaping and Combining Data Sets
@@ -440,7 +434,7 @@ np.sort(silly_data)
 np.argsort(silly_data)
 ```
 
-For Pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation. This is discussed more in TODO.
+For Pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation.
 
 ```{python, collapse = TRUE}
 import pandas as pd

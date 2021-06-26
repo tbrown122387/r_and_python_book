@@ -354,7 +354,7 @@ Be careful of using extreme values to stand in for what should be an `NA`. Faili
 ```
 
 
-TODO complete.cases versus dropna
+
 <!---
 ---------------------------------------------------------------------------
 -->
@@ -457,7 +457,7 @@ Why are functions important in statistical programming? In both R and Python (an
 This text has already covered how to *use* functions that come to us pre-made. At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python. 
 In this section we take a look at how to define our own functions. This will help us understand pre-made functions. It will also be useful if we need some functionality that isn't already written for us. 
 
-Writing our own functions is also useful (sometimes it is essential) for "packaging up" computations (more on *functional programming* in TODO). Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the "best" one?
+Writing our own functions is also useful for "packaging up" computations. The utility of this will become very apparent in chapter \@ref(functional-programming). Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the "best" one?
 
 Thankfully, R functions are very similar to Python functions. In both languages, functions are **first-class objects**. This means that, no matter which of these two languages you're using, functions
 
@@ -584,7 +584,7 @@ add_number.__defaults__
 The code attribute has much more to offer. To see a list of names of all its contents, you can use `dir(add_number.__code__)`.
 
 ```{block, type='rmd-details'}
-Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) operator will become more clear in chapter TODO. For now, just think of `__code__` being an object *belonging to* `add_number`. Objects that belong to other objects are called **attributes** in Python. The dot operator helps us access attributes *inside* other objects. 
+Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) operator will become more clear in the future chapter on *object-oriented programming*. For now, just think of `__code__` as being an object *belonging to* `add_number`. Objects that belong to other objects are called **attributes** in Python. The dot operator helps us access attributes *inside* other objects. 
 ```
 
 
@@ -782,7 +782,7 @@ So, is it possible to do? Is it easy to do? Does the answer to this question rem
 
 #### In R
 
-In R, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this. The only one that I won't avoid discussing is *environments*, but I will save this for section TODO] Consider the following code.
+In R, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this, but it's generally true.] Consider the following code.
 
 ```{r, collapse=TRUE}
 a <- 1
@@ -1049,9 +1049,6 @@ type_of_day.cat.ordered
 You'll notice that, in this instance, `pd.cut` did not return a `Series` object. It can, but `pd.cut`'s return type will depend on the inputs you feed in. In this case, it returned a [`Categorical`](http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical), which is not the same thing as a `Series`. In the code above, I had to convert it back before accessing the `cat` attribute.
 ```
 
-TODO question on likert scales
-TODO question with cut that induces NAs
-
 
 ## Data Frames
 
@@ -1059,7 +1056,7 @@ As data scientists, most of the time, our data set will be stored as a data fram
 
 ### Data Frames in R
 
-Let's consider as an example Fisher's "Iris" data set. We will read this data set in from a comma separated file (more on input/output in chapter TODO). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
+Let's consider as an example Fisher's "Iris" data set. We will read this data set in from a comma separated file (more on input/output in chapter \@ref(input-and-output)). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
 
 
 ```{r, collapse=TRUE}
@@ -1242,7 +1239,7 @@ $$ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 $$
 
 3. Assume we are interested in the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$.
 
-We will make use of the *Monte Carlo* (TODO cite) method below. It is a technique to approximate expectations and probabilities. If $n$ is a large number, then the right hand side of 
+We will make use of the *Monte Carlo* [@monte-carlo-stat-methods] method below. It is a technique to approximate expectations and probabilities. If $n$ is a large number, then the right hand side of 
 $$
 \mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6)
 $$
@@ -1326,7 +1323,6 @@ a. Make a new `list` that is these two `dict`s above "squished together" (why ca
 
 9. Example on underflow and overflow.
 
-TODO discuss iterators
 
 12. infix functions in R
 
@@ -1337,3 +1333,10 @@ TODO discuss iterators
 15. log-sum-exp trick problem
 
 16. linear algebra problems
+
+17. demo complete.cases versus dropna
+
+18. question on likert scales
+
+19. question with cut that induces NAs
+
