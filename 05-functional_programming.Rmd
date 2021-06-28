@@ -2,7 +2,7 @@
 
 ## Background
 
-Even though this book only discusses one of our languages, the motivation for **functional programming** in both R and Python is clearly in [Advanced R](https://adv-r.hadley.nz/fp.html):
+Even though this book only discusses *one* of our languages of interest, the motivation for **functional programming** in both R and Python is clearly explained in [Advanced R](https://adv-r.hadley.nz/fp.html):
 
 > A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.
 
@@ -202,7 +202,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 ### `map`
 
-[`map`](https://docs.python.org/3/library/functions.html#map) can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a *spline* function, which can be useful for coming up with predictors in regression models.
+[`map`](https://docs.python.org/3/library/functions.html#map) can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a *spline* function, which can be useful for coming up with predictors in regression models. This particular spline function is $f(x) = (x-k)1(x \ge k)$, where $k$ is some chosen "knot point."
 
 ```{python, collapse=TRUE}
 import numpy as np
@@ -330,7 +330,116 @@ More tips on this programming pattern can be found [here](https://pandas.pydata.
 
 ## Functions as Function Outputs in R
 
+Functions that create and return other functions are sometimes called **function factories.** Functions are first class objects in R, so it's easy to return them. What's more interesting is that supposedly temporary objects inside the outer function can be accessed during the call of the inner function after it's returned. 
 
+Here is a first quick example. 
+
+```{r, collapse = TRUE}
+funcFactory <- function(greetingMessage){
+  function(name){
+    paste(greetingMessage, name)
+  }
+}
+greetWithHello <- funcFactory("Hello")
+greetWithHello("Taylor")
+greetWithHello("Charlie")
+```
+
+The `greetingMessage` argument that is passed in, `"Hello"`, isn't temporary anymore. 
+
+
+Here is an example that implements a variance reduction technique called **common random numbers**. 
+
+Suppose $X \sim \text{Normal}(\mu, \sigma^2)$, and we are interested in approximating an expectation of a function of this random variable. Suppose that we don't know that
+$$
+\mathbb{E}[\sin(X)] = \sin(\mu) \exp\left(-\frac{\sigma^2}{2}\right)
+$$
+for any particular choice of $\mu$ and $\sigma^2$, and instead, we choose to use the Monte Carlo method:
+$$
+\hat{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(X^i)
+$$
+where $X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)$ is a large collection of draws from the appropriate normal distribution. In real life, the theoretical expectation might not be tractable (either because the random variable has a complicated distribution, or maybe because the functional is very complicated) and Monte Carlo, or some other approximation algorithm, might be our only hope!
+
+Here are two functions that calculate the above quantities for $n=100$. `actualExpectSin` is a function that computes the theoretical expectation for any particular parameter pair. `monteCarloSin` is a function that implements the Monte Carlo approximate expectation. 
+
+```{r, collapse = TRUE}
+n <- 1000 # don't hardcode variables that aren't passed as arguments!
+actualExpectSin <- function(params){
+  stopifnot(params[2] > 0) # second parameter is sigma
+  sin(params[1])*exp(-.5*(params[2]^2))
+}
+monteCarloSin <- function(params){
+  stopifnot(params[2] > 0) 
+  mean(sin(rnorm(n = n, mean = params[1], sd = params[2])))
+}
+# monteCarloSin(c(10,1))
+```
+
+One-off approximations aren't as interesting as visualizing many expectations for many parameter inputs. On the left, we have the true expectation function plotted with a contour plot. On the right, 
+```{r}
+muGrid <- seq(-10,10, length.out = 100)
+sigmaGrid <- seq(.001, 5, length.out = 100)
+muSigmaGrid <- expand.grid(muGrid, sigmaGrid)
+actuals <-  matrix(apply(muSigmaGrid, 1, actualExpectSin), ncol = length(muGrid))
+mcApprox <- matrix(apply(muSigmaGrid, 1, monteCarloSin), ncol = length(muGrid))
+
+par(mfrow=c(1,2))
+contour(muGrid, sigmaGrid, actuals, xlab = "mu", ylab = "sigma", main = "actual expect.s")
+contour(muGrid, sigmaGrid, mcApprox, xlab = "mu", ylab = "sigma", main = "mc without crn")
+par(mfrow=c(1,1))
+```
+
+If we wanted to use common random numbers, we could generate $Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)$, and use the fact that
+$$
+X^i = \mu + \sigma Z^i
+$$
+This leads to the Monte Carlo estimate
+$$
+\tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
+$$
+Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variates once, globally. Each time you call `monteCarloSinCRNv1(c(10,1))`, you get the same answer. 
+```{r, collapse = TRUE}
+commonZs <- rnorm(n=n)
+monteCarloSinCRNv1 <- function(params){
+  stopifnot(params[2] > 0) 
+  mean(sin(params[1] + params[2]*commonZs))
+} 
+# monteCarloSinCRNv1(c(10,1))
+```
+
+Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look "smoother."
+
+```{r, collapse=TRUE}
+mcApproxCRNv1 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv1), ncol = length(muGrid))
+par(mfrow=c(1,2))
+contour(muGrid, sigmaGrid, mcApprox, xlab = "mu", ylab = "sigma", main = "mc without crn")
+contour(muGrid, sigmaGrid, mcApproxCRNv1, xlab = "mu", ylab = "sigma", main = "mc with crn")
+par(mfrow=c(1,1))
+```
+
+The downside to this implementation is that we have a bunch of samples floating around in the global environment. We can implement this much more nicely with a function factory.
+
+```{r, collapse = TRUE}
+makeMCFunc <- function(){
+  commonZs <- rnorm(n=n)
+  function(params){
+    stopifnot(params[2] > 0) 
+    mean(sin(params[1] + params[2]*commonZs))    
+  }  
+}
+monteCarloSinCRNv2 <- makeMCFunc()
+# monteCarloSinCRNv2(c(10,1))
+```
+
+Much better! Let's just make sure this function works by comparing its output to the known true function.
+
+```{r, collapse=TRUE, echo=FALSE}
+mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), ncol = length(muGrid))
+par(mfrow=c(1,2))
+contour(muGrid, sigmaGrid, mcApprox, xlab = "mu", ylab = "sigma", main = "mc without crn")
+contour(muGrid, sigmaGrid, mcApproxCRNv2, xlab = "mu", ylab = "sigma", main = "mc with crn")
+par(mfrow=c(1,1))
+```
 
 ## Functions as Function Outputs in Python
 
@@ -379,7 +488,7 @@ $$
 100 \times \max(X_t - s_1, 0) - 100\times\max(X_t - s_2, 0)
 $$
 
-a. In R, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. Functions that create and return other functions are sometimes called **function factories.** These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
+a. In R, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
 
 Because the arguments may only take on certain values, and because the function to be returned has a certain signature, a template has been provided below. 
 

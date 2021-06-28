@@ -148,9 +148,11 @@ A few things you might find interesting:
 ### Adding Inheritance
 
 
-Last, we'll talk about inheritance. In my opinion, it isn't a critical data analysis tool. However, it is helpful to understand a little bit about Python's inheritance so that we can compare it to R's inheritance system.
+Last, we'll talk about inheritance. One example of inheritance is writing generic algorithm (e.g. a particular Markov chain Monte Carlo algorithm) as a base class, and specific model as a class that inherits from the algorithm class. This pattern promotes code reuse--model objects will come with pre-made methods that implement the algorithm. For instance, a model object might call a methods that fits the model on a data set, and this method will not even need to be written by the writer of the model class. 
 
-Let's suppose I assume that the data points $x_1, \ldots, x_n$ are a "random sample"^[Otherwise known as an independent and identically distributed sample] from a normal distibution with mean $\mu$ and variance $\sigma^2=1$. $\mu$ is assumed to be unknown (this is, after all, and interval for $\mu$), and $\sigma^2$ is assumed to be known, for simplicity. 
+It is helpful to understand a little bit about Python's inheritance so that we can compare it to R's inheritance system.
+
+Let's suppose I assume that the data points $x_1, \ldots, x_n$ are a "random sample"^[Otherwise known as an independent and identically distributed sample] from a normal distribution with mean $\mu$ and variance $\sigma^2=1$. $\mu$ is assumed to be unknown (this is, after all, and interval for $\mu$), and $\sigma^2$ is assumed to be known, for simplicity. 
 
 A $95\%$ confidence interval for the true unknown population mean $\mu$ is 
 $$
@@ -216,16 +218,6 @@ for datum in time_series:
 ```
 
 If, in the future, you add a new class called `class7`, then you need to change this inner `for` loop, as well as provide new code for the class. 
-
-
-
-
-
-
-
-
-
-
 
 
 ## OOP In R
