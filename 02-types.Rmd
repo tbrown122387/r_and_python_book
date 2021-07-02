@@ -108,6 +108,30 @@ The basic types of R are a little different than the basic types of Python. R us
 
 TODO constants versus literals?
 
+
+### Exercises
+
+#### Easy
+
+All answers to questions related to R should be written in a file named `easy_data_types_exercises.R`. All answers to questions related to Python should be written in a file named `easy_data_types_exercises.py`.
+
+
+1. Which Python type is ideal for each piece of data? Assign your answers to a `list` of `str`ings called `question_one`. 
+
+    + An individual's IP address
+    + whether or not an individual attended a study
+    + the number of seeds found in a plant
+    + the amount of time it takes for a car to race around a track
+  
+2. Answer the same question above, but use R types? Assign your answers to a `character vector` of length four called `questionOne`. 
+
+    + An individual's IP address
+    + whether or not an individual attended a study
+    + the number of seeds found in a plant
+    + the amount of time it takes for a car to race around a track
+  
+3. ["The only numbers that can be represented exactly in R’s numeric type are integers and fractions whose denominator is a power of 2."](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f) Provide ten examples of numbers that have nonzero decimal components and are not exactly equal represented by R's `numeric` type. Store them all in a vector called `notExactFloats`.
+
 <!---
 ---------------------------------------------------------------------------
 -->
@@ -147,7 +171,7 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
-Another choice in Python is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `Pandas` library. The benefit of these is that they play nicely with Pandas data frames (more information about Pandas data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( TODO cite book https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array).
+Another choice in Python is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `Pandas` library. The benefit of these is that they play nicely with Pandas data frames (more information about Pandas data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information    ).
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -178,9 +202,7 @@ This makes sense most of the time, but sometimes it can be tricky. Notice that t
 
 ### Vectorization in Python
 
-TODO add pandas series
-
-Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or `ufunc` for short. Some `ufunc`s can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by name (e.g. `np.sum`). Mixing and matching is allowed, too.
+The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or `ufunc` for short. Some `ufunc`s can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by name (e.g. `np.sum`). Mixing and matching is allowed, too.
 
 `ufunc`s are called *unary* if they take in one array, and *binary* if they take in two. I reproduce a portion of the very nice table found in [@py_ds_handbook] 
 
@@ -204,7 +226,42 @@ np.zeros(5) > np.arange(-3,2)
 np.exp( -.5 * np.linspace(-3, 3, 10)**2) / np.sqrt( 2 * np.pi)
 ```
 
-Instead of calling it "recycling", Python calls it [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. 
+Instead of calling it "recycling", Numpy calls it [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. 
+
+Then there are the `Series` objects from `Pandas`. ufuncs still work on `Series` objects, and they [respect common index values](https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html).
+
+```{python, collapse = TRUE}
+s1 = pd.Series(np.repeat(100,3))
+s2 = pd.Series(np.repeat(10,3))
+s1 + s2
+```
+
+If you feel more comfortable, and you want to coerce these `Series` objects to Numpy arrays, you can do that. For example, the following works. 
+
+```{python, collapse = TRUE}
+s = pd.Series(np.linspace(-1,1,5))
+np.exp(s.to_numpy())
+```
+
+In addition, there are many [attributes and methods](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) they possess. 
+
+```{python, collapse = TRUE}
+ints = pd.Series(np.arange(10))
+ints.abs()
+ints.mean()
+ints.floordiv(2)
+```
+
+`Series` objects that have [text data](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#working-with-text-data) are a little bit different. For one, you have to access the `.str` attribute of the `Series` before calling any [vectorized methods](https://jakevdp.github.io/PythonDataScienceHandbook/03.10-working-with-strings.html). Here is an example. 
+
+```{python}
+s = pd.Series(['a','b','c','33'])
+s.dtype
+s.str.isdigit()
+s.str.replace('a', 'z')
+```
+
+String operations can be a big game changer. 
 
 ### Indexing `vector`s in R
 
@@ -382,7 +439,7 @@ a
 
 ### In R
 
-TODO (cite matloff book)
+TODO [@matloff_r_book]
 
 ## R's lists versus Python's lists and dictionaries
 
@@ -553,7 +610,7 @@ There is a lot more information about environments that isn't provided in this t
 ### More details on Python's user-defined functions
 
 
-Python functions have the same things R functions have: a **formal parameter list**, a body, and they are enclosed a TODO. These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn't organized in the same way. 
+Python functions have the same things R functions have: a **formal parameter list**, a body, and there are [namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) created that help organize which variables the function can access, as well as which pieces of code can call this new function. These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn't organized in the same way. 
 
 Below is a table, taken straight from [the documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types), of all each user-defined function's *special attributes*. 
 
@@ -631,7 +688,7 @@ outerFunc <- function(){
 outerFunc()
 ```
 
-If we ask `outerFunc` to return the function `innerFunc` (functions are objects!), then we might be surprised to see that `innerFunc()` can still successfully refer to `b`, even though it doesn't exist inside the *calling environment.* But don't be surprised! What matters is what was available when the function was *created*.
+If we ask `outerFunc` to return the function `innerFunc` (functions are objects!), then we might be surprised to see that `innerFunc()` can still successfully refer to `b`, even though it doesn't exist inside the *calling environment.* But don't be surprised! What matters is what was available when the function was *created*. In this example, `outerFuncV2` is sometimes called a *function factory*. More information about this is provided in \@ref(functional-programming).
 
 ```{r, collapse = TRUE}
 outerFuncV2 <- function(){
@@ -661,7 +718,7 @@ Python uses **lexical scoping** just like R! There's a famous acronym for the co
 - G: Global, and 
 - B: Built-in.
 
-A Python function will search for a variable in these namespaces in this order.^[Functions aren't the only thing that get their own namespace. TODO]. 
+A Python function will search for a variable in these [namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) in this order.^[Functions aren't the only thing that get their own namespace. For instance, [classes do as well](https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes). More information on classes is provided in Chapter \@ref(an-introduction-to-object-oriented-programming)]. 
 
 "*Local*" refers to variables that are defined inside of the function's block. The function below uses the local `a` over the global one. 
 
@@ -690,7 +747,7 @@ my_new_func()
 my_new_func.__code__.co_freevars
 ```
 
-"*Global*" scope contains variables defined in the module-level namespace. In the example below, `a` is a global variable.
+"*Global*" scope contains variables defined in the module-level namespace. If the below example code was the entirety of your script, then `a` would be a global variable.
 
 ```{python, collapse = TRUE}
 a = "outside both"
@@ -703,7 +760,29 @@ outer_func()
 ```
 
 
-Just like in R, Python functions **cannot** necessarily find variables in an environment where the function was *called* in. TODO check Code outside the body of a function cannot access variables inside the body of a function.
+Just like in R, Python functions **cannot** necessarily find variables in an environment where the function was *called* in. For example, here is some code that mimics the above R example. Both `a` and `b` are accessible from within `inner_func`. That is due to LEGB.
+
+```{python}
+a = "outside both"
+def outer_func():
+  b = "inside one"
+  def inner_func():
+    print(a) 
+    print(b)
+  return inner_func() 
+outer_func()
+```
+
+However, if we start using `outer_func` inside another function, *calling* it in another function, when it was *defined* somewhere else, well then it doesn't have access to some variables. You might be surprised at how the following code functions. Does this print the right string: `"this is the a I want to use now!"` No!
+
+```{python}
+def third_func():
+  a = "this is the a I want to use now!"
+  outer_func()
+third_func() 
+```
+
+Again, these examples get at *functional programming*, which is discussed more in depth in chapter \@ref(functional-programming). There it will describe strategies to make your code easier to maintain (e.g. keep your functions "pure"!)
 
 
 ### Dynamic Lookup 
@@ -1015,7 +1094,7 @@ is.ordered(typeOfDay)
 
 ### Categorical Data in Python
 
-[Categorical data can be handled with the Pandas' library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. We've talked about `Series` objects before in TODO, and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in R), and whether it's ordered or not.
+[Categorical data can be handled with the Pandas' library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. We've talked about `Series` objects before in section \@ref(vectorization-in-python), and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in R), and whether it's ordered or not.
 
 
 ```{python, collapse = TRUE}
