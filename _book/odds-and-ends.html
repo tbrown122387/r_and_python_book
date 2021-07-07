@@ -389,11 +389,9 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 </div>
 <p>Moreover, all of these environments are connected in a chain-like structure. To see what environments are loaded on your machine, and what order they were loaded in, use the <code>search()</code> function. This displays the <a href="https://cran.r-project.org/doc/manuals/R-lang.html#Search-path"><strong>search path</strong></a>, or the ordered sequence of all of your environments.</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="odds-and-ends.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span>
-<span id="cb101-2"><a href="odds-and-ends.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;          &quot;package:reticulate&quot;  &quot;package:quantmod&quot;    &quot;package:TTR&quot;        </span></span>
-<span id="cb101-3"><a href="odds-and-ends.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;package:xts&quot;         &quot;package:zoo&quot;         &quot;package:shiny&quot;       &quot;package:cPseudoMaRg&quot;</span></span>
-<span id="cb101-4"><a href="odds-and-ends.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;devtools_shims&quot;      &quot;tools:rstudio&quot;       &quot;package:stats&quot;       &quot;package:graphics&quot;   </span></span>
-<span id="cb101-5"><a href="odds-and-ends.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;package:grDevices&quot;   &quot;package:utils&quot;       &quot;package:datasets&quot;    &quot;package:methods&quot;    </span></span>
-<span id="cb101-6"><a href="odds-and-ends.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [17] &quot;Autoloads&quot;           &quot;package:base&quot;</span></span></code></pre></div>
+<span id="cb101-2"><a href="odds-and-ends.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:reticulate&quot; &quot;package:ggplot2&quot;    &quot;tools:rstudio&quot;      &quot;package:stats&quot;     </span></span>
+<span id="cb101-3"><a href="odds-and-ends.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] &quot;package:graphics&quot;   &quot;package:grDevices&quot;  &quot;package:utils&quot;      &quot;package:datasets&quot;   &quot;package:methods&quot;   </span></span>
+<span id="cb101-4"><a href="odds-and-ends.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [11] &quot;Autoloads&quot;          &quot;package:base&quot;</span></span></code></pre></div>
 <p>Alternatively, if you’re using RStudio, the search path, and the contents of each of its environments, are displayed in the “Environment” window. You can choose which environment you’d like to look at by selecting it from the dropdown menu. This allows you to see all of the variables in that particular environment. The <strong>global environment</strong> (i.e. <code>".GlobalEnv"</code>) is displayed by default, because that is where you store all the objects you are creating in the console.</p>
 <div class="figure" style="text-align: center">
 <img src="pics/environments_display_rstudio.png" alt="The Environment Window in RStudio" width="80%" />
@@ -412,18 +410,14 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <span id="cb102-2"><a href="odds-and-ends.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: lattice</span></span>
 <span id="cb102-3"><a href="odds-and-ends.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: survival</span></span>
 <span id="cb102-4"><a href="odds-and-ends.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: Formula</span></span>
-<span id="cb102-5"><a href="odds-and-ends.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: ggplot2</span></span>
-<span id="cb102-6"><a href="odds-and-ends.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-7"><a href="odds-and-ends.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: &#39;Hmisc&#39;</span></span>
-<span id="cb102-8"><a href="odds-and-ends.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="do">## The following object is masked from &#39;package:quantmod&#39;:</span></span>
-<span id="cb102-9"><a href="odds-and-ends.html#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-10"><a href="odds-and-ends.html#cb102-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     Lag</span></span>
-<span id="cb102-11"><a href="odds-and-ends.html#cb102-11" aria-hidden="true" tabindex="-1"></a><span class="do">## The following objects are masked from &#39;package:base&#39;:</span></span>
-<span id="cb102-12"><a href="odds-and-ends.html#cb102-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb102-13"><a href="odds-and-ends.html#cb102-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     format.pval, units</span></span>
-<span id="cb102-14"><a href="odds-and-ends.html#cb102-14" aria-hidden="true" tabindex="-1"></a><span class="co"># format.pval refers to Hmisc&#39;s format.pval because it was loaded more recently</span></span>
-<span id="cb102-15"><a href="odds-and-ends.html#cb102-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Hmisc::format.pval in this case is the same as above</span></span>
-<span id="cb102-16"><a href="odds-and-ends.html#cb102-16" aria-hidden="true" tabindex="-1"></a><span class="co"># base::format.pval this is the only way you can get base&#39;s format.pval function</span></span></code></pre></div>
+<span id="cb102-5"><a href="odds-and-ends.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb102-6"><a href="odds-and-ends.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: &#39;Hmisc&#39;</span></span>
+<span id="cb102-7"><a href="odds-and-ends.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb102-8"><a href="odds-and-ends.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb102-9"><a href="odds-and-ends.html#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="do">##     format.pval, units</span></span>
+<span id="cb102-10"><a href="odds-and-ends.html#cb102-10" aria-hidden="true" tabindex="-1"></a><span class="co"># format.pval refers to Hmisc&#39;s format.pval because it was loaded more recently</span></span>
+<span id="cb102-11"><a href="odds-and-ends.html#cb102-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Hmisc::format.pval in this case is the same as above</span></span>
+<span id="cb102-12"><a href="odds-and-ends.html#cb102-12" aria-hidden="true" tabindex="-1"></a><span class="co"># base::format.pval this is the only way you can get base&#39;s format.pval function</span></span></code></pre></div>
 </div>
 <div id="loading-packages-in-python" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Loading Packages In Python</h3>
@@ -452,20 +446,20 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="odds-and-ends.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
 <span id="cb104-2"><a href="odds-and-ends.html#cb104-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb104-3"><a href="odds-and-ends.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.06764447,  1.03067843,  0.49131087, -1.27005614, -1.08203803,</span></span>
-<span id="cb104-4"><a href="odds-and-ends.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.49630607,  0.58709995, -1.50507126,  0.59148865, -1.33918749])</span></span></code></pre></div>
+<span id="cb104-3"><a href="odds-and-ends.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1.66496405,  0.87186256, -0.57661876,  1.23822509,  0.52292753,</span></span>
+<span id="cb104-4"><a href="odds-and-ends.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.74743871, -2.36077944, -0.39462979, -1.00383971, -0.86890877])</span></span></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">4</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="odds-and-ends.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb105-2"><a href="odds-and-ends.html#cb105-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb105-3"><a href="odds-and-ends.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.95360844,  0.24364544,  1.27048014,  1.64439841, -0.78128069,</span></span>
-<span id="cb105-4"><a href="odds-and-ends.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.98785476,  1.35739674, -2.15518811,  0.02426835, -0.60364065])</span></span></code></pre></div>
+<span id="cb105-3"><a href="odds-and-ends.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 2.02532372, -0.79225927, -0.83581761,  1.27127336, -0.80121759,</span></span>
+<span id="cb105-4"><a href="odds-and-ends.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.79748232, -1.45694445,  0.50000915,  0.39501846,  0.08556432])</span></span></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="odds-and-ends.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
 <span id="cb106-2"><a href="odds-and-ends.html#cb106-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb106-3"><a href="odds-and-ends.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 2.14995817,  2.82222916, -1.96639541,  0.03852112,  0.39740555,</span></span>
-<span id="cb106-4"><a href="odds-and-ends.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.04537859, -1.70402293,  0.60027353,  0.24612372,  0.21653289])</span></span></code></pre></div>
+<span id="cb106-3"><a href="odds-and-ends.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.68443225, -0.19289662,  1.07421443, -0.546465  ,  0.21111947,</span></span>
+<span id="cb106-4"><a href="odds-and-ends.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.59997444,  0.41619559, -0.12503542, -0.85131637, -1.8281531 ])</span></span></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="odds-and-ends.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t do this!</span></span>
 <span id="cb107-2"><a href="odds-and-ends.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span> <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
@@ -686,11 +680,11 @@ We can plot all three functions.</p>
 <p>In R, it all starts with <code>vector</code>s. There are two common functions you should know: <code>sort</code> and <code>order</code>. <code>sort</code> returns the sorted <em>data</em>, while <code>order</code> returns the <em>order indexes</em>.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="odds-and-ends.html#cb118-1" aria-hidden="true" tabindex="-1"></a>sillyData <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
 <span id="cb118-2"><a href="odds-and-ends.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sillyData)</span>
-<span id="cb118-3"><a href="odds-and-ends.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.70844216 -0.06281458  0.12102033  2.19224179 -0.53897101</span></span>
+<span id="cb118-3"><a href="odds-and-ends.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.0766197  1.4855405  1.1807133 -0.6761747 -0.4229867</span></span>
 <span id="cb118-4"><a href="odds-and-ends.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(sillyData)</span>
-<span id="cb118-5"><a href="odds-and-ends.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.70844216 -0.53897101 -0.06281458  0.12102033  2.19224179</span></span>
+<span id="cb118-5"><a href="odds-and-ends.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.0766197 -0.6761747 -0.4229867  1.1807133  1.4855405</span></span>
 <span id="cb118-6"><a href="odds-and-ends.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(sillyData)</span>
-<span id="cb118-7"><a href="odds-and-ends.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 5 2 3 4</span></span></code></pre></div>
+<span id="cb118-7"><a href="odds-and-ends.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 4 5 3 2</span></span></code></pre></div>
 <p><code>order</code> is useful if you’re sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the <code>MSRP</code> (a <code>character</code> vector) a little first. We use the function <code>gsub</code> to find patterns in the text, and replace them with the empty string.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="odds-and-ends.html#cb119-1" aria-hidden="true" tabindex="-1"></a>carData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
 <span id="cb119-2"><a href="odds-and-ends.html#cb119-2" aria-hidden="true" tabindex="-1"></a>noDollarSignMSRP <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;$&quot;</span>, <span class="st">&quot;&quot;</span>, carData<span class="sc">$</span>MSRP, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
@@ -707,11 +701,11 @@ We can plot all three functions.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="odds-and-ends.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb121-2"><a href="odds-and-ends.html#cb121-2" aria-hidden="true" tabindex="-1"></a>silly_data <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb121-3"><a href="odds-and-ends.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(silly_data)</span>
-<span id="cb121-4"><a href="odds-and-ends.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [ 1.04563717 -0.04338765  0.93029887  2.02407236 -0.75197328]</span></span>
+<span id="cb121-4"><a href="odds-and-ends.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [-0.82016975  1.21114351 -0.41335646  0.20382271  0.04627469]</span></span>
 <span id="cb121-5"><a href="odds-and-ends.html#cb121-5" aria-hidden="true" tabindex="-1"></a>np.sort(silly_data)</span>
-<span id="cb121-6"><a href="odds-and-ends.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.75197328, -0.04338765,  0.93029887,  1.04563717,  2.02407236])</span></span>
+<span id="cb121-6"><a href="odds-and-ends.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.82016975, -0.41335646,  0.04627469,  0.20382271,  1.21114351])</span></span>
 <span id="cb121-7"><a href="odds-and-ends.html#cb121-7" aria-hidden="true" tabindex="-1"></a>np.argsort(silly_data)</span>
-<span id="cb121-8"><a href="odds-and-ends.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([4, 1, 2, 0, 3])</span></span></code></pre></div>
+<span id="cb121-8"><a href="odds-and-ends.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0, 2, 4, 3, 1])</span></span></code></pre></div>
 <p>For Pandas’ <code>DataFrame</code>s, most of the functions I find useful are methods attached to the <code>DataFrame</code> class. That means that, as long as something is inside a <code>DataFrame</code>, you can use dot notation.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="odds-and-ends.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb122-2"><a href="odds-and-ends.html#cb122-2" aria-hidden="true" tabindex="-1"></a>car_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
@@ -741,20 +735,20 @@ We can plot all three functions.</p>
 <span id="cb123-2"><a href="odds-and-ends.html#cb123-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> realEstate[<span class="sc">-</span><span class="dv">1</span>,]</span>
 <span id="cb123-3"><a href="odds-and-ends.html#cb123-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> realEstate[<span class="dv">1</span>,]</span>
 <span id="cb123-4"><a href="odds-and-ends.html#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rbind</span>(test, train))</span>
-<span id="cb123-5"><a href="odds-and-ends.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize</span></span>
-<span id="cb123-6"><a href="odds-and-ends.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000</span></span>
-<span id="cb123-7"><a href="odds-and-ends.html#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189</span></span>
-<span id="cb123-8"><a href="odds-and-ends.html#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760</span></span>
-<span id="cb123-9"><a href="odds-and-ends.html#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648</span></span>
-<span id="cb123-10"><a href="odds-and-ends.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880</span></span>
-<span id="cb123-11"><a href="odds-and-ends.html#cb123-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838</span></span>
-<span id="cb123-12"><a href="odds-and-ends.html#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   TotalValue        City</span></span>
-<span id="cb123-13"><a href="odds-and-ends.html#cb123-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     409900      CROZET</span></span>
-<span id="cb123-14"><a href="odds-and-ends.html#cb123-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     523100      CROZET</span></span>
-<span id="cb123-15"><a href="odds-and-ends.html#cb123-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     180900 EARLYSVILLE</span></span>
-<span id="cb123-16"><a href="odds-and-ends.html#cb123-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 4     620700      CROZET</span></span>
-<span id="cb123-17"><a href="odds-and-ends.html#cb123-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 5     162500      CROZET</span></span>
-<span id="cb123-18"><a href="odds-and-ends.html#cb123-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 6     167200      CROZET</span></span>
+<span id="cb123-5"><a href="odds-and-ends.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
+<span id="cb123-6"><a href="odds-and-ends.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
+<span id="cb123-7"><a href="odds-and-ends.html#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
+<span id="cb123-8"><a href="odds-and-ends.html#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
+<span id="cb123-9"><a href="odds-and-ends.html#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
+<span id="cb123-10"><a href="odds-and-ends.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
+<span id="cb123-11"><a href="odds-and-ends.html#cb123-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
+<span id="cb123-12"><a href="odds-and-ends.html#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
+<span id="cb123-13"><a href="odds-and-ends.html#cb123-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
+<span id="cb123-14"><a href="odds-and-ends.html#cb123-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
+<span id="cb123-15"><a href="odds-and-ends.html#cb123-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
+<span id="cb123-16"><a href="odds-and-ends.html#cb123-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
+<span id="cb123-17"><a href="odds-and-ends.html#cb123-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
+<span id="cb123-18"><a href="odds-and-ends.html#cb123-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
 <span id="cb123-19"><a href="odds-and-ends.html#cb123-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">rbind</span>(test, train) <span class="sc">!=</span> realEstate)</span>
 <span id="cb123-20"><a href="odds-and-ends.html#cb123-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
 <p>The above example was with <code>data.frame</code>s. This example of <code>rbind</code> is with <code>matrix</code> objects.</p>
@@ -851,6 +845,7 @@ We can plot all three functions.</p>
 </div>
 <div id="visualization" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Visualization</h2>
+<p>I describe a few plotting paradigms in R and Python below. Note that these descriptions are extremely thin. More depth could easily turn any of these subsections into an entire textbook!</p>
 <div id="base-r-plotting" class="section level3" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Base R Plotting</h3>
 <p>R comes with some built-in functions <code>plot</code>, <code>hist</code>, <code>boxplot</code>, etc. Many of these reside in <code>package:graphics</code>, which comes pre-loaded into the search path. <code>plot</code> on the other hand, is higher up the search path in <code>package:base</code>–it is a generic method whose methods might be in <code>package:graphics</code> or some place else.</p>
@@ -858,20 +853,20 @@ We can plot all three functions.</p>
 <p>Recall our Albemarle Real Estate data set.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="odds-and-ends.html#cb131-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb131-2"><a href="odds-and-ends.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
-<span id="cb131-3"><a href="odds-and-ends.html#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize</span></span>
-<span id="cb131-4"><a href="odds-and-ends.html#cb131-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000</span></span>
-<span id="cb131-5"><a href="odds-and-ends.html#cb131-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189</span></span>
-<span id="cb131-6"><a href="odds-and-ends.html#cb131-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760</span></span>
-<span id="cb131-7"><a href="odds-and-ends.html#cb131-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648</span></span>
-<span id="cb131-8"><a href="odds-and-ends.html#cb131-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880</span></span>
-<span id="cb131-9"><a href="odds-and-ends.html#cb131-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838</span></span>
-<span id="cb131-10"><a href="odds-and-ends.html#cb131-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   TotalValue        City</span></span>
-<span id="cb131-11"><a href="odds-and-ends.html#cb131-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     409900      CROZET</span></span>
-<span id="cb131-12"><a href="odds-and-ends.html#cb131-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     523100      CROZET</span></span>
-<span id="cb131-13"><a href="odds-and-ends.html#cb131-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     180900 EARLYSVILLE</span></span>
-<span id="cb131-14"><a href="odds-and-ends.html#cb131-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4     620700      CROZET</span></span>
-<span id="cb131-15"><a href="odds-and-ends.html#cb131-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5     162500      CROZET</span></span>
-<span id="cb131-16"><a href="odds-and-ends.html#cb131-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6     167200      CROZET</span></span></code></pre></div>
+<span id="cb131-3"><a href="odds-and-ends.html#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
+<span id="cb131-4"><a href="odds-and-ends.html#cb131-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
+<span id="cb131-5"><a href="odds-and-ends.html#cb131-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
+<span id="cb131-6"><a href="odds-and-ends.html#cb131-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
+<span id="cb131-7"><a href="odds-and-ends.html#cb131-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
+<span id="cb131-8"><a href="odds-and-ends.html#cb131-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
+<span id="cb131-9"><a href="odds-and-ends.html#cb131-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
+<span id="cb131-10"><a href="odds-and-ends.html#cb131-10" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
+<span id="cb131-11"><a href="odds-and-ends.html#cb131-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
+<span id="cb131-12"><a href="odds-and-ends.html#cb131-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
+<span id="cb131-13"><a href="odds-and-ends.html#cb131-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
+<span id="cb131-14"><a href="odds-and-ends.html#cb131-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
+<span id="cb131-15"><a href="odds-and-ends.html#cb131-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
+<span id="cb131-16"><a href="odds-and-ends.html#cb131-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span></code></pre></div>
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="odds-and-ends.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb132-2"><a href="odds-and-ends.html#cb132-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
@@ -893,11 +888,79 @@ We can plot all three functions.</p>
 </div>
 <div id="plotting-with-ggplot2" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Plotting with <code>ggplot2</code></h3>
-<p>TODO</p>
+<p><a href="https://ggplot2.tidyverse.org/index.html"><code>ggplot2</code></a> is a popular third-party visualization package for R. This subsection provides a short tutorial on how to use it, and it is primarily based off of the material provided in <span class="citation">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span>. An online version of that text is provided <a href="https://ggplot2-book.org">here</a>.</p>
+<p><code>ggplot2</code> code looks a lot different than the code in the above section<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. There, we would write a series of function calls, and each would change some state in the current figure. Here, we call several functions, and “add” (i.e. we use the <code>+</code> operator) their outputs.</p>
+<p>The core function is <a href="https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/ggplot"><code>ggplot</code> function</a>. This is what figures are initialized with. This function will take in information about which data set you want to plot, and it will return an S3 object (more information about S3 objects in subsection <a href="an-introduction-to-object-oriented-programming.html#using-s3-objects">4.2.2</a>).</p>
+<p>Another function is <a href="https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point"><code>geom_point</code></a>. It too returns an S3 instance. Here is our first example, taken from <a href="https://ggplot2-book.org/getting-started.html#basic-use">here</a>.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="odds-and-ends.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb135-2"><a href="odds-and-ends.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
+<span id="cb135-3"><a href="odds-and-ends.html#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
+<p>Let’s cover some vocabulary.</p>
+<ol style="list-style-type: decimal">
+<li><p><code>aes</code></p></li>
+<li><p><strong>geoms</strong></p></li>
+<li><p><strong>stats</strong></p></li>
+<li><p><strong>layers</strong></p></li>
+<li><p><strong>facets</strong></p></li>
+<li><p><strong>coord</strong></p></li>
+<li><p><strong>scales</strong></p></li>
+<li><p><strong>theme</strong></p></li>
+</ol>
 </div>
 <div id="plotting-with-matplotlib" class="section level3" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> Plotting with Matplotlib</h3>
-<p>TODO</p>
+<p>Matplotlib <span class="citation">(<a href="#ref-Hunter:2007" role="doc-biblioref">Hunter 2007</a>)</span> is a third-party visualization library in Python. It’s the oldest and most heavily-used, so it’s the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of <a href="https://matplotlib.org/stable/tutorials/index.html">tutorials</a> on Matplotlib’s website. I will start off making a simple plot, and commenting on each line of code.</p>
+<div class="rmd-details">
+<p>
+You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “object-oriented-style” to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you’re familiar with MATLAB, you might consider learning a little about the first style, as well.
+</p>
+</div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="odds-and-ends.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt       <span class="co"># 1</span></span>
+<span id="cb136-2"><a href="odds-and-ends.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np                    <span class="co"># 2</span></span>
+<span id="cb136-3"><a href="odds-and-ends.html#cb136-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()              <span class="co"># 3</span></span>
+<span id="cb136-4"><a href="odds-and-ends.html#cb136-4" aria-hidden="true" tabindex="-1"></a>ax.hist(np.random.normal(size<span class="op">=</span><span class="dv">1000</span>))  <span class="co"># 4</span></span>
+<span id="cb136-5"><a href="odds-and-ends.html#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([  1.,   2.,  24.,  95., 214., 256., 250., 120.,  32.,   6.]), array([-4.0275026 , -3.30783903, -2.58817546, -1.86851188, -1.14884831,</span></span>
+<span id="cb136-6"><a href="odds-and-ends.html#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.42918474,  0.29047883,  1.01014241,  1.72980598,  2.44946955,</span></span>
+<span id="cb136-7"><a href="odds-and-ends.html#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.16913313]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-150-1.png" width="80%" /></p>
+<p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. It also follows the most commonly-used convention.</p>
+<p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
+<p>Third, we call the <code>subplots</code> function, and use <em>sequence unpacking</em> to unpack the returned container into individual objects without storing the overall container. “Subplots” sounds like it will make many different plots all on one figure, but if you look at the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots">documentation</a> the number of rows and columns defaults to one and one, respectively.</p>
+<p><code>plt.subplots</code> returns a <a href="https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple"><code>tuple</code></a><a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> of two things: a <code>Figure</code> object, and one or more <code>Axes</code> object(s). These two classes will require some explanation.</p>
+<ol style="list-style-type: decimal">
+<li><p>A <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure"><code>Figure</code> object</a> is the overall visualization object you’re making. It holds onto all of the plot elements. If you want to save all of your progress (e.g. with <code>fig.savefig('my_picture.png')</code>), you’re saving the overall <code>Figure</code> object.</p></li>
+<li><p>One or more <a href="https://matplotlib.org/stable/api/axes_api.html#the-axes-class"><code>Axes</code> objects</a> are contained in a <code>Figure</code> object. Each is <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#axes">"what you think of as ‘a plot’</a>." They hold onto two <code>Axis</code> objects (in the case of 2-dimensional plots) or three (in the case of 3-dimensional arguments). We are usually calling the methods of these objects to effect changes on a plot.</p></li>
+</ol>
+<p>In line four, we call the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist"><code>hist()</code> method</a> of the <code>Axes</code> object called <code>ax</code>. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in <a href="https://matplotlib.org/stable/api/axes_api.html#plotting">the documentation</a>.</p>
+<p>If you want to make figures more elaborate, just keep calling different methods of <code>ax</code>. If you want to fit more subplots to the same figure, add more <code>Axes</code> objects. Here is an example using some code from <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface">one of the official Matplotlib tutorials</a>.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb137-1"><a href="odds-and-ends.html#cb137-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>np.pi, <span class="dv">100</span>) <span class="co"># x values grid shared by both subplots</span></span>
+<span id="cb137-2"><a href="odds-and-ends.html#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-3"><a href="odds-and-ends.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create two subplots...one row two columns</span></span>
+<span id="cb137-4"><a href="odds-and-ends.html#cb137-4" aria-hidden="true" tabindex="-1"></a>fig, myAxes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># kind of like par(mfrow=c(1,2)) in R</span></span>
+<span id="cb137-5"><a href="odds-and-ends.html#cb137-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-6"><a href="odds-and-ends.html#cb137-6" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
+<span id="cb137-7"><a href="odds-and-ends.html#cb137-7" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
+<span id="cb137-8"><a href="odds-and-ends.html#cb137-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd24dc6c748&gt;]</span></span>
+<span id="cb137-9"><a href="odds-and-ends.html#cb137-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
+<span id="cb137-10"><a href="odds-and-ends.html#cb137-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd24dc6cbe0&gt;]</span></span>
+<span id="cb137-11"><a href="odds-and-ends.html#cb137-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
+<span id="cb137-12"><a href="odds-and-ends.html#cb137-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd24df83240&gt;]</span></span>
+<span id="cb137-13"><a href="odds-and-ends.html#cb137-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
+<span id="cb137-14"><a href="odds-and-ends.html#cb137-14" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
+<span id="cb137-15"><a href="odds-and-ends.html#cb137-15" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
+<span id="cb137-16"><a href="odds-and-ends.html#cb137-16" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0, 0.5, &#39;y label&#39;)</span></span>
+<span id="cb137-17"><a href="odds-and-ends.html#cb137-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_title(<span class="st">&quot;Simple Plot&quot;</span>)  <span class="co"># Add a title to the axes.</span></span>
+<span id="cb137-18"><a href="odds-and-ends.html#cb137-18" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 1.0, &#39;Simple Plot&#39;)</span></span>
+<span id="cb137-19"><a href="odds-and-ends.html#cb137-19" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
+<span id="cb137-20"><a href="odds-and-ends.html#cb137-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-21"><a href="odds-and-ends.html#cb137-21" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
+<span id="cb137-22"><a href="odds-and-ends.html#cb137-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7fd24df56048&gt;</span></span>
+<span id="cb137-23"><a href="odds-and-ends.html#cb137-23" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
+<span id="cb137-24"><a href="odds-and-ends.html#cb137-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd24dc3b128&gt;]</span></span>
+<span id="cb137-25"><a href="odds-and-ends.html#cb137-25" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-151-3.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-152-5.png" width="80%" /></p>
 <p>import numpy as np
 my_inputs = np.linspace(start = 0, stop = 2*np.pi)
 outputs = np.sin(my_inputs)</p>
@@ -919,8 +982,14 @@ plt.plot(my_inputs, outputs)</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Hunter:2007" class="csl-entry">
+Hunter, J. D. 2007. <span>“Matplotlib: A 2d Graphics Environment.”</span> <em>Computing in Science &amp; Engineering</em> 9 (3): 90–95. <a href="https://doi.org/10.1109/MCSE.2007.55">https://doi.org/10.1109/MCSE.2007.55</a>.
+</div>
 <div id="ref-monte-carlo-stat-methods" class="csl-entry">
 Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Methods (Springer Texts in Statistics)</em>. Berlin, Heidelberg: Springer-Verlag.
+</div>
+<div id="ref-ggplot2" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
 </div>
 </div>
 <div class="footnotes">
@@ -931,6 +1000,8 @@ Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Meth
 <li id="fn11"><p>Sometimes a package is called a <em>library</em> but I will avoid this terminology.<a href="odds-and-ends.html#fnref11" class="footnote-back">↩︎</a></p></li>
 <li id="fn12"><p>The posterior distribution is usually the object of interest in Bayesian statistics. According to Bayes’ Rule, the unnormalized posterior is usually the product of two “easy” functions. However, integrating the product is not always possible!<a href="odds-and-ends.html#fnref12" class="footnote-back">↩︎</a></p></li>
 <li id="fn13"><p>This is the density of a <span class="math inline">\(\text{Beta}(3,2)\)</span> random variable, if you’re curious.<a href="odds-and-ends.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>Personally, I find its syntax more confusing, and so I tend to prefer base graphics. However, it is popular at the moment, and so I do believe that it is important to mention here in this text.<a href="odds-and-ends.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>We didn’t talk about <code>tuple</code>s in chapter 2, but you can think of them as being similar to <code>list</code>s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g. <code>('a')</code> ) instead of square brackets, and they are immutable instead of mutable.<a href="odds-and-ends.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

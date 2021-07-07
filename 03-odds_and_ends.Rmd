@@ -561,6 +561,9 @@ TODO
 
 ## Visualization
 
+I describe a few plotting paradigms in R and Python below. Note that these descriptions are extremely thin. More depth could easily turn any of these subsections into an entire textbook!
+
+
 ### Base R Plotting
 
 R comes with some built-in functions `plot`, `hist`, `boxplot`, etc. Many of these reside in `package:graphics`, which comes pre-loaded into the search path. `plot` on the other hand, is higher up the search path in `package:base`--it is a generic method whose methods might be in `package:graphics` or some place else. 
@@ -603,12 +606,99 @@ I also use a couple other functions. `abline` is used to superimpose lines over 
 
 ### Plotting with `ggplot2`
 
-TODO
+[`ggplot2`](https://ggplot2.tidyverse.org/index.html) is a popular third-party visualization package for R. This subsection provides a short tutorial on how to use it, and it is primarily based off of the material provided in [@ggplot2]. An online version of that text is provided [here](https://ggplot2-book.org).
+
+`ggplot2` code looks a lot different than the code in the above section^[Personally, I find its syntax more confusing, and so I tend to prefer base graphics. However, it is popular at the moment, and so I do believe that it is important to mention here in this text.]. There, we would write a series of function calls, and each would change some state in the current figure. Here, we call several functions, and "add" (i.e. we use the `+` operator) their outputs. 
+
+The core function is [`ggplot` function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/ggplot). This is what figures are initialized with. This function will take in information about which data set you want to plot, and it will return an S3 object (more information about S3 objects in subsection \@ref(using-s3-objects)). 
+
+Another function is [`geom_point`](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point). It too returns an S3 instance. Here is our first example, taken from [here](https://ggplot2-book.org/getting-started.html#basic-use).
+
+```{r, collapse = TRUE}
+library(ggplot2)
+ggplot(mpg, aes(x = displ, y = hwy))  +
+  geom_point()
+```
+
+Let's cover some vocabulary.
+
+1. `aes`
+
+
+
+1. **geoms**
+
+2. **stats**
+
+3. **layers**
+
+4. **facets**
+
+5. **coord**
+
+6. **scales**
+
+7. **theme**
+
 
 
 ### Plotting with Matplotlib
 
-TODO
+Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It's the oldest and most heavily-used, so it's the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of [tutorials](https://matplotlib.org/stable/tutorials/index.html) on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code.
+
+```{block, type='rmd-details'}
+You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
+```
+
+```{python, collapse = TRUE}
+import matplotlib.pyplot as plt       # 1
+import numpy as np                    # 2
+fig, ax = plt.subplots()              # 3
+ax.hist(np.random.normal(size=1000))  # 4
+```
+```{python, collapse = TRUE, out.width='80%', echo= FALSE}
+plt.show()                            # 5
+```
+
+In the first line, we import the `pyplot` submodule of `matplotlib`. We rename it to `plt`, which is short, and will save us some typing. It also follows the most commonly-used convention. 
+
+Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn't in a Numpy array, you should convert it first. 
+
+Third, we call the `subplots` function, and use *sequence unpacking* to unpack the returned container into individual objects without storing the overall container. "Subplots" sounds like it will make many different plots all on one figure, but if you look at the [documentation](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots) the number of rows and columns defaults to one and one, respectively. 
+
+`plt.subplots` returns a [`tuple`](https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple)^[We didn't talk about `tuple`s in chapter 2, but you can think of them as being similar to `list`s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g. `('a')` ) instead of square brackets, and they are immutable instead of mutable.] of two things: a `Figure` object, and one or more `Axes` object(s). These two classes will require some explanation. 
+
+1. A [`Figure` object](https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure) is the overall visualization object you're making. It holds onto all of the plot elements. If you want to save all of your progress (e.g. with `fig.savefig('my_picture.png')`), you're saving the overall `Figure` object. 
+
+2. One or more [`Axes` objects](https://matplotlib.org/stable/api/axes_api.html#the-axes-class) are contained in a `Figure` object. Each is ["what you think of as 'a plot'](https://matplotlib.org/stable/tutorials/introductory/usage.html#axes)." They hold onto two `Axis` objects (in the case of 2-dimensional plots) or three (in the case of 3-dimensional arguments). We are usually calling the methods of these objects to effect changes on a plot. 
+
+In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist) of the `Axes` object called `ax`. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in [the documentation](https://matplotlib.org/stable/api/axes_api.html#plotting).
+
+If you want to make figures more elaborate, just keep calling different methods of `ax`. If you want to fit more subplots to the same figure, add more `Axes` objects. Here is an example using some code from [one of the official Matplotlib tutorials](https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface).
+
+```{python, collapse = TRUE}
+x = np.linspace(0, 2*np.pi, 100) # x values grid shared by both subplots
+
+# create two subplots...one row two columns
+fig, myAxes = plt.subplots(1, 2) # kind of like par(mfrow=c(1,2)) in R
+
+# first subplot
+myAxes[0].plot(x, x, label='linear')  # Plot some data on the axes.
+myAxes[0].plot(x, x**2, label='quadratic')  # Plot more data on the axes...
+myAxes[0].plot(x, x**3, label='cubic')  # ... and some more.
+myAxes[0].set_xlabel('x label')  # Add an x-label to the axes.
+myAxes[0].set_ylabel('y label')  # Add a y-label to the axes.
+myAxes[0].set_title("Simple Plot")  # Add a title to the axes.
+myAxes[0].legend()  # Add a legend.
+
+# second subplot
+myAxes[1].plot(x,np.sin(x), label='sine wave')
+myAxes[1].legend()
+```
+
+```{python, collapse = TRUE, out.width='80%', echo= FALSE}
+plt.show()                            
+```
 
 import numpy as np
 my_inputs = np.linspace(start = 0, stop = 2*np.pi)
