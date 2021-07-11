@@ -557,6 +557,71 @@ You can see it's slightly more concise in Python. If you are familiar with SQL, 
 
 ### Long Versus Wide Data
 
+
+#### Long Versus Wide in R
+
+Many types of data can be stored in either a **wide** or **long** format. 
+
+The classical example is data from a *longitudinal study.* If an experimental unit (in the example below a person) is repeatedly measured over time, each row would correspond to an experimental unit *and* an observation time in a data set in a long form. 
+
+```{r, collapse = TRUE}
+fake_long_data1 <- data.frame(person = c("Taylor","Taylor","Charlie","Charlie"), 
+                             timeObserved = c(1, 2, 1, 2),
+                             nums = c(100,101,300,301))
+fake_long_data1
+```
+
+A long format can also be used if you have multiple observations (at a single time point) on an experimental unit. Here is another example. 
+
+```{r, collapse = TRUE}
+fake_long_data2 <- data.frame(person = c("Taylor", "Taylor", "Charlie","Charlie"), 
+                             attributeName = c("attrA","attrB","attrA","attrB"),
+                             nums = c(100,101,300,301))
+fake_long_data2
+```
+
+If you would like to reshape the long data sets into a wide format, you can use the `reshape` function. You will need to specify which columns correspond with the experimental unit, and which column is the "factor" variable. 
+
+
+```{r, collapse = TRUE}
+fake_wide_data1 <- reshape(fake_long_data1, 
+                           direction = "wide", 
+                           timevar = "timeObserved", 
+                           idvar = "person", 
+                           varying = c("before","after")) # col names in new data set
+fake_long_data1
+fake_wide_data1
+```
+
+```{r, collapse = TRUE}
+fake_wide_data2 <- reshape(fake_long_data2, 
+                           direction = "wide", 
+                           timevar = "attributeName", # timevar is kind of a misnomer here
+                           idvar = "person", 
+                           varying = c("attribute A","attribute B")) 
+fake_long_data2
+fake_wide_data2
+```
+
+`reshape` will also go in the other direction: it can take wide data and convert it into long data
+
+```{r, collapse = TRUE}
+reshape(fake_wide_data1, 
+        direction = "long",
+        idvar = "person", 
+        varying = list(c("before","after")),
+        v.names = "nums")
+fake_long_data1
+reshape(fake_wide_data2, 
+        direction = "long",
+        idvar = "person", 
+        varying = list(c("attribute A","attribute B")),
+        v.names = "nums")
+fake_long_data2
+```
+
+#### Long Versus Wide in Python
+
 TODO
 
 ## Visualization
@@ -606,13 +671,32 @@ I also use a couple other functions. `abline` is used to superimpose lines over 
 
 ### Plotting with `ggplot2`
 
-[`ggplot2`](https://ggplot2.tidyverse.org/index.html) is a popular third-party visualization package for R. This subsection provides a short tutorial on how to use it, and it is primarily based off of the material provided in [@ggplot2]. An online version of that text is provided [here](https://ggplot2-book.org).
+[`ggplot2`](https://ggplot2.tidyverse.org/index.html) is a popular third-party visualization package for R. There are also libraries in Python (e.g. [`plotnine`](https://plotnine.readthedocs.io/en/stable/#) that look and feel quite similar. This subsection provides a short tutorial on how to use `ggplot2` in R, and it is primarily based off of the material provided in [@ggplot2]. An online version of this text is provided [here](https://ggplot2-book.org).
 
-`ggplot2` code looks a lot different than the code in the above section^[Personally, I find its syntax more confusing, and so I tend to prefer base graphics. However, it is popular at the moment, and so I do believe that it is important to mention here in this text.]. There, we would write a series of function calls, and each would change some state in the current figure. Here, we call several functions, and "add" (i.e. we use the `+` operator) their outputs. 
+`ggplot2` code looks a lot different than the code in the above section^[Personally, I find its syntax more confusing, and so I tend to prefer base graphics. However, it is popular at the moment, and so I do believe that it is important to mention here in this text.]. There, we would write a series of function calls, and each would change some state in the current figure. Here, we call different `ggplot2` functions that create S3 objects with special behavior (more information about S3 objects in subsection \@ref(using-s3-objects)), and then we "add" (i.e. we use the `+` operator) them together. 
 
-The core function is [`ggplot` function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/ggplot). This is what figures are initialized with. This function will take in information about which data set you want to plot, and it will return an S3 object (more information about S3 objects in subsection \@ref(using-s3-objects)). 
+This new design is not to encourage you to think about S3 object-oriented systems. Rather, it is to get you thinking about making visualizations using the "grammar of graphics" [@gog]. `ggplot2` makes use of its own specialized vocabulary that is taken from this book. As we get started, I will try to introduce some of this vocabulary slowly.
 
-Another function is [`geom_point`](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point). It too returns an S3 instance. Here is our first example, taken from [here](https://ggplot2-book.org/getting-started.html#basic-use).
+The core function is the [`ggplot` function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/ggplot). This is the function that figures are initialized with; it is the function that will take in information about *which* data set you want to plot, and *how* you want to plot it. The raw data is provided in the first argument. The second argument, `mapping=`, is more confusing. The argument should be constructed with the `aes` function. In the parlance of `ggplot2`, `aes` constructs an **aesthetic mapping**. Think of the "aesthetic mapping" as stored information that can be used later on--it "maps" data to visual properties of a figure.
+
+Consider this first example. 
+
+```{r, collapse = TRUE, out.width='80%'}
+library(ggplot2)
+ggplot(mpg, aes(x = displ, y = hwy))
+```
+
+You'll notice a few things about the code and the result produced:
+
+1. No geometric shapes show up!
+
+2. A Cartesian coordinate system is displayed, and the x-axis and y-axis were created based on aesthetic mapping provided (confirm this by typing `summary(mpg$displ)` and `summary(mpg$hwy)`).
+
+3. The axis labels are taken from the column names provided to `aes`.
+
+To plot geometric shapes (*geoms* in the parlance of `ggplot2`), we need to add [**layers**](https://ggplot2-book.org/toolbox.html#toolbox) to it. "Layers" is quite a broad term--it does not only apply to geometric objects. In fact, in `ggplot2`, a layer can be pretty much anything: raw data, summarized data, transformed data, annotations, etc. However, the functions that add geometric object layers usually start with the prefix `geom_`. In RStudio, after loading `ggplot2`, type `geom_`, and then press `<Tab>` (autocomplete) to see some of the options.
+
+Consider the function [`geom_point`](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point). It too returns an S3 instance that has specialized behavior. In the parlance of `ggplot2`, it adds a [scatterplot](https://ggplot2-book.org/getting-started.html#basic-use) layer to the figure.
 
 ```{r, collapse = TRUE}
 library(ggplot2)
@@ -620,27 +704,60 @@ ggplot(mpg, aes(x = displ, y = hwy))  +
   geom_point()
 ```
 
-Let's cover some vocabulary.
+Notice that we did not need to provide any arguments to `geom_point`. The aesthetic mappings were used by the new layer.
 
-1. `aes`
+There are *many* types of layers that you can add to a plot, and you're not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the `ggtitle` function to add a title layer. Unlike `geom_point`, this function will need to take an argument because the desired title is not stored as an aesthetic mapping.
 
+```{r, collapse = TRUE}
+ggplot(mpg, aes(x = displ, y = hwy))  +
+  geom_point() + 
+  ggtitle("my favorite scatterplot")
+```
 
+Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.
 
-1. **geoms**
+```{r, collapse = TRUE}
+ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
+  geom_point() + 
+  ggtitle("my favorite scatterplot")
+```
 
-2. **stats**
+If we want tighter control on the aesthetic mapping, we can use [**scales**](https://ggplot2-book.org/scales.html#scales). Syntactically, these are things we "add" (`+`) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix `scale_`.
 
-3. **layers**
+We can change attributes of the axes like this.
 
-4. **facets**
+```{r, collapse = TRUE}
+base_plot <- ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
+             geom_point() + 
+             ggtitle("my favorite scatterplot")
+base_plot + scale_x_log10() + scale_y_reverse()
+```
 
-5. **coord**
+We can also change plot colors with scale layers. Let's add an aesthetic called fill so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called `score`. We also use a new geom layer from a function called `geom_tile()`.  
 
-6. **scales**
+```{r, collapse = TRUE}
+mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
+ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
+  geom_tile() 
+```
 
-7. **theme**
+If we didn't like these colors, we could change them with a scale layer. Personally, I like this one. 
 
+```{r, collapse = TRUE}
+mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
+ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
+  geom_tile() + 
+  scale_fill_viridis_b()
+```
 
+There are many to choose from, though. Here's another one. 
+
+```{r, collapse = TRUE}
+mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
+ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
+  geom_tile() + 
+  scale_fill_gradient2()
+```
 
 ### Plotting with Matplotlib
 

@@ -462,8 +462,7 @@ For example, <code>int</code>s are often implicitly converted to <code>float</co
 <span id="cb17-7"><a href="data-types.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;5/2/2021&quot;</span>, <span class="st">&quot;5/3/2021&quot;</span>, <span class="st">&quot;5/4/2021&quot;</span>)</span>
 <span id="cb17-8"><a href="data-types.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;5/2/2021&quot; &quot;5/3/2021&quot; &quot;5/4/2021&quot;</span></span>
 <span id="cb17-9"><a href="data-types.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb17-10"><a href="data-types.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.78317481 -1.22214507  1.16464548 -0.01069886 -1.20665587 -0.28913172  0.20823276  1.64763218 -0.83722261</span></span>
-<span id="cb17-11"><a href="data-types.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] -1.12956608</span></span></code></pre></div>
+<span id="cb17-10"><a href="data-types.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1.1751792  0.6016514  1.5969062  0.7421955  0.8396117 -0.6152867  0.7854714  0.7267517 -1.2124122  0.1961345</span></span></code></pre></div>
 <p><code>c</code> is short for “combine.” <code>seq</code> and <code>rep</code> are short for “sequence” and “replicate,” respectively. <code>rnorm</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
 </div>
 <div id="overview-of-python" class="section level3" number="2.2.2">
@@ -476,7 +475,7 @@ For example, <code>int</code>s are often implicitly converted to <code>float</co
 <span id="cb18-4"><a href="data-types.html#cb18-4" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
 <span id="cb18-5"><a href="data-types.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  3,  5,  7,  9, 11])</span></span>
 <span id="cb18-6"><a href="data-types.html#cb18-6" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb18-7"><a href="data-types.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1.10655122, 0.78214454, 0.81049066])</span></span></code></pre></div>
+<span id="cb18-7"><a href="data-types.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.48542727,  0.41413747,  0.23101633])</span></span></code></pre></div>
 <p>Another choice in Python is to use a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series"><code>Series</code> object</a> from the <code>Pandas</code> library. The benefit of these is that they play nicely with Pandas data frames (more information about Pandas data frames can be found in <a href="data-types.html#data-frames-in-python">2.7.2</a>), and that they have more flexibility with accessing elements by name ( see <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array">here</a> for more information ).</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="data-types.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb19-2"><a href="data-types.html#cb19-2" aria-hidden="true" tabindex="-1"></a>first <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
@@ -1254,7 +1253,7 @@ Sometimes, in R, functions are called <strong>closures</strong> to emphasize tha
 <span id="cb75-9"><a href="data-types.html#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb75-10"><a href="data-types.html#cb75-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
 <span id="cb75-11"><a href="data-types.html#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg))</span>
-<span id="cb75-12"><a href="data-types.html#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 4623870448 4623870480</span></span>
+<span id="cb75-12"><a href="data-types.html#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 4561480176 4561480208</span></span>
 <span id="cb75-13"><a href="data-types.html#cb75-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb75-14"><a href="data-types.html#cb75-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
@@ -1371,7 +1370,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="data-types.html#cb82-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb82-2"><a href="data-types.html#cb82-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb82-3"><a href="data-types.html#cb82-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb82-4"><a href="data-types.html#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf]</span></span>
+<span id="cb82-4"><a href="data-types.html#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0]</span></span>
 <span id="cb82-5"><a href="data-types.html#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb82-6"><a href="data-types.html#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb82-7"><a href="data-types.html#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -1404,7 +1403,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="data-types.html#cb84-1" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb84-2"><a href="data-types.html#cb84-2" aria-hidden="true" tabindex="-1"></a>type_of_day <span class="op">=</span> pd.cut(stock_returns, [<span class="op">-</span>np.inf, <span class="dv">0</span>, np.inf], labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
 <span id="cb84-3"><a href="data-types.html#cb84-3" aria-hidden="true" tabindex="-1"></a>type_of_day</span>
-<span id="cb84-4"><a href="data-types.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;]</span></span>
+<span id="cb84-4"><a href="data-types.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;bad day&#39;]</span></span>
 <span id="cb84-5"><a href="data-types.html#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (2, object): [&#39;bad day&#39; &lt; &#39;good day&#39;]</span></span>
 <span id="cb84-6"><a href="data-types.html#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day)</span>
 <span id="cb84-7"><a href="data-types.html#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span>
