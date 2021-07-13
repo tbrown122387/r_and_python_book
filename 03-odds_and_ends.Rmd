@@ -622,7 +622,49 @@ fake_long_data2
 
 #### Long Versus Wide in Python
 
-TODO
+With Pandas, we can take make wide data long with [`pd.DataFrame.pivot`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
+
+When going from wide to long, make sure to use the [`pd.DataFrame.reset_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#) method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
+
+```{python, collapse = TRUE}
+import pandas as pd
+fake_long_data1 = pd.DataFrame({'person' : ["Taylor","Taylor","Charlie","Charlie"], 
+                               'time_observed' : [1, 2, 1, 2],
+                               'nums' : [100,101,300,301]})
+fake_long_data1
+pivot_data1 = fake_long_data1.pivot(index='person', columns='time_observed', values='nums')
+pivot_data1
+fake_wide_data1 = pivot_data1.reset_index()
+fake_wide_data1
+```
+
+Here's one more example showing the same functionality--going fom wide to long format.
+
+```{python, collapse = TRUE}
+fake_long_data2 = pd.DataFrame({'person' : ["Taylor","Taylor","Charlie","Charlie"], 
+                               'attribute_name' : ['attrA', 'attrB', 'attrA', 'attrB'],
+                               'nums' : [100,101,300,301]})
+fake_wide_data2 = fake_long_data2.pivot(index='person', 
+                                        columns='attribute_name', 
+                                        values='nums').reset_index()
+fake_wide_data2
+```
+
+Here are some examples of going in the other direction: from wide to long with [`pd.DataFrame.melt`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). The first example specifies value columns by integers.
+
+```{python, collapse = TRUE}
+fake_wide_data1
+fake_wide_data1.melt(id_vars = "person", value_vars = [1,2])
+```
+
+The second example uses strings to specify value columns.
+
+```{python, collapse = TRUE}
+fake_wide_data2
+fake_wide_data2.melt(id_vars = "person", value_vars = ['attrA','attrB'])
+```
+
+
 
 ## Visualization
 
