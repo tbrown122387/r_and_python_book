@@ -785,81 +785,11 @@ third_func()
 Again, these examples get at *functional programming*, which is discussed more in depth in chapter \@ref(functional-programming). There it will describe strategies to make your code easier to maintain (e.g. keep your functions "pure"!)
 
 
-### Dynamic Lookup 
-
-In general, it is not a good idea to define functions, in either language, that refer to variables in the global environment/namespace. 
-
-#### In R
-
-Consider the code below. 
-
-```{r, collapse=TRUE}
-# R
-missileLaunchCodesSet <- TRUE
-everythingIsSafe <- function(){
-  return(!missileLaunchCodesSet)
-}
-missileLaunchCodesSet <- FALSE
-# everythingIsSafe() # what happens if we call it?
-```
-
-`everythingIsSafe` is created in the global environment, and the global environment contains a  Boolean variable called `missileLaunchCodesAreSet`. 
-
-As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." Imagine sharing some code with a collaborator. Imagine, further, that your collaborator is the subject-matter expert, and knows little about R programming. Suppose that he finds a variable changes a global variable in the script. Shouldn't this be a relatively trivial change to the code? Wouldn't it be ideal if no one had to worry about 
-
-There are more situations where this code could be problematic. Consider what could happen if any of the following (very typical) conditions are true:
-
-- you or your collaborators aren't sure what `everythingIsSafe` will return because you don't understand dynamic lookup, or 
-- it's difficult to visually keep track of all assignments to `missileLaunchCodesAreSet` (e.g. your script is quite long), or
-- you are not running code sequentially (e.g. you are testing chunks at a time instead of `source()`ing from scratch over and over again).
-
-Another reason that this could be troublesome is if you define a function that refers to a nonexistent variable. Defining the function won't throw an error. R will assume that variable is defined in the global environment. Calling the function might, unless you (accidentally?) defined the variable (later on?).
-
-```{r, collapse = TRUE}
-# R
-myFunc <- function(){
-  return(varigbleNameWithTypo)
-}
-```
-
-#### In Python
-
-
-It's the same situation in Python. Consider `everything_is_safe`, a function that is analogous to `everythingIsSafe`.
-
-```{python, collapse=TRUE}
-# python
-missile_launch_codes_set = True
-def everything_is_safe():
-  return not missile_launch_codes_set
-
-missile_launch_codes_set = False
-everything_is_safe()
-```
-
-We can also define `my_func`, which is analogous to `myFunc`. Defining this function doesn't throw an error either!
-
-```{python, collapse = TRUE}
-# python
-def my_func():
-  return varigble_name_with_typo
-```
-
-So stay away from referring to variables outside the body of your function! 
-
-<!-- ```{block, type='rmd-details'} -->
-<!-- Sometimes, in R, functions are called *closures* to emphasize that they are capturing variables from the parent environment in which they were created.  -->
-<!-- ``` -->
-
 ### Modifying a Function's Arguments
 
-Can/should we modify a function's argument? The flexibility to do this sounds empowering; however, not being able to do it at all can be helpful because it makes programs easier to reason about. 
+Can/should we modify a function's argument? The flexibility to do this sounds empowering; however, not doing it is recommended because it makes programs easier to reason about. 
 
-For example, in \@ref(dynamic-lookup), we mentioned that code that *accessed* global variables can be tricky. If a function *modifies* global variables, it can compound all of those aforementioned problems.
-
-So, is it possible to do? Is it easy to do? Does the answer to this question remain the same for both programming languages? In short: it's complicated.
-
-#### In R
+#### Passing By Value In R
 
 In R, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this, but it's generally true.] Consider the following code.
 
@@ -876,28 +806,14 @@ print(a)
 
 The function `f` has an argument called `arg`. When `f(a)` is performed, changes are made to a *copy* of `a`. When a function constructs a copy of all input variables inside its body, this is called **pass-by-value** semantics. This copy is a temporary intermediate value that only serves as a starting point for the function to produce a return value of `2`.
 
-`arg` could have been called `a`, and the same behavior will take place. However, giving these two things different names is helpful.
+`arg` could have been called `a`, and the same behavior will take place. However, giving these two things different names is helpful to remind you and others that R copies its arguments.
 
-It is still possible to modify `a`, but I don't recommend doing it. You can use the *super assignment operator* (`<<-`).
-
-```{r, collapse=TRUE}
-a <- 1
-f <- function(arg){
-  arg <- 2
-  a <<- arg
-  # return(arg) # no return value
-}
-print(a)
-print(f(a))
-print(a)
-```
-
-In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. Then it takes that `2` and writes it to the global variable in the parent environment. Notice that the function can take in different inputs, but the global assignment is hard-coded.
+It is still possible to modify `a`, but I don't recommend doing this either. I will discuss this more in subsection \@ref(modifying-a-functions-arguments).
 
 
 #### Passing By Assignment In Python
 
-The story is more complicated in Python. Python functions have **pass-by-assignment** semantics. This is something that is very unique to Python. What this means is that the behavior depends on 
+The story is more complicated in Python. Python functions have **pass-by-assignment** semantics. This is something that is very unique to Python. What this means is that your ability to modify the arguments of a function depends on 
 
 - what the type of the argument is, and
 - what you're trying to do to it. 
@@ -1007,6 +923,100 @@ print(arg)
 
 The difference is in the line `arg = [2]`. This rebinds the name `arg` to a different variable. `list`s are still mutable, but this has nothing to do with re-binding--re-binding a name works no matter what type of object you're binding it to. In this case we are re-binding `arg` to a completely different list.  
 
+
+
+### Accessing and Modifying Non-Local Variables
+
+In the last subsection, we were talking about variables that were passed in as arguments to a function. Here we are talking about variables that are not, but are still referred to inside a function's body. 
+
+In general, even though it is possible to access and modify non-local variables in both languages, it is not a good idea. 
+
+#### Accessing and Modifying Non-Local Variables in R
+
+As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." R has **dynamic lookup**, meaning code inside a function will only try to access a referred-to variable when the function is *running*, not when it is defined.
+
+Consider the R code below. 
+
+```{r, collapse=TRUE}
+# R
+missileLaunchCodesSet <- TRUE
+everythingIsSafe <- function(){
+  return(!missileLaunchCodesSet)
+}
+missileLaunchCodesSet <- FALSE
+# everythingIsSafe() # what happens if we call it?
+```
+
+`everythingIsSafe` is created in the global environment, and the global environment contains a Boolean variable called `missileLaunchCodesAreSet`. 
+
+Now imagine sharing some code with a collaborator. Imagine, further, that your collaborator is the subject-matter expert, and knows little about R programming. Suppose that he changes a global variable in the script. Shouldn't this induce a relatively trivial change to the overall program? 
+
+Let's explore this hypothetical further. Consider what could happen if any of the following (very typical) conditions are true:
+
+- you or your collaborators aren't sure what `everythingIsSafe` will return because you don't understand dynamic lookup, or 
+- it's difficult to visually keep track of all assignments to `missileLaunchCodesAreSet` (e.g. your script is quite long or it changes often), or
+- you are not running code sequentially (e.g. you are testing chunks at a time instead of clearing out your memory and `source()`ing from scratch, over and over again).
+
+In each of these situations, understanding of the program would be compromised. However, if you follow the above principle of never referring to non-local variables in function code, all members of the group could do their own work separately, minimizing the dependence on one another. 
+
+Another reason violating this could be troublesome is if you define a function that refers to a nonexistent variable. *Defining* the function will never throw an error because R will assume that variable is defined in the global environment. *Calling* the function might throw an error, unless you accidentally defined the variable, or if you forgot to delete a variable whose name you no longer want to use. 
+
+```{r, collapse = TRUE}
+# R
+myFunc <- function(){
+  return(varigbleNameWithTypo)
+}
+```
+Running the above code to define `myFunc` will not throw an error, even if you think it should!
+
+#### Accessing and Modifying Non-Local Variables in Python
+
+It is the same exact situation in Python. Consider `everything_is_safe`, a function that is analogous to `everythingIsSafe`.
+
+```{python, collapse=TRUE}
+# python
+missile_launch_codes_set = True
+def everything_is_safe():
+  return not missile_launch_codes_set
+
+missile_launch_codes_set = False
+everything_is_safe()
+```
+
+We can also define `my_func`, which is analogous to `myFunc`. Defining this function doesn't throw an error either!
+
+```{python, collapse = TRUE}
+# python
+def my_func():
+  return varigble_name_with_typo
+```
+
+So stay away from referring to variables outside the body of your function! 
+
+
+#### Modifying Non-Local Variables In R
+
+Now what if we want to be extra bad, and in addition to *accessing* global variables, we *modify* them, too.
+
+```{r, collapse=TRUE}
+a <- 1
+f <- function(arg){
+  arg <- 2
+  a <<- arg
+  # return(arg) # no return value
+}
+print(a)
+print(f(a))
+print(a)
+```
+
+In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. Then it takes that `2` and writes it to the global variable in the parent environment. Notice that the function can take in different inputs, but the global assignment is hard-coded.
+
+
+
+#### Modifying Non-Local Variables In Python
+
+
 Finally, there is something in Python that is like R's super assignment operator (`<<-`). It is the `global` keyword. This will let you *modify* global variables. 
 
 ```{block, type='rmd-details'}
@@ -1037,9 +1047,6 @@ result = make_calc(my_array)
 print(result)
 print(my_array) # watch out: side effect
 ```
-
-
-
 
 
 ## Categorical Data 

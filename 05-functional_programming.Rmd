@@ -1,26 +1,43 @@
 # Functional Programming
 
-## Background
+**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)), so how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood subsection \@ref(user-defined-functions-in-r-and-python).
 
-Even though this book only discusses *one* of our languages of interest, the motivation for **functional programming** in both R and Python is clearly explained in [Advanced R](https://adv-r.hadley.nz/fp.html):
+Neither R nor Python is a purely functional language. For us, FP is a style that we can choose to let guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use a more object-oriented style. Some people tend to prefer one to the other, and others prefer to decide which to use depending on the task at hand. 
 
-> A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.
+-----------------------------------
 
-This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it's hard to give a one-line definition that is also comprehensive. Even with a definition, it isn't immediately obvious why the pieces of that definition would be conducive to the above goals. 
-
-Here is my definition: 
-
-- a functional programming style is a style of programming that favors using functions that are both *first-class* and *pure*. 
-
-Neither R nor Python is a 100% pure functional language. So for us, it's a style that we can choose to let us guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use elements discussed in \@ref(an-introduction-to-object-oriented-programming). Some people unilaterally prefer one to the other, but others prefer to decide which to use depending on the task at hand. 
+More specifically, a functional programming style favors using functions that are both *first-class* and *pure*. 
 
 1. **First class functions** are functions that can be passed as arguments to other functions, can be returned from other functions, and can be assigned to variables or stored in data structures. TODO quote. 
 
-Functions in both R and Python are first class. Many of the examples we discuss in this chapter would not exist if they were not. 
+2. **Pure functions** return the same output if they are given the same input, and they do not produce **side-effects**. Side-effects are changes made to non-temporary variables, to the "state" of the program. 
 
-2. **Pure functions** return the same output if they are given the same input, and they do not produce **side-effects**. 
+We discussed (1) in the beginning of chapter \@ref(user-defined-functions-in-r-and-python). If you have not used any other programming languages before, you might even take (1) for granted. However, if you have written C code before, you might remember how difficult it is to use functions as inputs to other functions! 
 
-Side-effects are changes made to non-temporary variables, to the "state" of the program. If your function refers to or modifies global variables, or if it modifies arguments passed in, then it is more difficult to understand. As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable 
+There is more to say about point (2). This means you should keep your functions as *modular* as possible, unless you want your overall program to be much more difficult to understand. FP stipulates that
+
+- **ideally functions will not refer to non-local variables;**
+
+- **ideally functions will not (refer to and) modify non-local variables; and**
+
+- **ideally functions will not modify their arguments.**
+    
+Unfortunately, violating the first of these three criteria is very easy to do in both of our languages. Recall our conversation about *dynamic lookup* in subsection \@ref(accessing-and-modifying-non-local-variables). Both R and Python use dynamic lookup, which means you can't control *when* functions look for variables. Typos in variable names easily go undiscovered, and modified global variables can potentially wreak havoc on your overall program. 
+
+Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-non-local-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two phrases are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
+
+Last, violating the third criterion is easy in Python and difficult in R. This was dicussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
+
+TODO pick up here
+
+
+
+Accidentally violating ii.) is easier to do in Python than it is in R. 
+
+
+If you make a typo, and accidentally refer to some variable outside of your function, whether it is accidentally via a typo, or intentionally
+
+As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable 
 
 |   a.) by itself in isolation, or 
 
@@ -31,6 +48,14 @@ Regarding a.), we discussed examples where changing the value of a single global
 One of the biggest tip-offs that you should be using functional programming is if you need to evaluate a single function many times, or in many different ways. This can happen in a great number of ways. Instead of copy/pasting similar-looking lines of code, you might consider *higher-order* functions that take your function as an input, and intelligently call it in all the many ways you want it to. A third option, not as heavily-discussed in this section, is to use a loop structure (c.f. \@ref(loops)).
 
 Another tip-off is if you need many different functions that are all resembling one another. Should you define each function separately, using excessive copy/paste-ing? Or should you write a function that can elegantly generate any function you need?
+
+
+Even though this book only discusses *one* of our languages of interest, the motivation for **functional programming** in both R and Python is clearly explained in [Advanced R](https://adv-r.hadley.nz/fp.html):
+
+> A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.
+
+This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it's hard to give a one-line definition that is also comprehensive. Even with a definition, it isn't immediately obvious why the pieces of that definition would be conducive to the above goals. 
+
 
 
 ## Functions as Function Inputs in R
@@ -532,5 +557,9 @@ bootstrap
 
 numerical integration
 
+
+3. verbal, open-ended wuestion about what happens when you make a typo in a variable name? R versus Python?
+
+4. try to think of the most complicated program that uses two functions that both use (and modify) globals
 
 
