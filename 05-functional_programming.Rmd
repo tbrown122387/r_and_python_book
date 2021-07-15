@@ -1,16 +1,21 @@
 # Functional Programming
 
-**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)), so how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood subsection \@ref(user-defined-functions-in-r-and-python).
+**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)), so how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(user-defined-functions-in-r-and-python).
 
-Neither R nor Python is a purely functional language. For us, FP is a style that we can choose to let guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use a more object-oriented style. Some people tend to prefer one to the other, and others prefer to decide which to use depending on the task at hand. 
+Neither R nor Python is a purely functional language. For us, FP is a style that we can choose to let guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use a more object-oriented style, or neither. Some people tend to prefer one style to other styles, and others prefer to decide which to use depending on the task at hand. 
 
------------------------------------
+More specifically, a functional programming style takes advantage of **first-class functions** and favors functions that are **pure**. 
 
-More specifically, a functional programming style favors using functions that are both *first-class* and *pure*. 
+1. **First-class functions** are functions that 
+    - can be passed as arguments to other functions, 
+    - can be returned from other functions, and 
+    - can be assigned to variables or stored in data structures. 
 
-1. **First class functions** are functions that can be passed as arguments to other functions, can be returned from other functions, and can be assigned to variables or stored in data structures. TODO quote. 
-
-2. **Pure functions** return the same output if they are given the same input, and they do not produce **side-effects**. Side-effects are changes made to non-temporary variables, to the "state" of the program. 
+2. **Pure functions** 
+    - return the same output if they are given the same input, and 
+    - do not produce **side-effects**. 
+    
+Side-effects are changes made to non-temporary variables, to the "state" of the program. 
 
 We discussed (1) in the beginning of chapter \@ref(user-defined-functions-in-r-and-python). If you have not used any other programming languages before, you might even take (1) for granted. However, if you have written C code before, you might remember how difficult it is to use functions as inputs to other functions! 
 
@@ -22,47 +27,34 @@ There is more to say about point (2). This means you should keep your functions 
 
 - **ideally functions will not modify their arguments.**
     
-Unfortunately, violating the first of these three criteria is very easy to do in both of our languages. Recall our conversation about *dynamic lookup* in subsection \@ref(accessing-and-modifying-non-local-variables). Both R and Python use dynamic lookup, which means you can't control *when* functions look for variables. Typos in variable names easily go undiscovered, and modified global variables can potentially wreak havoc on your overall program. 
+Unfortunately, violating the first of these three criteria is very easy to do in both of our languages. Recall our conversation about *dynamic lookup* in subsection \@ref(accessing-and-modifying-non-local-variables). Both R and Python use dynamic lookup, which means you can't reliably control *when* functions look for variables. Typos in variable names easily go undiscovered, and modified global variables can potentially wreak havoc on your overall program. 
 
-Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-non-local-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two phrases are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
+Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-non-local-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two symbols are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
 
 Last, violating the third criterion is easy in Python and difficult in R. This was dicussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
 
-TODO pick up here
+-----------------------------------
 
+This chapter avoids the philosophical discussion of FP. Instead, it takes the applied approach, and provides instructions on how to use FP in your own programs. I try to give examples of *how* you can use FP, and *when* these tools are especially suitable. 
 
+One of the biggest tip-offs that you should be using functional programming is if you need to evaluate a single function many times, or in many different ways. This happens quite frequently in statistical computing. Instead of copy/pasting similar-looking lines of code, you might consider *higher-order* functions that take your function as an input, and intelligently call it in all the many ways you want it to. A third option you might also consider is to use a loop (c.f. \@ref(loops)). However, that approach is not very functional, and so it will not be heavily-discussed in this section.
 
-Accidentally violating ii.) is easier to do in Python than it is in R. 
+Another tip-off that you need FP is if you need many different functions that are all "related" to one another. Should you define each function separately, using excessive copy/paste-ing? Or should you write a function that can elegantly generate any function you need?
 
-
-If you make a typo, and accidentally refer to some variable outside of your function, whether it is accidentally via a typo, or intentionally
-
-As was discussed in TODO, this is possible in both R and Python, but the function is not completely understandable 
-
-|   a.) by itself in isolation, or 
-
-|   b.) without knowing how many times it is called. 
-
-Regarding a.), we discussed examples where changing the value of a single global variable can completely change the behavior of an entire program (not just a single function!). Regarding b.) a variable has **referential transparency** if it can be replaced with a single value without changing the program's behavior. 
-
-One of the biggest tip-offs that you should be using functional programming is if you need to evaluate a single function many times, or in many different ways. This can happen in a great number of ways. Instead of copy/pasting similar-looking lines of code, you might consider *higher-order* functions that take your function as an input, and intelligently call it in all the many ways you want it to. A third option, not as heavily-discussed in this section, is to use a loop structure (c.f. \@ref(loops)).
-
-Another tip-off is if you need many different functions that are all resembling one another. Should you define each function separately, using excessive copy/paste-ing? Or should you write a function that can elegantly generate any function you need?
-
-
-Even though this book only discusses *one* of our languages of interest, the motivation for **functional programming** in both R and Python is clearly explained in [Advanced R](https://adv-r.hadley.nz/fp.html):
+Not repeating yourself and re-using code is a primary motivation, but it is not the only one. Another motivation for **functional programming** is clearly explained in [Advanced R](https://adv-r.hadley.nz/fp.html)^[Even though this book only discusses *one* of our languages of interest, this quote applies to both langauges.]:
 
 > A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.
 
-This sounds like a good thing to aspire to, so what is functional programming? Unfortunately, it's hard to give a one-line definition that is also comprehensive. Even with a definition, it isn't immediately obvious why the pieces of that definition would be conducive to the above goals. 
+All of these sound like a good things to have in our code, so let's get started with some examples! 
 
 
 
 ## Functions as Function Inputs in R
 
 
-Many of the most commonly-used functionals in R have names that end in "apply". The ones I discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. This is possible because R has first-class functions.
+Many of the most commonly-used functionals in R have names that end in "apply". The ones I discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.
 
+### `sapply` and `vapply`
 
 ```{r, echo=F}
 myDFrows <- 10
@@ -78,10 +70,17 @@ An amateurish way to do this would be something like the following.
 myFirstMean <- mean(myDF[,1])
 mySecondMean <- mean(myDF[,2])
 myThirdMean <- mean(myDF[,3])
+# ....
 # so on and so forth
+# ....
+myThirdMean <- mean(myDF[,100])
 ```
 
-You need one line of code for each column in this data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.  TODO cite DRY
+You will need one line of code for each column in the data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
+
+```{block, type='rmd-details'}
+"Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).
+```
 
 Instead, prefer the use of `sapply` in this situation. The "s" in `sapply` stands for "simplified." In this bit of code `mean` is called on each column of th data frame. `sapply` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
 
@@ -92,7 +91,7 @@ head(myMeans)
 
 Each call to `mean` returns a `double` `vector` of length $1$. This is necessary if you want to collect all the results into a `vector`--remember, all elements of a `vector` have to have the same type. To get the same behavior, you might also consider using `vapply(myDF, mean, numeric(1))`.
 
-In the above case, "simplify" referred to how one-hundred length-$1$ vectors were simplified into one length-$100$ vector. However, "simplified" does not necessarily imply that all elements will be stored in a vector. Consider the `summary` function, which returns a `double` `vector` of length $6$. In this case, one-hundred length-$6$ vectors were simplified into one $6 \times 100$ matrix.
+In the above case, "simplify" referred to how one-hundred length-$1$ vectors were simplified into one length-$100$ `vector`. However, "simplified" does not necessarily imply that all elements will be stored in a `vector`. Consider the `summary` function, which returns a `double` `vector` of length $6$. In this case, one-hundred length-$6$ vectors were simplified into one $6 \times 100$ matrix.
 
 ```{r, collapse = TRUE}
 mySummaries <- sapply(myDF, summary)
@@ -100,9 +99,13 @@ is.matrix(mySummaries)
 dim(mySummaries)
 ```
 
+
 ```{block, type='rmd-details'}
 Another function that is worth mentioning is `replicate`--it is a wrapper for `sapply`. Consider a situation where you want to call a function many times with the same inputs. You might try something like `sapply(1:100, function(elem) {  return(myFunc(someInput)) } )`. Another, more readable, way to do this is `replicate(100, myFunc(someInput))`. 
 ```
+
+
+### `lapply`
 
 For functions that do not return amenable types that fit into a `vector`, `matrix` or `array`, they might need to be stored in `list`. In this situation, you would need `lapply`. The "l" in `lapply` stands for "list". `lapply` always returns a `list` of the same length as the `input`.
 
@@ -114,19 +117,45 @@ class(myRegs[[1]])
 summary(myRegs[[12]])
 ```
 
-I use `sapply` and `lapply` the most, personally. The next most common function I use is `apply`. I use it to apply functions to *rows* instead of columns, although, it can also apply functions over columns, just as the other functions we discussed can. 
+### `apply`
+
+I use `sapply` and `lapply` the most, personally. The next most common function I use is `apply`. I use it to apply functions to *rows* instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can. 
 
 ```{r, collapse = TRUE}
 dim(myDF)
 apply(myDF, 1, mean)
 ```
 
-`tapply` can be very handy when you need it. First, we've alluded to the definition before in TODO, but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply`. Rather, I let `tapply` construct the ragged array for me. The first argument it expects is "typically vector-like", while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
+Another example where it can be useful to apply a function to rows is  **predicate functions.** A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a `data.frame`. Without a predicate function, filtering rows might look something like this.
+
+```{r, collapse = TRUE}
+albRealEstate <- read.csv("data/albemarle_real_estate.csv")
+subDF <- albRealEstate[(albRealEstate$YearBuilt == 2006 & albRealEstate$Condition == "Average") | albRealEstate$City == "CROZET",]
+head(subDF)
+```
+
+Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.
+
+- Step 1: write a predicate function that returns TRUE or FALSE;
+- Step 2: construct a `logical` `vector` by `apply`ing the predicate over rows;
+- Step 3: plug the `logical` `vector` into the `[` operator to remove the rows.
+   
+```{r, collapse = TRUE}
+pred <- function(row){
+  (row['YearBuilt'] == 2006 & row['Condition'] == "Average") | row['City'] == "CROZET"
+}
+whichRows <- apply(albRealEstate, 1, pred)
+subDF <- albRealEstate[whichRows,]
+head(subDF)
+``` 
+
+### `tapply`
+
+`tapply` can be very handy when you need it. First, we've alluded to the definition before in subsection \@ref(data-frames-in-r), but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply`. Rather, I let `tapply` construct the ragged array for me. The first argument it expects is "typically vector-like", while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
 
 If I wanted the average home price for each city, I could use something like this.
 
 ```{r, collapse = TRUE}
-albRealEstate <- read.csv("data/albemarle_real_estate.csv")
 head(albRealEstate)
 unique(albRealEstate$City)
 tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)
@@ -143,7 +172,11 @@ tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Conditio
 For functions that return higher-dimensional output, you will have to use something like `by` or `aggregate` in place of `tapply`.
 ```
 
-The [documentation of `mapply`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply` is a multivariate version of `sapply`. `sapply` worked with univariate functions: the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply`. 
+
+### `mapply`
+
+
+The [documentation of `mapply`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply` is a multivariate version of `sapply`. `sapply` worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply`. 
 
 Here is a short example. Regarding the `n=` argument of `rnorm`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample a.) three times from a mean $0$ normal, b.) twice from a mean $100$ normal, and c.) once from a mean $-100$ normal distribution.
 
@@ -152,27 +185,54 @@ rnorm(n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 mapply(rnorm, n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 ```
 
-I conclude by mentioning `Reduce`. Instead of applying a unary function to consecutive elements, it applies a binary function to elements. `Reduce`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. Here is an initial example. 
+### `Reduce` and `do.call`
+
+In section \@ref(Reshaping and Combining Data Sets) we talked about several different ways of "combining" data sets. We discussed stacking data sets on top of one another with `rbind` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge` (c.f. \@ref(merging-or-joining-data-sets)). Consider the task of combining *many* data sets. How do we write DRY code and abide by the DRY principle?
+
+We can use either `Reduce` or `do.call` as a higher-order function. Just like the aforementioned `*apply` functions, they take in either `cbind`, `rbind`, or `merge` as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take. 
+
+Take a look at the documentation to `rbind`. Its first argument is `...`, which is the [dot-dot-dot](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot) symbol. This means `rbind` can take a varying number of `data.frame`s to stack on top of each other. In other words, `rbind` is *variadic*.
+
+On the other hand, take a look at the documentation of `merge`. It only takes two `data.frame`s at a time^[Although, it is still variadic. The difference is that the `dot-dot-dot` symbol does not refer to a varying number of `data.frame`s...just a varying number of other things we don't care about at the present moment.].
+
+If we want to combine many data sets, `merge` This is the difference between `Reduce` and `do.call`. 
+
+`do.call` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce` calls a binary function many times on pairs of arguments. `Reduce`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
+
+TODO diagram
+
+Here is an initial example that makes use of four data sets `d1.csv`, `d2.csv`, `d3.csv`, and `d4.csv`. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste `read.csv` calls, but that would violate the DRY principle. Instead, let's use `lapply` an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
 
 ```{r, collapse = TRUE}
-sum(1:3)
-Reduce(sum, 1:3)
+numDataSets <- 4
+dataSets <- paste0("d",1:numDataSets)
+dfs <- lapply(dataSets, 
+              function(name) read.csv(paste0("data/", name, ".csv")))
+head(dfs[[3]])
 ```
 
-You can make the examples more interesting by making the binary function more complicated, or by changing the data structures. For instance, I often use `Reduce` for combining many data sets. 
+Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!
 
-```{r}
-myVecs <- lapply(1:10, function(num) matrix(rep(num,4), ncol=1))
-Reduce(cbind, myVecs)
+Next, `cbind`ing them all together can be done as follows. `do.call` will call the function only once. `cbind` takes many arguments at once, so this works. 
+
+```{r, collapse = TRUE}
+do.call(cbind, dfs) # DRY! :)
+# cbind(df1,df2,df3,df4) # WET! :(
 ```
 
-`Filter` is useful with **predicate functions.** Predicate functions return a boolean. Repeatedly calling a predicate on different inputs of any container can be done as follows.
+This code is even better than the above code in that if `dfs` becomes longer, or changes at all, *nothing* will need to be changed. 
 
-TODO
+What if we wanted to `merge` all these data sets together? After all, the `id` column appears to be repeating itself, and some data from `d2` isn't lining up.
+
+```{r, collapse=TRUE}
+Reduce(merge, dfs)
+```
+Again, this is very DRY code. Nothing would need to be changed if `dfs` grew. Furthermore, trying to `do.call` the `merge` function wouldn't work because it can only take two data sets at a time. 
+
 
 ## Another Example in R
 
-Consider another less contrived example. Suppose we want to plot a bivariate Gaussian distribution. 
+Consider another common example: plotting scalar-valued multivariate functions. Let's try to plot a bivariate Gaussian distribution. 
 
 $$
 f(x,y) = \frac{1}{2 \pi}  \exp\left[ -\frac{x ^2 + y^2}{2}     \right]
@@ -241,7 +301,7 @@ def spline(x):
 output = list(map(spline, my_inputs))
 ```
 
-We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization is given in TODO. 
+We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \@ref(visualization). 
 
 ```{python, collapse = TRUE, out.width = '70%', echo=F}
 import matplotlib.pyplot as plt
@@ -263,7 +323,7 @@ output = list(map(spline, my_inputs))
 ### `filter`
 
 
-[`filter`](https://docs.python.org/3/library/functions.html#filter) is very similar to R's `Filter`. It returns an iterable of type `filter`.
+[`filter`](https://docs.python.org/3/library/functions.html#filter) helps remove unwanted elements from a container. It returns an iterable of type `filter`, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
 ```{python, collapse = TRUE}
 raw_data = np.arange(0,1.5,.01)
@@ -271,7 +331,6 @@ for elem in filter(lambda x : x**2 > 2, raw_data):
     print(elem)
 ```
 
-This function is also similar to `which` in `R`. The only difference is that `which` does not accept a function, just a `logical vector`. 
 
 ## Selected Numpy Functionals
 
@@ -355,7 +414,7 @@ More tips on this programming pattern can be found [here](https://pandas.pydata.
 
 ## Functions as Function Outputs in R
 
-Functions that create and return other functions are sometimes called **function factories.** Functions are first class objects in R, so it's easy to return them. What's more interesting is that supposedly temporary objects inside the outer function can be accessed during the call of the inner function after it's returned. 
+Functions that create and return other functions are sometimes called **function factories.** Functions are first-class objects in R, so it's easy to return them. What's more interesting is that supposedly temporary objects inside the outer function can be accessed during the call of the inner function after it's returned. 
 
 Here is a first quick example. 
 

@@ -303,7 +303,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>5</b> Functional Programming</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-r"><i class="fa fa-check"></i><b>5.1</b> Functions as Function Inputs in R</a></li>
+<li class="chapter" data-level="5.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-r"><i class="fa fa-check"></i><b>5.1</b> Functions as Function Inputs in R</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="functional-programming.html"><a href="functional-programming.html#sapply-and-vapply"><i class="fa fa-check"></i><b>5.1.1</b> <code>sapply</code> and <code>vapply</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="functional-programming.html"><a href="functional-programming.html#lapply"><i class="fa fa-check"></i><b>5.1.2</b> <code>lapply</code></a></li>
+<li class="chapter" data-level="5.1.3" data-path="functional-programming.html"><a href="functional-programming.html#apply"><i class="fa fa-check"></i><b>5.1.3</b> <code>apply</code></a></li>
+<li class="chapter" data-level="5.1.4" data-path="functional-programming.html"><a href="functional-programming.html#tapply"><i class="fa fa-check"></i><b>5.1.4</b> <code>tapply</code></a></li>
+<li class="chapter" data-level="5.1.5" data-path="functional-programming.html"><a href="functional-programming.html#mapply"><i class="fa fa-check"></i><b>5.1.5</b> <code>mapply</code></a></li>
+<li class="chapter" data-level="5.1.6" data-path="functional-programming.html"><a href="functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>5.1.6</b> <code>Reduce</code> and <code>do.call</code></a></li>
+</ul></li>
 <li class="chapter" data-level="5.2" data-path="functional-programming.html"><a href="functional-programming.html#another-example-in-r"><i class="fa fa-check"></i><b>5.2</b> Another Example in R</a></li>
 <li class="chapter" data-level="5.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>5.3</b> Functions as Function Inputs in Base Python</a>
 <ul>
@@ -440,20 +448,20 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="odds-and-ends.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
 <span id="cb104-2"><a href="odds-and-ends.html#cb104-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb104-3"><a href="odds-and-ends.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.65322412,  1.47703704,  0.11020957, -0.42057008,  1.15431019,</span></span>
-<span id="cb104-4"><a href="odds-and-ends.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.2590427 , -1.87662339,  1.84544826,  1.18116337,  0.30890072])</span></span></code></pre></div>
+<span id="cb104-3"><a href="odds-and-ends.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.8411675 , -0.14891123,  0.017888  ,  1.6072606 , -1.78845716,</span></span>
+<span id="cb104-4"><a href="odds-and-ends.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.07901444,  2.15992339, -1.04642564, -0.63965818,  0.97876646])</span></span></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">4</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="odds-and-ends.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb105-2"><a href="odds-and-ends.html#cb105-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb105-3"><a href="odds-and-ends.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.7285913 , -0.29495057,  0.66058572, -0.86782142,  0.65262068,</span></span>
-<span id="cb105-4"><a href="odds-and-ends.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.73347802,  1.05672212,  1.17986728, -1.36975647, -3.12269853])</span></span></code></pre></div>
+<span id="cb105-3"><a href="odds-and-ends.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.3212941 , -0.98596247,  0.22604115, -0.11390149, -1.61242526,</span></span>
+<span id="cb105-4"><a href="odds-and-ends.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.89263291,  0.71916247,  1.24211091,  0.21435454, -0.74744484])</span></span></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="odds-and-ends.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
 <span id="cb106-2"><a href="odds-and-ends.html#cb106-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb106-3"><a href="odds-and-ends.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.44159946,  0.90880266, -0.16952936, -0.13801829, -0.43733788,</span></span>
-<span id="cb106-4"><a href="odds-and-ends.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.66663664, -0.97719344,  0.27392034,  0.74219986,  1.61039814])</span></span></code></pre></div>
+<span id="cb106-3"><a href="odds-and-ends.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.42023837, -0.34111141, -0.11126448,  0.19490364, -1.5916298 ,</span></span>
+<span id="cb106-4"><a href="odds-and-ends.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.63449324,  1.14205864,  1.3644491 ,  0.05799535,  1.60327298])</span></span></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="odds-and-ends.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t do this!</span></span>
 <span id="cb107-2"><a href="odds-and-ends.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span> <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
@@ -465,12 +473,12 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <h2><span class="header-section-number">3.3</span> Control Flow</h2>
 <div id="conditional-logic" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Conditional Logic</h3>
-<p>We discussed boolean objects in <a href="data-types.html#basic-types">2.1</a>. We used these for</p>
+<p>We discussed Boolean objects in <a href="data-types.html#basic-types">2.1</a>. We used these for</p>
 <ul>
 <li>counting up number of times a condition appeared, and</li>
 <li>subsetting.</li>
 </ul>
-<p>Another way to use them is to conditionally execute code, depending on whether or truth condition of a boolean.</p>
+<p>Another way to use them is to conditionally execute code, depending on whether or truth condition of a Boolean.</p>
 <p>In R,</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="odds-and-ends.html#cb108-1" aria-hidden="true" tabindex="-1"></a>myName <span class="ot">&lt;-</span> <span class="st">&quot;Clare&quot;</span></span>
 <span id="cb108-2"><a href="odds-and-ends.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(myName <span class="sc">!=</span> <span class="st">&quot;Taylor&quot;</span>){</span>
@@ -482,8 +490,8 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <span id="cb109-2"><a href="odds-and-ends.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_name <span class="op">==</span> <span class="st">&quot;Taylor&quot;</span>:</span>
 <span id="cb109-3"><a href="odds-and-ends.html#cb109-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
 <span id="cb109-4"><a href="odds-and-ends.html#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
-<p>There can be more than one truth test. To test alternative boolean conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
-<p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a boolean. Whether they execute only depends on the booleans in the previous blocks.</p>
+<p>There can be more than one truth test. To test alternative Boolean conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
+<p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks.</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="odds-and-ends.html#cb110-1" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
 <span id="cb110-2"><a href="odds-and-ends.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
 <span id="cb110-3"><a href="odds-and-ends.html#cb110-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
@@ -628,7 +636,7 @@ q(x) =
 \end{cases}
 \]</span>
 We can plot all three functions.</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-127-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-138-1.png" width="80%" /></p>
 <p>Here’s some Python code that attempts to sample once from <span class="math inline">\(p(x)\)</span>. Sometimes proposals are not accepted. When that happens, the function returns <code>None</code>.</p>
 <div class="sourceCode" id="cb116"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb116-1"><a href="odds-and-ends.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb116-2"><a href="odds-and-ends.html#cb116-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -657,7 +665,7 @@ We can plot all three functions.</p>
 <li>We are following the <a href="https://www.python.org/dev/peps/pep-0008/#other-recommendations">Python style guide</a> and using the <code>is not</code> keyword to check if something is <code>None</code></li>
 </ol>
 <p>In chapter <a href="odds-and-ends.html#visualization">3.5</a>, we’ll show you the code that you can use to generate the plot below.
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 </div>
 </div>
 </div>
@@ -674,11 +682,11 @@ We can plot all three functions.</p>
 <p>In R, it all starts with <code>vector</code>s. There are two common functions you should know: <code>sort</code> and <code>order</code>. <code>sort</code> returns the sorted <em>data</em>, while <code>order</code> returns the <em>order indexes</em>.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="odds-and-ends.html#cb118-1" aria-hidden="true" tabindex="-1"></a>sillyData <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
 <span id="cb118-2"><a href="odds-and-ends.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sillyData)</span>
-<span id="cb118-3"><a href="odds-and-ends.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.2811232 -1.0311164 -1.6866226 -1.3052989 -1.0978968</span></span>
+<span id="cb118-3"><a href="odds-and-ends.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.8067414  0.2141394 -0.4516872 -0.1003522  0.2353913</span></span>
 <span id="cb118-4"><a href="odds-and-ends.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(sillyData)</span>
-<span id="cb118-5"><a href="odds-and-ends.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.6866226 -1.3052989 -1.0978968 -1.0311164  0.2811232</span></span>
+<span id="cb118-5"><a href="odds-and-ends.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.4516872 -0.1003522  0.2141394  0.2353913  0.8067414</span></span>
 <span id="cb118-6"><a href="odds-and-ends.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(sillyData)</span>
-<span id="cb118-7"><a href="odds-and-ends.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3 4 5 2 1</span></span></code></pre></div>
+<span id="cb118-7"><a href="odds-and-ends.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3 4 2 5 1</span></span></code></pre></div>
 <p><code>order</code> is useful if you’re sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the <code>MSRP</code> (a <code>character</code> vector) a little first. We use the function <code>gsub</code> to find patterns in the text, and replace them with the empty string.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="odds-and-ends.html#cb119-1" aria-hidden="true" tabindex="-1"></a>carData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
 <span id="cb119-2"><a href="odds-and-ends.html#cb119-2" aria-hidden="true" tabindex="-1"></a>noDollarSignMSRP <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;$&quot;</span>, <span class="st">&quot;&quot;</span>, carData<span class="sc">$</span>MSRP, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
@@ -695,11 +703,11 @@ We can plot all three functions.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="odds-and-ends.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb121-2"><a href="odds-and-ends.html#cb121-2" aria-hidden="true" tabindex="-1"></a>silly_data <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb121-3"><a href="odds-and-ends.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(silly_data)</span>
-<span id="cb121-4"><a href="odds-and-ends.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [ 0.79339014 -0.79989871  0.51011534  0.57729964  0.84709877]</span></span>
+<span id="cb121-4"><a href="odds-and-ends.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [-0.01623144  0.34744712 -2.65564555 -0.19532429  0.77443999]</span></span>
 <span id="cb121-5"><a href="odds-and-ends.html#cb121-5" aria-hidden="true" tabindex="-1"></a>np.sort(silly_data)</span>
-<span id="cb121-6"><a href="odds-and-ends.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.79989871,  0.51011534,  0.57729964,  0.79339014,  0.84709877])</span></span>
+<span id="cb121-6"><a href="odds-and-ends.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-2.65564555, -0.19532429, -0.01623144,  0.34744712,  0.77443999])</span></span>
 <span id="cb121-7"><a href="odds-and-ends.html#cb121-7" aria-hidden="true" tabindex="-1"></a>np.argsort(silly_data)</span>
-<span id="cb121-8"><a href="odds-and-ends.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1, 2, 3, 0, 4])</span></span></code></pre></div>
+<span id="cb121-8"><a href="odds-and-ends.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([2, 3, 0, 1, 4])</span></span></code></pre></div>
 <p>For Pandas’ <code>DataFrame</code>s, most of the functions I find useful are methods attached to the <code>DataFrame</code> class. That means that, as long as something is inside a <code>DataFrame</code>, you can use dot notation.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="odds-and-ends.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb122-2"><a href="odds-and-ends.html#cb122-2" aria-hidden="true" tabindex="-1"></a>car_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
@@ -1010,7 +1018,7 @@ We can plot all three functions.</p>
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="odds-and-ends.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb141-2"><a href="odds-and-ends.html#cb141-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-154-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
 <p>I specified the <code>xlab=</code> and <code>main=</code> arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (<code>?hist</code>).</p>
 <p><code>plot</code> is useful for plotting two univariate numerical variables. This can be done in time series plots (variable versus time) and scatter plots (one variable versus another).</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="odds-and-ends.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
@@ -1021,7 +1029,7 @@ We can plot all three functions.</p>
 <span id="cb142-6"><a href="odds-and-ends.html#cb142-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;log. total value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log. lot size&quot;</span>, </span>
 <span id="cb142-7"><a href="odds-and-ends.html#cb142-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
 <span id="cb142-8"><a href="odds-and-ends.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">log</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LotSize)), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="odds-and-ends.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>I use some of the many arguments available (type <code>?plot</code>). <code>xlab=</code> and <code>ylab=</code> specify the x- and y-axis labels, respectively. <code>col=</code> is short for “color.” <code>pch=</code> is short for “point character.” Changing this will change the symbol shapes used for each point. <code>type=</code> is more general than that, but it is related. I typically use it to specify whether or not I want the points connected with lines.</p>
 <p>I also use a couple other functions. <code>abline</code> is used to superimpose lines over the top of a plot. They can be <code>h</code>orizontal, <code>v</code>ertical, or you can specify them in slope-intercept form, or by providing a linear model object. I also used <code>par</code> to set a graphical parameter. The graphical parameter <code>par()$mfrow</code> sets the layout of a multiple plot visualization. I then set it back to the standard <span class="math inline">\(1 \times 1\)</span> layout afterwards.</p>
@@ -1035,7 +1043,7 @@ We can plot all three functions.</p>
 <p>Consider this first example.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="odds-and-ends.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb144-2"><a href="odds-and-ends.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-156-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-167-1.png" width="80%" /></p>
 <p>You’ll notice a few things about the code and the result produced:</p>
 <ol style="list-style-type: decimal">
 <li><p>No geometric shapes show up!</p></li>
@@ -1047,42 +1055,42 @@ We can plot all three functions.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="odds-and-ends.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb145-2"><a href="odds-and-ends.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb145-3"><a href="odds-and-ends.html#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
 <p>Notice that we did not need to provide any arguments to <code>geom_point</code>. The aesthetic mappings were used by the new layer.</p>
 <p>There are <em>many</em> types of layers that you can add to a plot, and you’re not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the <code>ggtitle</code> function to add a title layer. Unlike <code>geom_point</code>, this function will need to take an argument because the desired title is not stored as an aesthetic mapping.</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="odds-and-ends.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb146-2"><a href="odds-and-ends.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb146-3"><a href="odds-and-ends.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
 <p>Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="odds-and-ends.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb147-2"><a href="odds-and-ends.html#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb147-3"><a href="odds-and-ends.html#cb147-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-159-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
 <p>If we want tighter control on the aesthetic mapping, we can use <a href="https://ggplot2-book.org/scales.html#scales"><strong>scales</strong></a>. Syntactically, these are things we “add” (<code>+</code>) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix <code>scale_</code>.</p>
 <p>We can change attributes of the axes like this.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="odds-and-ends.html#cb148-1" aria-hidden="true" tabindex="-1"></a>base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb148-2"><a href="odds-and-ends.html#cb148-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb148-3"><a href="odds-and-ends.html#cb148-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span>
 <span id="cb148-4"><a href="odds-and-ends.html#cb148-4" aria-hidden="true" tabindex="-1"></a>base_plot <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-160-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-171-1.png" width="672" /></p>
 <p>We can also change plot colors with scale layers. Let’s add an aesthetic called fill so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn’t have any more unused numerical columns, so let’s create a new one called <code>score</code>. We also use a new geom layer from a function called <code>geom_tile()</code>.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="odds-and-ends.html#cb149-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb149-2"><a href="odds-and-ends.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb149-3"><a href="odds-and-ends.html#cb149-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() </span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-161-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
 <p>If we didn’t like these colors, we could change them with a scale layer. Personally, I like this one.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="odds-and-ends.html#cb150-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb150-2"><a href="odds-and-ends.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb150-3"><a href="odds-and-ends.html#cb150-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb150-4"><a href="odds-and-ends.html#cb150-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_b</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
 <p>There are many to choose from, though. Here’s another one.</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="odds-and-ends.html#cb151-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb151-2"><a href="odds-and-ends.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb151-3"><a href="odds-and-ends.html#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb151-4"><a href="odds-and-ends.html#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
 </div>
 <div id="plotting-with-matplotlib" class="section level3" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> Plotting with Matplotlib</h3>
@@ -1096,10 +1104,10 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb152-2"><a href="odds-and-ends.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np                    <span class="co"># 2</span></span>
 <span id="cb152-3"><a href="odds-and-ends.html#cb152-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()              <span class="co"># 3</span></span>
 <span id="cb152-4"><a href="odds-and-ends.html#cb152-4" aria-hidden="true" tabindex="-1"></a>ax.hist(np.random.normal(size<span class="op">=</span><span class="dv">1000</span>))  <span class="co"># 4</span></span>
-<span id="cb152-5"><a href="odds-and-ends.html#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([  2.,  17.,  49., 148., 255., 246., 170.,  76.,  31.,   6.]), array([-3.44266777, -2.7747452 , -2.10682263, -1.43890007, -0.7709775 ,</span></span>
-<span id="cb152-6"><a href="odds-and-ends.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.10305493,  0.56486764,  1.2327902 ,  1.90071277,  2.56863534,</span></span>
-<span id="cb152-7"><a href="odds-and-ends.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.23655791]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-166-1.png" width="80%" /></p>
+<span id="cb152-5"><a href="odds-and-ends.html#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([  1.,   4.,  32., 100., 217., 279., 225., 105.,  27.,  10.]), array([-3.83333736, -3.13016136, -2.42698536, -1.72380936, -1.02063337,</span></span>
+<span id="cb152-6"><a href="odds-and-ends.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.31745737,  0.38571863,  1.08889463,  1.79207063,  2.49524662,</span></span>
+<span id="cb152-7"><a href="odds-and-ends.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.19842262]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-177-1.png" width="80%" /></p>
 <p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. It also follows the most commonly-used convention.</p>
 <p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
 <p>Third, we call the <code>subplots</code> function, and use <em>sequence unpacking</em> to unpack the returned container into individual objects without storing the overall container. “Subplots” sounds like it will make many different plots all on one figure, but if you look at the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots">documentation</a> the number of rows and columns defaults to one and one, respectively.</p>
@@ -1117,11 +1125,11 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb153-5"><a href="odds-and-ends.html#cb153-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb153-6"><a href="odds-and-ends.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
 <span id="cb153-7"><a href="odds-and-ends.html#cb153-7" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
-<span id="cb153-8"><a href="odds-and-ends.html#cb153-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35e57f0&gt;]</span></span>
+<span id="cb153-8"><a href="odds-and-ends.html#cb153-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35b5390&gt;]</span></span>
 <span id="cb153-9"><a href="odds-and-ends.html#cb153-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
-<span id="cb153-10"><a href="odds-and-ends.html#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35e5b70&gt;]</span></span>
+<span id="cb153-10"><a href="odds-and-ends.html#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35b5cc0&gt;]</span></span>
 <span id="cb153-11"><a href="odds-and-ends.html#cb153-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
-<span id="cb153-12"><a href="odds-and-ends.html#cb153-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35e5ef0&gt;]</span></span>
+<span id="cb153-12"><a href="odds-and-ends.html#cb153-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35b5128&gt;]</span></span>
 <span id="cb153-13"><a href="odds-and-ends.html#cb153-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
 <span id="cb153-14"><a href="odds-and-ends.html#cb153-14" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
 <span id="cb153-15"><a href="odds-and-ends.html#cb153-15" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
@@ -1131,12 +1139,12 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb153-19"><a href="odds-and-ends.html#cb153-19" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
 <span id="cb153-20"><a href="odds-and-ends.html#cb153-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb153-21"><a href="odds-and-ends.html#cb153-21" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
-<span id="cb153-22"><a href="odds-and-ends.html#cb153-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7fdef6e16eb8&gt;</span></span>
+<span id="cb153-22"><a href="odds-and-ends.html#cb153-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7fdf12177fd0&gt;</span></span>
 <span id="cb153-23"><a href="odds-and-ends.html#cb153-23" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
-<span id="cb153-24"><a href="odds-and-ends.html#cb153-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35d9518&gt;]</span></span>
+<span id="cb153-24"><a href="odds-and-ends.html#cb153-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fdee35da7f0&gt;]</span></span>
 <span id="cb153-25"><a href="odds-and-ends.html#cb153-25" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-167-3.png" width="672" /></p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-168-5.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-178-3.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-179-5.png" width="80%" /></p>
 <p>import numpy as np
 my_inputs = np.linspace(start = 0, stop = 2*np.pi)
 outputs = np.sin(my_inputs)</p>
