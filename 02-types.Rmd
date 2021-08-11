@@ -243,7 +243,7 @@ s = pd.Series(np.linspace(-1,1,5))
 np.exp(s.to_numpy())
 ```
 
-In addition, there are many [attributes and methods](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) they possess. 
+In addition, they possess many [attributes and methods](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series). 
 
 ```{python, collapse = TRUE}
 ints = pd.Series(np.arange(10))
@@ -300,6 +300,28 @@ one_through_ten
 one_through_ten[one_through_ten > 3] # bigger than three
 ```
 
+### Indexing Pandas Series
+
+At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas Series objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only appparent difference is that the results are printed a little differently.
+
+```{python, collapse=TRUE}
+import pandas as pd
+one_through_ten = pd.Series(np.arange(1, 11))
+one_through_ten[np.array([2,3])]
+one_through_ten[1:10:2] # evens
+one_through_ten[::-1] # reversed
+one_through_ten[-2] = 99 # second to last
+one_through_ten
+one_through_ten[one_through_ten > 3] # bigger than three
+one_through_ten.sum()
+```
+
+However, [Pandas Series have `.loc` and `.iloc` methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing). We won't talk much about these two methods now, but they will become very important when we start to discuss Pandas Data Frames in section \@ref(data-frames-in-python).
+
+```{python, collapse=TRUE}
+one_through_ten.iloc[2]
+one_through_ten.loc[2]
+```
 
 ### Some Gotchas
 
@@ -316,27 +338,66 @@ b[1] <- 999
 a # still the same!
 ```
 
-With Numpy arrays in Python, each copy is typically a **shallow copy.** In the code below, `b` is a **reference** for `a`. They both point to the same data in memory. We make a change to `b`, and it *does* affect `a`. This can make the program more confusing, although it can improve computational efficiency. More details on how Python treats the assignment operator can be found in \@ref(passing-by-assignment-in-python).
+With Numpy arrays in Python, ["shallow copies" can be created by simple assignment, or by explicitly constructing a **view**](https://numpy.org/devdocs/user/quickstart.html#copies-and-views). In the code below, `a`, `b`, `c`, and `d` all share the same data. If you modify one, you change all the others. This can make the program more confusing, but on the other hand, it can also improve computational efficiency. 
 
 ```{python, collapse = TRUE}
 # in python
 a = np.array([1,2,3])
-b = a
+b = a # b is an alias
+c = a.view() # c is a view
+d = a[:]
 b[0] = 999
 a # two names for the same object in memory
+b
+c
+d
 ```
 
-If you want a deep copy in Python, use `np.copy`.
+It's the same story with Pandas Series objects. You're usually making a "shallow" copy.
+
+```{python, collapse = TRUE}
+# in python
+import pandas as pd
+s1 = pd.Series(np.array([100.0,200.0,300.0]))
+s2 = s1
+s3 = s1.view()
+s4 = s1[:]
+s1[0] = 999
+s1
+s2
+s3
+s4
+```
+
+
+If you want a "deep copy" in Python, you usually want a function or method called `copy()`. Use `np.copy` or [`np.ndarray.copy`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.copy.html#numpy-ndarray-copy) when you have a Numpy array.
 
 ```{python, collapse = TRUE}
 # in python
 a = np.array([1,2,3])
 b = np.copy(a)
+c = a.copy()
 b[0] = 999
 a 
+b
+c
 ```
 
 
+Use [`pandas.Series.copy`](https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html#pandas-series-copy) with Pandas Series objects. Make sure not to set the `deep` argument to `False`. Otherwise you'll get a shallow copy.
+
+```{python, collapse = TRUE}
+# in python
+s1 = pd.Series(np.array([1,2,3]))
+s2 = s1.copy()
+s3 = s1.copy(deep=False)
+s1[0] = 999
+s1
+s2
+s3
+```
+
+ 
 ### How do R and Python handle missing values?
 
 R has `NULL`,  `NaN`, and `NA`. Python has `None`, `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
@@ -367,7 +428,7 @@ if thing is None:
 type(None)
 ```
 
-`NaN` stands for "not a number." It is an object of type `double` in R, and type `float` in Python. It can come in handy when you have $0/0$ or $\infty / -\infty$.
+"Nan" stands for "not a number." `NaN` is an object of type `double` in R, and `nan` is of type `float` in Python. It can come in handy when you have $0/0$ or $\infty / -\infty$.
 
 ```{r, collapse = TRUE}
 # in R
@@ -394,7 +455,7 @@ typeof(NA)
 ```
 
 
-Unfortunately Pythons support of an `NA`-like object is more limited. There is no `NA` object in base Python. And often `NaN`s will appear in place of an `NA`. There are a few useful tools, though. The Numpy library offers ["masked arrays"](https://numpy.org/devdocs/reference/maskedarray.html), for one. 
+Unfortunately, Python's support of an `NA`-like object is more limited. There is no `NA` object in base Python. And often `NaN`s will appear in place of an `NA`. There are a few useful tools, though. The Numpy library offers ["masked arrays"](https://numpy.org/devdocs/reference/maskedarray.html), for instance. 
 
 Also, as of version `1.0.0`, the [Pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." 
 

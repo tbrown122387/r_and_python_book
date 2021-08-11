@@ -119,7 +119,7 @@ summary(myRegs[[12]])
 
 ### `apply`
 
-I use `sapply` and `lapply` the most, personally. The next most common function I use is `apply`. I use it to apply functions to *rows* instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can. 
+I use `sapply` and `lapply` the most, personally. The next most common function I use is `apply`. I use it to apply functions to *rows* instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.^[`apply` is everyone's favorite whipping boy whenever it comes to comparing `apply` against the other `*apply` functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice. ] 
 
 ```{r, collapse = TRUE}
 dim(myDF)
@@ -187,7 +187,7 @@ mapply(rnorm, n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 
 ### `Reduce` and `do.call`
 
-In section \@ref(Reshaping and Combining Data Sets) we talked about several different ways of "combining" data sets. We discussed stacking data sets on top of one another with `rbind` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge` (c.f. \@ref(merging-or-joining-data-sets)). Consider the task of combining *many* data sets. How do we write DRY code and abide by the DRY principle?
+In section \@ref(reshaping-and-combining-data-sets) we talked about several different ways of "combining" data sets. We discussed stacking data sets on top of one another with `rbind` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge` (c.f. \@ref(merging-or-joining-data-sets)). Consider the task of combining *many* data sets. How do we write DRY code and abide by the DRY principle?
 
 We can use either `Reduce` or `do.call` as a higher-order function. Just like the aforementioned `*apply` functions, they take in either `cbind`, `rbind`, or `merge` as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take. 
 
@@ -332,7 +332,7 @@ for elem in filter(lambda x : x**2 > 2, raw_data):
 ```
 
 
-## Selected Numpy Functionals
+## Functions as Function Inputs in Numpy
 
 Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate working with `np.ndarray`s in a functional style. For example, [`np.apply_along_axis`](https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html) is similar to R's `apply`. `apply` had a `MARGIN` argument (`1` sums rows, `2` sums columns), whereas this function has a `axis=` argument (`0` sums columns, `1` sums rows). 
 
@@ -411,6 +411,11 @@ alb_real_est.groupby(['City']).apply(lambda df : np.average(df['TotalValue']))
 
 More tips on this programming pattern can be found [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html).
 
+## Functions as Function Inputs (miscellany)
+
+functools.reduce
+
+operator module
 
 ## Functions as Function Outputs in R
 
