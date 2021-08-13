@@ -144,7 +144,13 @@ This section is for describing the data types that let us store collections of e
 ### Overview of R
 
 I mentioned earlier that R does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
-). So, whether you want to store one number, or many numbers, you will need a `vector`. 
+). So, whether you want to store one number (or `logical`, or `character`, or ...), or many numbers, you will need a `vector`. 
+
+
+```{block, type='rmd-caution'}
+For many, the word "vector" evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on `vector`s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with `vector`s in R have little to do with linear algebra!
+```
+
 
 How do we create one of these? There are many ways. One common is to read in elements from an external data set, perhaps extracting them from a column of a `data.frame`, but we will describe those in section \@ref(data-frames). Here are some examples of generating `vector`s from code instead of grabbing them from an external data set after it is read in.
 
@@ -479,9 +485,9 @@ Be careful of using extreme values to stand in for what should be an `NA`. Faili
 
 ## Numpy's `ndarray`s versus R's matrices and arrays
 
-Sometimes you want a collection of elements that are all the same type, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you needed to use tensors for a computer vision project you're working on. 
+Sometimes you want a collection of elements that are *all the same type*, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you needed to use tensors for a computer vision project you're working on. 
 
-### In Python
+### Numpy `ndarray`s In Python
 
 In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). Each array will come with an enormous amount of [methods](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods) and [attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes) (more on object-oriented program in chapter \@ref(an-introduction-to-object-oriented-programming)) attached to it. A few are demonstrated below. 
 
@@ -498,9 +504,69 @@ a
 ```
 
 
-### In R
+### The `matrix` and `array` classes in R
 
-TODO [@matloff_r_book]
+In Python, adding a dimension to your "container" is simple. You keep using Numpy arrays, and you just change the `.shape` attribute (perhaps with a call to `.reshape()` or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the `matrix` class. Containers with 3 or more dimensions are of the `array` class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of [@matloff_r_book]. 
+
+
+```{block, type='rmd-caution'}
+Just like `vector`s, `matrix` objects do not necessarily have to be used to perform matrix arithmetic. Yes, they require all the elements are of the same type, but it doesn't really make sense to "multiply" `matrix` objects that hold onto `character`s.
+```
+
+
+I usually create `matrix` objects with the `matrix()` function or the `as.matrix()` function. `matrix()` is to be preferred in my opinion. The first argument is explicitly a `vector` of all the flattened data that you want in your `matrix`. On the other hand, `as.matrix()` is more flexible; it takes in a variety of R objects (e.g. `data.frame`s), and tries to figure out what to do with them on a case-by-case basis. In other words, `as.matrix()` is a *generic function*. More information about generic functions is provided in \@ref(using-s3-objects).
+
+Some other things to remember with `matrix()`: `byrow=` is `FALSE` by default, and you will also need to specify either `ncol=` and/or `nrow=` if you want anything that isn't a 1-column `matrix`.
+
+```{r, collapse = TRUE}
+A <- matrix(1:4)
+A
+matrix(1:4, ncol = 2)
+matrix(1:4, ncol = 2, byrow = T)
+as.matrix(data.frame(firstCol = c(1,2,3), secondCol = c("a","b","c"))) # coerces numbers to characters!
+dim(A)
+nrow(A)
+ncol(A)
+```
+
+I use `array()` to create `array` objects. Personally, I rarely use this type, but this doesn't mean you should avoid learning about it. Rather, this is a reflection of what kind of data sets I prefer to work with, and the fact that you can't matrix-multiply `array`s together. You won't be able to avoid 3-d data sets (3-dimensions, not a 3-column `matrix`) forever, though, particularly if you're working in an area such as neuroimaging or computer vision.
+
+```{r, collapse = TRUE}
+myArray <- array(rep(1:3, each = 4), dim = c(2,2,3))
+myArray
+```
+
+You can matrix-multiply `matrix` objects together with the `%*%` operator. If you're working on this, then the transpose operator (i.e. `t()`) comes in handy, too. You can still use element-wise (Hadamard) multiplication. This is defined with the more familiar multiplication operator `*`.
+
+```{r, collapse = TRUE}
+# calculate a quadratic form y'Qy
+y <- matrix(c(1,2,3))
+Q <- diag(1, 3) # diag() gets and sets diagonal matrices
+t(y) %*% Q %*% y
+```
+Sometimes you need to access or modify individual elements of a `matrix` object. You can use the familiar `[` and `[<-` operators to do this. Here is a setting example. You don't need to worry about coercion to different types here.
+
+```{r, collapse = TRUE}
+Qcopy <- Q
+Qcopy[1,1] <- 3
+Qcopy[2,2] <- 4
+Qcopy
+```
+
+Here are some extraction examples. Notice that, if it can, `[` will coerce a `matrix` to `vector`. If you wish to avoid this, you can specify `drop=FALSE`.
+
+```{r, collapse = TRUE}
+Q
+Q[1,1]
+Q[2,]
+Q[2,,drop=FALSE]
+class(Q)
+class(Q[2,])
+class(Q[2,,drop=FALSE])  
+row(Q) > 1
+Q[row(Q) > 1] # column-wise ordering
+```
+There are other functions that operate on one or more `matrix` objects in more interesting ways, but much of this will be covered in future sections. For instance, we will describe how `apply()` works with `matrix`s in section \@ref(functional-programming), and we will discuss combining `matrix` objects in different ways in section \@ref(reshaping-and-combining-data-sets).
 
 ## R's lists versus Python's lists and dictionaries
 
