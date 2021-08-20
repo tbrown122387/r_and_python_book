@@ -438,7 +438,7 @@ np.sort(silly_data)
 np.argsort(silly_data)
 ```
 
-For Pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation.
+For pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation.
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -449,7 +449,7 @@ car_data = car_data.sort_values(by='clean_MSRP', ascending = False)
 car_data[["Make", "Model", "MSRP", "clean_MSRP"]].head(5)
 ```
 
-Pandas `DataFrame`s and `Series` have a [`replace`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series` column before we used it. After the string was processed, we converted it to a `Series` of `float`s with the `astype` method. 
+pandas' `DataFrame`s and `Series` have a [`replace`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series` column before we used it. After the string was processed, we converted it to a `Series` of `float`s with the `astype` method. 
 
 Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e. raw subsetting by row indexes), but there is a built in method called `sort_values` that will do it for us. 
 
@@ -553,7 +553,7 @@ baby1.merge(baby2,
             how = "outer")
 ```
 
-You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where Pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging). 
+You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging). 
 
 ### Long Versus Wide Data
 
@@ -622,7 +622,7 @@ fake_long_data2
 
 #### Long Versus Wide in Python
 
-With Pandas, we can take make wide data long with [`pd.DataFrame.pivot`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
+With pandas, we can take make wide data long with [`pd.DataFrame.pivot`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
 
 When going from wide to long, make sure to use the [`pd.DataFrame.reset_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#) method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
 
@@ -868,6 +868,17 @@ plt.plot(my_inputs, outputs)
 
 
 very good! https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html
+
+
+## Working With Text Data
+
+TODO
+
+- regular expressions
+
+## Working With Dates and Times
+
+TODO
 
 
 ## Exercises

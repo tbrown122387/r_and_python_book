@@ -137,7 +137,7 @@ All answers to questions related to R should be written in a file named `easy_da
 -->
 
 
-## R vectors versus Numpy `array`s (and Pandas `Series`)
+## R vectors versus Numpy `array`s (and pandas' `Series`)
 
 This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these objects in a program, we will be interested in learning how to extract different subsets of elements, and how vectorization works.
 
@@ -177,7 +177,7 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
-Another choice in Python is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `Pandas` library. The benefit of these is that they play nicely with Pandas data frames (more information about Pandas data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information    ).
+Another choice in Python is to use a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the `pandas` library. The benefit of these is that they play nicely with pandas' data frames (more information about pandas' data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information    ).
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -234,7 +234,7 @@ np.exp( -.5 * np.linspace(-3, 3, 10)**2) / np.sqrt( 2 * np.pi)
 
 Instead of calling it "recycling", Numpy calls it [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. 
 
-Then there are the `Series` objects from `Pandas`. ufuncs still work on `Series` objects, and they [respect common index values](https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html).
+Then there are the `Series` objects from pandas. ufuncs still work on `Series` objects, and they [respect common index values](https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html).
 
 ```{python, collapse = TRUE}
 s1 = pd.Series(np.repeat(100,3))
@@ -306,9 +306,9 @@ one_through_ten
 one_through_ten[one_through_ten > 3] # bigger than three
 ```
 
-### Indexing Pandas Series
+### Indexing pandas' Series
 
-At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas Series objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only appparent difference is that the results are printed a little differently.
+At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to pandas' Series objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.
 
 ```{python, collapse=TRUE}
 import pandas as pd
@@ -322,7 +322,7 @@ one_through_ten[one_through_ten > 3] # bigger than three
 one_through_ten.sum()
 ```
 
-However, [Pandas Series have `.loc` and `.iloc` methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing). We won't talk much about these two methods now, but they will become very important when we start to discuss Pandas Data Frames in section \@ref(data-frames-in-python).
+However, [pandas' Series have `.loc` and `.iloc` methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing). We won't talk much about these two methods now, but they will become very important when we start to discuss pandas' data frames in section \@ref(data-frames-in-python).
 
 ```{python, collapse=TRUE}
 one_through_ten.iloc[2]
@@ -359,7 +359,7 @@ c
 d
 ```
 
-It's the same story with Pandas Series objects. You're usually making a "shallow" copy.
+It's the same story with pandas' Series objects. You're usually making a "shallow" copy.
 
 ```{python, collapse = TRUE}
 # in python
@@ -390,7 +390,7 @@ c
 ```
 
 
-Use [`pandas.Series.copy`](https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html#pandas-series-copy) with Pandas Series objects. Make sure not to set the `deep` argument to `False`. Otherwise you'll get a shallow copy.
+Use [`pandas.Series.copy`](https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html#pandas-series-copy) with pandas' Series objects. Make sure not to set the `deep` argument to `False`. Otherwise you'll get a shallow copy.
 
 ```{python, collapse = TRUE}
 # in python
@@ -463,7 +463,7 @@ typeof(NA)
 
 Unfortunately, Python's support of an `NA`-like object is more limited. There is no `NA` object in base Python. And often `NaN`s will appear in place of an `NA`. There are a few useful tools, though. The Numpy library offers ["masked arrays"](https://numpy.org/devdocs/reference/maskedarray.html), for instance. 
 
-Also, as of version `1.0.0`, the [Pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." 
+Also, as of version `1.0.0`, the [pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." 
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -586,7 +586,7 @@ If you want to extract an element, you need to decide between using single squar
 
 You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below. The `lm()` function estimates a linear regression model. It returns a `list` with plenty of components. 
 
-```{r, collapse = TRUE, echo=TRUE, results='hide'}
+```{r, collapse = TRUE}
 dataSet <- read.csv("data/cars.csv")
 results <- lm(log(Horsepower) ~ Type, data = dataSet)
 length(results)
@@ -596,25 +596,51 @@ results['rank']
 results[['terms']]
 ```
 
+```{block, type='rmd-caution'}
+`results` is a `list` (`is.list(results)` returns `TRUE`), but to be more specific, it is an S3 object of class `lm`. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren't confused if you type `class(results)` and see `lm` instead of `list`. Second, the fact that the authors  of `lm()` wrote code that returns `result` as a "fancy list" suggests that they are encouraging another way to access elements of the `results`: to use specialized functions! For example, you can use `residuals(results)`, `coefficients(results)`, and `fitted.values(results)`. These functions do not work for all lists in R, but when they do work (for `lm` and `glm` objects only), you can be sure you are writing the kind of code that is encouraged by the authors of `lm()`.
+```
+
 
 ### Lists In Python
 
-[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R's `list`s. 
+[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing and modifying elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R's lists. 
 
-Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) (see section \@ref(dictionaries-in-python)) or Pandas `Series` objects (see section \@ref(overview-of-python)).
+Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) (see section \@ref(dictionaries-in-python)) or pandas' `Series` objects (see section \@ref(overview-of-python)).
 
 From the example below, you can see that we've been introduced to lists already. We have been constructing Numpy arrays from them.
 
 ```{python, collapse = TRUE}
 another_list = [np.array([1,2,3]), "May 5th, 2021", True, [42,42]]
 another_list[2]
+another_list[2] = 100
+another_list
 ```
+
+Python lists have [methods attached to them](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists), which can come in handy.
+
+```{python, collapse = TRUE}
+another_list
+another_list.append('new element')
+another_list
+```
+
+
+Creating lists can be done as above, with the square bracket operators. They can also be created with the `list()` function, and by creating a *list comprehension*. List comprehensions are discussed more in \@ref(loops).
+
+
+```{python, collapse = TRUE}
+my_list = list(('a','b','c')) # converting a tuple to a list
+your_list = [i**2 for i in range(3)] # list comprehension
+my_list
+your_list
+```
+
 
 ### Dictionaries In Python
 
 [**Dictionaries**](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) in Python provide a container of key-value pairs. The keys are *unique*, and they must be *immutable*. `string`s are the most common key type, but `int`s can be used as well. 
 
-Here is an example of creating a `dict` that stores the current price of a few popular cryptocurrencies. Accessing an individual element's value using its key is dont with the square bracket operator (i.e. `[]`), and deleting elements is done with the `del` keyword.
+Here is an example of creating a `dict` with curly braces (i.e. `{}`). This `dict` stores the current price of a few popular cryptocurrencies. Accessing an individual element's value using its key is done with the square bracket operator (i.e. `[]`), and deleting elements is done with the `del` keyword.
 
 ```{python, collapse = TRUE}
 current_crypto_prices = {'BTC': 38657.14, 'ETH': 2386.54, 'DOGE': .308122}
@@ -624,13 +650,21 @@ current_crypto_prices.keys()
 current_crypto_prices.values()
 ```
 
-You can also create `dict`s using **dictionary comprehensions** 
+You can also create `dict`s using **dictionary comprehensions**. Just like list comprehensions, these are discussed more in \@ref(loops).
 
 ```{python, collapse= TRUE}
 incr_cryptos = {key:val*1.1 for (key,val) in current_crypto_prices.items()}
 incr_cryptos
 ```
 
+
+Personally, I don't use dictionaries as much as lists. If I have a dictionary, I usually convert it to a pandas data frame (more information on those in \@ref(data-frames-in-python)).
+
+```{python, collapse= TRUE}
+import pandas as pd
+df_from_dict = pd.DataFrame({ 'col1': [1,2,3], 'col2' : ['a','b','c']})
+df_from_dict
+```
 
 
 
@@ -1228,7 +1262,7 @@ is.ordered(typeOfDay)
 
 ### Categorical Data in Python
 
-[Categorical data can be handled with the Pandas' library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. We've talked about `Series` objects before in section \@ref(vectorization-in-python), and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in R), and whether it's ordered or not.
+[Categorical data can be handled with the pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. We've talked about `Series` objects before in section \@ref(vectorization-in-python), and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in R), and whether it's ordered or not.
 
 
 ```{python, collapse = TRUE}
@@ -1244,7 +1278,7 @@ responses.cat.categories
 responses.cat.ordered
 ```
 
-Pandas also provides a `pd.cut()` function, which can return either of these types, or even a regular Numpy array.
+The pandas library also provides a `pd.cut()` function, which can return either of these types, or even a regular Numpy array.
 
 ```{python, collapse = TRUE}
 stock_returns = np.random.normal(size=10) # not categorical here
@@ -1338,7 +1372,7 @@ irisData["1002",]
 ### Data Frames in Python
 
 
-The Pandas library in Python has data frames that are modeled after R's. 
+The pandas library in Python has data frames that are modeled after R's. 
 
 ```{python, collapse=TRUE}
 import pandas as pd
@@ -1392,7 +1426,7 @@ setosa_only.head()
 
 Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator. The second example filters out the rows where the `"species"` column elements are equal to `"Iris-setosa"`.
 
-Each `DataFrame` in Pandas comes with an `.index` attribute. This is analogous to a row name in R, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
+Each `DataFrame` in pandas comes with an `.index` attribute. This is analogous to a row name in R, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
 
 ```{python, collapse = TRUE}
 iris_data.index
@@ -1409,7 +1443,7 @@ iris_data.iloc[0]
 
 ### Row Names and Indexes
 
-In Python, Pandas `DataFrame`s have an 
+In Python, pandas' `DataFrame`s have an 
 
 ```{python, collapse = TRUE}
 iris_data.index
