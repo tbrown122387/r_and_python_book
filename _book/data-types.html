@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Data Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 2 Data Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Data Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="intro.html"/>
 <link rel="next" href="odds-and-ends.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -249,7 +249,10 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#input-and-output"><i class="fa fa-check"></i><b>3.1</b> Input and Output</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#reading-in-text-files"><i class="fa fa-check"></i><b>3.1.1</b> Reading In Text Files</a></li>
+<li class="chapter" data-level="3.1.1" data-path="odds-and-ends.html"><a href="odds-and-ends.html#general-input-considerations"><i class="fa fa-check"></i><b>3.1.1</b> General Input Considerations</a></li>
+<li class="chapter" data-level="3.1.2" data-path="odds-and-ends.html"><a href="odds-and-ends.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>3.1.2</b> Reading in Text Files with R</a></li>
+<li class="chapter" data-level="3.1.3" data-path="odds-and-ends.html"><a href="odds-and-ends.html#reading-in-text-files-with-python"><i class="fa fa-check"></i><b>3.1.3</b> Reading in Text Files with Python</a></li>
+<li class="chapter" data-level="3.1.4" data-path="odds-and-ends.html"><a href="odds-and-ends.html#output"><i class="fa fa-check"></i><b>3.1.4</b> Output</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="odds-and-ends.html"><a href="odds-and-ends.html#using-third-party-code"><i class="fa fa-check"></i><b>3.2</b> Using Third-Party Code</a>
 <ul>
@@ -279,7 +282,8 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="odds-and-ends.html"><a href="odds-and-ends.html#working-with-text-data"><i class="fa fa-check"></i><b>3.6</b> Working With Text Data</a></li>
 <li class="chapter" data-level="3.7" data-path="odds-and-ends.html"><a href="odds-and-ends.html#working-with-dates-and-times"><i class="fa fa-check"></i><b>3.7</b> Working With Dates and Times</a></li>
-<li class="chapter" data-level="3.8" data-path="odds-and-ends.html"><a href="odds-and-ends.html#exercises-3"><i class="fa fa-check"></i><b>3.8</b> Exercises</a></li>
+<li class="chapter" data-level="3.8" data-path="odds-and-ends.html"><a href="odds-and-ends.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>3.8</b> Running Scripts from the Command Line</a></li>
+<li class="chapter" data-level="3.9" data-path="odds-and-ends.html"><a href="odds-and-ends.html#exercises-3"><i class="fa fa-check"></i><b>3.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>4</b> An Introduction to Object-Oriented Programming</a>
 <ul>
@@ -479,7 +483,7 @@ For many, the word “vector” evokes an impression that these objects are desi
 <span id="cb17-7"><a href="data-types.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;5/2/2021&quot;</span>, <span class="st">&quot;5/3/2021&quot;</span>, <span class="st">&quot;5/4/2021&quot;</span>)</span>
 <span id="cb17-8"><a href="data-types.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;5/2/2021&quot; &quot;5/3/2021&quot; &quot;5/4/2021&quot;</span></span>
 <span id="cb17-9"><a href="data-types.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb17-10"><a href="data-types.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -1.7293070  1.4355785 -0.1971714 -0.6079921 -0.5874661 -0.8959648  0.4449680 -0.5758811 -0.5968732 -1.7436271</span></span></code></pre></div>
+<span id="cb17-10"><a href="data-types.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -1.7404554  1.4840809  1.6443551  0.2668595 -2.0931469 -0.8420111  1.2049055  0.9652151  0.5900558  0.3037106</span></span></code></pre></div>
 <p><code>c</code> is short for “combine.” <code>seq</code> and <code>rep</code> are short for “sequence” and “replicate,” respectively. <code>rnorm</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
 </div>
 <div id="overview-of-python" class="section level3" number="2.2.2">
@@ -492,7 +496,7 @@ For many, the word “vector” evokes an impression that these objects are desi
 <span id="cb18-4"><a href="data-types.html#cb18-4" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
 <span id="cb18-5"><a href="data-types.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  3,  5,  7,  9, 11])</span></span>
 <span id="cb18-6"><a href="data-types.html#cb18-6" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb18-7"><a href="data-types.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.11597347,  0.31606545, -0.78569509])</span></span></code></pre></div>
+<span id="cb18-7"><a href="data-types.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.16216972,  0.69438051,  0.37005509])</span></span></code></pre></div>
 <p>Another choice in Python is to use a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series"><code>Series</code> object</a> from the <code>pandas</code> library. The benefit of these is that they play nicely with pandas’ data frames (more information about pandas’ data frames can be found in <a href="data-types.html#data-frames-in-python">2.7.2</a>), and that they have more flexibility with accessing elements by name ( see <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array">here</a> for more information ).</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="data-types.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb19-2"><a href="data-types.html#cb19-2" aria-hidden="true" tabindex="-1"></a>first <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
@@ -1027,38 +1031,37 @@ Just like <code>vector</code>s, <code>matrix</code> objects do not necessarily h
 <span id="cb55-3"><a href="data-types.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
 <span id="cb55-4"><a href="data-types.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
 <span id="cb55-5"><a href="data-types.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results)</span>
-<span id="cb55-6"><a href="data-types.html#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;       </span></span>
-<span id="cb55-7"><a href="data-types.html#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;qr&quot;            &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;        </span></span>
-<span id="cb55-8"><a href="data-types.html#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;model&quot;</span></span>
-<span id="cb55-9"><a href="data-types.html#cb55-9" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
-<span id="cb55-10"><a href="data-types.html#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
-<span id="cb55-11"><a href="data-types.html#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
-<span id="cb55-12"><a href="data-types.html#cb55-12" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
-<span id="cb55-13"><a href="data-types.html#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
-<span id="cb55-14"><a href="data-types.html#cb55-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
-<span id="cb55-15"><a href="data-types.html#cb55-15" aria-hidden="true" tabindex="-1"></a>results[[<span class="st">&#39;terms&#39;</span>]]</span>
-<span id="cb55-16"><a href="data-types.html#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower) ~ Type</span></span>
-<span id="cb55-17"><a href="data-types.html#cb55-17" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;variables&quot;)</span></span>
-<span id="cb55-18"><a href="data-types.html#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
-<span id="cb55-19"><a href="data-types.html#cb55-19" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;factors&quot;)</span></span>
-<span id="cb55-20"><a href="data-types.html#cb55-20" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Type</span></span>
-<span id="cb55-21"><a href="data-types.html#cb55-21" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)    0</span></span>
-<span id="cb55-22"><a href="data-types.html#cb55-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Type               1</span></span>
-<span id="cb55-23"><a href="data-types.html#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;term.labels&quot;)</span></span>
-<span id="cb55-24"><a href="data-types.html#cb55-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Type&quot;</span></span>
-<span id="cb55-25"><a href="data-types.html#cb55-25" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;order&quot;)</span></span>
-<span id="cb55-26"><a href="data-types.html#cb55-26" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb55-27"><a href="data-types.html#cb55-27" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;intercept&quot;)</span></span>
-<span id="cb55-28"><a href="data-types.html#cb55-28" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb55-29"><a href="data-types.html#cb55-29" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;response&quot;)</span></span>
-<span id="cb55-30"><a href="data-types.html#cb55-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb55-31"><a href="data-types.html#cb55-31" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;.Environment&quot;)</span></span>
-<span id="cb55-32"><a href="data-types.html#cb55-32" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;environment: R_GlobalEnv&gt;</span></span>
-<span id="cb55-33"><a href="data-types.html#cb55-33" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;predvars&quot;)</span></span>
-<span id="cb55-34"><a href="data-types.html#cb55-34" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
-<span id="cb55-35"><a href="data-types.html#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;dataClasses&quot;)</span></span>
-<span id="cb55-36"><a href="data-types.html#cb55-36" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)            Type </span></span>
-<span id="cb55-37"><a href="data-types.html#cb55-37" aria-hidden="true" tabindex="-1"></a><span class="do">##       &quot;numeric&quot;     &quot;character&quot;</span></span></code></pre></div>
+<span id="cb55-6"><a href="data-types.html#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;   &quot;contrasts&quot;    </span></span>
+<span id="cb55-7"><a href="data-types.html#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
+<span id="cb55-8"><a href="data-types.html#cb55-8" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
+<span id="cb55-9"><a href="data-types.html#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
+<span id="cb55-10"><a href="data-types.html#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
+<span id="cb55-11"><a href="data-types.html#cb55-11" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
+<span id="cb55-12"><a href="data-types.html#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
+<span id="cb55-13"><a href="data-types.html#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
+<span id="cb55-14"><a href="data-types.html#cb55-14" aria-hidden="true" tabindex="-1"></a>results[[<span class="st">&#39;terms&#39;</span>]]</span>
+<span id="cb55-15"><a href="data-types.html#cb55-15" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower) ~ Type</span></span>
+<span id="cb55-16"><a href="data-types.html#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;variables&quot;)</span></span>
+<span id="cb55-17"><a href="data-types.html#cb55-17" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
+<span id="cb55-18"><a href="data-types.html#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;factors&quot;)</span></span>
+<span id="cb55-19"><a href="data-types.html#cb55-19" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Type</span></span>
+<span id="cb55-20"><a href="data-types.html#cb55-20" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)    0</span></span>
+<span id="cb55-21"><a href="data-types.html#cb55-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Type               1</span></span>
+<span id="cb55-22"><a href="data-types.html#cb55-22" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;term.labels&quot;)</span></span>
+<span id="cb55-23"><a href="data-types.html#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Type&quot;</span></span>
+<span id="cb55-24"><a href="data-types.html#cb55-24" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;order&quot;)</span></span>
+<span id="cb55-25"><a href="data-types.html#cb55-25" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb55-26"><a href="data-types.html#cb55-26" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;intercept&quot;)</span></span>
+<span id="cb55-27"><a href="data-types.html#cb55-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb55-28"><a href="data-types.html#cb55-28" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;response&quot;)</span></span>
+<span id="cb55-29"><a href="data-types.html#cb55-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb55-30"><a href="data-types.html#cb55-30" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;.Environment&quot;)</span></span>
+<span id="cb55-31"><a href="data-types.html#cb55-31" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;environment: R_GlobalEnv&gt;</span></span>
+<span id="cb55-32"><a href="data-types.html#cb55-32" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;predvars&quot;)</span></span>
+<span id="cb55-33"><a href="data-types.html#cb55-33" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
+<span id="cb55-34"><a href="data-types.html#cb55-34" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;dataClasses&quot;)</span></span>
+<span id="cb55-35"><a href="data-types.html#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)            Type </span></span>
+<span id="cb55-36"><a href="data-types.html#cb55-36" aria-hidden="true" tabindex="-1"></a><span class="do">##       &quot;numeric&quot;     &quot;character&quot;</span></span></code></pre></div>
 <div class="rmd-caution">
 <p>
 <code>results</code> is a <code>list</code> (<code>is.list(results)</code> returns <code>TRUE</code>), but to be more specific, it is an S3 object of class <code>lm</code>. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren’t confused if you type <code>class(results)</code> and see <code>lm</code> instead of <code>list</code>. Second, the fact that the authors of <code>lm()</code> wrote code that returns <code>result</code> as a “fancy list” suggests that they are encouraging another way to access elements of the <code>results</code>: to use specialized functions! For example, you can use <code>residuals(results)</code>, <code>coefficients(results)</code>, and <code>fitted.values(results)</code>. These functions do not work for all lists in R, but when they do work (for <code>lm</code> and <code>glm</code> objects only), you can be sure you are writing the kind of code that is encouraged by the authors of <code>lm()</code>.
@@ -1484,7 +1487,7 @@ Sometimes, in R, functions are called <strong>closures</strong> to emphasize tha
 <span id="cb82-9"><a href="data-types.html#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb82-10"><a href="data-types.html#cb82-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
 <span id="cb82-11"><a href="data-types.html#cb82-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg))</span>
-<span id="cb82-12"><a href="data-types.html#cb82-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140320109335904 140320109335936</span></span>
+<span id="cb82-12"><a href="data-types.html#cb82-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140508600341856 140508600341888</span></span>
 <span id="cb82-13"><a href="data-types.html#cb82-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb82-14"><a href="data-types.html#cb82-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
@@ -1670,7 +1673,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="data-types.html#cb94-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb94-2"><a href="data-types.html#cb94-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb94-3"><a href="data-types.html#cb94-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb94-4"><a href="data-types.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf]</span></span>
+<span id="cb94-4"><a href="data-types.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (0, Inf]</span></span>
 <span id="cb94-5"><a href="data-types.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb94-6"><a href="data-types.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb94-7"><a href="data-types.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -1703,7 +1706,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="data-types.html#cb96-1" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb96-2"><a href="data-types.html#cb96-2" aria-hidden="true" tabindex="-1"></a>type_of_day <span class="op">=</span> pd.cut(stock_returns, [<span class="op">-</span>np.inf, <span class="dv">0</span>, np.inf], labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
 <span id="cb96-3"><a href="data-types.html#cb96-3" aria-hidden="true" tabindex="-1"></a>type_of_day</span>
-<span id="cb96-4"><a href="data-types.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;]</span></span>
+<span id="cb96-4"><a href="data-types.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;good day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;good day&#39;]</span></span>
 <span id="cb96-5"><a href="data-types.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (2, object): [&#39;bad day&#39; &lt; &#39;good day&#39;]</span></span>
 <span id="cb96-6"><a href="data-types.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day)</span>
 <span id="cb96-7"><a href="data-types.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span>
@@ -1723,10 +1726,11 @@ You’ll notice that, in this instance, <code>pd.cut</code> did not return a <co
 </div>
 <div id="data-frames" class="section level2" number="2.7">
 <h2><span class="header-section-number">2.7</span> Data Frames</h2>
-<p>As data scientists, most of the time, our data set will be stored as a data frame.</p>
+<p>The rectangular array (e.g. an Excel spreadsheet ) of information is what many think of when they hear the word “data.” Each column contains elements of a shared data type, and these data types can vary from column to column.</p>
+<p>There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python scripts because many functions that read in data from an external source return objects of this type (e.g. <code>read.csv()</code> in R and <code>pd.read_csv()</code> in Python).</p>
 <div id="data-frames-in-r" class="section level3" number="2.7.1">
 <h3><span class="header-section-number">2.7.1</span> Data Frames in R</h3>
-<p>Let’s consider as an example Fisher’s “Iris” data set. We will read this data set in from a comma separated file (more on input/output in chapter <a href="odds-and-ends.html#input-and-output">3.1</a>). This file can be downloaded from this link: <a href="https://archive.ics.uci.edu/ml/datasets/iris">https://archive.ics.uci.edu/ml/datasets/iris</a>.</p>
+<p>Let’s consider as an example Fisher’s “Iris” data set obtained from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. We will read this data set in from a comma separated file (more on input/output in chapter <a href="odds-and-ends.html#input-and-output">3.1</a>). This file can be downloaded from this link: <a href="https://archive.ics.uci.edu/ml/datasets/iris">https://archive.ics.uci.edu/ml/datasets/iris</a>.</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="data-types.html#cb97-1" aria-hidden="true" tabindex="-1"></a>irisData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/iris.csv&quot;</span>, <span class="at">header =</span> F)</span>
 <span id="cb97-2"><a href="data-types.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData)</span>
 <span id="cb97-3"><a href="data-types.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    V1  V2  V3  V4          V5</span></span>
@@ -1869,7 +1873,7 @@ Be careful: depending on how you use the square brackets, you can either get a <
 <span id="cb102-18"><a href="data-types.html#cb102-18" aria-hidden="true" tabindex="-1"></a><span class="co">## 4           5.0          3.6</span></span></code></pre></div>
 <div class="rmd-details">
 <p>
-Notice that <code>iris_data[‘sepal.length’]</code> returns a <code>Series</code> and <code>iris_data[[“sepal.length,” “sepal.width”]</code> returns a Panda’s <code>DataFrame</code>. This behavior is similar to what happened in R’s. For more details, click <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection">here</a>.
+Notice that <code>iris_data[‘sepal.length’]</code> returns a <code>Series</code> and <code>iris_data[[“sepal.length,” “sepal.width”]</code> returns a Pandas <code>DataFrame</code>. This behavior is similar to what happened in R’s. For more details, click <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection">here</a>.
 </p>
 </div>
 <p>You can select columns and rows by number with the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html"><code>.iloc</code> method</a>. <code>iloc</code> is (probably) short for “integer location.”</p>
@@ -2041,6 +2045,9 @@ is the covariance between <span class="math inline">\(X_i\)</span> and <span cla
 <div id="ref-struc_and_interp" class="csl-entry">
 Abelson, Harold, and Gerald J. Sussman. 1996. <em>Structure and Interpretation of Computer Programs</em>. 2nd ed. Cambridge, MA, USA: MIT Press.
 </div>
+<div id="ref-uci_data" class="csl-entry">
+Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
+</div>
 <div id="ref-harris2020array" class="csl-entry">
 Harris, Charles R., K. Jarrod Millman, Stéfan J. van der Walt, Ralf Gommers, Pauli Virtanen, David Cournapeau, Eric Wieser, et al. 2020. <span>“Array Programming with <span>NumPy</span>.”</span> <em>Nature</em> 585 (7825): 357–62. <a href="https://doi.org/10.1038/s41586-020-2649-2">https://doi.org/10.1038/s41586-020-2649-2</a>.
 </div>
@@ -2113,7 +2120,11 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["r_and_python_book.pdf", "r_and_python_book.epub"],
+"download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

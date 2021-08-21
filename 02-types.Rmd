@@ -1299,11 +1299,14 @@ You'll notice that, in this instance, `pd.cut` did not return a `Series` object.
 
 ## Data Frames
 
-As data scientists, most of the time, our data set will be stored as a data frame.
+The rectangular array (e.g. an Excel spreadsheet ) of information is what many think of when they hear the word "data." Each column contains elements of a shared data type, and these data types can vary from column to column. 
+
+There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python scripts because many functions that read in data from an external source return objects of this type (e.g. `read.csv()` in R and `pd.read_csv()` in Python). 
+
 
 ### Data Frames in R
 
-Let's consider as an example Fisher's "Iris" data set. We will read this data set in from a comma separated file (more on input/output in chapter \@ref(input-and-output)). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
+Let's consider as an example Fisher's "Iris" data set obtained from [@uci_data]. We will read this data set in from a comma separated file (more on input/output in chapter \@ref(input-and-output)). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
 
 
 ```{r, collapse=TRUE}
@@ -1400,7 +1403,7 @@ first_two_cols.head()
 
 
 ```{block, type='rmd-details'}
-Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Panda's `DataFrame`. This behavior is similar to what happened in R's. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
+Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Pandas `DataFrame`. This behavior is similar to what happened in R's. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
 ```
 
 You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is (probably) short for "integer location." 
