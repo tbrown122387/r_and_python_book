@@ -416,7 +416,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="functional-programming.html#cb201-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
 <span id="cb201-2"><a href="functional-programming.html#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
 <span id="cb201-3"><a href="functional-programming.html#cb201-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          X1          X2          X3          X4          X5          X6 </span></span>
-<span id="cb201-4"><a href="functional-programming.html#cb201-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -0.31679084  0.27309608 -0.05660662  0.17577318 -0.03798136  0.35853046</span></span></code></pre></div>
+<span id="cb201-4"><a href="functional-programming.html#cb201-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  0.48620277  0.10301836 -0.14149408 -0.58377064  0.04541684  0.03584062</span></span></code></pre></div>
 <p>Each call to <code>mean</code> returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(1\)</span>. This is necessary if you want to collect all the results into a <code>vector</code>–remember, all elements of a <code>vector</code> have to have the same type. To get the same behavior, you might also consider using <code>vapply(myDF, mean, numeric(1))</code>.</p>
 <p>In the above case, “simplify” referred to how one-hundred length-<span class="math inline">\(1\)</span> vectors were simplified into one length-<span class="math inline">\(100\)</span> <code>vector</code>. However, “simplified” does not necessarily imply that all elements will be stored in a <code>vector</code>. Consider the <code>summary</code> function, which returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(6\)</span>. In this case, one-hundred length-<span class="math inline">\(6\)</span> vectors were simplified into one <span class="math inline">\(6 \times 100\)</span> matrix.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="functional-programming.html#cb202-1" aria-hidden="true" tabindex="-1"></a>mySummaries <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, summary)</span>
@@ -445,14 +445,14 @@ Another function that is worth mentioning is <code>replicate</code>–it is a wr
 <span id="cb203-10"><a href="functional-programming.html#cb203-10" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ 1)</span></span>
 <span id="cb203-11"><a href="functional-programming.html#cb203-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb203-12"><a href="functional-programming.html#cb203-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb203-13"><a href="functional-programming.html#cb203-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb203-14"><a href="functional-programming.html#cb203-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -1.2492 -1.0790  0.2559  0.8443  1.2935 </span></span>
+<span id="cb203-13"><a href="functional-programming.html#cb203-13" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb203-14"><a href="functional-programming.html#cb203-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.25730 -0.28427  0.00532  0.20567  1.91465 </span></span>
 <span id="cb203-15"><a href="functional-programming.html#cb203-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb203-16"><a href="functional-programming.html#cb203-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
 <span id="cb203-17"><a href="functional-programming.html#cb203-17" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb203-18"><a href="functional-programming.html#cb203-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   0.4426     0.3192   1.386    0.199</span></span>
+<span id="cb203-18"><a href="functional-programming.html#cb203-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   0.4396     0.3688   1.192    0.264</span></span>
 <span id="cb203-19"><a href="functional-programming.html#cb203-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb203-20"><a href="functional-programming.html#cb203-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.009 on 9 degrees of freedom</span></span></code></pre></div>
+<span id="cb203-20"><a href="functional-programming.html#cb203-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.166 on 9 degrees of freedom</span></span></code></pre></div>
 </div>
 <div id="apply" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> <code>apply</code></h3>
@@ -460,7 +460,7 @@ Another function that is worth mentioning is <code>replicate</code>–it is a wr
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="functional-programming.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(myDF)</span>
 <span id="cb204-2"><a href="functional-programming.html#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  10 100</span></span>
 <span id="cb204-3"><a href="functional-programming.html#cb204-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(myDF, <span class="dv">1</span>, mean)</span>
-<span id="cb204-4"><a href="functional-programming.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.06343489 -0.19013128 -0.28761900  0.15304833  0.22643180 -0.03974860 -0.07869921  0.21813606 -0.03489614  0.09714874</span></span></code></pre></div>
+<span id="cb204-4"><a href="functional-programming.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.018377541  0.084103363 -0.019911495  0.077868062  0.002758687  0.102143659 -0.168791288  0.017363728  0.158608952  0.091146882</span></span></code></pre></div>
 <p>Another example where it can be useful to apply a function to rows is <strong>predicate functions.</strong> A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a <code>data.frame</code>. Without a predicate function, filtering rows might look something like this.</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="functional-programming.html#cb205-1" aria-hidden="true" tabindex="-1"></a>albRealEstate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb205-2"><a href="functional-programming.html#cb205-2" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(albRealEstate<span class="sc">$</span>YearBuilt <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> albRealEstate<span class="sc">$</span>Condition <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span>,]</span>
@@ -529,16 +529,16 @@ For functions that return higher-dimensional output, you will have to use someth
 <p>The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html">documentation of <code>mapply</code></a> states <code>mapply</code> is a multivariate version of <code>sapply</code>. <code>sapply</code> worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use <code>mapply</code>.</p>
 <p>Here is a short example. Regarding the <code>n=</code> argument of <code>rnorm</code>, the documentation explains, “[i]f <code>length(n) &gt; 1</code>, the length is taken to be the number required.” This would be a problem if we want to sample a.) three times from a mean <span class="math inline">\(0\)</span> normal, b.) twice from a mean <span class="math inline">\(100\)</span> normal, and c.) once from a mean <span class="math inline">\(-100\)</span> normal distribution.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="functional-programming.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
-<pre><code>## [1]  5.700435e-03  9.996484e+01 -1.000082e+02</code></pre>
+<pre><code>## [1]   0.00639856 100.00897390 -99.98747159</code></pre>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="functional-programming.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapply</span>(rnorm, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
 <pre><code>## [[1]]
-## [1]  0.01718944  0.01046672 -0.01636799
+## [1] -0.005091854  0.015328462 -0.009838892
 ## 
 ## [[2]]
-## [1] 100.00263  99.98847
+## [1] 100.00875  99.98341
 ## 
 ## [[3]]
-## [1] -99.98628</code></pre>
+## [1] -100.0191</code></pre>
 </div>
 <div id="reduce-and-do.call" class="section level3" number="5.1.6">
 <h3><span class="header-section-number">5.1.6</span> <code>Reduce</code> and <code>do.call</code></h3>
@@ -612,7 +612,7 @@ The random elements <span class="math inline">\(x\)</span> and <span class="math
 <span id="cb218-4"><a href="functional-programming.html#cb218-4" aria-hidden="true" tabindex="-1"></a>rectangularOutput <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut1, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
 <span id="cb218-5"><a href="functional-programming.html#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(xGrid, yGrid, rectangularOutput, </span>
 <span id="cb218-6"><a href="functional-programming.html#cb218-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">zlab =</span> <span class="st">&quot;f(x,y)&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-266-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-243-1.png" width="672" /></p>
 <p>If you prefer using <code>apply</code>, that is also possible, but you would need to rewrite the function to take one (length-two) argument.</p>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="functional-programming.html#cb219-1" aria-hidden="true" tabindex="-1"></a>fOneArg <span class="ot">&lt;-</span> <span class="cf">function</span>(vec){</span>
 <span id="cb219-2"><a href="functional-programming.html#cb219-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(vec<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span><span class="sc">/</span>pi</span>
@@ -620,7 +620,7 @@ The random elements <span class="math inline">\(x\)</span> and <span class="math
 <span id="cb219-4"><a href="functional-programming.html#cb219-4" aria-hidden="true" tabindex="-1"></a>funcOut2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(grid, <span class="dv">1</span>, fOneArg)</span>
 <span id="cb219-5"><a href="functional-programming.html#cb219-5" aria-hidden="true" tabindex="-1"></a>moreRectOut <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut2, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
 <span id="cb219-6"><a href="functional-programming.html#cb219-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(xGrid, yGrid, moreRectOut, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-244-1.png" width="672" /></p>
 </div>
 <div id="functions-as-function-inputs-in-base-python" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Functions as Function Inputs in Base Python</h2>
@@ -808,7 +808,7 @@ where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \t
 <span id="cb234-7"><a href="functional-programming.html#cb234-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb234-8"><a href="functional-programming.html#cb234-8" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, actuals, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;actual expect.s&quot;</span>)</span>
 <span id="cb234-9"><a href="functional-programming.html#cb234-9" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-283-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-260-1.png" width="672" /></p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="functional-programming.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>If we wanted to use common random numbers, we could generate <span class="math inline">\(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\)</span>, and use the fact that
 <span class="math display">\[
@@ -830,7 +830,7 @@ Here is one function that naively implements Monte Carlo with common random numb
 <span id="cb237-2"><a href="functional-programming.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb237-3"><a href="functional-programming.html#cb237-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span>
 <span id="cb237-4"><a href="functional-programming.html#cb237-4" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApproxCRNv1, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc with crn&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-285-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-262-1.png" width="672" /></p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="functional-programming.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>The downside to this implementation is that we have a bunch of samples floating around in the global environment. We can implement this much more nicely with a function factory.</p>
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="functional-programming.html#cb239-1" aria-hidden="true" tabindex="-1"></a>makeMCFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
@@ -843,7 +843,7 @@ Here is one function that naively implements Monte Carlo with common random numb
 <span id="cb239-8"><a href="functional-programming.html#cb239-8" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv2 <span class="ot">&lt;-</span> <span class="fu">makeMCFunc</span>()</span>
 <span id="cb239-9"><a href="functional-programming.html#cb239-9" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSinCRNv2(c(10,1))</span></span></code></pre></div>
 <p>Much better! Let’s just make sure this function works by comparing its output to the known true function.</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-287-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-264-1.png" width="672" /></p>
 </div>
 <div id="functions-as-function-outputs-in-python" class="section level2" number="5.8">
 <h2><span class="header-section-number">5.8</span> Functions as Function Outputs in Python</h2>

@@ -162,7 +162,15 @@ c("5/2/2021", "5/3/2021", "5/4/2021")
 rnorm(10)
 ```
 
-`c` is short for "combine". `seq` and `rep` are short for "sequence" and "replicate", respectively. `rnorm` samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
+`c()` is short for "combine". `seq()` and `rep()` are short for "sequence" and "replicate", respectively. `rnorm()` samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
+
+```{block, type='rmd-details'}
+I should mention that functions such as `rnorm()` don't create truly random numbers, just *pseudorandom* ones. Pseudorandom numbers are pretty much indecipherable from truly random ones, but the way the computer generates them is actually deterministic. 
+
+First, a *seed*, or starting number is chosen. Then, the *pseudorandom number generator (PRNG)* maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic. 
+
+Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don't set the seed, and I don't think about the distinction between random and pseudorandom numbers.
+```
 
 ### Overview of Python
 
