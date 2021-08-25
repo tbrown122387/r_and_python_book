@@ -1,18 +1,103 @@
 # Odds and Ends
 
+TODO, this part organizes its teaching by concepts patterns commonly-found in data science. The components are types, and sometimes involve new functions. 
+
 ## Input and Output
+
+
+### General Input Considerations
 
 So far we have been creating small pieces of data within our scripts. This is primarily for pedagogical purposes. In real life, we can have 
 
-- data read in from a data set saved on our machine's hard drive (e.g. `my_data.csv`),
-- data read in from a data base (e.g. MySQL, PostgreSQL, etc.), or
+- data read in from a data set saved on our machine's hard drive (e.g. `my_data.csv` or `log_file.txt` ),
+- data read in from a database (e.g. MySQL, PostgreSQL, etc.), or
 - data created in a script (either deterministic or random).
 
-I focus mostly on the first one. The third is handled with basic assignment, and using specialized functions that are easily found. I avoid the second one because it requires my setting up a data base and teaching you SQL commands.
+I focus mostly on the first category in this section. Here are my reasons for doing so:
+
+1. text-files are more readily-available to students than databases, 
+2. teaching the second category requires teaching SQL, and that would introduce conceptual overlap, 
+3. the third category is programmatically self-explanatory.
+
+```{block, type='rmd-details'}
+The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in *simulation studies.* Authors writing statistical papers need to demonstrate that their techniques work on "nice" data: data simulated from a known data-generating process. In a simulation study, unlike in the "real-world," you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model. 
+
+Can your code/technique/algorithm, at the very least, obtain parameter estimates that are "in-line" with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g. `rnorm()` in R or `np.random.choice()` in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility. 
+
+Also, *benchmark data sets* are often readily available through specialized function calls. 
+```
+
+
+Even though this chapter is written to teach you how to read in files into R and Python, you should not expect that you will know how to read in *all* data sets after reading this section. For both R and Python, there are an enormous amount of functions, different functions have different return types, different functions are suited for different file types, many functions are spread across a plethora of third party libraries, and many of these functions have an enormous amount of arguments. You will probably not be able to memorize everything. In my very humble opinion, I doubt you should want to.
+
+Instead, **focus on developing your ability to identify and diagnose data input problems.** Reading in a data set correctly is often a process of trial-and-error. After attempting to read in a data set, always check the following items. Many of these points were previously mentioned in section \@(data-frames-in-r).
+
+1. **The correct column *separator* was used, or the correct "fixed-width format" was expected.** If mistakes are made, columns are going to be combined in weird ways, and often the wrong types are going to be used for pieces of data (e.g. `"2,3"` instead of `2` and `3`.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it's unclear whether people's names in the "last, first" format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.
+2. **The column names were parsed correctly.** Column names should not be stored as data in R/Python. Functions should not expect column names when they don't exist in the actual file. 
+3. **Empty space and metadata was ignored correctly.** Empty space between column names and data shouldn't be stored. Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it's being read in. This can occur at the beginning of the file, and even at the end of the file. 
+4. **Type choice is performed correctly.** Are letters stored as strings or as something else such as an R `factor`? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like $-9999$ to represent missing data--don't store that as a float or integer!
+
+
+I realize that this is no small task. To make matters worse:
+
+- you can't edit the raw data to suit your needs, to make it easier to read in. You have to work with what you're given. If you were allowed to edit, say, a text file you downloaded onto your own machine, you shouldn't--it will lead to code that doesn't run anywhere else. If you abuse write privileges on your company's database, say, well then that's definitely going to be catastrophic. 
+
+- Data sets are often quite large, so manually checking each element is often impossible. In this situation you will have to resign yourself to checking the top and bottom of a data set, or maybe anticipate a specific place where problems are likely to appear. 
+
+
+### Reading in Text Files with R
+
+You've seen examples of `read.csv()` used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is `read.table()`. Actually, if you look at the source code for `read.csv()` (type the name of the function without parentheses into the console and press <Enter>), you will see it calls `read.table()`. The primary difference between these functions is default arguments. **Mind the default arguments.** Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.
+
+Consider the ["Challenger USA Space Shuttle O-Ring Data Set"](https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring) from [@uci_data]. The first ten rows looks like this.
+
+```{bash, echo=FALSE, comment = NA}
+head data/o-ring-erosion-only.data
+```
+
+It does not use commas as separators, and there is no header information, so `read.csv()` used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.
+
+```{r, collapse = TRUE}
+d <- read.csv("data/o-ring-erosion-only.data")
+head(d)
+dim(d)
+typeof(d[,1])
+```
+Specifying `header=FALSE` fixes the column name issue, but `sep = " "` does not fix the separator issue.
+
+```{r, collapse = TRUE}
+d <- read.csv("data/o-ring-erosion-only.data", header=FALSE, sep = " ")
+head(d)
+dim(d)
+str(d)
+```
+One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that `""` works for "one or more spaces, tabs, newlines or carriage returns." This is why `read.table()`, with its default arguments, works well. 
+
+```{r, collapse = TRUE}
+d <- read.table("data/o-ring-erosion-only.data")
+head(d)
+dim(d)
+str(d)
+```
+This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.
+
+```{r, collapse = TRUE}
+d <- read.fwf("data/o-ring-erosion-only.data", widths = c(1,1,2,3,2), sep = "")
+str(d)
+```
+
+### Reading in Text Files with Python
+
+TODO
+
+
+
+### Output
 
 After we have created something useful, we might be interested in storing our results. We can write out to a database, a text file, or we can save a digitized version of our work space.
 
-### Reading In Text Files
+
+
 
 
 ## Using Third-Party Code
@@ -32,7 +117,7 @@ install.packages("thePackage")
 
 In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.
 
-If you followed the suggestions provided in \@ref(installing-python-by-installing-anaconda), then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/). Point-and-click interfaces are made available as well. 
+If you followed the suggestions provided in \@ref(installing-the-required-software), then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/). Point-and-click interfaces are made available as well. 
 
 ```{bash, eval=FALSE}
 conda install the_package
@@ -85,7 +170,7 @@ When you call `library(thePackage)`, the package has an environment created for 
  
  - Third, don't use `library()` inside code that is `source`'d in other files. For example, if you attach a package to the search path from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
 
-All is not lost if there is a name conflict. The variables haven't disappeared. It's just slightly more difficult to refer to them. For instance, if I load in `Hmisc`, I get the warning warning that `format.pval` and `units` are now masked because they were names that were in `"package:base"`. I can still refer to these masked variables with the double colon operator (`::`).
+All is not lost if there is a name conflict. The variables haven't disappeared. It's just slightly more difficult to refer to them. For instance, if I load in `Hmisc` (TODO cite), I get the warning warning that `format.pval` and `units` are now masked because they were names that were in `"package:base"`. I can still refer to these masked variables with the double colon operator (`::`).
 
 ```{r, collapse = TRUE}
 library(Hmisc)
@@ -267,7 +352,7 @@ Loop tips:
 4. *Don't hardcode variables.* Minimize the number of places you have to make changes to your code. You will change your code consistently, so save your future self some time. 
 ```
 
-```{block, type='rmd-details'}
+```{block, type='rmd-caution'}
 The last point bears repeating: *don't hardcode variables*. In statistical programs, there are often "tuning parameters," for instance that must be changed frequently to affect the overall behavior of the program. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility. 
 
 In the example above, the  `myLength` or `my_length` variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you *did* hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes!
@@ -880,6 +965,9 @@ TODO
 
 TODO
 
+## Running Scripts from the Command Line
+
+TODO
 
 ## Exercises
 
