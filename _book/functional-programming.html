@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="an-introduction-to-object-oriented-programming.html"/>
 
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -410,7 +410,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="functional-programming.html#cb203-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
 <span id="cb203-2"><a href="functional-programming.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
 <span id="cb203-3"><a href="functional-programming.html#cb203-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          X1          X2          X3          X4          X5          X6 </span></span>
-<span id="cb203-4"><a href="functional-programming.html#cb203-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -0.48868511  0.04186672 -0.16609069  0.02500321 -1.02376548  0.38211250</span></span></code></pre></div>
+<span id="cb203-4"><a href="functional-programming.html#cb203-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  0.08174746  0.33231906 -0.39740154  0.08901749  0.37995729 -0.04786620</span></span></code></pre></div>
 <p>Each call to <code>mean</code> returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(1\)</span>. This is necessary if you want to collect all the results into a <code>vector</code>–remember, all elements of a <code>vector</code> have to have the same type. To get the same behavior, you might also consider using <code>vapply(myDF, mean, numeric(1))</code>.</p>
 <p>In the above case, “simplify” referred to how one-hundred length-<span class="math inline">\(1\)</span> vectors were simplified into one length-<span class="math inline">\(100\)</span> <code>vector</code>. However, “simplified” does not necessarily imply that all elements will be stored in a <code>vector</code>. Consider the <code>summary</code> function, which returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(6\)</span>. In this case, one-hundred length-<span class="math inline">\(6\)</span> vectors were simplified into one <span class="math inline">\(6 \times 100\)</span> matrix.</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="functional-programming.html#cb204-1" aria-hidden="true" tabindex="-1"></a>mySummaries <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, summary)</span>
@@ -440,13 +440,13 @@ Another function that is worth mentioning is <code>replicate</code>–it is a wr
 <span id="cb205-11"><a href="functional-programming.html#cb205-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb205-12"><a href="functional-programming.html#cb205-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
 <span id="cb205-13"><a href="functional-programming.html#cb205-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb205-14"><a href="functional-programming.html#cb205-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -1.4451 -0.7990  0.1442  0.4654  1.9540 </span></span>
+<span id="cb205-14"><a href="functional-programming.html#cb205-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.6316 -0.3000  0.2603  0.5269  1.2490 </span></span>
 <span id="cb205-15"><a href="functional-programming.html#cb205-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb205-16"><a href="functional-programming.html#cb205-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
 <span id="cb205-17"><a href="functional-programming.html#cb205-17" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb205-18"><a href="functional-programming.html#cb205-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   0.4013     0.3221   1.246    0.244</span></span>
+<span id="cb205-18"><a href="functional-programming.html#cb205-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) -0.05216    0.33739  -0.155    0.881</span></span>
 <span id="cb205-19"><a href="functional-programming.html#cb205-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb205-20"><a href="functional-programming.html#cb205-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.019 on 9 degrees of freedom</span></span></code></pre></div>
+<span id="cb205-20"><a href="functional-programming.html#cb205-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.067 on 9 degrees of freedom</span></span></code></pre></div>
 </div>
 <div id="apply" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> <code>apply</code></h3>
@@ -454,8 +454,7 @@ Another function that is worth mentioning is <code>replicate</code>–it is a wr
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="functional-programming.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(myDF)</span>
 <span id="cb206-2"><a href="functional-programming.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  10 100</span></span>
 <span id="cb206-3"><a href="functional-programming.html#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(myDF, <span class="dv">1</span>, mean)</span>
-<span id="cb206-4"><a href="functional-programming.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.059275215 -0.143877288 -0.069209482  0.014339435 -0.003789998 -0.008134425 -0.097164463  0.057570927 -0.062965196</span></span>
-<span id="cb206-5"><a href="functional-programming.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] -0.044433721</span></span></code></pre></div>
+<span id="cb206-4"><a href="functional-programming.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.121636063 -0.008180506 -0.137401328 -0.044887753 -0.019947967 -0.101762404 -0.090625952  0.031513252 -0.144425546 -0.131332797</span></span></code></pre></div>
 <p>Another example where it can be useful to apply a function to rows is <strong>predicate functions.</strong> A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a <code>data.frame</code>. Without a predicate function, filtering rows might look something like this.</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="functional-programming.html#cb207-1" aria-hidden="true" tabindex="-1"></a>albRealEstate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb207-2"><a href="functional-programming.html#cb207-2" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(albRealEstate<span class="sc">$</span>YearBuilt <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> albRealEstate<span class="sc">$</span>Condition <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span>,]</span>
@@ -492,25 +491,18 @@ Another function that is worth mentioning is <code>replicate</code>–it is a wr
 <p><code>tapply</code> can be very handy when you need it. First, we’ve alluded to the definition before in subsection <a href="data-types.html#data-frames-in-r">2.7.1</a>, but a <strong>ragged array</strong> is a collection of arrays that all have potentially different lengths. I don’t typically construct such an object and then pass it to <code>tapply</code>. Rather, I let <code>tapply</code> construct the ragged array for me. The first argument it expects is “typically vector-like,” while the second tells us how to break that <code>vector</code> into chunks. The third argument is a function that gets applied to each <code>vector</code> chunk.</p>
 <p>If I wanted the average home price for each city, I could use something like this.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="functional-programming.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(albRealEstate)</span>
-<span id="cb209-2"><a href="functional-programming.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb209-3"><a href="functional-programming.html#cb209-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb209-4"><a href="functional-programming.html#cb209-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb209-5"><a href="functional-programming.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb209-6"><a href="functional-programming.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb209-7"><a href="functional-programming.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb209-8"><a href="functional-programming.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb209-9"><a href="functional-programming.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb209-10"><a href="functional-programming.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb209-11"><a href="functional-programming.html#cb209-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb209-12"><a href="functional-programming.html#cb209-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb209-13"><a href="functional-programming.html#cb209-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb209-14"><a href="functional-programming.html#cb209-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb209-15"><a href="functional-programming.html#cb209-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
-<span id="cb209-16"><a href="functional-programming.html#cb209-16" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
-<span id="cb209-17"><a href="functional-programming.html#cb209-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;     &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
-<span id="cb209-18"><a href="functional-programming.html#cb209-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
-<span id="cb209-19"><a href="functional-programming.html#cb209-19" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE </span></span>
-<span id="cb209-20"><a href="functional-programming.html#cb209-20" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4</span></span></code></pre></div>
+<span id="cb209-2"><a href="functional-programming.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb209-3"><a href="functional-programming.html#cb209-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
+<span id="cb209-4"><a href="functional-programming.html#cb209-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb209-5"><a href="functional-programming.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb209-6"><a href="functional-programming.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
+<span id="cb209-7"><a href="functional-programming.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
+<span id="cb209-8"><a href="functional-programming.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span>
+<span id="cb209-9"><a href="functional-programming.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
+<span id="cb209-10"><a href="functional-programming.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;     &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
+<span id="cb209-11"><a href="functional-programming.html#cb209-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
+<span id="cb209-12"><a href="functional-programming.html#cb209-12" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE </span></span>
+<span id="cb209-13"><a href="functional-programming.html#cb209-13" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4</span></span></code></pre></div>
 <p>You might be wondering why we put <code>albRealEstate$City</code> into a <code>list</code>. That seems kind of unnecessary. This is because <code>tapply</code> can be used with multiple <code>factor</code>s–this will break down the <code>vector</code> input into a finer partition. The second argument must be one object, though, so all of these <code>factor</code>s must be collected into a <code>list</code>. The following code produces a “pivot table.”</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="functional-programming.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City, albRealEstate<span class="sc">$</span>Condition), mean)</span>
 <span id="cb210-2"><a href="functional-programming.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                  Average Excellent     Fair     Good      Poor Substandard</span></span>
@@ -531,16 +523,16 @@ For functions that return higher-dimensional output, you will have to use someth
 <p>The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html">documentation of <code>mapply</code></a> states <code>mapply</code> is a multivariate version of <code>sapply</code>. <code>sapply</code> worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use <code>mapply</code>.</p>
 <p>Here is a short example. Regarding the <code>n=</code> argument of <code>rnorm</code>, the documentation explains, “[i]f <code>length(n) &gt; 1</code>, the length is taken to be the number required.” This would be a problem if we want to sample a.) three times from a mean <span class="math inline">\(0\)</span> normal, b.) twice from a mean <span class="math inline">\(100\)</span> normal, and c.) once from a mean <span class="math inline">\(-100\)</span> normal distribution.</p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="functional-programming.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
-<pre><code>## [1]   -0.01737486   99.98987700 -100.02013491</code></pre>
+<pre><code>## [1] -4.219681e-04  1.000146e+02 -9.999382e+01</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="functional-programming.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapply</span>(rnorm, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
 <pre><code>## [[1]]
-## [1]  0.019653033  0.008930524 -0.012163953
+## [1] -0.009566697 -0.005712589 -0.015758903
 ## 
 ## [[2]]
-## [1] 100.0089 100.0083
+## [1] 100.00271  99.98765
 ## 
 ## [[3]]
-## [1] -99.9968</code></pre>
+## [1] -99.98321</code></pre>
 </div>
 <div id="reduce-and-do.call" class="section level3" number="5.1.6">
 <h3><span class="header-section-number">5.1.6</span> <code>Reduce</code> and <code>do.call</code></h3>
@@ -1043,6 +1035,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

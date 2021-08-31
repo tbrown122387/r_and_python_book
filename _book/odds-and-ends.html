@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Odds and Ends | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 3 Odds and Ends | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Odds and Ends | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="data-types.html"/>
 <link rel="next" href="an-introduction-to-object-oriented-programming.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -396,7 +396,8 @@ Also, <em>benchmark data sets</em> are often readily available through specializ
 <h3><span class="header-section-number">3.1.2</span> Reading in Text Files with R</h3>
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>. Actually, if you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press <Enter>), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
 <p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first ten rows looks like this.</p>
-<pre><code>6 0 66  50  1
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
 6 0 68  50  4
@@ -513,9 +514,9 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 </div>
 <p>Moreover, all of these environments are connected in a chain-like structure. To see what environments are loaded on your machine, and what order they were loaded in, use the <code>search()</code> function. This displays the <a href="https://cran.r-project.org/doc/manuals/R-lang.html#Search-path"><strong>search path</strong></a>, or the ordered sequence of all of your environments.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="odds-and-ends.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span>
-<span id="cb120-2"><a href="odds-and-ends.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:reticulate&quot; &quot;tools:rstudio&quot;      &quot;package:stats&quot;      &quot;package:graphics&quot;  </span></span>
-<span id="cb120-3"><a href="odds-and-ends.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] &quot;package:grDevices&quot;  &quot;package:utils&quot;      &quot;package:datasets&quot;   &quot;package:methods&quot;    &quot;Autoloads&quot;         </span></span>
-<span id="cb120-4"><a href="odds-and-ends.html#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [11] &quot;package:base&quot;</span></span></code></pre></div>
+<span id="cb120-2"><a href="odds-and-ends.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:Hmisc&quot;      &quot;package:ggplot2&quot;    &quot;package:Formula&quot;    &quot;package:survival&quot;   &quot;package:lattice&quot;   </span></span>
+<span id="cb120-3"><a href="odds-and-ends.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;package:reticulate&quot; &quot;tools:rstudio&quot;      &quot;package:stats&quot;      &quot;package:graphics&quot;   &quot;package:grDevices&quot;  &quot;package:utils&quot;     </span></span>
+<span id="cb120-4"><a href="odds-and-ends.html#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;package:datasets&quot;   &quot;package:methods&quot;    &quot;Autoloads&quot;          &quot;package:base&quot;</span></span></code></pre></div>
 <p>Alternatively, if you’re using RStudio, the search path, and the contents of each of its environments, are displayed in the “Environment” window. You can choose which environment you’d like to look at by selecting it from the dropdown menu. This allows you to see all of the variables in that particular environment. The <strong>global environment</strong> (i.e. <code>".GlobalEnv"</code>) is displayed by default, because that is where you store all the objects you are creating in the console.</p>
 <div class="figure" style="text-align: center">
 <img src="pics/environments_display_rstudio.png" alt="The Environment Window in RStudio" width="80%" />
@@ -531,23 +532,9 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 </ul>
 <p>All is not lost if there is a name conflict. The variables haven’t disappeared. It’s just slightly more difficult to refer to them. For instance, if I load in <code>Hmisc</code> (TODO cite), I get the warning warning that <code>format.pval</code> and <code>units</code> are now masked because they were names that were in <code>"package:base"</code>. I can still refer to these masked variables with the double colon operator (<code>::</code>).</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="odds-and-ends.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb121-2"><a href="odds-and-ends.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: lattice</span></span>
-<span id="cb121-3"><a href="odds-and-ends.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: survival</span></span>
-<span id="cb121-4"><a href="odds-and-ends.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: Formula</span></span>
-<span id="cb121-5"><a href="odds-and-ends.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: ggplot2</span></span>
-<span id="cb121-6"><a href="odds-and-ends.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb121-7"><a href="odds-and-ends.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: &#39;ggplot2&#39;</span></span>
-<span id="cb121-8"><a href="odds-and-ends.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="do">## The following object is masked _by_ &#39;.GlobalEnv&#39;:</span></span>
-<span id="cb121-9"><a href="odds-and-ends.html#cb121-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb121-10"><a href="odds-and-ends.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     mpg</span></span>
-<span id="cb121-11"><a href="odds-and-ends.html#cb121-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb121-12"><a href="odds-and-ends.html#cb121-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: &#39;Hmisc&#39;</span></span>
-<span id="cb121-13"><a href="odds-and-ends.html#cb121-13" aria-hidden="true" tabindex="-1"></a><span class="do">## The following objects are masked from &#39;package:base&#39;:</span></span>
-<span id="cb121-14"><a href="odds-and-ends.html#cb121-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb121-15"><a href="odds-and-ends.html#cb121-15" aria-hidden="true" tabindex="-1"></a><span class="do">##     format.pval, units</span></span>
-<span id="cb121-16"><a href="odds-and-ends.html#cb121-16" aria-hidden="true" tabindex="-1"></a><span class="co"># format.pval refers to Hmisc&#39;s format.pval because it was loaded more recently</span></span>
-<span id="cb121-17"><a href="odds-and-ends.html#cb121-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Hmisc::format.pval in this case is the same as above</span></span>
-<span id="cb121-18"><a href="odds-and-ends.html#cb121-18" aria-hidden="true" tabindex="-1"></a><span class="co"># base::format.pval this is the only way you can get base&#39;s format.pval function</span></span></code></pre></div>
+<span id="cb121-2"><a href="odds-and-ends.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="co"># format.pval refers to Hmisc&#39;s format.pval because it was loaded more recently</span></span>
+<span id="cb121-3"><a href="odds-and-ends.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hmisc::format.pval in this case is the same as above</span></span>
+<span id="cb121-4"><a href="odds-and-ends.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co"># base::format.pval this is the only way you can get base&#39;s format.pval function</span></span></code></pre></div>
 </div>
 <div id="loading-packages-in-python" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Loading Packages In Python</h3>
@@ -576,20 +563,20 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb123-1"><a href="odds-and-ends.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
 <span id="cb123-2"><a href="odds-and-ends.html#cb123-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb123-3"><a href="odds-and-ends.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.2154459 ,  0.81946478,  1.38505801, -0.21247629,  0.12225431,</span></span>
-<span id="cb123-4"><a href="odds-and-ends.html#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.17624655,  0.13393328, -0.53109274, -0.36485966,  0.46026625])</span></span></code></pre></div>
+<span id="cb123-3"><a href="odds-and-ends.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1.14272204, -1.47368741,  0.12194132, -1.97238141,  1.16760286,</span></span>
+<span id="cb123-4"><a href="odds-and-ends.html#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         1.11168176,  0.91524337, -1.05863223, -0.66944503,  0.02792882])</span></span></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">4</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb124-1"><a href="odds-and-ends.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb124-2"><a href="odds-and-ends.html#cb124-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb124-3"><a href="odds-and-ends.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.01709698, -0.20776502, -1.11223658, -1.00814963,  0.13560018,</span></span>
-<span id="cb124-4"><a href="odds-and-ends.html#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.88057222, -0.1701853 , -1.83848636,  0.16874863, -0.60859187])</span></span></code></pre></div>
+<span id="cb124-3"><a href="odds-and-ends.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.11617007,  0.23986385,  0.76727812, -0.62020732, -0.31763692,</span></span>
+<span id="cb124-4"><a href="odds-and-ends.html#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.51075524, -0.01895633, -0.56581484, -0.74846893, -0.47724513])</span></span></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="odds-and-ends.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
 <span id="cb125-2"><a href="odds-and-ends.html#cb125-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb125-3"><a href="odds-and-ends.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.49147712,  0.19960584, -0.57726232, -0.49383572,  0.85989169,</span></span>
-<span id="cb125-4"><a href="odds-and-ends.html#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.01746845, -0.66041429, -0.06189606, -0.17866311,  1.91741018])</span></span></code></pre></div>
+<span id="cb125-3"><a href="odds-and-ends.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.1581075 , -0.90914895, -1.24414497,  0.14589245, -1.13216394,</span></span>
+<span id="cb125-4"><a href="odds-and-ends.html#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.93095304, -0.56047435,  0.92936203,  1.13595317,  2.06292827])</span></span></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb126-1"><a href="odds-and-ends.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t do this!</span></span>
 <span id="cb126-2"><a href="odds-and-ends.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span> <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
@@ -810,11 +797,11 @@ We can plot all three functions.</p>
 <p>In R, it all starts with <code>vector</code>s. There are two common functions you should know: <code>sort</code> and <code>order</code>. <code>sort</code> returns the sorted <em>data</em>, while <code>order</code> returns the <em>order indexes</em>.</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="odds-and-ends.html#cb137-1" aria-hidden="true" tabindex="-1"></a>sillyData <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
 <span id="cb137-2"><a href="odds-and-ends.html#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sillyData)</span>
-<span id="cb137-3"><a href="odds-and-ends.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.83528620  1.33664316  0.05622213  0.19085281 -0.17185807</span></span>
+<span id="cb137-3"><a href="odds-and-ends.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  1.4581563  0.5985972 -0.2252675 -0.1420626 -0.7811337</span></span>
 <span id="cb137-4"><a href="odds-and-ends.html#cb137-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(sillyData)</span>
-<span id="cb137-5"><a href="odds-and-ends.html#cb137-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.17185807  0.05622213  0.19085281  0.83528620  1.33664316</span></span>
+<span id="cb137-5"><a href="odds-and-ends.html#cb137-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.7811337 -0.2252675 -0.1420626  0.5985972  1.4581563</span></span>
 <span id="cb137-6"><a href="odds-and-ends.html#cb137-6" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(sillyData)</span>
-<span id="cb137-7"><a href="odds-and-ends.html#cb137-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5 3 4 1 2</span></span></code></pre></div>
+<span id="cb137-7"><a href="odds-and-ends.html#cb137-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5 3 4 2 1</span></span></code></pre></div>
 <p><code>order</code> is useful if you’re sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the <code>MSRP</code> (a <code>character</code> vector) a little first. We use the function <code>gsub</code> to find patterns in the text, and replace them with the empty string.</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="odds-and-ends.html#cb138-1" aria-hidden="true" tabindex="-1"></a>carData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
 <span id="cb138-2"><a href="odds-and-ends.html#cb138-2" aria-hidden="true" tabindex="-1"></a>noDollarSignMSRP <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;$&quot;</span>, <span class="st">&quot;&quot;</span>, carData<span class="sc">$</span>MSRP, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
@@ -831,11 +818,11 @@ We can plot all three functions.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb140-1"><a href="odds-and-ends.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb140-2"><a href="odds-and-ends.html#cb140-2" aria-hidden="true" tabindex="-1"></a>silly_data <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb140-3"><a href="odds-and-ends.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(silly_data)</span>
-<span id="cb140-4"><a href="odds-and-ends.html#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [ 0.47530159 -0.49084789  1.07222343 -0.01533942  0.62536798]</span></span>
+<span id="cb140-4"><a href="odds-and-ends.html#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [0.05410983 0.86941167 0.07309387 0.35730281 0.34334482]</span></span>
 <span id="cb140-5"><a href="odds-and-ends.html#cb140-5" aria-hidden="true" tabindex="-1"></a>np.sort(silly_data)</span>
-<span id="cb140-6"><a href="odds-and-ends.html#cb140-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.49084789, -0.01533942,  0.47530159,  0.62536798,  1.07222343])</span></span>
+<span id="cb140-6"><a href="odds-and-ends.html#cb140-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.05410983, 0.07309387, 0.34334482, 0.35730281, 0.86941167])</span></span>
 <span id="cb140-7"><a href="odds-and-ends.html#cb140-7" aria-hidden="true" tabindex="-1"></a>np.argsort(silly_data)</span>
-<span id="cb140-8"><a href="odds-and-ends.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1, 3, 0, 4, 2])</span></span></code></pre></div>
+<span id="cb140-8"><a href="odds-and-ends.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0, 2, 4, 3, 1])</span></span></code></pre></div>
 <p>For pandas’ <code>DataFrame</code>s, most of the functions I find useful are methods attached to the <code>DataFrame</code> class. That means that, as long as something is inside a <code>DataFrame</code>, you can use dot notation.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="odds-and-ends.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb141-2"><a href="odds-and-ends.html#cb141-2" aria-hidden="true" tabindex="-1"></a>car_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
@@ -865,22 +852,15 @@ We can plot all three functions.</p>
 <span id="cb142-2"><a href="odds-and-ends.html#cb142-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> realEstate[<span class="sc">-</span><span class="dv">1</span>,]</span>
 <span id="cb142-3"><a href="odds-and-ends.html#cb142-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> realEstate[<span class="dv">1</span>,]</span>
 <span id="cb142-4"><a href="odds-and-ends.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rbind</span>(test, train))</span>
-<span id="cb142-5"><a href="odds-and-ends.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb142-6"><a href="odds-and-ends.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb142-7"><a href="odds-and-ends.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb142-8"><a href="odds-and-ends.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb142-9"><a href="odds-and-ends.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb142-10"><a href="odds-and-ends.html#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb142-11"><a href="odds-and-ends.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb142-12"><a href="odds-and-ends.html#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb142-13"><a href="odds-and-ends.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb142-14"><a href="odds-and-ends.html#cb142-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb142-15"><a href="odds-and-ends.html#cb142-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb142-16"><a href="odds-and-ends.html#cb142-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb142-17"><a href="odds-and-ends.html#cb142-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb142-18"><a href="odds-and-ends.html#cb142-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
-<span id="cb142-19"><a href="odds-and-ends.html#cb142-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">rbind</span>(test, train) <span class="sc">!=</span> realEstate)</span>
-<span id="cb142-20"><a href="odds-and-ends.html#cb142-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
+<span id="cb142-5"><a href="odds-and-ends.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb142-6"><a href="odds-and-ends.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
+<span id="cb142-7"><a href="odds-and-ends.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb142-8"><a href="odds-and-ends.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb142-9"><a href="odds-and-ends.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
+<span id="cb142-10"><a href="odds-and-ends.html#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
+<span id="cb142-11"><a href="odds-and-ends.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span>
+<span id="cb142-12"><a href="odds-and-ends.html#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">rbind</span>(test, train) <span class="sc">!=</span> realEstate)</span>
+<span id="cb142-13"><a href="odds-and-ends.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
 <p>The above example was with <code>data.frame</code>s. This example of <code>rbind</code> is with <code>matrix</code> objects.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="odds-and-ends.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">matrix</span>(<span class="dv">1</span>,<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>), </span>
 <span id="cb143-2"><a href="odds-and-ends.html#cb143-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(<span class="dv">2</span>,<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>))</span>
@@ -1129,20 +1109,13 @@ We can plot all three functions.</p>
 <p>Recall our Albemarle Real Estate data set.</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="odds-and-ends.html#cb159-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb159-2"><a href="odds-and-ends.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
-<span id="cb159-3"><a href="odds-and-ends.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb159-4"><a href="odds-and-ends.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb159-5"><a href="odds-and-ends.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb159-6"><a href="odds-and-ends.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb159-7"><a href="odds-and-ends.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb159-8"><a href="odds-and-ends.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb159-9"><a href="odds-and-ends.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb159-10"><a href="odds-and-ends.html#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb159-11"><a href="odds-and-ends.html#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb159-12"><a href="odds-and-ends.html#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb159-13"><a href="odds-and-ends.html#cb159-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb159-14"><a href="odds-and-ends.html#cb159-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb159-15"><a href="odds-and-ends.html#cb159-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb159-16"><a href="odds-and-ends.html#cb159-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span></code></pre></div>
+<span id="cb159-3"><a href="odds-and-ends.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb159-4"><a href="odds-and-ends.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
+<span id="cb159-5"><a href="odds-and-ends.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb159-6"><a href="odds-and-ends.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb159-7"><a href="odds-and-ends.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
+<span id="cb159-8"><a href="odds-and-ends.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
+<span id="cb159-9"><a href="odds-and-ends.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span></code></pre></div>
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="odds-and-ends.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb160-2"><a href="odds-and-ends.html#cb160-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
@@ -1232,9 +1205,9 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb171-2"><a href="odds-and-ends.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np                    <span class="co"># 2</span></span>
 <span id="cb171-3"><a href="odds-and-ends.html#cb171-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()              <span class="co"># 3</span></span>
 <span id="cb171-4"><a href="odds-and-ends.html#cb171-4" aria-hidden="true" tabindex="-1"></a>ax.hist(np.random.normal(size<span class="op">=</span><span class="dv">1000</span>))  <span class="co"># 4</span></span>
-<span id="cb171-5"><a href="odds-and-ends.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([  1.,   2.,  18.,  74., 170., 270., 268., 137.,  53.,   7.]), array([-4.1221406 , -3.41894661, -2.71575262, -2.01255864, -1.30936465,</span></span>
-<span id="cb171-6"><a href="odds-and-ends.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.60617066,  0.09702332,  0.80021731,  1.5034113 ,  2.20660528,</span></span>
-<span id="cb171-7"><a href="odds-and-ends.html#cb171-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         2.90979927]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
+<span id="cb171-5"><a href="odds-and-ends.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([  7.,  36., 107., 196., 282., 233., 103.,  30.,   4.,   2.]), array([-3.06049298, -2.37366492, -1.68683687, -1.00000882, -0.31318077,</span></span>
+<span id="cb171-6"><a href="odds-and-ends.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.37364728,  1.06047534,  1.74730339,  2.43413144,  3.12095949,</span></span>
+<span id="cb171-7"><a href="odds-and-ends.html#cb171-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.80778755]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
 <p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-1.png" width="80%" /></p>
 <p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. It also follows the most commonly-used convention.</p>
 <p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
@@ -1253,11 +1226,11 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb172-5"><a href="odds-and-ends.html#cb172-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb172-6"><a href="odds-and-ends.html#cb172-6" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
 <span id="cb172-7"><a href="odds-and-ends.html#cb172-7" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
-<span id="cb172-8"><a href="odds-and-ends.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd626510c88&gt;]</span></span>
+<span id="cb172-8"><a href="odds-and-ends.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f9a2b26e0b8&gt;]</span></span>
 <span id="cb172-9"><a href="odds-and-ends.html#cb172-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
-<span id="cb172-10"><a href="odds-and-ends.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd626510f98&gt;]</span></span>
+<span id="cb172-10"><a href="odds-and-ends.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f9a2b26e438&gt;]</span></span>
 <span id="cb172-11"><a href="odds-and-ends.html#cb172-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
-<span id="cb172-12"><a href="odds-and-ends.html#cb172-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd62651d3c8&gt;]</span></span>
+<span id="cb172-12"><a href="odds-and-ends.html#cb172-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f9a2b26e7b8&gt;]</span></span>
 <span id="cb172-13"><a href="odds-and-ends.html#cb172-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
 <span id="cb172-14"><a href="odds-and-ends.html#cb172-14" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
 <span id="cb172-15"><a href="odds-and-ends.html#cb172-15" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
@@ -1267,9 +1240,9 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb172-19"><a href="odds-and-ends.html#cb172-19" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
 <span id="cb172-20"><a href="odds-and-ends.html#cb172-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb172-21"><a href="odds-and-ends.html#cb172-21" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
-<span id="cb172-22"><a href="odds-and-ends.html#cb172-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7fd626554160&gt;</span></span>
+<span id="cb172-22"><a href="odds-and-ends.html#cb172-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f9a2b2a9550&gt;</span></span>
 <span id="cb172-23"><a href="odds-and-ends.html#cb172-23" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
-<span id="cb172-24"><a href="odds-and-ends.html#cb172-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7fd62651d9e8&gt;]</span></span>
+<span id="cb172-24"><a href="odds-and-ends.html#cb172-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f9a2b26edd8&gt;]</span></span>
 <span id="cb172-25"><a href="odds-and-ends.html#cb172-25" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
 <p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
 <p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-5.png" width="80%" /></p>
@@ -1387,6 +1360,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
