@@ -1,0 +1,164 @@
+# (PART) Part I: Data Types {-} 
+
+# Data Frames
+
+The rectangular array (e.g. an Excel spreadsheet ) of information is what many think of when they hear the word "data." Each column contains elements of a shared data type, and these data types can vary from column to column. 
+
+There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python scripts because many functions that read in data from an external source return objects of this type (e.g. `read.csv()` in R and `pd.read_csv()` in Python). 
+
+
+## Data Frames in R
+
+Let's consider as an example Fisher's "Iris" data set obtained from [@uci_data]. We will read this data set in from a comma separated file (more on input/output in chapter \@ref(input-and-output)). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
+
+
+```{r, collapse=TRUE}
+irisData <- read.csv("data/iris.csv", header = F)
+head(irisData)
+typeof(irisData)
+class(irisData) # we'll talk more about classes later
+dim(irisData)
+nrow(irisData)
+ncol(irisData)
+```
+
+```{block, type='rmd-caution'}
+Do not rely on the default arguments of `read.csv` or `read.table`! After you read in a data frame, always check the first few rows to make sure that 
+
+1. The number of columns is correct because the correct column *separator* was used (c.f. `sep=`),
+2. column names were parsed correctly, if there were some in the raw text file,
+3. the first row of data wasn't used as a column name sequence, if there weren't column names in the text file, and
+4. the last few rows aren't reading in empty spaces
+5. character columns are read in correctly (c.f. `stringsAsFactors=`), and
+6. special characters signifying missing data were correctly identified (c.f. `na.strings=`).
+```
+
+
+There are some exceptions, but most data sets can be stored as a `data.frame`. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation. 
+
+[A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. This is one of the biggest differences between data frames and `matrix`s. They are both two-dimensional, but a `matrix` needs elements to be all the same type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. In other words, the `data.frame` is not a "*ragged*" list.
+
+Often times you will need to extract pieces of information from a `data.frame`. This can be done in many ways. If the columns have names, you can use the `$` operator to access a single column. Accessing a single column might be followed up by creating a new vector. You can also use the `[` operator to access multiple columns by name.  
+
+```{r, collapse=TRUE}
+colnames(irisData) <- c("sepal.length", "sepal.width", "petal.length","petal.width", "species")
+firstCol <- irisData$sepal.length
+head(firstCol)
+firstTwoCols <- irisData[c("sepal.length", "sepal.width")] 
+head(firstTwoCols)
+```
+
+The `[` operator is also useful for selecting rows and columns by index numbers, or by some logical criteria.
+
+```{r, collapse=TRUE}
+topLeft <- irisData[1,1] # first row, first col
+topLeft
+firstThreeRows <- irisData[1:3,] # rows 1-3, all cols
+firstThreeRows
+setosaOnly <- irisData[irisData$species == "Iris-setosa",] # rows where species column is setosa
+head(setosaOnly)
+```
+
+In the code above, `irisData$species == "Iris-setosa"` creates a logical vector (try it!) using the vectorized `==` operator. The `[` operator selects the rows for which the corresponding element of this logical vector is `TRUE`. 
+
+```{block, type='rmd-details'}
+Be careful: depending on how you use the square brackets, you can either get a `data.frame` or a `vector.` As an example, try both `class(irisData[,1])` and `class(irisData[,c(1,2)])`. 
+```
+
+
+In R, `data.frame`s have row names. You can get/set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. Personally, I don't typically use this functionality that often.
+
+```{r, collapse = TRUE}
+head(rownames(irisData))
+rownames(irisData) <- as.numeric(rownames(irisData)) + 1000
+head(rownames(irisData))
+irisData["1002",]
+```
+
+## Data Frames in Python
+
+
+The pandas library in Python has data frames that are modeled after R's. 
+
+```{python, collapse=TRUE}
+import pandas as pd
+iris_data = pd.read_csv("data/iris.csv", header = None)
+iris_data.head()
+iris_data.shape
+len(iris_data) # num rows
+len(iris_data.columns) # num columns
+iris_data.dtypes
+```
+
+The structure is very similar to that of R's data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to R's situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `array`s and `DataFrame`s.
+
+
+Just like in R, you can access columns by name. You do that using square brackets. Observe how similar this code is to the corresponding R code above.
+
+```{python, collapse=TRUE}
+iris_data.columns = ["sepal.length", "sepal.width", "petal.length",
+                     "petal.width", "species"]
+first_col = iris_data['sepal.length']
+first_col.head()
+first_two_cols = iris_data[["sepal.length", "sepal.width"]]
+first_two_cols.head()
+```
+
+
+```{block, type='rmd-details'}
+Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Pandas `DataFrame`. This behavior is similar to what happened in R's. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
+```
+
+You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is (probably) short for "integer location." 
+
+```{python, collapse=TRUE}
+# specify rows/cols by number
+top_left = iris_data.iloc[0,0]
+top_left
+first_three_rows = iris_data.iloc[:3,]
+first_three_rows
+#setosa_only = iris_data[irisData$species == "Iris-setosa",]  # easieriwith loc?
+#head(setosaOnly)
+```
+
+Selecting columns by anything besides integer number can be done with the [`.loc()` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html). You should generally prefer this method to access columns because accessing things by *name* instead of *number* is more readable. Here are some examples. 
+
+```{python, collapse=TRUE}
+sepal_w_to_pedal_w = iris_data.loc['sepal.width':'pedal.width']
+sepal_w_to_pedal_w
+setosa_only = iris_data.loc[iris_data['species'] == "Iris-setosa",]
+setosa_only.head()
+```
+
+Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator. The second example filters out the rows where the `"species"` column elements are equal to `"Iris-setosa"`.
+
+Each `DataFrame` in pandas comes with an `.index` attribute. This is analogous to a row name in R, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
+
+```{python, collapse = TRUE}
+iris_data.index
+iris_data = iris_data.set_index(iris_data.index[::-1]) # reverse the index
+iris_data.head(2)
+iris_data.tail(2)
+iris_data.loc[0]
+iris_data.iloc[0] 
+```
+
+`iris_data.loc[0]` selects the `0`th index. The second line reversed the indexes, so this is actually the last row. If you want the first row, use `iris_data.iloc[0]`.
+
+<!-- [`DataFrame`s have a huge amount  many useful attributes and methods, too.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#) -->
+
+## Row Names and Indexes
+
+In Python, Pandas' `DataFrame`s have an 
+
+```{python, collapse = TRUE}
+iris_data.index
+
+```
+
+
+
+
+## Getting Versus Setting
+
+

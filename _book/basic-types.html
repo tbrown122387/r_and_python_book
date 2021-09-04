@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
-  <meta name="description" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <title>Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:title" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="twitter:title" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="intro.html"/>
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -389,48 +389,91 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<div id="about-this-book" class="section level2 unnumbered">
-<h2>About this book</h2>
-<p>This book is written to be used in a one-semester statistical computing class that teaches both R and Python to graduate students in a statistics or data science department. This book is written for students that do not necessarily possess any previous familiarity with writing code.</p>
-<ul>
-<li><p>If you are using them for analyzing data, R and Python do a lot of the same things in pretty similar ways, so it does not always make sense to teach one language after the other. Imagine learning about vectorization, say, in R, and then several weeks later learning about the same concept in Python. You might end up spending a lot of time refreshing your memory before getting started for the second time. The side-by-side approach ought to help reinforce shared concepts. In my opinion, it also helps to highlight key differences.</p></li>
-<li><p>This text does not describe statistical modeling techniques in detail, although many exercises will be motivated by different statistical techniques. Rather, it teaches a.) important data types, b.) the basics of common procedures such as data “cleaning”, “munging” and manipulation, and c.) some background on object-oriented programming and functional programming. This is largely motivated by the setup of many graduate programs in statistics and data science. Many of these departments organize their classes by sub-discipline (e.g. time series, linear models, Bayesian, etc.). When this is the case, departments tend to compartmentalize the programming courses. The organization of this text aims to complement this kind of course offering structure.</p></li>
-<li><p>This book is written for aspiring data scientists, not necessarily aspiring software developers. Why do I draw the distinction? When discussing different types, for example, I do not discuss data structures in any depth. Rather, I discuss examples of applications where different types would be most useful.</p></li>
-<li><p>This book does not attempt to be an authoritative reference. This is my attempt at balancing depth and breadth for a one-semester course. Plenty of discovery will be left to the reader. For instance, hyperlinks are provided to support self-guided exploration, and second many exercises are designed to motivate further questions.</p></li>
-<li><p>Generally speaking, chapters should be read in order. However, some jumping around may be useful. (TODO update after re-organizing) (sub-)sections within a chapter are carefully ordered. Say, for instance, a topic in R is discussed first. If the Python discussion comes second, that discussion will reference and make comparisons with details mentioned in the R section. So read sections and subsections in order.</p></li>
-</ul>
+<div id="basic-types" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Basic Types</h1>
+<p>Storing an individual piece of information is simple in both languages. However, while Python has scalar types, R does not draw as strong of a distinction between scalar and compound types.</p>
+<div id="basic-types-in-python" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Basic Types In Python</h2>
+<p>In Python, the simplest types we frequently use are <code>str</code> (short for string), <code>int</code> (short for integer), <code>float</code> (short for floating point) and <code>bool</code> (short for Boolean). This list is not exhaustive, but these are a good collection to start thinking about. For a complete list of built-in types in Python, click <a href="https://docs.python.org/3/library/stdtypes.html">here</a>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="basic-types.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="st">&#39;a&#39;</span>), <span class="bu">type</span>(<span class="dv">1</span>), <span class="bu">type</span>(<span class="fl">1.3</span>))</span>
+<span id="cb9-2"><a href="basic-types.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;str&#39;&gt; &lt;class &#39;int&#39;&gt; &lt;class &#39;float&#39;&gt;</span></span></code></pre></div>
+<p>Strings are useful for processing text data such as names of people/places/things and messages such as texts, tweets and emails. If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you’ll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section <a href="control-flow.html#control-flow">11</a>.</p>
+<p>In the next section we will discuss the Numpy library. This library has a <a href="https://numpy.org/doc/stable/user/basics.types.html">broader collection</a> of basic types that allows for finer control over any script you write.</p>
+<div id="type-conversions-in-python" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Type Conversions in Python</h3>
+<p>We will often have to convert between types in a Python program. This is called <strong>type conversion</strong>, and it can be either implicitly or explicitly done.</p>
+<p>For example, <code>int</code>s are often implicitly converted to <code>float</code>s, so that arithmetic operations work.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="basic-types.html#cb10-1" aria-hidden="true" tabindex="-1"></a>my_int <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb10-2"><a href="basic-types.html#cb10-2" aria-hidden="true" tabindex="-1"></a>my_float <span class="op">=</span> <span class="fl">3.2</span></span>
+<span id="cb10-3"><a href="basic-types.html#cb10-3" aria-hidden="true" tabindex="-1"></a>my_sum <span class="op">=</span> my_int <span class="op">+</span> my_float</span>
+<span id="cb10-4"><a href="basic-types.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;my_int&#39;s type&quot;</span>, <span class="bu">type</span>(my_int))</span>
+<span id="cb10-5"><a href="basic-types.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">## my_int&#39;s type &lt;class &#39;int&#39;&gt;</span></span>
+<span id="cb10-6"><a href="basic-types.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;my_float&#39;s type&quot;</span>, <span class="bu">type</span>(my_float))</span>
+<span id="cb10-7"><a href="basic-types.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">## my_float&#39;s type &lt;class &#39;float&#39;&gt;</span></span>
+<span id="cb10-8"><a href="basic-types.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_sum)</span>
+<span id="cb10-9"><a href="basic-types.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 4.2</span></span>
+<span id="cb10-10"><a href="basic-types.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;my_sum&#39;s type&quot;</span>, <span class="bu">type</span>(my_sum))</span>
+<span id="cb10-11"><a href="basic-types.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">## my_sum&#39;s type &lt;class &#39;float&#39;&gt;</span></span></code></pre></div>
+<p>You might be disappointed if you always count on this behavior, though.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="basic-types.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">3.2</span> <span class="op">+</span> <span class="st">&quot;3.2&quot;</span></span>
+<span id="cb11-2"><a href="basic-types.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: unsupported operand type(s) for +: &#39;float&#39; and &#39;str&#39;</span></span></code></pre></div>
+<p>Explicit conversions occur when we as programmers explicitly ask Python to perform a conversion. We will do this with the functions such as <code>int()</code>, <code>str()</code>, <code>float()</code>, and <code>bool()</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="basic-types.html#cb12-1" aria-hidden="true" tabindex="-1"></a>my_date <span class="op">=</span> <span class="st">&quot;5/2/2021&quot;</span></span>
+<span id="cb12-2"><a href="basic-types.html#cb12-2" aria-hidden="true" tabindex="-1"></a>month_day_year <span class="op">=</span> my_date.split(<span class="st">&#39;/&#39;</span>)</span>
+<span id="cb12-3"><a href="basic-types.html#cb12-3" aria-hidden="true" tabindex="-1"></a>my_year <span class="op">=</span> <span class="bu">int</span>(month_day_year[<span class="op">-</span><span class="dv">1</span>]) </span>
+<span id="cb12-4"><a href="basic-types.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;my_year is equal to &#39;</span>, my_year, <span class="st">&#39;and its type is &#39;</span>, <span class="bu">type</span>(my_year))</span>
+<span id="cb12-5"><a href="basic-types.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">## my_year is equal to  2021 and its type is  &lt;class &#39;int&#39;&gt;</span></span></code></pre></div>
 </div>
-<div id="conventions" class="section level2 unnumbered">
-<h2>Conventions</h2>
-<p>Sometimes R and Python code look very similar, or even identical. This is why I usually separate R and Python code into separate sections. However, sometimes I do not, so whenever it is necessary to prevent confusion, I will remind you what language is being used in comments (more about comments in <a href="intro.html#hello-world-in-python">1.2</a> ).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="preface.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
-<span id="cb1-2"><a href="preface.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb1-3"><a href="preface.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">## hello world</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="preface.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
-<span id="cb2-2"><a href="preface.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb2-3"><a href="preface.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;hello world&quot;</span></span></code></pre></div>
 </div>
-<div id="installing-the-required-software" class="section level2 unnumbered">
-<h2>Installing the Required Software</h2>
-<p>To get started, you must install both R and Python. The installation process depends on what kind of machine you have (e.g. what type of operating system your machine is running, is your processor <span class="math inline">\(32\)</span> or <span class="math inline">\(64\)</span> bit, etc.).</p>
-<p>Below, I suggest running R with RStudio, and Python with Anaconda, and I provide some helpful links. I suggest downloading these two bundles separately; however, I should note that the recommendation below is not the only installation method. For example:
-- one can run R and Python without downloading RStudio or Anaconda,
-- one can install RStudio with Anaconda,
-- one can run Python from within Rstudio,
-- one can run Python from within Rstudio that is managed by Anaconda, etc., and
-- options and procedures are very likely to change over time.</p>
-<p>Instructors can prefer alternative strategies, if they wish. If they do, they should verify that Python’s version is <code>&gt;=3.6</code>, and R’s is <code>&gt;=4.0.0</code>. If so, all the code in this book should run.</p>
-<div id="installing-r-and-rstudio" class="section level3 unnumbered">
-<h3>Installing R (and RStudio)</h3>
-<p>It is recommended that you install R and <em>RStudio Desktop</em>. <em>RStudio Desktop</em> is a graphical user interface with many tools that making writing R easier and more fun.</p>
-<p>Install R from the Comprehensive R Archive Network (CRAN). You can access instructions for your specific machine by clicking <a href="https://cran.r-project.org/">here.</a></p>
-<p>You can get RStudio Desktop directly from the <a href="https://www.rstudio.com/products/rstudio/download/#download">company’s website</a>.</p>
+<div id="basic-types-in-r" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Basic Types In R</h2>
+<p>In R, the names of basic types are only slightly different. They are <code>logical</code> (instead of <code>bool</code>), <code>integer</code> (instead of <code>int</code>), <code>double</code> or <code>numeric</code> (instead of <code>float</code>)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, <code>character</code> (instead of <code>str</code>), <code>complex</code> (for calculations involving imaginary numbers), and <code>raw</code> (useful for working with bytes).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="basic-types.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat() is kind of like print()</span></span>
+<span id="cb13-2"><a href="basic-types.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">typeof</span>(<span class="st">&#39;a&#39;</span>), <span class="fu">typeof</span>(<span class="dv">1</span>), <span class="fu">typeof</span>(<span class="fl">1.3</span>))</span>
+<span id="cb13-3"><a href="basic-types.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## character double double</span></span></code></pre></div>
+<p>In this case R automatically upgraded <code>1</code> to a double. If you wanted to force it to be an integer, you can add a capital “L” to the end of the number.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="basic-types.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat() is kind of like print()</span></span>
+<span id="cb14-2"><a href="basic-types.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">typeof</span>(<span class="st">&#39;a&#39;</span>), <span class="fu">typeof</span>(1L), <span class="fu">typeof</span>(<span class="fl">1.3</span>))</span>
+<span id="cb14-3"><a href="basic-types.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## character integer double</span></span></code></pre></div>
+<div id="type-conversions-in-r" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Type Conversions in R</h3>
+<p>You can explicitly and implicitly convert types in R just as you did in Python. Implicit conversion looks like this.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="basic-types.html#cb15-1" aria-hidden="true" tabindex="-1"></a>myInt <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb15-2"><a href="basic-types.html#cb15-2" aria-hidden="true" tabindex="-1"></a>myDouble <span class="ot">=</span> <span class="fl">3.2</span></span>
+<span id="cb15-3"><a href="basic-types.html#cb15-3" aria-hidden="true" tabindex="-1"></a>mySum <span class="ot">=</span> myInt <span class="sc">+</span> myDouble</span>
+<span id="cb15-4"><a href="basic-types.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;my_int&#39;s type is &quot;</span>, <span class="fu">typeof</span>(myInt)))</span>
+<span id="cb15-5"><a href="basic-types.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;my_int&#39;s type is double&quot;</span></span>
+<span id="cb15-6"><a href="basic-types.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;my_float&#39;s type is &quot;</span>, <span class="fu">typeof</span>(myDouble)))</span>
+<span id="cb15-7"><a href="basic-types.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;my_float&#39;s type is double&quot;</span></span>
+<span id="cb15-8"><a href="basic-types.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mySum)</span>
+<span id="cb15-9"><a href="basic-types.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4.2</span></span>
+<span id="cb15-10"><a href="basic-types.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;my_sum&#39;s type is &quot;</span>, <span class="fu">typeof</span>(mySum)))</span>
+<span id="cb15-11"><a href="basic-types.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;my_sum&#39;s type is double&quot;</span></span></code></pre></div>
+<p>Explicit conversion can be achieved with functions such as <code>as.integer</code>, <code>as.logical</code>, <code>as.double</code>, etc.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="basic-types.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(<span class="dv">1</span>))</span>
+<span id="cb16-2"><a href="basic-types.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;double&quot;</span></span>
+<span id="cb16-3"><a href="basic-types.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(<span class="fu">as.logical</span>(<span class="dv">1</span>)))</span>
+<span id="cb16-4"><a href="basic-types.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;logical&quot;</span></span></code></pre></div>
 </div>
-<div id="installing-python-by-installing-anaconda" class="section level3" number="0.0.1">
-<h3><span class="header-section-number">0.0.1</span> Installing Python by Installing Anaconda {-}</h3>
-<p>It is recommended that you install <em>Anaconda</em>, which is a package manager, environment manager, and Python distribution with many third party open source packages. It provides a graphical user interface for us, too, just as RStudio does. You can access instructions for your specific machine and OS by clicking <a href="https://docs.anaconda.com/anaconda/install/#">here</a>.</p>
+<div id="rs-simplification" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> R’s Simplification</h3>
+<p>The basic types of R are a little different than the basic types of Python. On the one hand, Python has basic types for individual elements, and it uses separate types as containers for storing many elements. On the other, R uses the same type to store a single element as it does to store many elements. Strictly speaking, R does not have a scalar type.</p>
+<p>Technically, all of the examples we just did in R are using length one <strong>vectors</strong>–<code>logical</code> <code>integer</code> <code>double</code>, <code>character</code>, <code>complex</code>, and <code>raw</code> are the possible <strong>modes</strong> of a vector. <code>vector</code>s will be discussed further section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-vectors-versus-numpy-arrays-and-pandas-series">3</a>.</p>
+<p>Think about which option you prefer. What are the benefits of using separate types for scalars and collections? What are the benefits of using the same type?</p>
+<!-- ### Exercises -->
+<!-- #### Easy -->
+<!-- All answers to questions related to R should be written in a file named `easy_data_types_exercises.R`. All answers to questions related to Python should be written in a file named `easy_data_types_exercises.py`. -->
+<!-- 1. Which Python type is ideal for each piece of data? Assign your answers to a `list` of `str`ings called `question_one`.  -->
+<!--     + An individual's IP address -->
+<!--     + whether or not an individual attended a study -->
+<!--     + the number of seeds found in a plant -->
+<!--     + the amount of time it takes for a car to race around a track -->
+<!-- 2. Answer the same question above, but use R types? Assign your answers to a `character vector` of length four called `questionOne`.  -->
+<!--     + An individual's IP address -->
+<!--     + whether or not an individual attended a study -->
+<!--     + the number of seeds found in a plant -->
+<!--     + the amount of time it takes for a car to race around a track -->
+<!-- 3. ["The only numbers that can be represented exactly in R’s numeric type are integers and fractions whose denominator is a power of 2."](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f) Provide ten examples of numbers that have nonzero decimal components and are not exactly equal represented by R's `numeric` type. Store them all in a vector called `notExactFloats`. -->
 
 </div>
 </div>
@@ -438,13 +481,19 @@ div.csl-indent {
 
 
 
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>“double” is short for “double precision floating point.” In other programming languages, the programmer might choose how many decimal points of precision he or she wants.<a href="basic-types.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -476,7 +525,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/preface.Rmd",
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/02-basic_types.Rmd",
 "text": "Edit"
 },
 "history": {

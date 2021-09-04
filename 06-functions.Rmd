@@ -1,0 +1,543 @@
+# (PART) Part I: Data Types {-} 
+
+
+# User-defined functions in R and Python
+
+Why are functions important in statistical programming? In both R and Python (and every other programming language), functions are used to perform calculations. This is a pretty obvious statement.
+
+This text has already covered how to *use* functions that come to us pre-made. At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python. 
+In this section we take a look at how to define our own functions. This will help us understand pre-made functions. It will also be useful if we need some functionality that isn't already written for us. 
+
+Writing our own functions is also useful for "packaging up" computations. The utility of this will become very apparent in chapter \@ref(functional-programming). Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the "best" one?
+
+Thankfully, R functions are very similar to Python functions. In both languages, functions are **first-class objects**. This means that, no matter which of these two languages you're using, functions
+
+- can be passed as arguments to other functions, 
+- they can be returned as values from other functions, and 
+- they can be assigned to variables and stored in containers [@struc_and_interp]
+
+## Defining R Functions
+
+To create a function in R, we need another function called `function`. We give the output of `function` a name in the same way we give names to any other variable in R, by using the assignment operator `<-`. Here's an example of a toy function called `addOne`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
+
+```{r, collapse = TRUE}
+addOne <- function(myInput){  # define the function
+  myOutput <- myInput + 1
+  return(myOutput)
+}
+addOne(41) # call/invoke/use the function 
+```
+
+Below the definition, the function is called with an input of `41`. When this happens, the following sequence of events occurs
+
+- The value `41` is assigned to `myInput`
+- `myOutput` is given the value `42`
+- `42` is returned from the function
+- the temporary variables `myInput` and `myOutput` are destroyed. 
+
+We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away. 
+
+
+## Defining Python Functions
+
+To create a function in Python, we use the `def` statement (instead of the `function` function in R). The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in R. 
+
+Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and `return` isn't a function like it is in R, so there is no need to use parentheses after it. There is one addition, though--we need a colon (`:`). 
+
+Here is an example of a toy function called `add_one`.
+
+```{python, collapse = TRUE}
+def add_one(my_input):  # define the function
+  my_output = my_input + 1
+  return my_output
+add_one(41) # call/invoke/use the function 
+```
+
+Below the definition, the function is called with an input of `41`. When this happens, the following sequence of events occurs
+
+- The value `41` is assigned to `my_input`
+- `my_output` is given the value `42`
+- `42` is returned from the function
+- the temporary variables `my_input` and `my_output` are destroyed. 
+
+We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away. 
+
+## More details on R's user-defined functions
+
+
+Technically, in R, functions are [defined as three things bundled together](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Function-objects): 
+
+ 1. a **formal argument list** (also known as *formals*), 
+ 2. a **body**, and 
+ 3. a **parent environment**.
+
+The *formal argument list* is exactly what it sounds like. It is the list of arguments a function takes. You can access a function's formal argument list using the `formals()` function. Note that it is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created in the first place.
+
+Here is another function that takes a *default* argument called `whichNumber`. If the user of the function doesn't specify how much she wants to add to `myInput`, `addNumber` will use `1` as the default. This default value shows up in the output of `formals(addNumber)`.
+
+```{r, collapse = TRUE}
+addNumber <- function(myInput, whichNumber = 1){  
+  myOutput <- myInput + whichNumber
+  return(myOutput)
+}
+addNumber(3) # no second argument being provided by the user here
+formals(addNumber)
+```
+
+The function's *body* is also exactly what it sounds like. It is the work that a function performs. You can access a functions body using the the `body()` function. 
+
+```{r, collapse = TRUE}
+addNumber <- function(myInput, whichNumber = 1){  
+  myOutput <- myInput + whichNumber
+  return(myOutput)
+}
+body(addNumber)
+```
+
+Every function you create also has a  *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. To understand functions well in R, these examples are important to understand, so I provide more detail in \@ref(function-scope-in-r).
+
+```{block, type='rmd-details'}
+There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
+```
+
+
+## More details on Python's user-defined functions
+
+
+Python functions have the same things R functions have: a **formal parameter list**, a body, and there are [namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) created that help organize which variables the function can access, as well as which pieces of code can call this new function. These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn't organized in the same way. 
+
+Below is a table, taken straight from [the documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types), of all each user-defined function's *special attributes*. 
+
+| Attribute |	Meaning |
+|-----------|-------------------|
+`__doc__`	| The function’s documentation string, or `None` if unavailable; not inherited by subclasses.
+`__name__`	| The function’s name.	
+`__qualname__`	| The function’s qualified name.	
+`__module__` |	The name of the module the function was defined in, or None if unavailable.
+`__defaults__`	| A tuple containing default argument values for those arguments that have defaults, or None if no arguments have a default value.
+`__code__` |	The code object representing the compiled function body.
+`__globals__`	| A reference to the dictionary that holds the function’s global variables — the global namespace of the module in which the function was defined.
+`__dict__` |	The namespace supporting arbitrary function attributes.
+`__closure__` | `None` or a tuple of cells that contain bindings for the function’s free variables. See below for information on the `cell_contents` attribute.
+`__annotations__` | A dict containing annotations of parameters. The keys of the dict are the parameter names, and 'return' for the return annotation, if provided.
+`__kwdefaults__` | A dict containing defaults for keyword-only parameters.
+
+So take the  *formal parameter list* of a user-defined function, which is, again, the list of inputs a function takes. Just like in R, this is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created.^[You might have noticed that Python uses two different words to prevent confusion--unlike R, Python uses the word "parameter" (instead of "argument") to refer to the inputs a function takes, and "arguments" to the specific values a user plugs in.] Below we have another function that takes a **default argument** called `which_number`. If the user of the function doesn't specify how much she wants to add to `my_input`, `add_number` will use `1` as the default. This default value can be obtained with `add_number.__defaults__`.
+
+```{python, collapse = TRUE}
+def add_number(my_input, which_number = 1):
+  my_output = my_input + which_number
+  return my_output
+add_number(3) # no second argument being provided by the user here
+add_number.__code__.co_varnames # this also contains my_output
+add_number.__defaults__
+```
+The code attribute has much more to offer. To see a list of names of all its contents, you can use `dir(add_number.__code__)`.
+
+```{block, type='rmd-details'}
+Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) operator will become more clear in the future chapter on *object-oriented programming*. For now, just think of `__code__` as being an object *belonging to* `add_number`. Objects that belong to other objects are called **attributes** in Python. The dot operator helps us access attributes *inside* other objects. 
+```
+
+
+
+## Function Scope in R
+
+R uses **lexical scoping**.
+
+R functions can use variables that are defined in the function body, and variables that were defined in the environment that the function itself was defined in. R functions **cannot** necessarily find variables in an environment where the function was *called* in. Code outside the body of a function cannot access variables inside the body of a function.
+
+```{r, collapse = TRUE}
+a <- 3
+sillyFunction <- function(){
+  return(a + 20) 
+}
+environment(sillyFunction) # the env. it was defined in contains a
+sillyFunction()
+```
+
+From the point of view of the function, when it attempts to access a variable, it first looks in its own body. In the example below, there are two variables named `a`, but they exist in different environments. Inside the function, the innermost one gets used. Outside the function, the global variable gets used. 
+
+```{r, collapse = TRUE}
+a <- 3
+sillyFunction <- function(){
+  a <- 20
+  return(a + 20) 
+}
+sillyFunction()
+print(a)
+```
+
+The same concept applies if you create functions within functions. The inner function looks "inside-out" for variables. Below we call `outerFunc()`, which calls `innerFunc()`. `innerFunc()` can refer to the variable `b`, because it lies in the same environment in which `innerFunc()` was created. Interestingly, `innerFunc()` can also refer to the variable `a`, because that variable was captured by `outerFunc`, which provides access to `innerFunc`. 
+
+```{r, collapse = TRUE}
+a <- "outside both"
+outerFunc <- function(){
+  b <- "inside one"
+  innerFunc <- function(){
+    print(a) 
+    print(b)
+  }
+  return(innerFunc())
+}
+outerFunc()
+```
+
+If we ask `outerFunc` to return the function `innerFunc` (functions are objects!), then we might be surprised to see that `innerFunc()` can still successfully refer to `b`, even though it doesn't exist inside the *calling environment.* But don't be surprised! What matters is what was available when the function was *created*. In this example, `outerFuncV2` is sometimes called a *function factory*. More information about this is provided in \@ref(functional-programming).
+
+```{r, collapse = TRUE}
+outerFuncV2 <- function(){
+  b <- "inside one"
+  innerFunc <- function(){
+    print(b)
+  }
+  return(innerFunc) # note the missing inner parentheses!
+}
+myFunc <- outerFuncV2() # get a new function
+ls(environment(myFunc)) # list all data attached to this function
+myFunc()
+```
+
+```{block, type='rmd-details'}
+Sometimes, in R, functions are called **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with. 
+```
+
+
+
+## Function Scope in Python
+
+Python uses **lexical scoping** just like R! There's a famous acronym for the concept in Python: **LEGB**.
+
+- L: Local, 
+- E: Enclosing, 
+- G: Global, and 
+- B: Built-in.
+
+A Python function will search for a variable in these [namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) in this order.^[Functions aren't the only thing that get their own namespace. For instance, [classes do as well](https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes). More information on classes is provided in Chapter \@ref(an-introduction-to-object-oriented-programming)]. 
+
+"*Local*" refers to variables that are defined inside of the function's block. The function below uses the local `a` over the global one. 
+
+```{python, collapse = TRUE}
+a = 3
+def silly_function():
+  a = 22 # local a
+  print("local variables are ", locals())
+  return a + 20
+silly_function()
+silly_function.__code__.co_nlocals # number of local variables
+silly_function.__code__.co_varnames # names of local variables
+```
+
+"*Enclosing*" refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called **free variables.** In the example below, there is no local `a` variable for `inner_func`. But there is a global one and one in the enclosing namespace. It chooses the one in the enclosing namespace. 
+
+```{python, collapse = TRUE}
+a = "outside both"
+def outer_func():
+  a = "inside one"
+  def inner_func():
+    print(a)
+  return inner_func
+my_new_func = outer_func()
+my_new_func()
+my_new_func.__code__.co_freevars
+```
+
+"*Global*" scope contains variables defined in the module-level namespace. If the below example code was the entirety of your script, then `a` would be a global variable.
+
+```{python, collapse = TRUE}
+a = "outside both"
+def outer_func():
+  b = "inside one"
+  def inner_func():
+    print(a) 
+  inner_func()
+outer_func()
+```
+
+
+Just like in R, Python functions **cannot** necessarily find variables in an environment where the function was *called* in. For example, here is some code that mimics the above R example. Both `a` and `b` are accessible from within `inner_func`. That is due to LEGB.
+
+```{python}
+a = "outside both"
+def outer_func():
+  b = "inside one"
+  def inner_func():
+    print(a) 
+    print(b)
+  return inner_func() 
+outer_func()
+```
+
+However, if we start using `outer_func` inside another function, *calling* it in another function, when it was *defined* somewhere else, well then it doesn't have access to some variables. You might be surprised at how the following code functions. Does this print the right string: `"this is the a I want to use now!"` No!
+
+```{python}
+def third_func():
+  a = "this is the a I want to use now!"
+  outer_func()
+third_func() 
+```
+
+Again, these examples get at *functional programming*, which is discussed more in depth in chapter \@ref(functional-programming). There it will describe strategies to make your code easier to maintain (e.g. keep your functions "pure"!)
+
+
+## Modifying a Function's Arguments
+
+Can/should we modify a function's argument? The flexibility to do this sounds empowering; however, not doing it is recommended because it makes programs easier to reason about. 
+
+### Passing By Value In R
+
+In R, it is *difficult* for a function to modify the variable that a user plugs in to a function as its argument.^[There are some exceptions to this, but it's generally true.] Consider the following code.
+
+```{r, collapse=TRUE}
+a <- 1
+f <- function(arg){
+  arg <- 2
+  return(arg)
+}
+print(a)
+print(f(a))
+print(a)
+```
+
+The function `f` has an argument called `arg`. When `f(a)` is performed, changes are made to a *copy* of `a`. When a function constructs a copy of all input variables inside its body, this is called **pass-by-value** semantics. This copy is a temporary intermediate value that only serves as a starting point for the function to produce a return value of `2`.
+
+`arg` could have been called `a`, and the same behavior will take place. However, giving these two things different names is helpful to remind you and others that R copies its arguments.
+
+It is still possible to modify `a`, but I don't recommend doing this either. I will discuss this more in subsection \@ref(modifying-a-functions-arguments).
+
+
+### Passing By Assignment In Python
+
+The story is more complicated in Python. Python functions have **pass-by-assignment** semantics. This is something that is very unique to Python. What this means is that your ability to modify the arguments of a function depends on 
+
+- what the type of the argument is, and
+- what you're trying to do to it. 
+
+We will go throw some examples first, and then explain why this works the way it does. Here is some code that is analogous to the example above. 
+
+```{python, collapse=TRUE}
+a = 1
+def f(arg):
+  arg = 2
+  return arg
+
+print(type(a))
+print(a)
+print(f(a))
+print(a)
+```
+
+In this case, `a` is not modified. That is because `a` is an `int`. `int`s are **immutable** in Python, which means that their [value](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types) cannot be changed after they are created, either inside or outside of the function's scope. However, consider the case when `a` is a `list`, which is a **mutable** type. A mutable type is one that can have its value changed after its created. 
+
+```{python, collapse=TRUE}
+a = [999]
+def f(arg):
+  arg[0] = 2
+  return arg
+
+print(type(a))
+print(a)
+print(f(a))
+print(a)
+```
+
+In this case `a` *is* modified. Changing the value of the argument *inside* the function effects changes to that variable outside of the function. 
+
+Ready to be confused? What happens if we take in a list, but try to do something else with it. 
+
+```{python, collapse=TRUE}
+a = [999]
+def f(arg):
+  arg = [2]
+  return arg
+
+print(a)
+print(f(a))
+print(a)
+```
+
+That time `a` did not permanently change in the global scope. Why does this happen? I thought `list`s were mutable!
+
+The reason behind all of this doesn't even have anything to do with functions, per se. Rather, it has to do with how Python manages, [objects, values, and types](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types). It also has to do with what happens during [assignment](https://docs.python.org/3/reference/executionmodel.html#naming-and-binding).
+
+Let's revisit the above code, but bring everything out of a function. Python is pass-by-assignment, so all we have to do is understand how assignment works. Starting with the immutable `int` example, we have the following.
+
+```{python, collapse=TRUE}
+# old code: 
+# a = 1
+# def f(arg):
+#   arg = 2
+#   return arg
+a = 1    # still done in global scope
+arg = a  # arg is a name that is bound to the object a refers to
+arg = 2  # arg is a name that is bound to the object 2
+print(arg is a)
+print(id(a), id(arg))
+print(a)
+```
+
+```{block, type='rmd-details'}
+The [`id()`](https://docs.python.org/3/library/functions.html#id) function returns the **identity** of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, `a` and `b` say, have the same identity, `a is b` will evaluate to `True`. Otherwise, it will evaluate to `False`.
+```
+
+In the first line, the *name* `a` is bound to the *object* `1`. In the second line, the name `arg` is bound to the *object* that is referred to by the *name* `a`. After the second line finishes, `arg` and `a` are two names for the same object (a fact that you can confirm by inserting `arg is a` immediately after this line). 
+
+In the third line, `arg` is bound to `2`. The variable `arg` can be changed, but only by re-binding it with a separate object. Re-binding `arg` does not change the value referred to by `a` because `a` still refers to `1`, an object separate from `2`. There is no reason to re-bind `a` because it wasn't mentioned at all in the third line. 
+
+If we go back to the first function example, it's basically the same idea. The only difference, however, is that `arg` is in its own scope. Let's look at a simplified version of our second code chunk that uses a mutable list.
+
+```{python, collapse=TRUE}
+a = [999]
+# old code:
+# def f(arg):
+#   arg[0] = 2
+#   return arg
+arg = a
+arg[0] = 2
+print(arg)
+print(a)
+print(arg is a)
+```
+
+In this example, when we run `arg = a`, the name `arg` is bound to the same object that is bound to `a`. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of `arg` is done "in place", and all variables can access the mutated object.
+
+Why did the third example produce unexpected results? 
+
+```{python, collapse=TRUE}
+a = [999]
+# old code
+# def f(arg):
+#   arg = [2]
+#   return arg
+arg = a
+arg = [2]
+print(arg is a)
+print(a)
+print(arg)
+```
+
+The difference is in the line `arg = [2]`. This rebinds the name `arg` to a different variable. `list`s are still mutable, but this has nothing to do with re-binding--re-binding a name works no matter what type of object you're binding it to. In this case we are re-binding `arg` to a completely different list.  
+
+
+
+## Accessing and Modifying Non-Local Variables
+
+In the last subsection, we were talking about variables that were passed in as arguments to a function. Here we are talking about variables that are not, but are still referred to inside a function's body. 
+
+In general, even though it is possible to access and modify non-local variables in both languages, it is not a good idea. 
+
+### Accessing and Modifying Non-Local Variables in R
+
+As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." R has **dynamic lookup**, meaning code inside a function will only try to access a referred-to variable when the function is *running*, not when it is defined.
+
+Consider the R code below. 
+
+```{r, collapse=TRUE}
+# R
+missileLaunchCodesSet <- TRUE
+everythingIsSafe <- function(){
+  return(!missileLaunchCodesSet)
+}
+missileLaunchCodesSet <- FALSE
+# everythingIsSafe() # what happens if we call it?
+```
+
+`everythingIsSafe` is created in the global environment, and the global environment contains a Boolean variable called `missileLaunchCodesAreSet`. 
+
+Now imagine sharing some code with a collaborator. Imagine, further, that your collaborator is the subject-matter expert, and knows little about R programming. Suppose that he changes a global variable in the script. Shouldn't this induce a relatively trivial change to the overall program? 
+
+Let's explore this hypothetical further. Consider what could happen if any of the following (very typical) conditions are true:
+
+- you or your collaborators aren't sure what `everythingIsSafe` will return because you don't understand dynamic lookup, or 
+- it's difficult to visually keep track of all assignments to `missileLaunchCodesAreSet` (e.g. your script is quite long or it changes often), or
+- you are not running code sequentially (e.g. you are testing chunks at a time instead of clearing out your memory and `source()`ing from scratch, over and over again).
+
+In each of these situations, understanding of the program would be compromised. However, if you follow the above principle of never referring to non-local variables in function code, all members of the group could do their own work separately, minimizing the dependence on one another. 
+
+Another reason violating this could be troublesome is if you define a function that refers to a nonexistent variable. *Defining* the function will never throw an error because R will assume that variable is defined in the global environment. *Calling* the function might throw an error, unless you accidentally defined the variable, or if you forgot to delete a variable whose name you no longer want to use. 
+
+```{r, collapse = TRUE}
+# R
+myFunc <- function(){
+  return(varigbleNameWithTypo)
+}
+```
+Running the above code to define `myFunc` will not throw an error, even if you think it should!
+
+### Accessing and Modifying Non-Local Variables in Python
+
+It is the same exact situation in Python. Consider `everything_is_safe`, a function that is analogous to `everythingIsSafe`.
+
+```{python, collapse=TRUE}
+# python
+missile_launch_codes_set = True
+def everything_is_safe():
+  return not missile_launch_codes_set
+
+missile_launch_codes_set = False
+everything_is_safe()
+```
+
+We can also define `my_func`, which is analogous to `myFunc`. Defining this function doesn't throw an error either!
+
+```{python, collapse = TRUE}
+# python
+def my_func():
+  return varigble_name_with_typo
+```
+
+So stay away from referring to variables outside the body of your function! 
+
+
+### Modifying Non-Local Variables In R
+
+Now what if we want to be extra bad, and in addition to *accessing* global variables, we *modify* them, too.
+
+```{r, collapse=TRUE}
+a <- 1
+f <- function(arg){
+  arg <- 2
+  a <<- arg
+  # return(arg) # no return value
+}
+print(a)
+print(f(a))
+print(a)
+```
+
+In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. Then it takes that `2` and writes it to the global variable in the parent environment. Notice that the function can take in different inputs, but the global assignment is hard-coded.
+
+
+
+### Modifying Non-Local Variables In Python
+
+
+Finally, there is something in Python that is like R's super assignment operator (`<<-`). It is the `global` keyword. This will let you *modify* global variables. 
+
+```{block, type='rmd-details'}
+Referring to global variables *without* modifying them was always allowed, even without using the `global` keyword. This keyword should be used sparingly, and when it is used, it identifies that a function causes **side effects**, which are changes in some variable defined outside of the function's scope.
+```
+
+```{python, collapse = TRUE}
+a = 1
+def increment_a():
+  global a
+  a += 1
+increment_a()
+increment_a()
+increment_a()
+print(a)
+```
+
+
+Here's a last example that will be important for us in particular. Notice that Numpy `array`s are mutable.
+
+```{python, collapse = TRUE}
+import numpy as np
+my_array = np.array([1,2,3])
+def make_calc(arr):
+  arr[0] = np.average(my_array)
+  return 2*arr
+result = make_calc(my_array)
+print(result)
+print(my_array) # watch out: side effect
+```

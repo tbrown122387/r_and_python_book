@@ -1,0 +1,358 @@
+# (PART) Part I: Data Types {-} 
+
+
+
+# R vectors versus Numpy `array`s and Pandas' `Series`
+
+This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these collection objects in a program, we will be interested in learning how to extract and modify different elements in the collection, as well as how to use the entire collection in an efficient calculation.
+
+## Overview of R
+
+In the previous section, I mentioned that R does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
+). So, whether you want to store one number (or `logical`, or `character`, or ...), or many numbers, you will need a `vector`. 
+
+
+```{block, type='rmd-caution'}
+For many, the word "vector" evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on `vector`s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with `vector`s in R have little to do with linear algebra!
+```
+
+
+How do we create one of these? There are many ways. One common way is to read in elements from an external data set. Another way is to generate `vector`s from code.
+
+```{R, collapse = TRUE}
+1:10         # consecutive integers
+seq(1,10,2)  # arbitrary sequences
+rep(2,5)     # repeating numbers
+c("5/2/2021", "5/3/2021", "5/4/2021") # combine elements without relying on a pattern
+rnorm(10)                             # generate Gaussian random variables
+```
+
+`c()` is short for "combine". `seq()` and `rep()` are short for "sequence" and "replicate", respectively. `rnorm()` samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
+
+```{block, type='rmd-details'}
+I should mention that functions such as `rnorm()` don't create truly random numbers, just *pseudorandom* ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic. 
+
+First, a *seed*, or starting number is chosen. Then, the *pseudorandom number generator (PRNG)* maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic. 
+
+Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don't set the seed, and I don't think about the distinction between random and pseudorandom numbers.
+```
+
+## Overview of Python
+
+If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy `array`. Numpy is a highly-regarded third party library [@harris2020array] for Python. Its `array` objects store elements of the same type, just as R's `vector`s do.
+
+There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the examples from above.
+
+```{python, collapse = TRUE}
+import numpy as np   
+np.array([1,2,3])
+np.arange(1,12,2)
+np.random.normal(size=3)
+```
+
+Another option for storing a homogeneous collection of elements in Python is a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the Pandas library. The benefit of these is that they play nicely with Pandas' data frames (more information about Pandas' data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information ).
+
+```{python, collapse = TRUE}
+import pandas as pd
+first = pd.Series([2, 4, 6])
+second = pd.Series([2, 4, 6], index = ['a','b','c'])
+print(first[0])
+print(second['c'])
+```
+
+
+## Vectorization in R
+
+An operation in R is **vectorized** if it applies to all of the elements of a `vector` at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster. 
+
+Arithmetic (e.g. `+`, `-`, `*`, `/`, `^`, `%%`, `%/%`, etc.) and logical (e.g. `!`, `|`, `&`, `>`, `>=`, `<`, `<=`, `==`, etc.) operators are commonly applied to one or two vectors. Arithmetic is usually performed *element-by-element*. Numeric vectors are converted to logical vectors if they need to be. Be careful of operator precedence if you seek to minimize your use of parentheses. 
+
+Note that there are an extraordinary amount of named functions (e.g. `sum()`, `length()`, `cumsum()`, etc.) that operate on entire `vector`s, as well. Here are some examples. 
+
+```{r, collapse = TRUE}
+(1:3) * (1:3)        
+(1:3) == rev(1:3)    
+sin( (2*pi/3)*(1:5)) 
+```
+
+In the last example, there is **recycling** happening. `(2*pi/3)` is taking three length-one vectors and producing another length-one vector. The resulting length-one vector is multiplied by a length five vector `1:5`. The single element in the length one vector gets *recycled* so that its value is multiplied by every element of `1:5`. 
+This makes sense most of the time, but sometimes recycling can be tricky. Notice that the following code does not produce an error--just a warning.
+```{r, collapse = TRUE}
+(1:3) * (1:4)
+```
+
+## Vectorization in Python
+
+The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or "ufuncs" for short. Some ufuncs can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by its name (e.g. `np.sum()` instead of `+`). Mixing and matching is allowed, too.
+
+Ufuncs are called *unary* if they take in one array, and *binary* if they take in two. At the moment, there are [fewer than $100$ available](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs), all performing either mathematical operations, boolean-emitting comparisons, or bit-twiddling operations. For an exhaustive list of Numpy's universal functions, [click here.](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs) Here are some code examples.
+
+
+```{python, collapse=TRUE}
+np.arange(1,4)*np.arange(1,4)
+np.zeros(5) > np.arange(-3,2)
+np.exp( -.5 * np.linspace(-3, 3, 10)**2) / np.sqrt( 2 * np.pi)
+```
+
+Instead of calling it "recycling", Numpy calls reusing elements of a shorter array in a binary operation [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. 
+
+```{python, collapse=TRUE, error = TRUE}
+np.arange(1,3)*np.arange(1,4)
+```
+
+
+If you are working with string arrays, Numpy has a [`np.char` module with many useful functions](https://numpy.org/doc/stable/reference/routines.char.html#module-numpy.char). 
+
+```{python, collapse=TRUE, error = TRUE}
+a = np.array(['a','b','c'])
+np.char.upper(a)
+```
+
+
+Then there are the `Series` objects from Pandas. Ufuncs continue to work in the same way on `Series` objects, and they [respect common index values](https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html).
+
+```{python, collapse = TRUE}
+s1 = pd.Series(np.repeat(100,3))
+s2 = pd.Series(np.repeat(10,3))
+s1 + s2
+```
+
+If you feel more comfortable, and you want to coerce these `Series` objects to Numpy arrays before working with them, you can do that. For example, the following works. 
+
+```{python, collapse = TRUE}
+s = pd.Series(np.linspace(-1,1,5))
+np.exp(s.to_numpy())
+```
+
+In addition, `Series` objects possess many extra [attributes and methods](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series). 
+
+```{python, collapse = TRUE}
+ints = pd.Series(np.arange(10))
+ints.abs()
+ints.mean()
+ints.floordiv(2)
+```
+
+`Series` objects that have [text data](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#working-with-text-data) are a little bit different. For one, you have to access the `.str` attribute of the `Series` before calling any [vectorized methods](https://jakevdp.github.io/PythonDataScienceHandbook/03.10-working-with-strings.html). Here are some examples. 
+
+```{python}
+s = pd.Series(['a','b','c','33'])
+s.dtype
+s.str.isdigit()
+s.str.replace('a', 'z')
+```
+
+String operations can be a big game changer, and we discuss text processing strategies in more detail in section \@(working-with-text-data).
+
+## Indexing Vectors in R
+
+It is very common to want to extract or modify a subset of elements in a vector. There are a few ways to do this. All of the ways I discuss will involve the square bracket operator (i.e. `[]`). Feel free to retrieve the documentation by typing `?'['`.
+
+```{R, collapse = TRUE}
+allElements <- 1:6
+allElements[seq(2,6,2)] # extract evens
+allElements[-seq(2,6,2)] <- 99 # replace all odds with 99
+allElements[allElements > 2] # get nums bigger than 2
+```
+
+To access the first element, we use the index `1`. To access the second, we use `2`, and so on. Also, the `-` sign tells R to remove elements. Both of these functionalities are *very different* from Python, as we will see shortly.
+
+We can use names to access elements elements, too, but only if the elements are named.
+
+```{R, collapse = TRUE}
+sillyVec <- c("favorite"=1, "least favorite" = 2)
+sillyVec['favorite']
+```
+
+
+## Indexing Numpy arrays
+
+[Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in R. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
+
+For one, indexing is 0-based in Python. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in R, but rather to count backwards. Third, using one or two `:` inside square brackets is more flexible in Python. This is syntactic sugar for using the `slice()` function, which is similar to R's `seq()` function. 
+
+```{python, collapse=TRUE}
+one_through_ten = np.arange(1, 11)
+one_through_ten[np.array([2,3])]
+one_through_ten[1:10:2] # evens
+one_through_ten[::-1] # reversed
+one_through_ten[-2] = 99 # second to last
+one_through_ten
+one_through_ten[one_through_ten > 3] # bigger than three
+```
+
+## Indexing Pandas' Series
+
+At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas' Series objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.
+
+```{python, collapse=TRUE}
+import pandas as pd
+one_through_ten = pd.Series(np.arange(1, 11))
+one_through_ten[np.array([2,3])]
+one_through_ten[1:10:2] # evens
+one_through_ten[::-1] # reversed
+one_through_ten[-2] = 99 # second to last
+one_through_ten
+one_through_ten[one_through_ten > 3] # bigger than three
+one_through_ten.sum()
+```
+
+However, [Pandas' Series have `.loc` and `.iloc` methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing). We won't talk much about these two methods now, but they will become very important when we start to discuss Pandas' data frames in section \@ref(data-frames-in-python).
+
+```{python, collapse=TRUE}
+one_through_ten.iloc[2]
+one_through_ten.loc[2]
+```
+
+## Some Gotchas
+
+
+### Shallow versus Deep Copies
+
+In R, assignment usually produces a **deep copy.** In the code below, we create `b` from `a`. If we modify `b`, these changes don't affect `a`. This takes up more memory, but our program is easier to follow as we don't have to keep track of connections between objects. 
+
+```{r, collapse = TRUE}
+# in R
+a <- c(1,2,3)
+b <- a
+b[1] <- 999
+a # still the same!
+```
+
+With Numpy arrays in Python, ["shallow copies" can be created by simple assignment, or by explicitly constructing a **view**](https://numpy.org/devdocs/user/quickstart.html#copies-and-views). In the code below, `a`, `b`, `c`, and `d` all share the same data. If you modify one, you change all the others. This can make the program more confusing, but on the other hand, it can also improve computational efficiency. 
+
+```{python, collapse = TRUE}
+# in python
+a = np.array([1,2,3])
+b = a # b is an alias
+c = a.view() # c is a view
+d = a[:]
+b[0] = 999
+a # two names for the same object in memory
+b
+c
+d
+```
+
+It's the same story with Pandas' Series objects. You're usually making a "shallow" copy.
+
+```{python, collapse = TRUE}
+# in python
+import pandas as pd
+s1 = pd.Series(np.array([100.0,200.0,300.0]))
+s2 = s1
+s3 = s1.view()
+s4 = s1[:]
+s1[0] = 999
+s1
+s2
+s3
+s4
+```
+
+
+If you want a "deep copy" in Python, you usually want a function or method called `copy()`. Use `np.copy` or [`np.ndarray.copy`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.copy.html#numpy-ndarray-copy) when you have a Numpy array.
+
+```{python, collapse = TRUE}
+# in python
+a = np.array([1,2,3])
+b = np.copy(a)
+c = a.copy()
+b[0] = 999
+a 
+b
+c
+```
+
+
+Use [`pandas.Series.copy`](https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html#pandas-series-copy) with Pandas' Series objects. Make sure not to set the `deep` argument to `False`. Otherwise you'll get a shallow copy.
+
+```{python, collapse = TRUE}
+# in python
+s1 = pd.Series(np.array([1,2,3]))
+s2 = s1.copy()
+s3 = s1.copy(deep=False)
+s1[0] = 999
+s1
+s2
+s3
+```
+
+ 
+## How do R and Python handle missing values?
+
+R has `NULL`,  `NaN`, and `NA`. Python has `None` and `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
+
+R's `NULL` and Python's `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more information on functions can be found in section \@ref(user-defined-functions-in-r-and-python)) anything meaningful. 
+
+In R, for example, if a function fails to return anything, then it actually returns a `NULL`. [A `NULL` object has its own type.](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#NULL-object)
+
+```{r, collapse = TRUE, warning=TRUE}
+NULL == FALSE
+NULL == NULL
+# create a function that doesn't return anything
+# more information on this later
+doNothingFunc <- function(a){} 
+thing <- doNothingFunc() # call our new function
+is.null(thing)
+typeof(NULL)
+```
+
+In Python, we have the following.
+
+```{python, collapse = TRUE}
+None == False
+None == None
+# create a function that doesn't return anything
+# more information on this later
+def do_nothing_func():
+  pass
+thing = do_nothing_func()
+if thing is None:
+  print("thing is None!")
+type(None)
+```
+
+"NaN" abbreviates "not a number." `NaN` is an object of type `double` in R, and `np.nan` is of type `float` in Python. It can come in handy when you (delibrately or accidentally) perform undefined calculations such as $0/0$ or $\infty / -\infty$.
+
+```{r, collapse = TRUE}
+# in R
+0/0
+Inf/Inf
+is.na(0/0)
+```
+```{python, collapse = TRUE, error = TRUE}
+# in Python
+0/0
+import numpy as np
+np.inf/np.inf
+np.isnan(np.nan)
+```
+
+"NA" is short for "not available." Missing data is a fact of life in data science. Observations are often missing in data sets, introduced after joining/merging data sets together (more on this in section \@ref(merging-or-joining-data-sets)), or arise from calculations involving underflow and overflow. There are many techniques designed to estimate quantities in the presence of missing data. When you code them up, you'll need to make sure you deal with `NA`s properly. 
+
+```{r, collapse = TRUE}
+# in R
+babyData <- c(0,-1,9,NA,21)
+NA == TRUE 
+is.na(babyData)
+typeof(NA)
+```
+
+
+Unfortunately, Python's support of an `NA`-like object is more limited. There is no `NA` object in base Python. And often `NaN`s will appear in place of an `NA`. There are a few useful tools, though. The Numpy library offers ["masked arrays"](https://numpy.org/devdocs/reference/maskedarray.html), for instance. 
+
+Also, as of version `1.0.0`, the [pandas library](https://pandas.pydata.org/docs/user_guide/index.html#user-guide) has an experimental `pd.NA` object. However, they [warn](https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na) that "the behaviour of `pd.NA` can still change without warning." 
+
+```{python, collapse = TRUE}
+import numpy as np
+import numpy.ma as ma
+baby_data = ma.array([0,-1,9,-9999, 21]) # -9999 "stands for" missing
+baby_data[3] = ma.masked
+np.average(baby_data)
+```
+
+```{block, type='rmd-caution'}
+Be careful of using extreme values to stand in for what should be an `NA`. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!
+```
+

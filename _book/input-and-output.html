@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
-  <meta name="description" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="twitter:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="intro.html"/>
+<link rel="prev" href="data-frames.html"/>
+<link rel="next" href="using-third-party-code.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -389,62 +389,151 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<div id="about-this-book" class="section level2 unnumbered">
-<h2>About this book</h2>
-<p>This book is written to be used in a one-semester statistical computing class that teaches both R and Python to graduate students in a statistics or data science department. This book is written for students that do not necessarily possess any previous familiarity with writing code.</p>
+<div id="input-and-output" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Input and Output</h1>
+<div id="general-input-considerations" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> General Input Considerations</h2>
+<p>So far we have been creating small pieces of data within our scripts. This is primarily for pedagogical purposes. In real life, we can have</p>
 <ul>
-<li><p>If you are using them for analyzing data, R and Python do a lot of the same things in pretty similar ways, so it does not always make sense to teach one language after the other. Imagine learning about vectorization, say, in R, and then several weeks later learning about the same concept in Python. You might end up spending a lot of time refreshing your memory before getting started for the second time. The side-by-side approach ought to help reinforce shared concepts. In my opinion, it also helps to highlight key differences.</p></li>
-<li><p>This text does not describe statistical modeling techniques in detail, although many exercises will be motivated by different statistical techniques. Rather, it teaches a.) important data types, b.) the basics of common procedures such as data “cleaning”, “munging” and manipulation, and c.) some background on object-oriented programming and functional programming. This is largely motivated by the setup of many graduate programs in statistics and data science. Many of these departments organize their classes by sub-discipline (e.g. time series, linear models, Bayesian, etc.). When this is the case, departments tend to compartmentalize the programming courses. The organization of this text aims to complement this kind of course offering structure.</p></li>
-<li><p>This book is written for aspiring data scientists, not necessarily aspiring software developers. Why do I draw the distinction? When discussing different types, for example, I do not discuss data structures in any depth. Rather, I discuss examples of applications where different types would be most useful.</p></li>
-<li><p>This book does not attempt to be an authoritative reference. This is my attempt at balancing depth and breadth for a one-semester course. Plenty of discovery will be left to the reader. For instance, hyperlinks are provided to support self-guided exploration, and second many exercises are designed to motivate further questions.</p></li>
-<li><p>Generally speaking, chapters should be read in order. However, some jumping around may be useful. (TODO update after re-organizing) (sub-)sections within a chapter are carefully ordered. Say, for instance, a topic in R is discussed first. If the Python discussion comes second, that discussion will reference and make comparisons with details mentioned in the R section. So read sections and subsections in order.</p></li>
+<li>data read in from a data set saved on our machine’s hard drive (e.g. <code>my_data.csv</code> or <code>log_file.txt</code> ),</li>
+<li>data read in from a database (e.g. MySQL, PostgreSQL, etc.), or</li>
+<li>data created in a script (either deterministic or random).</li>
+</ul>
+<p>I focus mostly on the first category in this section. Here are my reasons for doing so:</p>
+<ol style="list-style-type: decimal">
+<li>text-files are more readily-available to students than databases,</li>
+<li>teaching the second category requires teaching SQL, and that would introduce conceptual overlap,</li>
+<li>the third category is programmatically self-explanatory.</li>
+</ol>
+<div class="rmd-details">
+<p>
+The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in <em>simulation studies.</em> Authors writing statistical papers need to demonstrate that their techniques work on “nice” data: data simulated from a known data-generating process. In a simulation study, unlike in the “real-world,” you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.
+</p>
+<p>
+Can your code/technique/algorithm, at the very least, obtain parameter estimates that are “in-line” with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g. <code>rnorm()</code> in R or <code>np.random.choice()</code> in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility.
+</p>
+<p>
+Also, <em>benchmark data sets</em> are often readily available through specialized function calls.
+</p>
+</div>
+<p>Even though this chapter is written to teach you how to read in files into R and Python, you should not expect that you will know how to read in <em>all</em> data sets after reading this section. For both R and Python, there are an enormous amount of functions, different functions have different return types, different functions are suited for different file types, many functions are spread across a plethora of third party libraries, and many of these functions have an enormous amount of arguments. You will probably not be able to memorize everything. In my very humble opinion, I doubt you should want to.</p>
+<p>Instead, <strong>focus on developing your ability to identify and diagnose data input problems.</strong> Reading in a data set correctly is often a process of trial-and-error. After attempting to read in a data set, always check the following items. Many of these points were previously mentioned in section @(data-frames-in-r).</p>
+<ol style="list-style-type: decimal">
+<li><strong>The correct column <em>separator</em> was used, or the correct “fixed-width format” was expected.</strong> If mistakes are made, columns are going to be combined in weird ways, and often the wrong types are going to be used for pieces of data (e.g. <code>"2,3"</code> instead of <code>2</code> and <code>3</code>.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it’s unclear whether people’s names in the “last, first” format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.</li>
+<li><strong>The column names were parsed correctly.</strong> Column names should not be stored as data in R/Python. Functions should not expect column names when they don’t exist in the actual file.</li>
+<li><strong>Empty space and metadata was ignored correctly.</strong> Empty space between column names and data shouldn’t be stored. Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it’s being read in. This can occur at the beginning of the file, and even at the end of the file.</li>
+<li><strong>Type choice is performed correctly.</strong> Are letters stored as strings or as something else such as an R <code>factor</code>? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like <span class="math inline">\(-9999\)</span> to represent missing data–don’t store that as a float or integer!</li>
+</ol>
+<p>I realize that this is no small task. To make matters worse:</p>
+<ul>
+<li><p>you can’t edit the raw data to suit your needs, to make it easier to read in. You have to work with what you’re given. If you were allowed to edit, say, a text file you downloaded onto your own machine, you shouldn’t–it will lead to code that doesn’t run anywhere else. If you abuse write privileges on your company’s database, say, well then that’s definitely going to be catastrophic.</p></li>
+<li><p>Data sets are often quite large, so manually checking each element is often impossible. In this situation you will have to resign yourself to checking the top and bottom of a data set, or maybe anticipate a specific place where problems are likely to appear.</p></li>
 </ul>
 </div>
-<div id="conventions" class="section level2 unnumbered">
-<h2>Conventions</h2>
-<p>Sometimes R and Python code look very similar, or even identical. This is why I usually separate R and Python code into separate sections. However, sometimes I do not, so whenever it is necessary to prevent confusion, I will remind you what language is being used in comments (more about comments in <a href="intro.html#hello-world-in-python">1.2</a> ).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="preface.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
-<span id="cb1-2"><a href="preface.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb1-3"><a href="preface.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">## hello world</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="preface.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
-<span id="cb2-2"><a href="preface.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb2-3"><a href="preface.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;hello world&quot;</span></span></code></pre></div>
+<div id="reading-in-text-files-with-r" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Reading in Text Files with R</h2>
+<p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>. Actually, if you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press <Enter>), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
+<p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first ten rows looks like this.</p>
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+6 0 66  50  1
+6 1 70  50  2
+6 0 69  50  3
+6 0 68  50  4
+6 0 67  50  5
+6 0 72  50  6
+6 0 73 100  7
+6 0 70 100  8
+6 1 57 200  9
+6 1 63 200 10</code></pre>
+<p>It does not use commas as separators, and there is no header information, so <code>read.csv()</code> used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="input-and-output.html#cb110-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
+<span id="cb110-2"><a href="input-and-output.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
+<span id="cb110-3"><a href="input-and-output.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   X6.0.66..50..1</span></span>
+<span id="cb110-4"><a href="input-and-output.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6 1 70  50  2</span></span>
+<span id="cb110-5"><a href="input-and-output.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6 0 69  50  3</span></span>
+<span id="cb110-6"><a href="input-and-output.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6 0 68  50  4</span></span>
+<span id="cb110-7"><a href="input-and-output.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6 0 67  50  5</span></span>
+<span id="cb110-8"><a href="input-and-output.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6 0 72  50  6</span></span>
+<span id="cb110-9"><a href="input-and-output.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6 0 73 100  7</span></span>
+<span id="cb110-10"><a href="input-and-output.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
+<span id="cb110-11"><a href="input-and-output.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 22  1</span></span>
+<span id="cb110-12"><a href="input-and-output.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(d[,<span class="dv">1</span>])</span>
+<span id="cb110-13"><a href="input-and-output.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;character&quot;</span></span></code></pre></div>
+<p>Specifying <code>header=FALSE</code> fixes the column name issue, but <code>sep = " "</code> does not fix the separator issue.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="input-and-output.html#cb111-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb111-2"><a href="input-and-output.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
+<span id="cb111-3"><a href="input-and-output.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5 V6 V7</span></span>
+<span id="cb111-4"><a href="input-and-output.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6  0 66 NA 50 NA  1</span></span>
+<span id="cb111-5"><a href="input-and-output.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6  1 70 NA 50 NA  2</span></span>
+<span id="cb111-6"><a href="input-and-output.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6  0 69 NA 50 NA  3</span></span>
+<span id="cb111-7"><a href="input-and-output.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6  0 68 NA 50 NA  4</span></span>
+<span id="cb111-8"><a href="input-and-output.html#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6  0 67 NA 50 NA  5</span></span>
+<span id="cb111-9"><a href="input-and-output.html#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6  0 72 NA 50 NA  6</span></span>
+<span id="cb111-10"><a href="input-and-output.html#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
+<span id="cb111-11"><a href="input-and-output.html#cb111-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23  7</span></span>
+<span id="cb111-12"><a href="input-and-output.html#cb111-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb111-13"><a href="input-and-output.html#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  7 variables:</span></span>
+<span id="cb111-14"><a href="input-and-output.html#cb111-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb111-15"><a href="input-and-output.html#cb111-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb111-16"><a href="input-and-output.html#cb111-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb111-17"><a href="input-and-output.html#cb111-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  NA NA NA NA NA NA 100 100 200 200 ...</span></span>
+<span id="cb111-18"><a href="input-and-output.html#cb111-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  50 50 50 50 50 50 NA NA NA 10 ...</span></span>
+<span id="cb111-19"><a href="input-and-output.html#cb111-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V6: int  NA NA NA NA NA NA 7 8 9 NA ...</span></span>
+<span id="cb111-20"><a href="input-and-output.html#cb111-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V7: int  1 2 3 4 5 6 NA NA NA NA ...</span></span></code></pre></div>
+<p>One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that <code>""</code> works for “one or more spaces, tabs, newlines or carriage returns.” This is why <code>read.table()</code>, with its default arguments, works well.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="input-and-output.html#cb112-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
+<span id="cb112-2"><a href="input-and-output.html#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
+<span id="cb112-3"><a href="input-and-output.html#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5</span></span>
+<span id="cb112-4"><a href="input-and-output.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6  0 66 50  1</span></span>
+<span id="cb112-5"><a href="input-and-output.html#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6  1 70 50  2</span></span>
+<span id="cb112-6"><a href="input-and-output.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6  0 69 50  3</span></span>
+<span id="cb112-7"><a href="input-and-output.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6  0 68 50  4</span></span>
+<span id="cb112-8"><a href="input-and-output.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6  0 67 50  5</span></span>
+<span id="cb112-9"><a href="input-and-output.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6  0 72 50  6</span></span>
+<span id="cb112-10"><a href="input-and-output.html#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
+<span id="cb112-11"><a href="input-and-output.html#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23  5</span></span>
+<span id="cb112-12"><a href="input-and-output.html#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb112-13"><a href="input-and-output.html#cb112-13" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  5 variables:</span></span>
+<span id="cb112-14"><a href="input-and-output.html#cb112-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb112-15"><a href="input-and-output.html#cb112-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb112-16"><a href="input-and-output.html#cb112-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb112-17"><a href="input-and-output.html#cb112-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
+<span id="cb112-18"><a href="input-and-output.html#cb112-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
+<p>This data set has columns whose widths are “fixed”, too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="input-and-output.html#cb113-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb113-2"><a href="input-and-output.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb113-3"><a href="input-and-output.html#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  4 variables:</span></span>
+<span id="cb113-4"><a href="input-and-output.html#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb113-5"><a href="input-and-output.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb113-6"><a href="input-and-output.html#cb113-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb113-7"><a href="input-and-output.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  5 5 5 5 5 5 10 10 20 20 ...</span></span></code></pre></div>
 </div>
-<div id="installing-the-required-software" class="section level2 unnumbered">
-<h2>Installing the Required Software</h2>
-<p>To get started, you must install both R and Python. The installation process depends on what kind of machine you have (e.g. what type of operating system your machine is running, is your processor <span class="math inline">\(32\)</span> or <span class="math inline">\(64\)</span> bit, etc.).</p>
-<p>Below, I suggest running R with RStudio, and Python with Anaconda, and I provide some helpful links. I suggest downloading these two bundles separately; however, I should note that the recommendation below is not the only installation method. For example:
-- one can run R and Python without downloading RStudio or Anaconda,
-- one can install RStudio with Anaconda,
-- one can run Python from within Rstudio,
-- one can run Python from within Rstudio that is managed by Anaconda, etc., and
-- options and procedures are very likely to change over time.</p>
-<p>Instructors can prefer alternative strategies, if they wish. If they do, they should verify that Python’s version is <code>&gt;=3.6</code>, and R’s is <code>&gt;=4.0.0</code>. If so, all the code in this book should run.</p>
-<div id="installing-r-and-rstudio" class="section level3 unnumbered">
-<h3>Installing R (and RStudio)</h3>
-<p>It is recommended that you install R and <em>RStudio Desktop</em>. <em>RStudio Desktop</em> is a graphical user interface with many tools that making writing R easier and more fun.</p>
-<p>Install R from the Comprehensive R Archive Network (CRAN). You can access instructions for your specific machine by clicking <a href="https://cran.r-project.org/">here.</a></p>
-<p>You can get RStudio Desktop directly from the <a href="https://www.rstudio.com/products/rstudio/download/#download">company’s website</a>.</p>
+<div id="reading-in-text-files-with-python" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Reading in Text Files with Python</h2>
+<p>TODO</p>
 </div>
-<div id="installing-python-by-installing-anaconda" class="section level3" number="0.0.1">
-<h3><span class="header-section-number">0.0.1</span> Installing Python by Installing Anaconda {-}</h3>
-<p>It is recommended that you install <em>Anaconda</em>, which is a package manager, environment manager, and Python distribution with many third party open source packages. It provides a graphical user interface for us, too, just as RStudio does. You can access instructions for your specific machine and OS by clicking <a href="https://docs.anaconda.com/anaconda/install/#">here</a>.</p>
+<div id="output" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Output</h2>
+<p>After we have created something useful, we might be interested in storing our results. We can write out to a database, a text file, or we can save a digitized version of our work space.</p>
 
 </div>
 </div>
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-uci_data" class="csl-entry">
+Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
 </div>
-
-
-
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-frames.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-third-party-code.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -476,7 +565,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/preface.Rmd",
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/09-io.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -1,0 +1,138 @@
+# (PART) Part I: Data Types {-} 
+
+In every programming language, data is stored in different ways. Writing a program that manipulates data requires understanding all of the choices. That is why we must be concerned with the different **types** of data in our R and Python programs. Different types are suitable for different purposes.
+
+There are similarities between Python's and R's type systems. However, there are may  differences as well. Be prepared for these differences. There are many more of them in this chapter than there were in the previous chapter!
+
+If you're ever unsure what type a variable has, use `type()` (in Python) or `typeof()` (in R) to query it. 
+
+
+
+```{r setup, include =FALSE}
+library(reticulate)
+use_condaenv("base")
+```
+
+<!---
+---------------------------------------------------------------------------
+-->
+
+
+# Basic Types
+
+Storing an individual piece of information is simple in both languages. However, while Python has scalar types, R does not draw as strong of a distinction between scalar and compound types.
+
+## Basic Types In Python
+
+In Python, the simplest types we frequently use are `str` (short for string), `int` (short for integer), `float` (short for floating point) and `bool` (short for Boolean). This list is not exhaustive, but these are a good collection to start thinking about. For a complete list of built-in types in Python, click [here](https://docs.python.org/3/library/stdtypes.html).
+
+```{python, collapse = TRUE}
+print(type('a'), type(1), type(1.3))
+```
+
+Strings are useful for processing text data such as names of people/places/things and messages such as texts, tweets and emails. If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section \@ref(control-flow).
+
+In the next section we will discuss the Numpy library. This library has a [broader collection](https://numpy.org/doc/stable/user/basics.types.html) of basic types that allows for finer control over any script you write. 
+
+
+### Type Conversions in Python
+
+We will often have to convert between types in a Python program. This is called **type conversion**, and it can be either implicitly or explicitly done. 
+
+For example, `int`s are often implicitly converted to `float`s, so that arithmetic operations work. 
+```{python, collapse = TRUE}
+my_int = 1
+my_float = 3.2
+my_sum = my_int + my_float
+print("my_int's type", type(my_int))
+print("my_float's type", type(my_float))
+print(my_sum)
+print("my_sum's type", type(my_sum))
+```
+
+You might be disappointed if you always count on this behavior, though.
+```{python, error = TRUE, collapse=TRUE}
+3.2 + "3.2"
+```
+
+Explicit conversions occur when we as programmers explicitly ask Python to perform a conversion. We will do this with the functions such as `int()`, `str()`, `float()`, and `bool()`. 
+
+```{python, collapse = TRUE}
+my_date = "5/2/2021"
+month_day_year = my_date.split('/')
+my_year = int(month_day_year[-1]) 
+print('my_year is equal to ', my_year, 'and its type is ', type(my_year))
+```
+
+
+## Basic Types In R
+
+In R, the names of basic types are only slightly different. They are `logical` (instead of `bool`), `integer` (instead of `int`), `double` or `numeric` (instead of `float`)^["double" is short for "double precision floating point." In other programming languages, the programmer might choose how many decimal points of precision he or she wants.], `character` (instead of `str`), `complex` (for calculations involving imaginary numbers), and `raw` (useful for working with bytes).
+
+```{R, collapse = TRUE}
+# cat() is kind of like print()
+cat(typeof('a'), typeof(1), typeof(1.3))
+```
+
+In this case R automatically upgraded `1` to a double. If you wanted to force it to be an integer, you can add a capital "L" to the end of the number.
+
+```{R, collapse = TRUE}
+# cat() is kind of like print()
+cat(typeof('a'), typeof(1L), typeof(1.3))
+```
+
+
+### Type Conversions in R
+
+You can explicitly and implicitly convert types in R just as you did in Python. Implicit conversion looks like this.
+
+```{R, collapse = TRUE}
+myInt = 1
+myDouble = 3.2
+mySum = myInt + myDouble
+print(paste0("my_int's type is ", typeof(myInt)))
+print(paste0("my_float's type is ", typeof(myDouble)))
+print(mySum)
+print(paste0("my_sum's type is ", typeof(mySum)))
+```
+
+Explicit conversion can be achieved with functions such as `as.integer`, `as.logical`, `as.double`, etc.
+
+```{R, collapse = TRUE}
+print(typeof(1))
+print(typeof(as.logical(1)))
+```
+
+
+
+### R's Simplification
+
+The basic types of R are a little different than the basic types of Python. On the one hand, Python has basic types for individual elements, and it uses separate types as containers for storing many elements. On the other, R uses the same type to store a single element as it does to store many elements. Strictly speaking, R does not have a scalar type. 
+
+Technically, all of the examples we just did in R are using length one **vectors**--`logical` `integer` `double`, `character`, `complex`, and `raw` are the possible **modes** of a vector. `vector`s will be discussed further section \@ref(r-vectors-versus-numpy-arrays-and-pandas-series).
+
+Think about which option you prefer. What are the benefits of using separate types for scalars and collections? What are the benefits of using the same type?
+
+<!-- ### Exercises -->
+
+<!-- #### Easy -->
+
+<!-- All answers to questions related to R should be written in a file named `easy_data_types_exercises.R`. All answers to questions related to Python should be written in a file named `easy_data_types_exercises.py`. -->
+
+
+<!-- 1. Which Python type is ideal for each piece of data? Assign your answers to a `list` of `str`ings called `question_one`.  -->
+
+<!--     + An individual's IP address -->
+<!--     + whether or not an individual attended a study -->
+<!--     + the number of seeds found in a plant -->
+<!--     + the amount of time it takes for a car to race around a track -->
+
+<!-- 2. Answer the same question above, but use R types? Assign your answers to a `character vector` of length four called `questionOne`.  -->
+
+<!--     + An individual's IP address -->
+<!--     + whether or not an individual attended a study -->
+<!--     + the number of seeds found in a plant -->
+<!--     + the amount of time it takes for a car to race around a track -->
+
+<!-- 3. ["The only numbers that can be represented exactly in R’s numeric type are integers and fractions whose denominator is a power of 2."](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f) Provide ten examples of numbers that have nonzero decimal components and are not exactly equal represented by R's `numeric` type. Store them all in a vector called `notExactFloats`. -->
+

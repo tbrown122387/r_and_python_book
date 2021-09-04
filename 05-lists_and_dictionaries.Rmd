@@ -1,0 +1,100 @@
+# (PART) Part I: Data Types {-} 
+
+# R's lists versus Python's lists and dictionaries
+
+When you need to store elements in a container, but you can't guarantee that these elements all have the same type, or you can't guarantee that they all have the same size, then you need a `list` in R. In Python, you might need a `list` or `dict` (short for dictionary). 
+
+
+## Lists In R
+
+`list`s are one of the most flexible data types in R. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type. 
+
+```{r, collapse = TRUE}
+myList <- list(c(1,2,3), "May 5th, 2021", c(TRUE, TRUE, FALSE))
+myList[1] # length-1 list; first element is length 3 vector
+myList[[1]] # length-3 vector
+```
+
+If you want to extract an element, you need to decide between using single square brackets or double square brackets. The former returns a `list`, while the second returns the type of the individual element.
+
+You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below. The `lm()` function estimates a linear regression model. It returns a `list` with plenty of components. 
+
+```{r, collapse = TRUE}
+dataSet <- read.csv("data/cars.csv")
+results <- lm(log(Horsepower) ~ Type, data = dataSet)
+length(results)
+names(results)
+results$contrasts
+results['rank']
+results[['terms']]
+```
+
+```{block, type='rmd-caution'}
+`results` is a `list` (`is.list(results)` returns `TRUE`), but to be more specific, it is an S3 object of class `lm`. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren't confused if you type `class(results)` and see `lm` instead of `list`. Second, the fact that the authors  of `lm()` wrote code that returns `result` as a "fancy list" suggests that they are encouraging another way to access elements of the `results`: to use specialized functions! For example, you can use `residuals(results)`, `coefficients(results)`, and `fitted.values(results)`. These functions do not work for all lists in R, but when they do work (for `lm` and `glm` objects only), you can be sure you are writing the kind of code that is encouraged by the authors of `lm()`.
+```
+
+
+## Lists In Python
+
+[Python `list`s](https://docs.python.org/3/library/stdtypes.html#lists) are very flexible, too. There are fewer choices for accessing and modifying elements of lists in Python--you'll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R's lists. 
+
+Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python [dictionaries](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) (see section \@ref(dictionaries-in-python)) or Pandas' `Series` objects (see section \@ref(overview-of-python)).
+
+From the example below, you can see that we've been introduced to lists already. We have been constructing Numpy arrays from them.
+
+```{python, collapse = TRUE}
+another_list = [np.array([1,2,3]), "May 5th, 2021", True, [42,42]]
+another_list[2]
+another_list[2] = 100
+another_list
+```
+
+Python lists have [methods attached to them](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists), which can come in handy.
+
+```{python, collapse = TRUE}
+another_list
+another_list.append('new element')
+another_list
+```
+
+
+Creating lists can be done as above, with the square bracket operators. They can also be created with the `list()` function, and by creating a *list comprehension*. List comprehensions are discussed more in \@ref(loops).
+
+
+```{python, collapse = TRUE}
+my_list = list(('a','b','c')) # converting a tuple to a list
+your_list = [i**2 for i in range(3)] # list comprehension
+my_list
+your_list
+```
+
+
+## Dictionaries In Python
+
+[**Dictionaries**](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) in Python provide a container of key-value pairs. The keys are *unique*, and they must be *immutable*. `string`s are the most common key type, but `int`s can be used as well. 
+
+Here is an example of creating a `dict` with curly braces (i.e. `{}`). This `dict` stores the current price of a few popular cryptocurrencies. Accessing an individual element's value using its key is done with the square bracket operator (i.e. `[]`), and deleting elements is done with the `del` keyword.
+
+```{python, collapse = TRUE}
+current_crypto_prices = {'BTC': 38657.14, 'ETH': 2386.54, 'DOGE': .308122}
+current_crypto_prices['DOGE'] # get the current price of Dogecoin
+del current_crypto_prices['BTC'] # remove the current price of Bitcoin
+current_crypto_prices.keys()
+current_crypto_prices.values()
+```
+
+You can also create `dict`s using **dictionary comprehensions**. Just like list comprehensions, these are discussed more in \@ref(loops).
+
+```{python, collapse= TRUE}
+incr_cryptos = {key:val*1.1 for (key,val) in current_crypto_prices.items()}
+incr_cryptos
+```
+
+
+Personally, I don't use dictionaries as much as lists. If I have a dictionary, I usually convert it to a pandas data frame (more information on those in \@ref(data-frames-in-python)).
+
+```{python, collapse= TRUE}
+import pandas as pd
+df_from_dict = pd.DataFrame({ 'col1': [1,2,3], 'col2' : ['a','b','c']})
+df_from_dict
+```

@@ -1,0 +1,89 @@
+# (PART) Part I: Data Types {-} 
+
+
+# Categorical Data 
+
+
+## Categorical Data in R
+
+Categorical data is typically stored in a [`factor`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors) variable in R. For example, say we asked three people what their favorite season was. The data might look something like this.
+
+```{r, collapse = TRUE}
+responses <- factor(c("autumn", "summer", "summer"), 
+                    levels = c("autumn", "summer", "spring", "winter"))
+levels(responses)
+contrasts(responses)
+is.factor(responses)
+is.ordered(responses)
+```
+
+`factor`s have a `levels` attribute, which is comprised of all the possible values that each response could be. They also have a `contrasts` attribute, which will be important once you start using `factor`s as inputs to functions such as `lm`. In the case of using `factor`s as inputs to `lm()`, the `factor` would tell `lm()` *how* to create the dummy predictors in a linear regression model. It's perfectly fine if you're rusty on regression--the reason I mention this is that in Python, dummy variable construction is done more explicitly/manually.
+
+```{block, type='rmd-caution'}
+In the above example, there wasn't at least one person who prefers each season (that's a confusing sentence). Here, if we did not specify a `levels` argument, there would only be two levels. This is a common source of bugs! Another source of bugs: what if some people say "autumn" and others say "fall"?
+```
+
+`factor`s can be ordered or unordered. Ordered `factor`s are for ordinal data. As another example, say we asked ten people how much they liked programming, and they could only respond "love it", "hate it", or "it's okay". The data might look something like this.
+
+```{r, collapse = TRUE}
+responses <- factor(c("love it", "it's okay", "love it", 
+                      "love it", "it's okay", "love it", 
+                      "love it", "love it", "it's okay", 
+                      "it's okay"), 
+                    levels = c("hate it", "it's okay", "love it"),
+                    ordered = TRUE)
+levels(responses)
+contrasts(responses)
+is.factor(responses)
+is.ordered(responses)
+```
+
+Whether a `factor` is ordered or not can affect its `contrasts` and the behavior of functions it is fed into. Intuitively, it should be clear when to impose ordering or not. In the first example, there isn't a clear ordering of the seasons (which one should come first?). In the second example, we are looking at responses to a "how much" question. 
+
+Here's a third example. We can take non-categorical data, and `cut` it into something categorical. 
+
+```{r, collapse = TRUE}
+stockReturns <- rnorm(10) # not categorical here
+typeOfDay <- cut(stockReturns, breaks = c(-Inf, 0, Inf)) 
+typeOfDay
+levels(typeOfDay)
+is.factor(typeOfDay)
+is.ordered(typeOfDay)
+```
+
+## Categorical Data in Python
+
+[Categorical data can be handled with the pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. We've talked about `Series` objects before in section \@ref(vectorization-in-python), and here we will use them again. All we have to do to make a `Series` object categorical is to change its `dtype`. The `dtype` we provide will control the categories (like `levels` in R), and whether it's ordered or not.
+
+
+```{python, collapse = TRUE}
+import pandas as pd
+from pandas.api.types import CategoricalDtype
+
+cat_type = CategoricalDtype(categories=["autumn", "summer", "spring", "winter"], 
+                            ordered=False)
+responses = pd.Series(["autumn", "summer", "summer"], 
+                      dtype = cat_type)
+responses
+responses.cat.categories
+responses.cat.ordered
+```
+
+The pandas library also provides a `pd.cut()` function, which can return either of these types, or even a regular Numpy array.
+
+```{python, collapse = TRUE}
+stock_returns = np.random.normal(size=10) # not categorical here
+type_of_day = pd.cut(stock_returns, [-np.inf, 0, np.inf], labels = ['bad day', 'good day']) 
+type_of_day
+type(type_of_day)
+type_of_day = pd.Series(type_of_day)
+type(type_of_day)
+type_of_day.cat.categories
+type_of_day.cat.ordered
+```
+
+
+```{block, type='rmd-details'}
+You'll notice that, in this instance, `pd.cut` did not return a `Series` object. It can, but `pd.cut`'s return type will depend on the inputs you feed in. In this case, it returned a [`Categorical`](http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical), which is not the same thing as a `Series`. In the code above, I had to convert it back before accessing the `cat` attribute.
+```
+

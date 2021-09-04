@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
-  <meta name="description" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <title>Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Preface | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="twitter:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="intro.html"/>
+<link rel="prev" href="user-defined-functions-in-r-and-python.html"/>
+<link rel="next" href="data-frames.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -389,50 +389,104 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<div id="about-this-book" class="section level2 unnumbered">
-<h2>About this book</h2>
-<p>This book is written to be used in a one-semester statistical computing class that teaches both R and Python to graduate students in a statistics or data science department. This book is written for students that do not necessarily possess any previous familiarity with writing code.</p>
-<ul>
-<li><p>If you are using them for analyzing data, R and Python do a lot of the same things in pretty similar ways, so it does not always make sense to teach one language after the other. Imagine learning about vectorization, say, in R, and then several weeks later learning about the same concept in Python. You might end up spending a lot of time refreshing your memory before getting started for the second time. The side-by-side approach ought to help reinforce shared concepts. In my opinion, it also helps to highlight key differences.</p></li>
-<li><p>This text does not describe statistical modeling techniques in detail, although many exercises will be motivated by different statistical techniques. Rather, it teaches a.) important data types, b.) the basics of common procedures such as data “cleaning”, “munging” and manipulation, and c.) some background on object-oriented programming and functional programming. This is largely motivated by the setup of many graduate programs in statistics and data science. Many of these departments organize their classes by sub-discipline (e.g. time series, linear models, Bayesian, etc.). When this is the case, departments tend to compartmentalize the programming courses. The organization of this text aims to complement this kind of course offering structure.</p></li>
-<li><p>This book is written for aspiring data scientists, not necessarily aspiring software developers. Why do I draw the distinction? When discussing different types, for example, I do not discuss data structures in any depth. Rather, I discuss examples of applications where different types would be most useful.</p></li>
-<li><p>This book does not attempt to be an authoritative reference. This is my attempt at balancing depth and breadth for a one-semester course. Plenty of discovery will be left to the reader. For instance, hyperlinks are provided to support self-guided exploration, and second many exercises are designed to motivate further questions.</p></li>
-<li><p>Generally speaking, chapters should be read in order. However, some jumping around may be useful. (TODO update after re-organizing) (sub-)sections within a chapter are carefully ordered. Say, for instance, a topic in R is discussed first. If the Python discussion comes second, that discussion will reference and make comparisons with details mentioned in the R section. So read sections and subsections in order.</p></li>
-</ul>
+<div id="categorical-data" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Categorical Data</h1>
+<div id="categorical-data-in-r" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Categorical Data in R</h2>
+<p>Categorical data is typically stored in a <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors"><code>factor</code></a> variable in R. For example, say we asked three people what their favorite season was. The data might look something like this.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="categorical-data.html#cb94-1" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>), </span>
+<span id="cb94-2"><a href="categorical-data.html#cb94-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;spring&quot;</span>, <span class="st">&quot;winter&quot;</span>))</span>
+<span id="cb94-3"><a href="categorical-data.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(responses)</span>
+<span id="cb94-4"><a href="categorical-data.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;autumn&quot; &quot;summer&quot; &quot;spring&quot; &quot;winter&quot;</span></span>
+<span id="cb94-5"><a href="categorical-data.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(responses)</span>
+<span id="cb94-6"><a href="categorical-data.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="do">##        summer spring winter</span></span>
+<span id="cb94-7"><a href="categorical-data.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="do">## autumn      0      0      0</span></span>
+<span id="cb94-8"><a href="categorical-data.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="do">## summer      1      0      0</span></span>
+<span id="cb94-9"><a href="categorical-data.html#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="do">## spring      0      1      0</span></span>
+<span id="cb94-10"><a href="categorical-data.html#cb94-10" aria-hidden="true" tabindex="-1"></a><span class="do">## winter      0      0      1</span></span>
+<span id="cb94-11"><a href="categorical-data.html#cb94-11" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(responses)</span>
+<span id="cb94-12"><a href="categorical-data.html#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb94-13"><a href="categorical-data.html#cb94-13" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(responses)</span>
+<span id="cb94-14"><a href="categorical-data.html#cb94-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
+<p><code>factor</code>s have a <code>levels</code> attribute, which is comprised of all the possible values that each response could be. They also have a <code>contrasts</code> attribute, which will be important once you start using <code>factor</code>s as inputs to functions such as <code>lm</code>. In the case of using <code>factor</code>s as inputs to <code>lm()</code>, the <code>factor</code> would tell <code>lm()</code> <em>how</em> to create the dummy predictors in a linear regression model. It’s perfectly fine if you’re rusty on regression–the reason I mention this is that in Python, dummy variable construction is done more explicitly/manually.</p>
+<div class="rmd-caution">
+<p>
+In the above example, there wasn’t at least one person who prefers each season (that’s a confusing sentence). Here, if we did not specify a <code>levels</code> argument, there would only be two levels. This is a common source of bugs! Another source of bugs: what if some people say “autumn” and others say “fall”?
+</p>
 </div>
-<div id="conventions" class="section level2 unnumbered">
-<h2>Conventions</h2>
-<p>Sometimes R and Python code look very similar, or even identical. This is why I usually separate R and Python code into separate sections. However, sometimes I do not, so whenever it is necessary to prevent confusion, I will remind you what language is being used in comments (more about comments in <a href="intro.html#hello-world-in-python">1.2</a> ).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="preface.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
-<span id="cb1-2"><a href="preface.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb1-3"><a href="preface.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">## hello world</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="preface.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
-<span id="cb2-2"><a href="preface.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb2-3"><a href="preface.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;hello world&quot;</span></span></code></pre></div>
+<p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for ordinal data. As another example, say we asked ten people how much they liked programming, and they could only respond “love it”, “hate it”, or “it’s okay”. The data might look something like this.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="categorical-data.html#cb95-1" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
+<span id="cb95-2"><a href="categorical-data.html#cb95-2" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
+<span id="cb95-3"><a href="categorical-data.html#cb95-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, </span>
+<span id="cb95-4"><a href="categorical-data.html#cb95-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;it&#39;s okay&quot;</span>), </span>
+<span id="cb95-5"><a href="categorical-data.html#cb95-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;hate it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>),</span>
+<span id="cb95-6"><a href="categorical-data.html#cb95-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb95-7"><a href="categorical-data.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(responses)</span>
+<span id="cb95-8"><a href="categorical-data.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;hate it&quot;   &quot;it&#39;s okay&quot; &quot;love it&quot;</span></span>
+<span id="cb95-9"><a href="categorical-data.html#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(responses)</span>
+<span id="cb95-10"><a href="categorical-data.html#cb95-10" aria-hidden="true" tabindex="-1"></a><span class="do">##                 .L         .Q</span></span>
+<span id="cb95-11"><a href="categorical-data.html#cb95-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] -7.071068e-01  0.4082483</span></span>
+<span id="cb95-12"><a href="categorical-data.html#cb95-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] -7.850462e-17 -0.8164966</span></span>
+<span id="cb95-13"><a href="categorical-data.html#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]  7.071068e-01  0.4082483</span></span>
+<span id="cb95-14"><a href="categorical-data.html#cb95-14" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(responses)</span>
+<span id="cb95-15"><a href="categorical-data.html#cb95-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb95-16"><a href="categorical-data.html#cb95-16" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(responses)</span>
+<span id="cb95-17"><a href="categorical-data.html#cb95-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<p>Whether a <code>factor</code> is ordered or not can affect its <code>contrasts</code> and the behavior of functions it is fed into. Intuitively, it should be clear when to impose ordering or not. In the first example, there isn’t a clear ordering of the seasons (which one should come first?). In the second example, we are looking at responses to a “how much” question.</p>
+<p>Here’s a third example. We can take non-categorical data, and <code>cut</code> it into something categorical.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="categorical-data.html#cb96-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
+<span id="cb96-2"><a href="categorical-data.html#cb96-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
+<span id="cb96-3"><a href="categorical-data.html#cb96-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
+<span id="cb96-4"><a href="categorical-data.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf]</span></span>
+<span id="cb96-5"><a href="categorical-data.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
+<span id="cb96-6"><a href="categorical-data.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
+<span id="cb96-7"><a href="categorical-data.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
+<span id="cb96-8"><a href="categorical-data.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(typeOfDay)</span>
+<span id="cb96-9"><a href="categorical-data.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb96-10"><a href="categorical-data.html#cb96-10" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(typeOfDay)</span>
+<span id="cb96-11"><a href="categorical-data.html#cb96-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
 </div>
-<div id="installing-the-required-software" class="section level2 unnumbered">
-<h2>Installing the Required Software</h2>
-<p>To get started, you must install both R and Python. The installation process depends on what kind of machine you have (e.g. what type of operating system your machine is running, is your processor <span class="math inline">\(32\)</span> or <span class="math inline">\(64\)</span> bit, etc.).</p>
-<p>Below, I suggest running R with RStudio, and Python with Anaconda, and I provide some helpful links. I suggest downloading these two bundles separately; however, I should note that the recommendation below is not the only installation method. For example:
-- one can run R and Python without downloading RStudio or Anaconda,
-- one can install RStudio with Anaconda,
-- one can run Python from within Rstudio,
-- one can run Python from within Rstudio that is managed by Anaconda, etc., and
-- options and procedures are very likely to change over time.</p>
-<p>Instructors can prefer alternative strategies, if they wish. If they do, they should verify that Python’s version is <code>&gt;=3.6</code>, and R’s is <code>&gt;=4.0.0</code>. If so, all the code in this book should run.</p>
-<div id="installing-r-and-rstudio" class="section level3 unnumbered">
-<h3>Installing R (and RStudio)</h3>
-<p>It is recommended that you install R and <em>RStudio Desktop</em>. <em>RStudio Desktop</em> is a graphical user interface with many tools that making writing R easier and more fun.</p>
-<p>Install R from the Comprehensive R Archive Network (CRAN). You can access instructions for your specific machine by clicking <a href="https://cran.r-project.org/">here.</a></p>
-<p>You can get RStudio Desktop directly from the <a href="https://www.rstudio.com/products/rstudio/download/#download">company’s website</a>.</p>
+<div id="categorical-data-in-python" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Categorical Data in Python</h2>
+<p><a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html">Categorical data can be handled with the pandas library</a>, which takes a lot of inspiration from R. We’ve talked about <code>Series</code> objects before in section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python">3.4</a>, and here we will use them again. All we have to do to make a <code>Series</code> object categorical is to change its <code>dtype</code>. The <code>dtype</code> we provide will control the categories (like <code>levels</code> in R), and whether it’s ordered or not.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="categorical-data.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb97-2"><a href="categorical-data.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.api.types <span class="im">import</span> CategoricalDtype</span>
+<span id="cb97-3"><a href="categorical-data.html#cb97-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-4"><a href="categorical-data.html#cb97-4" aria-hidden="true" tabindex="-1"></a>cat_type <span class="op">=</span> CategoricalDtype(categories<span class="op">=</span>[<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;spring&quot;</span>, <span class="st">&quot;winter&quot;</span>], </span>
+<span id="cb97-5"><a href="categorical-data.html#cb97-5" aria-hidden="true" tabindex="-1"></a>                            ordered<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb97-6"><a href="categorical-data.html#cb97-6" aria-hidden="true" tabindex="-1"></a>responses <span class="op">=</span> pd.Series([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], </span>
+<span id="cb97-7"><a href="categorical-data.html#cb97-7" aria-hidden="true" tabindex="-1"></a>                      dtype <span class="op">=</span> cat_type)</span>
+<span id="cb97-8"><a href="categorical-data.html#cb97-8" aria-hidden="true" tabindex="-1"></a>responses</span>
+<span id="cb97-9"><a href="categorical-data.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    autumn</span></span>
+<span id="cb97-10"><a href="categorical-data.html#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    summer</span></span>
+<span id="cb97-11"><a href="categorical-data.html#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    summer</span></span>
+<span id="cb97-12"><a href="categorical-data.html#cb97-12" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: category</span></span>
+<span id="cb97-13"><a href="categorical-data.html#cb97-13" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (4, object): [&#39;autumn&#39;, &#39;summer&#39;, &#39;spring&#39;, &#39;winter&#39;]</span></span>
+<span id="cb97-14"><a href="categorical-data.html#cb97-14" aria-hidden="true" tabindex="-1"></a>responses.cat.categories</span>
+<span id="cb97-15"><a href="categorical-data.html#cb97-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;, &#39;spring&#39;, &#39;winter&#39;], dtype=&#39;object&#39;)</span></span>
+<span id="cb97-16"><a href="categorical-data.html#cb97-16" aria-hidden="true" tabindex="-1"></a>responses.cat.ordered</span>
+<span id="cb97-17"><a href="categorical-data.html#cb97-17" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span></code></pre></div>
+<p>The pandas library also provides a <code>pd.cut()</code> function, which can return either of these types, or even a regular Numpy array.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="categorical-data.html#cb98-1" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">10</span>) <span class="co"># not categorical here</span></span>
+<span id="cb98-2"><a href="categorical-data.html#cb98-2" aria-hidden="true" tabindex="-1"></a>type_of_day <span class="op">=</span> pd.cut(stock_returns, [<span class="op">-</span>np.inf, <span class="dv">0</span>, np.inf], labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
+<span id="cb98-3"><a href="categorical-data.html#cb98-3" aria-hidden="true" tabindex="-1"></a>type_of_day</span>
+<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;good day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;good day&#39;]</span></span>
+<span id="cb98-5"><a href="categorical-data.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (2, object): [&#39;bad day&#39; &lt; &#39;good day&#39;]</span></span>
+<span id="cb98-6"><a href="categorical-data.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day)</span>
+<span id="cb98-7"><a href="categorical-data.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span>
+<span id="cb98-8"><a href="categorical-data.html#cb98-8" aria-hidden="true" tabindex="-1"></a>type_of_day <span class="op">=</span> pd.Series(type_of_day)</span>
+<span id="cb98-9"><a href="categorical-data.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day)</span>
+<span id="cb98-10"><a href="categorical-data.html#cb98-10" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span>
+<span id="cb98-11"><a href="categorical-data.html#cb98-11" aria-hidden="true" tabindex="-1"></a>type_of_day.cat.categories</span>
+<span id="cb98-12"><a href="categorical-data.html#cb98-12" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;bad day&#39;, &#39;good day&#39;], dtype=&#39;object&#39;)</span></span>
+<span id="cb98-13"><a href="categorical-data.html#cb98-13" aria-hidden="true" tabindex="-1"></a>type_of_day.cat.ordered</span>
+<span id="cb98-14"><a href="categorical-data.html#cb98-14" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
+<div class="rmd-details">
+<p>
+You’ll notice that, in this instance, <code>pd.cut</code> did not return a <code>Series</code> object. It can, but <code>pd.cut</code>’s return type will depend on the inputs you feed in. In this case, it returned a <a href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical"><code>Categorical</code></a>, which is not the same thing as a <code>Series</code>. In the code above, I had to convert it back before accessing the <code>cat</code> attribute.
+</p>
 </div>
-<div id="installing-python-by-installing-anaconda" class="section level3" number="0.0.1">
-<h3><span class="header-section-number">0.0.1</span> Installing Python by Installing Anaconda {-}</h3>
-<p>It is recommended that you install <em>Anaconda</em>, which is a package manager, environment manager, and Python distribution with many third party open source packages. It provides a graphical user interface for us, too, just as RStudio does. You can access instructions for your specific machine and OS by clicking <a href="https://docs.anaconda.com/anaconda/install/#">here</a>.</p>
 
-</div>
 </div>
 </div>
 
@@ -443,8 +497,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="user-defined-functions-in-r-and-python.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-frames.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -476,7 +530,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/preface.Rmd",
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/07-categorical_data.Rmd",
 "text": "Edit"
 },
 "history": {
