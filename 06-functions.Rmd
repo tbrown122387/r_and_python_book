@@ -1,17 +1,16 @@
-# User-defined functions in R and Python
-
-Why are functions important in statistical programming? In both R and Python (and every other programming language), functions are used to perform calculations. This is a pretty obvious statement.
+# Functions
 
 This text has already covered how to *use* functions that come to us pre-made. At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python. 
-In this section we take a look at how to define our own functions. This will help us understand pre-made functions. It will also be useful if we need some functionality that isn't already written for us. 
+
+In this section we take a look at how to *define* our own functions. This will not only help us to understand pre-made functions, but it will also be useful if we need some extra functionality that isn't already provided to us. 
 
 Writing our own functions is also useful for "packaging up" computations. The utility of this will become very apparent in chapter \@ref(functional-programming). Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the "best" one?
 
-Thankfully, R functions are very similar to Python functions. In both languages, functions are **first-class objects**. This means that, no matter which of these two languages you're using, functions
+Thankfully, R functions are very similar to Python functions. In both languages, functions are **first-class objects**. This means that, no matter which of these two languages you are using, functions
 
 - can be passed as arguments to other functions, 
-- they can be returned as values from other functions, and 
-- they can be assigned to variables and stored in containers [@struc_and_interp]
+- can be returned as values from other functions, and 
+- can be assigned to variables and stored in containers [@struc_and_interp]
 
 ## Defining R Functions
 
@@ -29,17 +28,17 @@ Below the definition, the function is called with an input of `41`. When this ha
 
 - The value `41` is assigned to `myInput`
 - `myOutput` is given the value `42`
-- `42` is returned from the function
+- `myOutput`, which is `42`, is returned from the function
 - the temporary variables `myInput` and `myOutput` are destroyed. 
 
-We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away. 
+We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away after they are no longer needed. 
 
 
 ## Defining Python Functions
 
 To create a function in Python, we use the `def` statement (instead of the `function` function in R). The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in R. 
 
-Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and `return` isn't a function like it is in R, so there is no need to use parentheses after it. There is one addition, though--we need a colon (`:`). 
+Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and `return` isn't a function like it is in R, so there is no need to use parentheses after it. There is one syntactic addition, though--we need a colon (`:`). 
 
 Here is an example of a toy function called `add_one`.
 
@@ -54,13 +53,12 @@ Below the definition, the function is called with an input of `41`. When this ha
 
 - The value `41` is assigned to `my_input`
 - `my_output` is given the value `42`
-- `42` is returned from the function
+- `my_output`, which is `42`, is returned from the function
 - the temporary variables `my_input` and `my_output` are destroyed. 
 
-We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away. 
+We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away after they are no longer needed. 
 
 ## More details on R's user-defined functions
-
 
 Technically, in R, functions are [defined as three things bundled together](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Function-objects): 
 
@@ -70,7 +68,7 @@ Technically, in R, functions are [defined as three things bundled together](http
 
 The *formal argument list* is exactly what it sounds like. It is the list of arguments a function takes. You can access a function's formal argument list using the `formals()` function. Note that it is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created in the first place.
 
-Here is another function that takes a *default* argument called `whichNumber`. If the user of the function doesn't specify how much she wants to add to `myInput`, `addNumber` will use `1` as the default. This default value shows up in the output of `formals(addNumber)`.
+Here is another function that takes a **default argument** called `whichNumber`. If the user of the function doesn't specify how much she wants to add to `myInput`, `addNumber` will use `1` as the default. This default value shows up in the output of `formals(addNumber)`.
 
 ```{r, collapse = TRUE}
 addNumber <- function(myInput, whichNumber = 1){  
@@ -81,7 +79,7 @@ addNumber(3) # no second argument being provided by the user here
 formals(addNumber)
 ```
 
-The function's *body* is also exactly what it sounds like. It is the work that a function performs. You can access a functions body using the the `body()` function. 
+The function's *body* is also exactly what it sounds like. It is the work that a function performs. You can access a function's body using the the `body()` function. 
 
 ```{r, collapse = TRUE}
 addNumber <- function(myInput, whichNumber = 1){  
@@ -101,34 +99,39 @@ There is a lot more information about environments that isn't provided in this t
 ## More details on Python's user-defined functions
 
 
-Python functions have the same things R functions have: a **formal parameter list**, a body, and there are [namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) created that help organize which variables the function can access, as well as which pieces of code can call this new function. These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn't organized in the same way. 
+Roughly, Python functions have the same things R functions have. They have a **formal parameter list**, a body, and there are [namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) created that help organize which variables the function can access, as well as which pieces of code can call this new function. These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn't organized in the same way. To access these bits of information, you need to access the *special attributes* of a function. User-defined functions in Python have a lot of pieces of information attached to them. If you'd like to see all of them, you can visit [this page of documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types).
 
-Below is a table, taken straight from [the documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types), of all each user-defined function's *special attributes*. 
 
-| Attribute |	Meaning |
-|-----------|-------------------|
-`__doc__`	| The function’s documentation string, or `None` if unavailable; not inherited by subclasses.
-`__name__`	| The function’s name.	
-`__qualname__`	| The function’s qualified name.	
-`__module__` |	The name of the module the function was defined in, or None if unavailable.
-`__defaults__`	| A tuple containing default argument values for those arguments that have defaults, or None if no arguments have a default value.
-`__code__` |	The code object representing the compiled function body.
-`__globals__`	| A reference to the dictionary that holds the function’s global variables — the global namespace of the module in which the function was defined.
-`__dict__` |	The namespace supporting arbitrary function attributes.
-`__closure__` | `None` or a tuple of cells that contain bindings for the function’s free variables. See below for information on the `cell_contents` attribute.
-`__annotations__` | A dict containing annotations of parameters. The keys of the dict are the parameter names, and 'return' for the return annotation, if provided.
-`__kwdefaults__` | A dict containing defaults for keyword-only parameters.
 
-So take the  *formal parameter list* of a user-defined function, which is, again, the list of inputs a function takes. Just like in R, this is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created.^[You might have noticed that Python uses two different words to prevent confusion--unlike R, Python uses the word "parameter" (instead of "argument") to refer to the inputs a function takes, and "arguments" to the specific values a user plugs in.] Below we have another function that takes a **default argument** called `which_number`. If the user of the function doesn't specify how much she wants to add to `my_input`, `add_number` will use `1` as the default. This default value can be obtained with `add_number.__defaults__`.
+
+<!-- Below is a table, taken straight from [the documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types), of all each user-defined function's .  -->
+
+<!-- | Attribute |	Meaning | -->
+<!-- |-----------|-------------------| -->
+<!-- `__doc__`	| The function’s documentation string, or `None` if unavailable; not inherited by subclasses. -->
+<!-- `__name__`	| The function’s name.	 -->
+<!-- `__qualname__`	| The function’s qualified name.	 -->
+<!-- `__module__` |	The name of the module the function was defined in, or None if unavailable. -->
+<!-- `__defaults__`	| A tuple containing default argument values for those arguments that have defaults, or None if no arguments have a default value. -->
+<!-- `__code__` |	The code object representing the compiled function body. -->
+<!-- `__globals__`	| A reference to the dictionary that holds the function’s global variables — the global namespace of the module in which the function was defined. -->
+<!-- `__dict__` |	The namespace supporting arbitrary function attributes. -->
+<!-- `__closure__` | `None` or a tuple of cells that contain bindings for the function’s free variables. See below for information on the `cell_contents` attribute. -->
+<!-- `__annotations__` | A dict containing annotations of parameters. The keys of the dict are the parameter names, and 'return' for the return annotation, if provided. -->
+<!-- `__kwdefaults__` | A dict containing defaults for keyword-only parameters. -->
+
+
+So, for instance, let's try to find the  *formal parameter list* of a user-defined function below. This is, again, the collection of inputs a function takes. Just like in R, this is not the *actual* arguments a user will plug in--that isn't knowable at the time the function is created.^[You might have noticed that Python uses two different words to prevent confusion. Unlike R, Python uses the word "parameter" (instead of "argument") to refer to the inputs a function takes, and "arguments" to the specific values a user plugs in.] Here we have another function called `add_number()` that takes a **default argument** called `which_number`. 
 
 ```{python, collapse = TRUE}
-def add_number(my_input, which_number = 1):
+def add_number(my_input, which_number = 1): # define a function
   my_output = my_input + which_number
   return my_output
 add_number(3) # no second argument being provided by the user here
-add_number.__code__.co_varnames # this also contains my_output
+add_number.__code__.co_varnames # note this also contains *my_output*
 add_number.__defaults__
 ```
+
 The code attribute has much more to offer. To see a list of names of all its contents, you can use `dir(add_number.__code__)`.
 
 ```{block, type='rmd-details'}

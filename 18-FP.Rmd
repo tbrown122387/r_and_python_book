@@ -1,6 +1,6 @@
 # Functional Programming
 
-**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)), so how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(user-defined-functions-in-r-and-python).
+**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)), so how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(functions).
 
 Neither R nor Python is a purely functional language. For us, FP is a style that we can choose to let guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use a more object-oriented style, or neither. Some people tend to prefer one style to other styles, and others prefer to decide which to use depending on the task at hand. 
 
@@ -17,7 +17,7 @@ More specifically, a functional programming style takes advantage of **first-cla
     
 Side-effects are changes made to non-temporary variables, to the "state" of the program. 
 
-We discussed (1) in the beginning of chapter \@ref(user-defined-functions-in-r-and-python). If you have not used any other programming languages before, you might even take (1) for granted. However, if you have written C code before, you might remember how difficult it is to use functions as inputs to other functions! 
+We discussed (1) in the beginning of chapter \@ref(functions). If you have not used any other programming languages before, you might even take (1) for granted. However, if you have written C code before, you might remember how difficult it is to use functions as inputs to other functions! 
 
 There is more to say about point (2). This means you should keep your functions as *modular* as possible, unless you want your overall program to be much more difficult to understand. FP stipulates that
 
@@ -31,7 +31,7 @@ Unfortunately, violating the first of these three criteria is very easy to do in
 
 Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-non-local-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two symbols are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
 
-Last, violating the third criterion is easy in Python and difficult in R. This was dicussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
+Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
 
 -----------------------------------
 
@@ -395,14 +395,14 @@ alb_real_est[['FinSqFt','LotSize']].applymap(lambda e : e + 1).head(2)
 ```
 
 
-Last, we have a [`.groupby`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html) method, which can be used to mirror the behavior of R's `tapply`, `aggregate` or `by`. It can take the `DataFrame` it belongs to, and group its rows into multiple sub-`DataFrame`s. The collection of sub-`DataFrames` has a lot of the same methods that an individual `DataFrame` has (e.g. the subsetting operators,  and the `.apply` method), which can all be used in a second step of calculating things on each sub-`DataFrame`.
+Last, we have a [`.groupby`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html) method, which can be used to mirror the behavior of R's `tapply`, `aggregate` or `by`. It can take the `DataFrame` it belongs to, and group its rows into multiple sub-`DataFrame`s. The collection of sub-`DataFrames` has a lot of the same methods that an individual `DataFrame` has (e.g. the subsetting operators,  and the `.apply()` method), which can all be used in a second step of calculating things on each sub-`DataFrame`.
 
 ```{python, collapse = TRUE}
 type(alb_real_est.groupby(['City']))
 type(alb_real_est.groupby(['City'])['TotalValue'])
 ```
 
-Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which `City` they are in, extracts the `TotalValue` column in each sub-`DataFrame`, and then `.apply`s the `np.average` function on the sole column found in each sub-`DataFrame`. The second applys a lambda function to each sub-`DataFrame` directly. 
+Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which `City` they are in, extracts the `TotalValue` column in each sub-`DataFrame`, and then `.apply()`s the `np.average()` function on the sole column found in each sub-`DataFrame`. The second `.apply()`s a lambda function to each sub-`DataFrame` directly. 
 
 ```{python, collapse = TRUE}
 alb_real_est.groupby(['City'])['TotalValue'].apply(np.average)
@@ -486,7 +486,7 @@ This leads to the Monte Carlo estimate
 $$
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
 $$
-Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variates once, globally. Each time you call `monteCarloSinCRNv1(c(10,1))`, you get the same answer. 
+Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call `monteCarloSinCRNv1(c(10,1))`, you get the same answer. 
 ```{r, collapse = TRUE}
 commonZs <- rnorm(n=n)
 monteCarloSinCRNv1 <- function(params){
@@ -551,79 +551,79 @@ reduce,
 
 
 
-### Exercises
+<!-- ### Exercises -->
 
-1.  Let $X_t$ be the price of a stock at time $t$. A *call (or put) option* is a type of derivative contract you can buy or sell. It's called a derivative because its value derives from the value of a stock. A single call contract (or put) gives the owner the right to buy (or sell) stock ($100$ shares) at a certain price. This certain price written into an options contract ($s$) is called the *strike price*. The day the option expires    is called the *expiration date*. If a holder of the option uses his/her right to buy or sell the underlying stock, he/she is said to have *exercised* the option.
+<!-- 1.  Let $X_t$ be the price of a stock at time $t$. A *call (or put) option* is a type of derivative contract you can buy or sell. It's called a derivative because its value derives from the value of a stock. A single call contract (or put) gives the owner the right to buy (or sell) stock ($100$ shares) at a certain price. This certain price written into an options contract ($s$) is called the *strike price*. The day the option expires    is called the *expiration date*. If a holder of the option uses his/her right to buy or sell the underlying stock, he/she is said to have *exercised* the option. -->
 
-The price and value of options floats around randomly through time just like a stock does. Part of the value of an option is its *intrinsic value*. It is not the same as the overall value of an option, or its "fair price"--rather, the intrinsic value represents how much money its possible to guarantee at the current moment, if you exercised the option, and then liquidated the resulting position in the underlying.
+<!-- The price and value of options floats around randomly through time just like a stock does. Part of the value of an option is its *intrinsic value*. It is not the same as the overall value of an option, or its "fair price"--rather, the intrinsic value represents how much money its possible to guarantee at the current moment, if you exercised the option, and then liquidated the resulting position in the underlying. -->
 
-For example, call owners hope the stock rises above the strike price so that they can buy the stock for a low price, and immediately sell it for a high price. If $X_t > s$, they could buy at $s$, and sell at $X_t$. In other words, the intrinsic value of a call option is 
+<!-- For example, call owners hope the stock rises above the strike price so that they can buy the stock for a low price, and immediately sell it for a high price. If $X_t > s$, they could buy at $s$, and sell at $X_t$. In other words, the intrinsic value of a call option is  -->
 
-$$
-C^s_t = 100 \times \max(X_t - s, 0)
-$$
-as long as $t$ is before the expiration date. If $X_t < s$, then the owner doesn't have to buy the stock, so the call at that time is intrinsically worthless. 
+<!-- $$ -->
+<!-- C^s_t = 100 \times \max(X_t - s, 0) -->
+<!-- $$ -->
+<!-- as long as $t$ is before the expiration date. If $X_t < s$, then the owner doesn't have to buy the stock, so the call at that time is intrinsically worthless.  -->
 
-Put owners hope the stock price falls below the strike price, because a put's intrinsic value is
+<!-- Put owners hope the stock price falls below the strike price, because a put's intrinsic value is -->
 
-$$
-P^s_t = 100 \times \max(s - X_t, 0)
-$$
+<!-- $$ -->
+<!-- P^s_t = 100 \times \max(s - X_t, 0) -->
+<!-- $$ -->
 
-Sometimes people buy and sell multiple contracts (with the same expiration date) at the same time. If they do, the intrinsic value of the entire position is additive. For example, if you bought two of the same put option as the one above, then you just double the above expression to get the intrinsic value.
+<!-- Sometimes people buy and sell multiple contracts (with the same expiration date) at the same time. If they do, the intrinsic value of the entire position is additive. For example, if you bought two of the same put option as the one above, then you just double the above expression to get the intrinsic value. -->
 
-As another example, if you buy (you can also sell) a *call spread*, you buy one call, and then sell another call with the same expiration and a higher strike price. Assuming $s_1 < s_2$ the intrinsic value is of the call spread with strikes $s_1$ and $s_2$ is
-$$
-100 \times \max(X_t - s_1, 0) - 100\times\max(X_t - s_2, 0)
-$$
+<!-- As another example, if you buy (you can also sell) a *call spread*, you buy one call, and then sell another call with the same expiration and a higher strike price. Assuming $s_1 < s_2$ the intrinsic value is of the call spread with strikes $s_1$ and $s_2$ is -->
+<!-- $$ -->
+<!-- 100 \times \max(X_t - s_1, 0) - 100\times\max(X_t - s_2, 0) -->
+<!-- $$ -->
 
-a. In R, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time. 
+<!-- a. In R, write a function called `getIntrinsicValueFunc` that takes three vectors as arguments, (`dirs`, `strikes`, `contractType`, `numContracts`), and returns a function. These arguments should all be the same length. The length of these inputs is the number of contracts in an options position. The function that `getIntrinsicValueFunc` returns should only take one argument: `prices`, a vector of prices of the underlying stock. The function that `getIntrinsicValueFunc` should return a vector of intrinsic values over time.  -->
 
-Because the arguments may only take on certain values, and because the function to be returned has a certain signature, a template has been provided below. 
+<!-- Because the arguments may only take on certain values, and because the function to be returned has a certain signature, a template has been provided below.  -->
 
-```{r, eval=F}
-getIntrinsicValueFunc <-function(dirs, strikes, contractType, numContracts){
-  stopifnot(all(dirs %in% c("buy", "sell")))
-  stopifnot(all(contractType %in% c("call", "put")))
-  stopifnot(all(is.integer(strikes)))
-  stopifnot(all(is.integer(numContracts)))
-  stopifnot( (length(dirs) == length(strikes)) && (length(dirs) == length(contractType)))
-  
-  usefulFunc <- function(prices){
-    # TODO
-  }
-  return(usefulFunc)
-} 
-```
+<!-- ```{r, eval=F} -->
+<!-- getIntrinsicValueFunc <-function(dirs, strikes, contractType, numContracts){ -->
+<!--   stopifnot(all(dirs %in% c("buy", "sell"))) -->
+<!--   stopifnot(all(contractType %in% c("call", "put"))) -->
+<!--   stopifnot(all(is.integer(strikes))) -->
+<!--   stopifnot(all(is.integer(numContracts))) -->
+<!--   stopifnot( (length(dirs) == length(strikes)) && (length(dirs) == length(contractType))) -->
 
-b. Create an intrinsic value plot. The x-axis should be a grid of values: let's say from $100$ to $200$. On the y-axis plot the intrinsic value of buying a call spread with strikes $110$ and $120$. 
+<!--   usefulFunc <- function(prices){ -->
+<!--     # TODO -->
+<!--   } -->
+<!--   return(usefulFunc) -->
+<!-- }  -->
+<!-- ``` -->
 
-c. Do the same thing as above but show what happens when you sell the same call spread. 
+<!-- b. Create an intrinsic value plot. The x-axis should be a grid of values: let's say from $100$ to $200$. On the y-axis plot the intrinsic value of buying a call spread with strikes $110$ and $120$.  -->
 
-d. Plot the intrinsic value of a bought put spread with strikes $110$ and $120$. 
+<!-- c. Do the same thing as above but show what happens when you sell the same call spread.  -->
 
-e. Plot the intrinsic value of a sold put spread with strikes $110$ and $120$. What is the difference between all four plots?
+<!-- d. Plot the intrinsic value of a bought put spread with strikes $110$ and $120$.  -->
 
-
-2. Do the same thing, but in Python!
+<!-- e. Plot the intrinsic value of a sold put spread with strikes $110$ and $120$. What is the difference between all four plots? -->
 
 
-
-creating row masks in a data frame
-
-.apply with weird predicate function
-
-Optimization example 
-
-Importance sampling example
-
-bootstrap
-
-numerical integration
+<!-- 2. Do the same thing, but in Python! -->
 
 
-3. verbal, open-ended wuestion about what happens when you make a typo in a variable name? R versus Python?
 
-4. try to think of the most complicated program that uses two functions that both use (and modify) globals
+<!-- creating row masks in a data frame -->
+
+<!-- .apply with weird predicate function -->
+
+<!-- Optimization example  -->
+
+<!-- Importance sampling example -->
+
+<!-- bootstrap -->
+
+<!-- numerical integration -->
+
+
+<!-- 3. verbal, open-ended wuestion about what happens when you make a typo in a variable name? R versus Python? -->
+
+<!-- 4. try to think of the most complicated program that uses two functions that both use (and modify) globals -->
 
 
