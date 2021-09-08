@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="reshaping-and-combining-data-sets.html"/>
 <link rel="next" href="working-with-text-data.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -391,24 +391,24 @@ div.csl-indent {
 <p>Recall our Albemarle Real Estate data set.</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="visualization.html#cb157-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb157-2"><a href="visualization.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
-<span id="cb157-3"><a href="visualization.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb157-4"><a href="visualization.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb157-5"><a href="visualization.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb157-6"><a href="visualization.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb157-7"><a href="visualization.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb157-8"><a href="visualization.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb157-9"><a href="visualization.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb157-10"><a href="visualization.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb157-11"><a href="visualization.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb157-12"><a href="visualization.html#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb157-13"><a href="visualization.html#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb157-14"><a href="visualization.html#cb157-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb157-15"><a href="visualization.html#cb157-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb157-16"><a href="visualization.html#cb157-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span></code></pre></div>
+<span id="cb157-3"><a href="visualization.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize</span></span>
+<span id="cb157-4"><a href="visualization.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000</span></span>
+<span id="cb157-5"><a href="visualization.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189</span></span>
+<span id="cb157-6"><a href="visualization.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760</span></span>
+<span id="cb157-7"><a href="visualization.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648</span></span>
+<span id="cb157-8"><a href="visualization.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880</span></span>
+<span id="cb157-9"><a href="visualization.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838</span></span>
+<span id="cb157-10"><a href="visualization.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   TotalValue        City</span></span>
+<span id="cb157-11"><a href="visualization.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     409900      CROZET</span></span>
+<span id="cb157-12"><a href="visualization.html#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     523100      CROZET</span></span>
+<span id="cb157-13"><a href="visualization.html#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     180900 EARLYSVILLE</span></span>
+<span id="cb157-14"><a href="visualization.html#cb157-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4     620700      CROZET</span></span>
+<span id="cb157-15"><a href="visualization.html#cb157-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5     162500      CROZET</span></span>
+<span id="cb157-16"><a href="visualization.html#cb157-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6     167200      CROZET</span></span></code></pre></div>
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="visualization.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb158-2"><a href="visualization.html#cb158-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-156-1.png" width="672" /></p>
 <p>I specified the <code>xlab=</code> and <code>main=</code> arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (<code>?hist</code>).</p>
 <p><code>plot</code> is useful for plotting two univariate numerical variables. This can be done in time series plots (variable versus time) and scatter plots (one variable versus another).</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="visualization.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
@@ -419,7 +419,7 @@ div.csl-indent {
 <span id="cb159-6"><a href="visualization.html#cb159-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;log. total value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log. lot size&quot;</span>, </span>
 <span id="cb159-7"><a href="visualization.html#cb159-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
 <span id="cb159-8"><a href="visualization.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">log</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LotSize)), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="visualization.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>I use some of the many arguments available (type <code>?plot</code>). <code>xlab=</code> and <code>ylab=</code> specify the x- and y-axis labels, respectively. <code>col=</code> is short for “color.” <code>pch=</code> is short for “point character.” Changing this will change the symbol shapes used for each point. <code>type=</code> is more general than that, but it is related. I typically use it to specify whether or not I want the points connected with lines.</p>
 <p>I also use a couple other functions. <code>abline</code> is used to superimpose lines over the top of a plot. They can be <code>h</code>orizontal, <code>v</code>ertical, or you can specify them in slope-intercept form, or by providing a linear model object. I also used <code>par</code> to set a graphical parameter. The graphical parameter <code>par()$mfrow</code> sets the layout of a multiple plot visualization. I then set it back to the standard <span class="math inline">\(1 \times 1\)</span> layout afterwards.</p>
@@ -433,7 +433,7 @@ div.csl-indent {
 <p>Consider this first example.</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="visualization.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb161-2"><a href="visualization.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-180-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-158-1.png" width="80%" /></p>
 <p>You’ll notice a few things about the code and the result produced:</p>
 <ol style="list-style-type: decimal">
 <li><p>No geometric shapes show up!</p></li>
@@ -445,66 +445,64 @@ div.csl-indent {
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="visualization.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb162-2"><a href="visualization.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb162-3"><a href="visualization.html#cb162-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-159-1.png" width="672" /></p>
 <p>Notice that we did not need to provide any arguments to <code>geom_point</code>. The aesthetic mappings were used by the new layer.</p>
 <p>There are <em>many</em> types of layers that you can add to a plot, and you’re not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the <code>ggtitle</code> function to add a title layer. Unlike <code>geom_point</code>, this function will need to take an argument because the desired title is not stored as an aesthetic mapping.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="visualization.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb163-2"><a href="visualization.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb163-3"><a href="visualization.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-160-1.png" width="672" /></p>
 <p>Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="visualization.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb164-2"><a href="visualization.html#cb164-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb164-3"><a href="visualization.html#cb164-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-161-1.png" width="672" /></p>
 <p>If we want tighter control on the aesthetic mapping, we can use <a href="https://ggplot2-book.org/scales.html#scales"><strong>scales</strong></a>. Syntactically, these are things we “add” (<code>+</code>) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix <code>scale_</code>.</p>
 <p>We can change attributes of the axes like this.</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="visualization.html#cb165-1" aria-hidden="true" tabindex="-1"></a>base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb165-2"><a href="visualization.html#cb165-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb165-3"><a href="visualization.html#cb165-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span>
 <span id="cb165-4"><a href="visualization.html#cb165-4" aria-hidden="true" tabindex="-1"></a>base_plot <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
 <p>We can also change plot colors with scale layers. Let’s add an aesthetic called fill so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn’t have any more unused numerical columns, so let’s create a new one called <code>score</code>. We also use a new geom layer from a function called <code>geom_tile()</code>.</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="visualization.html#cb166-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb166-2"><a href="visualization.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb166-3"><a href="visualization.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() </span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
 <p>If we didn’t like these colors, we could change them with a scale layer. Personally, I like this one.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="visualization.html#cb167-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb167-2"><a href="visualization.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb167-3"><a href="visualization.html#cb167-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb167-4"><a href="visualization.html#cb167-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_b</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-164-1.png" width="672" /></p>
 <p>There are many to choose from, though. Here’s another one.</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="visualization.html#cb168-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb168-2"><a href="visualization.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb168-3"><a href="visualization.html#cb168-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb168-4"><a href="visualization.html#cb168-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
 </div>
 <div id="plotting-with-matplotlib" class="section level2" number="13.3">
 <h2><span class="header-section-number">13.3</span> Plotting with Matplotlib</h2>
 <p>Matplotlib <span class="citation">(<a href="#ref-Hunter:2007" role="doc-biblioref">Hunter 2007</a>)</span> is a third-party visualization library in Python. It’s the oldest and most heavily-used, so it’s the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of <a href="https://matplotlib.org/stable/tutorials/index.html">tutorials</a> on Matplotlib’s website. I will start off making a simple plot, and commenting on each line of code.</p>
 <div class="rmd-details">
-<p>
-You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “object-oriented-style” to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you’re familiar with MATLAB, you might consider learning a little about the first style, as well.
-</p>
+<p>You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “object-oriented-style” to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you’re familiar with MATLAB, you might consider learning a little about the first style, as well.</p>
 </div>
 <div class="sourceCode" id="cb169"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb169-1"><a href="visualization.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt       <span class="co"># 1</span></span>
 <span id="cb169-2"><a href="visualization.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np                    <span class="co"># 2</span></span>
 <span id="cb169-3"><a href="visualization.html#cb169-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()              <span class="co"># 3</span></span>
 <span id="cb169-4"><a href="visualization.html#cb169-4" aria-hidden="true" tabindex="-1"></a>ax.hist(np.random.normal(size<span class="op">=</span><span class="dv">1000</span>))  <span class="co"># 4</span></span>
-<span id="cb169-5"><a href="visualization.html#cb169-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([ 13.,  42., 119., 196., 259., 200., 106.,  48.,  12.,   5.]), array([-2.73949562, -2.12121869, -1.50294175, -0.88466482, -0.26638789,</span></span>
-<span id="cb169-6"><a href="visualization.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.35188904,  0.97016597,  1.5884429 ,  2.20671983,  2.82499676,</span></span>
-<span id="cb169-7"><a href="visualization.html#cb169-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.4432737 ]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-1.png" width="80%" /></p>
+<span id="cb169-5"><a href="visualization.html#cb169-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([  1.,   7.,  30., 129., 232., 271., 223.,  87.,  18.,   2.]), array([-3.99160183, -3.24031556, -2.48902928, -1.73774301, -0.98645673,</span></span>
+<span id="cb169-6"><a href="visualization.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.23517046,  0.51611582,  1.2674021 ,  2.01868837,  2.76997465,</span></span>
+<span id="cb169-7"><a href="visualization.html#cb169-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.52126092]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-167-1.png" width="80%" /></p>
 <p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. It also follows the most commonly-used convention.</p>
 <p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
 <p>Third, we call the <code>subplots</code> function, and use <em>sequence unpacking</em> to unpack the returned container into individual objects without storing the overall container. “Subplots” sounds like it will make many different plots all on one figure, but if you look at the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots">documentation</a> the number of rows and columns defaults to one and one, respectively.</p>
 <p><code>plt.subplots</code> returns a <a href="https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple"><code>tuple</code></a><a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> of two things: a <code>Figure</code> object, and one or more <code>Axes</code> object(s). These two classes will require some explanation.</p>
 <ol style="list-style-type: decimal">
 <li><p>A <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure"><code>Figure</code> object</a> is the overall visualization object you’re making. It holds onto all of the plot elements. If you want to save all of your progress (e.g. with <code>fig.savefig('my_picture.png')</code>), you’re saving the overall <code>Figure</code> object.</p></li>
-<li><p>One or more <a href="https://matplotlib.org/stable/api/axes_api.html#the-axes-class"><code>Axes</code> objects</a> are contained in a <code>Figure</code> object. Each is <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#axes">“what you think of as ‘a plot’</a>.” They hold onto two <code>Axis</code> objects (in the case of 2-dimensional plots) or three (in the case of 3-dimensional arguments). We are usually calling the methods of these objects to effect changes on a plot.</p></li>
+<li><p>One or more <a href="https://matplotlib.org/stable/api/axes_api.html#the-axes-class"><code>Axes</code> objects</a> are contained in a <code>Figure</code> object. Each is <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#axes">"what you think of as ‘a plot’</a>." They hold onto two <code>Axis</code> objects (in the case of 2-dimensional plots) or three (in the case of 3-dimensional arguments). We are usually calling the methods of these objects to effect changes on a plot.</p></li>
 </ol>
 <p>In line four, we call the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist"><code>hist()</code> method</a> of the <code>Axes</code> object called <code>ax</code>. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in <a href="https://matplotlib.org/stable/api/axes_api.html#plotting">the documentation</a>.</p>
 <p>If you want to make figures more elaborate, just keep calling different methods of <code>ax</code>. If you want to fit more subplots to the same figure, add more <code>Axes</code> objects. Here is an example using some code from <a href="https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface">one of the official Matplotlib tutorials</a>.</p>
@@ -515,26 +513,18 @@ You can use either “pyplot-style” (e.g. <code>plt.plot()</code>) or “obje
 <span id="cb170-5"><a href="visualization.html#cb170-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb170-6"><a href="visualization.html#cb170-6" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
 <span id="cb170-7"><a href="visualization.html#cb170-7" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
-<span id="cb170-8"><a href="visualization.html#cb170-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f92485a1c18&gt;]</span></span>
-<span id="cb170-9"><a href="visualization.html#cb170-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
-<span id="cb170-10"><a href="visualization.html#cb170-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f92485a1f98&gt;]</span></span>
-<span id="cb170-11"><a href="visualization.html#cb170-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
-<span id="cb170-12"><a href="visualization.html#cb170-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f9205f81358&gt;]</span></span>
-<span id="cb170-13"><a href="visualization.html#cb170-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
-<span id="cb170-14"><a href="visualization.html#cb170-14" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
-<span id="cb170-15"><a href="visualization.html#cb170-15" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
-<span id="cb170-16"><a href="visualization.html#cb170-16" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0, 0.5, &#39;y label&#39;)</span></span>
-<span id="cb170-17"><a href="visualization.html#cb170-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_title(<span class="st">&quot;Simple Plot&quot;</span>)  <span class="co"># Add a title to the axes.</span></span>
-<span id="cb170-18"><a href="visualization.html#cb170-18" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 1.0, &#39;Simple Plot&#39;)</span></span>
-<span id="cb170-19"><a href="visualization.html#cb170-19" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
-<span id="cb170-20"><a href="visualization.html#cb170-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb170-21"><a href="visualization.html#cb170-21" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
-<span id="cb170-22"><a href="visualization.html#cb170-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f92059f49b0&gt;</span></span>
-<span id="cb170-23"><a href="visualization.html#cb170-23" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
-<span id="cb170-24"><a href="visualization.html#cb170-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f9205f81940&gt;]</span></span>
-<span id="cb170-25"><a href="visualization.html#cb170-25" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-5.png" width="80%" /></p>
+<span id="cb170-8"><a href="visualization.html#cb170-8" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
+<span id="cb170-9"><a href="visualization.html#cb170-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
+<span id="cb170-10"><a href="visualization.html#cb170-10" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
+<span id="cb170-11"><a href="visualization.html#cb170-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
+<span id="cb170-12"><a href="visualization.html#cb170-12" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_title(<span class="st">&quot;Simple Plot&quot;</span>)  <span class="co"># Add a title to the axes.</span></span>
+<span id="cb170-13"><a href="visualization.html#cb170-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
+<span id="cb170-14"><a href="visualization.html#cb170-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb170-15"><a href="visualization.html#cb170-15" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
+<span id="cb170-16"><a href="visualization.html#cb170-16" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
+<span id="cb170-17"><a href="visualization.html#cb170-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-168-3.png" width="624" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-169-5.png" width="80%" /></p>
 <p>import numpy as np
 my_inputs = np.linspace(start = 0, stop = 2*np.pi)
 outputs = np.sin(my_inputs)</p>
@@ -613,10 +603,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

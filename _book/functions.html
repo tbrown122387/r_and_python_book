@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="rs-lists-versus-pythons-lists-and-dictionaries.html"/>
 <link rel="next" href="categorical-data.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -463,9 +463,7 @@ div.csl-indent {
 <span id="cb68-9"><a href="functions.html#cb68-9" aria-hidden="true" tabindex="-1"></a><span class="do">## }</span></span></code></pre></div>
 <p>Every function you create also has a <em>parent environment</em><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. You can get/set this using the <code>environment()</code> function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was <em>created</em>, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called <em>scoping</em>. When you create functions in R, you are primarily using <strong>lexical scoping</strong>. To understand functions well in R, these examples are important to understand, so I provide more detail in <a href="functions.html#function-scope-in-r">6.5</a>.</p>
 <div class="rmd-details">
-<p>
-There is a lot more information about environments that isn’t provided in this text. For instance, a user-defined function also has <a href="http://adv-r.had.co.nz/Environments.html#function-envs">binding, execution, and calling environments associated with it</a>, and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
-</p>
+<p>There is a lot more information about environments that isn’t provided in this text. For instance, a user-defined function also has <a href="http://adv-r.had.co.nz/Environments.html#function-envs">binding, execution, and calling environments associated with it</a>, and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.</p>
 </div>
 </div>
 <div id="more-details-on-pythons-user-defined-functions" class="section level2" number="6.4">
@@ -497,9 +495,7 @@ There is a lot more information about environments that isn’t provided in this
 <span id="cb69-9"><a href="functions.html#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="co">## (1,)</span></span></code></pre></div>
 <p>The code attribute has much more to offer. To see a list of names of all its contents, you can use <code>dir(add_number.__code__)</code>.</p>
 <div class="rmd-details">
-<p>
-Don’t worry if the notation <code>add_number.__code__</code> looks strange. The dot (<code>.</code>) operator will become more clear in the future chapter on <em>object-oriented programming</em>. For now, just think of <code><strong>code</strong></code> as being an object <em>belonging to</em> <code>add_number</code>. Objects that belong to other objects are called <strong>attributes</strong> in Python. The dot operator helps us access attributes <em>inside</em> other objects.
-</p>
+<p>Don’t worry if the notation <code>add_number.__code__</code> looks strange. The dot (<code>.</code>) operator will become more clear in the future chapter on <em>object-oriented programming</em>. For now, just think of <code>__code__</code> as being an object <em>belonging to</em> <code>add_number</code>. Objects that belong to other objects are called <strong>attributes</strong> in Python. The dot operator helps us access attributes <em>inside</em> other objects.</p>
 </div>
 </div>
 <div id="function-scope-in-r" class="section level2" number="6.5">
@@ -551,9 +547,7 @@ Don’t worry if the notation <code>add_number.__code__</code> looks strange. Th
 <span id="cb73-11"><a href="functions.html#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="fu">myFunc</span>()</span>
 <span id="cb73-12"><a href="functions.html#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;inside one&quot;</span></span></code></pre></div>
 <div class="rmd-details">
-<p>
-Sometimes, in R, functions are called <strong>closures</strong> to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with.
-</p>
+<p>Sometimes, in R, functions are called <strong>closures</strong> to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with.</p>
 </div>
 </div>
 <div id="function-scope-in-python" class="section level2" number="6.6">
@@ -618,7 +612,7 @@ Sometimes, in R, functions are called <strong>closures</strong> to emphasize tha
 <span id="cb79-4"><a href="functions.html#cb79-4" aria-hidden="true" tabindex="-1"></a>third_func() </span></code></pre></div>
 <pre><code>## outside both
 ## inside one</code></pre>
-<p>Again, these examples get at <em>functional programming</em>, which is discussed more in depth in chapter <a href="functional-programming.html#functional-programming">18</a>. There it will describe strategies to make your code easier to maintain (e.g. keep your functions “pure”!)</p>
+<p>Again, these examples get at <em>functional programming</em>, which is discussed more in depth in chapter <a href="functional-programming.html#functional-programming">18</a>. There it will describe strategies to make your code easier to maintain (e.g. keep your functions “pure!”)</p>
 </div>
 <div id="modifying-a-functions-arguments" class="section level2" number="6.7">
 <h2><span class="header-section-number">6.7</span> Modifying a Function’s Arguments</h2>
@@ -703,13 +697,11 @@ Sometimes, in R, functions are called <strong>closures</strong> to emphasize tha
 <span id="cb85-9"><a href="functions.html#cb85-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb85-10"><a href="functions.html#cb85-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
 <span id="cb85-11"><a href="functions.html#cb85-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg))</span>
-<span id="cb85-12"><a href="functions.html#cb85-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140265855112544 140265855112576</span></span>
+<span id="cb85-12"><a href="functions.html#cb85-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140510223533408 140510223533440</span></span>
 <span id="cb85-13"><a href="functions.html#cb85-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb85-14"><a href="functions.html#cb85-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
-<p>
-The <a href="https://docs.python.org/3/library/functions.html#id"><code>id()</code></a> function returns the <strong>identity</strong> of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, <code>a</code> and <code>b</code> say, have the same identity, <code>a is b</code> will evaluate to <code>True</code>. Otherwise, it will evaluate to <code>False</code>.
-</p>
+<p>The <a href="https://docs.python.org/3/library/functions.html#id"><code>id()</code></a> function returns the <strong>identity</strong> of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, <code>a</code> and <code>b</code> say, have the same identity, <code>a is b</code> will evaluate to <code>True</code>. Otherwise, it will evaluate to <code>False</code>.</p>
 </div>
 <p>In the first line, the <em>name</em> <code>a</code> is bound to the <em>object</em> <code>1</code>. In the second line, the name <code>arg</code> is bound to the <em>object</em> that is referred to by the <em>name</em> <code>a</code>. After the second line finishes, <code>arg</code> and <code>a</code> are two names for the same object (a fact that you can confirm by inserting <code>arg is a</code> immediately after this line).</p>
 <p>In the third line, <code>arg</code> is bound to <code>2</code>. The variable <code>arg</code> can be changed, but only by re-binding it with a separate object. Re-binding <code>arg</code> does not change the value referred to by <code>a</code> because <code>a</code> still refers to <code>1</code>, an object separate from <code>2</code>. There is no reason to re-bind <code>a</code> because it wasn’t mentioned at all in the third line.</p>
@@ -727,7 +719,7 @@ The <a href="https://docs.python.org/3/library/functions.html#id"><code>id()</co
 <span id="cb86-11"><a href="functions.html#cb86-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
 <span id="cb86-12"><a href="functions.html#cb86-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb86-13"><a href="functions.html#cb86-13" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
-<p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place”, and all variables can access the mutated object.</p>
+<p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place,” and all variables can access the mutated object.</p>
 <p>Why did the third example produce unexpected results?</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="functions.html#cb87-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
 <span id="cb87-2"><a href="functions.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="co"># old code</span></span>
@@ -814,9 +806,7 @@ The <a href="https://docs.python.org/3/library/functions.html#id"><code>id()</co
 <h3><span class="header-section-number">6.8.4</span> Modifying Non-Local Variables In Python</h3>
 <p>Finally, there is something in Python that is like R’s super assignment operator (<code>&lt;&lt;-</code>). It is the <code>global</code> keyword. This will let you <em>modify</em> global variables.</p>
 <div class="rmd-details">
-<p>
-Referring to global variables <em>without</em> modifying them was always allowed, even without using the <code>global</code> keyword. This keyword should be used sparingly, and when it is used, it identifies that a function causes <strong>side effects</strong>, which are changes in some variable defined outside of the function’s scope.
-</p>
+<p>Referring to global variables <em>without</em> modifying them was always allowed, even without using the <code>global</code> keyword. This keyword should be used sparingly, and when it is used, it identifies that a function causes <strong>side effects</strong>, which are changes in some variable defined outside of the function’s scope.</p>
 </div>
 <div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="functions.html#cb93-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb93-2"><a href="functions.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> increment_a():</span>
@@ -907,10 +897,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="functions.html"/>
 <link rel="next" href="data-frames.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -402,11 +402,9 @@ div.csl-indent {
 <span id="cb95-14"><a href="categorical-data.html#cb95-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
 <p><code>factor</code>s have a <code>levels</code> attribute, which is comprised of all the possible values that each response could be. They also have a <code>contrasts</code> attribute, which will be important once you start using <code>factor</code>s as inputs to functions such as <code>lm</code>. In the case of using <code>factor</code>s as inputs to <code>lm()</code>, the <code>factor</code> would tell <code>lm()</code> <em>how</em> to create the dummy predictors in a linear regression model. It’s perfectly fine if you’re rusty on regression–the reason I mention this is that in Python, dummy variable construction is done more explicitly/manually.</p>
 <div class="rmd-caution">
-<p>
-In the above example, there wasn’t at least one person who prefers each season (that’s a confusing sentence). Here, if we did not specify a <code>levels</code> argument, there would only be two levels. This is a common source of bugs! Another source of bugs: what if some people say “autumn” and others say “fall”?
-</p>
+<p>In the above example, there wasn’t at least one person who prefers each season (that’s a confusing sentence). Here, if we did not specify a <code>levels</code> argument, there would only be two levels. This is a common source of bugs! Another source of bugs: what if some people say “autumn” and others say “fall?”</p>
 </div>
-<p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for ordinal data. As another example, say we asked ten people how much they liked programming, and they could only respond “love it”, “hate it”, or “it’s okay”. The data might look something like this.</p>
+<p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for ordinal data. As another example, say we asked ten people how much they liked programming, and they could only respond “love it,” “hate it,” or “it’s okay.” The data might look something like this.</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="categorical-data.html#cb96-1" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
 <span id="cb96-2"><a href="categorical-data.html#cb96-2" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
 <span id="cb96-3"><a href="categorical-data.html#cb96-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, </span>
@@ -429,7 +427,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="categorical-data.html#cb97-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb97-2"><a href="categorical-data.html#cb97-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb97-3"><a href="categorical-data.html#cb97-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb97-4"><a href="categorical-data.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf]</span></span>
+<span id="cb97-4"><a href="categorical-data.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (0, Inf] (0, Inf]</span></span>
 <span id="cb97-5"><a href="categorical-data.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb97-6"><a href="categorical-data.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb97-7"><a href="categorical-data.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -462,7 +460,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="categorical-data.html#cb99-1" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb99-2"><a href="categorical-data.html#cb99-2" aria-hidden="true" tabindex="-1"></a>type_of_day <span class="op">=</span> pd.cut(stock_returns, [<span class="op">-</span>np.inf, <span class="dv">0</span>, np.inf], labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
 <span id="cb99-3"><a href="categorical-data.html#cb99-3" aria-hidden="true" tabindex="-1"></a>type_of_day</span>
-<span id="cb99-4"><a href="categorical-data.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;bad day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;]</span></span>
+<span id="cb99-4"><a href="categorical-data.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;good day&#39;, &#39;good day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;bad day&#39;, &#39;good day&#39;, &#39;good day&#39;]</span></span>
 <span id="cb99-5"><a href="categorical-data.html#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (2, object): [&#39;bad day&#39; &lt; &#39;good day&#39;]</span></span>
 <span id="cb99-6"><a href="categorical-data.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day)</span>
 <span id="cb99-7"><a href="categorical-data.html#cb99-7" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span>
@@ -474,9 +472,7 @@ In the above example, there wasn’t at least one person who prefers each season
 <span id="cb99-13"><a href="categorical-data.html#cb99-13" aria-hidden="true" tabindex="-1"></a>type_of_day.cat.ordered</span>
 <span id="cb99-14"><a href="categorical-data.html#cb99-14" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
 <div class="rmd-details">
-<p>
-You’ll notice that, in this instance, <code>pd.cut</code> did not return a <code>Series</code> object. It can, but <code>pd.cut</code>’s return type will depend on the inputs you feed in. In this case, it returned a <a href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical"><code>Categorical</code></a>, which is not the same thing as a <code>Series</code>. In the code above, I had to convert it back before accessing the <code>cat</code> attribute.
-</p>
+<p>You’ll notice that, in this instance, <code>pd.cut</code> did not return a <code>Series</code> object. It can, but <code>pd.cut</code>’s return type will depend on the inputs you feed in. In this case, it returned a <a href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical"><code>Categorical</code></a>, which is not the same thing as a <code>Series</code>. In the code above, I had to convert it back before accessing the <code>cat</code> attribute.</p>
 </div>
 
 </div>
@@ -531,10 +527,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

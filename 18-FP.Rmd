@@ -78,9 +78,9 @@ myThirdMean <- mean(myDF[,100])
 
 You will need one line of code for each column in the data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 "Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).
-```
+:::
 
 Instead, prefer the use of `sapply` in this situation. The "s" in `sapply` stands for "simplified." In this bit of code `mean` is called on each column of th data frame. `sapply` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
 
@@ -100,9 +100,9 @@ dim(mySummaries)
 ```
 
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Another function that is worth mentioning is `replicate`--it is a wrapper for `sapply`. Consider a situation where you want to call a function many times with the same inputs. You might try something like `sapply(1:100, function(elem) {  return(myFunc(someInput)) } )`. Another, more readable, way to do this is `replicate(100, myFunc(someInput))`. 
-```
+:::
 
 
 ### `lapply`
@@ -168,9 +168,9 @@ tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Conditio
 ```
 
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 For functions that return higher-dimensional output, you will have to use something like `by` or `aggregate` in place of `tapply`.
-```
+:::
 
 
 ### `mapply`

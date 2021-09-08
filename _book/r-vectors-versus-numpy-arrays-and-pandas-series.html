@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="basic-types.html"/>
 <link rel="next" href="numpys-ndarrays-versus-rs-matrices-and-arrays.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -388,9 +388,7 @@ div.csl-indent {
 <h2><span class="header-section-number">3.1</span> Overview of R</h2>
 <p>In the previous section, I mentioned that R does not have scalar types–it just has <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects"><strong>vectors</strong></a>. So, whether you want to store one number (or <code>logical</code>, or <code>character</code>, or …), or many numbers, you will need a <code>vector</code>.</p>
 <div class="rmd-caution">
-<p>
-For many, the word “vector” evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on <code>vector</code>s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with <code>vector</code>s in R have little to do with linear algebra!
-</p>
+<p>For many, the word “vector” evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on <code>vector</code>s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with <code>vector</code>s in R have little to do with linear algebra!</p>
 </div>
 <p>How do we create one of these? There are many ways. One common way is to read in elements from an external data set. Another way is to generate <code>vector</code>s from code.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>         <span class="co"># consecutive integers</span></span>
@@ -402,18 +400,13 @@ For many, the word “vector” evokes an impression that these objects are desi
 <span id="cb18-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;5/2/2021&quot;</span>, <span class="st">&quot;5/3/2021&quot;</span>, <span class="st">&quot;5/4/2021&quot;</span>) <span class="co"># combine elements without relying on a pattern</span></span>
 <span id="cb18-8"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;5/2/2021&quot; &quot;5/3/2021&quot; &quot;5/4/2021&quot;</span></span>
 <span id="cb18-9"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)                             <span class="co"># generate Gaussian random variables</span></span>
-<span id="cb18-10"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.6817214 -0.2423883  0.5100299  0.8108573 -0.2874050  1.8007086  1.2377884  1.2041343  0.7312852  1.2845923</span></span></code></pre></div>
-<p><code>c()</code> is short for “combine”. <code>seq()</code> and <code>rep()</code> are short for “sequence” and “replicate”, respectively. <code>rnorm()</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
+<span id="cb18-10"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -1.36699704  0.97209786 -1.11173449 -0.89827659 -1.44813997  1.76930361 -1.93138528  1.00210832</span></span>
+<span id="cb18-11"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9]  0.63993325  0.01505493</span></span></code></pre></div>
+<p><code>c()</code> is short for “combine.” <code>seq()</code> and <code>rep()</code> are short for “sequence” and “replicate,” respectively. <code>rnorm()</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
 <div class="rmd-details">
-<p>
-I should mention that functions such as <code>rnorm()</code> don’t create truly random numbers, just <em>pseudorandom</em> ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic.
-</p>
-<p>
-First, a <em>seed</em>, or starting number is chosen. Then, the <em>pseudorandom number generator (PRNG)</em> maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic.
-</p>
-<p>
-Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don’t set the seed, and I don’t think about the distinction between random and pseudorandom numbers.
-</p>
+<p>I should mention that functions such as <code>rnorm()</code> don’t create truly random numbers, just <em>pseudorandom</em> ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic.</p>
+<p>First, a <em>seed</em>, or starting number is chosen. Then, the <em>pseudorandom number generator (PRNG)</em> maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic.</p>
+<p>Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don’t set the seed, and I don’t think about the distinction between random and pseudorandom numbers.</p>
 </div>
 </div>
 <div id="overview-of-python" class="section level2" number="3.2">
@@ -426,7 +419,7 @@ Sometimes you will be interested in setting the seed on your own because it is a
 <span id="cb19-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-4" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
 <span id="cb19-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  3,  5,  7,  9, 11])</span></span>
 <span id="cb19-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-6" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb19-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.36629276, -0.17277175, -0.3723774 ])</span></span></code></pre></div>
+<span id="cb19-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.86593298, 1.85487724, 1.64696434])</span></span></code></pre></div>
 <p>Another option for storing a homogeneous collection of elements in Python is a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series"><code>Series</code> object</a> from the Pandas library. The benefit of these is that they play nicely with Pandas’ data frames (more information about Pandas’ data frames can be found in <a href="data-frames.html#data-frames-in-python">8.2</a>), and that they have more flexibility with accessing elements by name ( see <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array">here</a> for more information ).</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb20-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb20-2" aria-hidden="true" tabindex="-1"></a>first <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
@@ -464,9 +457,12 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb23-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb23-5" aria-hidden="true" tabindex="-1"></a>np.exp( <span class="op">-</span><span class="fl">.5</span> <span class="op">*</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">10</span>)<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> np.sqrt( <span class="dv">2</span> <span class="op">*</span> np.pi)</span>
 <span id="cb23-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.00443185, 0.02622189, 0.09947714, 0.24197072, 0.37738323,</span></span>
 <span id="cb23-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">##        0.37738323, 0.24197072, 0.09947714, 0.02622189, 0.00443185])</span></span></code></pre></div>
-<p>Instead of calling it “recycling”, Numpy calls reusing elements of a shorter array in a binary operation <a href="https://numpy.org/devdocs/user/theory.broadcasting.html"><strong>broadcasting</strong></a>. It’s the same idea as in R, but in general, Python is stricter and disallows more scenarios.</p>
+<p>Instead of calling it “recycling,” Numpy calls reusing elements of a shorter array in a binary operation <a href="https://numpy.org/devdocs/user/theory.broadcasting.html"><strong>broadcasting</strong></a>. It’s the same idea as in R, but in general, Python is stricter and disallows more scenarios.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-1" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">3</span>)<span class="op">*</span>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)</span>
-<span id="cb24-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): ValueError: operands could not be broadcast together with shapes (2,) (3,)</span></span></code></pre></div>
+<span id="cb24-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): ValueError: operands could not be broadcast together with shapes (2,) (3,) </span></span>
+<span id="cb24-3"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
+<span id="cb24-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Detailed traceback:</span></span>
+<span id="cb24-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</span></span></code></pre></div>
 <p>If you are working with string arrays, Numpy has a <a href="https://numpy.org/doc/stable/reference/routines.char.html#module-numpy.char"><code>np.char</code> module with many useful functions</a>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb25-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>])</span>
 <span id="cb25-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb25-2" aria-hidden="true" tabindex="-1"></a>np.char.upper(a)</span>
@@ -754,11 +750,14 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
 <span id="cb48-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span><span class="op">/</span><span class="dv">0</span></span>
 <span id="cb48-3"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): ZeroDivisionError: division by zero</span></span>
-<span id="cb48-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb48-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-5" aria-hidden="true" tabindex="-1"></a>np.inf<span class="op">/</span>np.inf</span>
-<span id="cb48-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co">## nan</span></span>
-<span id="cb48-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-7" aria-hidden="true" tabindex="-1"></a>np.isnan(np.nan)</span>
-<span id="cb48-8"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
+<span id="cb48-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
+<span id="cb48-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Detailed traceback:</span></span>
+<span id="cb48-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</span></span>
+<span id="cb48-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb48-8"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-8" aria-hidden="true" tabindex="-1"></a>np.inf<span class="op">/</span>np.inf</span>
+<span id="cb48-9"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co">## nan</span></span>
+<span id="cb48-10"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-10" aria-hidden="true" tabindex="-1"></a>np.isnan(np.nan)</span>
+<span id="cb48-11"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
 <p>“NA” is short for “not available.” Missing data is a fact of life in data science. Observations are often missing in data sets, introduced after joining/merging data sets together (more on this in section <a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets">12.3</a>), or arise from calculations involving underflow and overflow. There are many techniques designed to estimate quantities in the presence of missing data. When you code them up, you’ll need to make sure you deal with <code>NA</code>s properly.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
 <span id="cb49-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb49-2" aria-hidden="true" tabindex="-1"></a>babyData <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">9</span>,<span class="cn">NA</span>,<span class="dv">21</span>)</span>
@@ -777,9 +776,7 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb50-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb50-5" aria-hidden="true" tabindex="-1"></a>np.average(baby_data)</span>
 <span id="cb50-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 7.25</span></span></code></pre></div>
 <div class="rmd-caution">
-<p>
-Be careful of using extreme values to stand in for what should be an <code>NA</code>. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!
-</p>
+<p>Be careful of using extreme values to stand in for what should be an <code>NA</code>. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!</p>
 </div>
 
 </div>
@@ -840,10 +837,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="categorical-data.html"/>
 <link rel="next" href="input-and-output.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -408,28 +408,14 @@ div.csl-indent {
 <span id="cb100-18"><a href="data-frames.html#cb100-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(irisData)</span>
 <span id="cb100-19"><a href="data-frames.html#cb100-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span></code></pre></div>
 <div class="rmd-caution">
-<p>
-Do not rely on the default arguments of <code>read.csv</code> or <code>read.table</code>! After you read in a data frame, always check the first few rows to make sure that
-</p>
+<p>Do not rely on the default arguments of <code>read.csv</code> or <code>read.table</code>! After you read in a data frame, always check the first few rows to make sure that</p>
 <ol style="list-style-type: decimal">
-<li>
-The number of columns is correct because the correct column <em>separator</em> was used (c.f. <code>sep=</code>),
-</li>
-<li>
-column names were parsed correctly, if there were some in the raw text file,
-</li>
-<li>
-the first row of data wasn’t used as a column name sequence, if there weren’t column names in the text file, and
-</li>
-<li>
-the last few rows aren’t reading in empty spaces
-</li>
-<li>
-character columns are read in correctly (c.f. <code>stringsAsFactors=</code>), and
-</li>
-<li>
-special characters signifying missing data were correctly identified (c.f. <code>na.strings=</code>).
-</li>
+<li>The number of columns is correct because the correct column <em>separator</em> was used (c.f. <code>sep=</code>),</li>
+<li>column names were parsed correctly, if there were some in the raw text file,</li>
+<li>the first row of data wasn’t used as a column name sequence, if there weren’t column names in the text file, and</li>
+<li>the last few rows aren’t reading in empty spaces</li>
+<li>character columns are read in correctly (c.f. <code>stringsAsFactors=</code>), and</li>
+<li>special characters signifying missing data were correctly identified (c.f. <code>na.strings=</code>).</li>
 </ol>
 </div>
 <p>There are some exceptions, but most data sets can be stored as a <code>data.frame</code>. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation.</p>
@@ -469,9 +455,7 @@ special characters signifying missing data were correctly identified (c.f. <code
 <span id="cb102-18"><a href="data-frames.html#cb102-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 6          5.4         3.9          1.7         0.4 Iris-setosa</span></span></code></pre></div>
 <p>In the code above, <code>irisData$species == "Iris-setosa"</code> creates a logical vector (try it!) using the vectorized <code>==</code> operator. The <code>[</code> operator selects the rows for which the corresponding element of this logical vector is <code>TRUE</code>.</p>
 <div class="rmd-details">
-<p>
-Be careful: depending on how you use the square brackets, you can either get a <code>data.frame</code> or a <code>vector.</code> As an example, try both <code>class(irisData[,1])</code> and <code>class(irisData[,c(1,2)])</code>.
-</p>
+<p>Be careful: depending on how you use the square brackets, you can either get a <code>data.frame</code> or a <code>vector.</code> As an example, try both <code>class(irisData[,1])</code> and <code>class(irisData[,c(1,2)])</code>.</p>
 </div>
 <p>In R, <code>data.frame</code>s have row names. You can get/set this character <code>vector</code> with the <code>rownames()</code> function. You can access rows by name using the square bracket operator. Personally, I don’t typically use this functionality that often.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="data-frames.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(irisData))</span>
@@ -529,9 +513,7 @@ Be careful: depending on how you use the square brackets, you can either get a <
 <span id="cb105-17"><a href="data-frames.html#cb105-17" aria-hidden="true" tabindex="-1"></a><span class="co">## 3           4.6          3.1</span></span>
 <span id="cb105-18"><a href="data-frames.html#cb105-18" aria-hidden="true" tabindex="-1"></a><span class="co">## 4           5.0          3.6</span></span></code></pre></div>
 <div class="rmd-details">
-<p>
-Notice that <code>iris_data[‘sepal.length’]</code> returns a <code>Series</code> and <code>iris_data[[“sepal.length”, “sepal.width”]</code> returns a Pandas <code>DataFrame</code>. This behavior is similar to what happened in R’s. For more details, click <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection">here</a>.
-</p>
+<p>Notice that <code>iris_data['sepal.length']</code> returns a <code>Series</code> and <code>iris_data[["sepal.length", "sepal.width"]</code> returns a Pandas <code>DataFrame</code>. This behavior is similar to what happened in R’s. For more details, click <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection">here</a>.</p>
 </div>
 <p>You can select columns and rows by number with the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html"><code>.iloc</code> method</a>. <code>iloc</code> is (probably) short for “integer location.”</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="data-frames.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify rows/cols by number</span></span>
@@ -660,10 +642,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

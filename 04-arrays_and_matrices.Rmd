@@ -24,9 +24,9 @@ a
 In Python, adding a dimension to your "container" is simple. You keep using Numpy arrays, and you just change the `.shape` attribute (perhaps with a call to `.reshape()` or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the `matrix` class. Containers with 3 or more dimensions are of the `array` class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of [@matloff_r_book]. 
 
 
-```{block, type='rmd-caution'}
+::: {.rmd-caution}
 Just like `vector`s, `matrix` objects do not necessarily have to be used to perform matrix arithmetic. Yes, they require all the elements are of the same type, but it doesn't really make sense to "multiply" `matrix` objects that hold onto `character`s.
-```
+:::
 
 
 I usually create `matrix` objects with the `matrix()` function or the `as.matrix()` function. `matrix()` is to be preferred in my opinion. The first argument is explicitly a `vector` of all the flattened data that you want in your `matrix`. On the other hand, `as.matrix()` is more flexible; it takes in a variety of R objects (e.g. `data.frame`s), and tries to figure out what to do with them on a case-by-case basis. In other words, `as.matrix()` is a *generic function*. More information about generic functions is provided in \@ref(using-s3-objects).

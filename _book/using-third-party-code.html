@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="input-and-output.html"/>
 <link rel="next" href="control-flow.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -410,16 +410,15 @@ div.csl-indent {
 <p>To understand this more deeply, we need to talk about <strong>environments</strong> again. We discussed these before in <a href="functions.html#more-details-on-rs-user-defined-functions">6.3</a>, but only in the context of user-defined functions. When we load in a package with <code>library()</code>, we make its contents available by putting it all in an environment for that package.</p>
 <p>An <a href="https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects">environment</a> holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in R pre-loaded have their own environment.</p>
 <div class="rmd-details">
-<p>
-Formally, each environment is pair of two things: a <strong>frame</strong> and an <strong>enclosure</strong>. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you’ve heard of a <em>linked list</em> in a computer science class, it’s the same thing.
-</p>
+<p>Formally, each environment is pair of two things: a <strong>frame</strong> and an <strong>enclosure</strong>. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you’ve heard of a <em>linked list</em> in a computer science class, it’s the same thing.</p>
 </div>
 <p>Moreover, all of these environments are connected in a chain-like structure. To see what environments are loaded on your machine, and what order they were loaded in, use the <code>search()</code> function. This displays the <a href="https://cran.r-project.org/doc/manuals/R-lang.html#Search-path"><strong>search path</strong></a>, or the ordered sequence of all of your environments.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="using-third-party-code.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span>
-<span id="cb118-2"><a href="using-third-party-code.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:R6&quot;         &quot;package:Matrix&quot;     &quot;package:Hmisc&quot;      &quot;package:ggplot2&quot;   </span></span>
-<span id="cb118-3"><a href="using-third-party-code.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] &quot;package:Formula&quot;    &quot;package:survival&quot;   &quot;package:lattice&quot;    &quot;package:reticulate&quot; &quot;tools:rstudio&quot;     </span></span>
-<span id="cb118-4"><a href="using-third-party-code.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [11] &quot;package:stats&quot;      &quot;package:graphics&quot;   &quot;package:grDevices&quot;  &quot;package:utils&quot;      &quot;package:datasets&quot;  </span></span>
-<span id="cb118-5"><a href="using-third-party-code.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] &quot;package:methods&quot;    &quot;Autoloads&quot;          &quot;package:base&quot;</span></span></code></pre></div>
+<span id="cb118-2"><a href="using-third-party-code.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:R6&quot;         &quot;package:Matrix&quot;     &quot;package:Hmisc&quot;     </span></span>
+<span id="cb118-3"><a href="using-third-party-code.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;package:ggplot2&quot;    &quot;package:Formula&quot;    &quot;package:survival&quot;   &quot;package:lattice&quot;   </span></span>
+<span id="cb118-4"><a href="using-third-party-code.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;package:reticulate&quot; &quot;tools:rstudio&quot;      &quot;package:stats&quot;      &quot;package:graphics&quot;  </span></span>
+<span id="cb118-5"><a href="using-third-party-code.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;package:grDevices&quot;  &quot;package:utils&quot;      &quot;package:datasets&quot;   &quot;package:methods&quot;   </span></span>
+<span id="cb118-6"><a href="using-third-party-code.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [17] &quot;Autoloads&quot;          &quot;package:base&quot;</span></span></code></pre></div>
 <p>Alternatively, if you’re using RStudio, the search path, and the contents of each of its environments, are displayed in the “Environment” window. You can choose which environment you’d like to look at by selecting it from the drop-down menu. This allows you to see all of the variables in that particular environment. The <strong>global environment</strong> (i.e. <code>".GlobalEnv"</code>) is displayed by default, because that is where you store all the objects you are creating in the console.</p>
 <div class="figure" style="text-align: center">
 <img src="pics/environments_display_rstudio.png" alt="The Environment Window in RStudio" width="80%" />
@@ -466,20 +465,20 @@ Formally, each environment is pair of two things: a <strong>frame</strong> and a
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="using-third-party-code.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
 <span id="cb121-2"><a href="using-third-party-code.html#cb121-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb121-3"><a href="using-third-party-code.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1.08318281,  1.84549913,  1.36723833, -0.42649881,  0.1124269 ,</span></span>
-<span id="cb121-4"><a href="using-third-party-code.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.71299278, -2.10310291,  0.61057718,  0.98407335,  0.40808271])</span></span></code></pre></div>
+<span id="cb121-3"><a href="using-third-party-code.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.82673334, -1.31098287, -1.73070407,  0.89940313,  0.21126774,</span></span>
+<span id="cb121-4"><a href="using-third-party-code.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.25429344,  1.33768093, -0.54263008,  1.98099168, -0.78257636])</span></span></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">17</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="using-third-party-code.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb122-2"><a href="using-third-party-code.html#cb122-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb122-3"><a href="using-third-party-code.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.11960399,  1.86378836,  0.56500422,  0.15590117,  0.16444591,</span></span>
-<span id="cb122-4"><a href="using-third-party-code.html#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.7930684 , -0.32374152,  1.33564433,  0.20969152, -1.25728952])</span></span></code></pre></div>
+<span id="cb122-3"><a href="using-third-party-code.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.33523073,  0.27216183, -0.37984448,  0.19476164, -0.92710063,</span></span>
+<span id="cb122-4"><a href="using-third-party-code.html#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.38611704,  0.16404037, -0.47436913, -0.75463563, -1.33887834])</span></span></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb123-1"><a href="using-third-party-code.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
 <span id="cb123-2"><a href="using-third-party-code.html#cb123-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb123-3"><a href="using-third-party-code.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.14281511, -0.91679945,  0.64776792,  0.18544291,  0.15332568,</span></span>
-<span id="cb123-4"><a href="using-third-party-code.html#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         1.62613392,  0.5485353 ,  0.91638693, -0.62727707,  1.12562952])</span></span></code></pre></div>
+<span id="cb123-3"><a href="using-third-party-code.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.73742874,  1.14707563, -0.62350037,  1.3751701 , -1.38107576,</span></span>
+<span id="cb123-4"><a href="using-third-party-code.html#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.17881885,  0.79255203, -0.58951598, -1.07097447,  0.86811342])</span></span></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb124-1"><a href="using-third-party-code.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t do this!</span></span>
 <span id="cb124-2"><a href="using-third-party-code.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span> <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
@@ -546,10 +545,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -8,9 +8,9 @@ In the previous section, I mentioned that R does not have scalar types--it just 
 ). So, whether you want to store one number (or `logical`, or `character`, or ...), or many numbers, you will need a `vector`. 
 
 
-```{block, type='rmd-caution'}
+::: {.rmd-caution}
 For many, the word "vector" evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on `vector`s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with `vector`s in R have little to do with linear algebra!
-```
+:::
 
 
 How do we create one of these? There are many ways. One common way is to read in elements from an external data set. Another way is to generate `vector`s from code.
@@ -25,13 +25,13 @@ rnorm(10)                             # generate Gaussian random variables
 
 `c()` is short for "combine". `seq()` and `rep()` are short for "sequence" and "replicate", respectively. `rnorm()` samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 I should mention that functions such as `rnorm()` don't create truly random numbers, just *pseudorandom* ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic. 
 
 First, a *seed*, or starting number is chosen. Then, the *pseudorandom number generator (PRNG)* maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic. 
 
 Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don't set the seed, and I don't think about the distinction between random and pseudorandom numbers.
-```
+:::
 
 ## Overview of Python
 
@@ -348,7 +348,9 @@ baby_data[3] = ma.masked
 np.average(baby_data)
 ```
 
-```{block, type='rmd-caution'}
+
+
+::: {.rmd-caution}
 Be careful of using extreme values to stand in for what should be an `NA`. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!
-```
+::: 
 

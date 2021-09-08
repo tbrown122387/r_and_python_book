@@ -10,8 +10,19 @@ bookdown::gitbook:
     download: false
 bookdown::pdf_book:
   includes:
-    in_header: preamble.tex
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
+  keep_tex: true
+  dev: "pdf"
   latex_engine: xelatex
   citation_package: natbib
-  keep_tex: yes
-bookdown::epub_book: default
+  template: null
+  pandoc_args: --top-level-division=chapter
+  toc_depth: 3
+  toc_unnumbered: false
+  toc_appendix: true
+  quote_footer: ["\\VA{", "}{}"]
+  highlight_bw: true
+bookdown::epub_book:
+  stylesheet: style.css

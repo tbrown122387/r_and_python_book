@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -398,15 +398,9 @@ div.csl-indent {
 <li>the third category is programmatically self-explanatory.</li>
 </ol>
 <div class="rmd-details">
-<p>
-The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in <em>simulation studies.</em> Authors writing statistical papers need to demonstrate that their techniques work on “nice” data: data simulated from a known data-generating process. In a simulation study, unlike in the “real-world,” you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.
-</p>
-<p>
-Can your code/technique/algorithm, at the very least, obtain parameter estimates that are “in-line” with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g. <code>rnorm()</code> in R or <code>np.random.choice()</code> in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility.
-</p>
-<p>
-Also, <em>benchmark data sets</em> are often readily available through specialized function calls.
-</p>
+<p>The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in <em>simulation studies.</em> Authors writing statistical papers need to demonstrate that their techniques work on “nice” data: data simulated from a known data-generating process. In a simulation study, unlike in the “real-world,” you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.</p>
+<p>Can your code/technique/algorithm, at the very least, obtain parameter estimates that are “in-line” with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g. <code>rnorm()</code> in R or <code>np.random.choice()</code> in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility.</p>
+<p>Also, <em>benchmark data sets</em> are often readily available through specialized function calls.</p>
 </div>
 <p>Even though this chapter is written to teach you how to read in files into R and Python, you should not expect that you will know how to read in <em>all</em> data sets after reading this section. For both R and Python, there are an enormous amount of functions, different functions have different return types, different functions are suited for different file types, many functions are spread across a plethora of third party libraries, and many of these functions have an enormous amount of arguments. You will probably not be able to memorize everything. In my very humble opinion, I doubt you should want to.</p>
 <p>Instead, <strong>focus on developing your ability to identify and diagnose data input problems.</strong> Reading in a data set correctly is often a process of trial-and-error. After attempting to read in a data set, always check the following items. Many of these points were previously mentioned in section @(data-frames-in-r).</p>
@@ -426,8 +420,7 @@ Also, <em>benchmark data sets</em> are often readily available through specializ
 <h2><span class="header-section-number">9.2</span> Reading in Text Files with R</h2>
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>. Actually, if you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press <Enter>), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
 <p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first ten rows looks like this.</p>
-<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
-6 0 66  50  1
+<pre><code>6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
 6 0 68  50  4
@@ -491,7 +484,7 @@ Also, <em>benchmark data sets</em> are often readily available through specializ
 <span id="cb113-16"><a href="input-and-output.html#cb113-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
 <span id="cb113-17"><a href="input-and-output.html#cb113-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
 <span id="cb113-18"><a href="input-and-output.html#cb113-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
-<p>This data set has columns whose widths are “fixed”, too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
+<p>This data set has columns whose widths are “fixed,” too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="input-and-output.html#cb114-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb114-2"><a href="input-and-output.html#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
 <span id="cb114-3"><a href="input-and-output.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  4 variables:</span></span>
@@ -566,10 +559,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -453,45 +453,23 @@ div.csl-indent {
 <li>The <a href="https://docs.python.org/3/tutorial/controlflow.html#the-range-function"><code>range</code></a> doesn’t generate all the numbers in the sequence at once, so it saves on memory. This can be quite useful for certain applications. However, <code>r</code> is a list that <em>does</em> store all the consecutive integers.</li>
 </ol>
 <div class="rmd-caution">
-<p>
-Loop tips:
-</p>
+<p>Loop tips:</p>
 <ol style="list-style-type: decimal">
-<li>
-If you find yourself copy/paste-ing code, changing only a small portion of text on each line of code, you should consider using a loop,
-</li>
-<li>
-If a <code>for</code> loop works for something you are trying to do, first try to find a replacement function that does what you want. The examples above just made a <code>vector</code>/<code>list</code> of consecutive integers. There are many built in functions that accomplish this. Avoiding loops in this case would make your program shorter, easier to read, and (potentially) much faster.
-</li>
-<li>
-A third option between looping, and a built-in function, is to try the functional approach. This will be explained more in the last chapter.
-</li>
-<li>
-Watch out for <a href="https://en.wikipedia.org/wiki/Off-by-one_error"><strong>off-by-one</strong> errors</a>. Iterating over the wrong sequence is a common mistake, considering
+<li>If you find yourself copy/paste-ing code, changing only a small portion of text on each line of code, you should consider using a loop,</li>
+<li>If a <code>for</code> loop works for something you are trying to do, first try to find a replacement function that does what you want. The examples above just made a <code>vector</code>/<code>list</code> of consecutive integers. There are many built in functions that accomplish this. Avoiding loops in this case would make your program shorter, easier to read, and (potentially) much faster.</li>
+<li>A third option between looping, and a built-in function, is to try the functional approach. This will be explained more in the last chapter.</li>
+<li>Watch out for <a href="https://en.wikipedia.org/wiki/Off-by-one_error"><strong>off-by-one</strong> errors</a>. Iterating over the wrong sequence is a common mistake, considering
 <ul>
-<li>
-Python starts counting from <span class="math inline"><span class="math inline">\(0\)</span></span>, while R starts counting from <span class="math inline"><span class="math inline">\(1\)</span></span>
-</li>
-<li>
-sometimes iteration <code>i</code> references the <code>i-1</code>th element of a container
-</li>
-<li>
-The behavior of loops is sometimes more difficult to understand if they’re using <code>break</code> or <code>continue</code>/<code>next</code> statements
-</li>
-</ul>
-</li>
-<li>
-<em>Don’t hardcode variables.</em> Minimize the number of places you have to make changes to your code. You will change your code consistently, so save your future self some time.
-</li>
+<li>Python starts counting from <span class="math inline">\(0\)</span>, while R starts counting from <span class="math inline">\(1\)</span></li>
+<li>sometimes iteration <code>i</code> references the <code>i-1</code>th element of a container</li>
+<li>The behavior of loops is sometimes more difficult to understand if they’re using <code>break</code> or <code>continue</code>/<code>next</code> statements</li>
+</ul></li>
+<li><em>Don’t hardcode variables.</em> Minimize the number of places you have to make changes to your code. You will change your code consistently, so save your future self some time.</li>
 </ol>
 </div>
 <div class="rmd-caution">
-<p>
-The last point bears repeating: <em>don’t hardcode variables</em>. In statistical programs, there are often “tuning parameters,” for instance that must be changed frequently to affect the overall behavior of the program. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility.
-</p>
-<p>
-In the example above, the <code>myLength</code> or <code>my_length</code> variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you <em>did</em> hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes!
-</p>
+<p>The last point bears repeating: <em>don’t hardcode variables</em>. In statistical programs, there are often “tuning parameters,” for instance that must be changed frequently to affect the overall behavior of the program. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility.</p>
+<p>In the example above, the <code>myLength</code> or <code>my_length</code> variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you <em>did</em> hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes!</p>
 </div>
 <p>Python provides an alternative way to construct lists similar to the one we constructed in the above example. They are called <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions"><strong>list comprehensions</strong></a>. You can incorporate iteration and conditional logic in one line of code.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb131-1"><a href="control-flow.html#cb131-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span><span class="op">*</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span>
@@ -548,7 +526,7 @@ q(x) =
 \end{cases}
 \]</span>
 We can plot all three functions.</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-151-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-129-1.png" width="80%" /></p>
 <p>Here’s some Python code that attempts to sample once from <span class="math inline">\(p(x)\)</span>. Sometimes proposals are not accepted. When that happens, the function returns <code>None</code>.</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb133-1"><a href="control-flow.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb133-2"><a href="control-flow.html#cb133-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -577,7 +555,7 @@ We can plot all three functions.</p>
 <li>We are following the <a href="https://www.python.org/dev/peps/pep-0008/#other-recommendations">Python style guide</a> and using the <code>is not</code> keyword to check if something is <code>None</code></li>
 </ol>
 <p>In chapter <a href="visualization.html#visualization">13</a>, we’ll show you the code that you can use to generate the plot below.
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-154-1.png" width="672" /></p>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -645,10 +623,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

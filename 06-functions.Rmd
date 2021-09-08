@@ -91,9 +91,9 @@ body(addNumber)
 
 Every function you create also has a  *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. To understand functions well in R, these examples are important to understand, so I provide more detail in \@ref(function-scope-in-r).
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
-```
+:::
 
 
 ## More details on Python's user-defined functions
@@ -134,9 +134,9 @@ add_number.__defaults__
 
 The code attribute has much more to offer. To see a list of names of all its contents, you can use `dir(add_number.__code__)`.
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) operator will become more clear in the future chapter on *object-oriented programming*. For now, just think of `__code__` as being an object *belonging to* `add_number`. Objects that belong to other objects are called **attributes** in Python. The dot operator helps us access attributes *inside* other objects. 
-```
+:::
 
 
 
@@ -197,9 +197,10 @@ ls(environment(myFunc)) # list all data attached to this function
 myFunc()
 ```
 
-```{block, type='rmd-details'}
+
+::: {.rmd-details}
 Sometimes, in R, functions are called **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with. 
-```
+:::
 
 
 
@@ -375,9 +376,9 @@ print(id(a), id(arg))
 print(a)
 ```
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 The [`id()`](https://docs.python.org/3/library/functions.html#id) function returns the **identity** of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, `a` and `b` say, have the same identity, `a is b` will evaluate to `True`. Otherwise, it will evaluate to `False`.
-```
+:::
 
 In the first line, the *name* `a` is bound to the *object* `1`. In the second line, the name `arg` is bound to the *object* that is referred to by the *name* `a`. After the second line finishes, `arg` and `a` are two names for the same object (a fact that you can confirm by inserting `arg is a` immediately after this line). 
 
@@ -513,9 +514,9 @@ In the program above, `arg` creates a copy of `a`. It assigns `2` to that copy. 
 
 Finally, there is something in Python that is like R's super assignment operator (`<<-`). It is the `global` keyword. This will let you *modify* global variables. 
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Referring to global variables *without* modifying them was always allowed, even without using the `global` keyword. This keyword should be used sparingly, and when it is used, it identifies that a function causes **side effects**, which are changes in some variable defined outside of the function's scope.
-```
+:::
 
 ```{python, collapse = TRUE}
 a = 1

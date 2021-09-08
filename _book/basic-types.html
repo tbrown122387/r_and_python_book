@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="intro.html"/>
 <link rel="next" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -411,7 +411,10 @@ div.csl-indent {
 <span id="cb10-11"><a href="basic-types.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">## my_sum&#39;s type &lt;class &#39;float&#39;&gt;</span></span></code></pre></div>
 <p>You might be disappointed if you always count on this behavior, though.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="basic-types.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">3.2</span> <span class="op">+</span> <span class="st">&quot;3.2&quot;</span></span>
-<span id="cb11-2"><a href="basic-types.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: unsupported operand type(s) for +: &#39;float&#39; and &#39;str&#39;</span></span></code></pre></div>
+<span id="cb11-2"><a href="basic-types.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: unsupported operand type(s) for +: &#39;float&#39; and &#39;str&#39;</span></span>
+<span id="cb11-3"><a href="basic-types.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
+<span id="cb11-4"><a href="basic-types.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Detailed traceback:</span></span>
+<span id="cb11-5"><a href="basic-types.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</span></span></code></pre></div>
 <p>Explicit conversions occur when we as programmers explicitly ask Python to perform a conversion. We will do this with the functions such as <code>int()</code>, <code>str()</code>, <code>float()</code>, and <code>bool()</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="basic-types.html#cb12-1" aria-hidden="true" tabindex="-1"></a>my_date <span class="op">=</span> <span class="st">&quot;5/2/2021&quot;</span></span>
 <span id="cb12-2"><a href="basic-types.html#cb12-2" aria-hidden="true" tabindex="-1"></a>month_day_year <span class="op">=</span> my_date.split(<span class="st">&#39;/&#39;</span>)</span>
@@ -560,7 +563,7 @@ This distribution is a special case of a prior distribution that is used in Baye
 <li><p>Simulate <span class="math inline">\(X_1, \ldots, X_{5000}\)</span> from a <span class="math inline">\(\text{half-Cauchy}(0, 1)\)</span> and call these samples <code>xSamps</code>. Hint: you can simulate from a <span class="math inline">\(t\)</span> distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.</p></li>
 <li><p>Simulate <span class="math inline">\(Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}\)</span> and call the samples <code>ySamps</code>.</p></li>
 <li><p>Calculate the approximate probability using <code>ySamps</code> and call it <code>approxProbDev1</code>.</p></li>
-<li><p>Why is simply “ignoring” <code>xSamps</code>, the samples you condition on, “equivalent” to “integrating out <span class="math inline">\(x\)</span>”? Store a string response as a length <span class="math inline">\(1\)</span> character vector called <code>integratingOutResp</code>.</p></li>
+<li><p>Why is simply “ignoring” <code>xSamps</code>, the samples you condition on, “equivalent” to “integrating out <span class="math inline">\(x\)</span>?” Store a string response as a length <span class="math inline">\(1\)</span> character vector called <code>integratingOutResp</code>.</p></li>
 <li><p>Calculate another <strong>Rao-Blackwellized</strong> Monte Carlo estimate of <span class="math inline">\(\mathbb{P}[|Y| &gt; 1]\)</span> from <code>xSamps</code>. Call it <code>approxProbDev2</code>. Hint: <span class="math inline">\(\mathbb{P}[|Y| &gt; 1] = \mathbb{E}[\mathbb{P}(|Y| &gt; 1 \mid X) ]\)</span>. Calculate <span class="math inline">\(\mathbb{P}(|Y| &gt; 1 \mid X=x)\)</span> with pencil and paper, notice it is a function in <span class="math inline">\(x\)</span>, apply that function to each of <code>xSamps</code>, and average all of it together.</p></li>
 <li><p>Are you able to calculate an exact solution to <span class="math inline">\(\mathbb{P}[|Y| &gt; 1]\)</span>?</p></li>
 </ol>
@@ -604,7 +607,7 @@ If you haven’t seen an <strong>indicator function</strong> before, it is defin
 \end{cases}.
 \]</span></p>
 <p>If you wanted to visualize it, <span class="math inline">\(\mathbf{1}(x &gt; 6)\)</span> looks like this.</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-22-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" /></p>
 <p>So, the sum in this expression is just a count of the number of elements that are greater than <span class="math inline">\(6\)</span>.</p>
 <ol style="list-style-type: decimal">
 <li><p>Evaluate exactly the probability that a normal random variable with mean <span class="math inline">\(5\)</span> and standard deviation <span class="math inline">\(6\)</span> is greater than <span class="math inline">\(6\)</span>. Assign it to the variable <code>exact_exceedance_prob</code> in Python.</p></li>
@@ -630,7 +633,7 @@ and</p>
 X \sim \text{Bernoulli}(.5).
 \]</span></p>
 <p>Both <span class="math inline">\(f(y \mid X=0)\)</span> and <span class="math inline">\(f(y \mid X=1)\)</span> are bell-curved, and <span class="math inline">\(f(y)\)</span> looks like this</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-23-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" /></p>
 <ol style="list-style-type: decimal">
 <li><p>Evaluate exactly <span class="math inline">\(\mathbb{E}[Y]\)</span>. Assign it to the variable <code>exact_mean</code> in Python.</p></li>
 <li><p>Simulate <span class="math inline">\(1e3\)</span> times from the Bernoulli distribution. Call the samples <code>bernoulli_flips</code></p></li>
@@ -722,10 +725,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -20,7 +20,7 @@ nrow(irisData)
 ncol(irisData)
 ```
 
-```{block, type='rmd-caution'}
+::: {.rmd-caution}
 Do not rely on the default arguments of `read.csv` or `read.table`! After you read in a data frame, always check the first few rows to make sure that 
 
 1. The number of columns is correct because the correct column *separator* was used (c.f. `sep=`),
@@ -29,7 +29,7 @@ Do not rely on the default arguments of `read.csv` or `read.table`! After you re
 4. the last few rows aren't reading in empty spaces
 5. character columns are read in correctly (c.f. `stringsAsFactors=`), and
 6. special characters signifying missing data were correctly identified (c.f. `na.strings=`).
-```
+:::
 
 
 There are some exceptions, but most data sets can be stored as a `data.frame`. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation. 
@@ -59,9 +59,9 @@ head(setosaOnly)
 
 In the code above, `irisData$species == "Iris-setosa"` creates a logical vector (try it!) using the vectorized `==` operator. The `[` operator selects the rows for which the corresponding element of this logical vector is `TRUE`. 
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Be careful: depending on how you use the square brackets, you can either get a `data.frame` or a `vector.` As an example, try both `class(irisData[,1])` and `class(irisData[,c(1,2)])`. 
-```
+:::
 
 
 In R, `data.frame`s have row names. You can get/set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. Personally, I don't typically use this functionality that often.
@@ -103,9 +103,9 @@ first_two_cols.head()
 ```
 
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Notice that `iris_data['sepal.length']` returns a `Series` and `iris_data[["sepal.length", "sepal.width"]` returns a Pandas `DataFrame`. This behavior is similar to what happened in R's. For more details, click [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection).
-```
+::: 
 
 You can select columns and rows by number with the [`.iloc` method](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html). `iloc` is (probably) short for "integer location." 
 

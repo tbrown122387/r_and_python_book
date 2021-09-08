@@ -104,9 +104,9 @@ my_ave.get_current_xbar()  #xbar_2
 my_ave.n   # my_ave.n instead of self.n
 ```
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 There is a Python convention that stipules class names should be written in `UpperCamelCase` (e.g. `RunningMean`).
-```
+:::
 
 That's much better! Notice the *encapsulation*. Looking at this code we don't need to think about the mathematical formula and the data being received. We only need to think about the latter. In other words, the *implementation* is separated from the *interface*. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code. 
 
@@ -128,9 +128,9 @@ class RunningMean:
       return self.current_xbar
 ```
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Methods that look like `\_\_init\_\_`, or that possess names that begin and end with two underscores, are called **dunder (double underscore) methods**, **special methods** or **magic methods**. There are many that you can take advantage of! For more information see [this](https://docs.python.org/3/reference/datamodel.html#special-method-names).
-```
+::: 
 
 Here are the details of the class definition:
 
@@ -240,9 +240,9 @@ Regarding the example above, you might argue that a confidence interval isn't a 
 
 3. Many-to-one relationships are easier. It's generally easier to "own" many base class instances rather than inherit from many base classes at once. This is especially true if this is the only book on programming you plan on reading--I completely avoid the topic of multiple inheritance!
 
-```{block, type='rmd-caution'}
+::: {.rmd-caution}
 Sometimes it is very difficult to choose between using composition or using inheritance. However, this choice should be made very carefully. If you make the wrong one, and realize too late, *refactoring* your code might be very time consuming! 
-```
+:::
 
 ----------------------------------
 
@@ -333,15 +333,15 @@ methods(plot)
 
 All of these S3 class methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (`.`), then the name of the class that they are specifically written to be used with. 
 
-```{block, type='rmd-caution'}
+::: {.rmd-caution}
 R's dot-notation is nothing like Python's dot-notation! In R, functions do not *belong* to types/classes like they do in Python!
-```
+::: 
 
 Method dispatch works by looking at the `class` attribute of an S3 object argument. An object in R may or may not have a set of  [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are "embellished" versions of a `vector` might (e.g. run `attributes(factor(1:3))`).
 
-```{block, type='rmd-caution'}
+::: {.rmd-caution}
 `class` will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with `is.object` first. 
-```
+:::
 
 Also, these methods are not *encapsulated* inside a class definition like they are in Python, either. They just look like loose functions--the method definition for a particular class is not defined inside the class. These class methods can be defined just as ordinary functions, out on their own, in whatever file you think is appropriate to define functions in.  
 
@@ -430,9 +430,9 @@ Much more information about S4 classes can be obtained by reading [Chapter 15 in
 One CRAN package that uses S4 is the [Matrix package.](
 https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf) S4 objects are also extremely popular in packages hosted on [Bioconductor](https://www.bioconductor.org/). 
 
-```{block, type='rmd-details'}
+::: {.rmd-details}
 Bioconductor is kind of like CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided [here](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
-```
+::: 
 
 ```{r, collapse = TRUE}
 library(Matrix)

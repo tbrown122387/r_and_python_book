@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 R’s lists versus Python’s lists and dictionaries | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 5 R’s lists versus Python’s lists and dictionaries | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 R’s lists versus Python’s lists and dictionaries | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="numpys-ndarrays-versus-rs-matrices-and-arrays.html"/>
 <link rel="next" href="functions.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -400,41 +400,40 @@ div.csl-indent {
 <span id="cb58-3"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
 <span id="cb58-4"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
 <span id="cb58-5"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results)</span>
-<span id="cb58-6"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;           </span></span>
-<span id="cb58-7"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
-<span id="cb58-8"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-8" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
-<span id="cb58-9"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
-<span id="cb58-10"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
-<span id="cb58-11"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-11" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
-<span id="cb58-12"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
-<span id="cb58-13"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
-<span id="cb58-14"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-14" aria-hidden="true" tabindex="-1"></a>results[[<span class="st">&#39;terms&#39;</span>]]</span>
-<span id="cb58-15"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower) ~ Type</span></span>
-<span id="cb58-16"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-16" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;variables&quot;)</span></span>
-<span id="cb58-17"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
-<span id="cb58-18"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;factors&quot;)</span></span>
-<span id="cb58-19"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Type</span></span>
-<span id="cb58-20"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-20" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)    0</span></span>
-<span id="cb58-21"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Type               1</span></span>
-<span id="cb58-22"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-22" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;term.labels&quot;)</span></span>
-<span id="cb58-23"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Type&quot;</span></span>
-<span id="cb58-24"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-24" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;order&quot;)</span></span>
-<span id="cb58-25"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-25" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb58-26"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-26" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;intercept&quot;)</span></span>
-<span id="cb58-27"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb58-28"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-28" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;response&quot;)</span></span>
-<span id="cb58-29"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb58-30"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-30" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;.Environment&quot;)</span></span>
-<span id="cb58-31"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-31" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;environment: R_GlobalEnv&gt;</span></span>
-<span id="cb58-32"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-32" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;predvars&quot;)</span></span>
-<span id="cb58-33"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-33" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
-<span id="cb58-34"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-34" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;dataClasses&quot;)</span></span>
-<span id="cb58-35"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-35" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)            Type </span></span>
-<span id="cb58-36"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-36" aria-hidden="true" tabindex="-1"></a><span class="do">##       &quot;numeric&quot;     &quot;character&quot;</span></span></code></pre></div>
+<span id="cb58-6"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;       </span></span>
+<span id="cb58-7"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;qr&quot;            &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;        </span></span>
+<span id="cb58-8"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;model&quot;</span></span>
+<span id="cb58-9"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-9" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
+<span id="cb58-10"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
+<span id="cb58-11"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
+<span id="cb58-12"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-12" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
+<span id="cb58-13"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
+<span id="cb58-14"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span>
+<span id="cb58-15"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-15" aria-hidden="true" tabindex="-1"></a>results[[<span class="st">&#39;terms&#39;</span>]]</span>
+<span id="cb58-16"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-16" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower) ~ Type</span></span>
+<span id="cb58-17"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;variables&quot;)</span></span>
+<span id="cb58-18"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
+<span id="cb58-19"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;factors&quot;)</span></span>
+<span id="cb58-20"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-20" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Type</span></span>
+<span id="cb58-21"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-21" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)    0</span></span>
+<span id="cb58-22"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Type               1</span></span>
+<span id="cb58-23"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-23" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;term.labels&quot;)</span></span>
+<span id="cb58-24"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Type&quot;</span></span>
+<span id="cb58-25"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-25" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;order&quot;)</span></span>
+<span id="cb58-26"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-26" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb58-27"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-27" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;intercept&quot;)</span></span>
+<span id="cb58-28"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-28" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb58-29"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-29" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;response&quot;)</span></span>
+<span id="cb58-30"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb58-31"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-31" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;.Environment&quot;)</span></span>
+<span id="cb58-32"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-32" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;environment: R_GlobalEnv&gt;</span></span>
+<span id="cb58-33"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-33" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;predvars&quot;)</span></span>
+<span id="cb58-34"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-34" aria-hidden="true" tabindex="-1"></a><span class="do">## list(log(Horsepower), Type)</span></span>
+<span id="cb58-35"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-35" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;dataClasses&quot;)</span></span>
+<span id="cb58-36"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-36" aria-hidden="true" tabindex="-1"></a><span class="do">## log(Horsepower)            Type </span></span>
+<span id="cb58-37"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#cb58-37" aria-hidden="true" tabindex="-1"></a><span class="do">##       &quot;numeric&quot;     &quot;character&quot;</span></span></code></pre></div>
 <div class="rmd-caution">
-<p>
-<code>results</code> is a <code>list</code> (<code>is.list(results)</code> returns <code>TRUE</code>), but to be more specific, it is an S3 object of class <code>lm</code>. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren’t confused if you type <code>class(results)</code> and see <code>lm</code> instead of <code>list</code>. Second, the fact that the authors of <code>lm()</code> wrote code that returns <code>result</code> as a “fancy list” suggests that they are encouraging another way to access elements of the <code>results</code>: to use specialized functions! For example, you can use <code>residuals(results)</code>, <code>coefficients(results)</code>, and <code>fitted.values(results)</code>. These functions do not work for all lists in R, but when they do work (for <code>lm</code> and <code>glm</code> objects only), you can be sure you are writing the kind of code that is encouraged by the authors of <code>lm()</code>.
-</p>
+<p><code>results</code> is a <code>list</code> (<code>is.list(results)</code> returns <code>TRUE</code>), but to be more specific, it is an S3 object of class <code>lm</code>. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren’t confused if you type <code>class(results)</code> and see <code>lm</code> instead of <code>list</code>. Second, the fact that the authors of <code>lm()</code> wrote code that returns <code>result</code> as a “fancy list” suggests that they are encouraging another way to access elements of the <code>results</code>: to use specialized functions! For example, you can use <code>residuals(results)</code>, <code>coefficients(results)</code>, and <code>fitted.values(results)</code>. These functions do not work for all lists in R, but when they do work (for <code>lm</code> and <code>glm</code> objects only), you can be sure you are writing the kind of code that is encouraged by the authors of <code>lm()</code>.</p>
 </div>
 </div>
 <div id="lists-in-python" class="section level2" number="5.2">
@@ -539,10 +538,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }
