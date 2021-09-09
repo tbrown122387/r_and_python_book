@@ -184,9 +184,7 @@
 \thispagestyle{empty}
 
 \begin{center}
-To my son,
-
-without whom I should have finished this book two years earlier
+To Clare
 %\includegraphics{images/dedication.pdf}
 \end{center}
 
@@ -298,8 +296,8 @@ You can get RStudio Desktop directly from the \href{https://www.rstudio.com/prod
 
 It is recommended that you install \emph{Anaconda}, which is a package manager, environment manager, and Python distribution with many third party open source packages. It provides a graphical user interface for us, too, just as RStudio does. You can access instructions for your specific machine and OS by clicking \href{https://docs.anaconda.com/anaconda/install/\#}{here}.
 
-\hypertarget{part-part-i}{%
-\part{Part I}\label{part-part-i}}
+\hypertarget{part-part-i-introducing-the-basics}{%
+\part{Part I: Introducing the Basics}\label{part-part-i-introducing-the-basics}}
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
@@ -470,17 +468,11 @@ Third, we can tell Python to run \texttt{awesomeScript.py} from the command line
 \hypertarget{reading-documentation}{%
 \subsection{Reading Documentation}\label{reading-documentation}}
 
-Programming is not about memorization. Nobody can memorize, for example, every function and all of its arguments. Nobody can do that. Not even close. So what do programmers do when they get stuck? The primary way is to read the documentation.
-
-\hypertarget{in-r}{%
-\subsubsection{In R}\label{in-r}}
+Programming is not about memorization. Nobody can memorize, for example, every function and all of its arguments. So what do programmers do when they get stuck? The primary way is to find and read the documentation.
 
 Getting help in R is easy. If you want to know more about a function, type into the console the name of the function with a leading question mark. For example, \texttt{?print} or \texttt{?setwd}. You can also use \texttt{help()} and \texttt{help.search()} to find out more about functions (e.g.~\texttt{help(print)}). Sometimes you will need to put quotation marks around the name of the function (e.g.~\texttt{?":"}).
 
 This will not open a separate web browser window, which is very convenient. If you are using RStudio, you have some extra benefits. Everything will look very pretty, and you can search through the text by typing phrases into the search bar in the ``Help'' window.
-
-\hypertarget{in-python}{%
-\subsubsection{In Python}\label{in-python}}
 
 In Python, the question mark comes \emph{after} the name of the function\footnote{If you did not install \texttt{Anaconda}, then this may not work for you because this is an IPython (\url{https://ipython.org}) feature.} (e.g.~\texttt{print?}), and you can use \texttt{help(print)} just as in R.
 
@@ -493,13 +485,7 @@ File paths look different on different operating systems. Mac and Linux machines
 
 Depending on what kind of operating system is running your code, you will need to change the file paths. It is important for everyone writing R and Python code to understand how things work on both types of machines--just because you're writing code on a Windows machine doesn't mean that it won't be run on a Mac, or vice versa.
 
-\hypertarget{nix-machines}{%
-\subsubsection{*nix Machines}\label{nix-machines}}
-
 The directory repeatedly mentioned in the code above was \texttt{/home/taylor/Desktop}. This is a directory on my machine which is running Ubuntu Linux. The leading forward slash is the \emph{root directory}. Inside that is the directory \texttt{home/}, and inside that is \texttt{taylor/}, and inside that is \texttt{Desktop/}. If you are running MacOS, these file paths will look very similar. The folder \texttt{home/} will most likely be replaced with \texttt{Users/}.
-
-\hypertarget{windows-machines}{%
-\subsubsection{Windows Machines}\label{windows-machines}}
 
 On Windows, things are a bit different. For one, a full path starts with a drive (e.g.~\texttt{C:}). Second, there are backslashes (not forward slashes) to separate directory names (e.g \texttt{C:\textbackslash{}Users\textbackslash{}taylor\textbackslash{}Desktop}).
 
@@ -512,9 +498,6 @@ The recommended way of handling this is to just use forward slashes instead. For
 You may also use ``raw string constants'' (e.g.~\texttt{r\textquotesingle{}C:\textbackslash{}Users\textbackslash{}taylor\textbackslash{}Desktop\textbackslash{}my\_file.txt\textquotesingle{}} ). ``Raw'' means that \texttt{\textbackslash{}} will be treated as a literal character instead of an escape character.
 
 Alternatively, you can ``escape'' the backslashes by replacing each single backslash with a double backslash.
-
-\hypertarget{part-part-i-data-types}{%
-\part{Part I: Data Types}\label{part-part-i-data-types}}
 
 \hypertarget{basic-types}{%
 \chapter{Basic Types}\label{basic-types}}
@@ -572,9 +555,6 @@ You might be disappointed if you always count on this behavior, though.
 \begin{Highlighting}[]
 \FloatTok{3.2} \OperatorTok{+} \StringTok{"3.2"}
 \CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): TypeError: unsupported operand type(s) for +: \textquotesingle{}float\textquotesingle{} and \textquotesingle{}str\textquotesingle{}}
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -657,8 +637,8 @@ Think about which option you prefer. What are the benefits of using separate typ
 \hypertarget{exercises}{%
 \section{Exercises}\label{exercises}}
 
-\hypertarget{easier-r-questions}{%
-\subsection{Easier R Questions}\label{easier-r-questions}}
+\hypertarget{r-questions}{%
+\subsection{R Questions}\label{r-questions}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -708,24 +688,10 @@ Think about which option you prefer. What are the benefits of using separate typ
   \item
     Test for near equality (using \texttt{all.equal}) that this variable is ``equal'' to \texttt{2}. Assign the result of this test to \texttt{closeEnough}. Make sure to read the documentation for this function because the return type can be tricky!
   \end{itemize}
-\item
-  Let's flip some coins! Generate a thousand flips of a fair coin. Use \texttt{rbinom}, and let heads be coded as \texttt{1} and tails coded as \texttt{0}.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Assign the thousand raw coin flips to a variable \texttt{flips}. Make sure the elements are integers, and make sure you flip a ``fair'' coin (\(p=.5\)).
-  \item
-    Create a length \texttt{1000} \texttt{logical} \texttt{vector} called \texttt{isHeads}. Whenever you get a heads, make sure the corresponding element is \texttt{TRUE} and \texttt{FALSE} otherwise.
-  \item
-    Create a variable called \texttt{numHeads} by tallying up the number of heads.
-  \item
-    Calculate the percent of time that the number changes in \texttt{flips}. Assign your number to \texttt{acceptanceRate}. Try to write only one line of code to do this.
-  \end{itemize}
 \end{enumerate}
 
-\hypertarget{easier-python-questions}{%
-\subsection{Easier Python Questions}\label{easier-python-questions}}
+\hypertarget{python-questions}{%
+\subsection{Python Questions}\label{python-questions}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -771,198 +737,6 @@ Think about which option you prefer. What are the benefits of using separate typ
   \item
     Test for near equality (using \texttt{np.isclose}) that this variable is ``equal'' to \texttt{2}. Assign the result of this test to \texttt{close\_enough}.
   \end{itemize}
-\item
-  Let's flip some coins (again)! Generate a thousand flips of a fair coin. Use \texttt{np.random.binomial}, and let heads be coded as \texttt{1} and tails coded as \texttt{0}.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Assign the thousand raw coin flips to a variable \texttt{flips}. Make sure the elements are integers, and make sure you flip a ``fair'' coin (\(p=.5\)).
-  \item
-    Create a length \texttt{1000} \texttt{list} of \texttt{bool}s called \texttt{is\_heads}. Whenever you get a heads, make sure the corresponding element is \texttt{True} and \texttt{False} otherwise.
-  \item
-    Create a variable called \texttt{num\_heads} by tallying up the number of heads.
-  \item
-    Calculate the percent of time that the number changes in \texttt{flips}. Assign your number to \texttt{acceptance\_rate}. Try to write only one line of code to do this.
-  \end{itemize}
-\end{enumerate}
-
-\hypertarget{more-difficult-r-questions}{%
-\subsection{More Difficult R Questions}\label{more-difficult-r-questions}}
-
-\hypertarget{examining-a-vector}{%
-\subsubsection{\texorpdfstring{Examining a \texttt{vector}}{Examining a vector}}\label{examining-a-vector}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Say you have a vector of prices of some financial asset:
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{prices }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{100.10}\NormalTok{, }\FloatTok{95.98}\NormalTok{, }\FloatTok{100.01}\NormalTok{, }\FloatTok{99.87}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Convert this vector into a vector of \emph{log returns}. Call the variable \texttt{logReturns}. If \(p_t\) is the price at time \(t\), the log return ending at time \(t\) is
-\[ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}\]
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Do the same for \emph{arithmetic returns}. These are regular percent changes if you scale by \(100\). Call the variable \texttt{arithReturns}. The mathematical formula you need is \[ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 \]
-\end{enumerate}
-
-\hypertarget{some-monte-carlo}{%
-\subsubsection{Some Monte Carlo}\label{some-monte-carlo}}
-
-Consider another \textbf{mixture density} \(f(y) = \int f(y \mid x) f(x) dx\) where
-
-\[
-Y \mid X \sim \text{Normal}(0, x^2)
-\]
-and
-
-\[
-X \sim \text{half-Cauchy}(0, 1).
-\]
-This distribution is a special case of a prior distribution that is used in Bayesian statistics \citep{horseshoe}.
-
-Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:
-
-\[
-\mathbb{P}[|Y| > 1] = \int_{y : |y| > 1} f(y)dy = \int_{y : |y| > 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
-\]
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Simulate \(X_1, \ldots, X_{5000}\) from a \(\text{half-Cauchy}(0, 1)\) and call these samples \texttt{xSamps}. Hint: you can simulate from a \(t\) distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.
-\item
-  Simulate \(Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}\) and call the samples \texttt{ySamps}.
-\item
-  Calculate the approximate probability using \texttt{ySamps} and call it \texttt{approxProbDev1}.
-\item
-  Why is simply ``ignoring'' \texttt{xSamps}, the samples you condition on, ``equivalent'' to ``integrating out \(x\)''? Store a string response as a length \(1\) character vector called \texttt{integratingOutResp}.
-\item
-  Calculate another \textbf{Rao-Blackwellized} Monte Carlo estimate of \(\mathbb{P}[|Y| > 1]\) from \texttt{xSamps}. Call it \texttt{approxProbDev2}. Hint: \(\mathbb{P}[|Y| > 1] = \mathbb{E}[\mathbb{P}(|Y| > 1 \mid X) ]\). Calculate \(\mathbb{P}(|Y| > 1 \mid X=x)\) with pencil and paper, notice it is a function in \(x\), apply that function to each of \texttt{xSamps}, and average all of it together.
-\item
-  Are you able to calculate an exact solution to \(\mathbb{P}[|Y| > 1]\)?
-\end{enumerate}
-
-\hypertarget{playing-around-with-some-letters}{%
-\subsubsection{Playing Around with Some Letters}\label{playing-around-with-some-letters}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Store the ordered uppercase letters of the alphabet in a length \(26\) \texttt{character} \texttt{vector} called \texttt{myUpcaseLetters}. Do not hardcode this. Use a function, along with the variable \texttt{letters}.
-\item
-  Create a new vector called \texttt{withReplacements} that's the same as the previous \texttt{vector}, but replace all vowels with \texttt{"-\/-\/-"}. Again, do not hardcode this. Find a function that searches for patterns and performs a replacement whenever that pattern is found.
-\item
-  Create a length \(26\) logical vector that is \texttt{TRUE} whenever an element of \texttt{letters} is a consonant, and \texttt{FALSE} everywhere else. Call it \texttt{consonant}.
-\end{enumerate}
-
-\hypertarget{more-difficult-python-questions}{%
-\subsection{More Difficult Python Questions}\label{more-difficult-python-questions}}
-
-\hypertarget{examining-a-series-taken-from-a-dataframe}{%
-\subsection{\texorpdfstring{Examining a \texttt{Series} taken from a \texttt{DataFrame}}{Examining a Series taken from a DataFrame}}\label{examining-a-series-taken-from-a-dataframe}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Use \texttt{pd.read\_csv} to correctly read in \texttt{"2013-10\_Citi\_Bike\_trip\_data\_20K.csv"} as a data frame called \texttt{my\_df}. Make sure to read \texttt{autograding\_tips.html}.
-\item
-  extract the \texttt{"starttime"} column into a separate \texttt{Series} called \texttt{s\_times}
-\item
-  extract date strings of those elements into a \texttt{Series} called \texttt{date\_strings}
-\item
-  extract time strings of those elements into a \texttt{Series} called \texttt{time\_strings}
-\end{enumerate}
-
-\hypertarget{monte-carlo-integration}{%
-\subsection{Monte Carlo Integration}\label{monte-carlo-integration}}
-
-\hypertarget{approximating-probabilities}{%
-\subsubsection{Approximating Probabilities}\label{approximating-probabilities}}
-
-We will make use of the \emph{Monte Carlo} \citep{monte-carlo-stat-methods} method below. It is a technique to approximate expectations and probabilities. If \(n\) is a large number, and \(X_1, \ldots, X_n\) is a random sample drawn from the distribution of interest, then
-\[
-\mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6).
-\]
-If you haven't seen an \textbf{indicator function} before, it is defined as
-
-\[
-\mathbf{1}(X_i > 6)
-=
-\begin{cases}
-1 & X_i > 6 \\
-0 & X_i \le 6
-\end{cases}.
-\]
-
-If you wanted to visualize it, \(\mathbf{1}(x > 6)\) looks like this.
-
-\begin{center}\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-19-1} \end{center}
-
-So, the sum in this expression is just a count of the number of elements that are greater than \(6\).
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Evaluate exactly the probability that a normal random variable with mean \(5\) and standard deviation \(6\) is greater than \(6\). Assign it to the variable \texttt{exact\_exceedance\_prob} in Python.
-\item
-  Simulate \(1e3\) times from a standard normal distribution (mean 0 and variance 1). Call the samples \texttt{stand\_norm\_samps}
-\item
-  Calculate a Monte Carlo estimate of \(\mathbb{P}(X > 6)\) from these samples. Call it \texttt{approx\_exceedance\_prob1}.
-\item
-  Simulate \(1e3\) times from a normal distribution with mean \(5\) and standard deviation \(6\). Call the samples \texttt{norm\_samps}. Don't use the old samples in any way.
-\item
-  Calculate a Monte Carlo estimate of \(\mathbb{P}(X > 6)\) from these new \texttt{norm\_samps}. Call it \texttt{approx\_exceedance\_prob2}.
-\end{enumerate}
-
-\hypertarget{approximating-expectations}{%
-\subsubsection{Approximating Expectations}\label{approximating-expectations}}
-
-Alternatively, we can approximate expectations. If \(\mathbb{E}[f(X)]\) exists, \(n\) is a large number, and \(W_1, \ldots, W_n\) is a random sample drawn from the distribution of interest, then
-
-\[
-\mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
-\]
-
-Here's a new distribution. It is a \textbf{mixture distribution}, specifically a \textbf{finite mixture of normal distributions}: \(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\) where
-
-\[
-Y \mid X=0 \sim \text{Normal}(0, 2) \\
-Y \mid X=1 \sim \text{Normal}(10, 2)
-\]
-and
-
-\[
-X \sim \text{Bernoulli}(.5).
-\]
-
-Both \(f(y \mid X=0)\) and \(f(y \mid X=1)\) are bell-curved, and \(f(y)\) looks like this
-
-\begin{center}\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-20-1} \end{center}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Evaluate exactly \(\mathbb{E}[Y]\). Assign it to the variable \texttt{exact\_mean} in Python.
-\item
-  Simulate \(1e3\) times from the Bernoulli distribution. Call the samples \texttt{bernoulli\_flips}
-\item
-  Simulate \(Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}\) and call the samples \texttt{cond\_norm\_samps}.
-\item
-  Calculate a Monte Carlo estimate of \(\mathbb{E}[Y]\) from \texttt{cond\_norm\_samps}. Call it \texttt{approx\_ave\_1}. Why is simply ``ignoring'' \texttt{bernoulli\_flips}, the samples you condition on, ``equivalent'' to ``integrating them out?''
-\item
-  Calculate a \textbf{Rao-Blackwellized} Monte Carlo estimate of \(\mathbb{E}[Y]\) from \texttt{bernoulli\_flips}. Call it \texttt{approx\_ave\_2}. Hint: \(\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]\). Calculate \(\mathbb{E}(Y \mid X_i)\) exactly, and evaluate that function on each \(X_i\) sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.
 \end{enumerate}
 
 \hypertarget{r-vectors-versus-numpy-arrays-and-pandas-series}{%
@@ -990,8 +764,7 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1]  0.6708303 {-}1.3901584  2.3564705 {-}0.5026985 {-}2.8020787 {-}1.6232026  0.2745727 {-}0.3025950 {-}0.9707211}
-\DocumentationTok{\#\# [10] {-}1.7146973}
+\DocumentationTok{\#\#  [1] {-}1.5063775  1.4968354 {-}1.1056687 {-}1.9291411  1.5537725 {-}0.4094657 {-}0.6147064 {-}1.1860563 {-}0.9917598 {-}1.1227121}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1018,7 +791,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([0.68142417, 0.54087541, 1.23369108])}
+\CommentTok{\#\# array([{-}0.71840108, {-}2.12832683,  0.11888053])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1091,10 +864,7 @@ Instead of calling it ``recycling'', Numpy calls reusing elements of a shorter a
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)}\OperatorTok{*}\NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)}
-\CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): ValueError: operands could not be broadcast together with shapes (2,) (3,) }
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
+\CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): ValueError: operands could not be broadcast together with shapes (2,) (3,)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1519,9 +1289,6 @@ In Python, we have the following.
 \CommentTok{\# in Python}
 \DecValTok{0}\OperatorTok{/}\DecValTok{0}
 \CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): ZeroDivisionError: division by zero}
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{np.inf}\OperatorTok{/}\NormalTok{np.inf}
 \CommentTok{\#\# nan}
@@ -1562,10 +1329,235 @@ Also, as of version \texttt{1.0.0}, the \href{https://pandas.pydata.org/docs/use
 
 Be careful of using extreme values to stand in for what should be an \texttt{NA}. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!
 
+\hypertarget{exercises-1}{%
+\section{Exercises}\label{exercises-1}}
+
+\hypertarget{r-questions-1}{%
+\subsection{R Questions}\label{r-questions-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Let's flip some coins! Generate a thousand flips of a fair coin. Use \texttt{rbinom}, and let heads be coded as \texttt{1} and tails coded as \texttt{0}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Assign the thousand raw coin flips to a variable \texttt{flips}. Make sure the elements are integers, and make sure you flip a ``fair'' coin (\(p=.5\)).
+  \item
+    Create a length \texttt{1000} \texttt{logical} \texttt{vector} called \texttt{isHeads}. Whenever you get a heads, make sure the corresponding element is \texttt{TRUE} and \texttt{FALSE} otherwise.
+  \item
+    Create a variable called \texttt{numHeads} by tallying up the number of heads.
+  \item
+    Calculate the percent of time that the number changes in \texttt{flips}. Assign your number to \texttt{acceptanceRate}. Try to write only one line of code to do this.
+  \end{itemize}
+\item
+  Say you have a \texttt{vector} of prices of some financial asset:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prices }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{100.10}\NormalTok{, }\FloatTok{95.98}\NormalTok{, }\FloatTok{100.01}\NormalTok{, }\FloatTok{99.87}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Convert this vector into a vector of \emph{log returns}. Call the variable \texttt{logReturns}. If \(p_t\) is the price at time \(t\), the log return ending at time \(t\) is
+  \[ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}\]
+\item
+  Do the same for \emph{arithmetic returns}. These are regular percent changes if you scale by \(100\). Call the variable \texttt{arithReturns}. The mathematical formula you need is \[ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 \]
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Consider another \textbf{mixture density} \(f(y) = \int f(y \mid x) f(x) dx\) where
+\end{enumerate}
+
+\[
+Y \mid X = x \sim \text{Normal}(0, x^2)
+\]
+and
+
+\[
+X \sim \text{half-Cauchy}(0, 1).
+\]
+This distribution is a special case of a prior distribution that is used in Bayesian statistics \citep{horseshoe}.
+
+Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:
+
+\[
+\mathbb{P}[|Y| > 1] = \int_{y : |y| > 1} f(y)dy = \int_{y : |y| > 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Simulate \(X_1, \ldots, X_{5000}\) from a \(\text{half-Cauchy}(0, 1)\) and call these samples \texttt{xSamps}. Hint: you can simulate from a \(t\) distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.
+\item
+  Simulate \(Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}\) and call the samples \texttt{ySamps}.
+\item
+  Calculate the approximate probability using \texttt{ySamps} and call it \texttt{approxProbDev1}.
+\item
+  Why is simply ``ignoring'' \texttt{xSamps}, the samples you condition on, ``equivalent'' to ``integrating out \(x\)''? Store a string response as a length \(1\) character vector called \texttt{integratingOutResp}.
+\item
+  Calculate another \textbf{Rao-Blackwellized} Monte Carlo estimate of \(\mathbb{P}[|Y| > 1]\) from \texttt{xSamps}. Call it \texttt{approxProbDev2}. Hint: \(\mathbb{P}[|Y| > 1] = \mathbb{E}[\mathbb{P}(|Y| > 1 \mid X) ]\). Calculate \(\mathbb{P}(|Y| > 1 \mid X=x)\) with pencil and paper, notice it is a function in \(x\), apply that function to each of \texttt{xSamps}, and average all of it together.
+\item
+  Are you able to calculate an exact solution to \(\mathbb{P}[|Y| > 1]\)?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Store the ordered uppercase letters of the alphabet in a length \(26\) \texttt{character} \texttt{vector} called \texttt{myUpcaseLetters}. Do not hardcode this. Use a function, along with the variable \texttt{letters}.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Create a new vector called \texttt{withReplacements} that's the same as the previous \texttt{vector}, but replace all vowels with \texttt{"-\/-\/-"}. Again, do not hardcode this. Find a function that searches for patterns and performs a replacement whenever that pattern is found.
+\item
+  Create a length \(26\) logical vector that is \texttt{TRUE} whenever an element of \texttt{letters} is a consonant, and \texttt{FALSE} everywhere else. Call it \texttt{consonant}.
+\end{enumerate}
+
+\hypertarget{python-questions-1}{%
+\subsection{Python Questions}\label{python-questions-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Let's flip some coins (again)! Generate a thousand flips of a fair coin. Use \texttt{np.random.binomial}, and let heads be coded as \texttt{1} and tails coded as \texttt{0}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Assign the thousand raw coin flips to a variable \texttt{flips}. Make sure the elements are integers, and make sure you flip a ``fair'' coin (\(p=.5\)).
+  \item
+    Create a length \texttt{1000} \texttt{list} of \texttt{bool}s called \texttt{is\_heads}. Whenever you get a heads, make sure the corresponding element is \texttt{True} and \texttt{False} otherwise.
+  \item
+    Create a variable called \texttt{num\_heads} by tallying up the number of heads.
+  \item
+    Calculate the percent of time that the number changes in \texttt{flips}. Assign your number to \texttt{acceptance\_rate}. Try to write only one line of code to do this.
+  \end{itemize}
+\item
+  Use \texttt{pd.read\_csv} to correctly read in \texttt{"2013-10\_Citi\_Bike\_trip\_data\_20K.csv"} as a data frame called \texttt{my\_df}. Make sure to read \texttt{autograding\_tips.html}.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  extract the \texttt{"starttime"} column into a separate \texttt{Series} called \texttt{s\_times}
+\item
+  extract date strings of those elements into a \texttt{Series} called \texttt{date\_strings}
+\item
+  extract time strings of those elements into a \texttt{Series} called \texttt{time\_strings}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  We will make use of the \emph{Monte Carlo} \citep{monte-carlo-stat-methods} method below. It is a technique to approximate expectations and probabilities. If \(n\) is a large number, and \(X_1, \ldots, X_n\) is a random sample drawn from the distribution of interest, then
+  \[
+  \mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6).
+  \]
+  If you haven't seen an \textbf{indicator function} before, it is defined as
+\end{enumerate}
+
+\[
+\mathbf{1}(X_i > 6)
+=
+\begin{cases}
+1 & X_i > 6 \\
+0 & X_i \le 6
+\end{cases}.
+\]
+
+If you wanted to visualize it, \(\mathbf{1}(x > 6)\) looks like this.
+
+\begin{center}\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-47-1} \end{center}
+
+So, the sum in this expression is just a count of the number of elements that are greater than \(6\).
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Evaluate exactly the probability that a normal random variable with mean \(5\) and standard deviation \(6\) is greater than \(6\). Assign it to the variable \texttt{exact\_exceedance\_prob} in Python.
+\item
+  Simulate \(1e3\) times from a standard normal distribution (mean 0 and variance 1). Call the samples \texttt{stand\_norm\_samps}
+\item
+  Calculate a Monte Carlo estimate of \(\mathbb{P}(X > 6)\) from these samples. Call it \texttt{approx\_exceedance\_prob1}.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Simulate \(1e3\) times from a normal distribution with mean \(5\) and standard deviation \(6\). Call the samples \texttt{norm\_samps}. Don't use the old samples in any way.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Calculate a Monte Carlo estimate of \(\mathbb{P}(X > 6)\) from these new \texttt{norm\_samps}. Call it \texttt{approx\_exceedance\_prob2}.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Alternatively, we can approximate expectations. If \(\mathbb{E}[f(X)]\) exists, \(n\) is a large number, and \(W_1, \ldots, W_n\) is a random sample drawn from the distribution of interest, then
+\end{enumerate}
+
+\[
+\mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
+\]
+
+Here's a new distribution. It is a \textbf{mixture distribution}, specifically a \textbf{finite mixture of normal distributions}: \(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\) where
+
+\[
+Y \mid X=0 \sim \text{Normal}(0, 2) \\
+Y \mid X=1 \sim \text{Normal}(10, 2)
+\]
+and
+
+\[
+X \sim \text{Bernoulli}(.5).
+\]
+
+Both \(f(y \mid X=0)\) and \(f(y \mid X=1)\) are bell-curved, and \(f(y)\) looks like this
+
+\begin{center}\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-48-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Evaluate exactly \(\mathbb{E}[Y]\). Assign it to the variable \texttt{exact\_mean} in Python.
+\item
+  Simulate \(1e3\) times from the Bernoulli distribution. Call the samples \texttt{bernoulli\_flips}
+\item
+  Simulate \(Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}\) and call the samples \texttt{cond\_norm\_samps}.
+\item
+  Calculate a Monte Carlo estimate of \(\mathbb{E}[Y]\) from \texttt{cond\_norm\_samps}. Call it \texttt{approx\_ave\_1}. Why is simply ``ignoring'' \texttt{bernoulli\_flips}, the samples you condition on, ``equivalent'' to ``integrating them out?''
+\item
+  Calculate a \textbf{Rao-Blackwellized} Monte Carlo estimate of \(\mathbb{E}[Y]\) from \texttt{bernoulli\_flips}. Call it \texttt{approx\_ave\_2}. Hint: \(\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]\). Calculate \(\mathbb{E}(Y \mid X_i)\) exactly, and evaluate that function on each \(X_i\) sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.
+\end{enumerate}
+
 \hypertarget{numpys-ndarrays-versus-rs-matrices-and-arrays}{%
 \chapter{\texorpdfstring{Numpy's \texttt{ndarray}s versus R's matrices and arrays}{Numpy's ndarrays versus R's matrices and arrays}}\label{numpys-ndarrays-versus-rs-matrices-and-arrays}}
 
-Sometimes you want a collection of elements that are \emph{all the same type}, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you needed to use tensors for a computer vision project you're working on.
+Sometimes you want a collection of elements that are \emph{all the same type}, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you need to use tensors for a computer vision project you're working on.
 
 \hypertarget{numpy-ndarrays-in-python}{%
 \section{\texorpdfstring{Numpy \texttt{ndarray}s In Python}{Numpy ndarrays In Python}}\label{numpy-ndarrays-in-python}}
@@ -1590,6 +1582,26 @@ In Python, you could still use arrays for these kinds of tasks. You will be plea
 \NormalTok{a.resize((}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)) }\CommentTok{\# modification is **in place**}
 \NormalTok{a}
 \CommentTok{\#\# array([[1., 2., 3., 4.]])}
+\end{Highlighting}
+\end{Shaded}
+
+Matrix and elementwise multiplication is often useful, too.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b }\OperatorTok{=}\NormalTok{ np.ones(}\DecValTok{4}\NormalTok{).reshape((}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{)) }
+\NormalTok{np.dot(b,a) }\CommentTok{\# matrix mult.}
+\CommentTok{\#\# array([[1., 2., 3., 4.],}
+\CommentTok{\#\#        [1., 2., 3., 4.],}
+\CommentTok{\#\#        [1., 2., 3., 4.],}
+\CommentTok{\#\#        [1., 2., 3., 4.]])}
+\NormalTok{b }\OperatorTok{@}\NormalTok{ a }\CommentTok{\# infix matrix mult. from PEP 465}
+\CommentTok{\#\# array([[1., 2., 3., 4.],}
+\CommentTok{\#\#        [1., 2., 3., 4.],}
+\CommentTok{\#\#        [1., 2., 3., 4.],}
+\CommentTok{\#\#        [1., 2., 3., 4.]])}
+\NormalTok{a }\OperatorTok{*}\NormalTok{ np.arange(}\DecValTok{4}\NormalTok{) }\CommentTok{\# elementwise mult.}
+\CommentTok{\#\# array([[ 0.,  2.,  6., 12.]])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1635,7 +1647,7 @@ Some other things to remember with \texttt{matrix()}: \texttt{byrow=} is \texttt
 \end{Highlighting}
 \end{Shaded}
 
-I use \texttt{array()} to create \texttt{array} objects. Personally, I rarely use this type, but this doesn't mean you should avoid learning about it. Rather, this is a reflection of what kind of data sets I prefer to work with, and the fact that you can't matrix-multiply \texttt{array}s together. You won't be able to avoid 3-d data sets (3-dimensions, not a 3-column \texttt{matrix}) forever, though, particularly if you're working in an area such as neuroimaging or computer vision.
+\texttt{array()} is used to create \texttt{array} objects. This type is used less than the \texttt{matrix} type, but this doesn't mean you should avoid learning about it. This is mostly a reflection of what kind of data sets people prefer to work with, and the fact that matrix algebra is generally better understood than tensor algebra. You won't be able to avoid 3-d data sets (3-dimensions, not a 3-column \texttt{matrix}) forever, though, particularly if you're working in an area such as neuroimaging or computer vision.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1723,6 +1735,161 @@ Here are some extraction examples. Notice that, if it can, \texttt{{[}} will coe
 
 There are other functions that operate on one or more \texttt{matrix} objects in more interesting ways, but much of this will be covered in future sections. For instance, we will describe how \texttt{apply()} works with \texttt{matrix}s in section \ref{functional-programming}, and we will discuss combining \texttt{matrix} objects in different ways in section \ref{reshaping-and-combining-data-sets}.
 
+\hypertarget{exercises-2}{%
+\section{Exercises}\label{exercises-2}}
+
+\hypertarget{r-questions-2}{%
+\subsection{R Questions}\label{r-questions-2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Consider the following data set. Let \(N = 20\) be the number of rows. For \(i=1,\ldots,N\), define \(\mathbf{x}_i \in \mathbb{R}^4\) as the data in row \(i\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \SpecialCharTok{{-}}\FloatTok{1.1585476}\NormalTok{,  }\FloatTok{0.06059602}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.854421163}\NormalTok{,  }\FloatTok{1.62855626}\NormalTok{,}
+  \FloatTok{0.5619835}\NormalTok{,  }\FloatTok{0.74857327}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.830973409}\NormalTok{,  }\FloatTok{0.38432716}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{1.6949202}\NormalTok{,  }\FloatTok{1.24726626}\NormalTok{,  }\FloatTok{0.068601035}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.32505127}\NormalTok{,}
+  \FloatTok{2.8260260}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.68567999}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.109012111}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.59738648}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{0.3128249}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.21192009}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.317923437}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.60813901}\NormalTok{,}
+  \FloatTok{0.3830597}\NormalTok{,  }\FloatTok{0.68000706}\NormalTok{,  }\FloatTok{0.787044622}\NormalTok{,  }\FloatTok{0.13872087}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{0.2381630}\NormalTok{,  }\FloatTok{1.02531172}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.606091651}\NormalTok{,  }\FloatTok{1.80442260}\NormalTok{,}
+  \FloatTok{1.5429671}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.05174198}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.950780046}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.87716787}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{0.5927925}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.40566883}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.309193162}\NormalTok{,  }\FloatTok{1.25575250}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{0.8970403}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.10111751}\NormalTok{,  }\FloatTok{1.555160257}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.54434356}\NormalTok{,}
+  \FloatTok{2.4060504}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.08199934}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.472715155}\NormalTok{,  }\FloatTok{0.25254794}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{1.0145770}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.83132666}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.009597552}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.71378699}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{0.3590219}\NormalTok{,  }\FloatTok{0.84127504}\NormalTok{,  }\FloatTok{0.062052945}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.00587841}\NormalTok{,}
+  \SpecialCharTok{{-}}\FloatTok{0.1335952}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.02769315}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.102229046}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.08526057}\NormalTok{,}
+  \FloatTok{0.1641571}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.08308289}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.711009361}\NormalTok{,  }\FloatTok{0.06809487}\NormalTok{,}
+  \FloatTok{2.2450975}\NormalTok{,  }\FloatTok{0.32619749}\NormalTok{,  }\FloatTok{1.280665384}\NormalTok{,  }\FloatTok{1.75090469}\NormalTok{,}
+  \FloatTok{1.2147885}\NormalTok{,  }\FloatTok{0.10720830}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{2.018215962}\NormalTok{,  }\FloatTok{0.34602861}\NormalTok{,}
+  \FloatTok{0.7309219}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.60083707}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.007344145}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.77345958}\NormalTok{,}
+  \FloatTok{0.1791807}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.49500051}\NormalTok{,  }\FloatTok{0.402840566}\NormalTok{,  }\FloatTok{0.60532646}\NormalTok{,}
+  \FloatTok{1.0454594}\NormalTok{,  }\FloatTok{1.09878293}\NormalTok{,  }\FloatTok{2.784986486}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.22579848}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+For the following problems, make sure to only use the transpose function \texttt{t()}, matrix multiplication (i.e.~\texttt{\%*\%}), and scalar multiplication/division. You may use other functions in interactive mode to check your work, but please do not use them in your submission.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Calculate the sample mean \(\bar{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i\). Check your work with \texttt{colMeans()}, \textbf{but don't use that function in your submitted code.} Assign it to the variable \texttt{xbar}. Make sure it is a \(4 \times 1\) \texttt{matrix} object.
+\item
+  Calculate the \(4 \times 4\) sample covariance of the following data. Call the variable \texttt{mySampCov}, and make sure it is also a \texttt{matrix} object.
+\end{enumerate}
+
+A formula for the sample covariance is
+\[
+\frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
+\]
+\textbf{You can check your work with \texttt{cov()}, but don't use it in your submitted code.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Create a \texttt{matrix} called \texttt{P} that has one hundred rows, one hundred columns, all of its elements positive, \(1/10\) on every diagonal element, and all rows summing to one. This matrix is called \textbf{stochastic} and it describes how a Markov chain moves randomly through time.
+\item
+  Create a \texttt{matrix} called \texttt{X} that has one thousand rows, four columns, has every element set to either \(0\) or \(1\), has its first column set to all \(1\)s, has the second column set to \(1\) in the second \(250\) elements and \(0\) elsewhere, has the third column set to \(1\) in the third \(250\) spots and \(0\) elsewhere, and has the fourth column set to \(1\) in the last \(250\) spots and \(0\) elsewhere. In other words, it looks something like
+\end{enumerate}
+
+\[
+  \begin{bmatrix}
+  \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  & \mathbf{1}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{1}_{250} & \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{1}_{250} \\
+  \end{bmatrix}
+  \]
+where \(\mathbf{1}_{250}\) and \(\mathbf{0}_{250}\) are length \(250\) column vectors with all of their elements set to \(1\) or \(0\), respectively.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Compute the \textbf{projection (or hat) matrix} \(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}\). Make it a \texttt{matrix} and call it \texttt{H}.
+\item
+  An \textbf{exchangeable} covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten \(100 \times 100\) \textbf{exchangeable} covariance matrices, each with \(2\) as the variance, and have the possible covariances take values in the collection \(0,.01,.02, ..., .09.\) Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the ``layer'' or ``slice'' indicating which of the \(10\) matrices you have. Name this array \texttt{myCovMats}
+\item
+  In R, generate one hundred \(10 \times 10\) \textbf{exchangeable} covariance matrices, each with \(2\) as the variance, and have the possible covariances take values in the collection \(0,0.0009090909, ..., 0.0890909091, .09.\) Store these \(100\) covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the ``layer'' or ``slice'' indicating which of the \(100\) matrices you have. Name this array \texttt{myCovMats2}
+\end{enumerate}
+
+\hypertarget{python-questions-2}{%
+\subsection{Python Questions}\label{python-questions-2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Let \(\mathbf{X}\) be an \(n \times 1\) random vector. It has a multivariate normal distribution with mean vector \(\mathbf{m}\) and positive definite covariance matrix \(\mathbf{C}\) if its probability density function can be written as
+\end{enumerate}
+
+\[
+f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
+\]
+
+Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider:
+
+\begin{itemize}
+\item
+  inverting very large matrices with either \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html}{\texttt{np.linalg.solve}} or \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html}{\texttt{np.linalg.inv}} becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
+\item
+  recall from the last lab that exponentiating numbers close to \(-\infty\) risks numerical underflow. It's better to prefer evaluating log densities. There are also \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html}{special functions that evaluate log determinants} that are less likely to underflow/overflow, too!
+\end{itemize}
+
+Complete the following problems. \textbf{Do not use pre-made functions like \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html}{\texttt{scipy.stats.norm}} and \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html}{\texttt{scipy.stats.multivariate\_normal}} in your submission, but you may use them to check your work. Use only ``standard'' functions and Numpy n-dimensional arrays.} Use the following definitions for \(\mathbf{x}\) and \(\mathbf{m}\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.array([}\FloatTok{1.1}\NormalTok{, }\FloatTok{.9}\NormalTok{, }\FloatTok{1.0}\NormalTok{]).reshape((}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\NormalTok{m }\OperatorTok{=}\NormalTok{ np.ones(}\DecValTok{3}\NormalTok{).reshape((}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Let \(\mathbf{C} = \begin{bmatrix} 10 & 0 & 0 \\ 0 & 10 & 0 \\ 0 & 0 & 10 \end{bmatrix}\). Evaluate and assign the log density to a \texttt{float}-like called \texttt{log\_dens1}. Can you do this without defining a numpy array for \(\mathbf{C}\)?
+\item
+  Let \(\mathbf{C} = \begin{bmatrix} 10 & 0 & 0 \\ 0 & 11 & 0 \\ 0 & 0 & 12 \end{bmatrix}\). Evaluate and assign the log density to a \texttt{float}-like called \texttt{log\_dens2}. Can you do this without defining a numpy array for \(\mathbf{C}\)?
+\item
+  Let \(\mathbf{C} = \begin{bmatrix} 10 & -.9 & -.9 \\ -.9 & 11 & -.9 \\ -.9 & -.9 & 12 \end{bmatrix}\). Evaluate and assign the log density to a \texttt{float}-like called \texttt{log\_dens3}. Can you do this without defining a numpy array for \(\mathbf{C}\)?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Consider this \href{https://archive.ics.uci.edu/ml/datasets/Wine+Quality}{wine data set} from \citep{wine_data} hosted by \citep{uci_data}. Read it in with the following code
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"winequality{-}red.csv"}\NormalTok{, sep }\OperatorTok{=} \StringTok{";"}\NormalTok{)}
+\NormalTok{d.head()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Create the \textbf{design matrix} (denoted mathematically by \(\mathbf{X}\)) by removing the \texttt{"quality"} column, and subtracting the column mean from each element. Call the variable \texttt{X}, and make sure that it is a Numpy \texttt{ndarray}, not a Pandas \texttt{DataFrame}.
+\item
+  Compute the \textbf{spectral decomposition} of \(\mathbf{X}^\intercal \mathbf{X}\). In other words, find ``special'' matrices\footnote{Do not worry too much about the properties of these matrices for this problem} \(\mathbf{V}\) and \(\boldsymbol{\Lambda}\) such that \(\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal\). Note that the \emph{eigenvectors} are stored as columns in a matrix \(\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 & \cdots & \mathbf{V}_{11}\end{bmatrix}\), and the scalar \emph{eigenvalues} are stored as diagonal elements \(\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})\). Store the eigenvectors in an \texttt{ndarray} called \texttt{eig\_vecs}, and store the eigenvalues in a Numpy \texttt{array} called \texttt{eig\_vals}. Hint: use \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html}{\texttt{np.linalg.eig()}}. Also, if you're rusty with your linear algebra, don't worry too much about refreshing your memory about what eigenvectors and eigenvalues are.
+\item
+  Compute the \textbf{singular value decomposition} of \(\mathbf{X}\). In other words, find ``special''\footnote{Again, do not worry too much about the properties of these matrices for this problem.} matrices \(\mathbf{U}\), \(\mathbf{\Sigma}\), and \(\mathbf{V}\) such that \(\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal\). Use \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html}{\texttt{np.linalg.svd}}, and don't worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two \(\mathbf{V}\) matrices should be the same, and the elements of \(\boldsymbol{\Sigma}\) should be the square roots of the elements of \(\boldsymbol{\Lambda}\). Store the eigenvectors as columns in an \texttt{ndarray} called \texttt{eig\_vecs\_v2}, and store the singular values (diagonal elements of \(\boldsymbol{\Sigma}\)) in a Numpy \texttt{array} called \texttt{sing\_vals}.
+\item
+  Compute the \textbf{first principal component} vector, and call it \texttt{first\_pc\_v1}. The mathematical formula is \(\mathbf{X} \mathbf{U}_1\) where \(\mathbf{U}_1\) is the eigenvector associated with the largest eigenvalue \(\lambda_1\). This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors.
+\end{enumerate}
+
 \hypertarget{rs-lists-versus-pythons-lists-and-dictionaries}{%
 \chapter{R's lists versus Python's lists and dictionaries}\label{rs-lists-versus-pythons-lists-and-dictionaries}}
 
@@ -1755,9 +1922,8 @@ You can also name the elements of a list. This can lead to more readable code. T
 \FunctionTok{length}\NormalTok{(results)}
 \DocumentationTok{\#\# [1] 13}
 \FunctionTok{names}\NormalTok{(results)}
-\DocumentationTok{\#\#  [1] "coefficients"  "residuals"     "effects"       "rank"          "fitted.values" "assign"       }
-\DocumentationTok{\#\#  [7] "qr"            "df.residual"   "contrasts"     "xlevels"       "call"          "terms"        }
-\DocumentationTok{\#\# [13] "model"}
+\DocumentationTok{\#\#  [1] "coefficients"  "residuals"     "effects"       "rank"          "fitted.values" "assign"        "qr"           }
+\DocumentationTok{\#\#  [8] "df.residual"   "contrasts"     "xlevels"       "call"          "terms"         "model"}
 \NormalTok{results}\SpecialCharTok{$}\NormalTok{contrasts}
 \DocumentationTok{\#\# $Type}
 \DocumentationTok{\#\# [1] "contr.treatment"}
@@ -2360,7 +2526,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg))}
-\CommentTok{\#\# 140510223533408 140510223533440}
+\CommentTok{\#\# 139804936668512 139804936668544}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2629,7 +2795,7 @@ Here's a third example. We can take non-categorical data, and \texttt{cut} it in
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf]}
+\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] (0, Inf] (0, Inf] ({-}Inf,0]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -2674,7 +2840,7 @@ The pandas library also provides a \texttt{pd.cut()} function, which can return 
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \NormalTok{type\_of\_day}
-\CommentTok{\#\# [\textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}]}
+\CommentTok{\#\# [\textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
 \CommentTok{\#\# Categories (2, object): [\textquotesingle{}bad day\textquotesingle{} \textless{} \textquotesingle{}good day\textquotesingle{}]}
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -3038,6 +3204,7 @@ You've seen examples of \texttt{read.csv()} used earlier in the book, so it shou
 Consider the \href{https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring}{``Challenger USA Space Shuttle O-Ring Data Set''} from \citep{uci_data}. The first ten rows looks like this.
 
 \begin{verbatim}
+bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
@@ -3213,11 +3380,10 @@ Moreover, all of these environments are connected in a chain-like structure. To 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
-\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:Hmisc"     }
-\DocumentationTok{\#\#  [5] "package:ggplot2"    "package:Formula"    "package:survival"   "package:lattice"   }
-\DocumentationTok{\#\#  [9] "package:reticulate" "tools:rstudio"      "package:stats"      "package:graphics"  }
-\DocumentationTok{\#\# [13] "package:grDevices"  "package:utils"      "package:datasets"   "package:methods"   }
-\DocumentationTok{\#\# [17] "Autoloads"          "package:base"}
+\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:Hmisc"      "package:ggplot2"   }
+\DocumentationTok{\#\#  [6] "package:Formula"    "package:survival"   "package:lattice"    "package:reticulate" "tools:rstudio"     }
+\DocumentationTok{\#\# [11] "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"      "package:datasets"  }
+\DocumentationTok{\#\# [16] "package:methods"    "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3308,8 +3474,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.27765344, {-}0.47933331,  0.35239385,  1.29126942, {-}1.14823749,}
-\CommentTok{\#\#         0.45079581, {-}0.16164364,  1.61077554,  0.19163947,  0.8018418 ])}
+\CommentTok{\#\# array([ 0.16414334, {-}0.74455512,  0.49301558, {-}0.50023817, {-}0.37603616,}
+\CommentTok{\#\#         1.15600828, {-}1.13372645,  0.08708511, {-}0.57919206,  0.07535512])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3321,8 +3487,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.60424474,  1.10574136, {-}0.03758288,  0.74888149, {-}1.26213601,}
-\CommentTok{\#\#        {-}0.40244042, {-}0.39630302,  0.20299809,  1.33581446, {-}0.31943598])}
+\CommentTok{\#\# array([ 0.03313485, {-}0.49799463,  0.94741964, {-}0.99649894, {-}0.49847179,}
+\CommentTok{\#\#        {-}0.15574502, {-}0.24355157, {-}0.52742125, {-}1.66586655, {-}0.60842579])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3334,8 +3500,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.00206196, {-}0.30941862,  1.31168263, {-}0.55416485,  0.48026473,}
-\CommentTok{\#\#         0.27260937, {-}1.26977766,  0.18755715,  0.67696992, {-}0.65171426])}
+\CommentTok{\#\# array([{-}0.68062288,  0.49780581, {-}0.36762053,  1.42783586,  0.85699947,}
+\CommentTok{\#\#         0.60822757, {-}0.63609282, {-}0.08496536,  0.33526155, {-}1.95280616])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3600,7 +3766,7 @@ q(x) =
 \]
 We can plot all three functions.
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-129-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-133-1}
 
 Here's some Python code that attempts to sample once from \(p(x)\). Sometimes proposals are not accepted. When that happens, the function returns \texttt{None}.
 
@@ -3646,7 +3812,7 @@ Here's some Python code that attempts to sample once from \(p(x)\). Sometimes pr
 \end{enumerate}
 
 In chapter \ref{visualization}, we'll show you the code that you can use to generate the plot below.
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 \hypertarget{reshaping-and-combining-data-sets}{%
 \chapter{Reshaping and Combining Data Sets}\label{reshaping-and-combining-data-sets}}
@@ -3673,11 +3839,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}0.64581828  0.07525966 {-}0.23188324  0.51466673  1.06266555}
+\DocumentationTok{\#\# [1] {-}1.2288807 {-}0.7139817 {-}0.2849920  3.0825927 {-}0.8289408}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}0.64581828 {-}0.23188324  0.07525966  0.51466673  1.06266555}
+\DocumentationTok{\#\# [1] {-}1.2288807 {-}0.8289408 {-}0.7139817 {-}0.2849920  3.0825927}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 1 3 2 4 5}
+\DocumentationTok{\#\# [1] 1 5 2 3 4}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3709,11 +3875,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [{-}2.35016726 {-}0.75361656  0.477097   {-}0.27210408 {-}1.06733766]}
+\CommentTok{\#\# [{-}0.41702768  1.05660063 {-}0.36279931 {-}1.33374099 {-}0.35111098]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}2.35016726, {-}1.06733766, {-}0.75361656, {-}0.27210408,  0.477097  ])}
+\CommentTok{\#\# array([{-}1.33374099, {-}0.41702768, {-}0.36279931, {-}0.35111098,  1.05660063])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([0, 4, 1, 3, 2])}
+\CommentTok{\#\# array([3, 0, 2, 4, 1])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3764,20 +3930,20 @@ In R, this can be done with \texttt{rbind} (short for ``row bind'')
 \NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
 \NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\DecValTok{1}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train))}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{sum}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train) }\SpecialCharTok{!=}\NormalTok{ realEstate)}
 \DocumentationTok{\#\# [1] 0}
 \end{Highlighting}
@@ -4139,20 +4305,20 @@ Recall our Albemarle Real Estate data set.
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \FunctionTok{head}\NormalTok{(df)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4165,7 +4331,7 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-156-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-160-1.pdf}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
 
@@ -4184,7 +4350,7 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-157-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4216,7 +4382,7 @@ Consider this first example.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-158-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-162-1}
 
 You'll notice a few things about the code and the result produced:
 
@@ -4242,7 +4408,7 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-159-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point}. The aesthetic mappings were used by the new layer.
 
@@ -4256,7 +4422,7 @@ There are \emph{many} types of layers that you can add to a plot, and you're not
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-160-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-164-1.pdf}
 
 Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.
 
@@ -4268,7 +4434,7 @@ Additionally, notice that the same layer will behave much differently if we chan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}.
 
@@ -4283,7 +4449,7 @@ We can change attributes of the axes like this.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-162-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called fill so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
 
@@ -4295,7 +4461,7 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
 
@@ -4308,7 +4474,7 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-164-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-168-1.pdf}
 
 There are many to choose from, though. Here's another one.
 
@@ -4321,7 +4487,7 @@ There are many to choose from, though. Here's another one.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-169-1.pdf}
 
 \hypertarget{plotting-with-matplotlib}{%
 \section{Plotting with Matplotlib}\label{plotting-with-matplotlib}}
@@ -4336,13 +4502,13 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  3.,  16.,  62., 110., 232., 244., 196.,  94.,  34.,   9.]), array([{-}3.48748924, {-}2.83646093, {-}2.18543263, {-}1.53440432, {-}0.88337601,}
-\CommentTok{\#\#        {-}0.23234771,  0.4186806 ,  1.06970891,  1.72073721,  2.37176552,}
-\CommentTok{\#\#         3.02279383]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  1.,   2.,  20.,  75., 204., 287., 241., 126.,  33.,  11.]), array([{-}4.37621771, {-}3.60411374, {-}2.83200976, {-}2.05990578, {-}1.28780181,}
+\CommentTok{\#\#        {-}0.51569783,  0.25640614,  1.02851012,  1.8006141 ,  2.57271807,}
+\CommentTok{\#\#         3.34482205]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-167-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. It also follows the most commonly-used convention.
 
@@ -4373,22 +4539,30 @@ If you want to make figures more elaborate, just keep calling different methods 
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f26afcb95c0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data on the axes...}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f26afcb9940\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f26afcb9cc0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
+\CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
+\CommentTok{\#\# Text(0, 0.5, \textquotesingle{}y label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{"Simple Plot"}\NormalTok{)  }\CommentTok{\# Add a title to the axes.}
+\CommentTok{\#\# Text(0.5, 1.0, \textquotesingle{}Simple Plot\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f26b0024c88\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f26afc7e2e8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-168-3.pdf}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-1-3}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-169-5}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-5}
 
 import numpy as np
 my\_inputs = np.linspace(start = 0, stop = 2*np.pi)
@@ -4795,7 +4969,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x55f51c399030>
+## <bytecode: 0x5569ffddb680>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -4857,7 +5031,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-182-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-186-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -4874,7 +5048,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-183-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-187-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -5223,8 +5397,8 @@ a more detailed
 
 \url{https://adv-r.hadley.nz/r6.html\#why-r6}
 
-\hypertarget{exercises-1}{%
-\section{Exercises}\label{exercises-1}}
+\hypertarget{exercises-3}{%
+\section{Exercises}\label{exercises-3}}
 
 All answers to questions related to R should be written in a file named \texttt{data\_types\_exercises.R}. All answers to questions related to Python should be written in a file named \texttt{data\_types\_exercises.py}.
 
@@ -5294,7 +5468,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-196-1.pdf}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -5421,7 +5595,7 @@ Instead, prefer the use of \texttt{sapply} in this situation. The ``s'' in \text
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
 \DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
-\DocumentationTok{\#\#  0.09039357 {-}0.92846760  0.30457418 {-}0.04405609 {-}0.09384464  0.45688472}
+\DocumentationTok{\#\#  0.04069595  0.65169163  0.37011443  0.06416552 {-}0.28724117 {-}0.08979900}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5460,14 +5634,14 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# lm(formula = y \textasciitilde{} 1)}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
-\DocumentationTok{\#\#      Min       1Q   Median       3Q      Max }
-\DocumentationTok{\#\# {-}1.44489 {-}0.78635 {-}0.03176  0.38692  1.87463 }
+\DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
+\DocumentationTok{\#\# {-}0.6055 {-}0.4588 {-}0.1620  0.2605  1.1357 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept)  {-}0.2658     0.3189  {-}0.833    0.426}
+\DocumentationTok{\#\# (Intercept)  {-}0.2648     0.1818  {-}1.456    0.179}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 1.008 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 0.575 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5481,8 +5655,8 @@ I use \texttt{sapply} and \texttt{lapply} the most, personally. The next most co
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.18780324 {-}0.05832272 {-}0.17120024 {-}0.08014775  0.04603083 {-}0.10057438 {-}0.03150695 {-}0.10084850}
-\DocumentationTok{\#\#  [9] {-}0.08449865 {-}0.04301368}
+\DocumentationTok{\#\#  [1]  0.04093835  0.05719291  0.09578950 {-}0.04683210  0.01296983  0.20182524 {-}0.18335845 {-}0.05106115  0.08318709}
+\DocumentationTok{\#\# [10]  0.19941884}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5493,20 +5667,13 @@ Another example where it can be useful to apply a function to rows is \textbf{pr
 \NormalTok{albRealEstate }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(albRealEstate}\SpecialCharTok{$}\NormalTok{YearBuilt }\SpecialCharTok{==} \DecValTok{2006} \SpecialCharTok{\&}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{Condition }\SpecialCharTok{==} \StringTok{"Average"}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030}
-\DocumentationTok{\#\#   TotalValue   City}
-\DocumentationTok{\#\# 1     409900 CROZET}
-\DocumentationTok{\#\# 2     523100 CROZET}
-\DocumentationTok{\#\# 4     620700 CROZET}
-\DocumentationTok{\#\# 5     162500 CROZET}
-\DocumentationTok{\#\# 6     167200 CROZET}
-\DocumentationTok{\#\# 8     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5530,20 +5697,13 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030}
-\DocumentationTok{\#\#   TotalValue   City}
-\DocumentationTok{\#\# 1     409900 CROZET}
-\DocumentationTok{\#\# 2     523100 CROZET}
-\DocumentationTok{\#\# 4     620700 CROZET}
-\DocumentationTok{\#\# 5     162500 CROZET}
-\DocumentationTok{\#\# 6     167200 CROZET}
-\DocumentationTok{\#\# 8     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5557,23 +5717,22 @@ If I wanted the average home price for each city, I could use something like thi
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(albRealEstate)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City)}
-\DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"   }
-\DocumentationTok{\#\# [6] "KESWICK"}
+\DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"    "KESWICK"}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)}
 \DocumentationTok{\#\# CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE }
 \DocumentationTok{\#\#        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4}
@@ -5611,7 +5770,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm}, t
 \end{Shaded}
 
 \begin{verbatim}
-## [1]   0.01339378  99.99952118 -99.99995760
+## [1]    0.01021312  100.01620781 -100.00849046
 \end{verbatim}
 
 \begin{Shaded}
@@ -5622,13 +5781,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm}, t
 
 \begin{verbatim}
 ## [[1]]
-## [1] 0.014982930 0.006057215 0.005257986
+## [1]  0.0006095645 -0.0097407432  0.0088579413
 ## 
 ## [[2]]
-## [1]  99.99486 100.00275
+## [1] 100.00691  99.98466
 ## 
 ## [[3]]
-## [1] -100.02
+## [1] -99.9984
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
@@ -5757,7 +5916,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid} fu
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-213-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-217-1.pdf}
 
 If you prefer using \texttt{apply}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -5772,7 +5931,7 @@ If you prefer using \texttt{apply}, that is also possible, but you would need to
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-214-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-218-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -5800,7 +5959,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-216-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 \texttt{map} can also be used like \texttt{mapply}. In other words, you can apply it to two containers,
 
@@ -6060,7 +6219,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-230-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-234-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6100,7 +6259,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-232-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-236-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6126,7 +6285,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-238-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}

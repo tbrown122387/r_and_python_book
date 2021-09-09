@@ -1,6 +1,6 @@
 # Numpy's `ndarray`s versus R's matrices and arrays
 
-Sometimes you want a collection of elements that are *all the same type*, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you needed to use tensors for a computer vision project you're working on. 
+Sometimes you want a collection of elements that are *all the same type*, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you need to use tensors for a computer vision project you're working on. 
 
 ## Numpy `ndarray`s In Python
 
@@ -16,6 +16,16 @@ a.dtype
 a.max()
 a.resize((1,4)) # modification is **in place**
 a
+```
+
+
+Matrix and elementwise multiplication is often useful, too. 
+
+```{python, collapse = TRUE}
+b = np.ones(4).reshape((4,1)) 
+np.dot(b,a) # matrix mult.
+b @ a # infix matrix mult. from PEP 465
+a * np.arange(4) # elementwise mult.
 ```
 
 
@@ -44,7 +54,7 @@ nrow(A)
 ncol(A)
 ```
 
-I use `array()` to create `array` objects. Personally, I rarely use this type, but this doesn't mean you should avoid learning about it. Rather, this is a reflection of what kind of data sets I prefer to work with, and the fact that you can't matrix-multiply `array`s together. You won't be able to avoid 3-d data sets (3-dimensions, not a 3-column `matrix`) forever, though, particularly if you're working in an area such as neuroimaging or computer vision.
+`array()` is used to create `array` objects. This type is used less than the `matrix` type, but this doesn't mean you should avoid learning about it. This is mostly a reflection of what kind of data sets people prefer to work with, and the fact that matrix algebra is generally better understood than tensor algebra. You won't be able to avoid 3-d data sets (3-dimensions, not a 3-column `matrix`) forever, though, particularly if you're working in an area such as neuroimaging or computer vision.
 
 ```{r, collapse = TRUE}
 myArray <- array(rep(1:3, each = 4), dim = c(2,2,3))
@@ -82,3 +92,117 @@ row(Q) > 1
 Q[row(Q) > 1] # column-wise ordering
 ```
 There are other functions that operate on one or more `matrix` objects in more interesting ways, but much of this will be covered in future sections. For instance, we will describe how `apply()` works with `matrix`s in section \@ref(functional-programming), and we will discuss combining `matrix` objects in different ways in section \@ref(reshaping-and-combining-data-sets).
+
+
+## Exercises
+
+### R Questions
+
+1. Consider the following data set. Let $N = 20$ be the number of rows. For $i=1,\ldots,N$, define $\mathbf{x}_i \in \mathbb{R}^4$ as the data in row $i$.
+
+```{r}
+d <- matrix(c(
+  -1.1585476,  0.06059602, -1.854421163,  1.62855626,
+  0.5619835,  0.74857327, -0.830973409,  0.38432716,
+  -1.6949202,  1.24726626,  0.068601035, -0.32505127,
+  2.8260260, -0.68567999, -0.109012111, -0.59738648,
+  -0.3128249, -0.21192009, -0.317923437, -1.60813901,
+  0.3830597,  0.68000706,  0.787044622,  0.13872087,
+  -0.2381630,  1.02531172, -0.606091651,  1.80442260,
+  1.5429671, -0.05174198, -1.950780046, -0.87716787,
+  -0.5927925, -0.40566883, -0.309193162,  1.25575250,
+  -0.8970403, -0.10111751,  1.555160257, -0.54434356,
+  2.4060504, -0.08199934, -0.472715155,  0.25254794,
+  -1.0145770, -0.83132666, -0.009597552, -1.71378699,
+  -0.3590219,  0.84127504,  0.062052945, -1.00587841,
+  -0.1335952, -0.02769315, -0.102229046, -1.08526057,
+  0.1641571, -0.08308289, -0.711009361,  0.06809487,
+  2.2450975,  0.32619749,  1.280665384,  1.75090469,
+  1.2147885,  0.10720830, -2.018215962,  0.34602861,
+  0.7309219, -0.60083707, -1.007344145, -1.77345958,
+  0.1791807, -0.49500051,  0.402840566,  0.60532646,
+  1.0454594,  1.09878293,  2.784986486, -0.22579848), ncol = 4)
+```
+
+For the following problems, make sure to only use the transpose function `t()`, matrix multiplication (i.e. `%*%`), and scalar multiplication/division. You may use other functions in interactive mode to check your work, but please do not use them in your submission.
+
+  a. Calculate the sample mean $\bar{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i$. Check your work with `colMeans()`, **but don't use that function in your submitted code.** Assign it to the variable `xbar`. Make sure it is a $4 \times 1$ `matrix` object.
+  
+  b. Calculate the $4 \times 4$ sample covariance of the following data. Call the variable `mySampCov`, and make sure it is also a `matrix` object. 
+  
+  A formula for the sample covariance is 
+$$
+\frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
+$$
+**You can check your work with `cov()`, but don't use it in your submitted code.**
+
+
+2. Create a `matrix` called `P` that has one hundred rows, one hundred columns, all of its elements positive, $1/10$ on every diagonal element, and all rows summing to one. This matrix is called **stochastic** and it describes how a Markov chain moves randomly through time. 
+
+3. Create a `matrix` called `X` that has one thousand rows, four columns, has every element set to either $0$ or $1$, has its first column set to all $1$s, has the second column set to $1$ in the second $250$ elements and $0$ elsewhere, has the third column set to $1$ in the third $250$ spots and $0$ elsewhere, and has the fourth column set to $1$ in the last $250$ spots and $0$ elsewhere. In other words, it looks something like
+  
+  $$
+  \begin{bmatrix}
+  \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  & \mathbf{1}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{1}_{250} & \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{1}_{250} \\
+  \end{bmatrix}
+  $$
+  where $\mathbf{1}_{250}$ and $\mathbf{0}_{250}$ are length $250$ column vectors with all of their elements set to $1$ or $0$, respectively.
+
+  a. Compute the **projection (or hat) matrix** $\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}$. Make it a `matrix` and call it `H`. 
+  
+  b. An **exchangeable** covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten $100 \times 100$ **exchangeable** covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,.01,.02, ..., .09.$  Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $10$ matrices you have. Name this array `myCovMats`
+  
+  c. In R, generate one hundred $10 \times 10$ **exchangeable** covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,0.0009090909, ..., 0.0890909091, .09.$  Store these $100$ covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $100$ matrices you have. Name this array `myCovMats2`
+
+
+### Python Questions
+
+
+1. Let $\mathbf{X}$ be an $n \times 1$ random vector. It has a multivariate normal distribution with mean vector $\mathbf{m}$ and positive definite covariance matrix $\mathbf{C}$ if its probability density function can be written as 
+
+$$
+f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
+$$
+
+
+Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider: 
+
+  + inverting very large matrices with either [`np.linalg.solve`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) or [`np.linalg.inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html) becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
+  
+  + recall from the last lab that exponentiating numbers close to $-\infty$ risks numerical underflow. It's better to prefer evaluating log densities. There are also [special functions that evaluate log determinants](https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html) that are less likely to underflow/overflow, too!  
+  
+Complete the following problems. **Do not use pre-made functions like [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) and [`scipy.stats.multivariate_normal`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html) in your submission, but you may use them to check your work. Use only "standard" functions and Numpy n-dimensional arrays.** Use the following definitions for $\mathbf{x}$ and $\mathbf{m}$:
+
+```{python}
+import numpy as np
+x = np.array([1.1, .9, 1.0]).reshape((3,1))
+m = np.ones(3).reshape((3,1))
+```
+  
+  a. Let $\mathbf{C} =  \begin{bmatrix} 10 & 0 & 0 \\ 0 & 10 & 0 \\ 0 & 0 & 10 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens1`. Can you do this without defining a numpy array for $\mathbf{C}$?
+  
+  b. Let $\mathbf{C} =  \begin{bmatrix} 10 & 0 & 0 \\ 0 & 11 & 0 \\ 0 & 0 & 12 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens2`. Can you do this without defining a numpy array for $\mathbf{C}$?
+  
+  c. Let $\mathbf{C} =  \begin{bmatrix} 10 & -.9 & -.9 \\ -.9 & 11 & -.9 \\ -.9 & -.9 & 12 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens3`. Can you do this without defining a numpy array for $\mathbf{C}$?
+  
+
+2. Consider this [wine data set](https://archive.ics.uci.edu/ml/datasets/Wine+Quality) from [@wine_data] hosted by [@uci_data]. Read it in with the following code. Note that you might need to use `os.chdir()` first.
+
+```{python, eval = FALSE}
+import pandas as pd
+d = pd.read_csv("winequality-red.csv", sep = ";")
+d.head()
+```
+
+  a. Create the **design matrix** (denoted mathematically by $\mathbf{X}$) by removing the `"quality"` column, and subtracting the column mean from each element. Call the variable `X`, and make sure that it is a Numpy `ndarray`, not a Pandas `DataFrame`. 
+  
+  b. Compute the **spectral decomposition** of $\mathbf{X}^\intercal \mathbf{X}$. In other words, find "special" matrices^[Do not worry too much about the properties of these matrices for this problem] $\mathbf{V}$ and $\boldsymbol{\Lambda}$ such that $\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal$. Note that the *eigenvectors* are stored as columns in a matrix $\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 & \cdots & \mathbf{V}_{11}\end{bmatrix}$, and the scalar *eigenvalues* are stored as diagonal elements $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})$. Store the eigenvectors in an `ndarray` called `eig_vecs`, and store the eigenvalues in a Numpy `array` called `eig_vals`. Hint: use [`np.linalg.eig()`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html). Also, if you're rusty with your linear algebra, don't worry too much about refreshing your memory about what eigenvectors and eigenvalues are. 
+
+  c. Compute the **singular value decomposition** of $\mathbf{X}$. In other words, find "special"^[Again, do not worry too much about the properties of these matrices for this problem.] matrices $\mathbf{U}$, $\mathbf{\Sigma}$, and $\mathbf{V}$ such that $\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal$. Use [`np.linalg.svd`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html), and don't worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two $\mathbf{V}$ matrices should be the same, and the elements of $\boldsymbol{\Sigma}$ should be the square roots of the elements of $\boldsymbol{\Lambda}$. Store the eigenvectors as columns in an `ndarray` called `eig_vecs_v2`, and store the singular values (diagonal elements of $\boldsymbol{\Sigma}$) in a Numpy `array` called `sing_vals`. 
+  
+  d. Compute the **first principal component** vector, and call it `first_pc_v1`. The mathematical formula is $\mathbf{X} \mathbf{U}_1$ where $\mathbf{U}_1$ is the eigenvector associated with the largest eigenvalue $\lambda_1$. This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors. 
+
+  

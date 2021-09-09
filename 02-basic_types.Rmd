@@ -1,13 +1,3 @@
-# (PART) Part I: Data Types {-} 
-
-
-
-```{r setup, include =FALSE}
-library(reticulate)
-use_condaenv("base")
-```
-
-
 # Basic Types
 
 In every programming language, data is stored in different ways. Writing a program that manipulates data requires understanding all of the choices. That is why we must be concerned with the different **types** of data in our R and Python programs. Different types are suitable for different purposes.
@@ -113,7 +103,7 @@ Think about which option you prefer. What are the benefits of using separate typ
 
 ## Exercises
 
-### Easier R Questions
+### R Questions
 
 1. Which R base type is ideal for each piece of data? Assign your answers to a `character` `vector` of length four called `questionOne`. 
 
@@ -138,14 +128,8 @@ Think about which option you prefer. What are the benefits of using separate typ
     + Test (using `==`) that this variable is equal to `2`. Assign the result of this test to `isTwoRecoverable`
     + Test for near equality (using `all.equal`) that this variable is "equal" to `2`. Assign the result of this test to `closeEnough`. Make sure to read the documentation for this function because the return type can be tricky!
     
-4. Let's flip some coins! Generate a thousand flips of a fair coin. Use `rbinom`, and let heads be coded as `1` and tails coded as `0`. 
 
-    + Assign the thousand raw coin flips to a variable `flips`. Make sure the elements are integers, and make sure you flip a "fair" coin ($p=.5$).
-    + Create a length `1000` `logical` `vector` called `isHeads`. Whenever you get a heads, make sure the corresponding element is `TRUE` and `FALSE` otherwise.
-    + Create a variable called `numHeads` by tallying up the number of heads. 
-    + Calculate the percent of time that the number changes in `flips`. Assign your number to `acceptanceRate`. Try to write only one line of code to do this.
-
-### Easier Python Questions
+### Python Questions
 
 1. Which Python type is ideal for each piece of data? Assign your answers to a `list` of `str`ings called `question_one`. 
 
@@ -167,192 +151,3 @@ Think about which option you prefer. What are the benefits of using separate typ
     + `print` the square of this variable
     + Test (using `==`) that this variable is equal to `2`. Assign the result of this test to `is_two_recoverable`
     + Test for near equality (using `np.isclose`) that this variable is "equal" to `2`. Assign the result of this test to `close_enough`. 
-
-4. Let's flip some coins (again)! Generate a thousand flips of a fair coin. Use `np.random.binomial`, and let heads be coded as `1` and tails coded as `0`. 
-
-    + Assign the thousand raw coin flips to a variable `flips`. Make sure the elements are integers, and make sure you flip a "fair" coin ($p=.5$).
-    + Create a length `1000` `list` of `bool`s called `is_heads`. Whenever you get a heads, make sure the corresponding element is `True` and `False` otherwise.
-    + Create a variable called `num_heads` by tallying up the number of heads. 
-    +  Calculate the percent of time that the number changes in `flips`. Assign your number to `acceptance_rate`. Try to write only one line of code to do this.
-
-
-### More Difficult R Questions
-
-
-#### Examining a `vector`
-
-  1. Say you have a vector of prices of some financial asset:
-
-```{R, collapse = TRUE}
-prices <- c(100.10, 95.98, 100.01, 99.87)
-```
-  
-  Convert this vector into a vector of *log returns*. Call the variable `logReturns`. If $p_t$ is the price at time $t$, the log return ending at time $t$ is 
-$$ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}$$
-
-  2. Do the same for *arithmetic returns*. These are regular percent changes if you scale by $100$. Call the variable `arithReturns`. The mathematical formula you need is $$ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 $$
-
-
-
-#### Some Monte Carlo
-
-Consider another **mixture density** $f(y) = \int f(y \mid x) f(x) dx$ where  
-
-$$
-Y \mid X \sim \text{Normal}(0, x^2)
-$$
-and
-
-$$
-X \sim \text{half-Cauchy}(0, 1).
-$$
-This distribution is a special case of a prior distribution that is used in Bayesian statistics [@horseshoe]. 
-
-Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median: 
-
-$$
-\mathbb{P}[|Y| > 1] = \int_{y : |y| > 1} f(y)dy = \int_{y : |y| > 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
-$$
-
-
-  1. Simulate $X_1, \ldots, X_{5000}$ from a $\text{half-Cauchy}(0, 1)$ and call these samples `xSamps`. Hint: you can simulate from a $t$ distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.
-  
-  2. Simulate $Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}$ and call the samples `ySamps`. 
-  
-  3. Calculate the approximate probability using `ySamps` and call it `approxProbDev1`.
-  
-  4. Why is simply "ignoring" `xSamps`, the samples you condition on, "equivalent" to "integrating out $x$"? Store a string response as a length $1$ character vector called `integratingOutResp`.
-  
-  5. Calculate another **Rao-Blackwellized** Monte Carlo estimate of $\mathbb{P}[|Y| > 1]$ from `xSamps`. Call it `approxProbDev2`. Hint: $\mathbb{P}[|Y| > 1] = \mathbb{E}[\mathbb{P}(|Y| > 1 \mid X) ]$. Calculate $\mathbb{P}(|Y| > 1 \mid X=x)$ with pencil and paper, notice it is a function in $x$, apply that function to each of `xSamps`, and average all of it together.
-  
-  6. Are you able to calculate an exact solution to $\mathbb{P}[|Y| > 1]$?
-
-
-#### Playing Around with Some Letters
-
-
-  1. Store the ordered uppercase letters of the alphabet in a length $26$ `character` `vector` called `myUpcaseLetters`. Do not hardcode this. Use a function, along with the variable `letters`.
-  
-  2. Create a new vector called `withReplacements` that's the same as the previous `vector`, but replace all vowels with `"---"`. Again, do not hardcode this. Find a function that searches for patterns and performs a replacement whenever that pattern is found.
-  
-  3. Create a length $26$ logical vector that is `TRUE` whenever an element of `letters` is a consonant, and `FALSE` everywhere else. Call it `consonant`.
-
-
-
-### More Difficult Python Questions
-
-
-### Examining a `Series` taken from a `DataFrame`
-
-  1. Use `pd.read_csv` to correctly read in `"2013-10_Citi_Bike_trip_data_20K.csv"` as a data frame called `my_df`. Make sure to read `autograding_tips.html`.
-  
-  2. extract the `"starttime"` column into a separate `Series` called `s_times`
-  
-  3. extract date strings of those elements into a `Series` called `date_strings`
-  
-  4. extract time strings of those elements into a `Series` called `time_strings`
-
-### Monte Carlo Integration
-
-#### Approximating Probabilities
-
-We will make use of the *Monte Carlo* [@monte-carlo-stat-methods] method below. It is a technique to approximate expectations and probabilities. If $n$ is a large number, and $X_1, \ldots, X_n$ is a random sample drawn from the distribution of interest, then 
-$$
-\mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6).
-$$
-If you haven't seen an **indicator function** before, it is defined as 
-
-$$
-\mathbf{1}(X_i > 6)
-=
-\begin{cases}
-1 & X_i > 6 \\
-0 & X_i \le 6
-\end{cases}.
-$$
-
-If you wanted to visualize it, $\mathbf{1}(x > 6)$ looks like this. 
-
-
-```{r, echo=FALSE, out.width="50%", fig.align = 'center'}
-leX <- seq(6-5,6+5, .01)
-plot(leX, leX > 6, type = "l", xlab = "x", ylab = "1(x>6)")
-```
-
-So, the sum in this expression is just a count of the number of elements that are greater than $6$. 
-
-
-  1. Evaluate exactly the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$. Assign it to the variable `exact_exceedance_prob` in Python.
-  
-  2. Simulate $1e3$ times from a standard normal distribution (mean 0 and variance 1). Call the samples `stand_norm_samps`
-  
-  3. Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these samples. Call it `approx_exceedance_prob1`.
-  
-  4. Simulate $1e3$ times from a normal distribution with mean $5$ and standard deviation $6$. Call the samples `norm_samps`. Don't use the old samples in any way.
-
-  5. Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these new `norm_samps`. Call it `approx_exceedance_prob2`.
-
-
-#### Approximating Expectations
-
-Alternatively, we can approximate expectations. If $\mathbb{E}[f(X)]$ exists, $n$ is a large number, and $W_1, \ldots, W_n$ is a random sample drawn from the distribution of interest, then
-
-$$
-\mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
-$$
-
-Here's a new distribution. It is a **mixture distribution**, specifically a **finite mixture of normal distributions**: $f(y) =  f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)$ where  
-
-$$
-Y \mid X=0 \sim \text{Normal}(0, 2) \\
-Y \mid X=1 \sim \text{Normal}(10, 2)
-$$
-and
-
-$$
-X \sim \text{Bernoulli}(.5).
-$$
-
-Both $f(y \mid X=0)$ and $f(y \mid X=1)$ are bell-curved, and $f(y)$ looks like this
-
-```{r,  echo=FALSE, out.width="50%", fig.align = 'center'}
-leX <- seq(5-20,5+20, .1)
-plot(leX, .5*dnorm(leX, 0, sqrt(2)) + .5*dnorm(leX, 10, sqrt(2)), type = "l", xlab = "x", ylab = "f(y)")
-```
-
-
-  1. Evaluate exactly $\mathbb{E}[Y]$. Assign it to the variable `exact_mean` in Python.
-  
-  2. Simulate $1e3$ times from the Bernoulli distribution. Call the samples `bernoulli_flips`
-
-  3. Simulate $Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}$ and call the samples `cond_norm_samps`. 
-  
-  4. Calculate a Monte Carlo estimate of $\mathbb{E}[Y]$ from `cond_norm_samps`. Call it `approx_ave_1`. Why is simply "ignoring" `bernoulli_flips`, the samples you condition on, "equivalent" to "integrating them out?" 
-  
-  5. Calculate a **Rao-Blackwellized** Monte Carlo estimate of $\mathbb{E}[Y]$ from `bernoulli_flips`. Call it `approx_ave_2`. Hint: $\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]$. Calculate $\mathbb{E}(Y \mid X_i)$ exactly, and evaluate that function on each $X_i$ sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.
-  
-  
-
-<!-- ### Exercises -->
-
-<!-- #### Easy -->
-
-<!-- All answers to questions related to R should be written in a file named `easy_data_types_exercises.R`. All answers to questions related to Python should be written in a file named `easy_data_types_exercises.py`. -->
-
-
-<!-- 1. Which Python type is ideal for each piece of data? Assign your answers to a `list` of `str`ings called `question_one`.  -->
-
-<!--     + An individual's IP address -->
-<!--     + whether or not an individual attended a study -->
-<!--     + the number of seeds found in a plant -->
-<!--     + the amount of time it takes for a car to race around a track -->
-
-<!-- 2. Answer the same question above, but use R types? Assign your answers to a `character vector` of length four called `questionOne`.  -->
-
-<!--     + An individual's IP address -->
-<!--     + whether or not an individual attended a study -->
-<!--     + the number of seeds found in a plant -->
-<!--     + the amount of time it takes for a car to race around a track -->
-
-<!-- 3. ["The only numbers that can be represented exactly in R’s numeric type are integers and fractions whose denominator is a power of 2."](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f) Provide ten examples of numbers that have nonzero decimal components and are not exactly equal represented by R's `numeric` type. Store them all in a vector called `notExactFloats`. -->
-
