@@ -52,9 +52,9 @@ All of these sound like a good things to have in our code, so let's get started 
 ## Functions as Function Inputs in R
 
 
-Many of the most commonly-used functionals in R have names that end in "apply". The ones I discuss are `sapply`, `vapply`, `lapply`, `apply`, `tapply` and `mapply`. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.
+Many of the most commonly-used functionals in R have names that end in "apply". The ones I discuss are `sapply()`, `vapply()`, `lapply()`, `apply()`, `tapply()` and `mapply()`. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.
 
-### `sapply` and `vapply`
+### `sapply()` and `vapply()`
 
 ```{r, echo=F}
 myDFrows <- 10
@@ -82,14 +82,14 @@ You will need one line of code for each column in the data frame. For data frame
 "Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).
 :::
 
-Instead, prefer the use of `sapply` in this situation. The "s" in `sapply` stands for "simplified." In this bit of code `mean` is called on each column of th data frame. `sapply` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
+Instead, prefer the use of `sapply()` in this situation. The "s" in `sapply()` stands for "simplified." In this bit of code `mean()` is called on each column of th data frame. `sapply()` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
 
 ```{r, collapse=TRUE}
 myMeans <- sapply(myDF, mean)
 head(myMeans)
 ```
 
-Each call to `mean` returns a `double` `vector` of length $1$. This is necessary if you want to collect all the results into a `vector`--remember, all elements of a `vector` have to have the same type. To get the same behavior, you might also consider using `vapply(myDF, mean, numeric(1))`.
+Each call to `mean()` returns a `double` `vector` of length $1$. This is necessary if you want to collect all the results into a `vector`--remember, all elements of a `vector` have to have the same type. To get the same behavior, you might also consider using `vapply(myDF, mean, numeric(1))`.
 
 In the above case, "simplify" referred to how one-hundred length-$1$ vectors were simplified into one length-$100$ `vector`. However, "simplified" does not necessarily imply that all elements will be stored in a `vector`. Consider the `summary` function, which returns a `double` `vector` of length $6$. In this case, one-hundred length-$6$ vectors were simplified into one $6 \times 100$ matrix.
 
@@ -101,13 +101,13 @@ dim(mySummaries)
 
 
 ::: {.rmd-details}
-Another function that is worth mentioning is `replicate`--it is a wrapper for `sapply`. Consider a situation where you want to call a function many times with the same inputs. You might try something like `sapply(1:100, function(elem) {  return(myFunc(someInput)) } )`. Another, more readable, way to do this is `replicate(100, myFunc(someInput))`. 
+Another function that is worth mentioning is `replicate()`--it is a wrapper for `sapply()`. Consider a situation where you want to call a function many times with the same inputs. You might try something like `sapply(1:100, function(elem) {  return(myFunc(someInput)) } )`. Another, more readable, way to do this is `replicate(100, myFunc(someInput))`. 
 :::
 
 
-### `lapply`
+### `lapply()`
 
-For functions that do not return amenable types that fit into a `vector`, `matrix` or `array`, they might need to be stored in `list`. In this situation, you would need `lapply`. The "l" in `lapply` stands for "list". `lapply` always returns a `list` of the same length as the `input`.
+For functions that do not return amenable types that fit into a `vector`, `matrix` or `array`, they might need to be stored in `list`. In this situation, you would need `lapply()`. The "l" in `lapply()` stands for "list". `lapply()` always returns a `list` of the same length as the `input`.
 
 ```{r, collapse = TRUE}
 regress <- function(y){ lm(y ~ 1) }
@@ -117,9 +117,9 @@ class(myRegs[[1]])
 summary(myRegs[[12]])
 ```
 
-### `apply`
+### `apply()`
 
-I use `sapply` and `lapply` the most, personally. The next most common function I use is `apply`. I use it to apply functions to *rows* instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.^[`apply` is everyone's favorite whipping boy whenever it comes to comparing `apply` against the other `*apply` functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice. ] 
+I use `sapply()` and `lapply()` the most, personally. The next most common function I use is `apply()`. I use it to apply functions to *rows* instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.^[`apply()` is everyone's favorite whipping boy whenever it comes to comparing `apply()` against the other `*apply()` functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice. ] 
 
 ```{r, collapse = TRUE}
 dim(myDF)
@@ -137,7 +137,7 @@ head(subDF)
 Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.
 
 - Step 1: write a predicate function that returns TRUE or FALSE;
-- Step 2: construct a `logical` `vector` by `apply`ing the predicate over rows;
+- Step 2: construct a `logical` `vector` by `apply()`ing the predicate over rows;
 - Step 3: plug the `logical` `vector` into the `[` operator to remove the rows.
    
 ```{r, collapse = TRUE}
@@ -149,9 +149,9 @@ subDF <- albRealEstate[whichRows,]
 head(subDF)
 ``` 
 
-### `tapply`
+### `tapply()`
 
-`tapply` can be very handy when you need it. First, we've alluded to the definition before in subsection \@ref(data-frames-in-r), but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply`. Rather, I let `tapply` construct the ragged array for me. The first argument it expects is "typically vector-like", while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
+`tapply()` can be very handy when you need it. First, we've alluded to the definition before in subsection \@ref(data-frames-in-r), but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply()`. Rather, I let `tapply()` construct the ragged array for me. The first argument it expects is "typically vector-like", while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
 
 If I wanted the average home price for each city, I could use something like this.
 
@@ -161,7 +161,7 @@ unique(albRealEstate$City)
 tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)
 ```
 
-You might be wondering why we put `albRealEstate$City` into a `list`. That seems kind of unnecessary. This is because `tapply` can be used with multiple `factor`s--this will break down the `vector` input into a finer partition. The second argument must be one object, though, so all of these `factor`s must be collected into a `list`. The following code produces a "pivot table."
+You might be wondering why we put `albRealEstate$City` into a `list`. That seems kind of unnecessary. This is because `tapply()` can be used with multiple `factor`s--this will break down the `vector` input into a finer partition. The second argument must be one object, though, so all of these `factor`s must be collected into a `list`. The following code produces a "pivot table."
 
 ```{r, collapse = TRUE}
 tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Condition), mean)
@@ -169,39 +169,39 @@ tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Conditio
 
 
 ::: {.rmd-details}
-For functions that return higher-dimensional output, you will have to use something like `by` or `aggregate` in place of `tapply`.
+For functions that return higher-dimensional output, you will have to use something like `by()` or `aggregate()` in place of `tapply()`.
 :::
 
 
-### `mapply`
+### `mapply()`
 
 
-The [documentation of `mapply`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply` is a multivariate version of `sapply`. `sapply` worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply`. 
+The [documentation of `mapply()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply()` is a multivariate version of `sapply()`. `sapply()` worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply()`. 
 
-Here is a short example. Regarding the `n=` argument of `rnorm`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample a.) three times from a mean $0$ normal, b.) twice from a mean $100$ normal, and c.) once from a mean $-100$ normal distribution.
+Here is a short example. Regarding the `n=` argument of `rnorm()`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample a.) three times from a mean $0$ normal, b.) twice from a mean $100$ normal, and c.) once from a mean $-100$ normal distribution.
 
 ```{r}
 rnorm(n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 mapply(rnorm, n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
 ```
 
-### `Reduce` and `do.call`
+### `Reduce()` and `do.call()`
 
-In section \@ref(reshaping-and-combining-data-sets) we talked about several different ways of "combining" data sets. We discussed stacking data sets on top of one another with `rbind` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge` (c.f. \@ref(merging-or-joining-data-sets)). Consider the task of combining *many* data sets. How do we write DRY code and abide by the DRY principle?
+In section \@ref(reshaping-and-combining-data-sets) we talked about several different ways of "combining" data sets. We discussed stacking data sets on top of one another with `rbind()` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind()` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge()` (c.f. \@ref(merging-or-joining-data-sets)). Consider the task of combining *many* data sets. How do we write DRY code and abide by the DRY principle?
 
-We can use either `Reduce` or `do.call` as a higher-order function. Just like the aforementioned `*apply` functions, they take in either `cbind`, `rbind`, or `merge` as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take. 
+We can use either `Reduce()` or `do.call()` as a higher-order function. Just like the aforementioned `*apply()` functions, they take in either `cbind()`, `rbind()`, or `merge()` as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take. 
 
-Take a look at the documentation to `rbind`. Its first argument is `...`, which is the [dot-dot-dot](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot) symbol. This means `rbind` can take a varying number of `data.frame`s to stack on top of each other. In other words, `rbind` is *variadic*.
+Take a look at the documentation to `rbind()`. Its first argument is `...`, which is the [dot-dot-dot](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot) symbol. This means `rbind()` can take a varying number of `data.frame`s to stack on top of each other. In other words, `rbind()` is *variadic*.
 
-On the other hand, take a look at the documentation of `merge`. It only takes two `data.frame`s at a time^[Although, it is still variadic. The difference is that the `dot-dot-dot` symbol does not refer to a varying number of `data.frame`s...just a varying number of other things we don't care about at the present moment.].
+On the other hand, take a look at the documentation of `merge()`. It only takes two `data.frame`s at a time^[Although, it is still variadic. The difference is that the `dot-dot-dot` symbol does not refer to a varying number of `data.frame`s...just a varying number of other things we don't care about at the present moment.].
 
-If we want to combine many data sets, `merge` This is the difference between `Reduce` and `do.call`. 
+If we want to combine many data sets, `merge()` This is the difference between `Reduce()` and `do.call()`. 
 
-`do.call` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce` calls a binary function many times on pairs of arguments. `Reduce`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
+`do.call()` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce()` calls a binary function many times on pairs of arguments. `Reduce()`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
 
 TODO diagram
 
-Here is an initial example that makes use of four data sets `d1.csv`, `d2.csv`, `d3.csv`, and `d4.csv`. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste `read.csv` calls, but that would violate the DRY principle. Instead, let's use `lapply` an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
+Here is an initial example that makes use of four data sets `d1.csv`, `d2.csv`, `d3.csv`, and `d4.csv`. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste `read.csv` calls, but that would violate the DRY principle. Instead, let's use `lapply()` an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
 
 ```{r, collapse = TRUE}
 numDataSets <- 4
@@ -213,7 +213,7 @@ head(dfs[[3]])
 
 Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!
 
-Next, `cbind`ing them all together can be done as follows. `do.call` will call the function only once. `cbind` takes many arguments at once, so this works. 
+Next, `cbind()`ing them all together can be done as follows. `do.call()` will call the function only once. `cbind()` takes many arguments at once, so this works. 
 
 ```{r, collapse = TRUE}
 do.call(cbind, dfs) # DRY! :)
@@ -222,12 +222,12 @@ do.call(cbind, dfs) # DRY! :)
 
 This code is even better than the above code in that if `dfs` becomes longer, or changes at all, *nothing* will need to be changed. 
 
-What if we wanted to `merge` all these data sets together? After all, the `id` column appears to be repeating itself, and some data from `d2` isn't lining up.
+What if we wanted to `merge()` all these data sets together? After all, the `id` column appears to be repeating itself, and some data from `d2` isn't lining up.
 
 ```{r, collapse=TRUE}
 Reduce(merge, dfs)
 ```
-Again, this is very DRY code. Nothing would need to be changed if `dfs` grew. Furthermore, trying to `do.call` the `merge` function wouldn't work because it can only take two data sets at a time. 
+Again, this is very DRY code. Nothing would need to be changed if `dfs` grew. Furthermore, trying to `do.call()` the `merge()` function wouldn't work because it can only take two data sets at a time. 
 
 
 ## Another Example in R
@@ -243,7 +243,7 @@ The random elements $x$ and $y$, in this particular case, are uncorrelated, each
 2. evaluate our function on each point, and then
 3. call some plotting function that takes this all and makes a pretty picture.
 
-There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use `mapply`, we need the function to take two arguments.
+There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use `mapply()`, we need the function to take two arguments.
 
 ```{r, collapse = TRUE}
 fTwoArgs <- function(x,y){
@@ -251,7 +251,7 @@ fTwoArgs <- function(x,y){
 }
 ```
 
-We can construct every possible point on a grid with the `expand.grid` function.
+We can construct every possible point on a grid with the `expand.grid()` function.
 
 ```{r, collapse = TRUE}
 xGrid <- seq(-3,3,.1)
@@ -260,7 +260,7 @@ grid <- expand.grid(xGrid, yGrid)
 head(grid)
 ```
 
-`mapply` would take `fTwoArgs`, and effectively call it on every row pair. The pairs do not need to be organized in a `data.frame`, though.
+`mapply()` would take `fTwoArgs=`, and effectively call it on every row pair. The pairs do not need to be organized in a `data.frame`, though.
 
 ```{r, collapse=TRUE}
 funcOut1 <- mapply(fTwoArgs, grid[,1], grid[,2])
@@ -270,7 +270,7 @@ persp(xGrid, yGrid, rectangularOutput,
       zlab = "f(x,y)", xlab = "x", ylab = "y")
 ```
 
-If you prefer using `apply`, that is also possible, but you would need to rewrite the function to take one (length-two) argument. 
+If you prefer using `apply()`, that is also possible, but you would need to rewrite the function to take one (length-two) argument. 
 
 ```{r, collapse=T}
 fOneArg <- function(vec){
@@ -283,11 +283,11 @@ contour(xGrid, yGrid, moreRectOut, xlab = "x", ylab = "y")
 
 ## Functions as Function Inputs in Base Python
 
-I discuss two functions from base Python that take functions as input. Neither return a `list` or a `np.array`, but they do return different kinds of **iterables**, which are "objects capable of returning their members one at a time," [according to the Python documentation.](https://docs.python.org/3/glossary.html) `map`, the function, will return objects of type `map`. `filter`, the function, will return objects of type `filter`. Often times we will just convert these to the container we are more familiar with.
+I discuss two functions from base Python that take functions as input. Neither return a `list` or a `np.array`, but they do return different kinds of **iterables**, which are "objects capable of returning their members one at a time," [according to the Python documentation.](https://docs.python.org/3/glossary.html) `map()`, the function, will return objects of type `map`. `filter()`, the function, will return objects of type `filter`. Often times we will just convert these to the container we are more familiar with.
 
-### `map`
+### `map()`
 
-[`map`](https://docs.python.org/3/library/functions.html#map) can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a *spline* function, which can be useful for coming up with predictors in regression models. This particular spline function is $f(x) = (x-k)1(x \ge k)$, where $k$ is some chosen "knot point."
+[`map()`](https://docs.python.org/3/library/functions.html#map) can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a *spline* function, which can be useful for coming up with predictors in regression models. This particular spline function is $f(x) = (x-k)1(x \ge k)$, where $k$ is some chosen "knot point."
 
 ```{python, collapse=TRUE}
 import numpy as np
@@ -308,7 +308,7 @@ import matplotlib.pyplot as plt
 plt.plot(my_inputs, output)
 ```
 
-`map` can also be used like `mapply`. In other words, you can apply it to two containers,
+`map()` can also be used like `mapply()`. In other words, you can apply it to two containers,
 
 ```{python, collapse=TRUE}
 import numpy as np
@@ -320,10 +320,10 @@ output = list(map(spline, my_inputs))
 ```
 
 
-### `filter`
+### `filter()`
 
 
-[`filter`](https://docs.python.org/3/library/functions.html#filter) helps remove unwanted elements from a container. It returns an iterable of type `filter`, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
+[`filter()`](https://docs.python.org/3/library/functions.html#filter) helps remove unwanted elements from a container. It returns an iterable of type `filter`, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
 ```{python, collapse = TRUE}
 raw_data = np.arange(0,1.5,.01)
@@ -334,7 +334,7 @@ for elem in filter(lambda x : x**2 > 2, raw_data):
 
 ## Functions as Function Inputs in Numpy
 
-Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate working with `np.ndarray`s in a functional style. For example, [`np.apply_along_axis`](https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html) is similar to R's `apply`. `apply` had a `MARGIN` argument (`1` sums rows, `2` sums columns), whereas this function has a `axis=` argument (`0` sums columns, `1` sums rows). 
+Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate working with `np.ndarray`s in a functional style. For example, [`np.apply_along_axis()`](https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html) is similar to R's `apply()`. `apply()` had a `MARGIN=` input (`1` sums rows, `2` sums columns), whereas this function has a `axis=` input (`0` sums columns, `1` sums rows). 
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -352,9 +352,9 @@ np.apply_along_axis(sum, 1, my_array).shape
 ```
 
 
-## Functional Methods in pandas
+## Functional Methods in Pandas
 
-pandas' `DataFrame`s have an [`.apply` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply` in R,^[You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as `DataFrame` methods. For instance, `.mean` would allow you to do something like `my_df.mean()`.] but again, just like the above function, you have to think about an `axis=` argument instead of a `MARGIN=` argument. 
+Pandas' `DataFrame`s have an [`.apply()` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply()` in R,^[You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as `DataFrame` methods. For instance, `.mean()` would allow you to do something like `my_df.mean()`.] but again, just like the above function, you have to think about an `axis=` argument instead of a `MARGIN=` argument. 
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -364,7 +364,7 @@ alb_real_est.apply(len, axis=0) # length of columns
 type(alb_real_est.apply(len, axis=1)) # length of rows
 ```
 
-Another thing to keep in mind is that `DataFrame`s, unlike `ndarray`s, don't have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before `.apply`ing a function to rows. Here is an example of computing each property's "score". 
+Another thing to keep in mind is that `DataFrame`s, unlike `ndarray`s, don't have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before `.apply()`ing a function to rows. Here is an example of computing each property's "score". 
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -375,7 +375,7 @@ alb_real_est['Score'] = alb_real_est[['FinSqFt','LotSize']].apply(get_prop_score
 alb_real_est[['FinSqFt','LotSize','Score']].head(2)
 ```
 
-`.apply` also works with more than one function at a time.
+`.apply()` also works with more than one function at a time.
 
 ```{python, collapse = TRUE}
 alb_real_est[['FinSqFt','LotSize']].apply([sum, len])
@@ -388,14 +388,14 @@ alb_real_est[['FinSqFt','LotSize']].apply(lambda row : sum(row*[2,3]), 1)[:4]
 ```
 
 
-If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with [`.applymap`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap).
+If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with [`.applymap()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap).
 
 ```{python, collapse = TRUE}
 alb_real_est[['FinSqFt','LotSize']].applymap(lambda e : e + 1).head(2)
 ```
 
 
-Last, we have a [`.groupby`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html) method, which can be used to mirror the behavior of R's `tapply`, `aggregate` or `by`. It can take the `DataFrame` it belongs to, and group its rows into multiple sub-`DataFrame`s. The collection of sub-`DataFrames` has a lot of the same methods that an individual `DataFrame` has (e.g. the subsetting operators,  and the `.apply()` method), which can all be used in a second step of calculating things on each sub-`DataFrame`.
+Last, we have a [`.groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html) method, which can be used to mirror the behavior of R's `tapply()`, `aggregate()` or `by()`. It can take the `DataFrame` it belongs to, and group its rows into multiple sub-`DataFrame`s. The collection of sub-`DataFrames` has a lot of the same methods that an individual `DataFrame` has (e.g. the subsetting operators,  and the `.apply()` method), which can all be used in a second step of calculating things on each sub-`DataFrame`.
 
 ```{python, collapse = TRUE}
 type(alb_real_est.groupby(['City']))
@@ -434,7 +434,7 @@ greetWithHello("Taylor")
 greetWithHello("Charlie")
 ```
 
-The `greetingMessage` argument that is passed in, `"Hello"`, isn't temporary anymore. 
+The `greetingMessage=` argument that is passed in, `"Hello"`, isn't temporary anymore. 
 
 
 Here is an example that implements a variance reduction technique called **common random numbers**. 
@@ -449,7 +449,7 @@ $$
 $$
 where $X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)$ is a large collection of draws from the appropriate normal distribution. In real life, the theoretical expectation might not be tractable (either because the random variable has a complicated distribution, or maybe because the functional is very complicated) and Monte Carlo, or some other approximation algorithm, might be our only hope!
 
-Here are two functions that calculate the above quantities for $n=100$. `actualExpectSin` is a function that computes the theoretical expectation for any particular parameter pair. `monteCarloSin` is a function that implements the Monte Carlo approximate expectation. 
+Here are two functions that calculate the above quantities for $n=100$. `actualExpectSin()` is a function that computes the theoretical expectation for any particular parameter pair. `monteCarloSin()` is a function that implements the Monte Carlo approximate expectation. 
 
 ```{r, collapse = TRUE}
 n <- 1000 # don't hardcode variables that aren't passed as arguments!
@@ -534,11 +534,11 @@ par(mfrow=c(1,1))
 
 Returning functions from functions, explaining mechanics
 
-[`np.vectorize`](https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html#numpy.vectorize) is something that I use quite often.     
+[`np.vectorize()`](https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html#numpy.vectorize) is something that I use quite often.     
 
 decorators!
 
-TODO Both R and Python have reduce functions. R has `Reduce`, while Python has `reduce`.
+TODO Both R and Python have reduce functions. R has `Reduce()`, while Python has `reduce()`.
 
 In R
 
