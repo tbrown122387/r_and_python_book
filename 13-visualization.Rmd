@@ -18,7 +18,7 @@ head(df)
 
 If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices. 
 
-```{r, collapse=TRUE}
+```{r, collapse=TRUE, fig.cap="A Simple Histogram"}
 hist(log(df$TotalValue), 
      xlab = "natural logarithm of home price", main = "Super-Duper Plot!")
 ```
@@ -27,7 +27,7 @@ I specified the `xlab=` and `main=` arguments, but there are many more that coul
 
 `plot` is useful for plotting two univariate numerical variables. This can be done in time series plots (variable versus time) and scatter plots (one variable versus another).
 
-```{r, collapse=T}
+```{r, collapse=T, fig.cap = "Some Scatterplots" }
 par(mfrow=c(1,2))
 plot(df$TotalValue, df$LotSize, 
      xlab = "total value ($)", ylab = "lot size (sq. ft.)",
@@ -55,7 +55,7 @@ The core function is the [`ggplot` function](https://www.rdocumentation.org/pack
 
 Consider this first example. 
 
-```{r, collapse = TRUE, out.width='80%'}
+```{r, collapse = TRUE, out.width='80%', fig.cap = "A Blank Canvas"}
 library(ggplot2)
 ggplot(mpg, aes(x = displ, y = hwy))
 ```
@@ -72,7 +72,7 @@ To plot geometric shapes (*geoms* in the parlance of `ggplot2`), we need to add 
 
 Consider the function [`geom_point`](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point). It too returns an S3 instance that has specialized behavior. In the parlance of `ggplot2`, it adds a [scatterplot](https://ggplot2-book.org/getting-started.html#basic-use) layer to the figure.
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, fig.cap = "A Second Scatterplot"}
 library(ggplot2)
 ggplot(mpg, aes(x = displ, y = hwy))  +
   geom_point()
@@ -80,9 +80,9 @@ ggplot(mpg, aes(x = displ, y = hwy))  +
 
 Notice that we did not need to provide any arguments to `geom_point`. The aesthetic mappings were used by the new layer.
 
-There are *many* types of layers that you can add to a plot, and you're not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the `ggtitle` function to add a title layer. Unlike `geom_point`, this function will need to take an argument because the desired title is not stored as an aesthetic mapping.
+There are *many* types of layers that you can add to a plot, and you're not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the `ggtitle` function to add a title layer. Unlike `geom_point`, this function will need to take an argument because the desired title is not stored as an aesthetic mapping. Try running the following code on your own machine.
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, eval=FALSE}
 ggplot(mpg, aes(x = displ, y = hwy))  +
   geom_point() + 
   ggtitle("my favorite scatterplot")
@@ -90,7 +90,7 @@ ggplot(mpg, aes(x = displ, y = hwy))  +
 
 Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, fig.cap = "Adding Some Color"}
 ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
   geom_point() + 
   ggtitle("my favorite scatterplot")
@@ -100,16 +100,16 @@ If we want tighter control on the aesthetic mapping, we can use [**scales**](htt
 
 We can change attributes of the axes like this.
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, fig.cap = "Changing Scales"}
 base_plot <- ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
              geom_point() + 
              ggtitle("my favorite scatterplot")
 base_plot + scale_x_log10() + scale_y_reverse()
 ```
 
-We can also change plot colors with scale layers. Let's add an aesthetic called fill so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called `score`. We also use a new geom layer from a function called `geom_tile()`.  
+We can also change plot colors with scale layers. Let's add an aesthetic called `fill=` so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called `score`. We also use a new geom layer from a function called `geom_tile()`.  
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, fig.cap = "Changing the Fill"}
 mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
 ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
   geom_tile() 
@@ -117,16 +117,16 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one. 
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, fig.cap = "Changing the Fill Again"}
 mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
 ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
   geom_tile() + 
   scale_fill_viridis_b()
 ```
 
-There are many to choose from, though. Here's another one. 
+There are many to choose from, though. Try to run the following code on your own to see what it produces.
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, eval = FALSE}
 mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
 ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
   geom_tile() + 
@@ -141,7 +141,7 @@ Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It's
 You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
 :::
 
-```{python, collapse = TRUE}
+```{python, collapse = TRUE, fig.cap = "Another Simple Histogram"}
 import matplotlib.pyplot as plt       # 1
 import numpy as np                    # 2
 fig, ax = plt.subplots()              # 3
@@ -155,9 +155,9 @@ In the first line, we import the `pyplot` submodule of `matplotlib`. We rename i
 
 Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn't in a Numpy array, you should convert it first. 
 
-Third, we call the `subplots` function, and use *sequence unpacking* to unpack the returned container into individual objects without storing the overall container. "Subplots" sounds like it will make many different plots all on one figure, but if you look at the [documentation](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots) the number of rows and columns defaults to one and one, respectively. 
+Third, we call the `subplots()` function, and use *sequence unpacking* to unpack the returned container into individual objects without storing the overall container. "Subplots" sounds like it will make many different plots all on one figure, but if you look at the [documentation](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots) the number of rows and columns defaults to one and one, respectively. 
 
-`plt.subplots` returns a [`tuple`](https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple)^[We didn't talk about `tuple`s in chapter 2, but you can think of them as being similar to `list`s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g. `('a')` ) instead of square brackets, and they are immutable instead of mutable.] of two things: a `Figure` object, and one or more `Axes` object(s). These two classes will require some explanation. 
+`plt.subplots()` returns a [`tuple`](https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple)^[We didn't talk about `tuple`s in chapter 2, but you can think of them as being similar to `list`s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g. `('a')` ) instead of square brackets, and they are immutable instead of mutable.] of two things: a `Figure` object, and one or more `Axes` object(s). These two classes will require some explanation. 
 
 1. A [`Figure` object](https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure) is the overall visualization object you're making. It holds onto all of the plot elements. If you want to save all of your progress (e.g. with `fig.savefig('my_picture.png')`), you're saving the overall `Figure` object. 
 
@@ -187,7 +187,7 @@ myAxes[1].plot(x,np.sin(x), label='sine wave')
 myAxes[1].legend()
 ```
 
-```{python, collapse = TRUE, out.width='80%', echo= FALSE}
+```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Side-By-Side Line Plots in Matplotlib"}
 plt.show()                            
 ```
 

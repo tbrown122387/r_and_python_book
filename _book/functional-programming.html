@@ -445,8 +445,8 @@ div.csl-indent {
 <p>Instead, prefer the use of <code>sapply()</code> in this situation. The “s” in <code>sapply()</code> stands for “simplified.” In this bit of code <code>mean()</code> is called on each column of th data frame. <code>sapply()</code> applies the function over columns, instead of rows, because data frames are internally a <code>list</code> of columns.</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="functional-programming.html#cb203-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
 <span id="cb203-2"><a href="functional-programming.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
-<span id="cb203-3"><a href="functional-programming.html#cb203-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         X1         X2         X3         X4         X5         X6 </span></span>
-<span id="cb203-4"><a href="functional-programming.html#cb203-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  0.1225714  0.1410555  0.0736524  0.6414736 -0.1712193  0.1345321</span></span></code></pre></div>
+<span id="cb203-3"><a href="functional-programming.html#cb203-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          X1          X2          X3          X4          X5          X6 </span></span>
+<span id="cb203-4"><a href="functional-programming.html#cb203-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -0.05652897  0.12630524  0.04350013  0.31853511  0.05133571 -0.12876482</span></span></code></pre></div>
 <p>Each call to <code>mean()</code> returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(1\)</span>. This is necessary if you want to collect all the results into a <code>vector</code>–remember, all elements of a <code>vector</code> have to have the same type. To get the same behavior, you might also consider using <code>vapply(myDF, mean, numeric(1))</code>.</p>
 <p>In the above case, “simplify” referred to how one-hundred length-<span class="math inline">\(1\)</span> vectors were simplified into one length-<span class="math inline">\(100\)</span> <code>vector</code>. However, “simplified” does not necessarily imply that all elements will be stored in a <code>vector</code>. Consider the <code>summary</code> function, which returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(6\)</span>. In this case, one-hundred length-<span class="math inline">\(6\)</span> vectors were simplified into one <span class="math inline">\(6 \times 100\)</span> matrix.</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="functional-programming.html#cb204-1" aria-hidden="true" tabindex="-1"></a>mySummaries <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, summary)</span>
@@ -474,13 +474,13 @@ div.csl-indent {
 <span id="cb205-11"><a href="functional-programming.html#cb205-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb205-12"><a href="functional-programming.html#cb205-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
 <span id="cb205-13"><a href="functional-programming.html#cb205-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb205-14"><a href="functional-programming.html#cb205-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.0486 -1.4525  0.2564  1.2027  1.8667 </span></span>
+<span id="cb205-14"><a href="functional-programming.html#cb205-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -1.1845 -0.7041 -0.1645  0.6728  1.4865 </span></span>
 <span id="cb205-15"><a href="functional-programming.html#cb205-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb205-16"><a href="functional-programming.html#cb205-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
 <span id="cb205-17"><a href="functional-programming.html#cb205-17" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb205-18"><a href="functional-programming.html#cb205-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -0.6051     0.4786  -1.264    0.238</span></span>
+<span id="cb205-18"><a href="functional-programming.html#cb205-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -0.4576     0.2951  -1.551    0.155</span></span>
 <span id="cb205-19"><a href="functional-programming.html#cb205-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb205-20"><a href="functional-programming.html#cb205-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.513 on 9 degrees of freedom</span></span></code></pre></div>
+<span id="cb205-20"><a href="functional-programming.html#cb205-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 0.9333 on 9 degrees of freedom</span></span></code></pre></div>
 </div>
 <div id="apply" class="section level3" number="18.1.3">
 <h3><span class="header-section-number">18.1.3</span> <code>apply()</code></h3>
@@ -488,8 +488,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="functional-programming.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(myDF)</span>
 <span id="cb206-2"><a href="functional-programming.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  10 100</span></span>
 <span id="cb206-3"><a href="functional-programming.html#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(myDF, <span class="dv">1</span>, mean)</span>
-<span id="cb206-4"><a href="functional-programming.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.08230408  0.07966684  0.14442117 -0.06576382  0.08663019 -0.18047354  0.06326709  0.23727456</span></span>
-<span id="cb206-5"><a href="functional-programming.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] -0.16700290  0.08939788</span></span></code></pre></div>
+<span id="cb206-4"><a href="functional-programming.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.023196477  0.037221248 -0.008878634 -0.053457738 -0.036816668  0.031687279 -0.060227674</span></span>
+<span id="cb206-5"><a href="functional-programming.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] -0.047570467 -0.010129079 -0.100110712</span></span></code></pre></div>
 <p>Another example where it can be useful to apply a function to rows is <strong>predicate functions.</strong> A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a <code>data.frame</code>. Without a predicate function, filtering rows might look something like this.</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="functional-programming.html#cb207-1" aria-hidden="true" tabindex="-1"></a>albRealEstate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb207-2"><a href="functional-programming.html#cb207-2" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(albRealEstate<span class="sc">$</span>YearBuilt <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> albRealEstate<span class="sc">$</span>Condition <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span>,]</span>
@@ -578,16 +578,16 @@ div.csl-indent {
 <p>The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html">documentation of <code>mapply()</code></a> states <code>mapply()</code> is a multivariate version of <code>sapply()</code>. <code>sapply()</code> worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use <code>mapply()</code>.</p>
 <p>Here is a short example. Regarding the <code>n=</code> argument of <code>rnorm()</code>, the documentation explains, “[i]f <code>length(n) &gt; 1</code>, the length is taken to be the number required.” This would be a problem if we want to sample a.) three times from a mean <span class="math inline">\(0\)</span> normal, b.) twice from a mean <span class="math inline">\(100\)</span> normal, and c.) once from a mean <span class="math inline">\(-100\)</span> normal distribution.</p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="functional-programming.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
-<pre><code>## [1]   0.006171609 100.010533669 -99.994407160</code></pre>
+<pre><code>## [1]  9.131865e-03  9.999663e+01 -1.000005e+02</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="functional-programming.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapply</span>(rnorm, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
 <pre><code>## [[1]]
-## [1] -0.002107059 -0.009343811  0.007078546
+## [1] -0.009988501  0.007870637  0.022877229
 ## 
 ## [[2]]
-## [1] 100.0091 100.0132
+## [1] 100.0022 100.0030
 ## 
 ## [[3]]
-## [1] -100.0045</code></pre>
+## [1] -99.99588</code></pre>
 </div>
 <div id="reduce-and-do.call" class="section level3" number="18.1.6">
 <h3><span class="header-section-number">18.1.6</span> <code>Reduce()</code> and <code>do.call()</code></h3>

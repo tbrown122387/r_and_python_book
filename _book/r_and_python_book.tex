@@ -746,7 +746,7 @@ Think about which option you prefer. What are the benefits of using separate typ
 \end{enumerate}
 
 \hypertarget{r-vectors-versus-numpy-arrays-and-pandas-series}{%
-\chapter{\texorpdfstring{R vectors versus Numpy \texttt{array}s and Pandas' \texttt{Series}}{R vectors versus Numpy arrays and Pandas' Series}}\label{r-vectors-versus-numpy-arrays-and-pandas-series}}
+\chapter{\texorpdfstring{R \texttt{vector}s versus Numpy \texttt{array}s and Pandas' \texttt{Series}}{R vectors versus Numpy arrays and Pandas' Series}}\label{r-vectors-versus-numpy-arrays-and-pandas-series}}
 
 This section is for describing the data types that let us store collections of elements that all \textbf{share the same type}. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these collection objects in a program, we will be interested in learning how to extract and modify different elements in the collection, as well as how to use the entire collection in an efficient calculation.
 
@@ -770,8 +770,8 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1] {-}0.3744729 {-}0.7712159 {-}0.4798847  0.9972218  0.3568309 {-}0.5606568 {-}0.8007674 {-}0.5424465 {-}2.0885384}
-\DocumentationTok{\#\# [10] {-}0.8012808}
+\DocumentationTok{\#\#  [1]  1.0761374 {-}0.7508032 {-}0.4899507  1.2474798  1.0251222  1.2043709 {-}0.5320196  1.1423383 {-}0.4611399}
+\DocumentationTok{\#\# [10] {-}1.5301810}
 \end{Highlighting}
 \end{Shaded}
 
@@ -798,7 +798,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.50261919, {-}1.26327694,  0.3518894 ])}
+\CommentTok{\#\# array([{-}0.811128  ,  0.2257682 , {-}0.91921848])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1233,8 +1233,8 @@ Use \href{https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html\#
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{how-do-r-and-python-handle-missing-values}{%
-\section{How do R and Python handle missing values?}\label{how-do-r-and-python-handle-missing-values}}
+\hypertarget{how-r-and-python-handle-missing-values}{%
+\subsection{How R and Python Handle Missing Values}\label{how-r-and-python-handle-missing-values}}
 
 R has \texttt{NULL}, \texttt{NaN}, and \texttt{NA}. Python has \texttt{None} and \texttt{np.nan}. If your eyes are glazing over already and you're thinking ``they all look like the same''--they are not.
 
@@ -1567,8 +1567,8 @@ Both \(f(y \mid X=0)\) and \(f(y \mid X=1)\) are bell-curved, and \(f(y)\) looks
   Calculate a \textbf{Rao-Blackwellized} Monte Carlo estimate of \(\mathbb{E}[Y]\) from \texttt{bernoulli\_flips}. Call it \texttt{approx\_ave\_2}. Hint: \(\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]\). Calculate \(\mathbb{E}(Y \mid X_i)\) exactly, and evaluate that function on each \(X_i\) sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.
 \end{enumerate}
 
-\hypertarget{numpys-ndarrays-versus-rs-matrices-and-arrays}{%
-\chapter{\texorpdfstring{Numpy's \texttt{ndarray}s versus R's matrices and arrays}{Numpy's ndarrays versus R's matrices and arrays}}\label{numpys-ndarrays-versus-rs-matrices-and-arrays}}
+\hypertarget{numpy-ndarrays-versus-rs-matrix-and-array-types}{%
+\chapter{\texorpdfstring{Numpy \texttt{ndarray}s Versus R's \texttt{matrix} and \texttt{array} Types}{Numpy ndarrays Versus R's matrix and array Types}}\label{numpy-ndarrays-versus-rs-matrix-and-array-types}}
 
 Sometimes you want a collection of elements that are \emph{all the same type}, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you're writing, or that you need to use tensors for a computer vision project you're working on.
 
@@ -1904,7 +1904,7 @@ Complete the following problems. \textbf{Do not use pre-made functions like \hre
 \end{enumerate}
 
 \hypertarget{rs-lists-versus-pythons-lists-and-dictionaries}{%
-\chapter{R's lists versus Python's lists and dictionaries}\label{rs-lists-versus-pythons-lists-and-dictionaries}}
+\chapter{\texorpdfstring{R's \texttt{list}s Versus Python's \texttt{list}s and Dictionaries}{R's lists Versus Python's lists and Dictionaries}}\label{rs-lists-versus-pythons-lists-and-dictionaries}}
 
 When you need to store elements in a container, but you can't guarantee that these elements all have the same type, or you can't guarantee that they all have the same size, then you need a \texttt{list} in R. In Python, you might need a \texttt{list} or \texttt{dict} (short for dictionary).
 
@@ -2152,7 +2152,7 @@ Below the definition, the function is called with an input of \texttt{41}. When 
 We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away after they are no longer needed.
 
 \hypertarget{more-details-on-rs-user-defined-functions}{%
-\section{More details on R's user-defined functions}\label{more-details-on-rs-user-defined-functions}}
+\section{More Details On R's User-Defined Functions}\label{more-details-on-rs-user-defined-functions}}
 
 Technically, in R, functions are \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Function-objects}{defined as three things bundled together}:
 
@@ -2531,7 +2531,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 139831168877920 139831168877952}
+\CommentTok{\#\# 140328445875552 140328445875584}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2755,7 +2755,7 @@ Here's a third example. We can take non-categorical data, and \texttt{cut} it in
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0]}
+\DocumentationTok{\#\#  [1] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -2800,7 +2800,7 @@ The pandas library also provides a \texttt{pd.cut()} function, which can return 
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \NormalTok{type\_of\_day}
-\CommentTok{\#\# [\textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}]}
+\CommentTok{\#\# [\textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
 \CommentTok{\#\# Categories (2, object): [\textquotesingle{}bad day\textquotesingle{} \textless{} \textquotesingle{}good day\textquotesingle{}]}
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -3293,7 +3293,7 @@ In R, there are thousands of user-created \textbf{packages.} You can download mo
 
 In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.
 
-If you followed the suggestions provided in \ref{installing-python-by-installing-anaconda}, then you installed Anaconda. This means you will usually be using the \href{https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/}{\texttt{conda} command}. Point-and-click interfaces are made available as well.
+If you followed the suggestions provided in earlier in the text, then you installed Anaconda. This means you will usually be using the \href{https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/}{\texttt{conda} command}. Point-and-click interfaces are made available as well.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3434,8 +3434,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.37430682,  0.65055601,  1.04116985,  0.40619786,  1.18545264,}
-\CommentTok{\#\#         1.10477273, {-}0.6552697 ,  0.36210862, {-}1.5410743 , {-}1.16479554])}
+\CommentTok{\#\# array([{-}0.5126524 ,  0.1566794 ,  1.51515309, {-}0.6087987 , {-}0.8186656 ,}
+\CommentTok{\#\#         2.01670806, {-}0.19679004,  1.04240121,  0.8930571 , {-}1.25850883])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3447,8 +3447,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}2.10645384, {-}0.64331232,  0.54323479, {-}1.15784231, {-}1.44656607,}
-\CommentTok{\#\#        {-}0.33880164, {-}2.04988204,  2.48597726, {-}1.61682283, {-}0.77244657])}
+\CommentTok{\#\# array([{-}0.08912259,  0.12166268,  1.33552168,  1.21217794,  0.51807594,}
+\CommentTok{\#\#         0.81217249, {-}1.40578026, {-}0.08473983,  0.6202171 , {-}0.44714262])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3460,8 +3460,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.49992793,  1.85643285,  1.02441403,  0.77091548,  0.1953895 ,}
-\CommentTok{\#\#         3.18882199, {-}0.28449735, {-}0.1745171 ,  0.87041154, {-}1.64804442])}
+\CommentTok{\#\# array([ 1.04228361, {-}0.74492593, {-}1.1317017 , {-}1.96032149, {-}0.09316334,}
+\CommentTok{\#\#        {-}2.12767854, {-}0.67546808,  0.31398889,  1.30694523,  0.36415567])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3726,7 +3726,9 @@ q(x) =
 \]
 We can plot all three functions.
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-131-1}
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-131-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-131}
+\end{figure}
 
 Here's some Python code that attempts to sample once from \(p(x)\). Sometimes proposals are not accepted. When that happens, the function returns \texttt{None}.
 
@@ -3799,11 +3801,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1]  0.97324535 {-}0.95166064  0.08267718 {-}0.91703104 {-}0.72028354}
+\DocumentationTok{\#\# [1] {-}0.03708202 {-}1.17545709 {-}1.34363020  0.38723512  0.37705838}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}0.95166064 {-}0.91703104 {-}0.72028354  0.08267718  0.97324535}
+\DocumentationTok{\#\# [1] {-}1.34363020 {-}1.17545709 {-}0.03708202  0.37705838  0.38723512}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 2 4 5 3 1}
+\DocumentationTok{\#\# [1] 3 2 1 5 4}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3835,11 +3837,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [ 0.54005264 {-}0.1341511  {-}0.54070674  0.98248741  0.09481614]}
+\CommentTok{\#\# [ 0.16281438 {-}0.07993891 {-}0.23360895 {-}0.92996242 {-}2.95138317]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}0.54070674, {-}0.1341511 ,  0.09481614,  0.54005264,  0.98248741])}
+\CommentTok{\#\# array([{-}2.95138317, {-}0.92996242, {-}0.23360895, {-}0.07993891,  0.16281438])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([2, 1, 4, 0, 3])}
+\CommentTok{\#\# array([4, 3, 2, 1, 0])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3867,7 +3869,7 @@ pandas' \texttt{DataFrame}s and \texttt{Series} have a \href{https://pandas.pyda
 Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e.~raw subsetting by row indexes), but there is a built in method called \texttt{sort\_values} that will do it for us.
 
 \hypertarget{stacking-data-sets-and-placing-them-shoulder-to-shoulder}{%
-\section{Stacking Data Sets and Placing them Shoulder to Shoulder}\label{stacking-data-sets-and-placing-them-shoulder-to-shoulder}}
+\section{Stacking Data Sets and Placing Them Shoulder to Shoulder}\label{stacking-data-sets-and-placing-them-shoulder-to-shoulder}}
 
 Stacking data sets on top of each other is a common task. You might need to do it if
 
@@ -4006,7 +4008,7 @@ The email addresses \texttt{anotherfake@gmail.com} and \texttt{notreal@gmail.com
 
 Notice the duplicate email address, too. In this case, either the user signed up for two accounts using the same email, or one person signed up for an account with another person's email address. In the case of duplicates, both rows will match with the same rows in the other data frame.
 
-Also, in this case, all email addresses that weren't found in both data sets were thrown away. This does not necessarily need to be the intended behavior. For instance, if we wanted to make sure no rows were thrown away, that would be possible. In this case, though, for email addresses that weren't found in both data sets, some information will be missing. Recall that Python and R handle missing data differently (see \ref{how-do-r-and-python-handle-missing-values}).
+Also, in this case, all email addresses that weren't found in both data sets were thrown away. This does not necessarily need to be the intended behavior. For instance, if we wanted to make sure no rows were thrown away, that would be possible. In this case, though, for email addresses that weren't found in both data sets, some information will be missing. Recall that Python and R handle missing data differently (see \ref{how-r-and-python-handle-missing-values}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4291,7 +4293,11 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-158-1.pdf}
+\caption{\label{fig:unnamed-chunk-158}A Simple Histogram}
+\end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
 
@@ -4310,7 +4316,11 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-159-1.pdf}
+\caption{\label{fig:unnamed-chunk-159}Some Scatterplots}
+\end{figure}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4342,7 +4352,9 @@ Consider this first example.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-160-1}
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-160-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-160}
+\end{figure}
 
 You'll notice a few things about the code and the result produced:
 
@@ -4368,11 +4380,15 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
+\caption{\label{fig:unnamed-chunk-161}A Second Scatterplot}
+\end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point}. The aesthetic mappings were used by the new layer.
 
-There are \emph{many} types of layers that you can add to a plot, and you're not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the \texttt{ggtitle} function to add a title layer. Unlike \texttt{geom\_point}, this function will need to take an argument because the desired title is not stored as an aesthetic mapping.
+There are \emph{many} types of layers that you can add to a plot, and you're not limited to any number of them in a given plot. For example, if we wanted to add a title, we could use the \texttt{ggtitle} function to add a title layer. Unlike \texttt{geom\_point}, this function will need to take an argument because the desired title is not stored as an aesthetic mapping. Try running the following code on your own machine.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4381,8 +4397,6 @@ There are \emph{many} types of layers that you can add to a plot, and you're not
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"my favorite scatterplot"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-162-1.pdf}
 
 Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.
 
@@ -4394,7 +4408,11 @@ Additionally, notice that the same layer will behave much differently if we chan
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
+\caption{\label{fig:unnamed-chunk-163}Adding Some Color}
+\end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}.
 
@@ -4409,9 +4427,13 @@ We can change attributes of the axes like this.
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-164-1.pdf}
+\caption{\label{fig:unnamed-chunk-164}Changing Scales}
+\end{figure}
 
-We can also change plot colors with scale layers. Let's add an aesthetic called fill so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
+We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4421,7 +4443,11 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
+\caption{\label{fig:unnamed-chunk-165}Changing the Fill}
+\end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
 
@@ -4434,9 +4460,13 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
+\caption{\label{fig:unnamed-chunk-166}Changing the Fill Again}
+\end{figure}
 
-There are many to choose from, though. Here's another one.
+There are many to choose from, though. Try to run the following code on your own to see what it produces.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4446,8 +4476,6 @@ There are many to choose from, though. Here's another one.
   \FunctionTok{scale\_fill\_gradient2}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
-
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
 
 \hypertarget{plotting-with-matplotlib}{%
 \section{Plotting with Matplotlib}\label{plotting-with-matplotlib}}
@@ -4462,9 +4490,9 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  8.,  29.,  96., 159., 267., 232., 132.,  63.,  11.,   3.]), array([{-}3.0288461 , {-}2.40133168, {-}1.77381726, {-}1.14630284, {-}0.51878842,}
-\CommentTok{\#\#         0.108726  ,  0.73624042,  1.36375484,  1.99126926,  2.61878368,}
-\CommentTok{\#\#         3.2462981 ]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  9.,  29.,  74., 145., 226., 242., 162.,  84.,  22.,   7.]), array([{-}3.04592189, {-}2.43083116, {-}1.81574042, {-}1.20064968, {-}0.58555894,}
+\CommentTok{\#\#         0.02953179,  0.64462253,  1.25971327,  1.87480401,  2.48989475,}
+\CommentTok{\#\#         3.10498548]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4474,9 +4502,9 @@ In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib
 
 Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn't in a Numpy array, you should convert it first.
 
-Third, we call the \texttt{subplots} function, and use \emph{sequence unpacking} to unpack the returned container into individual objects without storing the overall container. ``Subplots'' sounds like it will make many different plots all on one figure, but if you look at the \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html\#matplotlib-pyplot-subplots}{documentation} the number of rows and columns defaults to one and one, respectively.
+Third, we call the \texttt{subplots()} function, and use \emph{sequence unpacking} to unpack the returned container into individual objects without storing the overall container. ``Subplots'' sounds like it will make many different plots all on one figure, but if you look at the \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html\#matplotlib-pyplot-subplots}{documentation} the number of rows and columns defaults to one and one, respectively.
 
-\texttt{plt.subplots} returns a \href{https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple\#tuple}{\texttt{tuple}}\footnote{We didn't talk about \texttt{tuple}s in chapter 2, but you can think of them as being similar to \texttt{list}s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g.~\texttt{(\textquotesingle{}a\textquotesingle{})} ) instead of square brackets, and they are immutable instead of mutable.} of two things: a \texttt{Figure} object, and one or more \texttt{Axes} object(s). These two classes will require some explanation.
+\texttt{plt.subplots()} returns a \href{https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple\#tuple}{\texttt{tuple}}\footnote{We didn't talk about \texttt{tuple}s in chapter 2, but you can think of them as being similar to \texttt{list}s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g.~\texttt{(\textquotesingle{}a\textquotesingle{})} ) instead of square brackets, and they are immutable instead of mutable.} of two things: a \texttt{Figure} object, and one or more \texttt{Axes} object(s). These two classes will require some explanation.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -4514,7 +4542,9 @@ If you want to make figures more elaborate, just keep calling different methods 
 
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-170-3.pdf}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-171-5}
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-171-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-171}
+\end{figure}
 
 import numpy as np
 my\_inputs = np.linspace(start = 0, stop = 2*np.pi)
@@ -4921,7 +4951,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x562e2925a758>
+## <bytecode: 0x56184e9aaef0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -5515,10 +5545,10 @@ All of these sound like a good things to have in our code, so let's get started 
 \hypertarget{functions-as-function-inputs-in-r}{%
 \section{Functions as Function Inputs in R}\label{functions-as-function-inputs-in-r}}
 
-Many of the most commonly-used functionals in R have names that end in ``apply''. The ones I discuss are \texttt{sapply}, \texttt{vapply}, \texttt{lapply}, \texttt{apply}, \texttt{tapply} and \texttt{mapply}. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.
+Many of the most commonly-used functionals in R have names that end in ``apply''. The ones I discuss are \texttt{sapply()}, \texttt{vapply()}, \texttt{lapply()}, \texttt{apply()}, \texttt{tapply()} and \texttt{mapply()}. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.
 
 \hypertarget{sapply-and-vapply}{%
-\subsection{\texorpdfstring{\texttt{sapply} and \texttt{vapply}}{sapply and vapply}}\label{sapply-and-vapply}}
+\subsection{\texorpdfstring{\texttt{sapply()} and \texttt{vapply()}}{sapply() and vapply()}}\label{sapply-and-vapply}}
 
 Suppose we have a \texttt{data.frame} that has 10 rows and 100 columns. What if we want to take the mean of each column?
 
@@ -5540,18 +5570,18 @@ You will need one line of code for each column in the data frame. For data frame
 
 ``Don't repeat yourself'' (DRY) is an idea that's been around for a while and is widely accepted \citep{hunt2000pragmatic}. DRY is the opposite of \href{https://en.wikipedia.org/wiki/Don\%27t_repeat_yourself\#WET}{WET}.
 
-Instead, prefer the use of \texttt{sapply} in this situation. The ``s'' in \texttt{sapply} stands for ``simplified.'' In this bit of code \texttt{mean} is called on each column of th data frame. \texttt{sapply} applies the function over columns, instead of rows, because data frames are internally a \texttt{list} of columns.
+Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \texttt{sapply()} stands for ``simplified.'' In this bit of code \texttt{mean()} is called on each column of th data frame. \texttt{sapply()} applies the function over columns, instead of rows, because data frames are internally a \texttt{list} of columns.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
 \DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
-\DocumentationTok{\#\# {-}0.51513987  0.35642343 {-}0.05910913  0.53142807 {-}0.24683566 {-}0.24566430}
+\DocumentationTok{\#\# {-}0.36304669 {-}0.06248811 {-}0.33902043 {-}0.53348058  0.30111467  0.30365474}
 \end{Highlighting}
 \end{Shaded}
 
-Each call to \texttt{mean} returns a \texttt{double} \texttt{vector} of length \(1\). This is necessary if you want to collect all the results into a \texttt{vector}--remember, all elements of a \texttt{vector} have to have the same type. To get the same behavior, you might also consider using \texttt{vapply(myDF,\ mean,\ numeric(1))}.
+Each call to \texttt{mean()} returns a \texttt{double} \texttt{vector} of length \(1\). This is necessary if you want to collect all the results into a \texttt{vector}--remember, all elements of a \texttt{vector} have to have the same type. To get the same behavior, you might also consider using \texttt{vapply(myDF,\ mean,\ numeric(1))}.
 
 In the above case, ``simplify'' referred to how one-hundred length-\(1\) vectors were simplified into one length-\(100\) \texttt{vector}. However, ``simplified'' does not necessarily imply that all elements will be stored in a \texttt{vector}. Consider the \texttt{summary} function, which returns a \texttt{double} \texttt{vector} of length \(6\). In this case, one-hundred length-\(6\) vectors were simplified into one \(6 \times 100\) matrix.
 
@@ -5565,12 +5595,12 @@ In the above case, ``simplify'' referred to how one-hundred length-\(1\) vectors
 \end{Highlighting}
 \end{Shaded}
 
-Another function that is worth mentioning is \texttt{replicate}--it is a wrapper for \texttt{sapply}. Consider a situation where you want to call a function many times with the same inputs. You might try something like \texttt{sapply(1:100,\ function(elem)\ \{\ \ return(myFunc(someInput))\ \}\ )}. Another, more readable, way to do this is \texttt{replicate(100,\ myFunc(someInput))}.
+Another function that is worth mentioning is \texttt{replicate()}--it is a wrapper for \texttt{sapply()}. Consider a situation where you want to call a function many times with the same inputs. You might try something like \texttt{sapply(1:100,\ function(elem)\ \{\ \ return(myFunc(someInput))\ \}\ )}. Another, more readable, way to do this is \texttt{replicate(100,\ myFunc(someInput))}.
 
 \hypertarget{lapply}{%
-\subsection{\texorpdfstring{\texttt{lapply}}{lapply}}\label{lapply}}
+\subsection{\texorpdfstring{\texttt{lapply()}}{lapply()}}\label{lapply}}
 
-For functions that do not return amenable types that fit into a \texttt{vector}, \texttt{matrix} or \texttt{array}, they might need to be stored in \texttt{list}. In this situation, you would need \texttt{lapply}. The ``l'' in \texttt{lapply} stands for ``list''. \texttt{lapply} always returns a \texttt{list} of the same length as the \texttt{input}.
+For functions that do not return amenable types that fit into a \texttt{vector}, \texttt{matrix} or \texttt{array}, they might need to be stored in \texttt{list}. In this situation, you would need \texttt{lapply()}. The ``l'' in \texttt{lapply()} stands for ``list''. \texttt{lapply()} always returns a \texttt{list} of the same length as the \texttt{input}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5587,28 +5617,28 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
 \DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}0.9795 {-}0.8970 {-}0.6464  1.0814  2.1473 }
+\DocumentationTok{\#\# {-}1.2604 {-}0.5851 {-}0.2481  0.5817  1.9651 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept) {-}0.04366    0.39573   {-}0.11    0.915}
+\DocumentationTok{\#\# (Intercept)  {-}0.2438     0.3160  {-}0.772     0.46}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 1.251 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 0.9991 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{apply}{%
-\subsection{\texorpdfstring{\texttt{apply}}{apply}}\label{apply}}
+\subsection{\texorpdfstring{\texttt{apply()}}{apply()}}\label{apply}}
 
-I use \texttt{sapply} and \texttt{lapply} the most, personally. The next most common function I use is \texttt{apply}. I use it to apply functions to \emph{rows} instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.\footnote{\texttt{apply} is everyone's favorite whipping boy whenever it comes to comparing \texttt{apply} against the other \texttt{*apply} functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice.}
+I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next most common function I use is \texttt{apply()}. I use it to apply functions to \emph{rows} instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.\footnote{\texttt{apply()} is everyone's favorite whipping boy whenever it comes to comparing \texttt{apply()} against the other \texttt{*apply()} functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.005715929 {-}0.138748180  0.065391027 {-}0.024379938  0.113298832 {-}0.038814010  0.158132867}
-\DocumentationTok{\#\#  [8]  0.053641633  0.104124151  0.055207925}
+\DocumentationTok{\#\#  [1]  0.001794624 {-}0.040589323 {-}0.017031484 {-}0.051361857  0.067512812  0.086231731  0.011460005}
+\DocumentationTok{\#\#  [8] {-}0.034333536  0.079393586 {-}0.043010070}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5643,7 +5673,7 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \item
   Step 1: write a predicate function that returns TRUE or FALSE;
 \item
-  Step 2: construct a \texttt{logical} \texttt{vector} by \texttt{apply}ing the predicate over rows;
+  Step 2: construct a \texttt{logical} \texttt{vector} by \texttt{apply()}ing the predicate over rows;
 \item
   Step 3: plug the \texttt{logical} \texttt{vector} into the \texttt{{[}} operator to remove the rows.
 \end{itemize}
@@ -5674,9 +5704,9 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \end{Shaded}
 
 \hypertarget{tapply}{%
-\subsection{\texorpdfstring{\texttt{tapply}}{tapply}}\label{tapply}}
+\subsection{\texorpdfstring{\texttt{tapply()}}{tapply()}}\label{tapply}}
 
-\texttt{tapply} can be very handy when you need it. First, we've alluded to the definition before in subsection \ref{data-frames-in-r}, but a \textbf{ragged array} is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to \texttt{tapply}. Rather, I let \texttt{tapply} construct the ragged array for me. The first argument it expects is ``typically vector-like'', while the second tells us how to break that \texttt{vector} into chunks. The third argument is a function that gets applied to each \texttt{vector} chunk.
+\texttt{tapply()} can be very handy when you need it. First, we've alluded to the definition before in subsection \ref{data-frames-in-r}, but a \textbf{ragged array} is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to \texttt{tapply()}. Rather, I let \texttt{tapply()} construct the ragged array for me. The first argument it expects is ``typically vector-like'', while the second tells us how to break that \texttt{vector} into chunks. The third argument is a function that gets applied to each \texttt{vector} chunk.
 
 If I wanted the average home price for each city, I could use something like this.
 
@@ -5706,7 +5736,7 @@ If I wanted the average home price for each city, I could use something like thi
 \end{Highlighting}
 \end{Shaded}
 
-You might be wondering why we put \texttt{albRealEstate\$City} into a \texttt{list}. That seems kind of unnecessary. This is because \texttt{tapply} can be used with multiple \texttt{factor}s--this will break down the \texttt{vector} input into a finer partition. The second argument must be one object, though, so all of these \texttt{factor}s must be collected into a \texttt{list}. The following code produces a ``pivot table.''
+You might be wondering why we put \texttt{albRealEstate\$City} into a \texttt{list}. That seems kind of unnecessary. This is because \texttt{tapply()} can be used with multiple \texttt{factor}s--this will break down the \texttt{vector} input into a finer partition. The second argument must be one object, though, so all of these \texttt{factor}s must be collected into a \texttt{list}. The following code produces a ``pivot table.''
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5721,14 +5751,14 @@ You might be wondering why we put \texttt{albRealEstate\$City} into a \texttt{li
 \end{Highlighting}
 \end{Shaded}
 
-For functions that return higher-dimensional output, you will have to use something like \texttt{by} or \texttt{aggregate} in place of \texttt{tapply}.
+For functions that return higher-dimensional output, you will have to use something like \texttt{by()} or \texttt{aggregate()} in place of \texttt{tapply()}.
 
 \hypertarget{mapply}{%
-\subsection{\texorpdfstring{\texttt{mapply}}{mapply}}\label{mapply}}
+\subsection{\texorpdfstring{\texttt{mapply()}}{mapply()}}\label{mapply}}
 
-The \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html}{documentation of \texttt{mapply}} states \texttt{mapply} is a multivariate version of \texttt{sapply}. \texttt{sapply} worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use \texttt{mapply}.
+The \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html}{documentation of \texttt{mapply()}} states \texttt{mapply()} is a multivariate version of \texttt{sapply()}. \texttt{sapply()} worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use \texttt{mapply()}.
 
-Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm}, the documentation explains, ``{[}i{]}f \texttt{length(n)\ \textgreater{}\ 1}, the length is taken to be the number required.'' This would be a problem if we want to sample a.) three times from a mean \(0\) normal, b.) twice from a mean \(100\) normal, and c.) once from a mean \(-100\) normal distribution.
+Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()}, the documentation explains, ``{[}i{]}f \texttt{length(n)\ \textgreater{}\ 1}, the length is taken to be the number required.'' This would be a problem if we want to sample a.) three times from a mean \(0\) normal, b.) twice from a mean \(100\) normal, and c.) once from a mean \(-100\) normal distribution.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5737,7 +5767,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm}, t
 \end{Shaded}
 
 \begin{verbatim}
-## [1]    0.02171451  100.00009453 -100.01913526
+## [1]   0.00585364  99.99083049 -99.99913674
 \end{verbatim}
 
 \begin{Shaded}
@@ -5748,33 +5778,33 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm}, t
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.014369839 -0.001567972  0.017301689
+## [1]  0.007092268  0.002768089 -0.005602510
 ## 
 ## [[2]]
-## [1] 100.0014 100.0035
+## [1] 100.00981  99.98752
 ## 
 ## [[3]]
-## [1] -99.99893
+## [1] -99.98798
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
-\subsection{\texorpdfstring{\texttt{Reduce} and \texttt{do.call}}{Reduce and do.call}}\label{reduce-and-do.call}}
+\subsection{\texorpdfstring{\texttt{Reduce()} and \texttt{do.call()}}{Reduce() and do.call()}}\label{reduce-and-do.call}}
 
-In section \ref{reshaping-and-combining-data-sets} we talked about several different ways of ``combining'' data sets. We discussed stacking data sets on top of one another with \texttt{rbind} (c.f. subsection \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), stacking them side-by-side with \texttt{cbind} (also in \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), and intelligently joining them together with \texttt{merge} (c.f. \ref{merging-or-joining-data-sets}). Consider the task of combining \emph{many} data sets. How do we write DRY code and abide by the DRY principle?
+In section \ref{reshaping-and-combining-data-sets} we talked about several different ways of ``combining'' data sets. We discussed stacking data sets on top of one another with \texttt{rbind()} (c.f. subsection \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), stacking them side-by-side with \texttt{cbind()} (also in \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), and intelligently joining them together with \texttt{merge()} (c.f. \ref{merging-or-joining-data-sets}). Consider the task of combining \emph{many} data sets. How do we write DRY code and abide by the DRY principle?
 
-We can use either \texttt{Reduce} or \texttt{do.call} as a higher-order function. Just like the aforementioned \texttt{*apply} functions, they take in either \texttt{cbind}, \texttt{rbind}, or \texttt{merge} as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take.
+We can use either \texttt{Reduce()} or \texttt{do.call()} as a higher-order function. Just like the aforementioned \texttt{*apply()} functions, they take in either \texttt{cbind()}, \texttt{rbind()}, or \texttt{merge()} as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take.
 
-Take a look at the documentation to \texttt{rbind}. Its first argument is \texttt{...}, which is the \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Dot_002ddot_002ddot}{dot-dot-dot} symbol. This means \texttt{rbind} can take a varying number of \texttt{data.frame}s to stack on top of each other. In other words, \texttt{rbind} is \emph{variadic}.
+Take a look at the documentation to \texttt{rbind()}. Its first argument is \texttt{...}, which is the \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Dot_002ddot_002ddot}{dot-dot-dot} symbol. This means \texttt{rbind()} can take a varying number of \texttt{data.frame}s to stack on top of each other. In other words, \texttt{rbind()} is \emph{variadic}.
 
-On the other hand, take a look at the documentation of \texttt{merge}. It only takes two \texttt{data.frame}s at a time\footnote{Although, it is still variadic. The difference is that the \texttt{dot-dot-dot} symbol does not refer to a varying number of \texttt{data.frame}s\ldots just a varying number of other things we don't care about at the present moment.}.
+On the other hand, take a look at the documentation of \texttt{merge()}. It only takes two \texttt{data.frame}s at a time\footnote{Although, it is still variadic. The difference is that the \texttt{dot-dot-dot} symbol does not refer to a varying number of \texttt{data.frame}s\ldots just a varying number of other things we don't care about at the present moment.}.
 
-If we want to combine many data sets, \texttt{merge} This is the difference between \texttt{Reduce} and \texttt{do.call}.
+If we want to combine many data sets, \texttt{merge()} This is the difference between \texttt{Reduce()} and \texttt{do.call()}.
 
-\texttt{do.call} calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, \texttt{Reduce} calls a binary function many times on pairs of arguments. \texttt{Reduce}'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.
+\texttt{do.call()} calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, \texttt{Reduce()} calls a binary function many times on pairs of arguments. \texttt{Reduce()}'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.
 
 TODO diagram
 
-Here is an initial example that makes use of four data sets \texttt{d1.csv}, \texttt{d2.csv}, \texttt{d3.csv}, and \texttt{d4.csv}. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste \texttt{read.csv} calls, but that would violate the DRY principle. Instead, let's use \texttt{lapply} an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
+Here is an initial example that makes use of four data sets \texttt{d1.csv}, \texttt{d2.csv}, \texttt{d3.csv}, and \texttt{d4.csv}. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste \texttt{read.csv} calls, but that would violate the DRY principle. Instead, let's use \texttt{lapply()} an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5792,7 +5822,7 @@ Here is an initial example that makes use of four data sets \texttt{d1.csv}, \te
 
 Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!
 
-Next, \texttt{cbind}ing them all together can be done as follows. \texttt{do.call} will call the function only once. \texttt{cbind} takes many arguments at once, so this works.
+Next, \texttt{cbind()}ing them all together can be done as follows. \texttt{do.call()} will call the function only once. \texttt{cbind()} takes many arguments at once, so this works.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5807,7 +5837,7 @@ Next, \texttt{cbind}ing them all together can be done as follows. \texttt{do.cal
 
 This code is even better than the above code in that if \texttt{dfs} becomes longer, or changes at all, \emph{nothing} will need to be changed.
 
-What if we wanted to \texttt{merge} all these data sets together? After all, the \texttt{id} column appears to be repeating itself, and some data from \texttt{d2} isn't lining up.
+What if we wanted to \texttt{merge()} all these data sets together? After all, the \texttt{id} column appears to be repeating itself, and some data from \texttt{d2} isn't lining up.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5819,7 +5849,7 @@ What if we wanted to \texttt{merge} all these data sets together? After all, the
 \end{Highlighting}
 \end{Shaded}
 
-Again, this is very DRY code. Nothing would need to be changed if \texttt{dfs} grew. Furthermore, trying to \texttt{do.call} the \texttt{merge} function wouldn't work because it can only take two data sets at a time.
+Again, this is very DRY code. Nothing would need to be changed if \texttt{dfs} grew. Furthermore, trying to \texttt{do.call()} the \texttt{merge()} function wouldn't work because it can only take two data sets at a time.
 
 \hypertarget{another-example-in-r}{%
 \section{Another Example in R}\label{another-example-in-r}}
@@ -5842,7 +5872,7 @@ The random elements \(x\) and \(y\), in this particular case, are uncorrelated, 
   call some plotting function that takes this all and makes a pretty picture.
 \end{enumerate}
 
-There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use \texttt{mapply}, we need the function to take two arguments.
+There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use \texttt{mapply()}, we need the function to take two arguments.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5852,7 +5882,7 @@ There are a couple ways you could write this function. One way might take two ar
 \end{Highlighting}
 \end{Shaded}
 
-We can construct every possible point on a grid with the \texttt{expand.grid} function.
+We can construct every possible point on a grid with the \texttt{expand.grid()} function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5870,7 +5900,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid} fu
 \end{Highlighting}
 \end{Shaded}
 
-\texttt{mapply} would take \texttt{fTwoArgs}, and effectively call it on every row pair. The pairs do not need to be organized in a \texttt{data.frame}, though.
+\texttt{mapply()} would take \texttt{fTwoArgs=}, and effectively call it on every row pair. The pairs do not need to be organized in a \texttt{data.frame}, though.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5885,7 +5915,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid} fu
 
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-215-1.pdf}
 
-If you prefer using \texttt{apply}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
+If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5903,12 +5933,12 @@ If you prefer using \texttt{apply}, that is also possible, but you would need to
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
 
-I discuss two functions from base Python that take functions as input. Neither return a \texttt{list} or a \texttt{np.array}, but they do return different kinds of \textbf{iterables}, which are ``objects capable of returning their members one at a time,'' \href{https://docs.python.org/3/glossary.html}{according to the Python documentation.} \texttt{map}, the function, will return objects of type \texttt{map}. \texttt{filter}, the function, will return objects of type \texttt{filter}. Often times we will just convert these to the container we are more familiar with.
+I discuss two functions from base Python that take functions as input. Neither return a \texttt{list} or a \texttt{np.array}, but they do return different kinds of \textbf{iterables}, which are ``objects capable of returning their members one at a time,'' \href{https://docs.python.org/3/glossary.html}{according to the Python documentation.} \texttt{map()}, the function, will return objects of type \texttt{map}. \texttt{filter()}, the function, will return objects of type \texttt{filter}. Often times we will just convert these to the container we are more familiar with.
 
 \hypertarget{map}{%
-\subsection{\texorpdfstring{\texttt{map}}{map}}\label{map}}
+\subsection{\texorpdfstring{\texttt{map()}}{map()}}\label{map}}
 
-\href{https://docs.python.org/3/library/functions.html\#map}{\texttt{map}} can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a \emph{spline} function, which can be useful for coming up with predictors in regression models. This particular spline function is \(f(x) = (x-k)1(x \ge k)\), where \(k\) is some chosen ``knot point.''
+\href{https://docs.python.org/3/library/functions.html\#map}{\texttt{map()}} can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a \emph{spline} function, which can be useful for coming up with predictors in regression models. This particular spline function is \(f(x) = (x-k)1(x \ge k)\), where \(k\) is some chosen ``knot point.''
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5928,7 +5958,7 @@ We can visualize the mathematical function by plotting its outputs against its i
 
 \includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-218-1}
 
-\texttt{map} can also be used like \texttt{mapply}. In other words, you can apply it to two containers,
+\texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5942,9 +5972,9 @@ We can visualize the mathematical function by plotting its outputs against its i
 \end{Shaded}
 
 \hypertarget{filter}{%
-\subsection{\texorpdfstring{\texttt{filter}}{filter}}\label{filter}}
+\subsection{\texorpdfstring{\texttt{filter()}}{filter()}}\label{filter}}
 
-\href{https://docs.python.org/3/library/functions.html\#filter}{\texttt{filter}} helps remove unwanted elements from a container. It returns an iterable of type \texttt{filter}, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
+\href{https://docs.python.org/3/library/functions.html\#filter}{\texttt{filter()}} helps remove unwanted elements from a container. It returns an iterable of type \texttt{filter}, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5965,7 +5995,7 @@ We can visualize the mathematical function by plotting its outputs against its i
 \hypertarget{functions-as-function-inputs-in-numpy}{%
 \section{Functions as Function Inputs in Numpy}\label{functions-as-function-inputs-in-numpy}}
 
-Numpy provides a \href{https://numpy.org/doc/stable/reference/routines.functional.html}{number of functions} that facilitate working with \texttt{np.ndarray}s in a functional style. For example, \href{https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html}{\texttt{np.apply\_along\_axis}} is similar to R's \texttt{apply}. \texttt{apply} had a \texttt{MARGIN} argument (\texttt{1} sums rows, \texttt{2} sums columns), whereas this function has a \texttt{axis=} argument (\texttt{0} sums columns, \texttt{1} sums rows).
+Numpy provides a \href{https://numpy.org/doc/stable/reference/routines.functional.html}{number of functions} that facilitate working with \texttt{np.ndarray}s in a functional style. For example, \href{https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html}{\texttt{np.apply\_along\_axis()}} is similar to R's \texttt{apply()}. \texttt{apply()} had a \texttt{MARGIN=} input (\texttt{1} sums rows, \texttt{2} sums columns), whereas this function has a \texttt{axis=} input (\texttt{0} sums columns, \texttt{1} sums rows).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5992,9 +6022,9 @@ Numpy provides a \href{https://numpy.org/doc/stable/reference/routines.functiona
 \end{Shaded}
 
 \hypertarget{functional-methods-in-pandas}{%
-\section{Functional Methods in pandas}\label{functional-methods-in-pandas}}
+\section{Functional Methods in Pandas}\label{functional-methods-in-pandas}}
 
-pandas' \texttt{DataFrame}s have an \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html}{\texttt{.apply} method} that is very similar to \texttt{apply} in R,\footnote{You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as \texttt{DataFrame} methods. For instance, \texttt{.mean} would allow you to do something like \texttt{my\_df.mean()}.} but again, just like the above function, you have to think about an \texttt{axis=} argument instead of a \texttt{MARGIN=} argument.
+Pandas' \texttt{DataFrame}s have an \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html}{\texttt{.apply()} method} that is very similar to \texttt{apply()} in R,\footnote{You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as \texttt{DataFrame} methods. For instance, \texttt{.mean()} would allow you to do something like \texttt{my\_df.mean()}.} but again, just like the above function, you have to think about an \texttt{axis=} argument instead of a \texttt{MARGIN=} argument.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6021,7 +6051,7 @@ pandas' \texttt{DataFrame}s have an \href{https://pandas.pydata.org/pandas-docs/
 \end{Highlighting}
 \end{Shaded}
 
-Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarray}s, don't have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before \texttt{.apply}ing a function to rows. Here is an example of computing each property's ``score''.
+Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarray}s, don't have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before \texttt{.apply()}ing a function to rows. Here is an example of computing each property's ``score''.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6037,7 +6067,7 @@ Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarra
 \end{Highlighting}
 \end{Shaded}
 
-\texttt{.apply} also works with more than one function at a time.
+\texttt{.apply()} also works with more than one function at a time.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6061,7 +6091,7 @@ If you do not want to waste two lines defining a function with \texttt{def}, you
 \end{Highlighting}
 \end{Shaded}
 
-If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html\#pandas.DataFrame.applymap}{\texttt{.applymap}}.
+If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html\#pandas.DataFrame.applymap}{\texttt{.applymap()}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6072,7 +6102,7 @@ If you want to apply a (scalar-valued) function that takes only individual eleme
 \end{Highlighting}
 \end{Shaded}
 
-Last, we have a \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html}{\texttt{.groupby}} method, which can be used to mirror the behavior of R's \texttt{tapply}, \texttt{aggregate} or \texttt{by}. It can take the \texttt{DataFrame} it belongs to, and group its rows into multiple sub-\texttt{DataFrame}s. The collection of sub-\texttt{DataFrames} has a lot of the same methods that an individual \texttt{DataFrame} has (e.g.~the subsetting operators, and the \texttt{.apply()} method), which can all be used in a second step of calculating things on each sub-\texttt{DataFrame}.
+Last, we have a \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html}{\texttt{.groupby()}} method, which can be used to mirror the behavior of R's \texttt{tapply()}, \texttt{aggregate()} or \texttt{by()}. It can take the \texttt{DataFrame} it belongs to, and group its rows into multiple sub-\texttt{DataFrame}s. The collection of sub-\texttt{DataFrames} has a lot of the same methods that an individual \texttt{DataFrame} has (e.g.~the subsetting operators, and the \texttt{.apply()} method), which can all be used in a second step of calculating things on each sub-\texttt{DataFrame}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6139,7 +6169,7 @@ Here is a first quick example.
 \end{Highlighting}
 \end{Shaded}
 
-The \texttt{greetingMessage} argument that is passed in, \texttt{"Hello"}, isn't temporary anymore.
+The \texttt{greetingMessage=} argument that is passed in, \texttt{"Hello"}, isn't temporary anymore.
 
 Here is an example that implements a variance reduction technique called \textbf{common random numbers}.
 
@@ -6153,7 +6183,7 @@ for any particular choice of \(\mu\) and \(\sigma^2\), and instead, we choose to
 \]
 where \(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)\) is a large collection of draws from the appropriate normal distribution. In real life, the theoretical expectation might not be tractable (either because the random variable has a complicated distribution, or maybe because the functional is very complicated) and Monte Carlo, or some other approximation algorithm, might be our only hope!
 
-Here are two functions that calculate the above quantities for \(n=100\). \texttt{actualExpectSin} is a function that computes the theoretical expectation for any particular parameter pair. \texttt{monteCarloSin} is a function that implements the Monte Carlo approximate expectation.
+Here are two functions that calculate the above quantities for \(n=100\). \texttt{actualExpectSin()} is a function that computes the theoretical expectation for any particular parameter pair. \texttt{monteCarloSin()} is a function that implements the Monte Carlo approximate expectation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6259,11 +6289,11 @@ Much better! Let's just make sure this function works by comparing its output to
 
 Returning functions from functions, explaining mechanics
 
-\href{https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html\#numpy.vectorize}{\texttt{np.vectorize}} is something that I use quite often.
+\href{https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html\#numpy.vectorize}{\texttt{np.vectorize()}} is something that I use quite often.
 
 decorators!
 
-TODO Both R and Python have reduce functions. R has \texttt{Reduce}, while Python has \texttt{reduce}.
+TODO Both R and Python have reduce functions. R has \texttt{Reduce()}, while Python has \texttt{reduce()}.
 
 In R
 
