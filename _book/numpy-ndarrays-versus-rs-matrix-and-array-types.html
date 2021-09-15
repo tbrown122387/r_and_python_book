@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
-<link rel="next" href="rs-lists-versus-pythons-lists-and-dictionaries.html"/>
+<link rel="next" href="rs-lists-versus-pythons-lists-and-dicts.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -161,7 +161,6 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-sample-course"><i class="fa fa-check"></i>A Sample Course</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#become-a-contributor"><i class="fa fa-check"></i>Become a Contributor</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#licenses"><i class="fa fa-check"></i>License(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
@@ -232,11 +231,16 @@ div.csl-indent {
 <li class="chapter" data-level="4.3.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#python-questions-2"><i class="fa fa-check"></i><b>4.3.2</b> Python Questions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dictionaries.html"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and Dictionaries</a>
+<li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dictionaries.html"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> Lists In R</a></li>
-<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dictionaries.html"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> Lists In Python</a></li>
-<li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dictionaries.html"><a href="rs-lists-versus-pythons-lists-and-dictionaries.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
+<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> Lists In R</a></li>
+<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> Lists In Python</a></li>
+<li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
+<li class="chapter" data-level="5.4" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r-1"><i class="fa fa-check"></i><b>5.4</b> Lists In R</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3"><i class="fa fa-check"></i><b>5.4.1</b> R Questions</a></li>
+<li class="chapter" data-level="5.4.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3"><i class="fa fa-check"></i><b>5.4.2</b> Python Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
 <ul>
@@ -573,7 +577,7 @@ div.csl-indent {
   \]</span>
 where <span class="math inline">\(\mathbf{1}_{250}\)</span> and <span class="math inline">\(\mathbf{0}_{250}\)</span> are length <span class="math inline">\(250\)</span> column vectors with all of their elements set to <span class="math inline">\(1\)</span> or <span class="math inline">\(0\)</span>, respectively.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Compute the <strong>projection (or hat) matrix</strong> <span class="math inline">\(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}\)</span>. Make it a <code>matrix</code> and call it <code>H</code>.</p></li>
+<li><p>Compute the <strong>projection (or hat) matrix</strong> <span class="math inline">\(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal\)</span>. Make it a <code>matrix</code> and call it <code>H</code>.</p></li>
 <li><p>An <strong>exchangeable</strong> covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten <span class="math inline">\(100 \times 100\)</span> <strong>exchangeable</strong> covariance matrices, each with <span class="math inline">\(2\)</span> as the variance, and have the possible covariances take values in the collection <span class="math inline">\(0,.01,.02, ..., .09.\)</span> Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix’s row index, the second should be the column index of each matrix, and the third index should be the “layer” or “slice” indicating which of the <span class="math inline">\(10\)</span> matrices you have. Name this array <code>myCovMats</code></p></li>
 <li><p>In R, generate one hundred <span class="math inline">\(10 \times 10\)</span> <strong>exchangeable</strong> covariance matrices, each with <span class="math inline">\(2\)</span> as the variance, and have the possible covariances take values in the collection <span class="math inline">\(0,0.0009090909, ..., 0.0890909091, .09.\)</span> Store these <span class="math inline">\(100\)</span> covariance matrices in a three-dimensional array. The first index should be each matrix’s row index, the second should be the column index of each matrix, and the third index should be the “layer” or “slice” indicating which of the <span class="math inline">\(100\)</span> matrices you have. Name this array <code>myCovMats2</code></p></li>
 </ol>
@@ -641,7 +645,7 @@ Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Softw
         </div>
       </div>
 <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rs-lists-versus-pythons-lists-and-dictionaries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rs-lists-versus-pythons-lists-and-dicts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -207,13 +207,7 @@ To Clare
 
 Please email me for access to a private Github repository with course materials such as a syllabus, course schedule, and assignments.
 
-Assignments are written with automatic grading in mind. R scripts are graded with the \texttt{gradeR} package \citep{gradeR}, and Python scripts with the \href{https://otter-grader.readthedocs.io/en/latest/}{\texttt{Otter-Grader} library} \citep{otter}. The quickest way to create your own autograding bundles is to use the tool here (TODO).
-
-\hypertarget{become-a-contributor}{%
-\section*{Become a Contributor}\label{become-a-contributor}}
-
-
-Spot a typo, or have a suggestion? Feel free to post an \href{https://github.com/tbrown122387/r_and_python_book/issues}{\textbf{issue here}}. You may also submit pull requests through Github. I'll be happy to take a look.
+You will notice that some of the exercise questions are unusually specific. For example, they will ask the student to assign the answer in a certain form to a variable with a very specific name. This is because they are written with automatic grading in mind. All of exercises have been very generously ``battle tested'' by the Fall 2021 STAT 5430 class at the University of Virginia. R scripts were graded with the \texttt{gradeR} package \citep{gradeR}, and Python scripts with the \href{https://otter-grader.readthedocs.io/en/latest/}{\texttt{Otter-Grader} library} \citep{otter}.
 
 \hypertarget{licenses}{%
 \section*{License(s)}\label{licenses}}
@@ -229,19 +223,17 @@ The textbook is licensed under a Creative Commons Attribution-NonCommercial-Shar
 \section*{About this book}\label{about-this-book}}
 
 
-This book is written to be used in a one-semester statistical computing class that teaches both R and Python to graduate students in a statistics or data science department. This book is written for students that do not necessarily possess any previous familiarity with writing code.
+This book is written to be used in a computing class that teaches both R and Python to graduate students in a statistics or data science department. This book is written for students that do not necessarily possess any previous familiarity with writing code.
 
 \begin{itemize}
 \item
-  If you are using them for analyzing data, R and Python do a lot of the same things in pretty similar ways, so it does not always make sense to teach one language after the other. Imagine learning about vectorization, say, in R, and then several weeks later learning about the same concept in Python. You might end up spending a lot of time refreshing your memory before getting started for the second time. The side-by-side approach ought to help reinforce shared concepts. In my opinion, it also helps to highlight key differences.
+  If you are using them for analyzing data, R and Python do a lot of the same things in pretty similar ways, so it does not always make sense to either a.) teach one language after the other, or b.) choose one over the other. The side-by-side approach helps to teach/learn more, save time, and reinforce shared concepts and key differences.
 \item
-  This text does not describe statistical modeling techniques in detail, although many exercises will be motivated by different statistical techniques. Rather, it teaches a.) important data types, b.) the basics of common procedures such as data ``cleaning'', ``munging'' and manipulation, and c.) some background on object-oriented programming and functional programming. This is largely motivated by the setup of many graduate programs in statistics and data science. Many of these departments organize their classes by sub-discipline (e.g.~time series, linear models, Bayesian, etc.). When this is the case, departments tend to compartmentalize the programming courses. The organization of this text aims to complement this kind of course offering structure.
+  This text does not describe statistical modeling techniques in detail, but many exercises will ask students to implement them. These exercises will not assume mathematical familiarity. The objective is to test programming ability, and an added benefit is that the work might be useful later in their careers.
 \item
   This book is written for aspiring data scientists, not necessarily aspiring software developers. Why do I draw the distinction? When discussing different types, for example, I do not discuss data structures in any depth. Rather, I discuss examples of applications where different types would be most useful.
 \item
-  This book does not attempt to be an authoritative reference. This is my attempt at balancing depth and breadth for a one-semester course. Plenty of discovery will be left to the reader. For instance, hyperlinks are provided to support self-guided exploration, and second many exercises are designed to motivate further questions.
-\item
-  Generally speaking, chapters should be read in order. However, some jumping around may be useful. (TODO update after re-organizing) (sub-)sections within a chapter are carefully ordered. Say, for instance, a topic in R is discussed first. If the Python discussion comes second, that discussion will reference and make comparisons with details mentioned in the R section. So read sections and subsections in order.
+  Generally speaking, chapters should be read in order, but occasionally skipping ahead can be beneficial. Later chapters are more may assume some familiarity with previous chapters. Also, within a chapter's section, sometimes a discussion for a particular topic in Python, say, might follow a discussion about the same topic in R. In this case, the later section will often assume that the previous section has been read first.
 \end{itemize}
 
 \hypertarget{conventions}{%
@@ -770,8 +762,8 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1]  1.0761374 {-}0.7508032 {-}0.4899507  1.2474798  1.0251222  1.2043709 {-}0.5320196  1.1423383 {-}0.4611399}
-\DocumentationTok{\#\# [10] {-}1.5301810}
+\DocumentationTok{\#\#  [1] {-}0.79064632 {-}0.03743839  0.04093755  0.16592246  1.12826951  1.33561553 {-}0.65498813 {-}0.20307031}
+\DocumentationTok{\#\#  [9]  1.64941017 {-}0.24385140}
 \end{Highlighting}
 \end{Shaded}
 
@@ -798,7 +790,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.811128  ,  0.2257682 , {-}0.91921848])}
+\CommentTok{\#\# array([{-}1.46765987, {-}0.32801831, {-}0.12472592])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1825,7 +1817,7 @@ where \(\mathbf{1}_{250}\) and \(\mathbf{0}_{250}\) are length \(250\) column ve
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \item
-  Compute the \textbf{projection (or hat) matrix} \(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}\). Make it a \texttt{matrix} and call it \texttt{H}.
+  Compute the \textbf{projection (or hat) matrix} \(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal\). Make it a \texttt{matrix} and call it \texttt{H}.
 \item
   An \textbf{exchangeable} covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten \(100 \times 100\) \textbf{exchangeable} covariance matrices, each with \(2\) as the variance, and have the possible covariances take values in the collection \(0,.01,.02, ..., .09.\) Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the ``layer'' or ``slice'' indicating which of the \(10\) matrices you have. Name this array \texttt{myCovMats}
 \item
@@ -1903,8 +1895,8 @@ Complete the following problems. \textbf{Do not use pre-made functions like \hre
   Compute the \textbf{first principal component} vector, and call it \texttt{first\_pc\_v1}. The mathematical formula is \(\mathbf{X} \mathbf{U}_1\) where \(\mathbf{U}_1\) is the eigenvector associated with the largest eigenvalue \(\lambda_1\). This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors.
 \end{enumerate}
 
-\hypertarget{rs-lists-versus-pythons-lists-and-dictionaries}{%
-\chapter{\texorpdfstring{R's \texttt{list}s Versus Python's \texttt{list}s and Dictionaries}{R's lists Versus Python's lists and Dictionaries}}\label{rs-lists-versus-pythons-lists-and-dictionaries}}
+\hypertarget{rs-lists-versus-pythons-lists-and-dicts}{%
+\chapter{\texorpdfstring{R's \texttt{list}s Versus Python's \texttt{list}s and \texttt{dict}s}{R's lists Versus Python's lists and dicts}}\label{rs-lists-versus-pythons-lists-and-dicts}}
 
 When you need to store elements in a container, but you can't guarantee that these elements all have the same type, or you can't guarantee that they all have the same size, then you need a \texttt{list} in R. In Python, you might need a \texttt{list} or \texttt{dict} (short for dictionary).
 
@@ -2060,6 +2052,29 @@ Personally, I don't use dictionaries as much as lists. If I have a dictionary, I
 \CommentTok{\#\# 2     3    c}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{lists-in-r-1}{%
+\section{Lists In R}\label{lists-in-r-1}}
+
+\hypertarget{r-questions-3}{%
+\subsection{R Questions}\label{r-questions-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Consider the data sets \texttt{adult.data}, \texttt{car.data}, \texttt{hungarian.data}, \texttt{iris.data}, \texttt{long-beach-va.data} and \texttt{switzerland.data} \citep{misc_heart_disease_45}, \citep{misc_iris_53}. \citep{misc_adult_2} and \citep{misc_car_evaluation_19}. Read all of these in and store them all as a \texttt{list} of \texttt{data.frame}s. Call the list \texttt{listDfs}.
+\end{enumerate}
+
+\hypertarget{python-questions-3}{%
+\subsection{Python Questions}\label{python-questions-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Read in \texttt{car.data} with \texttt{pd.read\_csv()}, and use a \texttt{DataFrame} method to convert that to a \texttt{dict}. Store your answer as \texttt{car\_dict}.
+\end{enumerate}
 
 \hypertarget{functions}{%
 \chapter{Functions}\label{functions}}
@@ -2531,7 +2546,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140328445875552 140328445875584}
+\CommentTok{\#\# 140034320606560 140034320606592}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2755,7 +2770,7 @@ Here's a third example. We can take non-categorical data, and \texttt{cut} it in
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf]}
+\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -2800,7 +2815,7 @@ The pandas library also provides a \texttt{pd.cut()} function, which can return 
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \NormalTok{type\_of\_day}
-\CommentTok{\#\# [\textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
+\CommentTok{\#\# [\textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
 \CommentTok{\#\# Categories (2, object): [\textquotesingle{}bad day\textquotesingle{} \textless{} \textquotesingle{}good day\textquotesingle{}]}
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -3434,8 +3449,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.5126524 ,  0.1566794 ,  1.51515309, {-}0.6087987 , {-}0.8186656 ,}
-\CommentTok{\#\#         2.01670806, {-}0.19679004,  1.04240121,  0.8930571 , {-}1.25850883])}
+\CommentTok{\#\# array([{-}1.20588468, {-}0.14819645, {-}0.24498974, {-}0.84225491, {-}1.93379009,}
+\CommentTok{\#\#        {-}0.90023604,  0.3188193 , {-}0.55805448, {-}3.24707799,  0.69782328])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3447,8 +3462,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.08912259,  0.12166268,  1.33552168,  1.21217794,  0.51807594,}
-\CommentTok{\#\#         0.81217249, {-}1.40578026, {-}0.08473983,  0.6202171 , {-}0.44714262])}
+\CommentTok{\#\# array([{-}1.20457034,  0.31321512, {-}0.83554466, {-}1.76396544,  0.32957022,}
+\CommentTok{\#\#         1.14271872, {-}0.28138344,  1.02643769,  0.63442117, {-}1.44521059])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3460,8 +3475,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.04228361, {-}0.74492593, {-}1.1317017 , {-}1.96032149, {-}0.09316334,}
-\CommentTok{\#\#        {-}2.12767854, {-}0.67546808,  0.31398889,  1.30694523,  0.36415567])}
+\CommentTok{\#\# array([ 3.76479991,  0.66983708, {-}0.68841477, {-}0.81223329, {-}1.26027619,}
+\CommentTok{\#\#         0.21941028,  0.51186151, {-}2.52464003,  0.55260751, {-}0.274072  ])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3801,11 +3816,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}0.03708202 {-}1.17545709 {-}1.34363020  0.38723512  0.37705838}
+\DocumentationTok{\#\# [1] {-}0.75553406 {-}0.79597858  0.06894427 {-}0.06403403 {-}1.93851729}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.34363020 {-}1.17545709 {-}0.03708202  0.37705838  0.38723512}
+\DocumentationTok{\#\# [1] {-}1.93851729 {-}0.79597858 {-}0.75553406 {-}0.06403403  0.06894427}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 3 2 1 5 4}
+\DocumentationTok{\#\# [1] 5 2 1 4 3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3837,11 +3852,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [ 0.16281438 {-}0.07993891 {-}0.23360895 {-}0.92996242 {-}2.95138317]}
+\CommentTok{\#\# [ 1.03673401 {-}0.80302777  0.76871004  1.35440722 {-}1.58667747]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}2.95138317, {-}0.92996242, {-}0.23360895, {-}0.07993891,  0.16281438])}
+\CommentTok{\#\# array([{-}1.58667747, {-}0.80302777,  0.76871004,  1.03673401,  1.35440722])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([4, 3, 2, 1, 0])}
+\CommentTok{\#\# array([4, 1, 2, 0, 3])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4490,9 +4505,9 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  9.,  29.,  74., 145., 226., 242., 162.,  84.,  22.,   7.]), array([{-}3.04592189, {-}2.43083116, {-}1.81574042, {-}1.20064968, {-}0.58555894,}
-\CommentTok{\#\#         0.02953179,  0.64462253,  1.25971327,  1.87480401,  2.48989475,}
-\CommentTok{\#\#         3.10498548]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  4.,  36.,  78., 160., 233., 236., 154.,  78.,  15.,   6.]), array([{-}3.15380068, {-}2.50540188, {-}1.85700308, {-}1.20860429, {-}0.56020549,}
+\CommentTok{\#\#         0.08819331,  0.7365921 ,  1.3849909 ,  2.03338969,  2.68178849,}
+\CommentTok{\#\#         3.33018729]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4951,7 +4966,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x56184e9aaef0>
+## <bytecode: 0x561f17c7cfc0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -5576,8 +5591,8 @@ Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \te
 \begin{Highlighting}[]
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
-\DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
-\DocumentationTok{\#\# {-}0.36304669 {-}0.06248811 {-}0.33902043 {-}0.53348058  0.30111467  0.30365474}
+\DocumentationTok{\#\#         X1         X2         X3         X4         X5         X6 }
+\DocumentationTok{\#\# {-}0.5481395  0.3897585  0.2851341 {-}0.1209780  0.3567005  0.1427908}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5617,13 +5632,13 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
 \DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}1.2604 {-}0.5851 {-}0.2481  0.5817  1.9651 }
+\DocumentationTok{\#\# {-}2.8817 {-}0.3291  0.2070  0.7779  1.2863 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept)  {-}0.2438     0.3160  {-}0.772     0.46}
+\DocumentationTok{\#\# (Intercept)  {-}0.3782     0.3750  {-}1.009     0.34}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 0.9991 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 1.186 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5637,8 +5652,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.001794624 {-}0.040589323 {-}0.017031484 {-}0.051361857  0.067512812  0.086231731  0.011460005}
-\DocumentationTok{\#\#  [8] {-}0.034333536  0.079393586 {-}0.043010070}
+\DocumentationTok{\#\#  [1] {-}0.03879864  0.09798312  0.06398858  0.11911038  0.04502441 {-}0.22921126  0.03126866  0.01522112}
+\DocumentationTok{\#\#  [9] {-}0.07165936 {-}0.07685009}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5767,7 +5782,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 \end{Shaded}
 
 \begin{verbatim}
-## [1]   0.00585364  99.99083049 -99.99913674
+## [1]   -0.01262511   99.97978661 -100.00409958
 \end{verbatim}
 
 \begin{Shaded}
@@ -5778,13 +5793,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 
 \begin{verbatim}
 ## [[1]]
-## [1]  0.007092268  0.002768089 -0.005602510
+## [1] -0.014912847 -0.007217272 -0.002631590
 ## 
 ## [[2]]
-## [1] 100.00981  99.98752
+## [1] 100.0015 100.0250
 ## 
 ## [[3]]
-## [1] -99.98798
+## [1] -99.99562
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
