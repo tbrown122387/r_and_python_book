@@ -762,8 +762,8 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1] {-}0.79064632 {-}0.03743839  0.04093755  0.16592246  1.12826951  1.33561553 {-}0.65498813 {-}0.20307031}
-\DocumentationTok{\#\#  [9]  1.64941017 {-}0.24385140}
+\DocumentationTok{\#\#  [1]  0.85116697 {-}1.65110741 {-}0.17507158  1.56837845 {-}1.41301804  0.83187083 {-}1.03141560 {-}1.46051467}
+\DocumentationTok{\#\#  [9]  0.02772287 {-}0.22903315}
 \end{Highlighting}
 \end{Shaded}
 
@@ -790,7 +790,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.46765987, {-}0.32801831, {-}0.12472592])}
+\CommentTok{\#\# array([ 0.43517216,  1.12335476, {-}0.59836558])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2053,8 +2053,8 @@ Personally, I don't use dictionaries as much as lists. If I have a dictionary, I
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{lists-in-r-1}{%
-\section{Lists In R}\label{lists-in-r-1}}
+\hypertarget{exercises-3}{%
+\section{Exercises}\label{exercises-3}}
 
 \hypertarget{r-questions-3}{%
 \subsection{R Questions}\label{r-questions-3}}
@@ -2770,7 +2770,7 @@ Here's a third example. We can take non-categorical data, and \texttt{cut} it in
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf]}
+\DocumentationTok{\#\#  [1] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -2815,7 +2815,7 @@ The pandas library also provides a \texttt{pd.cut()} function, which can return 
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \NormalTok{type\_of\_day}
-\CommentTok{\#\# [\textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
+\CommentTok{\#\# [\textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
 \CommentTok{\#\# Categories (2, object): [\textquotesingle{}bad day\textquotesingle{} \textless{} \textquotesingle{}good day\textquotesingle{}]}
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -2841,7 +2841,7 @@ There is a type for this in R and Python: a data frame. It might even be the mos
 \hypertarget{data-frames-in-r}{%
 \section{Data Frames in R}\label{data-frames-in-r}}
 
-Let's consider as an example Fisher's ``Iris'' data set obtained from \citep{uci_data}. We will read this data set in from a comma separated file (more on input/output in chapter \ref{input-and-output}). This file can be downloaded from this link: \url{https://archive.ics.uci.edu/ml/datasets/iris}.
+Let's consider as an example Fisher's ``Iris'' data set {[}misc\_iris\_53{]}. We will read this data set in from a comma separated file (more on input/output in chapter \ref{input-and-output}). This file can be downloaded from this link: \url{https://archive.ics.uci.edu/ml/datasets/iris}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3449,8 +3449,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.20588468, {-}0.14819645, {-}0.24498974, {-}0.84225491, {-}1.93379009,}
-\CommentTok{\#\#        {-}0.90023604,  0.3188193 , {-}0.55805448, {-}3.24707799,  0.69782328])}
+\CommentTok{\#\# array([{-}1.54579964, {-}1.15623376, {-}0.18241021, {-}1.55107726,  0.48488931,}
+\CommentTok{\#\#        {-}0.67216619, {-}1.14039818,  0.63478622, {-}1.37914571, {-}1.41066925])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3462,8 +3462,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.20457034,  0.31321512, {-}0.83554466, {-}1.76396544,  0.32957022,}
-\CommentTok{\#\#         1.14271872, {-}0.28138344,  1.02643769,  0.63442117, {-}1.44521059])}
+\CommentTok{\#\# array([ 0.68320158, {-}1.42429259,  0.27367349,  0.37558466,  0.41446941,}
+\CommentTok{\#\#        {-}0.18679383,  0.72777628,  0.41053152, {-}0.88531372, {-}0.52839302])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3475,8 +3475,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 3.76479991,  0.66983708, {-}0.68841477, {-}0.81223329, {-}1.26027619,}
-\CommentTok{\#\#         0.21941028,  0.51186151, {-}2.52464003,  0.55260751, {-}0.274072  ])}
+\CommentTok{\#\# array([ 0.408738  , {-}0.06912679, {-}1.19756825, {-}0.47071487, {-}2.11277897,}
+\CommentTok{\#\#         0.89895974,  1.70044327, {-}2.3281974 ,  1.3776052 , {-}0.57320425])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3816,11 +3816,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}0.75553406 {-}0.79597858  0.06894427 {-}0.06403403 {-}1.93851729}
+\DocumentationTok{\#\# [1]  1.0267191  1.1412205 {-}0.2638651  0.6226000  0.1555443}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.93851729 {-}0.79597858 {-}0.75553406 {-}0.06403403  0.06894427}
+\DocumentationTok{\#\# [1] {-}0.2638651  0.1555443  0.6226000  1.0267191  1.1412205}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 5 2 1 4 3}
+\DocumentationTok{\#\# [1] 3 5 4 1 2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3852,11 +3852,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [ 1.03673401 {-}0.80302777  0.76871004  1.35440722 {-}1.58667747]}
+\CommentTok{\#\# [{-}0.24813929 {-}1.52526574  0.42018319 {-}1.09610589  0.44926968]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}1.58667747, {-}0.80302777,  0.76871004,  1.03673401,  1.35440722])}
+\CommentTok{\#\# array([{-}1.52526574, {-}1.09610589, {-}0.24813929,  0.42018319,  0.44926968])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([4, 1, 2, 0, 3])}
+\CommentTok{\#\# array([1, 3, 0, 2, 4])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4505,9 +4505,9 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  4.,  36.,  78., 160., 233., 236., 154.,  78.,  15.,   6.]), array([{-}3.15380068, {-}2.50540188, {-}1.85700308, {-}1.20860429, {-}0.56020549,}
-\CommentTok{\#\#         0.08819331,  0.7365921 ,  1.3849909 ,  2.03338969,  2.68178849,}
-\CommentTok{\#\#         3.33018729]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  4.,   9.,  51., 126., 260., 296., 178.,  64.,   7.,   5.]), array([{-}3.80961269, {-}3.05507924, {-}2.3005458 , {-}1.54601235, {-}0.79147891,}
+\CommentTok{\#\#        {-}0.03694546,  0.71758799,  1.47212143,  2.22665488,  2.98118833,}
+\CommentTok{\#\#         3.73572177]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5394,8 +5394,8 @@ a more detailed
 
 \url{https://adv-r.hadley.nz/r6.html\#why-r6}
 
-\hypertarget{exercises-3}{%
-\section{Exercises}\label{exercises-3}}
+\hypertarget{exercises-4}{%
+\section{Exercises}\label{exercises-4}}
 
 All answers to questions related to R should be written in a file named \texttt{data\_types\_exercises.R}. All answers to questions related to Python should be written in a file named \texttt{data\_types\_exercises.py}.
 
@@ -5591,8 +5591,8 @@ Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \te
 \begin{Highlighting}[]
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
-\DocumentationTok{\#\#         X1         X2         X3         X4         X5         X6 }
-\DocumentationTok{\#\# {-}0.5481395  0.3897585  0.2851341 {-}0.1209780  0.3567005  0.1427908}
+\DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
+\DocumentationTok{\#\#  0.01798329 {-}0.34527305 {-}0.34609046 {-}0.18486629 {-}0.45171680 {-}0.45818568}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5631,14 +5631,14 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# lm(formula = y \textasciitilde{} 1)}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
-\DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}2.8817 {-}0.3291  0.2070  0.7779  1.2863 }
+\DocumentationTok{\#\#      Min       1Q   Median       3Q      Max }
+\DocumentationTok{\#\# {-}1.46367 {-}0.04558  0.09693  0.55098  0.82433 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept)  {-}0.3782     0.3750  {-}1.009     0.34}
+\DocumentationTok{\#\# (Intercept)  {-}0.2256     0.2421  {-}0.932    0.376}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 1.186 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 0.7655 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5652,8 +5652,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1] {-}0.03879864  0.09798312  0.06398858  0.11911038  0.04502441 {-}0.22921126  0.03126866  0.01522112}
-\DocumentationTok{\#\#  [9] {-}0.07165936 {-}0.07685009}
+\DocumentationTok{\#\#  [1] {-}0.069333250  0.019268876  0.225489109 {-}0.004783627 {-}0.032608480 {-}0.123950504 {-}0.031926436}
+\DocumentationTok{\#\#  [8] {-}0.116165449 {-}0.084812980 {-}0.107958920}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5782,7 +5782,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 \end{Shaded}
 
 \begin{verbatim}
-## [1]   -0.01262511   99.97978661 -100.00409958
+## [1]  -0.001016995 100.005200655 -99.989227926
 \end{verbatim}
 
 \begin{Shaded}
@@ -5793,13 +5793,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.014912847 -0.007217272 -0.002631590
+## [1] 0.0039800004 0.0044963956 0.0007223947
 ## 
 ## [[2]]
-## [1] 100.0015 100.0250
+## [1] 99.99996 99.99022
 ## 
 ## [[3]]
-## [1] -99.99562
+## [1] -99.99536
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
