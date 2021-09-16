@@ -550,9 +550,6 @@ You might be disappointed if you always count on this behavior, though.
 \begin{Highlighting}[]
 \FloatTok{3.2} \OperatorTok{+} \StringTok{"3.2"}
 \CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): TypeError: unsupported operand type(s) for +: \textquotesingle{}float\textquotesingle{} and \textquotesingle{}str\textquotesingle{}}
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -762,8 +759,7 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1]  0.85116697 {-}1.65110741 {-}0.17507158  1.56837845 {-}1.41301804  0.83187083 {-}1.03141560 {-}1.46051467}
-\DocumentationTok{\#\#  [9]  0.02772287 {-}0.22903315}
+\DocumentationTok{\#\#  [1] {-}1.0880219  1.5829645 {-}0.7269905 {-}0.6667472  1.5122169 {-}0.1465768 {-}0.6481614 {-}0.2132982  0.7794293  1.6753766}
 \end{Highlighting}
 \end{Shaded}
 
@@ -790,7 +786,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([ 0.43517216,  1.12335476, {-}0.59836558])}
+\CommentTok{\#\# array([{-}2.69778113,  0.11592843, {-}0.79135341])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -863,10 +859,7 @@ Instead of calling it ``recycling'', Numpy calls reusing elements of a shorter a
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)}\OperatorTok{*}\NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)}
-\CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): ValueError: operands could not be broadcast together with shapes (2,) (3,) }
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
+\CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): ValueError: operands could not be broadcast together with shapes (2,) (3,)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1291,9 +1284,6 @@ In Python, we have the following.
 \CommentTok{\# in Python}
 \DecValTok{0}\OperatorTok{/}\DecValTok{0}
 \CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): ZeroDivisionError: division by zero}
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{np.inf}\OperatorTok{/}\NormalTok{np.inf}
 \CommentTok{\#\# nan}
@@ -1926,39 +1916,15 @@ You can also name the elements of a list. This can lead to more readable code. T
 \NormalTok{results }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(Horsepower) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Type, }\AttributeTok{data =}\NormalTok{ dataSet)}
 \FunctionTok{length}\NormalTok{(results)}
 \DocumentationTok{\#\# [1] 13}
-\FunctionTok{names}\NormalTok{(results)}
-\DocumentationTok{\#\#  [1] "coefficients"  "residuals"     "effects"       "rank"          "fitted.values" "assign"       }
-\DocumentationTok{\#\#  [7] "qr"            "df.residual"   "contrasts"     "xlevels"       "call"          "terms"        }
-\DocumentationTok{\#\# [13] "model"}
+\FunctionTok{names}\NormalTok{(results) }
+\DocumentationTok{\#\#  [1] "coefficients"  "residuals"     "effects"       "rank"          "fitted.values" "assign"        "qr"           }
+\DocumentationTok{\#\#  [8] "df.residual"   "contrasts"     "xlevels"       "call"          "terms"         "model"}
 \NormalTok{results}\SpecialCharTok{$}\NormalTok{contrasts}
 \DocumentationTok{\#\# $Type}
 \DocumentationTok{\#\# [1] "contr.treatment"}
 \NormalTok{results[}\StringTok{\textquotesingle{}rank\textquotesingle{}}\NormalTok{]}
 \DocumentationTok{\#\# $rank}
 \DocumentationTok{\#\# [1] 6}
-\NormalTok{results[[}\StringTok{\textquotesingle{}terms\textquotesingle{}}\NormalTok{]]}
-\DocumentationTok{\#\# log(Horsepower) \textasciitilde{} Type}
-\DocumentationTok{\#\# attr(,"variables")}
-\DocumentationTok{\#\# list(log(Horsepower), Type)}
-\DocumentationTok{\#\# attr(,"factors")}
-\DocumentationTok{\#\#                 Type}
-\DocumentationTok{\#\# log(Horsepower)    0}
-\DocumentationTok{\#\# Type               1}
-\DocumentationTok{\#\# attr(,"term.labels")}
-\DocumentationTok{\#\# [1] "Type"}
-\DocumentationTok{\#\# attr(,"order")}
-\DocumentationTok{\#\# [1] 1}
-\DocumentationTok{\#\# attr(,"intercept")}
-\DocumentationTok{\#\# [1] 1}
-\DocumentationTok{\#\# attr(,"response")}
-\DocumentationTok{\#\# [1] 1}
-\DocumentationTok{\#\# attr(,".Environment")}
-\DocumentationTok{\#\# \textless{}environment: R\_GlobalEnv\textgreater{}}
-\DocumentationTok{\#\# attr(,"predvars")}
-\DocumentationTok{\#\# list(log(Horsepower), Type)}
-\DocumentationTok{\#\# attr(,"dataClasses")}
-\DocumentationTok{\#\# log(Horsepower)            Type }
-\DocumentationTok{\#\#       "numeric"     "character"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2083,18 +2049,14 @@ This text has already covered how to \emph{use} functions that come to us pre-ma
 
 In this section we take a look at how to \emph{define} our own functions. This will not only help us to understand pre-made functions, but it will also be useful if we need some extra functionality that isn't already provided to us.
 
-Writing our own functions is also useful for ``packaging up'' computations. The utility of this will become very apparent in chapter \ref{functional-programming}. Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the ``best'' one?
-
-Thankfully, R functions are very similar to Python functions. In both languages, functions are \textbf{first-class objects} \citep{struc_and_interp}. This means that, no matter which of these two languages you are using, functions
+Writing our own functions is also useful for ``packaging up'' computations. The utility of this will become apparent very soon. Consider the task of estimating a regression model. If you have a function that performs all of the required calculations, then
 
 \begin{itemize}
 \tightlist
 \item
-  can be passed as arguments to other functions,
+  you can estimate models without having to think about lower-level details or write any code yourself, and
 \item
-  can be returned as values from other functions, and
-\item
-  can be assigned to variables and stored in containers.
+  you can re-use this function every time you fit any model on any data set for any project.
 \end{itemize}
 
 \hypertarget{defining-r-functions}{%
@@ -2219,7 +2181,7 @@ The function's \emph{body} is also exactly what it sounds like. It is the work t
 \end{Highlighting}
 \end{Shaded}
 
-Every function you create also has a \emph{parent environment}\footnote{Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.}. You can get/set this using the \texttt{environment()} function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was \emph{created}, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called \emph{scoping}. When you create functions in R, you are primarily using \textbf{lexical scoping}. To understand functions well in R, these examples are important to understand, so I provide more detail in \ref{function-scope-in-r}.
+Every function you create also has a \emph{parent environment}\footnote{Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.}. You can get/set this using the \texttt{environment()} function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was \emph{created}, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called \emph{scoping}. When you create functions in R, you are primarily using \textbf{lexical scoping}. This is discussed in more detail in section \ref{function-scope-in-r}.
 
 There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has \href{http://adv-r.had.co.nz/Environments.html\#function-envs}{binding, execution, and calling environments associated with it}, and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
 
@@ -2253,9 +2215,22 @@ Don't worry if the notation \texttt{add\_number.\_\_code\_\_} looks strange. The
 \hypertarget{function-scope-in-r}{%
 \section{Function Scope in R}\label{function-scope-in-r}}
 
-R uses \textbf{lexical scoping}.
+R uses \textbf{lexical scoping}. This means, in R,
 
-R functions can use variables that are defined in the function body, and variables that were defined in the environment that the function itself was defined in. R functions \textbf{cannot} necessarily find variables in an environment where the function was \emph{called} in. Code outside the body of a function cannot access variables inside the body of a function.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  functions can use \emph{local} variables that are defined inside themselves,\\
+\item
+  functions can use \emph{global} variables defined in the environment where the function itself was \emph{defined} in, and
+\item
+  functions \emph{cannot} use \emph{global} variables defined in the environment where the function was \emph{called} in, and
+\item
+  functions will prefer \emph{local} variables to \emph{global} variables if there is a name clash.
+\end{enumerate}
+
+The first characteristic is obvious. The second and third are import to distinguish between. Consider the following code below. \texttt{sillyFunction()} can access \texttt{a} because \texttt{sillyFunction()} and \texttt{a} are defined in the same place.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2270,7 +2245,23 @@ R functions can use variables that are defined in the function body, and variabl
 \end{Highlighting}
 \end{Shaded}
 
-From the point of view of the function, when it attempts to access a variable, it first looks in its own body. In the example below, there are two variables named \texttt{a}, but they exist in different environments. Inside the function, the innermost one gets used. Outside the function, the global variable gets used.
+On the other hand, the following example will not work because \texttt{a} and \texttt{anotherSillyFunc()} are not defined in the same place. Calling the function is not the same as defining a function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{anotherSillyFunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{}
+  \FunctionTok{return}\NormalTok{(a }\SpecialCharTok{+} \DecValTok{20}\NormalTok{) }
+\NormalTok{\}}
+\NormalTok{highLevelFunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{}
+\NormalTok{  a }\OtherTok{\textless{}{-}} \DecValTok{99}
+  \CommentTok{\# this isn\textquotesingle{}t the global environment anotherSillyFunc() was defined in}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"environment inside highLevelFunc(): "}\NormalTok{, }\FunctionTok{environment}\NormalTok{())}
+  \FunctionTok{anotherSillyFunc}\NormalTok{()}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, here is a demonstration of a function preferring one \texttt{a} over another. When \texttt{sillyFunction()} attempts to access \texttt{a}, it first looks in its own body, and so the innermost one gets used. On the other hand, \texttt{print(a)} shows \texttt{3}, the global variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2286,7 +2277,9 @@ From the point of view of the function, when it attempts to access a variable, i
 \end{Highlighting}
 \end{Shaded}
 
-The same concept applies if you create functions within functions. The inner function looks ``inside-out'' for variables. Below we call \texttt{outerFunc()}, which calls \texttt{innerFunc()}. \texttt{innerFunc()} can refer to the variable \texttt{b}, because it lies in the same environment in which \texttt{innerFunc()} was created. Interestingly, \texttt{innerFunc()} can also refer to the variable \texttt{a}, because that variable was captured by \texttt{outerFunc()}, which provides access to \texttt{innerFunc()}.
+The same concept applies if you create functions within functions. The inner function \texttt{innerFunc()} looks ``inside-out'' for variables, but only in the place it was defined.
+
+Below we call \texttt{outerFunc()}, which then calls \texttt{innerFunc()}. \texttt{innerFunc()} can refer to the variable \texttt{b}, because it lies in the same environment in which \texttt{innerFunc()} was created. Interestingly, \texttt{innerFunc()} can also refer to the variable \texttt{a}, because that variable was captured by \texttt{outerFunc()}, which provides access to \texttt{innerFunc()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2305,7 +2298,7 @@ The same concept applies if you create functions within functions. The inner fun
 \end{Highlighting}
 \end{Shaded}
 
-If we ask \texttt{outerFunc()} to return the function \texttt{innerFunc()} (not the return object of \texttt{innerFunct()}\ldots functions are objects, too!), then we might be surprised to see that \texttt{innerFunc()} can still successfully refer to \texttt{b}, even though it doesn't exist inside the \emph{calling environment.} But don't be surprised! What matters is what was available when the function was \emph{created}. In this example, \texttt{outerFuncV2()} is sometimes called a \emph{function factory}. More information about this is provided in \ref{functional-programming}.
+Here's another interesting example. If we ask \texttt{outerFunc()} to return the function \texttt{innerFunc()} (not the return object of \texttt{innerFunct()}\ldots functions are objects, too!), then we might be surprised to see that \texttt{innerFunc()} can still successfully refer to \texttt{b}, even though it doesn't exist inside the \emph{calling environment.} But don't be surprised! What matters is what was available when the function was \emph{created}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2323,6 +2316,8 @@ If we ask \texttt{outerFunc()} to return the function \texttt{innerFunc()} (not 
 \DocumentationTok{\#\# [1] "inside one"}
 \end{Highlighting}
 \end{Shaded}
+
+We use this property all the time when we create functions that return other functions. This is discussed in more detail in chapter \ref{functional-programming}. In the above example, \texttt{outerFuncV2()}, the function that returned another function, is called a \emph{function factory}.
 
 Sometimes people will refer to R's functions as \textbf{closures} to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with.
 
@@ -2433,7 +2428,22 @@ However, if we start using \texttt{outer\_func()} inside another function, \emph
 ## inside one
 \end{verbatim}
 
-These examples get at \emph{functional programming}, which is discussed more in depth in chapter \ref{functional-programming}. If you are interested in learning more, read on. That chapter will describe strategies to make your code much easier to understand and maintain (e.g.~keep your functions ``pure''!)
+Last, consider another function factory example. \texttt{b} is destroyed after \texttt{factory()} finishes being called, but the function it creates still has a copy of \texttt{b} to use.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ factory():}
+\NormalTok{  b }\OperatorTok{=} \StringTok{"I will live on, forever!"}
+  \KeywordTok{def}\NormalTok{ func():}
+    \ControlFlowTok{return}\NormalTok{ b}
+  \ControlFlowTok{return}\NormalTok{ func}
+\NormalTok{my\_func }\OperatorTok{=}\NormalTok{ factory()}
+\NormalTok{my\_func()}
+\CommentTok{\#\# \textquotesingle{}I will live on, forever!\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+If you feel like you understand lexical scoping, great! You should be ready to take on chapter \ref{functional-programming}, then. If not, keep playing around with examples. Without understanding the scoping rules R and Python share, writing your own functions will persistently feel more difficult than it really is.
 
 \hypertarget{modifying-a-functions-arguments}{%
 \section{Modifying a Function's Arguments}\label{modifying-a-functions-arguments}}
@@ -2546,7 +2556,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140034320606560 140034320606592}
+\CommentTok{\#\# 140657858671968 140657858672000}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2770,7 +2780,7 @@ Here's a third example. We can take non-categorical data, and \texttt{cut} it in
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf]}
+\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -2815,7 +2825,7 @@ The pandas library also provides a \texttt{pd.cut()} function, which can return 
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \NormalTok{type\_of\_day}
-\CommentTok{\#\# [\textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
+\CommentTok{\#\# [\textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}]}
 \CommentTok{\#\# Categories (2, object): [\textquotesingle{}bad day\textquotesingle{} \textless{} \textquotesingle{}good day\textquotesingle{}]}
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -3179,6 +3189,7 @@ You've seen examples of \texttt{read.csv()} used earlier in the book, so it shou
 Consider the \href{https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring}{``Challenger USA Space Shuttle O-Ring Data Set''} from \citep{uci_data}. The first ten rows looks like this.
 
 \begin{verbatim}
+bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
@@ -3354,11 +3365,10 @@ Moreover, all of these environments are connected in a chain-like structure. To 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
-\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:Hmisc"     }
-\DocumentationTok{\#\#  [5] "package:ggplot2"    "package:Formula"    "package:survival"   "package:lattice"   }
-\DocumentationTok{\#\#  [9] "package:reticulate" "tools:rstudio"      "package:stats"      "package:graphics"  }
-\DocumentationTok{\#\# [13] "package:grDevices"  "package:utils"      "package:datasets"   "package:methods"   }
-\DocumentationTok{\#\# [17] "Autoloads"          "package:base"}
+\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:Hmisc"      "package:ggplot2"   }
+\DocumentationTok{\#\#  [6] "package:Formula"    "package:survival"   "package:lattice"    "package:reticulate" "tools:rstudio"     }
+\DocumentationTok{\#\# [11] "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"      "package:datasets"  }
+\DocumentationTok{\#\# [16] "package:methods"    "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3449,8 +3459,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.54579964, {-}1.15623376, {-}0.18241021, {-}1.55107726,  0.48488931,}
-\CommentTok{\#\#        {-}0.67216619, {-}1.14039818,  0.63478622, {-}1.37914571, {-}1.41066925])}
+\CommentTok{\#\# array([{-}0.65709595,  0.71895782,  0.53708208,  1.11710087,  0.28240261,}
+\CommentTok{\#\#        {-}0.16124072, {-}1.29462968,  0.37077191, {-}1.06060561, {-}0.09100567])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3462,8 +3472,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 0.68320158, {-}1.42429259,  0.27367349,  0.37558466,  0.41446941,}
-\CommentTok{\#\#        {-}0.18679383,  0.72777628,  0.41053152, {-}0.88531372, {-}0.52839302])}
+\CommentTok{\#\# array([{-}2.54187257,  0.27798116,  0.13102643, {-}0.62643596, {-}1.77343478,}
+\CommentTok{\#\#         0.52584417,  0.24314197,  0.56691169, {-}1.90160784, {-}1.08602576])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3475,8 +3485,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 0.408738  , {-}0.06912679, {-}1.19756825, {-}0.47071487, {-}2.11277897,}
-\CommentTok{\#\#         0.89895974,  1.70044327, {-}2.3281974 ,  1.3776052 , {-}0.57320425])}
+\CommentTok{\#\# array([{-}0.53760769,  1.31102614, {-}1.01599654, {-}1.54940669,  0.60171093,}
+\CommentTok{\#\#        {-}0.23955959,  1.33782836,  1.16356082,  0.24199987,  0.55964144])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3742,7 +3752,7 @@ q(x) =
 We can plot all three functions.
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-131-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-131}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-133-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-133}
 \end{figure}
 
 Here's some Python code that attempts to sample once from \(p(x)\). Sometimes proposals are not accepted. When that happens, the function returns \texttt{None}.
@@ -3789,7 +3799,7 @@ Here's some Python code that attempts to sample once from \(p(x)\). Sometimes pr
 \end{enumerate}
 
 In chapter \ref{visualization}, we'll show you the code that you can use to generate the plot below.
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-134-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 \hypertarget{reshaping-and-combining-data-sets}{%
 \chapter{Reshaping and Combining Data Sets}\label{reshaping-and-combining-data-sets}}
@@ -3816,11 +3826,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1]  1.0267191  1.1412205 {-}0.2638651  0.6226000  0.1555443}
+\DocumentationTok{\#\# [1] {-}1.6117528  0.9248115  1.1956147  0.4721976  0.7182541}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}0.2638651  0.1555443  0.6226000  1.0267191  1.1412205}
+\DocumentationTok{\#\# [1] {-}1.6117528  0.4721976  0.7182541  0.9248115  1.1956147}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 3 5 4 1 2}
+\DocumentationTok{\#\# [1] 1 4 5 2 3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3852,11 +3862,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [{-}0.24813929 {-}1.52526574  0.42018319 {-}1.09610589  0.44926968]}
+\CommentTok{\#\# [ 1.56928375  0.29236016 {-}0.23577027  1.91857423 {-}1.44419334]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}1.52526574, {-}1.09610589, {-}0.24813929,  0.42018319,  0.44926968])}
+\CommentTok{\#\# array([{-}1.44419334, {-}0.23577027,  0.29236016,  1.56928375,  1.91857423])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([1, 3, 0, 2, 4])}
+\CommentTok{\#\# array([4, 2, 1, 0, 3])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3907,20 +3917,20 @@ In R, this can be done with \texttt{rbind} (short for ``row bind'')
 \NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
 \NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\DecValTok{1}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train))}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{sum}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train) }\SpecialCharTok{!=}\NormalTok{ realEstate)}
 \DocumentationTok{\#\# [1] 0}
 \end{Highlighting}
@@ -4282,20 +4292,20 @@ Recall our Albemarle Real Estate data set.
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \FunctionTok{head}\NormalTok{(df)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4310,8 +4320,8 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-158-1.pdf}
-\caption{\label{fig:unnamed-chunk-158}A Simple Histogram}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-160-1.pdf}
+\caption{\label{fig:unnamed-chunk-160}A Simple Histogram}
 \end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
@@ -4333,8 +4343,8 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-159-1.pdf}
-\caption{\label{fig:unnamed-chunk-159}Some Scatterplots}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
+\caption{\label{fig:unnamed-chunk-161}Some Scatterplots}
 \end{figure}
 
 \begin{Shaded}
@@ -4368,7 +4378,7 @@ Consider this first example.
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-160-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-160}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-162-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-162}
 \end{figure}
 
 You'll notice a few things about the code and the result produced:
@@ -4397,8 +4407,8 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
-\caption{\label{fig:unnamed-chunk-161}A Second Scatterplot}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
+\caption{\label{fig:unnamed-chunk-163}A Second Scatterplot}
 \end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point}. The aesthetic mappings were used by the new layer.
@@ -4425,8 +4435,8 @@ Additionally, notice that the same layer will behave much differently if we chan
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
-\caption{\label{fig:unnamed-chunk-163}Adding Some Color}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
+\caption{\label{fig:unnamed-chunk-165}Adding Some Color}
 \end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}.
@@ -4444,8 +4454,8 @@ We can change attributes of the axes like this.
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-164-1.pdf}
-\caption{\label{fig:unnamed-chunk-164}Changing Scales}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
+\caption{\label{fig:unnamed-chunk-166}Changing Scales}
 \end{figure}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
@@ -4460,8 +4470,8 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
-\caption{\label{fig:unnamed-chunk-165}Changing the Fill}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
+\caption{\label{fig:unnamed-chunk-167}Changing the Fill}
 \end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
@@ -4477,8 +4487,8 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
-\caption{\label{fig:unnamed-chunk-166}Changing the Fill Again}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-168-1.pdf}
+\caption{\label{fig:unnamed-chunk-168}Changing the Fill Again}
 \end{figure}
 
 There are many to choose from, though. Try to run the following code on your own to see what it produces.
@@ -4505,13 +4515,13 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  4.,   9.,  51., 126., 260., 296., 178.,  64.,   7.,   5.]), array([{-}3.80961269, {-}3.05507924, {-}2.3005458 , {-}1.54601235, {-}0.79147891,}
-\CommentTok{\#\#        {-}0.03694546,  0.71758799,  1.47212143,  2.22665488,  2.98118833,}
-\CommentTok{\#\#         3.73572177]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  3.,  21.,  55., 148., 231., 270., 174.,  76.,  19.,   3.]), array([{-}3.3522234 , {-}2.68363382, {-}2.01504423, {-}1.34645465, {-}0.67786506,}
+\CommentTok{\#\#        {-}0.00927548,  0.65931411,  1.32790369,  1.99649328,  2.66508286,}
+\CommentTok{\#\#         3.33367245]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-169-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-2-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. It also follows the most commonly-used convention.
 
@@ -4542,23 +4552,31 @@ If you want to make figures more elaborate, just keep calling different methods 
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e531a20\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data on the axes...}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e531da0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e53a160\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
+\CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
+\CommentTok{\#\# Text(0, 0.5, \textquotesingle{}y label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{"Simple Plot"}\NormalTok{)  }\CommentTok{\# Add a title to the axes.}
+\CommentTok{\#\# Text(0.5, 1.0, \textquotesingle{}Simple Plot\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7fed3e325128\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e53a748\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-170-3.pdf}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-2-3}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-171-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-171}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-2-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-173}
 \end{figure}
 
 import numpy as np
@@ -4966,7 +4984,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x561f17c7cfc0>
+## <bytecode: 0x560016a51018>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -5028,7 +5046,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-184-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-186-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -5045,7 +5063,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-185-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-187-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -5465,7 +5483,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-198-1.pdf}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-2-1}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -5497,7 +5515,7 @@ More specifically, a functional programming style takes advantage of \textbf{fir
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \textbf{First-class functions} are functions that
+  \textbf{First-class functions} are \citep{struc_and_interp} functions that
 
   \begin{itemize}
   \tightlist
@@ -5591,8 +5609,8 @@ Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \te
 \begin{Highlighting}[]
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
-\DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
-\DocumentationTok{\#\#  0.01798329 {-}0.34527305 {-}0.34609046 {-}0.18486629 {-}0.45171680 {-}0.45818568}
+\DocumentationTok{\#\#           X1           X2           X3           X4           X5           X6 }
+\DocumentationTok{\#\# {-}0.186626600 {-}0.001734603  0.505918900 {-}0.260795610  0.288033685 {-}0.112180365}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5631,14 +5649,14 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# lm(formula = y \textasciitilde{} 1)}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
-\DocumentationTok{\#\#      Min       1Q   Median       3Q      Max }
-\DocumentationTok{\#\# {-}1.46367 {-}0.04558  0.09693  0.55098  0.82433 }
+\DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
+\DocumentationTok{\#\# {-}1.6315 {-}0.7279  0.4213  0.5854  1.4320 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept)  {-}0.2256     0.2421  {-}0.932    0.376}
+\DocumentationTok{\#\# (Intercept)   0.3371     0.3224   1.046    0.323}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 0.7655 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 1.019 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5652,8 +5670,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1] {-}0.069333250  0.019268876  0.225489109 {-}0.004783627 {-}0.032608480 {-}0.123950504 {-}0.031926436}
-\DocumentationTok{\#\#  [8] {-}0.116165449 {-}0.084812980 {-}0.107958920}
+\DocumentationTok{\#\#  [1] {-}0.093699495  0.054415420 {-}0.118230613  0.076560924  0.140967268  0.073739736 {-}0.030871158  0.091842600}
+\DocumentationTok{\#\#  [9] {-}0.187439259  0.007772341}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5664,20 +5682,13 @@ Another example where it can be useful to apply a function to rows is \textbf{pr
 \NormalTok{albRealEstate }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(albRealEstate}\SpecialCharTok{$}\NormalTok{YearBuilt }\SpecialCharTok{==} \DecValTok{2006} \SpecialCharTok{\&}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{Condition }\SpecialCharTok{==} \StringTok{"Average"}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030}
-\DocumentationTok{\#\#   TotalValue   City}
-\DocumentationTok{\#\# 1     409900 CROZET}
-\DocumentationTok{\#\# 2     523100 CROZET}
-\DocumentationTok{\#\# 4     620700 CROZET}
-\DocumentationTok{\#\# 5     162500 CROZET}
-\DocumentationTok{\#\# 6     167200 CROZET}
-\DocumentationTok{\#\# 8     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5701,20 +5712,13 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030}
-\DocumentationTok{\#\#   TotalValue   City}
-\DocumentationTok{\#\# 1     409900 CROZET}
-\DocumentationTok{\#\# 2     523100 CROZET}
-\DocumentationTok{\#\# 4     620700 CROZET}
-\DocumentationTok{\#\# 5     162500 CROZET}
-\DocumentationTok{\#\# 6     167200 CROZET}
-\DocumentationTok{\#\# 8     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5728,23 +5732,22 @@ If I wanted the average home price for each city, I could use something like thi
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(albRealEstate)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City)}
-\DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"   }
-\DocumentationTok{\#\# [6] "KESWICK"}
+\DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"    "KESWICK"}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)}
 \DocumentationTok{\#\# CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE }
 \DocumentationTok{\#\#        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4}
@@ -5782,7 +5785,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  -0.001016995 100.005200655 -99.989227926
+## [1] -2.588782e-03  1.000185e+02 -1.000051e+02
 \end{verbatim}
 
 \begin{Shaded}
@@ -5793,13 +5796,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 
 \begin{verbatim}
 ## [[1]]
-## [1] 0.0039800004 0.0044963956 0.0007223947
+## [1] -0.008091561 -0.008037002 -0.010109641
 ## 
 ## [[2]]
-## [1] 99.99996 99.99022
+## [1]  99.99497 100.00403
 ## 
 ## [[3]]
-## [1] -99.99536
+## [1] -99.98601
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
@@ -5928,7 +5931,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid()} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-215-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-217-1.pdf}
 
 If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -5943,7 +5946,7 @@ If you prefer using \texttt{apply()}, that is also possible, but you would need 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-216-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-218-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -5971,7 +5974,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-218-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-2-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -6231,7 +6234,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-232-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-234-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6271,7 +6274,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-236-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6297,7 +6300,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-236-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-238-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}

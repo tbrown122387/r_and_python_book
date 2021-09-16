@@ -4,13 +4,11 @@ This text has already covered how to *use* functions that come to us pre-made. A
 
 In this section we take a look at how to *define* our own functions. This will not only help us to understand pre-made functions, but it will also be useful if we need some extra functionality that isn't already provided to us. 
 
-Writing our own functions is also useful for "packaging up" computations. The utility of this will become very apparent in chapter \@ref(functional-programming). Consider the task of estimating a regression model. Would you want to write that program using only arithmetic operators? Would it be simpler if you could use matrix multiplications? Would you want your function to work on different types of inputs? Would you want it to estimate several regression models and choose the "best" one?
+Writing our own functions is also useful for "packaging up" computations. The utility of this will become apparent very soon. Consider the task of estimating a regression model. If you have a function that performs all of the required calculations, then
 
-Thankfully, R functions are very similar to Python functions. In both languages, functions are **first-class objects** [@struc_and_interp]. This means that, no matter which of these two languages you are using, functions
+  * you can estimate models without having to think about lower-level details or write any code yourself, and
+  * you can re-use this function every time you fit any model on any data set for any project.
 
-- can be passed as arguments to other functions, 
-- can be returned as values from other functions, and 
-- can be assigned to variables and stored in containers.
 
 ## Defining R Functions
 
@@ -94,7 +92,7 @@ addNumber <- function(myInput, whichNumber = 1){
 body(addNumber)
 ```
 
-Every function you create also has a *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. To understand functions well in R, these examples are important to understand, so I provide more detail in \@ref(function-scope-in-r).
+Every function you create also has a *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. This is discussed in more detail in section \@ref(function-scope-in-r).
 
 ::: {.rmd-details}
 There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
@@ -149,9 +147,14 @@ Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) o
 
 ## Function Scope in R
 
-R uses **lexical scoping**.
+R uses **lexical scoping**. This means, in R, 
 
-R functions can use variables that are defined in the function body, and variables that were defined in the environment that the function itself was defined in. R functions **cannot** necessarily find variables in an environment where the function was *called* in. Code outside the body of a function cannot access variables inside the body of a function.
+  1. functions can use *local* variables that are defined inside themselves,  
+  2. functions can use *global* variables defined in the environment where the function itself was *defined* in, and
+  3. functions *cannot* use *global* variables defined in the environment where the function was *called* in, and
+  4. functions will prefer *local* variables to *global* variables if there is a name clash. 
+  
+The first characteristic is obvious. The second and third are import to distinguish between. Consider the following code below. `sillyFunction()` can access `a` because `sillyFunction()` and `a` are defined in the same place. 
 
 ```{r, collapse = TRUE}
 a <- 3
@@ -162,7 +165,21 @@ environment(sillyFunction) # the env. it was defined in contains a
 sillyFunction()
 ```
 
-From the point of view of the function, when it attempts to access a variable, it first looks in its own body. In the example below, there are two variables named `a`, but they exist in different environments. Inside the function, the innermost one gets used. Outside the function, the global variable gets used. 
+On the other hand, the following example will not work because `a` and `anotherSillyFunc()` are not defined in the same place. Calling the function is not the same as defining a function.
+
+```{r, collapse = TRUE}
+anotherSillyFunc <- function(){
+  return(a + 20) 
+}
+highLevelFunc <- function(){
+  a <- 99
+  # this isn't the global environment anotherSillyFunc() was defined in
+  cat("environment inside highLevelFunc(): ", environment())
+  anotherSillyFunc()
+}
+```
+
+Finally, here is a demonstration of a function preferring one `a` over another. When `sillyFunction()` attempts to access `a`, it first looks in its own body, and so the innermost one gets used. On the other hand, `print(a)` shows `3`, the global variable.
 
 ```{r, collapse = TRUE}
 a <- 3
@@ -174,7 +191,9 @@ sillyFunction()
 print(a)
 ```
 
-The same concept applies if you create functions within functions. The inner function looks "inside-out" for variables. Below we call `outerFunc()`, which calls `innerFunc()`. `innerFunc()` can refer to the variable `b`, because it lies in the same environment in which `innerFunc()` was created. Interestingly, `innerFunc()` can also refer to the variable `a`, because that variable was captured by `outerFunc()`, which provides access to `innerFunc()`. 
+The same concept applies if you create functions within functions. The inner function `innerFunc()` looks "inside-out" for variables, but only in the place it was defined. 
+
+Below we call `outerFunc()`, which then calls `innerFunc()`. `innerFunc()` can refer to the variable `b`, because it lies in the same environment in which `innerFunc()` was created. Interestingly, `innerFunc()` can also refer to the variable `a`, because that variable was captured by `outerFunc()`, which provides access to `innerFunc()`. 
 
 ```{r, collapse = TRUE}
 a <- "outside both"
@@ -189,7 +208,9 @@ outerFunc <- function(){
 outerFunc()
 ```
 
-If we ask `outerFunc()` to return the function `innerFunc()` (not the return object of `innerFunct()`...functions are objects, too!), then we might be surprised to see that `innerFunc()` can still successfully refer to `b`, even though it doesn't exist inside the *calling environment.* But don't be surprised! What matters is what was available when the function was *created*. In this example, `outerFuncV2()` is sometimes called a *function factory*. More information about this is provided in \@ref(functional-programming).
+
+Here's another interesting example. If we ask `outerFunc()` to return the function `innerFunc()` (not the return object of `innerFunct()`...functions are objects, too!), then we might be surprised to see that `innerFunc()` can still successfully refer to `b`, even though it doesn't exist inside the *calling environment.* But don't be surprised! What matters is what was available when the function was *created*. 
+
 
 ```{r, collapse = TRUE}
 outerFuncV2 <- function(){
@@ -203,6 +224,8 @@ myFunc <- outerFuncV2() # get a new function
 ls(environment(myFunc)) # list all data attached to this function
 myFunc()
 ```
+
+We use this property all the time when we create functions that return other functions. This is discussed in more detail in chapter \@ref(functional-programming). In the above example, `outerFuncV2()`, the function that returned another function, is called a *function factory*. 
 
 
 ::: {.rmd-details}
@@ -284,7 +307,20 @@ def third_func():
 third_func() 
 ```
 
-These examples get at *functional programming*, which is discussed more in depth in chapter \@ref(functional-programming). If you are interested in learning more, read on. That chapter will describe strategies to make your code much easier to understand and maintain (e.g. keep your functions "pure"!)
+Last, consider another function factory example. `b` is destroyed after `factory()` finishes being called, but the function it creates still has a copy of `b` to use.
+
+```{python, collapse = TRUE}
+def factory():
+  b = "I will live on, forever!"
+  def func():
+    return b
+  return func
+my_func = factory()
+my_func()
+```
+
+
+If you feel like you understand lexical scoping, great! You should be ready to take on chapter \@ref(functional-programming), then. If not, keep playing around with examples. Without understanding the scoping rules R and Python share, writing your own functions will persistently feel more difficult than it really is. 
 
 
 ## Modifying a Function's Arguments
