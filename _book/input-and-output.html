@@ -441,67 +441,67 @@ div.csl-indent {
 6 1 57 200  9
 6 1 63 200 10</code></pre>
 <p>It does not use commas as separators, and there is no header information, so <code>read.csv()</code> used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="input-and-output.html#cb115-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
-<span id="cb115-2"><a href="input-and-output.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
-<span id="cb115-3"><a href="input-and-output.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   X6.0.66..50..1</span></span>
-<span id="cb115-4"><a href="input-and-output.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6 1 70  50  2</span></span>
-<span id="cb115-5"><a href="input-and-output.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6 0 69  50  3</span></span>
-<span id="cb115-6"><a href="input-and-output.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6 0 68  50  4</span></span>
-<span id="cb115-7"><a href="input-and-output.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6 0 67  50  5</span></span>
-<span id="cb115-8"><a href="input-and-output.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6 0 72  50  6</span></span>
-<span id="cb115-9"><a href="input-and-output.html#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6 0 73 100  7</span></span>
-<span id="cb115-10"><a href="input-and-output.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
-<span id="cb115-11"><a href="input-and-output.html#cb115-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 22  1</span></span>
-<span id="cb115-12"><a href="input-and-output.html#cb115-12" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(d[,<span class="dv">1</span>])</span>
-<span id="cb115-13"><a href="input-and-output.html#cb115-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;character&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="input-and-output.html#cb112-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
+<span id="cb112-2"><a href="input-and-output.html#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
+<span id="cb112-3"><a href="input-and-output.html#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   X6.0.66..50..1</span></span>
+<span id="cb112-4"><a href="input-and-output.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6 1 70  50  2</span></span>
+<span id="cb112-5"><a href="input-and-output.html#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6 0 69  50  3</span></span>
+<span id="cb112-6"><a href="input-and-output.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6 0 68  50  4</span></span>
+<span id="cb112-7"><a href="input-and-output.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6 0 67  50  5</span></span>
+<span id="cb112-8"><a href="input-and-output.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6 0 72  50  6</span></span>
+<span id="cb112-9"><a href="input-and-output.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6 0 73 100  7</span></span>
+<span id="cb112-10"><a href="input-and-output.html#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
+<span id="cb112-11"><a href="input-and-output.html#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 22  1</span></span>
+<span id="cb112-12"><a href="input-and-output.html#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(d[,<span class="dv">1</span>])</span>
+<span id="cb112-13"><a href="input-and-output.html#cb112-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;character&quot;</span></span></code></pre></div>
 <p>Specifying <code>header=FALSE</code> fixes the column name issue, but <code>sep = " "</code> does not fix the separator issue.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="input-and-output.html#cb116-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb116-2"><a href="input-and-output.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
-<span id="cb116-3"><a href="input-and-output.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5 V6 V7</span></span>
-<span id="cb116-4"><a href="input-and-output.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6  0 66 NA 50 NA  1</span></span>
-<span id="cb116-5"><a href="input-and-output.html#cb116-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6  1 70 NA 50 NA  2</span></span>
-<span id="cb116-6"><a href="input-and-output.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6  0 69 NA 50 NA  3</span></span>
-<span id="cb116-7"><a href="input-and-output.html#cb116-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6  0 68 NA 50 NA  4</span></span>
-<span id="cb116-8"><a href="input-and-output.html#cb116-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6  0 67 NA 50 NA  5</span></span>
-<span id="cb116-9"><a href="input-and-output.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6  0 72 NA 50 NA  6</span></span>
-<span id="cb116-10"><a href="input-and-output.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
-<span id="cb116-11"><a href="input-and-output.html#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23  7</span></span>
-<span id="cb116-12"><a href="input-and-output.html#cb116-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
-<span id="cb116-13"><a href="input-and-output.html#cb116-13" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  7 variables:</span></span>
-<span id="cb116-14"><a href="input-and-output.html#cb116-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
-<span id="cb116-15"><a href="input-and-output.html#cb116-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
-<span id="cb116-16"><a href="input-and-output.html#cb116-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
-<span id="cb116-17"><a href="input-and-output.html#cb116-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  NA NA NA NA NA NA 100 100 200 200 ...</span></span>
-<span id="cb116-18"><a href="input-and-output.html#cb116-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  50 50 50 50 50 50 NA NA NA 10 ...</span></span>
-<span id="cb116-19"><a href="input-and-output.html#cb116-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V6: int  NA NA NA NA NA NA 7 8 9 NA ...</span></span>
-<span id="cb116-20"><a href="input-and-output.html#cb116-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V7: int  1 2 3 4 5 6 NA NA NA NA ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="input-and-output.html#cb113-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb113-2"><a href="input-and-output.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
+<span id="cb113-3"><a href="input-and-output.html#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5 V6 V7</span></span>
+<span id="cb113-4"><a href="input-and-output.html#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6  0 66 NA 50 NA  1</span></span>
+<span id="cb113-5"><a href="input-and-output.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6  1 70 NA 50 NA  2</span></span>
+<span id="cb113-6"><a href="input-and-output.html#cb113-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6  0 69 NA 50 NA  3</span></span>
+<span id="cb113-7"><a href="input-and-output.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6  0 68 NA 50 NA  4</span></span>
+<span id="cb113-8"><a href="input-and-output.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6  0 67 NA 50 NA  5</span></span>
+<span id="cb113-9"><a href="input-and-output.html#cb113-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6  0 72 NA 50 NA  6</span></span>
+<span id="cb113-10"><a href="input-and-output.html#cb113-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
+<span id="cb113-11"><a href="input-and-output.html#cb113-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23  7</span></span>
+<span id="cb113-12"><a href="input-and-output.html#cb113-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb113-13"><a href="input-and-output.html#cb113-13" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  7 variables:</span></span>
+<span id="cb113-14"><a href="input-and-output.html#cb113-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb113-15"><a href="input-and-output.html#cb113-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb113-16"><a href="input-and-output.html#cb113-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb113-17"><a href="input-and-output.html#cb113-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  NA NA NA NA NA NA 100 100 200 200 ...</span></span>
+<span id="cb113-18"><a href="input-and-output.html#cb113-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  50 50 50 50 50 50 NA NA NA 10 ...</span></span>
+<span id="cb113-19"><a href="input-and-output.html#cb113-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V6: int  NA NA NA NA NA NA 7 8 9 NA ...</span></span>
+<span id="cb113-20"><a href="input-and-output.html#cb113-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V7: int  1 2 3 4 5 6 NA NA NA NA ...</span></span></code></pre></div>
 <p>One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that <code>""</code> works for “one or more spaces, tabs, newlines or carriage returns.” This is why <code>read.table()</code>, with its default arguments, works well.</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="input-and-output.html#cb117-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
-<span id="cb117-2"><a href="input-and-output.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
-<span id="cb117-3"><a href="input-and-output.html#cb117-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5</span></span>
-<span id="cb117-4"><a href="input-and-output.html#cb117-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6  0 66 50  1</span></span>
-<span id="cb117-5"><a href="input-and-output.html#cb117-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6  1 70 50  2</span></span>
-<span id="cb117-6"><a href="input-and-output.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6  0 69 50  3</span></span>
-<span id="cb117-7"><a href="input-and-output.html#cb117-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6  0 68 50  4</span></span>
-<span id="cb117-8"><a href="input-and-output.html#cb117-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6  0 67 50  5</span></span>
-<span id="cb117-9"><a href="input-and-output.html#cb117-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6  0 72 50  6</span></span>
-<span id="cb117-10"><a href="input-and-output.html#cb117-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
-<span id="cb117-11"><a href="input-and-output.html#cb117-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23  5</span></span>
-<span id="cb117-12"><a href="input-and-output.html#cb117-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
-<span id="cb117-13"><a href="input-and-output.html#cb117-13" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  5 variables:</span></span>
-<span id="cb117-14"><a href="input-and-output.html#cb117-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
-<span id="cb117-15"><a href="input-and-output.html#cb117-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
-<span id="cb117-16"><a href="input-and-output.html#cb117-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
-<span id="cb117-17"><a href="input-and-output.html#cb117-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
-<span id="cb117-18"><a href="input-and-output.html#cb117-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="input-and-output.html#cb114-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
+<span id="cb114-2"><a href="input-and-output.html#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span>
+<span id="cb114-3"><a href="input-and-output.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5</span></span>
+<span id="cb114-4"><a href="input-and-output.html#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  6  0 66 50  1</span></span>
+<span id="cb114-5"><a href="input-and-output.html#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  6  1 70 50  2</span></span>
+<span id="cb114-6"><a href="input-and-output.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  6  0 69 50  3</span></span>
+<span id="cb114-7"><a href="input-and-output.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  6  0 68 50  4</span></span>
+<span id="cb114-8"><a href="input-and-output.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  6  0 67 50  5</span></span>
+<span id="cb114-9"><a href="input-and-output.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  6  0 72 50  6</span></span>
+<span id="cb114-10"><a href="input-and-output.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d)</span>
+<span id="cb114-11"><a href="input-and-output.html#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23  5</span></span>
+<span id="cb114-12"><a href="input-and-output.html#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb114-13"><a href="input-and-output.html#cb114-13" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  5 variables:</span></span>
+<span id="cb114-14"><a href="input-and-output.html#cb114-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb114-15"><a href="input-and-output.html#cb114-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb114-16"><a href="input-and-output.html#cb114-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb114-17"><a href="input-and-output.html#cb114-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
+<span id="cb114-18"><a href="input-and-output.html#cb114-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
 <p>This data set has columns whose widths are “fixed,” too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="input-and-output.html#cb118-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb118-2"><a href="input-and-output.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
-<span id="cb118-3"><a href="input-and-output.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  4 variables:</span></span>
-<span id="cb118-4"><a href="input-and-output.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
-<span id="cb118-5"><a href="input-and-output.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
-<span id="cb118-6"><a href="input-and-output.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
-<span id="cb118-7"><a href="input-and-output.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  5 5 5 5 5 5 10 10 20 20 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="input-and-output.html#cb115-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb115-2"><a href="input-and-output.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb115-3"><a href="input-and-output.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  4 variables:</span></span>
+<span id="cb115-4"><a href="input-and-output.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb115-5"><a href="input-and-output.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb115-6"><a href="input-and-output.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb115-7"><a href="input-and-output.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  5 5 5 5 5 5 10 10 20 20 ...</span></span></code></pre></div>
 </div>
 <div id="reading-in-text-files-with-python" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Reading in Text Files with Python</h2>

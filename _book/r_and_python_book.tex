@@ -759,7 +759,7 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1] {-}1.0880219  1.5829645 {-}0.7269905 {-}0.6667472  1.5122169 {-}0.1465768 {-}0.6481614 {-}0.2132982  0.7794293  1.6753766}
+\DocumentationTok{\#\#  [1]  1.8114892 {-}0.2285257  0.3278625 {-}1.4643152 {-}1.1424843 {-}1.2750914 {-}0.9460275  2.1206117 {-}0.6472018  2.2693876}
 \end{Highlighting}
 \end{Shaded}
 
@@ -786,7 +786,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}2.69778113,  0.11592843, {-}0.79135341])}
+\CommentTok{\#\# array([0.19446118, 0.38206327, 0.36005756])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2225,7 +2225,7 @@ R uses \textbf{lexical scoping}. This means, in R,
 \item
   functions can use \emph{global} variables defined in the environment where the function itself was \emph{defined} in, and
 \item
-  functions \emph{cannot} use \emph{global} variables defined in the environment where the function was \emph{called} in, and
+  functions \emph{cannot} necessarily use \emph{global} variables defined in the environment where the function was \emph{called} in, and
 \item
   functions will prefer \emph{local} variables to \emph{global} variables if there is a name clash.
 \end{enumerate}
@@ -2324,7 +2324,20 @@ Sometimes people will refer to R's functions as \textbf{closures} to emphasize t
 \hypertarget{function-scope-in-python}{%
 \section{Function Scope in Python}\label{function-scope-in-python}}
 
-Python uses \textbf{lexical scoping} just like R! There's a famous acronym for the concept in Python: \textbf{LEGB}.
+Python uses \textbf{lexical scoping} just like R. This means, in Python,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  functions can use \emph{local} variables that are defined inside themselves,\\
+\item
+  functions have an order of preference for which variable to prefer in the case of a name clash, and
+\item
+  functions can sometimes use variables defined outside itself, but that ability depends on where the function and variable were \emph{defined}, not where the function was \emph{called}.
+\end{enumerate}
+
+Regarding characteristics (2) and (3), there is a famous acronym that describes the rules Python follows when finding and choosing variables: \textbf{LEGB}.
 
 \begin{itemize}
 \tightlist
@@ -2359,7 +2372,7 @@ A Python function will search for a variable in these namespaces in this order.\
 \end{Highlighting}
 \end{Shaded}
 
-``\emph{Enclosing}'' refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called \textbf{free variables.} In the example below, there is no local \texttt{a} variable for \texttt{inner\_func()}. But there is a global one and one in the enclosing namespace. \texttt{inner\_func()} chooses the one in the enclosing namespace.
+``\emph{Enclosing}'' refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called \textbf{free variables.} In the example below, there is no local \texttt{a} variable for \texttt{inner\_func()}, but there is a global one, and one in the enclosing namespace. \texttt{inner\_func()} chooses the one in the enclosing namespace. Moreover, \texttt{inner\_func()} has its own copy of \texttt{a} to use, even after \texttt{a} was initially destroyed upon the completion of the call to \texttt{outer\_func()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2392,7 +2405,9 @@ A Python function will search for a variable in these namespaces in this order.\
 \end{Highlighting}
 \end{Shaded}
 
-Just like in R, Python functions \textbf{cannot} necessarily find variables in an environment where the function was \emph{called} in. For example, here is some code that mimics the above R example. Both \texttt{a} and \texttt{b} are accessible from within \texttt{inner\_func()}. That is due to LEGB.
+Just like in R, Python functions \textbf{cannot} necessarily find variables where the function was \emph{called}. For example, here is some code that mimics the above R example. Both \texttt{a} and \texttt{b} are accessible from within \texttt{inner\_func()}. That is due to LEGB.
+
+However, if we start using \texttt{outer\_func()} inside another function, \emph{calling} it in another function, when it was \emph{defined} somewhere else, well then it doesn't have access to variables in the call site. You might be surprised at how the following code functions. Does this print the right string: \texttt{"this\ is\ the\ a\ I\ want\ to\ use\ now!"} No!
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2403,19 +2418,6 @@ Just like in R, Python functions \textbf{cannot} necessarily find variables in a
     \BuiltInTok{print}\NormalTok{(a) }
     \BuiltInTok{print}\NormalTok{(b)}
   \ControlFlowTok{return}\NormalTok{ inner\_func() }
-\NormalTok{outer\_func()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## outside both
-## inside one
-\end{verbatim}
-
-However, if we start using \texttt{outer\_func()} inside another function, \emph{calling} it in another function, when it was \emph{defined} somewhere else, well then it doesn't have access to some variables. You might be surprised at how the following code functions. Does this print the right string: \texttt{"this\ is\ the\ a\ I\ want\ to\ use\ now!"} No!
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ third\_func():}
 \NormalTok{  a }\OperatorTok{=} \StringTok{"this is the a I want to use now!"}
 \NormalTok{  outer\_func()}
@@ -2427,21 +2429,6 @@ However, if we start using \texttt{outer\_func()} inside another function, \emph
 ## outside both
 ## inside one
 \end{verbatim}
-
-Last, consider another function factory example. \texttt{b} is destroyed after \texttt{factory()} finishes being called, but the function it creates still has a copy of \texttt{b} to use.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{def}\NormalTok{ factory():}
-\NormalTok{  b }\OperatorTok{=} \StringTok{"I will live on, forever!"}
-  \KeywordTok{def}\NormalTok{ func():}
-    \ControlFlowTok{return}\NormalTok{ b}
-  \ControlFlowTok{return}\NormalTok{ func}
-\NormalTok{my\_func }\OperatorTok{=}\NormalTok{ factory()}
-\NormalTok{my\_func()}
-\CommentTok{\#\# \textquotesingle{}I will live on, forever!\textquotesingle{}}
-\end{Highlighting}
-\end{Shaded}
 
 If you feel like you understand lexical scoping, great! You should be ready to take on chapter \ref{functional-programming}, then. If not, keep playing around with examples. Without understanding the scoping rules R and Python share, writing your own functions will persistently feel more difficult than it really is.
 
@@ -2556,7 +2543,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140657858671968 140657858672000}
+\CommentTok{\#\# 139983403640160 139983403640192}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2719,6 +2706,8 @@ The upside to the \texttt{global} keyword is that it makes hunting for \textbf{s
 \hypertarget{categorical-data}{%
 \chapter{Categorical Data}\label{categorical-data}}
 
+This chapter describes some considerations to make when you are dealing with categorical data in your program. While statisticians may describe data as being categorical or numerical. This classification is different than classifying data by its type in a program.
+
 \hypertarget{categorical-data-in-r}{%
 \section{Categorical Data in R}\label{categorical-data-in-r}}
 
@@ -2780,7 +2769,7 @@ Here's a third example. We can take non-categorical data, and \texttt{cut} it in
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0]}
+\DocumentationTok{\#\#  [1] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -2825,7 +2814,7 @@ The pandas library also provides a \texttt{pd.cut()} function, which can return 
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \NormalTok{type\_of\_day}
-\CommentTok{\#\# [\textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}]}
+\CommentTok{\#\# [\textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}, \textquotesingle{}bad day\textquotesingle{}, \textquotesingle{}good day\textquotesingle{}]}
 \CommentTok{\#\# Categories (2, object): [\textquotesingle{}bad day\textquotesingle{} \textless{} \textquotesingle{}good day\textquotesingle{}]}
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -3459,8 +3448,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.65709595,  0.71895782,  0.53708208,  1.11710087,  0.28240261,}
-\CommentTok{\#\#        {-}0.16124072, {-}1.29462968,  0.37077191, {-}1.06060561, {-}0.09100567])}
+\CommentTok{\#\# array([{-}1.47803874, {-}0.85572478, {-}1.26961174, {-}2.30975761,  0.23769402,}
+\CommentTok{\#\#        {-}0.10741396, {-}1.33626672,  0.01988994,  0.10557012, {-}1.31208947])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3472,8 +3461,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}2.54187257,  0.27798116,  0.13102643, {-}0.62643596, {-}1.77343478,}
-\CommentTok{\#\#         0.52584417,  0.24314197,  0.56691169, {-}1.90160784, {-}1.08602576])}
+\CommentTok{\#\# array([{-}0.73262775,  0.71107741, {-}0.10460775,  1.48406727,  0.22563566,}
+\CommentTok{\#\#        {-}0.33232372, {-}1.5457928 ,  0.47928525,  0.3689327 , {-}1.33724625])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3485,8 +3474,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.53760769,  1.31102614, {-}1.01599654, {-}1.54940669,  0.60171093,}
-\CommentTok{\#\#        {-}0.23955959,  1.33782836,  1.16356082,  0.24199987,  0.55964144])}
+\CommentTok{\#\# array([{-}0.7044891 , {-}0.67439848,  0.39321771, {-}0.84409836,  1.66342908,}
+\CommentTok{\#\#         0.2890751 ,  0.94534194,  1.64246026,  0.33217141,  1.1547187 ])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3752,7 +3741,7 @@ q(x) =
 We can plot all three functions.
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-133-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-133}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-131-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-131}
 \end{figure}
 
 Here's some Python code that attempts to sample once from \(p(x)\). Sometimes proposals are not accepted. When that happens, the function returns \texttt{None}.
@@ -3799,7 +3788,7 @@ Here's some Python code that attempts to sample once from \(p(x)\). Sometimes pr
 \end{enumerate}
 
 In chapter \ref{visualization}, we'll show you the code that you can use to generate the plot below.
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-134-1.pdf}
 
 \hypertarget{reshaping-and-combining-data-sets}{%
 \chapter{Reshaping and Combining Data Sets}\label{reshaping-and-combining-data-sets}}
@@ -3826,11 +3815,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.6117528  0.9248115  1.1956147  0.4721976  0.7182541}
+\DocumentationTok{\#\# [1]  0.35626592 {-}0.48234364 {-}0.41232139  0.07701254 {-}0.21067599}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.6117528  0.4721976  0.7182541  0.9248115  1.1956147}
+\DocumentationTok{\#\# [1] {-}0.48234364 {-}0.41232139 {-}0.21067599  0.07701254  0.35626592}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 1 4 5 2 3}
+\DocumentationTok{\#\# [1] 2 3 5 4 1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3862,11 +3851,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [ 1.56928375  0.29236016 {-}0.23577027  1.91857423 {-}1.44419334]}
+\CommentTok{\#\# [{-}0.92455362  0.29703176  0.02218716 {-}1.24130758  0.74340305]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}1.44419334, {-}0.23577027,  0.29236016,  1.56928375,  1.91857423])}
+\CommentTok{\#\# array([{-}1.24130758, {-}0.92455362,  0.02218716,  0.29703176,  0.74340305])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([4, 2, 1, 0, 3])}
+\CommentTok{\#\# array([3, 0, 2, 1, 4])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4320,8 +4309,8 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-160-1.pdf}
-\caption{\label{fig:unnamed-chunk-160}A Simple Histogram}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-158-1.pdf}
+\caption{\label{fig:unnamed-chunk-158}A Simple Histogram}
 \end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
@@ -4343,8 +4332,8 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
-\caption{\label{fig:unnamed-chunk-161}Some Scatterplots}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-159-1.pdf}
+\caption{\label{fig:unnamed-chunk-159}Some Scatterplots}
 \end{figure}
 
 \begin{Shaded}
@@ -4378,7 +4367,7 @@ Consider this first example.
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-162-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-162}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-160-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-160}
 \end{figure}
 
 You'll notice a few things about the code and the result produced:
@@ -4407,8 +4396,8 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
-\caption{\label{fig:unnamed-chunk-163}A Second Scatterplot}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-161-1.pdf}
+\caption{\label{fig:unnamed-chunk-161}A Second Scatterplot}
 \end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point}. The aesthetic mappings were used by the new layer.
@@ -4435,8 +4424,8 @@ Additionally, notice that the same layer will behave much differently if we chan
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
-\caption{\label{fig:unnamed-chunk-165}Adding Some Color}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-163-1.pdf}
+\caption{\label{fig:unnamed-chunk-163}Adding Some Color}
 \end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}.
@@ -4454,8 +4443,8 @@ We can change attributes of the axes like this.
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
-\caption{\label{fig:unnamed-chunk-166}Changing Scales}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-164-1.pdf}
+\caption{\label{fig:unnamed-chunk-164}Changing Scales}
 \end{figure}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
@@ -4470,8 +4459,8 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
-\caption{\label{fig:unnamed-chunk-167}Changing the Fill}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-165-1.pdf}
+\caption{\label{fig:unnamed-chunk-165}Changing the Fill}
 \end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
@@ -4487,8 +4476,8 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-168-1.pdf}
-\caption{\label{fig:unnamed-chunk-168}Changing the Fill Again}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
+\caption{\label{fig:unnamed-chunk-166}Changing the Fill Again}
 \end{figure}
 
 There are many to choose from, though. Try to run the following code on your own to see what it produces.
@@ -4515,13 +4504,13 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  3.,  21.,  55., 148., 231., 270., 174.,  76.,  19.,   3.]), array([{-}3.3522234 , {-}2.68363382, {-}2.01504423, {-}1.34645465, {-}0.67786506,}
-\CommentTok{\#\#        {-}0.00927548,  0.65931411,  1.32790369,  1.99649328,  2.66508286,}
-\CommentTok{\#\#         3.33367245]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  3.,  14.,  42., 105., 190., 261., 182., 122.,  64.,  17.]), array([{-}3.39158746, {-}2.78322939, {-}2.17487132, {-}1.56651326, {-}0.95815519,}
+\CommentTok{\#\#        {-}0.34979713,  0.25856094,  0.86691901,  1.47527707,  2.08363514,}
+\CommentTok{\#\#         2.69199321]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-2-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. It also follows the most commonly-used convention.
 
@@ -4552,11 +4541,11 @@ If you want to make figures more elaborate, just keep calling different methods 
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e531a20\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f508046cef0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data on the axes...}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e531da0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f50804772b0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e53a160\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f503acb3128\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
 \CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
@@ -4566,17 +4555,17 @@ If you want to make figures more elaborate, just keep calling different methods 
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7fed3e325128\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f50398795f8\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fed3e53a748\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f5080477780\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-2-3}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-1-3}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-2-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-173}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-171}
 \end{figure}
 
 import numpy as np
@@ -4984,7 +4973,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x560016a51018>
+## <bytecode: 0x557d57705818>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -5046,7 +5035,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-186-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-184-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -5063,7 +5052,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-187-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-185-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -5483,7 +5472,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-2-1}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -5609,8 +5598,8 @@ Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \te
 \begin{Highlighting}[]
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
-\DocumentationTok{\#\#           X1           X2           X3           X4           X5           X6 }
-\DocumentationTok{\#\# {-}0.186626600 {-}0.001734603  0.505918900 {-}0.260795610  0.288033685 {-}0.112180365}
+\DocumentationTok{\#\#         X1         X2         X3         X4         X5         X6 }
+\DocumentationTok{\#\# 0.18791379 0.32860530 0.37409096 0.06753335 0.21127377 0.08396739}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5650,13 +5639,13 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
 \DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}1.6315 {-}0.7279  0.4213  0.5854  1.4320 }
+\DocumentationTok{\#\# {-}2.4850 {-}0.4852  0.2328  0.6394  1.4447 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept)   0.3371     0.3224   1.046    0.323}
+\DocumentationTok{\#\# (Intercept)   0.2834     0.3587    0.79     0.45}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 1.019 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 1.134 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5670,8 +5659,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1] {-}0.093699495  0.054415420 {-}0.118230613  0.076560924  0.140967268  0.073739736 {-}0.030871158  0.091842600}
-\DocumentationTok{\#\#  [9] {-}0.187439259  0.007772341}
+\DocumentationTok{\#\#  [1]  0.05552465  0.10719996  0.03776452 {-}0.00606762  0.15164697  0.02808534  0.06334364  0.02870436  0.10133659}
+\DocumentationTok{\#\# [10] {-}0.08658825}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5785,7 +5774,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -2.588782e-03  1.000185e+02 -1.000051e+02
+## [1]   -0.00276107   99.99417045 -100.00156871
 \end{verbatim}
 
 \begin{Shaded}
@@ -5796,13 +5785,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.008091561 -0.008037002 -0.010109641
+## [1]  0.009768508 -0.001187353 -0.018654894
 ## 
 ## [[2]]
-## [1]  99.99497 100.00403
+## [1] 100.0103 100.0027
 ## 
 ## [[3]]
-## [1] -99.98601
+## [1] -100.0007
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
@@ -5931,7 +5920,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid()} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-217-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-215-1.pdf}
 
 If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -5946,7 +5935,7 @@ If you prefer using \texttt{apply()}, that is also possible, but you would need 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-218-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-216-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -5974,7 +5963,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-2-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -6234,7 +6223,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-232-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6274,7 +6263,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-236-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-234-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6300,7 +6289,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-238-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-236-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}

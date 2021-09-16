@@ -151,7 +151,7 @@ R uses **lexical scoping**. This means, in R,
 
   1. functions can use *local* variables that are defined inside themselves,  
   2. functions can use *global* variables defined in the environment where the function itself was *defined* in, and
-  3. functions *cannot* use *global* variables defined in the environment where the function was *called* in, and
+  3. functions *cannot* necessarily use *global* variables defined in the environment where the function was *called* in, and
   4. functions will prefer *local* variables to *global* variables if there is a name clash. 
   
 The first characteristic is obvious. The second and third are import to distinguish between. Consider the following code below. `sillyFunction()` can access `a` because `sillyFunction()` and `a` are defined in the same place. 
@@ -236,7 +236,13 @@ Sometimes people will refer to R's functions as **closures** to emphasize that t
 
 ## Function Scope in Python
 
-Python uses **lexical scoping** just like R! There's a famous acronym for the concept in Python: **LEGB**.
+Python uses **lexical scoping** just like R. This means, in Python, 
+
+  1. functions can use *local* variables that are defined inside themselves,  
+  2. functions have an order of preference for which variable to prefer in the case of a name clash, and 
+  3. functions can sometimes use variables defined outside itself, but that ability depends on where the function and variable were *defined*, not where the function was *called*.
+
+Regarding characteristics (2) and (3), there is a famous acronym that describes the rules Python follows when finding and choosing variables: **LEGB**.
 
 - L: Local, 
 - E: Enclosing, 
@@ -258,7 +264,7 @@ silly_function.__code__.co_nlocals # number of local variables
 silly_function.__code__.co_varnames # names of local variables
 ```
 
-"*Enclosing*" refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called **free variables.** In the example below, there is no local `a` variable for `inner_func()`. But there is a global one and one in the enclosing namespace. `inner_func()` chooses the one in the enclosing namespace. 
+"*Enclosing*" refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called **free variables.** In the example below, there is no local `a` variable for `inner_func()`, but there is a global one, and one in the enclosing namespace. `inner_func()` chooses the one in the enclosing namespace. Moreover, `inner_func()` has its own copy of `a` to use, even after `a` was initially destroyed upon the completion of the call to `outer_func()`. 
 
 ```{python, collapse = TRUE}
 a = "outside both"
@@ -285,7 +291,10 @@ outer_func()
 ```
 
 
-Just like in R, Python functions **cannot** necessarily find variables in an environment where the function was *called* in. For example, here is some code that mimics the above R example. Both `a` and `b` are accessible from within `inner_func()`. That is due to LEGB.
+Just like in R, Python functions **cannot** necessarily find variables where the function was *called*. For example, here is some code that mimics the above R example. Both `a` and `b` are accessible from within `inner_func()`. That is due to LEGB.
+
+However, if we start using `outer_func()` inside another function, *calling* it in another function, when it was *defined* somewhere else, well then it doesn't have access to variables in the call site. You might be surprised at how the following code functions. Does this print the right string: `"this is the a I want to use now!"` No!
+
 
 ```{python}
 a = "outside both"
@@ -295,28 +304,10 @@ def outer_func():
     print(a) 
     print(b)
   return inner_func() 
-outer_func()
-```
-
-However, if we start using `outer_func()` inside another function, *calling* it in another function, when it was *defined* somewhere else, well then it doesn't have access to some variables. You might be surprised at how the following code functions. Does this print the right string: `"this is the a I want to use now!"` No!
-
-```{python}
 def third_func():
   a = "this is the a I want to use now!"
   outer_func()
 third_func() 
-```
-
-Last, consider another function factory example. `b` is destroyed after `factory()` finishes being called, but the function it creates still has a copy of `b` to use.
-
-```{python, collapse = TRUE}
-def factory():
-  b = "I will live on, forever!"
-  def func():
-    return b
-  return func
-my_func = factory()
-my_func()
 ```
 
 

@@ -516,7 +516,7 @@ div.csl-indent {
 <li>functions can use <em>local</em> variables that are defined inside themselves,<br />
 </li>
 <li>functions can use <em>global</em> variables defined in the environment where the function itself was <em>defined</em> in, and</li>
-<li>functions <em>cannot</em> use <em>global</em> variables defined in the environment where the function was <em>called</em> in, and</li>
+<li>functions <em>cannot</em> necessarily use <em>global</em> variables defined in the environment where the function was <em>called</em> in, and</li>
 <li>functions will prefer <em>local</em> variables to <em>global</em> variables if there is a name clash.</li>
 </ol>
 <p>The first characteristic is obvious. The second and third are import to distinguish between. Consider the following code below. <code>sillyFunction()</code> can access <code>a</code> because <code>sillyFunction()</code> and <code>a</code> are defined in the same place.</p>
@@ -582,7 +582,14 @@ div.csl-indent {
 </div>
 <div id="function-scope-in-python" class="section level2" number="6.6">
 <h2><span class="header-section-number">6.6</span> Function Scope in Python</h2>
-<p>Python uses <strong>lexical scoping</strong> just like R! There’s a famous acronym for the concept in Python: <strong>LEGB</strong>.</p>
+<p>Python uses <strong>lexical scoping</strong> just like R. This means, in Python,</p>
+<ol style="list-style-type: decimal">
+<li>functions can use <em>local</em> variables that are defined inside themselves,<br />
+</li>
+<li>functions have an order of preference for which variable to prefer in the case of a name clash, and</li>
+<li>functions can sometimes use variables defined outside itself, but that ability depends on where the function and variable were <em>defined</em>, not where the function was <em>called</em>.</li>
+</ol>
+<p>Regarding characteristics (2) and (3), there is a famous acronym that describes the rules Python follows when finding and choosing variables: <strong>LEGB</strong>.</p>
 <ul>
 <li>L: Local,</li>
 <li>E: Enclosing,</li>
@@ -603,7 +610,7 @@ div.csl-indent {
 <span id="cb79-10"><a href="functions.html#cb79-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span>
 <span id="cb79-11"><a href="functions.html#cb79-11" aria-hidden="true" tabindex="-1"></a>silly_function.__code__.co_varnames <span class="co"># names of local variables</span></span>
 <span id="cb79-12"><a href="functions.html#cb79-12" aria-hidden="true" tabindex="-1"></a><span class="co">## (&#39;a&#39;,)</span></span></code></pre></div>
-<p>“<em>Enclosing</em>” refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called <strong>free variables.</strong> In the example below, there is no local <code>a</code> variable for <code>inner_func()</code>. But there is a global one and one in the enclosing namespace. <code>inner_func()</code> chooses the one in the enclosing namespace.</p>
+<p>“<em>Enclosing</em>” refers to variables that were defined in the enclosing namespace, but not the global namespace. These variables are sometimes called <strong>free variables.</strong> In the example below, there is no local <code>a</code> variable for <code>inner_func()</code>, but there is a global one, and one in the enclosing namespace. <code>inner_func()</code> chooses the one in the enclosing namespace. Moreover, <code>inner_func()</code> has its own copy of <code>a</code> to use, even after <code>a</code> was initially destroyed upon the completion of the call to <code>outer_func()</code>.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="functions.html#cb80-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">&quot;outside both&quot;</span></span>
 <span id="cb80-2"><a href="functions.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> outer_func():</span>
 <span id="cb80-3"><a href="functions.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> <span class="st">&quot;inside one&quot;</span></span>
@@ -624,7 +631,8 @@ div.csl-indent {
 <span id="cb81-6"><a href="functions.html#cb81-6" aria-hidden="true" tabindex="-1"></a>  inner_func()</span>
 <span id="cb81-7"><a href="functions.html#cb81-7" aria-hidden="true" tabindex="-1"></a>outer_func()</span>
 <span id="cb81-8"><a href="functions.html#cb81-8" aria-hidden="true" tabindex="-1"></a><span class="co">## outside both</span></span></code></pre></div>
-<p>Just like in R, Python functions <strong>cannot</strong> necessarily find variables in an environment where the function was <em>called</em> in. For example, here is some code that mimics the above R example. Both <code>a</code> and <code>b</code> are accessible from within <code>inner_func()</code>. That is due to LEGB.</p>
+<p>Just like in R, Python functions <strong>cannot</strong> necessarily find variables where the function was <em>called</em>. For example, here is some code that mimics the above R example. Both <code>a</code> and <code>b</code> are accessible from within <code>inner_func()</code>. That is due to LEGB.</p>
+<p>However, if we start using <code>outer_func()</code> inside another function, <em>calling</em> it in another function, when it was <em>defined</em> somewhere else, well then it doesn’t have access to variables in the call site. You might be surprised at how the following code functions. Does this print the right string: <code>"this is the a I want to use now!"</code> No!</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb82-1"><a href="functions.html#cb82-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">&quot;outside both&quot;</span></span>
 <span id="cb82-2"><a href="functions.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> outer_func():</span>
 <span id="cb82-3"><a href="functions.html#cb82-3" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> <span class="st">&quot;inside one&quot;</span></span>
@@ -632,25 +640,12 @@ div.csl-indent {
 <span id="cb82-5"><a href="functions.html#cb82-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(a) </span>
 <span id="cb82-6"><a href="functions.html#cb82-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(b)</span>
 <span id="cb82-7"><a href="functions.html#cb82-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> inner_func() </span>
-<span id="cb82-8"><a href="functions.html#cb82-8" aria-hidden="true" tabindex="-1"></a>outer_func()</span></code></pre></div>
+<span id="cb82-8"><a href="functions.html#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> third_func():</span>
+<span id="cb82-9"><a href="functions.html#cb82-9" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> <span class="st">&quot;this is the a I want to use now!&quot;</span></span>
+<span id="cb82-10"><a href="functions.html#cb82-10" aria-hidden="true" tabindex="-1"></a>  outer_func()</span>
+<span id="cb82-11"><a href="functions.html#cb82-11" aria-hidden="true" tabindex="-1"></a>third_func() </span></code></pre></div>
 <pre><code>## outside both
 ## inside one</code></pre>
-<p>However, if we start using <code>outer_func()</code> inside another function, <em>calling</em> it in another function, when it was <em>defined</em> somewhere else, well then it doesn’t have access to some variables. You might be surprised at how the following code functions. Does this print the right string: <code>"this is the a I want to use now!"</code> No!</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="functions.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> third_func():</span>
-<span id="cb84-2"><a href="functions.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> <span class="st">&quot;this is the a I want to use now!&quot;</span></span>
-<span id="cb84-3"><a href="functions.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  outer_func()</span>
-<span id="cb84-4"><a href="functions.html#cb84-4" aria-hidden="true" tabindex="-1"></a>third_func() </span></code></pre></div>
-<pre><code>## outside both
-## inside one</code></pre>
-<p>Last, consider another function factory example. <code>b</code> is destroyed after <code>factory()</code> finishes being called, but the function it creates still has a copy of <code>b</code> to use.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="functions.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> factory():</span>
-<span id="cb86-2"><a href="functions.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> <span class="st">&quot;I will live on, forever!&quot;</span></span>
-<span id="cb86-3"><a href="functions.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> func():</span>
-<span id="cb86-4"><a href="functions.html#cb86-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> b</span>
-<span id="cb86-5"><a href="functions.html#cb86-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> func</span>
-<span id="cb86-6"><a href="functions.html#cb86-6" aria-hidden="true" tabindex="-1"></a>my_func <span class="op">=</span> factory()</span>
-<span id="cb86-7"><a href="functions.html#cb86-7" aria-hidden="true" tabindex="-1"></a>my_func()</span>
-<span id="cb86-8"><a href="functions.html#cb86-8" aria-hidden="true" tabindex="-1"></a><span class="co">## &#39;I will live on, forever!&#39;</span></span></code></pre></div>
 <p>If you feel like you understand lexical scoping, great! You should be ready to take on chapter <a href="functional-programming.html#functional-programming">18</a>, then. If not, keep playing around with examples. Without understanding the scoping rules R and Python share, writing your own functions will persistently feel more difficult than it really is.</p>
 </div>
 <div id="modifying-a-functions-arguments" class="section level2" number="6.7">
@@ -659,15 +654,15 @@ div.csl-indent {
 <div id="passing-by-value-in-r" class="section level3" number="6.7.1">
 <h3><span class="header-section-number">6.7.1</span> Passing By Value In R</h3>
 <p>In R, it is <em>difficult</em> for a function to modify one of its argument.<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> Consider the following code.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="functions.html#cb87-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb87-2"><a href="functions.html#cb87-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(arg){</span>
-<span id="cb87-3"><a href="functions.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># modifying a temporary variable, not a</span></span>
-<span id="cb87-4"><a href="functions.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(arg)</span>
-<span id="cb87-5"><a href="functions.html#cb87-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb87-6"><a href="functions.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">f</span>(a))</span>
-<span id="cb87-7"><a href="functions.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb87-8"><a href="functions.html#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span>
-<span id="cb87-9"><a href="functions.html#cb87-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="functions.html#cb84-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb84-2"><a href="functions.html#cb84-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(arg){</span>
+<span id="cb84-3"><a href="functions.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># modifying a temporary variable, not a</span></span>
+<span id="cb84-4"><a href="functions.html#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(arg)</span>
+<span id="cb84-5"><a href="functions.html#cb84-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb84-6"><a href="functions.html#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">f</span>(a))</span>
+<span id="cb84-7"><a href="functions.html#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb84-8"><a href="functions.html#cb84-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span>
+<span id="cb84-9"><a href="functions.html#cb84-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div>
 <p>The function <code>f</code> has an argument called <code>arg</code>. When <code>f(a)</code> is performed, changes are made to a <em>copy</em> of <code>a</code>. When a function constructs a copy of all input variables inside its body, this is called <strong>pass-by-value</strong> semantics. This copy is a temporary intermediate value that only serves as a starting point for the function to produce a return value of <code>2</code>.</p>
 <p><code>arg</code> could have been called <code>a</code>, and the same behavior will take place. However, giving these two things different names is helpful to remind you and others that R copies its arguments.</p>
 <p>It is still possible to modify <code>a</code>, but I don’t recommend doing this either. I will discuss this more in subsection <a href="functions.html#modifying-a-functions-arguments">6.7</a>.</p>
@@ -680,71 +675,71 @@ div.csl-indent {
 <li>what you’re trying to do to it.</li>
 </ul>
 <p>We will go throw some examples first, and then explain why this works the way it does. Here is some code that is analogous to the example above.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="functions.html#cb88-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb88-2"><a href="functions.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
-<span id="cb88-3"><a href="functions.html#cb88-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb88-4"><a href="functions.html#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
-<span id="cb88-5"><a href="functions.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
-<span id="cb88-6"><a href="functions.html#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span>
-<span id="cb88-7"><a href="functions.html#cb88-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
-<span id="cb88-8"><a href="functions.html#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="functions.html#cb85-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb85-2"><a href="functions.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
+<span id="cb85-3"><a href="functions.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb85-4"><a href="functions.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
+<span id="cb85-5"><a href="functions.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
+<span id="cb85-6"><a href="functions.html#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span>
+<span id="cb85-7"><a href="functions.html#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb85-8"><a href="functions.html#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <p>In this case, <code>a</code> is not modified. That is because <code>a</code> is an <code>int</code>. <code>int</code>s are <strong>immutable</strong> in Python, which means that their <a href="https://docs.python.org/3/reference/datamodel.html#objects-values-and-types">value</a> cannot be changed after they are created, either inside or outside of the function’s scope. However, consider the case when <code>a</code> is a <code>list</code>, which is a <strong>mutable</strong> type. A mutable type is one that can have its value changed after its created.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="functions.html#cb89-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
-<span id="cb89-2"><a href="functions.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
-<span id="cb89-3"><a href="functions.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  arg[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb89-4"><a href="functions.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
-<span id="cb89-5"><a href="functions.html#cb89-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-6"><a href="functions.html#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
-<span id="cb89-7"><a href="functions.html#cb89-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
-<span id="cb89-8"><a href="functions.html#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a) <span class="co"># not [999] anymore!</span></span>
-<span id="cb89-9"><a href="functions.html#cb89-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="functions.html#cb86-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
+<span id="cb86-2"><a href="functions.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
+<span id="cb86-3"><a href="functions.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  arg[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb86-4"><a href="functions.html#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
+<span id="cb86-5"><a href="functions.html#cb86-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-6"><a href="functions.html#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
+<span id="cb86-7"><a href="functions.html#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
+<span id="cb86-8"><a href="functions.html#cb86-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a) <span class="co"># not [999] anymore!</span></span>
+<span id="cb86-9"><a href="functions.html#cb86-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span></code></pre></div>
 <p>In this case <code>a</code> <em>is</em> modified. Changing the value of the argument <em>inside</em> the function effects changes to that variable outside of the function.</p>
 <p>Ready to be confused? Here is a tricky third example. What happens if we take in a list, but try to do something else with it.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="functions.html#cb90-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
-<span id="cb90-2"><a href="functions.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
-<span id="cb90-3"><a href="functions.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="op">=</span> [<span class="dv">2</span>]</span>
-<span id="cb90-4"><a href="functions.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
-<span id="cb90-5"><a href="functions.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-6"><a href="functions.html#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
-<span id="cb90-7"><a href="functions.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
-<span id="cb90-8"><a href="functions.html#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a) <span class="co"># didn&#39;t change this time :(</span></span>
-<span id="cb90-9"><a href="functions.html#cb90-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [999]</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="functions.html#cb87-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
+<span id="cb87-2"><a href="functions.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
+<span id="cb87-3"><a href="functions.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="op">=</span> [<span class="dv">2</span>]</span>
+<span id="cb87-4"><a href="functions.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
+<span id="cb87-5"><a href="functions.html#cb87-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-6"><a href="functions.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
+<span id="cb87-7"><a href="functions.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
+<span id="cb87-8"><a href="functions.html#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a) <span class="co"># didn&#39;t change this time :(</span></span>
+<span id="cb87-9"><a href="functions.html#cb87-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [999]</span></span></code></pre></div>
 <p>That time <code>a</code> did not permanently change in the global scope. Why does this happen? I thought <code>list</code>s were mutable!</p>
 <p>The reason behind all of this doesn’t even have anything to do with functions, per se. Rather, it has to do with how Python manages, <a href="https://docs.python.org/3/reference/datamodel.html#objects-values-and-types">objects, values, and types</a>. It also has to do with what happens during <a href="https://docs.python.org/3/reference/executionmodel.html#naming-and-binding">assignment</a>.</p>
 <p>Let’s revisit the above code, but bring everything out of a function. Python is pass-by-assignment, so all we have to do is understand how assignment works. Starting with the immutable <code>int</code> example, we have the following.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="functions.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># old code: </span></span>
-<span id="cb91-2"><a href="functions.html#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a = 1</span></span>
-<span id="cb91-3"><a href="functions.html#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def f(arg):</span></span>
-<span id="cb91-4"><a href="functions.html#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   arg = 2</span></span>
-<span id="cb91-5"><a href="functions.html#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   return arg</span></span>
-<span id="cb91-6"><a href="functions.html#cb91-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span>    <span class="co"># still done in global scope</span></span>
-<span id="cb91-7"><a href="functions.html#cb91-7" aria-hidden="true" tabindex="-1"></a>arg <span class="op">=</span> a  <span class="co"># arg is a name that is bound to the object a refers to</span></span>
-<span id="cb91-8"><a href="functions.html#cb91-8" aria-hidden="true" tabindex="-1"></a>arg <span class="op">=</span> <span class="dv">2</span>  <span class="co"># arg is a name that is bound to the object 2</span></span>
-<span id="cb91-9"><a href="functions.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
-<span id="cb91-10"><a href="functions.html#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
-<span id="cb91-11"><a href="functions.html#cb91-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg)) <span class="co"># different!`</span></span>
-<span id="cb91-12"><a href="functions.html#cb91-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140657858671968 140657858672000</span></span>
-<span id="cb91-13"><a href="functions.html#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
-<span id="cb91-14"><a href="functions.html#cb91-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="functions.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># old code: </span></span>
+<span id="cb88-2"><a href="functions.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a = 1</span></span>
+<span id="cb88-3"><a href="functions.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def f(arg):</span></span>
+<span id="cb88-4"><a href="functions.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   arg = 2</span></span>
+<span id="cb88-5"><a href="functions.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   return arg</span></span>
+<span id="cb88-6"><a href="functions.html#cb88-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span>    <span class="co"># still done in global scope</span></span>
+<span id="cb88-7"><a href="functions.html#cb88-7" aria-hidden="true" tabindex="-1"></a>arg <span class="op">=</span> a  <span class="co"># arg is a name that is bound to the object a refers to</span></span>
+<span id="cb88-8"><a href="functions.html#cb88-8" aria-hidden="true" tabindex="-1"></a>arg <span class="op">=</span> <span class="dv">2</span>  <span class="co"># arg is a name that is bound to the object 2</span></span>
+<span id="cb88-9"><a href="functions.html#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
+<span id="cb88-10"><a href="functions.html#cb88-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
+<span id="cb88-11"><a href="functions.html#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg)) <span class="co"># different!`</span></span>
+<span id="cb88-12"><a href="functions.html#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 139983403640160 139983403640192</span></span>
+<span id="cb88-13"><a href="functions.html#cb88-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb88-14"><a href="functions.html#cb88-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
 <p>The <a href="https://docs.python.org/3/library/functions.html#id"><code>id()</code></a> function returns the <strong>identity</strong> of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, <code>a</code> and <code>b</code> say, have the same identity, <code>a is b</code> will evaluate to <code>True</code>. Otherwise, it will evaluate to <code>False</code>.</p>
 </div>
 <p>In the first line, the <em>name</em> <code>a</code> is bound to the <em>object</em> <code>1</code>. In the second line, the name <code>arg</code> is bound to the <em>object</em> that is referred to by the <em>name</em> <code>a</code>. After the second line finishes, <code>arg</code> and <code>a</code> are two names for the same object (a fact that you can confirm by inserting <code>arg is a</code> immediately after this line).</p>
 <p>In the third line, <code>arg</code> is bound to <code>2</code>. The variable <code>arg</code> can be changed, but only by re-binding it with a separate object. Re-binding <code>arg</code> does not change the value referred to by <code>a</code> because <code>a</code> still refers to <code>1</code>, an object separate from <code>2</code>. There is no reason to re-bind <code>a</code> because it wasn’t mentioned at all in the third line.</p>
 <p>If we go back to the first function example, it’s basically the same idea. The only difference, however, is that <code>arg</code> is in its own scope. Let’s look at a simplified version of our second code chunk that uses a mutable list.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="functions.html#cb92-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
-<span id="cb92-2"><a href="functions.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="co"># old code:</span></span>
-<span id="cb92-3"><a href="functions.html#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def f(arg):</span></span>
-<span id="cb92-4"><a href="functions.html#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   arg[0] = 2</span></span>
-<span id="cb92-5"><a href="functions.html#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   return arg</span></span>
-<span id="cb92-6"><a href="functions.html#cb92-6" aria-hidden="true" tabindex="-1"></a>arg <span class="op">=</span> a</span>
-<span id="cb92-7"><a href="functions.html#cb92-7" aria-hidden="true" tabindex="-1"></a>arg[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb92-8"><a href="functions.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg)</span>
-<span id="cb92-9"><a href="functions.html#cb92-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
-<span id="cb92-10"><a href="functions.html#cb92-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
-<span id="cb92-11"><a href="functions.html#cb92-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
-<span id="cb92-12"><a href="functions.html#cb92-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
-<span id="cb92-13"><a href="functions.html#cb92-13" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="functions.html#cb89-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
+<span id="cb89-2"><a href="functions.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co"># old code:</span></span>
+<span id="cb89-3"><a href="functions.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def f(arg):</span></span>
+<span id="cb89-4"><a href="functions.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   arg[0] = 2</span></span>
+<span id="cb89-5"><a href="functions.html#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   return arg</span></span>
+<span id="cb89-6"><a href="functions.html#cb89-6" aria-hidden="true" tabindex="-1"></a>arg <span class="op">=</span> a</span>
+<span id="cb89-7"><a href="functions.html#cb89-7" aria-hidden="true" tabindex="-1"></a>arg[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb89-8"><a href="functions.html#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg)</span>
+<span id="cb89-9"><a href="functions.html#cb89-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
+<span id="cb89-10"><a href="functions.html#cb89-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb89-11"><a href="functions.html#cb89-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
+<span id="cb89-12"><a href="functions.html#cb89-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
+<span id="cb89-13"><a href="functions.html#cb89-13" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
 <p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place,” and all variables can access the mutated object.</p>
 <p>Why did the third example produce unexpected results? The difference is in the line <code>arg = [2]</code>. This rebinds the name <code>arg</code> to a different variable. <code>list</code>s are still mutable, but this has nothing to do with re-binding–re-binding a name works no matter what type of object you’re binding it to. In this case we are re-binding <code>arg</code> to a completely different list.</p>
 </div>
@@ -756,13 +751,13 @@ div.csl-indent {
 <h3><span class="header-section-number">6.8.1</span> Accessing Captured Variables in R</h3>
 <p>As Hadley Wickham writes in <a href="https://adv-r.hadley.nz/functions.html#dynamic-lookup">his book</a>, “[l]exical scoping determines where, but not when to look for values.” R has <strong>dynamic lookup</strong>, meaning code inside a function will only try to access a referred-to variable when the function is <em>running</em>, not when it is defined.</p>
 <p>Consider the R code below. The <code>dataReadyForModeling()</code> function is created in the global environment, and the global environment contains a Boolean variable called <code>dataAreClean</code>.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="functions.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
-<span id="cb93-2"><a href="functions.html#cb93-2" aria-hidden="true" tabindex="-1"></a>dataAreClean <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb93-3"><a href="functions.html#cb93-3" aria-hidden="true" tabindex="-1"></a>dataReadyForModeling <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb93-4"><a href="functions.html#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dataAreClean)</span>
-<span id="cb93-5"><a href="functions.html#cb93-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb93-6"><a href="functions.html#cb93-6" aria-hidden="true" tabindex="-1"></a>dataAreClean <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb93-7"><a href="functions.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="co"># readyToDoSecondPart() # what happens if we call it now?</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="functions.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
+<span id="cb90-2"><a href="functions.html#cb90-2" aria-hidden="true" tabindex="-1"></a>dataAreClean <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb90-3"><a href="functions.html#cb90-3" aria-hidden="true" tabindex="-1"></a>dataReadyForModeling <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb90-4"><a href="functions.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dataAreClean)</span>
+<span id="cb90-5"><a href="functions.html#cb90-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb90-6"><a href="functions.html#cb90-6" aria-hidden="true" tabindex="-1"></a>dataAreClean <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb90-7"><a href="functions.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co"># readyToDoSecondPart() # what happens if we call it now?</span></span></code></pre></div>
 <p>Now imagine sharing some code with a collaborator. Imagine, further, that your collaborator is the subject-matter expert, and knows little about R programming. Suppose that he changes <code>dataAreClean</code>, a global variable in the script, after he is done . Shouldn’t this induce a relatively trivial change to the overall program?</p>
 <p>Let’s explore this hypothetical further. Consider what could happen if any of the following (very typical) conditions are true:</p>
 <ul>
@@ -772,40 +767,40 @@ div.csl-indent {
 </ul>
 <p>In each of these situations, understanding of the program would be compromised. However, if you follow the above principle of never referring to non-local variables in function code, all members of the group could do their own work separately, minimizing the dependence on one another.</p>
 <p>Another reason violating this could be troublesome is if you define a function that refers to a nonexistent variable. <em>Defining</em> the function will never throw an error because R will assume that variable is defined in the global environment. <em>Calling</em> the function might throw an error, unless you accidentally defined the variable, or if you forgot to delete a variable whose name you no longer want to use. Defining <code>myFunc()</code> with the code below will not throw an error, even if you think it should!</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="functions.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
-<span id="cb94-2"><a href="functions.html#cb94-2" aria-hidden="true" tabindex="-1"></a>myFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb94-3"><a href="functions.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(varigbleNameWithTypo) <span class="co">#varigble?</span></span>
-<span id="cb94-4"><a href="functions.html#cb94-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="functions.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
+<span id="cb91-2"><a href="functions.html#cb91-2" aria-hidden="true" tabindex="-1"></a>myFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb91-3"><a href="functions.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(varigbleNameWithTypo) <span class="co">#varigble?</span></span>
+<span id="cb91-4"><a href="functions.html#cb91-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="accessing-captured-variables-in-python" class="section level3" number="6.8.2">
 <h3><span class="header-section-number">6.8.2</span> Accessing Captured Variables in Python</h3>
 <p>It is the same exact situation in Python. Consider <code>everything_is_safe()</code>, a function that is analogous to <code>dataReadyForModeling()</code>.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="functions.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
-<span id="cb95-2"><a href="functions.html#cb95-2" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb95-3"><a href="functions.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> everything_is_safe():</span>
-<span id="cb95-4"><a href="functions.html#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">not</span> missile_launch_codes_set</span>
-<span id="cb95-5"><a href="functions.html#cb95-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-6"><a href="functions.html#cb95-6" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb95-7"><a href="functions.html#cb95-7" aria-hidden="true" tabindex="-1"></a>everything_is_safe()</span>
-<span id="cb95-8"><a href="functions.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="functions.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
+<span id="cb92-2"><a href="functions.html#cb92-2" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb92-3"><a href="functions.html#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> everything_is_safe():</span>
+<span id="cb92-4"><a href="functions.html#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">not</span> missile_launch_codes_set</span>
+<span id="cb92-5"><a href="functions.html#cb92-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-6"><a href="functions.html#cb92-6" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb92-7"><a href="functions.html#cb92-7" aria-hidden="true" tabindex="-1"></a>everything_is_safe()</span>
+<span id="cb92-8"><a href="functions.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
 <p>We can also define <code>my_func()</code>, which is analogous to <code>myFunc()</code>. Defining this function doesn’t throw an error either.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="functions.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
-<span id="cb96-2"><a href="functions.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_func():</span>
-<span id="cb96-3"><a href="functions.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> varigble_name_with_typo</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="functions.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
+<span id="cb93-2"><a href="functions.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_func():</span>
+<span id="cb93-3"><a href="functions.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> varigble_name_with_typo</span></code></pre></div>
 <p>So stay away from referring to variables outside the body of your function!</p>
 </div>
 <div id="modifying-captured-variables-in-r" class="section level3" number="6.8.3">
 <h3><span class="header-section-number">6.8.3</span> Modifying Captured Variables In R</h3>
 <p>Now what if we want to be extra bad, and in addition to <em>accessing</em> global variables, we <em>modify</em> them, too?</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="functions.html#cb97-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb97-2"><a href="functions.html#cb97-2" aria-hidden="true" tabindex="-1"></a>makeATwo <span class="ot">&lt;-</span> <span class="cf">function</span>(arg){</span>
-<span id="cb97-3"><a href="functions.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb97-4"><a href="functions.html#cb97-4" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;&lt;-</span> arg</span>
-<span id="cb97-5"><a href="functions.html#cb97-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb97-6"><a href="functions.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">makeATwo</span>(a))</span>
-<span id="cb97-7"><a href="functions.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb97-8"><a href="functions.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span>
-<span id="cb97-9"><a href="functions.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="functions.html#cb94-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb94-2"><a href="functions.html#cb94-2" aria-hidden="true" tabindex="-1"></a>makeATwo <span class="ot">&lt;-</span> <span class="cf">function</span>(arg){</span>
+<span id="cb94-3"><a href="functions.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb94-4"><a href="functions.html#cb94-4" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;&lt;-</span> arg</span>
+<span id="cb94-5"><a href="functions.html#cb94-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb94-6"><a href="functions.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">makeATwo</span>(a))</span>
+<span id="cb94-7"><a href="functions.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb94-8"><a href="functions.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(a)</span>
+<span id="cb94-9"><a href="functions.html#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 <p>In the program above, <code>makeATwo()</code> copies <code>a</code> into <code>arg</code>. It then assigns <code>2</code> to that copy. <strong>Then it takes that <code>2</code> and writes it to the global <code>a</code> variable in the parent environment.</strong> It does this using R’s super assignment operator <code>&lt;&lt;-</code>. Regardless of the inputs passed in to this function, it will always assign exactly <code>2</code> to <code>a</code>, no matter what.</p>
 <p>This is problematic because you are pre-occupying your mind with one function: <code>makeATwo()</code>. Whenever you write code that depends on <code>a</code> (or on things that depend on <code>a</code>, or on things that depended on things that depend on <code>a</code>, or …), you’ll have to repeatedly interrupt your train of thought to <em>try</em> and remember if what you’re doing is going to be okay with the current and future <code>makeATwo()</code> call sites.</p>
 </div>
@@ -815,14 +810,14 @@ div.csl-indent {
 <div class="rmd-details">
 <p>The upside to the <code>global</code> keyword is that it makes hunting for <strong>side effects</strong> relatively easy (A function’s side effects are changes it makes to non-local variables). Yes, this keyword should be used sparingly, even more sparingly than merely referring to global variables, but if you are ever debugging, and you want to hunt down places where variables are surprisingly being changed, you can hit <code>Ctrl-F</code> and search for the phrase “global.”</p>
 </div>
-<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="functions.html#cb98-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb98-2"><a href="functions.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> increment_a():</span>
-<span id="cb98-3"><a href="functions.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">global</span> a</span>
-<span id="cb98-4"><a href="functions.html#cb98-4" aria-hidden="true" tabindex="-1"></a>  a <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb98-5"><a href="functions.html#cb98-5" aria-hidden="true" tabindex="-1"></a>[increment_a() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>)]</span>
-<span id="cb98-6"><a href="functions.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [None, None, None, None, None, None, None, None, None, None]</span></span>
-<span id="cb98-7"><a href="functions.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
-<span id="cb98-8"><a href="functions.html#cb98-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 11</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="functions.html#cb95-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb95-2"><a href="functions.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> increment_a():</span>
+<span id="cb95-3"><a href="functions.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">global</span> a</span>
+<span id="cb95-4"><a href="functions.html#cb95-4" aria-hidden="true" tabindex="-1"></a>  a <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb95-5"><a href="functions.html#cb95-5" aria-hidden="true" tabindex="-1"></a>[increment_a() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>)]</span>
+<span id="cb95-6"><a href="functions.html#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [None, None, None, None, None, None, None, None, None, None]</span></span>
+<span id="cb95-7"><a href="functions.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb95-8"><a href="functions.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 11</span></span></code></pre></div>
 
 </div>
 </div>
