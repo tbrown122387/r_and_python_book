@@ -84,62 +84,83 @@ is.ordered(typeOfDay)
 Finally, be mindful of how different functions read in external data sets. When reading in an external file, if a particular function comes across a column that has characters in it, it will need to decide whether to store that column as a character vector, or as a `factor`. For example, `read.csv()` and `read.table()` have a `stringsAsFactors=` argument that you should be mindful of. 
 
 
-
-## Categorical Data in Pandas
-
-Pandas' `Series` were discussed earlier in sections \@ref(overview-of-python) and \@ref(vectorization-in-python). These were containers that forced every element to share the same `dtype`. When specifying `dtype="category"`, you get a type that is very similar to R's `factor`. The main differences are
-
-1. instead of levels, the possible values each element can take are called `categories`, and
-2. there is an `ordered` condition, which is exactly the same as `factor`s were in R. 
+## Categorical Data in Pandas: Two Options
 
 
-responses <- factor(c("autumn", "summer", "summer"), 
-                    levels = c("autumn", "summer", "spring", "winter"))
+Pandas provides two options for storing categorical data. They are both very similar to R's `factor`s. You may use either 
 
+  1. a Pandas `Series` with a special `dtype`, or 
+  2. a Pandas `Categorical` container.
+  
+Pandas' `Series` were discussed earlier in sections \@ref(overview-of-python) and \@ref(vectorization-in-python). These were containers that forced every element to share the same `dtype`. Here, we specify `dtype="category"` in `pd.Series()`.
 
-Here is a quick example. 
 ```{python, collapse = TRUE}
 import pandas as pd
-responses = pd.Series(["autumn", "summer", "spring", "winter"], \
-                      categories = ["autumn", "summer", "spring", "winter"] \
-                      dtype="category")
-responses
-responses.cat.categories
-responses.cat.ordered
+resp_series = pd.Series(["autumn", "summer", "summer"], dtype = "category") 
+resp_series.cat.categories
+resp_series.cat.ordered
+resp_series.dtype
+type(resp_series)
 ```
 
-[Categorical data can be handled with the pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html), which takes a lot of inspiration from R. 
+The second option is to use Pandas' `Categorical` containers. They are quite similar, so the choice is subtle. Like `Series` containers, they also have the same shared `dtype` for all of its elements.
 
+```{python, collapse = TRUE}
+resp_cat = pd.Categorical(["autumn", "summer", "summer"])
+resp_cat.categories
+resp_cat.ordered
+resp_cat.dtype
+type(resp_cat)
+```
+
+You might have noticed that, with the `Categorical` container, methods and data members were not accessed through the `.cat` accessor. It is also more similar to R's `factor`s because you can specify more arguments in the constructor.
+
+```{python, collapse = TRUE}
+all_szns = ["autumn", "summer","spring","winter"]
+resp_cat2 = pd.Categorical(["autumn", "summer", "summer"], 
+                            categories = all_szns, 
+                            ordered = False)
+```
+
+With Pandas' `Series` it's more difficult to specify a nondefault `dtype`. One option is to change them after the object has been created. 
+
+```{python, collapse = TRUE}
+resp_series = resp_series.cat.set_categories(["autumn", "summer","spring","winter"])
+resp_series.cat.categories
+resp_series = resp_series.cat.remove_categories(['spring','winter'])
+resp_series.cat.categories
+resp_series = resp_series.cat.add_categories(["fall", "winter"])
+resp_series.cat.categories
+```
+
+Another option is to create the `dtype` before you create the `Series`.
 
 ```{python, collapse = TRUE}
 import pandas as pd
 from pandas.api.types import CategoricalDtype
-
-cat_type = CategoricalDtype(categories=["autumn", "summer", "spring", "winter"], 
-                            ordered=False)
-responses = pd.Series(["autumn", "summer", "summer"], 
-                      dtype = cat_type)
+cat_type = CategoricalDtype(categories=["autumn", "summer", "spring", "winter"],
+                            ordered=True)
+responses = pd.Series(["autumn", "summer", "summer"], dtype = cat_type)
 responses
-responses.cat.categories
-responses.cat.ordered
 ```
 
-The pandas library also provides a `pd.cut()` function, which can return either of these types, or even a regular Numpy array.
+
+Just like in R, you can convert numerical data into categorical. The function even has the same name as in R: [`pd.cut()`](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html). Depending on the type of the input, [it will return either a `Series` or a `Categorical`](https://pandas.pydata.org/docs/reference/api/pandas.cut.html).
 
 ```{python, collapse = TRUE}
 import numpy as np
-stock_returns = np.random.normal(size=10) # not categorical here
-type_of_day = pd.cut(stock_returns, [-np.inf, 0, np.inf], labels = ['bad day', 'good day']) 
-type_of_day
+stock_returns = np.random.normal(size=10) # not categorical 
+type_of_day = pd.cut(stock_returns, # array input means Categorical output
+                     bins = [-np.inf, 0, np.inf], 
+                     labels = ['bad day', 'good day']) 
 type(type_of_day)
-type_of_day = pd.Series(type_of_day)
-type(type_of_day)
-type_of_day.cat.categories
-type_of_day.cat.ordered
+type_of_day2 = pd.cut(pd.Series(stock_returns), # Series in means Series out
+                      bins = [-np.inf, 0, np.inf], 
+                      labels = ['bad day', 'good day']) 
+type(type_of_day2)
 ```
 
 
-::: {.rmd-details}
-You'll notice that, in this instance, `pd.cut` did not return a `Series` object. It can, but `pd.cut`'s return type will depend on the inputs you feed in. In this case, it returned a [`Categorical`](http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.Categorical.html#pandas.Categorical), which is not the same thing as a `Series`. In the code above, I had to convert it back before accessing the `cat` attribute.
-:::
+Finally, columns of a Pandas `DataFrame` TODO
+
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -34,6 +34,7 @@
 <link rel="next" href="functions.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -233,8 +233,8 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> Lists In R</a></li>
-<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> Lists In Python</a></li>
+<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> <code>list</code>s In R</a></li>
+<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> <code>list</code>s In Python</a></li>
 <li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
 <li class="chapter" data-level="5.4" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a>
 <ul>
@@ -265,8 +265,8 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7" data-path="categorical-data.html"><a href="categorical-data.html"><i class="fa fa-check"></i><b>7</b> Categorical Data</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#categorical-data-in-r"><i class="fa fa-check"></i><b>7.1</b> Categorical Data in R</a></li>
-<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#categorical-data-in-python"><i class="fa fa-check"></i><b>7.2</b> Categorical Data in Python</a></li>
+<li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#factors-in-r"><i class="fa fa-check"></i><b>7.1</b> <code>factor</code>s in R</a></li>
+<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#categorical-data-in-pandas-two-options"><i class="fa fa-check"></i><b>7.2</b> Categorical Data in Pandas: Two Options</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>8</b> Data Frames</a>
 <ul>
@@ -394,7 +394,7 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 5</span> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</h1>
 <p>When you need to store elements in a container, but you can’t guarantee that these elements all have the same type, or you can’t guarantee that they all have the same size, then you need a <code>list</code> in R. In Python, you might need a <code>list</code> or <code>dict</code> (short for dictionary).</p>
 <div id="lists-in-r" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Lists In R</h2>
+<h2><span class="header-section-number">5.1</span> <code>list</code>s In R</h2>
 <p><code>list</code>s are one of the most flexible data types in R. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-1" aria-hidden="true" tabindex="-1"></a>myList <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&quot;May 5th, 2021&quot;</span>, <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
 <span id="cb61-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-2" aria-hidden="true" tabindex="-1"></a>myList[<span class="dv">1</span>] <span class="co"># length-1 list; first element is length 3 vector</span></span>
@@ -409,8 +409,8 @@ div.csl-indent {
 <span id="cb62-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
 <span id="cb62-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
 <span id="cb62-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results) </span>
-<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;           </span></span>
-<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
+<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  </span></span>
+<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
 <span id="cb62-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-8" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
 <span id="cb62-9"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
 <span id="cb62-10"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
@@ -422,7 +422,7 @@ div.csl-indent {
 </div>
 </div>
 <div id="lists-in-python" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Lists In Python</h2>
+<h2><span class="header-section-number">5.2</span> <code>list</code>s In Python</h2>
 <p><a href="https://docs.python.org/3/library/stdtypes.html#lists">Python <code>list</code>s</a> are very flexible, too. There are fewer choices for accessing and modifying elements of lists in Python–you’ll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R’s lists.</p>
 <p>Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python <a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">dictionaries</a> (see section <a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python">5.3</a>) or Pandas’ <code>Series</code> objects (see section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python">3.2</a>).</p>
 <p>From the example below, you can see that we’ve been introduced to lists already. We have been constructing Numpy arrays from them.</p>
@@ -513,7 +513,6 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -554,7 +553,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
