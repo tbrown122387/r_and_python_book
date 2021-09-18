@@ -266,7 +266,7 @@ div.csl-indent {
 <li class="chapter" data-level="7" data-path="categorical-data.html"><a href="categorical-data.html"><i class="fa fa-check"></i><b>7</b> Categorical Data</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#factors-in-r"><i class="fa fa-check"></i><b>7.1</b> <code>factor</code>s in R</a></li>
-<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#categorical-data-in-pandas-two-options"><i class="fa fa-check"></i><b>7.2</b> Categorical Data in Pandas: Two Options</a></li>
+<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#two-options-for-categorical-data-in-pandas"><i class="fa fa-check"></i><b>7.2</b> Two Options for Categorical Data in Pandas</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>8</b> Data Frames</a>
 <ul>
@@ -403,11 +403,11 @@ div.csl-indent {
 <li>they might have a <code>contrasts</code> attribute, which will control how they are used in statistical modeling functions.</li>
 </ul>
 <p>Here is a first example. Say we asked three people what their favorite season was. The data might look something like this.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="categorical-data.html#cb96-1" aria-hidden="true" tabindex="-1"></a>allSeasons <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;spring&quot;</span>, <span class="st">&quot;winter&quot;</span>)</span>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="categorical-data.html#cb96-1" aria-hidden="true" tabindex="-1"></a>allSeasons <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;spring&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;winter&quot;</span>)</span>
 <span id="cb96-2"><a href="categorical-data.html#cb96-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>), </span>
 <span id="cb96-3"><a href="categorical-data.html#cb96-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> allSeasons)</span>
 <span id="cb96-4"><a href="categorical-data.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(responses)</span>
-<span id="cb96-5"><a href="categorical-data.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;autumn&quot; &quot;summer&quot; &quot;spring&quot; &quot;winter&quot;</span></span>
+<span id="cb96-5"><a href="categorical-data.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;spring&quot; &quot;summer&quot; &quot;autumn&quot; &quot;winter&quot;</span></span>
 <span id="cb96-6"><a href="categorical-data.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(responses)</span>
 <span id="cb96-7"><a href="categorical-data.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
 <span id="cb96-8"><a href="categorical-data.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(responses)</span>
@@ -453,7 +453,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="categorical-data.html#cb98-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb98-2"><a href="categorical-data.html#cb98-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb98-3"><a href="categorical-data.html#cb98-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0]</span></span>
+<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (0, Inf]</span></span>
 <span id="cb98-5"><a href="categorical-data.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb98-6"><a href="categorical-data.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb98-7"><a href="categorical-data.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -463,8 +463,8 @@ div.csl-indent {
 <span id="cb98-11"><a href="categorical-data.html#cb98-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
 <p>Finally, be mindful of how different functions read in external data sets. When reading in an external file, if a particular function comes across a column that has characters in it, it will need to decide whether to store that column as a character vector, or as a <code>factor</code>. For example, <code>read.csv()</code> and <code>read.table()</code> have a <code>stringsAsFactors=</code> argument that you should be mindful of.</p>
 </div>
-<div id="categorical-data-in-pandas-two-options" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Categorical Data in Pandas: Two Options</h2>
+<div id="two-options-for-categorical-data-in-pandas" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Two Options for Categorical Data in Pandas</h2>
 <p>Pandas provides two options for storing categorical data. They are both very similar to R’s <code>factor</code>s. You may use either</p>
 <ol style="list-style-type: decimal">
 <li>a Pandas <code>Series</code> with a special <code>dtype</code>, or</li>
@@ -481,7 +481,7 @@ div.csl-indent {
 <span id="cb99-8"><a href="categorical-data.html#cb99-8" aria-hidden="true" tabindex="-1"></a><span class="co">## CategoricalDtype(categories=[&#39;autumn&#39;, &#39;summer&#39;], ordered=False)</span></span>
 <span id="cb99-9"><a href="categorical-data.html#cb99-9" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(resp_series)</span>
 <span id="cb99-10"><a href="categorical-data.html#cb99-10" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
-<p>The second option is to use Pandas’ <code>Categorical</code> containers. They are quite similar, so the choice is subtle. Like <code>Series</code> containers, they also have the same shared <code>dtype</code> for all of its elements.</p>
+<p>The second option is to use Pandas’ <code>Categorical</code> containers. They are quite similar, so the choice is subtle. Like <code>Series</code> containers, they also force all of their elements to share the same shared <code>dtype</code>.</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="categorical-data.html#cb100-1" aria-hidden="true" tabindex="-1"></a>resp_cat <span class="op">=</span> pd.Categorical([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>])</span>
 <span id="cb100-2"><a href="categorical-data.html#cb100-2" aria-hidden="true" tabindex="-1"></a>resp_cat.categories</span>
 <span id="cb100-3"><a href="categorical-data.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;], dtype=&#39;object&#39;)</span></span>
@@ -492,10 +492,13 @@ div.csl-indent {
 <span id="cb100-8"><a href="categorical-data.html#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(resp_cat)</span>
 <span id="cb100-9"><a href="categorical-data.html#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span></code></pre></div>
 <p>You might have noticed that, with the <code>Categorical</code> container, methods and data members were not accessed through the <code>.cat</code> accessor. It is also more similar to R’s <code>factor</code>s because you can specify more arguments in the constructor.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="categorical-data.html#cb101-1" aria-hidden="true" tabindex="-1"></a>all_szns <span class="op">=</span> [<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>,<span class="st">&quot;spring&quot;</span>,<span class="st">&quot;winter&quot;</span>]</span>
+<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="categorical-data.html#cb101-1" aria-hidden="true" tabindex="-1"></a>all_szns <span class="op">=</span> [<span class="st">&quot;spring&quot;</span>,<span class="st">&quot;summer&quot;</span>, <span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;winter&quot;</span>]</span>
 <span id="cb101-2"><a href="categorical-data.html#cb101-2" aria-hidden="true" tabindex="-1"></a>resp_cat2 <span class="op">=</span> pd.Categorical([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], </span>
 <span id="cb101-3"><a href="categorical-data.html#cb101-3" aria-hidden="true" tabindex="-1"></a>                            categories <span class="op">=</span> all_szns, </span>
 <span id="cb101-4"><a href="categorical-data.html#cb101-4" aria-hidden="true" tabindex="-1"></a>                            ordered <span class="op">=</span> <span class="va">False</span>)</span></code></pre></div>
+<div class="rmd-caution">
+<p>In Pandas, just like in R, you need to be very careful about what the <code>categories</code> (c.f <code>levels</code>) are. If you are using ordinal data, they need to be specified in the correct order. If you are using small data sets, be cognizant of whether all the categories show up in the data–otherwise they will not be correctly inferred.</p>
+</div>
 <p>With Pandas’ <code>Series</code> it’s more difficult to specify a nondefault <code>dtype</code>. One option is to change them after the object has been created.</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="categorical-data.html#cb102-1" aria-hidden="true" tabindex="-1"></a>resp_series <span class="op">=</span> resp_series.cat.set_categories([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>,<span class="st">&quot;spring&quot;</span>,<span class="st">&quot;winter&quot;</span>])</span>
 <span id="cb102-2"><a href="categorical-data.html#cb102-2" aria-hidden="true" tabindex="-1"></a>resp_series.cat.categories</span>
@@ -506,18 +509,17 @@ div.csl-indent {
 <span id="cb102-7"><a href="categorical-data.html#cb102-7" aria-hidden="true" tabindex="-1"></a>resp_series <span class="op">=</span> resp_series.cat.add_categories([<span class="st">&quot;fall&quot;</span>, <span class="st">&quot;winter&quot;</span>])</span>
 <span id="cb102-8"><a href="categorical-data.html#cb102-8" aria-hidden="true" tabindex="-1"></a>resp_series.cat.categories</span>
 <span id="cb102-9"><a href="categorical-data.html#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;, &#39;fall&#39;, &#39;winter&#39;], dtype=&#39;object&#39;)</span></span></code></pre></div>
-<p>Another option is to create the <code>dtype</code> before you create the <code>Series</code>.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="categorical-data.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb103-2"><a href="categorical-data.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.api.types <span class="im">import</span> CategoricalDtype</span>
-<span id="cb103-3"><a href="categorical-data.html#cb103-3" aria-hidden="true" tabindex="-1"></a>cat_type <span class="op">=</span> CategoricalDtype(categories<span class="op">=</span>[<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;spring&quot;</span>, <span class="st">&quot;winter&quot;</span>],</span>
-<span id="cb103-4"><a href="categorical-data.html#cb103-4" aria-hidden="true" tabindex="-1"></a>                            ordered<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb103-5"><a href="categorical-data.html#cb103-5" aria-hidden="true" tabindex="-1"></a>responses <span class="op">=</span> pd.Series([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], dtype <span class="op">=</span> cat_type)</span>
-<span id="cb103-6"><a href="categorical-data.html#cb103-6" aria-hidden="true" tabindex="-1"></a>responses</span>
-<span id="cb103-7"><a href="categorical-data.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    autumn</span></span>
-<span id="cb103-8"><a href="categorical-data.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    summer</span></span>
-<span id="cb103-9"><a href="categorical-data.html#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    summer</span></span>
-<span id="cb103-10"><a href="categorical-data.html#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: category</span></span>
-<span id="cb103-11"><a href="categorical-data.html#cb103-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (4, object): [&#39;autumn&#39; &lt; &#39;summer&#39; &lt; &#39;spring&#39; &lt; &#39;winter&#39;]</span></span></code></pre></div>
+<p>Another option is to create the <code>dtype</code> before you create the <code>Series</code>, and pass it into <code>pd.Series()</code>.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="categorical-data.html#cb103-1" aria-hidden="true" tabindex="-1"></a>cat_type <span class="op">=</span> pd.CategoricalDtype(</span>
+<span id="cb103-2"><a href="categorical-data.html#cb103-2" aria-hidden="true" tabindex="-1"></a>                  categories<span class="op">=</span>[<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;spring&quot;</span>, <span class="st">&quot;winter&quot;</span>],</span>
+<span id="cb103-3"><a href="categorical-data.html#cb103-3" aria-hidden="true" tabindex="-1"></a>                  ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb103-4"><a href="categorical-data.html#cb103-4" aria-hidden="true" tabindex="-1"></a>responses <span class="op">=</span> pd.Series([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], dtype <span class="op">=</span> cat_type)</span>
+<span id="cb103-5"><a href="categorical-data.html#cb103-5" aria-hidden="true" tabindex="-1"></a>responses</span>
+<span id="cb103-6"><a href="categorical-data.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    autumn</span></span>
+<span id="cb103-7"><a href="categorical-data.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    summer</span></span>
+<span id="cb103-8"><a href="categorical-data.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    summer</span></span>
+<span id="cb103-9"><a href="categorical-data.html#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: category</span></span>
+<span id="cb103-10"><a href="categorical-data.html#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (4, object): [&#39;autumn&#39; &lt; &#39;summer&#39; &lt; &#39;spring&#39; &lt; &#39;winter&#39;]</span></span></code></pre></div>
 <p>Just like in R, you can convert numerical data into categorical. The function even has the same name as in R: <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html"><code>pd.cut()</code></a>. Depending on the type of the input, <a href="https://pandas.pydata.org/docs/reference/api/pandas.cut.html">it will return either a <code>Series</code> or a <code>Categorical</code></a>.</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="categorical-data.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb104-2"><a href="categorical-data.html#cb104-2" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">10</span>) <span class="co"># not categorical </span></span>
@@ -531,8 +533,29 @@ div.csl-indent {
 <span id="cb104-10"><a href="categorical-data.html#cb104-10" aria-hidden="true" tabindex="-1"></a>                      labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
 <span id="cb104-11"><a href="categorical-data.html#cb104-11" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day2)</span>
 <span id="cb104-12"><a href="categorical-data.html#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
-<p>Finally, columns of a Pandas <code>DataFrame</code> TODO</p>
+<p>Finally, when reading in data from an external source, choose carefully whether you want character data to be stored as a string type, or as a categorical type. Here we use <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><code>pd.read_csv()</code></a> to read in Fisher’s Iris data set <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>. More information on Pandas’ <code>DataFrames</code> can be found in the next chapter.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="categorical-data.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb105-2"><a href="categorical-data.html#cb105-2" aria-hidden="true" tabindex="-1"></a>my_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/iris.csv&quot;</span>, header<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb105-3"><a href="categorical-data.html#cb105-3" aria-hidden="true" tabindex="-1"></a>                      dtype <span class="op">=</span> {<span class="dv">4</span>:<span class="st">&quot;category&quot;</span>}) <span class="co"># make 5th col categorical</span></span>
+<span id="cb105-4"><a href="categorical-data.html#cb105-4" aria-hidden="true" tabindex="-1"></a>my_data.head(<span class="dv">1</span>)</span>
+<span id="cb105-5"><a href="categorical-data.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co">##      0    1    2    3            4</span></span>
+<span id="cb105-6"><a href="categorical-data.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  5.1  3.5  1.4  0.2  Iris-setosa</span></span>
+<span id="cb105-7"><a href="categorical-data.html#cb105-7" aria-hidden="true" tabindex="-1"></a>my_data.dtypes</span>
+<span id="cb105-8"><a href="categorical-data.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     float64</span></span>
+<span id="cb105-9"><a href="categorical-data.html#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     float64</span></span>
+<span id="cb105-10"><a href="categorical-data.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 2     float64</span></span>
+<span id="cb105-11"><a href="categorical-data.html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 3     float64</span></span>
+<span id="cb105-12"><a href="categorical-data.html#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 4    category</span></span>
+<span id="cb105-13"><a href="categorical-data.html#cb105-13" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span>
+<span id="cb105-14"><a href="categorical-data.html#cb105-14" aria-hidden="true" tabindex="-1"></a>np.unique(my_data[<span class="dv">4</span>])</span>
+<span id="cb105-15"><a href="categorical-data.html#cb105-15" aria-hidden="true" tabindex="-1"></a><span class="co">## array([&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;], dtype=object)</span></span></code></pre></div>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-misc_iris_53" class="csl-entry">
+Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> UCI Machine Learning Repository.
 </div>
 </div>
             </section>

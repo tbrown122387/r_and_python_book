@@ -15,7 +15,7 @@ Categorical data in R is often stored in a [`factor`](https://cran.r-project.org
 Here is a first example. Say we asked three people what their favorite season was. The data might look something like this.
 
 ```{r, collapse = TRUE}
-allSeasons <- c("autumn", "summer", "spring", "winter")
+allSeasons <- c("spring", "summer", "autumn", "winter")
 responses <- factor(c("autumn", "summer", "summer"), 
                     levels = allSeasons)
 levels(responses)
@@ -84,7 +84,7 @@ is.ordered(typeOfDay)
 Finally, be mindful of how different functions read in external data sets. When reading in an external file, if a particular function comes across a column that has characters in it, it will need to decide whether to store that column as a character vector, or as a `factor`. For example, `read.csv()` and `read.table()` have a `stringsAsFactors=` argument that you should be mindful of. 
 
 
-## Categorical Data in Pandas: Two Options
+## Two Options for Categorical Data in Pandas 
 
 
 Pandas provides two options for storing categorical data. They are both very similar to R's `factor`s. You may use either 
@@ -103,7 +103,7 @@ resp_series.dtype
 type(resp_series)
 ```
 
-The second option is to use Pandas' `Categorical` containers. They are quite similar, so the choice is subtle. Like `Series` containers, they also have the same shared `dtype` for all of its elements.
+The second option is to use Pandas' `Categorical` containers. They are quite similar, so the choice is subtle. Like `Series` containers, they also force all of their elements to share the same shared `dtype`.
 
 ```{python, collapse = TRUE}
 resp_cat = pd.Categorical(["autumn", "summer", "summer"])
@@ -116,11 +116,16 @@ type(resp_cat)
 You might have noticed that, with the `Categorical` container, methods and data members were not accessed through the `.cat` accessor. It is also more similar to R's `factor`s because you can specify more arguments in the constructor.
 
 ```{python, collapse = TRUE}
-all_szns = ["autumn", "summer","spring","winter"]
+all_szns = ["spring","summer", "autumn", "winter"]
 resp_cat2 = pd.Categorical(["autumn", "summer", "summer"], 
                             categories = all_szns, 
                             ordered = False)
 ```
+
+
+::: {.rmd-caution}
+In Pandas, just like in R, you need to be very careful about what the `categories` (c.f `levels`) are. If you are using ordinal data, they need to be specified in the correct order. If you are using small data sets, be cognizant of whether all the categories show up in the data--otherwise they will not be correctly inferred. 
+:::
 
 With Pandas' `Series` it's more difficult to specify a nondefault `dtype`. One option is to change them after the object has been created. 
 
@@ -133,13 +138,12 @@ resp_series = resp_series.cat.add_categories(["fall", "winter"])
 resp_series.cat.categories
 ```
 
-Another option is to create the `dtype` before you create the `Series`.
+Another option is to create the `dtype` before you create the `Series`, and pass it into `pd.Series()`.
 
 ```{python, collapse = TRUE}
-import pandas as pd
-from pandas.api.types import CategoricalDtype
-cat_type = CategoricalDtype(categories=["autumn", "summer", "spring", "winter"],
-                            ordered=True)
+cat_type = pd.CategoricalDtype(
+                  categories=["autumn", "summer", "spring", "winter"],
+                  ordered=True)
 responses = pd.Series(["autumn", "summer", "summer"], dtype = cat_type)
 responses
 ```
@@ -161,6 +165,15 @@ type(type_of_day2)
 ```
 
 
-Finally, columns of a Pandas `DataFrame` TODO
+Finally, when reading in data from an external source, choose carefully whether you want character data to be stored as a string type, or as a categorical type. Here we use [`pd.read_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) to read in Fisher's Iris data set [@misc_iris_53]. More information on Pandas' `DataFrames` can be found in the next chapter. 
 
+
+```{python, collapse = TRUE}
+import numpy as np
+my_data = pd.read_csv("data/iris.csv", header=None, 
+                      dtype = {4:"category"}) # make 5th col categorical
+my_data.head(1)
+my_data.dtypes
+np.unique(my_data[4])
+```
 
