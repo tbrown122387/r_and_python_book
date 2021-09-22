@@ -2,17 +2,27 @@
 
 The rectangular array (e.g. an Excel spreadsheet ) of information is what many think of when they hear the word "data." Each column contains elements of a shared data type, and these data types can vary from column to column. 
 
-There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python scripts because many functions that read in data from an external source return objects of this type (e.g. `read.csv()` in R and `pd.read_csv()` in Python). 
+There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python programs because many functions that read in data from an external source return objects of this type (e.g. `read.csv()` in R and `pd.read_csv()` in Python). 
+
+R and Python's data frames have a number of things in common:
+
+  1. each column must be the same length as all other columns,
+  2. each column's elements will all have the same type, 
+  3. elements in any rows can have different types, 
+  4. columns and rows can be named in different ways, 
+  5. there are many ways to get and set different subsets of data, and
+  6. when reading in data, the same sorts of difficulties arise in both languages.
 
 
 ## Data Frames in R
 
-Let's consider as an example Fisher's "Iris" data set [misc_iris_53]. We will read this data set in from a comma separated file (more on input/output in chapter \@ref(input-and-output)). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
+
+Let's consider as an example Fisher's "Iris" data set [@misc_iris_53]. We will read this data set in from a comma separated file (more information on input/output can be found in chapter \@ref(input-and-output)). This file can be downloaded from this link: [https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris). 
 
 
 ```{r, collapse=TRUE}
 irisData <- read.csv("data/iris.csv", header = F)
-head(irisData)
+head(irisData, 3)
 typeof(irisData)
 class(irisData) # we'll talk more about classes later
 dim(irisData)
@@ -20,10 +30,12 @@ nrow(irisData)
 ncol(irisData)
 ```
 
-::: {.rmd-caution}
-Do not rely on the default arguments of `read.csv` or `read.table`! After you read in a data frame, always check the first few rows to make sure that 
+There are some exceptions, but most data sets can be stored as a `data.frame`. These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g. person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations. 
 
-1. The number of columns is correct because the correct column *separator* was used (c.f. `sep=`),
+::: {.rmd-caution}
+Do not rely on the default arguments of `read.csv()` or `read.table()`! After you read in a data frame, always check to make sure that 
+
+1. the number of columns is correct because the correct column *separator* was used (c.f. `sep=`),
 2. column names were parsed correctly, if there were some in the raw text file,
 3. the first row of data wasn't used as a column name sequence, if there weren't column names in the text file, and
 4. the last few rows aren't reading in empty spaces
@@ -32,18 +44,19 @@ Do not rely on the default arguments of `read.csv` or `read.table`! After you re
 :::
 
 
-There are some exceptions, but most data sets can be stored as a `data.frame`. This is because usually a data set comes in a two-dimensional shape Looking at one particular row gives you an observation with all its variables. Looking at an particular column gives you one particular variable for each observation. 
-
 [A `data.frame` is a special case of a `list`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects). Every element of the list is a column. Columns can be `vector`s or `factor`s, and they can all be of a different type. This is one of the biggest differences between data frames and `matrix`s. They are both two-dimensional, but a `matrix` needs elements to be all the same type. Unlike a general `list`, a `data.frame` requires all of its columns to have the same number of elements. In other words, the `data.frame` is not a "*ragged*" list.
+
 
 Often times you will need to extract pieces of information from a `data.frame`. This can be done in many ways. If the columns have names, you can use the `$` operator to access a single column. Accessing a single column might be followed up by creating a new vector. You can also use the `[` operator to access multiple columns by name.  
 
 ```{r, collapse=TRUE}
-colnames(irisData) <- c("sepal.length", "sepal.width", "petal.length","petal.width", "species")
+colnames(irisData) <- c("sepal.length", "sepal.width", 
+                        "petal.length","petal.width", 
+                        "species")
 firstCol <- irisData$sepal.length
 head(firstCol)
 firstTwoCols <- irisData[c("sepal.length", "sepal.width")] 
-head(firstTwoCols)
+head(firstTwoCols, 3)
 ```
 
 The `[` operator is also useful for selecting rows and columns by index numbers, or by some logical criteria.
@@ -54,7 +67,7 @@ topLeft
 firstThreeRows <- irisData[1:3,] # rows 1-3, all cols
 firstThreeRows
 setosaOnly <- irisData[irisData$species == "Iris-setosa",] # rows where species column is setosa
-head(setosaOnly)
+head(setosaOnly, 3)
 ```
 
 In the code above, `irisData$species == "Iris-setosa"` creates a logical vector (try it!) using the vectorized `==` operator. The `[` operator selects the rows for which the corresponding element of this logical vector is `TRUE`. 
@@ -64,7 +77,7 @@ Be careful: depending on how you use the square brackets, you can either get a `
 :::
 
 
-In R, `data.frame`s have row names. You can get/set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. Personally, I don't typically use this functionality that often.
+In R, `data.frame`s might have row names. You can get and set this character `vector` with the `rownames()` function. You can access rows by name using the square bracket operator. 
 
 ```{r, collapse = TRUE}
 head(rownames(irisData))
@@ -73,33 +86,61 @@ head(rownames(irisData))
 irisData["1002",]
 ```
 
+
+Code that modifies data usually looks quite similar to code extracting data. You'll notice a lot of the same symbols (e.g. `$`, `[`, etc.), but the (`<-`) will point in the other direction. 
+
+
+```{r, collapse = TRUE}
+irisData$columnOfOnes <- rep(1, nrow(irisData))
+irisData[1:2,1] <- rnorm(n = 2, mean = 999)
+irisData[,'sepal.width'] <- rnorm(n = nrow(irisData), mean = -999)
+irisData[irisData$species == "Iris-setosa", 'species'] <- "SETOSA!"
+head(irisData,3)
+```
+
+
 ## Data Frames in Python
 
 
-The pandas library in Python has data frames that are modeled after R's. 
+The Pandas library in Python has data frames that are modeled after R's. 
 
 ```{python, collapse=TRUE}
 import pandas as pd
 iris_data = pd.read_csv("data/iris.csv", header = None)
-iris_data.head()
+iris_data.head(3)
 iris_data.shape
 len(iris_data) # num rows
 len(iris_data.columns) # num columns
-iris_data.dtypes
+list(iris_data.dtypes)
 ```
 
-The structure is very similar to that of R's data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to R's situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `array`s and `DataFrame`s.
+The structure is very similar to that of R's data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to R's situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `ndarray`s and `DataFrame`s (c.f. R's `matrix` versus R's `data.frame`). 
 
 
-Just like in R, you can access columns by name. You do that using square brackets. Observe how similar this code is to the corresponding R code above.
+
+::: {.rmd-caution}
+Again, do not rely on the default arguments of `pd.read_csv()`! After you read in a data set, always check that
+
+1. the number of columns is correct because the correct column *separator* was used (c.f. `sep=`),
+2. column names were parsed correctly, if there were some in the raw text file,
+3. the first row of data wasn't used as a column name sequence, if there weren't column names in the text file (c.f. `header=`), and
+4. the last few rows aren't reading in empty spaces
+5. character columns are read in correctly (c.f. `dtype=`), and
+6. special characters signifying missing data were correctly identified (c.f. `na.values=`).
+:::
+
+
+Square brackets are a little different in Python than they are in R. Just like in R, you can access columns by name with square brackets, and you can also access rows. Unlike R, though, you don't have to specify both rows and columns every time you use the square brackets.
 
 ```{python, collapse=TRUE}
-iris_data.columns = ["sepal.length", "sepal.width", "petal.length",
-                     "petal.width", "species"]
+iris_data.columns = ["sepal.length", "sepal.width", 
+                     "petal.length", "petal.width", 
+                     "species"]
 first_col = iris_data['sepal.length']
 first_col.head()
 first_two_cols = iris_data[["sepal.length", "sepal.width"]]
-first_two_cols.head()
+first_two_cols.head(3)
+iris_data[0:2]
 ```
 
 
@@ -125,38 +166,33 @@ Selecting columns by anything besides integer number can be done with the [`.loc
 sepal_w_to_pedal_w = iris_data.loc['sepal.width':'pedal.width']
 sepal_w_to_pedal_w
 setosa_only = iris_data.loc[iris_data['species'] == "Iris-setosa",]
-setosa_only.head()
+setosa_only.head(3)
 ```
 
-Notice we used a `slice` to access many columns by only referring to the left-most and the right-most. This does not work with the regular square bracket operator. The second example filters out the rows where the `"species"` column elements are equal to `"Iris-setosa"`.
+Notice we used a `slice` (i.e. `'sepal.width':'pedal.width'`) to access many columns by only referring to the left-most and the right-most. Unlike slicing with numbers, [the right end is included](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#slicing-ranges). Also note that this does not work with the regular square bracket operator (i.e. `iris_data['sepal.width':'pedal.width']`). The second example filters out the rows where the `"species"` column elements are equal to `"Iris-setosa"`.
 
-Each `DataFrame` in pandas comes with an `.index` attribute. This is analogous to a row name in R, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was label-based selection. Labels don't necessarily have to be strings. Consider the following example
+Each `DataFrame` in pandas comes with an `.index` attribute. This is analogous to a row name in R, but it's much more flexible because the index can take on a variety of types. This can help us highlight the difference between `.loc` and `.iloc`. Recall that `.loc` was *label-based selection.* Labels don't necessarily have to be strings. Consider the following example.
 
 ```{python, collapse = TRUE}
 iris_data.index
 iris_data = iris_data.set_index(iris_data.index[::-1]) # reverse the index
-iris_data.head(2)
-iris_data.tail(2)
-iris_data.loc[0]
-iris_data.iloc[0] 
+iris_data.tail(2) # top is now bottom
+iris_data.loc[0] # last row has 0 index
+iris_data.iloc[0] # first row with big index 
 ```
 
 `iris_data.loc[0]` selects the `0`th index. The second line reversed the indexes, so this is actually the last row. If you want the first row, use `iris_data.iloc[0]`.
 
 <!-- [`DataFrame`s have a huge amount  many useful attributes and methods, too.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#) -->
 
-## Row Names and Indexes
-
-In Python, Pandas' `DataFrame`s have an 
+Modifying data inside a data frame looks quite similar to extracting data. You'll recognize a lot of the methods mentioned earlier.  
 
 ```{python, collapse = TRUE}
-iris_data.index
-
+import numpy as np
+n_rows = iris_data.shape[0]
+iris_data['col_ones'] = np.repeat(1.0, n_rows)
+iris_data.iloc[:2,0] =  np.random.normal(loc=999, size=2)
+iris_data.loc[:,'sepal.width'] = np.random.normal(loc=-999, size=n_rows)
+iris_data.loc[iris_data['species'] == "Iris-setosa", 'species'] = "SETOSA!"
+iris_data.head(3)
 ```
-
-
-
-
-## Getting Versus Setting
-
-

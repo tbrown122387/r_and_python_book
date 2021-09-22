@@ -535,3 +535,104 @@ print(a)
 ```
 
 
+## Exercises
+
+### R Questions
+
+1. 
+
+Suppose you have a matrix $\mathbf{X} \in \mathbb{R}^{n \times p}$ and a column vector $\mathbf{y} \in \mathbb{R}^{n}$. To estimate the linear regression model 
+$$
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \epsilon,
+$$
+where $\boldsymbol{\beta} \in \mathbb{R}^p$ is a column vector of errors, you can use calculus instead of numerical optimization. The formula for the least squares estimate of $\boldsymbol{\beta}$ is 
+$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^\intercal \mathbf{X})^{-1} \mathbf{X}^\intercal \mathbf{y}.
+$$
+
+Once this $p$-dimensional vector is found, you can also obtain the *predicted (or fitted) values*
+
+$$
+\hat{\mathbf{y}} := \mathbf{X}\hat{\boldsymbol{\beta}},
+$$
+and the *residuals (or errors)*
+
+$$
+\mathbf{y} - \hat{\mathbf{y}}
+$$
+
+Write a function called `getLinModEstimates()` that takes in two arguments in the following order:
+  a. the `vector` of response data $\mathbf{y}$
+  b. the `matrix` of predictors $\mathbf{X}$.
+
+Have it return a named `list` with three outputs inside:
+  
+  a. the coefficient estimates as a `vector`, 
+  b. a `vector` of fitted values, and
+  c. a `vector` of residuals. 
+
+  The three elements of the returned list should have the names `coefficients`, `fitVals`, and `residuals`.
+
+
+2. 
+
+Write a function called `monteCarlo` that
+
+  - takes as an input a function `sim(n)` that simulates `n` scalar variables,   
+  - takes as an input a function that evaluates $f(x)$ on each random variable sample and that ideally takes in all of the random variables as a `vector`, and
+  - returns a function that takes one integer-valued argument (`num_sims`) and outputs a length one `vector`. 
+
+  Assume `sim(n)` only has one argument: `n`, which is the number of simulations desired. `sim(n)`'s output should be a length `n` `vector`. 
+
+  The output of this returned function should be a Monte Carlo estimate of the expectation: $\mathbb{E}[f(X)] \approx \frac{1}{n}\sum_{i=1}^n f(X^i)$.
+  
+
+3. 
+
+Write a function called `myDFT()` that computes the **Discrete Fourier Transform** of a `vector` and returns another `vector`. Feel free to check your work against `spec.pgram()`, `fft()`, or `astsa::mvspec()`, but do not include calls to those functions in your submission. Also, you should be aware that different functions transform and scale the answer differently, so be sure to read the documentation of any function you use to test against.
+
+Given data $x_1,x_2,\ldots,x_n$, $i = \sqrt{-1}$, and the **Fourier/fundamental frequencies** $\omega_j= j/n$ for $j=0,1,\ldots,n-1$, we define the discrete Fourier transform (DFT) as:
+
+\begin{equation} \label{eq:DFT}
+d(\omega_j)= n^{-1/2} \sum_{t=1}^n x_t e^{-2 \pi i \omega_j t}
+\end{equation}
+
+
+
+### Python Questions
+
+1. 
+
+Estimating statistical models often involves some form of optimization, and often times, optimization is performed numerically. One of the most famous optimization algorithms is Newton's method TODO cite. 
+
+Suppose you have a function $f(x)$ that takes a scalar-valued input and returns a scalar as well. Also, suppose you have the function's derivative $f'(x)$, its second derivative $f''(x)$,  and a starting point guess for what the minimizing input of $f(x)$ is: $x_0$.
+
+The algorithm repeatedly applies the following recursion:
+
+$$
+x_{n+1} = x_{n} - \frac{f'(x_n)}{f''(x_{n})}.
+$$
+Under appropriate regularity conditions for $f$, after many iterations of the above recursion, when $\tilde{n}$ is very large, $x_{\tilde{n}}$ will be nearly the same as $x_{\tilde{n}-1}$, and $x_{\tilde{n}}$ is pretty close to  $\text{argmin}_x f(x)$. In other words, $x_{\tilde{n}}$ is the minimizer of $f$, and a root of $f'$.
+
+
+  - Write a function called `f` that takes a `float` `x` and returns $(x-42)^2 - 33$. 
+  - Write a function called `f_prime` that takes a `float` and returns the derivative of the above.
+  - Write a function called `f_dub_prime` that takes a `float` and returns an evaluation of the second derivative of $f$.
+  - Theoretically, what is the minimizer of $f$? Assign your answer to the variable `best_x`.
+  - Write a function called `minimize()` that takes three arguments, and performs **ten iterations** of Newton's algorithm, after which it returns $x_{10}$. Don't be afraid of copy/pasting ten or so lines of code. We haven't learned loops yet, so that's fine. The ordered arguments are:
+    * the function that evaluates the derivative of the function you're interested in,
+    * the function that evaluates the second derivative of your objective function,
+    * an initial guess of the minimizer.
+  - Test your function by plugging in the above functions, and use a starting point of $10$. Assign the output to a variable called `x_ten`. 
+  
+  
+2.
+
+Write a function called `smw_inverse(A,U,C,V)` that returns the inverse of a matrix using the **Sherman-Morrison-Woodbury formula.** Have it take the arguments $A$, $U$, $C$, and $V$ in that order and as Numpy `ndarray`s. Assume that `A` is a diagonal matrix.
+
+$$
+(A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}V A^{-1}
+$$
+Despite being difficult to remember, this formula can be quite handy for speeding up matrix inversions when $A$ and $C$ are easier to invert (e.g. if $A$ is diagonal and $C$ is a scalar). The formula often shows up a lot in applications where you multiply matrices together (there are many such examples).
+
+To check your work, pick certain inputs, and make sure your formula corresponds with the naive, left-hand-side approach. 
