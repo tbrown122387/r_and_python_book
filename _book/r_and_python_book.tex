@@ -762,8 +762,8 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1]  0.15657560 {-}0.69653275  0.75815287  1.55894311  0.04231078 {-}0.02438961 {-}0.70280358  1.24925880}
-\DocumentationTok{\#\#  [9]  0.06618809  0.44695839}
+\DocumentationTok{\#\#  [1]  0.76201099 {-}0.25613370  0.04902923 {-}0.72442548  0.52838621  0.23930254 {-}0.99305508  0.73942551}
+\DocumentationTok{\#\#  [9]  1.50493636 {-}0.26520080}
 \end{Highlighting}
 \end{Shaded}
 
@@ -790,7 +790,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([ 2.18087934, {-}0.65078157,  0.82289594])}
+\CommentTok{\#\# array([ 0.22017332,  0.38051099, {-}0.98205728])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2967,7 +2967,7 @@ Here is an example of (1). We can take non-categorical data, and \texttt{cut()} 
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] ({-}Inf,0]}
+\DocumentationTok{\#\#  [1] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] (0, Inf]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -3329,9 +3329,9 @@ Code that modifies data usually looks quite similar to code extracting data. You
 \NormalTok{irisData[irisData}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{, }\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"SETOSA!"}
 \FunctionTok{head}\NormalTok{(irisData,}\DecValTok{3}\NormalTok{)}
 \DocumentationTok{\#\#      sepal.length sepal.width petal.length petal.width species columnOfOnes}
-\DocumentationTok{\#\# 1001     998.2346   {-}998.4419          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1002     998.6621  {-}1000.6820          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1003       4.7000   {-}998.7330          1.3         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1001     999.8168   {-}998.2064          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1002     999.3307  {-}1000.5718          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1003       4.7000   {-}999.0314          1.3         0.2 SETOSA!            1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3492,11 +3492,28 @@ Modifying data inside a data frame looks quite similar to extracting data. You'l
 \NormalTok{iris\_data.loc[iris\_data[}\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{, }\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OperatorTok{=} \StringTok{"SETOSA!"}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.length  sepal.width  petal.length  petal.width  species  col\_ones}
-\CommentTok{\#\# 149    997.589601  {-}997.956588           1.4          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 148    999.769601  {-}998.480256           1.4          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 147      4.700000  {-}997.364501           1.3          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 149    998.251302  {-}997.811961           1.4          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 148    999.191612  {-}998.623510           1.4          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 147      4.700000 {-}1000.003527           1.3          0.2  SETOSA!       1.0}
 \end{Highlighting}
 \end{Shaded}
+
+You can also use the \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html}{\texttt{.assign()} method} to create a new column. This method does not modify the data frame in place. It returns a new \texttt{DataFrame} with the additional column.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_data }\OperatorTok{=}\NormalTok{ iris\_data.assign(new\_col\_name }\OperatorTok{=}\NormalTok{ np.arange(n\_rows))}
+\NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
+\CommentTok{\#\#      sepal.length  sepal.width  petal.length  ...  species col\_ones  new\_col\_name}
+\CommentTok{\#\# 149    998.251302  {-}997.811961           1.4  ...  SETOSA!      1.0             0}
+\CommentTok{\#\# 148    999.191612  {-}998.623510           1.4  ...  SETOSA!      1.0             1}
+\CommentTok{\#\# 147      4.700000 {-}1000.003527           1.3  ...  SETOSA!      1.0             2}
+\CommentTok{\#\# }
+\CommentTok{\#\# [3 rows x 7 columns]}
+\end{Highlighting}
+\end{Shaded}
+
+Above we were assigning Numpy arrays to columns of a \texttt{DataFrame}. Be careful when you're assigning \texttt{Series} objects. You'll see in the documentation that \href{https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html\#basics}{``pandas aligns all AXES when setting Series and \texttt{DataFrame} from \texttt{.loc}, and \texttt{.iloc}.''}.
 
 \hypertarget{part-common-tasks-and-patterns}{%
 \part{Common Tasks and Patterns}\label{part-common-tasks-and-patterns}}
@@ -3844,8 +3861,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.66301118,  1.0339411 , {-}0.6942305 , {-}0.10362414, {-}1.31071169,}
-\CommentTok{\#\#        {-}0.84374859, {-}1.24279689, {-}1.99675939, {-}1.83138199,  1.30565524])}
+\CommentTok{\#\# array([ 0.55477724,  0.41413355,  0.96085134,  0.1407009 , {-}0.47968853,}
+\CommentTok{\#\#        {-}1.22610964, {-}1.23971318,  1.57319349,  1.48325094,  0.28352799])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3857,8 +3874,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.5999889 ,  1.20617914,  1.57370794,  0.56356617, {-}0.00441482,}
-\CommentTok{\#\#         0.30498297,  0.48827599, {-}0.62357914, {-}0.24546901, {-}0.19524558])}
+\CommentTok{\#\# array([{-}0.43911781,  0.26582995,  1.0565605 , {-}0.88607198, {-}0.03710272,}
+\CommentTok{\#\#         0.37917265,  0.20273979, {-}0.139861  , {-}0.91155849,  0.72214628])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3870,8 +3887,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}3.12067134, {-}0.92212242, {-}0.0906788 ,  1.29836235,  1.18886008,}
-\CommentTok{\#\#        {-}0.58637481, {-}0.11730145,  0.90260583,  0.40020366, {-}0.75264719])}
+\CommentTok{\#\# array([ 1.16799018,  0.27867374, {-}0.07853349, {-}0.26096722,  0.06495153,}
+\CommentTok{\#\#         1.32838682,  0.47719804, {-}0.96904138,  0.78508845,  0.81323274])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4137,7 +4154,7 @@ q(x) =
 We can plot all three functions.
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-139-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-139}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-140-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-140}
 \end{figure}
 
 Here's some Python code that attempts to sample once from \(p(x)\). Sometimes proposals are not accepted. When that happens, the function returns \texttt{None}.
@@ -4184,7 +4201,7 @@ Here's some Python code that attempts to sample once from \(p(x)\). Sometimes pr
 \end{enumerate}
 
 In chapter \ref{visualization}, we'll show you the code that you can use to generate the plot below.
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-142-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-143-1.pdf}
 
 \hypertarget{reshaping-and-combining-data-sets}{%
 \chapter{Reshaping and Combining Data Sets}\label{reshaping-and-combining-data-sets}}
@@ -4211,11 +4228,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.6475324 {-}0.1430074  0.3011732 {-}0.9047442  1.2313952}
+\DocumentationTok{\#\# [1] {-}1.069159  1.597054 {-}1.103327  0.596831 {-}1.207086}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.6475324 {-}0.9047442 {-}0.1430074  0.3011732  1.2313952}
+\DocumentationTok{\#\# [1] {-}1.207086 {-}1.103327 {-}1.069159  0.596831  1.597054}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 1 4 2 3 5}
+\DocumentationTok{\#\# [1] 5 3 1 4 2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4247,11 +4264,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [{-}2.96860173 {-}0.51317531 {-}0.13470078 {-}0.00708184  2.06856329]}
+\CommentTok{\#\# [ 1.00326035  1.33570318  1.13763402 {-}1.29912552  0.74210305]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}2.96860173, {-}0.51317531, {-}0.13470078, {-}0.00708184,  2.06856329])}
+\CommentTok{\#\# array([{-}1.29912552,  0.74210305,  1.00326035,  1.13763402,  1.33570318])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([0, 1, 2, 3, 4])}
+\CommentTok{\#\# array([3, 4, 0, 2, 1])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4705,8 +4722,8 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-166-1.pdf}
-\caption{\label{fig:unnamed-chunk-166}A Simple Histogram}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
+\caption{\label{fig:unnamed-chunk-167}A Simple Histogram}
 \end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
@@ -4728,8 +4745,8 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
-\caption{\label{fig:unnamed-chunk-167}Some Scatterplots}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-168-1.pdf}
+\caption{\label{fig:unnamed-chunk-168}Some Scatterplots}
 \end{figure}
 
 \begin{Shaded}
@@ -4763,7 +4780,7 @@ Consider this first example.
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-168-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-168}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-169-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-169}
 \end{figure}
 
 You'll notice a few things about the code and the result produced:
@@ -4792,8 +4809,8 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-169-1.pdf}
-\caption{\label{fig:unnamed-chunk-169}A Second Scatterplot}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-170-1.pdf}
+\caption{\label{fig:unnamed-chunk-170}A Second Scatterplot}
 \end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point}. The aesthetic mappings were used by the new layer.
@@ -4820,8 +4837,8 @@ Additionally, notice that the same layer will behave much differently if we chan
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-171-1.pdf}
-\caption{\label{fig:unnamed-chunk-171}Adding Some Color}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-172-1.pdf}
+\caption{\label{fig:unnamed-chunk-172}Adding Some Color}
 \end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}.
@@ -4839,8 +4856,8 @@ We can change attributes of the axes like this.
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-172-1.pdf}
-\caption{\label{fig:unnamed-chunk-172}Changing Scales}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-173-1.pdf}
+\caption{\label{fig:unnamed-chunk-173}Changing Scales}
 \end{figure}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
@@ -4855,8 +4872,8 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-173-1.pdf}
-\caption{\label{fig:unnamed-chunk-173}Changing the Fill}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-174-1.pdf}
+\caption{\label{fig:unnamed-chunk-174}Changing the Fill}
 \end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
@@ -4872,8 +4889,8 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-174-1.pdf}
-\caption{\label{fig:unnamed-chunk-174}Changing the Fill Again}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-175-1.pdf}
+\caption{\label{fig:unnamed-chunk-175}Changing the Fill Again}
 \end{figure}
 
 There are many to choose from, though. Try to run the following code on your own to see what it produces.
@@ -4900,13 +4917,13 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([ 12.,  69., 135., 260., 241., 176.,  73.,  26.,   6.,   2.]), array([{-}2.75370653, {-}2.08917803, {-}1.42464953, {-}0.76012103, {-}0.09559254,}
-\CommentTok{\#\#         0.56893596,  1.23346446,  1.89799296,  2.56252145,  3.22704995,}
-\CommentTok{\#\#         3.89157845]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  4.,  24.,  97., 189., 227., 220., 153.,  66.,  17.,   3.]), array([{-}3.04637573, {-}2.4199116 , {-}1.79344748, {-}1.16698336, {-}0.54051924,}
+\CommentTok{\#\#         0.08594489,  0.71240901,  1.33887313,  1.96533725,  2.59180138,}
+\CommentTok{\#\#         3.2182655 ]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-177-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-178-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. It also follows the most commonly-used convention.
 
@@ -4950,10 +4967,10 @@ If you want to make figures more elaborate, just keep calling different methods 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-178-3.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-179-3.pdf}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-179-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-179}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-180-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-180}
 \end{figure}
 
 import numpy as np
@@ -5426,7 +5443,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-192-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-193-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -5443,7 +5460,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-193-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-194-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -5593,6 +5610,7 @@ Recall that in the Python example, each class had its own update method. Here, w
 \FunctionTok{setGeneric}\NormalTok{(}\StringTok{"update"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(oldMean, newNum) \{}
   \FunctionTok{standardGeneric}\NormalTok{(}\StringTok{"update"}\NormalTok{)}
 \NormalTok{\})}
+\DocumentationTok{\#\# Creating a new generic function for \textquotesingle{}update\textquotesingle{} in the global environment}
 \DocumentationTok{\#\# [1] "update"}
 \FunctionTok{setMethod}\NormalTok{(}\StringTok{"update"}\NormalTok{,}
           \FunctionTok{c}\NormalTok{(}\AttributeTok{oldMean =} \StringTok{"RunningMean"}\NormalTok{, }\AttributeTok{newNum =} \StringTok{"numeric"}\NormalTok{),}
@@ -5863,7 +5881,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-206-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-207-1.pdf}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -5990,7 +6008,7 @@ Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \te
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
 \DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
-\DocumentationTok{\#\#  0.41843639 {-}0.01604627 {-}0.45833772  0.38010844 {-}0.13096458  0.03915265}
+\DocumentationTok{\#\#  0.20459645  0.07652842  0.56611007  0.12396402 {-}0.47183324 {-}0.14797574}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6030,15 +6048,13 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
 \DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}1.6915 {-}0.5107  0.1674  0.7380  1.3319 }
+\DocumentationTok{\#\# {-}2.1875 {-}0.8623  0.5223  0.7790  1.6196 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
-\DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)  }
-\DocumentationTok{\#\# (Intercept)   0.6551     0.3420   1.916   0.0876 .}
-\DocumentationTok{\#\# {-}{-}{-}}
-\DocumentationTok{\#\# Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
+\DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
+\DocumentationTok{\#\# (Intercept)   0.4956     0.4014   1.235    0.248}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 1.081 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 1.269 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6052,8 +6068,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.19512257  0.09435102 {-}0.05538813 {-}0.04735374  0.15999087 {-}0.02727301  0.20551694 {-}0.03527403}
-\DocumentationTok{\#\#  [9]  0.06767848 {-}0.11382207}
+\DocumentationTok{\#\#  [1]  0.0160339412 {-}0.0786430531  0.0004604979 {-}0.1351301905  0.1509747881  0.1905770962  0.1108207936}
+\DocumentationTok{\#\#  [8] {-}0.1186822605 {-}0.0329771221 {-}0.0869986459}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6182,7 +6198,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 \end{Shaded}
 
 \begin{verbatim}
-## [1]   0.002748118  99.995613807 -99.991297530
+## [1]   -0.01354974   99.99540987 -100.00283908
 \end{verbatim}
 
 \begin{Shaded}
@@ -6193,13 +6209,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.007638536  0.003116440 -0.014753896
+## [1]  0.008918389  0.010288593 -0.011230676
 ## 
 ## [[2]]
-## [1]  99.99557 100.01211
+## [1] 100.01665  99.99541
 ## 
 ## [[3]]
-## [1] -99.99645
+## [1] -100.0188
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
@@ -6328,7 +6344,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid()} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-223-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-224-1.pdf}
 
 If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -6343,7 +6359,7 @@ If you prefer using \texttt{apply()}, that is also possible, but you would need 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-224-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-225-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -6371,7 +6387,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-226-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-227-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -6631,7 +6647,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-240-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-241-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6671,7 +6687,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-242-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-243-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6697,7 +6713,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-244-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-245-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}

@@ -197,5 +197,13 @@ iris_data.loc[iris_data['species'] == "Iris-setosa", 'species'] = "SETOSA!"
 iris_data.head(3)
 ```
 
+You can also use the [`.assign()` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html) to create a new column. This method does not modify the data frame in place. It returns a new `DataFrame` with the additional column.  
 
-TODO example of assigning a Series with different index.
+```{python, collapse = TRUE}
+iris_data = iris_data.assign(new_col_name = np.arange(n_rows))
+iris_data.head(3)
+```
+
+::: {.rmd-caution}
+Above we were assigning Numpy arrays to columns of a `DataFrame`. Be careful when you're assigning `Series` objects. You'll see in the documentation that ["pandas aligns all AXES when setting Series and `DataFrame` from `.loc`, and `.iloc`."](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#basics). 
+::: 
