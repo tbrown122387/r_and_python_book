@@ -1,3 +1,183 @@
+--- 
+title: 'An Introduction to R and Python For Data Analysis: A Side By Side Approach'
+author: "Taylor R. Brown"
+site: bookdown::bookdown_site
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+documentclass: krantz
+lot: yes
+lof: yes
+fontsize: 12pt
+monofont: "Source Code Pro"
+monofontoptions: "Scale=0.7"
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+github-repo: tbrown122387/r_and_python_book
+---
+
+# Welcome {-}
+
+Placeholder
+
+
+## A Sample Course {-}
+## License(s) {-}
+
+<!--chapter:end:index.Rmd-->
+
+
+# Preface {-}
+
+Placeholder
+
+
+## About this book {-}
+## Conventions {-}
+## Installing the Required Software {-}
+### Installing R (and RStudio) {-}
+### Installing Python by Installing Anaconda {-} 
+
+<!--chapter:end:preface.Rmd-->
+
+
+# (PART) Introducing the Basics {-} 
+
+Placeholder
+
+
+## Hello World in R
+## Hello World in Python
+## Getting Help
+### Reading Documentation
+### Understanding File Paths
+
+<!--chapter:end:01-intro.Rmd-->
+
+
+# Basic Types
+
+Placeholder
+
+
+## Basic Types In Python
+### Type Conversions in Python
+## Basic Types In R
+### Type Conversions in R
+### R's Simplification
+## Exercises
+### R Questions
+### Python Questions
+
+<!--chapter:end:02-basic_types.Rmd-->
+
+
+# R `vector`s versus Numpy `array`s and Pandas' `Series`
+
+Placeholder
+
+
+## Overview of R
+## Overview of Python
+## Vectorization in R
+## Vectorization in Python
+## Indexing Vectors in R
+## Indexing Numpy arrays
+## Indexing Pandas' Series
+## Some Gotchas
+### Shallow versus Deep Copies
+### How R and Python Handle Missing Values
+## Exercises
+### R Questions
+### Python Questions
+
+<!--chapter:end:03-vectors_and_arrays.Rmd-->
+
+
+# Numpy `ndarray`s Versus R's `matrix` and `array` Types
+
+Placeholder
+
+
+## Numpy `ndarray`s In Python
+## The `matrix` and `array` classes in R
+## Exercises
+### R Questions
+### Python Questions
+
+<!--chapter:end:04-arrays_and_matrices.Rmd-->
+
+
+# R's `list`s Versus Python's `list`s and `dict`s
+
+Placeholder
+
+
+## `list`s In R
+## `list`s In Python
+## Dictionaries In Python
+## Exercises
+### R Questions
+### Python Questions
+
+<!--chapter:end:05-lists_and_dictionaries.Rmd-->
+
+
+# Functions
+
+Placeholder
+
+
+## Defining R Functions
+## Defining Python Functions
+## More Details On R's User-Defined Functions
+## More details on Python's user-defined functions
+## Function Scope in R
+## Function Scope in Python
+## Modifying a Function's Arguments
+### Passing By Value In R
+### Passing By Assignment In Python
+## Accessing and Modifying Captured Variables
+### Accessing Captured Variables in R
+### Accessing Captured Variables in Python
+### Modifying Captured Variables In R
+### Modifying Captured Variables In Python
+## Exercises
+### R Questions
+### Python Questions
+
+<!--chapter:end:06-functions.Rmd-->
+
+
+# Categorical Data 
+
+Placeholder
+
+
+## `factor`s in R
+## Two Options for Categorical Data in Pandas 
+## Exercises
+### R Questions
+### Python Questions
+
+<!--chapter:end:07-categorical_data.Rmd-->
+
+
+# Data Frames
+
+Placeholder
+
+
+## Data Frames in R
+## Data Frames in Python
+
+<!--chapter:end:08-data_frames.Rmd-->
+
 # (PART) Common Tasks and Patterns {-} 
 
 # Input and Output
@@ -112,13 +292,17 @@ By default, `pd.read_csv()` is expecting column labels, which is also a problem.
 pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = " ").head(2) # 1 space: no
 pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\t").head(2) # tabs: no
 pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\s+").head(2) # 1 or more spaces: yes
-pd.read_table("data/o-ring-erosion-only.data", header=None).head(2) # also yes
+pd.read_table("data/o-ring-erosion-only.data").head(2) # also yes
 ```
 
+<!-- One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that `""` works for "one or more spaces, tabs, newlines or carriage returns." This is why `read.table()`, with its default arguments, works well.  -->
 
-https://pandas.pydata.org/pandas-docs/stable/reference/io.html
+```{r, collapse = TRUE}
+pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = " ")
 
-
+d <- read.table("data/o-ring-erosion-only.data")
+str(d)
+```
 <!-- This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. -->
 
 <!-- ```{r, collapse = TRUE} -->
@@ -141,3 +325,134 @@ After we have created something useful, we might be interested in storing our re
 
 TODO serialization
 TODO
+
+<!--chapter:end:09-io.Rmd-->
+
+
+# Using Third-Party Code
+
+Placeholder
+
+
+## Installing Packages In R 
+## Installing Packages In Python 
+## Loading Packages In R 
+## Loading Packages In Python 
+### `import`ing Examples
+
+<!--chapter:end:10-third_party_code.Rmd-->
+
+
+# Control Flow
+
+Placeholder
+
+
+## Conditional Logic 
+## Loops
+## A Longer Example
+### Description of Accept-Reject Sampling
+### A Specific Example
+
+<!--chapter:end:11-control_flow.Rmd-->
+
+
+# Reshaping and Combining Data Sets
+
+Placeholder
+
+
+## Ordering and Sorting Data
+## Stacking Data Sets and Placing Them Shoulder to Shoulder
+## Merging or Joining Data Sets
+## Long Versus Wide Data
+### Long Versus Wide in R
+### Long Versus Wide in Python
+
+<!--chapter:end:12-reshaping.Rmd-->
+
+
+# Visualization
+
+Placeholder
+
+
+## Base R Plotting
+## Plotting with `ggplot2`
+## Plotting with Matplotlib
+
+<!--chapter:end:13-visualization.Rmd-->
+
+# Working With Text Data
+
+TODO
+
+- regular expressions
+
+
+<!--chapter:end:14-text_data.Rmd-->
+
+# Dates and Times
+
+TODO
+
+
+<!--chapter:end:15-dates_and_times.Rmd-->
+
+# Running Scripts from the Command Line
+
+TODO
+
+
+<!--chapter:end:16-CLI.Rmd-->
+
+
+# (PART) Programming Styles {-} 
+
+Placeholder
+
+
+## OOP In Python
+### Overview
+### A First Example
+### Adding Inheritance
+### Adding in Composition
+## OOP In R
+### S3 objects: The Big Picture
+### Using S3 objects
+### Creating S3 objects
+### S4 objects: The Big Picture
+### Using S4 objects
+### Creating S4 objects
+### Reference Classes: The Big Picture
+### Creating Reference Classes
+### Creating R6 Classes
+## Exercises
+
+<!--chapter:end:17-oop.Rmd-->
+
+
+# Functional Programming
+
+Placeholder
+
+
+## Functions as Function Inputs in R
+### `sapply()` and `vapply()`
+### `lapply()`
+### `apply()`
+### `tapply()`
+### `mapply()`
+### `Reduce()` and `do.call()`
+## Another Example in R
+## Functions as Function Inputs in Base Python
+### `map()`
+### `filter()`
+## Functions as Function Inputs in Numpy
+## Functional Methods in Pandas
+## Functions as Function Inputs (miscellany)
+## Functions as Function Outputs in R
+## Functions as Function Outputs in Python
+
+<!--chapter:end:18-FP.Rmd-->
+
