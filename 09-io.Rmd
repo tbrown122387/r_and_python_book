@@ -14,9 +14,8 @@ So far we have been creating small pieces of data within our scripts. This is pr
 I focus mostly on the first category in this section. Here are my reasons for doing so:
 
 1. text-files are more readily-available to students than databases, 
-2. teaching the second category requires teaching SQL, and that would introduce conceptual overlap, 
-3. the third category is programmatically self-explanatory, and
-4. reading in data from text files is more difficult than querying from a database.
+2. teaching the second category requires teaching SQL, and that would introduce conceptual overlap, and
+3. the third category is programmatically self-explanatory.
 
 ::: {.rmd-details}
 The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in **simulation studies.** Authors writing statistical papers need to demonstrate that their techniques work on "nice" data: data simulated from a *known* data-generating process. In a simulation study, unlike in the "real-world," you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model. 
@@ -34,7 +33,7 @@ Instead, **focus on developing your ability to identify and diagnose data input 
 1. Check that **the correct column *separator* was used, or the correct "fixed-width format" was expected.** If mistakes are made, data frame columns are going to be combined or split apart in weird ways, and often the wrong types are going to be used for pieces of data (e.g. `"2,3"` instead of `2` and `3`.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it's unclear whether people's names in the "last, first" format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.
 2. Check that **the column names were parsed and stored correctly.** Column names should not be stored as data in R/Python. Functions that read in data should not expect column names when they don't exist in the actual file. 
 3. Check that **empty space and metadata was ignored correctly.** Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it's being read in. Empty space between column names and data shouldn't be stored. This can occur at the beginning of the file, and even at the end of the file. 
-4. **Type choice is performed correctly.** Are letters stored as strings or as something else such as an R `factor`? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like $-9999$ to represent missing data--don't store that as a float or integer!
+4. **Type choice and recognition of special characters are performed correctly.** Are letters stored as strings or as something else such as an R `factor`? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like $-9999$ to represent missing data--don't store that as a float or integer!
 
 
 I realize that this is no small task. To make matters worse:
@@ -48,36 +47,42 @@ I realize that this is no small task. To make matters worse:
 
 You've seen examples of `read.csv()` used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is `read.table()`. Actually, if you look at the source code for `read.csv()` (type the name of the function without parentheses into the console and press the `<Enter>` key), you will see it calls `read.table()`. The primary difference between these functions is default arguments. **Mind the default arguments.** Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.
 
-Consider the ["Challenger USA Space Shuttle O-Ring Data Set"](https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring) from [@uci_data]. The first ten rows of the text file looks like this.
+Consider the ["Challenger USA Space Shuttle O-Ring Data Set"](https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring) from [@uci_data]. The first few rows of the raw text file^[Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.] looks like this.
 
 ```{bash, echo=FALSE, comment = NA}
-head data/o-ring-erosion-only.data
+head -n3 data/o-ring-erosion-only.data
 ```
 
 It does not use commas as separators, and there is no header information, so `read.csv()` used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.
 
 ```{r, collapse = TRUE}
 d <- read.csv("data/o-ring-erosion-only.data")
-str(d)
+dim(d) # one row short, only 1 col
 typeof(d[,1])
 ```
 Specifying `header=FALSE` fixes the column name issue, but `sep = " "` does not fix the separator issue.
 
 ```{r, collapse = TRUE}
-d <- read.csv("data/o-ring-erosion-only.data", header=FALSE, sep = " ")
+d <- read.csv("data/o-ring-erosion-only.data", 
+              header=FALSE, sep = " ")
 str(d)
 ```
 
-One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that `""` works for "one or more spaces, tabs, newlines or carriage returns." This is why `read.table()`, with its default arguments, works well. 
+One space is strictly one space. Some rows have two, though. This causes there to be two too many columns filled with `NA`s. 
+
+After digging into the documentation a bit further, you will notice that `""` works for "one or more spaces, tabs, newlines or carriage returns." This is why `read.table()`, with its default arguments, works well. 
 
 ```{r, collapse = TRUE}
 d <- read.table("data/o-ring-erosion-only.data")
 str(d)
 ```
-This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.
+This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. 
+
+In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified `widths=c(2,2,4,4,1))`, which includes spaces to the *right* of digits, then columns would have been recognized as `character`s. 
 
 ```{r, collapse = TRUE}
-d <- read.fwf("data/o-ring-erosion-only.data", widths = c(1,1,2,3,2), sep = "")
+d <- read.fwf("data/o-ring-erosion-only.data", 
+              widths = c(1,2,3,4,3)) # or try c(2,2,4,4,1)
 str(d)
 ```
 
@@ -101,22 +106,33 @@ Recall the O-Ring data from above. The columns are *not* separated by commas, so
 import pandas as pd
 d = pd.read_csv("data/o-ring-erosion-only.data")
 d.head(2)
-d.shape
-d.columns
+d.shape # one column and missing a row
+d.columns # column labels are data
 ```
 
-By default, `pd.read_csv()` is expecting column labels, which is also a problem. Unlike R, though, the `header=` argument is not expected to be a Boolean. You will need to provide a `None` object, instead. The separator needs to be just right, too. 
+By default, `pd.read_csv()` is expecting column labels, which is also a problem. Unlike R, though, the `header=` argument is not expected to be a Boolean. You will need to provide a `None`, instead. The separator needs to be just right, too. 
 
 
 ```{python, collapse = TRUE}
-pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = " ").head(2) # 1 space: no
-pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\t").head(2) # tabs: no
-pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\s+").head(2) # 1 or more spaces: yes
-pd.read_table("data/o-ring-erosion-only.data", header=None).head(2) # also yes
+pd.read_csv("data/o-ring-erosion-only.data", 
+            header=None, sep = " ").head(2) # 1 space: no
+pd.read_csv("data/o-ring-erosion-only.data", 
+            header=None, sep = "\t").head(2) # tabs: no
+pd.read_table("data/o-ring-erosion-only.data", 
+              header=None).head(2) # default sep is tabs, so no
+pd.read_csv("data/o-ring-erosion-only.data", 
+            header=None, sep = "\s+").head(2) # 1 or more spaces: yes
+```
+
+Reading in fixed width files can be done in a way that is nearly identical to the way we did it in R. If you choose to set `widths=[1,2,3,4,3]`, then the trailing whitespace will cause Pandas to recognize 
+
+```{python, collapse = TRUE}
+d = pd.read_fwf("data/o-ring-erosion-only.data", 
+                widths = [1,2,3,4,3], header=None) # or try [1,2,3,4,3]
+d.info()
 ```
 
 
-https://pandas.pydata.org/pandas-docs/stable/reference/io.html
 
 
 <!-- This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. -->
@@ -134,7 +150,7 @@ https://pandas.pydata.org/pandas-docs/stable/reference/io.html
 <!-- ``` -->
 
 
-## Output
+## Saving Output
 
 After we have created something useful, we might be interested in storing our results. We can write out to a database, a text file, or we can save a digitized version of our work space.
 

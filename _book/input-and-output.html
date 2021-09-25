@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 8 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -288,7 +288,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>8.1</b> General Input Considerations</a></li>
 <li class="chapter" data-level="8.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>8.2</b> Reading in Text Files with R</a></li>
 <li class="chapter" data-level="8.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>8.3</b> Reading in Text Files with Pandas</a></li>
-<li class="chapter" data-level="8.4" data-path="input-and-output.html"><a href="input-and-output.html#output"><i class="fa fa-check"></i><b>8.4</b> Output</a></li>
+<li class="chapter" data-level="8.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-output"><i class="fa fa-check"></i><b>8.4</b> Saving Output</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>9</b> Using Third-Party Code</a>
 <ul>
@@ -409,9 +409,8 @@ div.csl-indent {
 <p>I focus mostly on the first category in this section. Here are my reasons for doing so:</p>
 <ol style="list-style-type: decimal">
 <li>text-files are more readily-available to students than databases,</li>
-<li>teaching the second category requires teaching SQL, and that would introduce conceptual overlap,</li>
-<li>the third category is programmatically self-explanatory, and</li>
-<li>reading in data from text files is more difficult than querying from a database.</li>
+<li>teaching the second category requires teaching SQL, and that would introduce conceptual overlap, and</li>
+<li>the third category is programmatically self-explanatory.</li>
 </ol>
 <div class="rmd-details">
 <p>The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in <strong>simulation studies.</strong> Authors writing statistical papers need to demonstrate that their techniques work on “nice” data: data simulated from a <em>known</em> data-generating process. In a simulation study, unlike in the “real-world,” you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.</p>
@@ -424,7 +423,7 @@ div.csl-indent {
 <li>Check that <strong>the correct column <em>separator</em> was used, or the correct “fixed-width format” was expected.</strong> If mistakes are made, data frame columns are going to be combined or split apart in weird ways, and often the wrong types are going to be used for pieces of data (e.g. <code>"2,3"</code> instead of <code>2</code> and <code>3</code>.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it’s unclear whether people’s names in the “last, first” format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.</li>
 <li>Check that <strong>the column names were parsed and stored correctly.</strong> Column names should not be stored as data in R/Python. Functions that read in data should not expect column names when they don’t exist in the actual file.</li>
 <li>Check that <strong>empty space and metadata was ignored correctly.</strong> Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it’s being read in. Empty space between column names and data shouldn’t be stored. This can occur at the beginning of the file, and even at the end of the file.</li>
-<li><strong>Type choice is performed correctly.</strong> Are letters stored as strings or as something else such as an R <code>factor</code>? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like <span class="math inline">\(-9999\)</span> to represent missing data–don’t store that as a float or integer!</li>
+<li><strong>Type choice and recognition of special characters are performed correctly.</strong> Are letters stored as strings or as something else such as an R <code>factor</code>? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like <span class="math inline">\(-9999\)</span> to represent missing data–don’t store that as a float or integer!</li>
 </ol>
 <p>I realize that this is no small task. To make matters worse:</p>
 <ul>
@@ -435,36 +434,30 @@ div.csl-indent {
 <div id="reading-in-text-files-with-r" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Reading in Text Files with R</h2>
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>. Actually, if you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press the <code>&lt;Enter&gt;</code> key), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
-<p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first ten rows of the text file looks like this.</p>
+<p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first few rows of the raw text file<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> looks like this.</p>
 <pre><code>6 0 66  50  1
 6 1 70  50  2
-6 0 69  50  3
-6 0 68  50  4
-6 0 67  50  5
-6 0 72  50  6
-6 0 73 100  7
-6 0 70 100  8
-6 1 57 200  9
-6 1 63 200 10</code></pre>
+6 0 69  50  3</code></pre>
 <p>It does not use commas as separators, and there is no header information, so <code>read.csv()</code> used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="input-and-output.html#cb2-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
-<span id="cb2-2"><a href="input-and-output.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
-<span id="cb2-3"><a href="input-and-output.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    22 obs. of  1 variable:</span></span>
-<span id="cb2-4"><a href="input-and-output.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ X6.0.66..50..1: chr  &quot;6 1 70  50  2&quot; &quot;6 0 69  50  3&quot; &quot;6 0 68  50  4&quot; &quot;6 0 67  50  5&quot; ...</span></span>
-<span id="cb2-5"><a href="input-and-output.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(d[,<span class="dv">1</span>])</span>
-<span id="cb2-6"><a href="input-and-output.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;character&quot;</span></span></code></pre></div>
+<span id="cb2-2"><a href="input-and-output.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(d) <span class="co"># one row short, only 1 col</span></span>
+<span id="cb2-3"><a href="input-and-output.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 22  1</span></span>
+<span id="cb2-4"><a href="input-and-output.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(d[,<span class="dv">1</span>])</span>
+<span id="cb2-5"><a href="input-and-output.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;character&quot;</span></span></code></pre></div>
 <p>Specifying <code>header=FALSE</code> fixes the column name issue, but <code>sep = " "</code> does not fix the separator issue.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="input-and-output.html#cb3-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb3-2"><a href="input-and-output.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
-<span id="cb3-3"><a href="input-and-output.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  7 variables:</span></span>
-<span id="cb3-4"><a href="input-and-output.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
-<span id="cb3-5"><a href="input-and-output.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
-<span id="cb3-6"><a href="input-and-output.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
-<span id="cb3-7"><a href="input-and-output.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  NA NA NA NA NA NA 100 100 200 200 ...</span></span>
-<span id="cb3-8"><a href="input-and-output.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  50 50 50 50 50 50 NA NA NA 10 ...</span></span>
-<span id="cb3-9"><a href="input-and-output.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V6: int  NA NA NA NA NA NA 7 8 9 NA ...</span></span>
-<span id="cb3-10"><a href="input-and-output.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V7: int  1 2 3 4 5 6 NA NA NA NA ...</span></span></code></pre></div>
-<p>One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that <code>""</code> works for “one or more spaces, tabs, newlines or carriage returns.” This is why <code>read.table()</code>, with its default arguments, works well.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="input-and-output.html#cb3-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb3-2"><a href="input-and-output.html#cb3-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb3-3"><a href="input-and-output.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb3-4"><a href="input-and-output.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  7 variables:</span></span>
+<span id="cb3-5"><a href="input-and-output.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb3-6"><a href="input-and-output.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb3-7"><a href="input-and-output.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb3-8"><a href="input-and-output.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  NA NA NA NA NA NA 100 100 200 200 ...</span></span>
+<span id="cb3-9"><a href="input-and-output.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  50 50 50 50 50 50 NA NA NA 10 ...</span></span>
+<span id="cb3-10"><a href="input-and-output.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V6: int  NA NA NA NA NA NA 7 8 9 NA ...</span></span>
+<span id="cb3-11"><a href="input-and-output.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V7: int  1 2 3 4 5 6 NA NA NA NA ...</span></span></code></pre></div>
+<p>One space is strictly one space. Some rows have two, though. This causes there to be two too many columns filled with <code>NA</code>s.</p>
+<p>After digging into the documentation a bit further, you will notice that <code>""</code> works for “one or more spaces, tabs, newlines or carriage returns.” This is why <code>read.table()</code>, with its default arguments, works well.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="input-and-output.html#cb4-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>)</span>
 <span id="cb4-2"><a href="input-and-output.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
 <span id="cb4-3"><a href="input-and-output.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  5 variables:</span></span>
@@ -474,13 +467,16 @@ div.csl-indent {
 <span id="cb4-7"><a href="input-and-output.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
 <span id="cb4-8"><a href="input-and-output.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
 <p>This data set has columns whose widths are “fixed,” too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="input-and-output.html#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb5-2"><a href="input-and-output.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
-<span id="cb5-3"><a href="input-and-output.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  4 variables:</span></span>
-<span id="cb5-4"><a href="input-and-output.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
-<span id="cb5-5"><a href="input-and-output.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
-<span id="cb5-6"><a href="input-and-output.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
-<span id="cb5-7"><a href="input-and-output.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  5 5 5 5 5 5 10 10 20 20 ...</span></span></code></pre></div>
+<p>In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified <code>widths=c(2,2,4,4,1))</code>, which includes spaces to the <em>right</em> of digits, then columns would have been recognized as <code>character</code>s.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="input-and-output.html#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb5-2"><a href="input-and-output.html#cb5-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>)) <span class="co"># or try c(2,2,4,4,1)</span></span>
+<span id="cb5-3"><a href="input-and-output.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(d)</span>
+<span id="cb5-4"><a href="input-and-output.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    23 obs. of  5 variables:</span></span>
+<span id="cb5-5"><a href="input-and-output.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...</span></span>
+<span id="cb5-6"><a href="input-and-output.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...</span></span>
+<span id="cb5-7"><a href="input-and-output.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
+<span id="cb5-8"><a href="input-and-output.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
+<span id="cb5-9"><a href="input-and-output.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
 <p>If you need to read in some text data that does not possess a tabular structure, then you may need <code>readLines()</code>. This function will read in all of the text, separate each line into an element of a <code>character</code> <code>vector</code>, and will not make any attempt to parse lines into columns. Further processing can be accomplished using the techniques from chapter @(working-with-text-data).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="input-and-output.html#cb6-1" aria-hidden="true" tabindex="-1"></a>html_data <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">warn =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb6-2"><a href="input-and-output.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(html_data, <span class="dv">2</span>)</span>
@@ -498,28 +494,47 @@ div.csl-indent {
 <span id="cb7-4"><a href="input-and-output.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">##    6 0 66  50  1</span></span>
 <span id="cb7-5"><a href="input-and-output.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6 1 70  50  2</span></span>
 <span id="cb7-6"><a href="input-and-output.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6 0 69  50  3</span></span>
-<span id="cb7-7"><a href="input-and-output.html#cb7-7" aria-hidden="true" tabindex="-1"></a>d.shape</span>
+<span id="cb7-7"><a href="input-and-output.html#cb7-7" aria-hidden="true" tabindex="-1"></a>d.shape <span class="co"># one column and missing a row</span></span>
 <span id="cb7-8"><a href="input-and-output.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">## (22, 1)</span></span>
-<span id="cb7-9"><a href="input-and-output.html#cb7-9" aria-hidden="true" tabindex="-1"></a>d.columns</span>
+<span id="cb7-9"><a href="input-and-output.html#cb7-9" aria-hidden="true" tabindex="-1"></a>d.columns <span class="co"># column labels are data</span></span>
 <span id="cb7-10"><a href="input-and-output.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;6 0 66  50  1&#39;], dtype=&#39;object&#39;)</span></span></code></pre></div>
-<p>By default, <code>pd.read_csv()</code> is expecting column labels, which is also a problem. Unlike R, though, the <code>header=</code> argument is not expected to be a Boolean. You will need to provide a <code>None</code> object, instead. The separator needs to be just right, too.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="input-and-output.html#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot; &quot;</span>).head(<span class="dv">2</span>) <span class="co"># no</span></span>
-<span id="cb8-2"><a href="input-and-output.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">##    0  1   2   3     4   5    6</span></span>
-<span id="cb8-3"><a href="input-and-output.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6  0  66 NaN  50.0 NaN  1.0</span></span>
-<span id="cb8-4"><a href="input-and-output.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6  1  70 NaN  50.0 NaN  2.0</span></span>
-<span id="cb8-5"><a href="input-and-output.html#cb8-5" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>).head(<span class="dv">2</span>) <span class="co"># yes</span></span>
-<span id="cb8-6"><a href="input-and-output.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">##                0</span></span>
-<span id="cb8-7"><a href="input-and-output.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6 0 66  50  1</span></span>
-<span id="cb8-8"><a href="input-and-output.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6 1 70  50  2</span></span>
-<span id="cb8-9"><a href="input-and-output.html#cb8-9" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;\s+&quot;</span>).head(<span class="dv">2</span>) <span class="co"># yes</span></span>
-<span id="cb8-10"><a href="input-and-output.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">##    0  1   2   3  4</span></span>
-<span id="cb8-11"><a href="input-and-output.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6  0  66  50  1</span></span>
-<span id="cb8-12"><a href="input-and-output.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6  1  70  50  2</span></span>
-<span id="cb8-13"><a href="input-and-output.html#cb8-13" aria-hidden="true" tabindex="-1"></a>pd.read_table(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>).head(<span class="dv">2</span>) <span class="co"># yes</span></span>
-<span id="cb8-14"><a href="input-and-output.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">##    6 0 66  50  1</span></span>
-<span id="cb8-15"><a href="input-and-output.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6 1 70  50  2</span></span>
-<span id="cb8-16"><a href="input-and-output.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6 0 69  50  3</span></span></code></pre></div>
-<!-- One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that `""` works for "one or more spaces, tabs, newlines or carriage returns." This is why `read.table()`, with its default arguments, works well.  -->
+<p>By default, <code>pd.read_csv()</code> is expecting column labels, which is also a problem. Unlike R, though, the <code>header=</code> argument is not expected to be a Boolean. You will need to provide a <code>None</code>, instead. The separator needs to be just right, too.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="input-and-output.html#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb8-2"><a href="input-and-output.html#cb8-2" aria-hidden="true" tabindex="-1"></a>            header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot; &quot;</span>).head(<span class="dv">2</span>) <span class="co"># 1 space: no</span></span>
+<span id="cb8-3"><a href="input-and-output.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">##    0  1   2   3     4   5    6</span></span>
+<span id="cb8-4"><a href="input-and-output.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6  0  66 NaN  50.0 NaN  1.0</span></span>
+<span id="cb8-5"><a href="input-and-output.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6  1  70 NaN  50.0 NaN  2.0</span></span>
+<span id="cb8-6"><a href="input-and-output.html#cb8-6" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb8-7"><a href="input-and-output.html#cb8-7" aria-hidden="true" tabindex="-1"></a>            header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>).head(<span class="dv">2</span>) <span class="co"># tabs: no</span></span>
+<span id="cb8-8"><a href="input-and-output.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">##                0</span></span>
+<span id="cb8-9"><a href="input-and-output.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6 0 66  50  1</span></span>
+<span id="cb8-10"><a href="input-and-output.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6 1 70  50  2</span></span>
+<span id="cb8-11"><a href="input-and-output.html#cb8-11" aria-hidden="true" tabindex="-1"></a>pd.read_table(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb8-12"><a href="input-and-output.html#cb8-12" aria-hidden="true" tabindex="-1"></a>              header<span class="op">=</span><span class="va">None</span>).head(<span class="dv">2</span>) <span class="co"># default sep is tabs, so no</span></span>
+<span id="cb8-13"><a href="input-and-output.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">##                0</span></span>
+<span id="cb8-14"><a href="input-and-output.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6 0 66  50  1</span></span>
+<span id="cb8-15"><a href="input-and-output.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6 1 70  50  2</span></span>
+<span id="cb8-16"><a href="input-and-output.html#cb8-16" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb8-17"><a href="input-and-output.html#cb8-17" aria-hidden="true" tabindex="-1"></a>            header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;\s+&quot;</span>).head(<span class="dv">2</span>) <span class="co"># 1 or more spaces: yes</span></span>
+<span id="cb8-18"><a href="input-and-output.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">##    0  1   2   3  4</span></span>
+<span id="cb8-19"><a href="input-and-output.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6  0  66  50  1</span></span>
+<span id="cb8-20"><a href="input-and-output.html#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6  1  70  50  2</span></span></code></pre></div>
+<p>Reading in fixed width files can be done in a way that is nearly identical to the way we did it in R.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="input-and-output.html#cb9-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_fwf(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
+<span id="cb9-2"><a href="input-and-output.html#cb9-2" aria-hidden="true" tabindex="-1"></a>                widths <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>], header<span class="op">=</span><span class="va">None</span>) <span class="co"># or try [2,2,4,4,1][1,2,3,4,3]</span></span>
+<span id="cb9-3"><a href="input-and-output.html#cb9-3" aria-hidden="true" tabindex="-1"></a>d.info()</span>
+<span id="cb9-4"><a href="input-and-output.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span></span>
+<span id="cb9-5"><a href="input-and-output.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">## RangeIndex: 23 entries, 0 to 22</span></span>
+<span id="cb9-6"><a href="input-and-output.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Data columns (total 5 columns):</span></span>
+<span id="cb9-7"><a href="input-and-output.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">##  #   Column  Non-Null Count  Dtype </span></span>
+<span id="cb9-8"><a href="input-and-output.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">## ---  ------  --------------  ----- </span></span>
+<span id="cb9-9"><a href="input-and-output.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">##  0   0       23 non-null     int64 </span></span>
+<span id="cb9-10"><a href="input-and-output.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">##  1   1       23 non-null     int64 </span></span>
+<span id="cb9-11"><a href="input-and-output.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">##  2   2       23 non-null     object</span></span>
+<span id="cb9-12"><a href="input-and-output.html#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">##  3   3       23 non-null     object</span></span>
+<span id="cb9-13"><a href="input-and-output.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">##  4   4       23 non-null     int64 </span></span>
+<span id="cb9-14"><a href="input-and-output.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">## dtypes: int64(3), object(2)</span></span>
+<span id="cb9-15"><a href="input-and-output.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">## memory usage: 1.0+ KB</span></span></code></pre></div>
 <!-- This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. -->
 <!-- ```{r, collapse = TRUE} -->
 <!-- d <- read.fwf("data/o-ring-erosion-only.data", widths = c(1,1,2,3,2), sep = "") -->
@@ -531,8 +546,8 @@ div.csl-indent {
 <!-- head(html_data, 2) -->
 <!-- ``` -->
 </div>
-<div id="output" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Output</h2>
+<div id="saving-output" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Saving Output</h2>
 <p>After we have created something useful, we might be interested in storing our results. We can write out to a database, a text file, or we can save a digitized version of our work space.</p>
 <p>TODO serialization
 TODO</p>
@@ -545,6 +560,12 @@ TODO</p>
 Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
 </div>
 </div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.<a href="input-and-output.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
@@ -555,6 +576,7 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -594,10 +616,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }
