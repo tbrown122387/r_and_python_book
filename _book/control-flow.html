@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -288,8 +288,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
 <li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
-<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-python"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Python</a></li>
-<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#output"><i class="fa fa-check"></i><b>9.4</b> Output</a></li>
+<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
 <ul>
@@ -409,60 +410,60 @@ div.csl-indent {
 </ul>
 <p>Another way to use them is to conditionally execute code, depending on whether or truth condition of a Boolean.</p>
 <p>In R,</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="control-flow.html#cb135-1" aria-hidden="true" tabindex="-1"></a>myName <span class="ot">&lt;-</span> <span class="st">&quot;Clare&quot;</span></span>
-<span id="cb135-2"><a href="control-flow.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(myName <span class="sc">!=</span> <span class="st">&quot;Taylor&quot;</span>){</span>
-<span id="cb135-3"><a href="control-flow.html#cb135-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;you are not Taylor&quot;</span>)</span>
-<span id="cb135-4"><a href="control-flow.html#cb135-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb135-5"><a href="control-flow.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;you are not Taylor&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="control-flow.html#cb148-1" aria-hidden="true" tabindex="-1"></a>myName <span class="ot">&lt;-</span> <span class="st">&quot;Clare&quot;</span></span>
+<span id="cb148-2"><a href="control-flow.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(myName <span class="sc">!=</span> <span class="st">&quot;Taylor&quot;</span>){</span>
+<span id="cb148-3"><a href="control-flow.html#cb148-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;you are not Taylor&quot;</span>)</span>
+<span id="cb148-4"><a href="control-flow.html#cb148-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb148-5"><a href="control-flow.html#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;you are not Taylor&quot;</span></span></code></pre></div>
 <p><a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">In Python</a>, you don’t need curly braces, but the indentation needs to be just right, and you need a colon.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="control-flow.html#cb136-1" aria-hidden="true" tabindex="-1"></a>my_name <span class="op">=</span> <span class="st">&quot;Taylor&quot;</span></span>
-<span id="cb136-2"><a href="control-flow.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_name <span class="op">==</span> <span class="st">&quot;Taylor&quot;</span>:</span>
-<span id="cb136-3"><a href="control-flow.html#cb136-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
-<span id="cb136-4"><a href="control-flow.html#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="control-flow.html#cb149-1" aria-hidden="true" tabindex="-1"></a>my_name <span class="op">=</span> <span class="st">&quot;Taylor&quot;</span></span>
+<span id="cb149-2"><a href="control-flow.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_name <span class="op">==</span> <span class="st">&quot;Taylor&quot;</span>:</span>
+<span id="cb149-3"><a href="control-flow.html#cb149-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
+<span id="cb149-4"><a href="control-flow.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
 <p>There can be more than one truth test. To test alternative Boolean conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
 <p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="control-flow.html#cb137-1" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
-<span id="cb137-2"><a href="control-flow.html#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
-<span id="cb137-3"><a href="control-flow.html#cb137-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
-<span id="cb137-4"><a href="control-flow.html#cb137-4" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
-<span id="cb137-5"><a href="control-flow.html#cb137-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
-<span id="cb137-6"><a href="control-flow.html#cb137-6" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
-<span id="cb137-7"><a href="control-flow.html#cb137-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
-<span id="cb137-8"><a href="control-flow.html#cb137-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb137-9"><a href="control-flow.html#cb137-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb138"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb138-1"><a href="control-flow.html#cb138-1" aria-hidden="true" tabindex="-1"></a>my_num <span class="op">=</span> <span class="fl">42.999</span></span>
-<span id="cb138-2"><a href="control-flow.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb138-3"><a href="control-flow.html#cb138-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num is even&quot;</span>)</span>
-<span id="cb138-4"><a href="control-flow.html#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb138-5"><a href="control-flow.html#cb138-5" aria-hidden="true" tabindex="-1"></a>    my_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb138-6"><a href="control-flow.html#cb138-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num was made even&quot;</span>)</span>
-<span id="cb138-7"><a href="control-flow.html#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb138-8"><a href="control-flow.html#cb138-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
-<span id="cb138-9"><a href="control-flow.html#cb138-9" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="control-flow.html#cb150-1" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
+<span id="cb150-2"><a href="control-flow.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
+<span id="cb150-3"><a href="control-flow.html#cb150-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
+<span id="cb150-4"><a href="control-flow.html#cb150-4" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
+<span id="cb150-5"><a href="control-flow.html#cb150-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
+<span id="cb150-6"><a href="control-flow.html#cb150-6" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb150-7"><a href="control-flow.html#cb150-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
+<span id="cb150-8"><a href="control-flow.html#cb150-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb150-9"><a href="control-flow.html#cb150-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="control-flow.html#cb151-1" aria-hidden="true" tabindex="-1"></a>my_num <span class="op">=</span> <span class="fl">42.999</span></span>
+<span id="cb151-2"><a href="control-flow.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb151-3"><a href="control-flow.html#cb151-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num is even&quot;</span>)</span>
+<span id="cb151-4"><a href="control-flow.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb151-5"><a href="control-flow.html#cb151-5" aria-hidden="true" tabindex="-1"></a>    my_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb151-6"><a href="control-flow.html#cb151-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num was made even&quot;</span>)</span>
+<span id="cb151-7"><a href="control-flow.html#cb151-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb151-8"><a href="control-flow.html#cb151-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
+<span id="cb151-9"><a href="control-flow.html#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
 </div>
 <div id="loops" class="section level2" number="11.2">
 <h2><span class="header-section-number">11.2</span> Loops</h2>
 <p>One line of code generally does one “thing,” unless you’re using loops. Code written inside a loop will execute many times.</p>
 <p>The most common loop for us will be a <code>for</code> loop. A simple <code>for</code> loop in R might look like this</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="control-flow.html#cb139-1" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb139-2"><a href="control-flow.html#cb139-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
-<span id="cb139-3"><a href="control-flow.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
-<span id="cb139-4"><a href="control-flow.html#cb139-4" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
-<span id="cb139-5"><a href="control-flow.html#cb139-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb139-6"><a href="control-flow.html#cb139-6" aria-hidden="true" tabindex="-1"></a>r</span>
-<span id="cb139-7"><a href="control-flow.html#cb139-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="control-flow.html#cb152-1" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb152-2"><a href="control-flow.html#cb152-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
+<span id="cb152-3"><a href="control-flow.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
+<span id="cb152-4"><a href="control-flow.html#cb152-4" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
+<span id="cb152-5"><a href="control-flow.html#cb152-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb152-6"><a href="control-flow.html#cb152-6" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb152-7"><a href="control-flow.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li><code>seq_len(myLength)</code> gives us a <code>vector</code></li>
 <li><code>i</code> is a variable that takes on the values found in the <code>vector</code></li>
 <li>Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code></li>
 </ol>
 <p><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">In Python</a></p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb140-1"><a href="control-flow.html#cb140-1" aria-hidden="true" tabindex="-1"></a>my_length <span class="op">=</span> <span class="dv">9</span></span>
-<span id="cb140-2"><a href="control-flow.html#cb140-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
-<span id="cb140-3"><a href="control-flow.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(my_length):</span>
-<span id="cb140-4"><a href="control-flow.html#cb140-4" aria-hidden="true" tabindex="-1"></a>    r.append(i)</span>
-<span id="cb140-5"><a href="control-flow.html#cb140-5" aria-hidden="true" tabindex="-1"></a>r</span>
-<span id="cb140-6"><a href="control-flow.html#cb140-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 2, 3, 4, 5, 6, 7, 8]</span></span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="control-flow.html#cb153-1" aria-hidden="true" tabindex="-1"></a>my_length <span class="op">=</span> <span class="dv">9</span></span>
+<span id="cb153-2"><a href="control-flow.html#cb153-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
+<span id="cb153-3"><a href="control-flow.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(my_length):</span>
+<span id="cb153-4"><a href="control-flow.html#cb153-4" aria-hidden="true" tabindex="-1"></a>    r.append(i)</span>
+<span id="cb153-5"><a href="control-flow.html#cb153-5" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb153-6"><a href="control-flow.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 2, 3, 4, 5, 6, 7, 8]</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Unsurprisingly, Python’s syntax opts for indentation and colons instead of curly braces and parentheses,</li>
 <li>Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code></li>
@@ -489,12 +490,12 @@ div.csl-indent {
 <p>In the example above, the <code>myLength</code> or <code>my_length</code> variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you <em>did</em> hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes!</p>
 </div>
 <p>Python provides an alternative way to construct lists similar to the one we constructed in the above example. They are called <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions"><strong>list comprehensions</strong></a>. You can incorporate iteration and conditional logic in one line of code.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="control-flow.html#cb141-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span><span class="op">*</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb141-2"><a href="control-flow.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 6, 12, 18, 24]</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="control-flow.html#cb154-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span><span class="op">*</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb154-2"><a href="control-flow.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 6, 12, 18, 24]</span></span></code></pre></div>
 <p>You might also have a look at <a href="https://www.python.org/dev/peps/pep-0289/"><em>generator expressions</em></a> and <a href="https://www.python.org/dev/peps/pep-0274/"><em>dictionary comprehensions</em></a>.</p>
 <p>R can come close to replicating the above behavior with vectorization, but the conditional part is hard to achieve without subsetting.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="control-flow.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)[<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)<span class="sc">%%</span><span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span>
-<span id="cb142-2"><a href="control-flow.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0  6 12 18 24</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="control-flow.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)[<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)<span class="sc">%%</span><span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span>
+<span id="cb155-2"><a href="control-flow.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0  6 12 18 24</span></span></code></pre></div>
 </div>
 <div id="a-longer-example" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> A Longer Example</h2>
@@ -502,7 +503,7 @@ div.csl-indent {
 <h3><span class="header-section-number">11.3.1</span> Description of Accept-Reject Sampling</h3>
 <p>An example of an algorithm that uses conditional logic is the <strong>accept-reject sampling method</strong> <span class="citation">(<a href="#ref-monte-carlo-stat-methods" role="doc-biblioref">Robert and Casella 2005</a>)</span>. This is useful for when we want to sample from a <em>target probability density</em> <span class="math inline">\(p(x)\)</span>, using another distribution called a <em>proposal distribution</em> <span class="math inline">\(q(x)\)</span>.</p>
 <p><span class="math inline">\(q(x)\)</span> is probably a distribution that is easy to sample from and is easy to evaluate pointwise. For example, a uniform distribution satisfies these criteria because both R and Python have functions that accomplish these two things (e.g. sampling can be done with <code>runif</code> in R and <code>np.random.uniform</code> in Python). <span class="math inline">\(p(x)\)</span> is generally more “complicated.” If it wasn’t, we would try to find some built-in function for it.</p>
-<p>One common way a distribution can be complicated is that it can have an unknown <strong>normalizing constant</strong>–one that is difficult or impossible to solve using calculus. This happens a lot in <em>Bayesian Statistics</em>, for example.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>. We might write down
+<p>One common way a distribution can be complicated is that it can have an unknown <strong>normalizing constant</strong>–one that is difficult or impossible to solve using calculus. This happens a lot in <em>Bayesian Statistics</em>, for example.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. We might write down
 <span class="math display">\[
 p(x) = \frac{f(x)}{\int f(x) dx},
 \]</span>
@@ -525,7 +526,7 @@ and this is guaranteed to be a probability density function as long as <span cla
 </div>
 <div id="a-specific-example" class="section level3" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> A Specific Example</h3>
-<p>Here is a specific example. Let’s say our target<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> is
+<p>Here is a specific example. Let’s say our target<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> is
 <span class="math display">\[
 p(x) = 
 \begin{cases}
@@ -543,42 +544,42 @@ q(x) =
 \end{cases}
 \]</span>
 We can plot all three functions.</p>
-<div class="figure"><span id="fig:unnamed-chunk-140"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-140-1.png" alt="Visualizing Our Three Functions" width="80%" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-164"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-164-1.png" alt="Visualizing Our Three Functions" width="80%" />
 <p class="caption">
 Figure 11.1: Visualizing Our Three Functions
 </p>
 </div>
 <p>Here’s some Python code that attempts to sample once from <span class="math inline">\(p(x)\)</span>. Sometimes proposals are not accepted. When that happens, the function returns <code>None</code>.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="control-flow.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb143-2"><a href="control-flow.html#cb143-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-3"><a href="control-flow.html#cb143-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(samp):</span>
-<span id="cb143-4"><a href="control-flow.html#cb143-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;the unnormalized density&quot;&quot;&quot;</span></span>
-<span id="cb143-5"><a href="control-flow.html#cb143-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">1</span><span class="op">-</span>samp)<span class="op">*</span>(samp<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb143-6"><a href="control-flow.html#cb143-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-7"><a href="control-flow.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> attempt_one_samp():</span>
-<span id="cb143-8"><a href="control-flow.html#cb143-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;attempts to sample from target distribution, using uniform as a proposal&quot;&quot;&quot;</span></span>
-<span id="cb143-9"><a href="control-flow.html#cb143-9" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.uniform()</span>
-<span id="cb143-10"><a href="control-flow.html#cb143-10" aria-hidden="true" tabindex="-1"></a>    M <span class="op">=</span> <span class="dv">4</span><span class="op">/</span><span class="dv">27</span></span>
-<span id="cb143-11"><a href="control-flow.html#cb143-11" aria-hidden="true" tabindex="-1"></a>    bern_prob_param <span class="op">=</span> f(x)<span class="op">/</span>M</span>
-<span id="cb143-12"><a href="control-flow.html#cb143-12" aria-hidden="true" tabindex="-1"></a>    accept <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, bern_prob_param) <span class="op">==</span> <span class="dv">1</span></span>
-<span id="cb143-13"><a href="control-flow.html#cb143-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> accept:</span>
-<span id="cb143-14"><a href="control-flow.html#cb143-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code></pre></div>
-<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="control-flow.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_from_target(num_times):</span>
-<span id="cb144-2"><a href="control-flow.html#cb144-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;sample num_times from the target distribution&quot;&quot;&quot;</span></span>
-<span id="cb144-3"><a href="control-flow.html#cb144-3" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> []</span>
-<span id="cb144-4"><a href="control-flow.html#cb144-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="bu">len</span>(samps) <span class="op">&lt;</span> num_times:</span>
-<span id="cb144-5"><a href="control-flow.html#cb144-5" aria-hidden="true" tabindex="-1"></a>        potential_samp <span class="op">=</span> attempt_one_samp()</span>
-<span id="cb144-6"><a href="control-flow.html#cb144-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> potential_samp <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb144-7"><a href="control-flow.html#cb144-7" aria-hidden="true" tabindex="-1"></a>            samps.append(potential_samp)</span>
-<span id="cb144-8"><a href="control-flow.html#cb144-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samps</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="control-flow.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb156-2"><a href="control-flow.html#cb156-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-3"><a href="control-flow.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(samp):</span>
+<span id="cb156-4"><a href="control-flow.html#cb156-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;the unnormalized density&quot;&quot;&quot;</span></span>
+<span id="cb156-5"><a href="control-flow.html#cb156-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">1</span><span class="op">-</span>samp)<span class="op">*</span>(samp<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb156-6"><a href="control-flow.html#cb156-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-7"><a href="control-flow.html#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> attempt_one_samp():</span>
+<span id="cb156-8"><a href="control-flow.html#cb156-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;attempts to sample from target distribution, using uniform as a proposal&quot;&quot;&quot;</span></span>
+<span id="cb156-9"><a href="control-flow.html#cb156-9" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.uniform()</span>
+<span id="cb156-10"><a href="control-flow.html#cb156-10" aria-hidden="true" tabindex="-1"></a>    M <span class="op">=</span> <span class="dv">4</span><span class="op">/</span><span class="dv">27</span></span>
+<span id="cb156-11"><a href="control-flow.html#cb156-11" aria-hidden="true" tabindex="-1"></a>    bern_prob_param <span class="op">=</span> f(x)<span class="op">/</span>M</span>
+<span id="cb156-12"><a href="control-flow.html#cb156-12" aria-hidden="true" tabindex="-1"></a>    accept <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, bern_prob_param) <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb156-13"><a href="control-flow.html#cb156-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> accept:</span>
+<span id="cb156-14"><a href="control-flow.html#cb156-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb157-1"><a href="control-flow.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_from_target(num_times):</span>
+<span id="cb157-2"><a href="control-flow.html#cb157-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;sample num_times from the target distribution&quot;&quot;&quot;</span></span>
+<span id="cb157-3"><a href="control-flow.html#cb157-3" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> []</span>
+<span id="cb157-4"><a href="control-flow.html#cb157-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="bu">len</span>(samps) <span class="op">&lt;</span> num_times:</span>
+<span id="cb157-5"><a href="control-flow.html#cb157-5" aria-hidden="true" tabindex="-1"></a>        potential_samp <span class="op">=</span> attempt_one_samp()</span>
+<span id="cb157-6"><a href="control-flow.html#cb157-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> potential_samp <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb157-7"><a href="control-flow.html#cb157-7" aria-hidden="true" tabindex="-1"></a>            samps.append(potential_samp)</span>
+<span id="cb157-8"><a href="control-flow.html#cb157-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samps</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>we used a <code>while</code> loop instead of a <code>for</code> loop because we did not know how many iterations it would take to get <code>num_times</code> samples</li>
 <li>We are following the <a href="https://www.python.org/dev/peps/pep-0008/#other-recommendations">Python style guide</a> and using the <code>is not</code> keyword to check if something is <code>None</code></li>
 </ol>
 In chapter <a href="visualization.html#visualization">13</a>, we’ll show you the code that you can use to generate the plot below.
-<div class="figure"><span id="fig:unnamed-chunk-143"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-143-1.png" alt="Comparing Random Samples With Theory" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-167"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-167-1.png" alt="Comparing Random Samples With Theory" width="672" />
 <p class="caption">
 Figure 11.2: Comparing Random Samples With Theory
 </p>
@@ -595,9 +596,9 @@ Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Meth
 </div>
 <div class="footnotes">
 <hr />
-<ol start="13">
-<li id="fn13"><p>The posterior distribution is usually the object of interest in Bayesian statistics. According to Bayes’ Rule, the unnormalized posterior is usually the product of two “easy” functions. However, integrating the product is not always possible!<a href="control-flow.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p>This is the density of a <span class="math inline">\(\text{Beta}(3,2)\)</span> random variable, if you’re curious.<a href="control-flow.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<ol start="14">
+<li id="fn14"><p>The posterior distribution is usually the object of interest in Bayesian statistics. According to Bayes’ Rule, the unnormalized posterior is usually the product of two “easy” functions. However, integrating the product is not always possible!<a href="control-flow.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>This is the density of a <span class="math inline">\(\text{Beta}(3,2)\)</span> random variable, if you’re curious.<a href="control-flow.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -650,6 +651,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

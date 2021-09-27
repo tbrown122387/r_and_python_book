@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="categorical-data.html"/>
 <link rel="next" href="input-and-output.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -288,8 +288,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
 <li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
-<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-python"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Python</a></li>
-<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#output"><i class="fa fa-check"></i><b>9.4</b> Output</a></li>
+<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
 <ul>
@@ -492,9 +493,9 @@ div.csl-indent {
 <span id="cb112-4"><a href="data-frames.html#cb112-4" aria-hidden="true" tabindex="-1"></a>irisData[irisData<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SETOSA!&quot;</span></span>
 <span id="cb112-5"><a href="data-frames.html#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData,<span class="dv">3</span>)</span>
 <span id="cb112-6"><a href="data-frames.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      sepal.length sepal.width petal.length petal.width species columnOfOnes</span></span>
-<span id="cb112-7"><a href="data-frames.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1001     999.5105   -998.9789          1.4         0.2 SETOSA!            1</span></span>
-<span id="cb112-8"><a href="data-frames.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002     997.7824   -999.5532          1.4         0.2 SETOSA!            1</span></span>
-<span id="cb112-9"><a href="data-frames.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1003       4.7000   -998.8839          1.3         0.2 SETOSA!            1</span></span></code></pre></div>
+<span id="cb112-7"><a href="data-frames.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1001     998.1673   -999.6169          1.4         0.2 SETOSA!            1</span></span>
+<span id="cb112-8"><a href="data-frames.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002     999.3232   -998.7071          1.4         0.2 SETOSA!            1</span></span>
+<span id="cb112-9"><a href="data-frames.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1003       4.7000   -999.8658          1.3         0.2 SETOSA!            1</span></span></code></pre></div>
 </div>
 <div id="data-frames-in-python" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Data Frames in Python</h2>
@@ -610,16 +611,16 @@ div.csl-indent {
 <span id="cb118-6"><a href="data-frames.html#cb118-6" aria-hidden="true" tabindex="-1"></a>iris_data.loc[iris_data[<span class="st">&#39;species&#39;</span>] <span class="op">==</span> <span class="st">&quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] <span class="op">=</span> <span class="st">&quot;SETOSA!&quot;</span></span>
 <span id="cb118-7"><a href="data-frames.html#cb118-7" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
 <span id="cb118-8"><a href="data-frames.html#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.length  petal.width  species  col_ones</span></span>
-<span id="cb118-9"><a href="data-frames.html#cb118-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 149   1000.387126  -999.406631           1.4          0.2  SETOSA!       1.0</span></span>
-<span id="cb118-10"><a href="data-frames.html#cb118-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 148   1001.243569  -998.665932           1.4          0.2  SETOSA!       1.0</span></span>
-<span id="cb118-11"><a href="data-frames.html#cb118-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -998.717016           1.3          0.2  SETOSA!       1.0</span></span></code></pre></div>
+<span id="cb118-9"><a href="data-frames.html#cb118-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.245693  -999.243405           1.4          0.2  SETOSA!       1.0</span></span>
+<span id="cb118-10"><a href="data-frames.html#cb118-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    999.838250  -999.295396           1.4          0.2  SETOSA!       1.0</span></span>
+<span id="cb118-11"><a href="data-frames.html#cb118-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -999.572933           1.3          0.2  SETOSA!       1.0</span></span></code></pre></div>
 <p>You can also use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html"><code>.assign()</code> method</a> to create a new column. This method does not modify the data frame in place. It returns a new <code>DataFrame</code> with the additional column.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb119-1"><a href="data-frames.html#cb119-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.assign(new_col_name <span class="op">=</span> np.arange(n_rows))</span>
 <span id="cb119-2"><a href="data-frames.html#cb119-2" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
 <span id="cb119-3"><a href="data-frames.html#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.length  ...  species col_ones  new_col_name</span></span>
-<span id="cb119-4"><a href="data-frames.html#cb119-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 149   1000.387126  -999.406631           1.4  ...  SETOSA!      1.0             0</span></span>
-<span id="cb119-5"><a href="data-frames.html#cb119-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 148   1001.243569  -998.665932           1.4  ...  SETOSA!      1.0             1</span></span>
-<span id="cb119-6"><a href="data-frames.html#cb119-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -998.717016           1.3  ...  SETOSA!      1.0             2</span></span>
+<span id="cb119-4"><a href="data-frames.html#cb119-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.245693  -999.243405           1.4  ...  SETOSA!      1.0             0</span></span>
+<span id="cb119-5"><a href="data-frames.html#cb119-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    999.838250  -999.295396           1.4  ...  SETOSA!      1.0             1</span></span>
+<span id="cb119-6"><a href="data-frames.html#cb119-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -999.572933           1.3  ...  SETOSA!      1.0             2</span></span>
 <span id="cb119-7"><a href="data-frames.html#cb119-7" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
 <span id="cb119-8"><a href="data-frames.html#cb119-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [3 rows x 7 columns]</span></span></code></pre></div>
 <div class="rmd-caution">
@@ -687,6 +688,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

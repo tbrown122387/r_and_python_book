@@ -5,13 +5,13 @@
 
 ## General Input Considerations
 
-So far we have been creating small pieces of data within our scripts. This is primarily for pedagogical purposes. In real life, we can have 
+So far, this text has been favoring the creation of small pieces of data *within our scripts.* The avoidance of reading in data from an external file has been avoided primarily for pedagogical purposes. In general, one might have 
 
-- data read in from a data set saved on our machine's hard drive (e.g. `my_data.csv` or `log_file.txt` ),
+- data read in from a plain text file (e.g. `my_data.csv` or `log_file.txt` ),
 - data read in from a database (e.g. MySQL, PostgreSQL, etc.), or
-- data created in a script (either deterministic or random).
+- data created in a script (either deterministically or randomly).
 
-I focus mostly on the first category in this section. Here are my reasons for doing so:
+When discussing reading in data, this text mostly focuses on the first category. Here are the reasons for its doing so:
 
 1. text-files are more readily-available to students than databases, 
 2. teaching the second category requires teaching SQL, and that would introduce conceptual overlap, and
@@ -36,16 +36,18 @@ Instead, **focus on developing your ability to identify and diagnose data input 
 4. **Type choice and recognition of special characters are performed correctly.** Are letters stored as strings or as something else such as an R `factor`? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like $-9999$ to represent missing data--don't store that as a float or integer!
 
 
-I realize that this is no small task. To make matters worse:
+This is no small task. To make matters worse:
 
-- you can't (or shouldn't) edit the raw data to suit your needs, to make it easier to read in. You have to work with what you are given. If you were allowed to edit, say, a text file you downloaded onto your own machine, you shouldn't--it will lead to code that doesn't run anywhere else. If you abuse write privileges on your company's database, for example--that could be very dangerous. 
+- you can't (or shouldn't) edit the raw data to suit your needs, to make it easier to read in. You have to work with what you are given. If you were allowed to edit, say, a text file you downloaded onto your own machine, you shouldn't--it will lead to code that doesn't run anywhere else. Additionally, if you abuse write privileges on your company's database, for example--that could be very dangerous as well. 
 
 - Data sets are often quite large, so manually checking each element is often impossible. In this situation you will have to resign yourself to checking the top and bottom of a data set, or maybe anticipate a specific place where problems are likely to appear. 
 
 
 ## Reading in Text Files with R 
 
-You've seen examples of `read.csv()` used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is `read.table()`. Actually, if you look at the source code for `read.csv()` (type the name of the function without parentheses into the console and press the `<Enter>` key), you will see it calls `read.table()`. The primary difference between these functions is default arguments. **Mind the default arguments.** Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.
+You've seen examples of `read.csv()` used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is `read.table()`. 
+
+If you look at the source code for `read.csv()` (type the name of the function without parentheses into the console and press the `<Enter>` key), you will see it calls `read.table()`. The primary difference between these functions is default arguments. **Mind the default arguments.** Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.
 
 Consider the ["Challenger USA Space Shuttle O-Ring Data Set"](https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring) from [@uci_data]. The first few rows of the raw text file^[Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.] looks like this.
 
@@ -76,9 +78,11 @@ After digging into the documentation a bit further, you will notice that `""` wo
 d <- read.table("data/o-ring-erosion-only.data")
 str(d)
 ```
-This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. 
+This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. 
 
-In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified `widths=c(2,2,4,4,1))`, which includes spaces to the *right* of digits, then columns would have been recognized as `character`s. 
+You may choose to exploit this and use a specialized function that reads in data in a fixed width format (e.g. `read.fwf()`). The frustrating thing about this approach, though, is that you have to specify what those widths are. This can be quite tedious, particularly if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. 
+
+In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified `widths=c(2,2,4,4,1)`, which includes spaces to the *right* of digits, then columns would have been recognized as `character`s. 
 
 ```{r, collapse = TRUE}
 d <- read.fwf("data/o-ring-erosion-only.data", 
@@ -98,14 +102,13 @@ head(html_data, 2)
 
 A [wide variety of different file formats can be read in with Pandas.](https://pandas.pydata.org/pandas-docs/stable/reference/io.html) I will only mention a few functions here. 
 
-Recall R has `read.table()` and `read.csv()`, and that they are very similar. In Pandas, [`pd.read_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) and [`pd.read_table()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html) have a lot in common, too. Their primary difference is the default column separator. 
+Recall R has `read.table()` and `read.csv()`, and that they are very similar. In Pandas, [`pd.read_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) and [`pd.read_table()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html) have a lot in common, too. Their primary difference is the default column separator, as well. 
 
 Recall the O-Ring data from above. The columns are *not* separated by commas, so if we treat it as a comma-separated file, the resulting Pandas `DataFrame` is going to be missing all but one of its columns. 
 
 ```{python, collapse = TRUE}
 import pandas as pd
 d = pd.read_csv("data/o-ring-erosion-only.data")
-d.head(2)
 d.shape # one column and missing a row
 d.columns # column labels are data
 ```
@@ -124,36 +127,103 @@ pd.read_csv("data/o-ring-erosion-only.data",
             header=None, sep = "\s+").head(2) # 1 or more spaces: yes
 ```
 
-Reading in fixed width files can be done in a way that is nearly identical to the way we did it in R. If you choose to set `widths=[1,2,3,4,3]`, then the trailing whitespace will cause Pandas to recognize 
+Reading in fixed width files can be done in a way that is nearly identical to the way we did it in R. Here is an example. 
 
 ```{python, collapse = TRUE}
 d = pd.read_fwf("data/o-ring-erosion-only.data", 
-                widths = [1,2,3,4,3], header=None) # or try [1,2,3,4,3]
+                widths = [1,2,3,4,3], header=None) # or try [2,2,4,4,1]
 d.info()
 ```
 
+If you had chosen `widths=[2,2,4,4,1]`, instead, then the trailing whitespace will cause Pandas to recognize a `dtype` of `object`. The reason it is not recognized as a string is because strings can be of different length, and all string types specify a maximum length. If you want to enforce a maximum length, there may be some speed advantages. In the below example, we use [`d.astype()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.astype.html) to convert two columns' types to [`pd.StringDtype`](https://pandas.pydata.org/docs/reference/api/pandas.StringDtype.html#pandas.StringDtype).
+
+```{python, collapse = TRUE}
+d = pd.read_fwf("data/o-ring-erosion-only.data", 
+                widths = [2,2,4,4,1], header=None)
+list(d.dtypes)
+d = d.astype({2:'string', 3:'string'}) 
+list(d.dtypes)
+```
+
+You may also read in unstructured, nontabular data with Python. Use the built-in [`open()`](https://docs.python.org/3/library/functions.html#open) function to open up a file in read mode, and then use `f.readlines()` to return a `list` of strings. 
+
+```{python, collapse=TRUE}
+f = open("data/Google.html", "r")
+d = f.readlines()
+d[:2]
+print(type(d), type(d[0]))
+```
 
 
+## Saving Data in R
 
-<!-- This data set has columns whose widths are "fixed", too. It is in "fixed width format" because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators. -->
+In R, there are many options for storing data. I will mention two: writing data out to a plain text file, and saving a serialized object. 
 
-<!-- ```{r, collapse = TRUE} -->
-<!-- d <- read.fwf("data/o-ring-erosion-only.data", widths = c(1,1,2,3,2), sep = "") -->
-<!-- str(d) -->
-<!-- ``` -->
+If you want to write out tabular data to a text file, use `write.table()` or `write.csv()`. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a `matrix` or `data.frame`), and the second argument is the file path on your hard drive. 
 
-<!-- If you need to read in some text data that does not possess a tabular structure, then you may need `readLines()`. This function will read in all of the text, separate each line into an element of a `character` `vector`, and will not make any attempt to parse lines into columns. Further processing can be accomplished using the techniques from chapter \@(working-with-text-data). -->
+Here is an example of writing out `d` to a file called `oring_out.csv`. I choose to include column names, but not row names. I also use commas to separate columns.
 
-<!-- ```{r, collapse=TRUE} -->
-<!-- html_data <- readLines("data/Google.html", warn = FALSE) -->
-<!-- head(html_data, 2) -->
-<!-- ``` -->
+```{r, collapse = TRUE}
+write.table(d, file = "data/oring_out.csv", 
+            col.names = TRUE, row.names = FALSE, sep = ";")
+```
+
+The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows. 
+
+```{bash, echo=FALSE, comment = NA}
+head data/oring_out.csv -n3
+```
+
+Alternatively you may choose to store your data in a **serialized** form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that's usually more efficient. 
+
+For instance, let's save the object `d` in a file called `oring.rds`. 
+
+```{r, collapse = TRUE}
+saveRDS(d, file = "data/oring.rds")
+rm(d)
+exists("d")
+```
+
+After it is saved with `saveRDS()`, we are free to delete the variable with `rm()`, because it can be read back in later on. To do this, call `readRDS()`. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, `.rds` files are typically smaller--`oring.rds` is only 248 bytes, while `oring_out.csv` is 332 bytes.
 
 
-## Saving Output
+```{r, collapse = TRUE}
+d2 <- readRDS(file = "data/oring.rds")
+head(d2, 3)
+```
 
-After we have created something useful, we might be interested in storing our results. We can write out to a database, a text file, or we can save a digitized version of our work space.
+You can serialize multiple objects at once, too! Convention dictates that these files end with the `.RData` suffix. Save your entire global environment with `save()` or `save.image()`, and bring it back with `load()` or `attach()`. 
+
+```{r, collapse = TRUE}
+rm(list=ls()) # remove everything
+a <- 1
+b <- 2
+save.image(file = "data/my-current-workspace.RData")
+rm(list=ls()) 
+load("data/my-current-workspace.RData")
+ls() # print all objects in your workspace
+```
 
 
-TODO serialization
-TODO
+## Saving Data in Python
+
+You can write out tabular data with a variety of [`DataFrame` methods that are named `to_*()`.](https://pandas.pydata.org/pandas-docs/stable/reference/io.html#input-output). [`pd.DataFrame.to_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv) has a lot of common with `write.csv()` in R.  
+
+Below we write out `d` to a file called `oring_out2.csv`.
+
+```{python, collapse = TRUE}
+import pandas as pd
+d = pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\s+")
+d.to_csv("data/oring_out2.csv", header=True, index=False, sep = ",")
+```
+
+Here's how the first few rows of that file looks in a text editor.
+
+```{bash, echo=FALSE, comment = NA}
+head data/oring_out2.csv -n3
+```
+
+
+Serialization is possible in Python, just like it is in R. In Python, it is sometimes called *pickling* an object. 
+
+TODO compare size, pandas versus non pandas, pickle versus cpickle
