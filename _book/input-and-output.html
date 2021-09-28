@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -289,8 +289,16 @@ div.csl-indent {
 <li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
 <li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
 <li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
-<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a></li>
-<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-r"><i class="fa fa-check"></i><b>9.4.1</b> Writing Out Tabular Plain Text Data in R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-r"><i class="fa fa-check"></i><b>9.4.2</b> Serialization in R</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-python"><i class="fa fa-check"></i><b>9.5.1</b> Writing Out Tabular Plain Text Data in Python</a></li>
+<li class="chapter" data-level="9.5.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-python"><i class="fa fa-check"></i><b>9.5.2</b> Serialization in Python</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
 <ul>
@@ -439,8 +447,7 @@ div.csl-indent {
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>.</p>
 <p>If you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press the <code>&lt;Enter&gt;</code> key), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
 <p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first few rows of the raw text file<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> looks like this.</p>
-<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
-6 0 66  50  1
+<pre><code>6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3</code></pre>
 <p>It does not use commas as separators, and there is no header information, so <code>read.csv()</code> used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.</p>
@@ -555,17 +562,22 @@ div.csl-indent {
 </div>
 <div id="saving-data-in-r" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> Saving Data in R</h2>
+<p>Storing data is important for saving your progress. For example, sometimes running a script that performs data cleaning can take a very long time. Saving your progress might free you from the responsibility of running that script many times.</p>
 <p>In R, there are many options for storing data. I will mention two: writing data out to a plain text file, and saving a serialized object.</p>
+<div id="writing-out-tabular-plain-text-data-in-r" class="section level3" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Writing Out Tabular Plain Text Data in R</h3>
 <p>If you want to write out tabular data to a text file, use <code>write.table()</code> or <code>write.csv()</code>. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a <code>matrix</code> or <code>data.frame</code>), and the second argument is the file path on your hard drive.</p>
 <p>Here is an example of writing out <code>d</code> to a file called <code>oring_out.csv</code>. I choose to include column names, but not row names. I also use commas to separate columns.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="input-and-output.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring_out.csv&quot;</span>, </span>
 <span id="cb131-2"><a href="input-and-output.html#cb131-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span></code></pre></div>
 <p>The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.</p>
-<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
-&quot;V1&quot;;&quot;V2&quot;;&quot;V3&quot;;&quot;V4&quot;;&quot;V5&quot;
+<pre><code>&quot;V1&quot;;&quot;V2&quot;;&quot;V3&quot;;&quot;V4&quot;;&quot;V5&quot;
 6;0;66;50;1
 6;1;70;50;2</code></pre>
-<p>Alternatively you may choose to store your data in a <strong>serialized</strong> form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that’s usually more efficient.</p>
+</div>
+<div id="serialization-in-r" class="section level3" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Serialization in R</h3>
+<p>Alternatively you may choose to store your data in a <strong>serialized</strong> form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that’s usually more memory efficient.</p>
 <p>For instance, let’s save the object <code>d</code> in a file called <code>oring.rds</code>.</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="input-and-output.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring.rds&quot;</span>)</span>
 <span id="cb133-2"><a href="input-and-output.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d)</span>
@@ -588,21 +600,39 @@ div.csl-indent {
 <span id="cb135-7"><a href="input-and-output.html#cb135-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>() <span class="co"># print all objects in your workspace</span></span>
 <span id="cb135-8"><a href="input-and-output.html#cb135-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;a&quot; &quot;b&quot;</span></span></code></pre></div>
 </div>
+</div>
 <div id="saving-data-in-python" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> Saving Data in Python</h2>
-<p>You can write out tabular data with a variety of <a href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html#input-output"><code>DataFrame</code> methods that are named <code>to_*()</code>.</a>. <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv"><code>pd.DataFrame.to_csv()</code></a> has a lot of common with <code>write.csv()</code> in R.</p>
-<p>Below we write out <code>d</code> to a file called <code>oring_out2.csv</code>.</p>
+<div id="writing-out-tabular-plain-text-data-in-python" class="section level3" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Writing Out Tabular Plain Text Data in Python</h3>
+<p>You can write out tabular data with a variety of <a href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html#input-output"><code>DataFrame</code> methods that are named <code>to_*()</code>.</a>. <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv"><code>pd.DataFrame.to_csv()</code></a> has a lot of common with <code>write.csv()</code> in R. Below we write out <code>d</code> to a file called <code>oring_out2.csv</code>.</p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="input-and-output.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb136-2"><a href="input-and-output.html#cb136-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;\s+&quot;</span>)</span>
 <span id="cb136-3"><a href="input-and-output.html#cb136-3" aria-hidden="true" tabindex="-1"></a>d.to_csv(<span class="st">&quot;data/oring_out2.csv&quot;</span>, header<span class="op">=</span><span class="va">True</span>, index<span class="op">=</span><span class="va">False</span>, sep <span class="op">=</span> <span class="st">&quot;,&quot;</span>)</span></code></pre></div>
-<p>Here’s how the first few rows of that file looks in a text editor.</p>
-<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
-0,1,2,3,4
+<p>Here is how the first few rows of that file looks in a text editor.</p>
+<pre><code>0,1,2,3,4
 6,0,66,50,1
 6,1,70,50,2</code></pre>
-<p>Serialization is possible in Python, just like it is in R. In Python, it is sometimes called <em>pickling</em> an object.</p>
-<p>TODO compare size, pandas versus non pandas, pickle versus cpickle</p>
+</div>
+<div id="serialization-in-python" class="section level3" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> Serialization in Python</h3>
+<p>Serialization functionality is readily available in Python, just like it is in R. In Python, the <a href="https://docs.python.org/3/library/pickle.html"><code>pickle</code></a> and <code>cPickle</code> libraries are probably the most commonly used. Serializing objects with these libraries is known as <em>pickling</em> an object.</p>
+<p>Pandas has a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_pickle.html"><code>.to_pickle()</code></a> wrapper method attached to every <code>DataFrame</code>. Once the pickled object is saved, the file can be read back into Python with <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_pickle.html#pandas.read_pickle"><code>pd.read_pickle()</code></a>. These functions are extremely convenient, because they call all the required <code>pickle</code> code and hide a decent amount of complexity.</p>
+<p>Here is an example of writing out <code>d</code> and then reading the pickled object back in. In Python 3, the file suffix for pickled objects is usually <code>.pickle</code>, but there are many other choices.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb138-1"><a href="input-and-output.html#cb138-1" aria-hidden="true" tabindex="-1"></a>d.to_pickle(<span class="st">&quot;data/oring.pickle&quot;</span>)</span>
+<span id="cb138-2"><a href="input-and-output.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> d</span>
+<span id="cb138-3"><a href="input-and-output.html#cb138-3" aria-hidden="true" tabindex="-1"></a>d_is_back <span class="op">=</span> pd.read_pickle(<span class="st">&quot;data/oring.pickle&quot;</span>)</span>
+<span id="cb138-4"><a href="input-and-output.html#cb138-4" aria-hidden="true" tabindex="-1"></a>d_is_back.head(<span class="dv">2</span>)</span>
+<span id="cb138-5"><a href="input-and-output.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="co">##    0  1   2   3  4</span></span>
+<span id="cb138-6"><a href="input-and-output.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6  0  66  50  1</span></span>
+<span id="cb138-7"><a href="input-and-output.html#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6  1  70  50  2</span></span></code></pre></div>
+<div class="rmd-caution">
+<p>Unfortunately, <code>oring.pickle</code> is much larger (1,676 bytes) than the original text file <code>o-ring-erosion-only.data</code> (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like <code>d_is_back.to_pickle("data/oring.zip")</code> it will become smaller.</p>
+</div>
+<p>In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library.</p>
+<p>Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>, improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research.</p>
 
+</div>
 </div>
 </div>
 <h3>References</h3>
@@ -615,6 +645,7 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
 <hr />
 <ol start="10">
 <li id="fn10"><p>Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.<a href="input-and-output.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>The <a href="https://docs.python.org/2/library/pickle.html">documentation for <code>pickle</code></a> mentions that the library is “not secure against erroneous or maliciously constructed data” and recommends that you “[n]ever unpickle data received from an untrusted or unauthenticated source.”<a href="input-and-output.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -667,10 +698,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }
