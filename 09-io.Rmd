@@ -157,7 +157,11 @@ print(type(d), type(d[0]))
 
 ## Saving Data in R
 
+Storing data is important for saving your progress. For example, sometimes running a script that performs data cleaning can take a very long time. Saving your progress might free you from the responsibility of running that script many times. 
+
 In R, there are many options for storing data. I will mention two: writing data out to a plain text file, and saving a serialized object. 
+
+### Writing Out Tabular Plain Text Data in R
 
 If you want to write out tabular data to a text file, use `write.table()` or `write.csv()`. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a `matrix` or `data.frame`), and the second argument is the file path on your hard drive. 
 
@@ -174,7 +178,9 @@ The above will not print anything to the R console, but we can use a text editor
 head data/oring_out.csv -n3
 ```
 
-Alternatively you may choose to store your data in a **serialized** form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that's usually more efficient. 
+### Serialization in R
+
+Alternatively you may choose to store your data in a **serialized** form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that's usually more memory efficient. 
 
 For instance, let's save the object `d` in a file called `oring.rds`. 
 
@@ -207,9 +213,10 @@ ls() # print all objects in your workspace
 
 ## Saving Data in Python
 
-You can write out tabular data with a variety of [`DataFrame` methods that are named `to_*()`.](https://pandas.pydata.org/pandas-docs/stable/reference/io.html#input-output). [`pd.DataFrame.to_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv) has a lot of common with `write.csv()` in R.  
 
-Below we write out `d` to a file called `oring_out2.csv`.
+### Writing Out Tabular Plain Text Data in Python
+
+You can write out tabular data with a variety of [`DataFrame` methods that are named `to_*()`.](https://pandas.pydata.org/pandas-docs/stable/reference/io.html#input-output). [`pd.DataFrame.to_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv) has a lot of common with `write.csv()` in R. Below we write out `d` to a file called `oring_out2.csv`.
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -217,13 +224,31 @@ d = pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\s+")
 d.to_csv("data/oring_out2.csv", header=True, index=False, sep = ",")
 ```
 
-Here's how the first few rows of that file looks in a text editor.
+Here is how the first few rows of that file looks in a text editor.
 
 ```{bash, echo=FALSE, comment = NA}
 head data/oring_out2.csv -n3
 ```
 
+### Serialization in Python
 
-Serialization is possible in Python, just like it is in R. In Python, it is sometimes called *pickling* an object. 
+Serialization functionality is readily available in Python, just like it is in R. In Python, the [`pickle`](https://docs.python.org/3/library/pickle.html) and `cPickle` libraries are probably the most commonly used. Serializing objects with these libraries is known as *pickling* an object. 
 
-TODO compare size, pandas versus non pandas, pickle versus cpickle
+Pandas has a [`.to_pickle()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_pickle.html) wrapper method attached to every `DataFrame`. Once the pickled object is saved, the file can be read back into Python with [`pd.read_pickle()`](https://pandas.pydata.org/docs/reference/api/pandas.read_pickle.html#pandas.read_pickle). These functions are extremely convenient, because they call all the required `pickle` code and hide a decent amount of complexity. 
+
+Here is an example of writing out `d` and then reading the pickled object back in. In Python 3, the file suffix for pickled objects is usually `.pickle`, but there are many other choices. 
+
+```{python, collapse = TRUE}
+d.to_pickle("data/oring.pickle")
+del d
+d_is_back = pd.read_pickle("data/oring.pickle")
+d_is_back.head(2)
+```
+
+::: {.rmd-caution}
+Unfortunately, `oring.pickle` is much larger (1,676 bytes) than the original text file `o-ring-erosion-only.data` (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like `d_is_back.to_pickle("data/oring.zip")` it will become smaller. 
+::: 
+
+In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library. 
+
+Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security^[The [documentation for `pickle`](https://docs.python.org/2/library/pickle.html) mentions that the library is "not secure against erroneous or maliciously constructed data" and recommends that you "[n]ever unpickle data received from an untrusted or unauthenticated source."], improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research. 

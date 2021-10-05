@@ -762,8 +762,8 @@ How do we create one of these? There are many ways. One common way is to read in
 \FunctionTok{c}\NormalTok{(}\StringTok{"5/2/2021"}\NormalTok{, }\StringTok{"5/3/2021"}\NormalTok{, }\StringTok{"5/4/2021"}\NormalTok{) }\CommentTok{\# combine elements without relying on a pattern}
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)                             }\CommentTok{\# generate Gaussian random variables}
-\DocumentationTok{\#\#  [1]  0.76201099 {-}0.25613370  0.04902923 {-}0.72442548  0.52838621  0.23930254 {-}0.99305508  0.73942551}
-\DocumentationTok{\#\#  [9]  1.50493636 {-}0.26520080}
+\DocumentationTok{\#\#  [1]  1.4333914  1.0044585 {-}0.4297633  3.4182513 {-}0.6269494  0.2351175 {-}0.1505099  1.1805252  0.2166032}
+\DocumentationTok{\#\# [10]  0.5184595}
 \end{Highlighting}
 \end{Shaded}
 
@@ -790,7 +790,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([ 0.22017332,  0.38051099, {-}0.98205728])}
+\CommentTok{\#\# array([ 0.1186722 ,  0.88305667, {-}0.19952233])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2554,7 +2554,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140107082409312 140107082409344}
+\CommentTok{\#\# 139728593298784 139728593298816}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2856,7 +2856,7 @@ Under appropriate regularity conditions for \(f\), after many iterations of the 
 \item
 \end{enumerate}
 
-Write a function called \texttt{smw\_inverse(A,U,C,V)} that returns the inverse of a matrix using the \textbf{Sherman-Morrison-Woodbury formula.} Have it take the arguments \(A\), \(U\), \(C\), and \(V\) in that order and as Numpy \texttt{ndarray}s. Assume that \texttt{A} is a diagonal matrix.
+Write a function called \texttt{smw\_inverse(A,U,C,V)} that returns the inverse of a matrix using the \textbf{Sherman-Morrison-Woodbury formula} \citep{woodbury}. Have it take the arguments \(A\), \(U\), \(C\), and \(V\) in that order and as Numpy \texttt{ndarray}s. Assume that \texttt{A} is a diagonal matrix.
 
 \[
 (A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}V A^{-1}
@@ -2967,7 +2967,7 @@ Here is an example of (1). We can take non-categorical data, and \texttt{cut()} 
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\#  [1] (0, Inf] ({-}Inf,0] (0, Inf] (0, Inf] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf] (0, Inf]}
+\DocumentationTok{\#\#  [1] ({-}Inf,0] ({-}Inf,0] (0, Inf] (0, Inf] (0, Inf] (0, Inf] ({-}Inf,0] ({-}Inf,0] (0, Inf] ({-}Inf,0]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -3329,9 +3329,9 @@ Code that modifies data usually looks quite similar to code extracting data. You
 \NormalTok{irisData[irisData}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{, }\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"SETOSA!"}
 \FunctionTok{head}\NormalTok{(irisData,}\DecValTok{3}\NormalTok{)}
 \DocumentationTok{\#\#      sepal.length sepal.width petal.length petal.width species columnOfOnes}
-\DocumentationTok{\#\# 1001     999.8168   {-}998.2064          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1002     999.3307  {-}1000.5718          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1003       4.7000   {-}999.0314          1.3         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1001     997.6813   {-}997.8679          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1002    1000.1210   {-}999.0997          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1003       4.7000   {-}998.5682          1.3         0.2 SETOSA!            1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3492,9 +3492,9 @@ Modifying data inside a data frame looks quite similar to extracting data. You'l
 \NormalTok{iris\_data.loc[iris\_data[}\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{, }\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OperatorTok{=} \StringTok{"SETOSA!"}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.length  sepal.width  petal.length  petal.width  species  col\_ones}
-\CommentTok{\#\# 149    998.251302  {-}997.811961           1.4          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 148    999.191612  {-}998.623510           1.4          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 147      4.700000 {-}1000.003527           1.3          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 149    998.862569  {-}997.382925           1.4          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 148    999.346863  {-}998.884393           1.4          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 147      4.700000  {-}999.878188           1.3          0.2  SETOSA!       1.0}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3505,9 +3505,9 @@ You can also use the \href{https://pandas.pydata.org/pandas-docs/stable/referenc
 \NormalTok{iris\_data }\OperatorTok{=}\NormalTok{ iris\_data.assign(new\_col\_name }\OperatorTok{=}\NormalTok{ np.arange(n\_rows))}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.length  sepal.width  petal.length  ...  species col\_ones  new\_col\_name}
-\CommentTok{\#\# 149    998.251302  {-}997.811961           1.4  ...  SETOSA!      1.0             0}
-\CommentTok{\#\# 148    999.191612  {-}998.623510           1.4  ...  SETOSA!      1.0             1}
-\CommentTok{\#\# 147      4.700000 {-}1000.003527           1.3  ...  SETOSA!      1.0             2}
+\CommentTok{\#\# 149    998.862569  {-}997.382925           1.4  ...  SETOSA!      1.0             0}
+\CommentTok{\#\# 148    999.346863  {-}998.884393           1.4  ...  SETOSA!      1.0             1}
+\CommentTok{\#\# 147      4.700000  {-}999.878188           1.3  ...  SETOSA!      1.0             2}
 \CommentTok{\#\# }
 \CommentTok{\#\# [3 rows x 7 columns]}
 \end{Highlighting}
@@ -3524,19 +3524,19 @@ Above we were assigning Numpy arrays to columns of a \texttt{DataFrame}. Be care
 \hypertarget{general-input-considerations}{%
 \section{General Input Considerations}\label{general-input-considerations}}
 
-So far we have been creating small pieces of data within our scripts. This is primarily for pedagogical purposes. In real life, we can have
+So far, this text has been favoring the creation of small pieces of data \emph{within our scripts.} The avoidance of reading in data from an external file has been avoided primarily for pedagogical purposes. In general, one might have
 
 \begin{itemize}
 \tightlist
 \item
-  data read in from a data set saved on our machine's hard drive (e.g.~\texttt{my\_data.csv} or \texttt{log\_file.txt} ),
+  data read in from a plain text file (e.g.~\texttt{my\_data.csv} or \texttt{log\_file.txt} ),
 \item
   data read in from a database (e.g.~MySQL, PostgreSQL, etc.), or
 \item
-  data created in a script (either deterministic or random).
+  data created in a script (either deterministically or randomly).
 \end{itemize}
 
-I focus mostly on the first category in this section. Here are my reasons for doing so:
+When discussing reading in data, this text mostly focuses on the first category. Here are the reasons for its doing so:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3544,12 +3544,12 @@ I focus mostly on the first category in this section. Here are my reasons for do
 \item
   text-files are more readily-available to students than databases,
 \item
-  teaching the second category requires teaching SQL, and that would introduce conceptual overlap,
+  teaching the second category requires teaching SQL, and that would introduce conceptual overlap, and
 \item
   the third category is programmatically self-explanatory.
 \end{enumerate}
 
-The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in \emph{simulation studies.} Authors writing statistical papers need to demonstrate that their techniques work on ``nice'' data: data simulated from a known data-generating process. In a simulation study, unlike in the ``real-world,'' you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.
+The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in \textbf{simulation studies.} Authors writing statistical papers need to demonstrate that their techniques work on ``nice'' data: data simulated from a \emph{known} data-generating process. In a simulation study, unlike in the ``real-world,'' you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.
 
 Can your code/technique/algorithm, at the very least, obtain parameter estimates that are ``in-line'' with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g.~\texttt{rnorm()} in R or \texttt{np.random.choice()} in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility.
 
@@ -3557,26 +3557,26 @@ Also, \emph{benchmark data sets} are often readily available through specialized
 
 Even though this chapter is written to teach you how to read in files into R and Python, you should not expect that you will know how to read in \emph{all} data sets after reading this section. For both R and Python, there are an enormous amount of functions, different functions have different return types, different functions are suited for different file types, many functions are spread across a plethora of third party libraries, and many of these functions have an enormous amount of arguments. You will probably not be able to memorize everything. In my very humble opinion, I doubt you should want to.
 
-Instead, \textbf{focus on developing your ability to identify and diagnose data input problems.} Reading in a data set correctly is often a process of trial-and-error. After attempting to read in a data set, always check the following items. Many of these points were previously mentioned in section @(data-frames-in-r).
+Instead, \textbf{focus on developing your ability to identify and diagnose data input problems.} Reading in a data set correctly is often a process of trial-and-error. After attempting to read in a data set, always check the following items. Many of these points were previously mentioned in section @(data-frames-in-r). Some apply to reading in text data more than reading in structured data from a database, and vice versa.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \textbf{The correct column \emph{separator} was used, or the correct ``fixed-width format'' was expected.} If mistakes are made, columns are going to be combined in weird ways, and often the wrong types are going to be used for pieces of data (e.g.~\texttt{"2,3"} instead of \texttt{2} and \texttt{3}.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it's unclear whether people's names in the ``last, first'' format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.
+  Check that \textbf{the correct column \emph{separator} was used, or the correct ``fixed-width format'' was expected.} If mistakes are made, data frame columns are going to be combined or split apart in weird ways, and often the wrong types are going to be used for pieces of data (e.g.~\texttt{"2,3"} instead of \texttt{2} and \texttt{3}.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it's unclear whether people's names in the ``last, first'' format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.
 \item
-  \textbf{The column names were parsed correctly.} Column names should not be stored as data in R/Python. Functions should not expect column names when they don't exist in the actual file.
+  Check that \textbf{the column names were parsed and stored correctly.} Column names should not be stored as data in R/Python. Functions that read in data should not expect column names when they don't exist in the actual file.
 \item
-  \textbf{Empty space and metadata was ignored correctly.} Empty space between column names and data shouldn't be stored. Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it's being read in. This can occur at the beginning of the file, and even at the end of the file.
+  Check that \textbf{empty space and metadata was ignored correctly.} Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it's being read in. Empty space between column names and data shouldn't be stored. This can occur at the beginning of the file, and even at the end of the file.
 \item
-  \textbf{Type choice is performed correctly.} Are letters stored as strings or as something else such as an R \texttt{factor}? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like \(-9999\) to represent missing data--don't store that as a float or integer!
+  \textbf{Type choice and recognition of special characters are performed correctly.} Are letters stored as strings or as something else such as an R \texttt{factor}? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like \(-9999\) to represent missing data--don't store that as a float or integer!
 \end{enumerate}
 
-I realize that this is no small task. To make matters worse:
+This is no small task. To make matters worse:
 
 \begin{itemize}
 \item
-  you can't edit the raw data to suit your needs, to make it easier to read in. You have to work with what you're given. If you were allowed to edit, say, a text file you downloaded onto your own machine, you shouldn't--it will lead to code that doesn't run anywhere else. If you abuse write privileges on your company's database, say, well then that's definitely going to be catastrophic.
+  you can't (or shouldn't) edit the raw data to suit your needs, to make it easier to read in. You have to work with what you are given. If you were allowed to edit, say, a text file you downloaded onto your own machine, you shouldn't--it will lead to code that doesn't run anywhere else. Additionally, if you abuse write privileges on your company's database, for example--that could be very dangerous as well.
 \item
   Data sets are often quite large, so manually checking each element is often impossible. In this situation you will have to resign yourself to checking the top and bottom of a data set, or maybe anticipate a specific place where problems are likely to appear.
 \end{itemize}
@@ -3584,21 +3584,16 @@ I realize that this is no small task. To make matters worse:
 \hypertarget{reading-in-text-files-with-r}{%
 \section{Reading in Text Files with R}\label{reading-in-text-files-with-r}}
 
-You've seen examples of \texttt{read.csv()} used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is \texttt{read.table()}. Actually, if you look at the source code for \texttt{read.csv()} (type the name of the function without parentheses into the console and press ), you will see it calls \texttt{read.table()}. The primary difference between these functions is default arguments. \textbf{Mind the default arguments.} Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.
+You've seen examples of \texttt{read.csv()} used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is \texttt{read.table()}.
 
-Consider the \href{https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring}{``Challenger USA Space Shuttle O-Ring Data Set''} from \citep{uci_data}. The first ten rows looks like this.
+If you look at the source code for \texttt{read.csv()} (type the name of the function without parentheses into the console and press the \texttt{\textless{}Enter\textgreater{}} key), you will see it calls \texttt{read.table()}. The primary difference between these functions is default arguments. \textbf{Mind the default arguments.} Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.
+
+Consider the \href{https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring}{``Challenger USA Space Shuttle O-Ring Data Set''} from \citep{uci_data}. The first few rows of the raw text file\footnote{Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.} looks like this.
 
 \begin{verbatim}
 6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
-6 0 68  50  4
-6 0 67  50  5
-6 0 72  50  6
-6 0 73 100  7
-6 0 70 100  8
-6 1 57 200  9
-6 1 63 200 10
 \end{verbatim}
 
 It does not use commas as separators, and there is no header information, so \texttt{read.csv()} used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.
@@ -3606,15 +3601,7 @@ It does not use commas as separators, and there is no header information, so \te
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{)}
-\FunctionTok{head}\NormalTok{(d)}
-\DocumentationTok{\#\#   X6.0.66..50..1}
-\DocumentationTok{\#\# 1  6 1 70  50  2}
-\DocumentationTok{\#\# 2  6 0 69  50  3}
-\DocumentationTok{\#\# 3  6 0 68  50  4}
-\DocumentationTok{\#\# 4  6 0 67  50  5}
-\DocumentationTok{\#\# 5  6 0 72  50  6}
-\DocumentationTok{\#\# 6  6 0 73 100  7}
-\FunctionTok{dim}\NormalTok{(d)}
+\FunctionTok{dim}\NormalTok{(d) }\CommentTok{\# one row short, only 1 col}
 \DocumentationTok{\#\# [1] 22  1}
 \FunctionTok{typeof}\NormalTok{(d[,}\DecValTok{1}\NormalTok{])}
 \DocumentationTok{\#\# [1] "character"}
@@ -3625,17 +3612,8 @@ Specifying \texttt{header=FALSE} fixes the column name issue, but \texttt{sep\ =
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{sep =} \StringTok{" "}\NormalTok{)}
-\FunctionTok{head}\NormalTok{(d)}
-\DocumentationTok{\#\#   V1 V2 V3 V4 V5 V6 V7}
-\DocumentationTok{\#\# 1  6  0 66 NA 50 NA  1}
-\DocumentationTok{\#\# 2  6  1 70 NA 50 NA  2}
-\DocumentationTok{\#\# 3  6  0 69 NA 50 NA  3}
-\DocumentationTok{\#\# 4  6  0 68 NA 50 NA  4}
-\DocumentationTok{\#\# 5  6  0 67 NA 50 NA  5}
-\DocumentationTok{\#\# 6  6  0 72 NA 50 NA  6}
-\FunctionTok{dim}\NormalTok{(d)}
-\DocumentationTok{\#\# [1] 23  7}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+              \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{sep =} \StringTok{" "}\NormalTok{)}
 \FunctionTok{str}\NormalTok{(d)}
 \DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    23 obs. of  7 variables:}
 \DocumentationTok{\#\#  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...}
@@ -3648,21 +3626,13 @@ Specifying \texttt{header=FALSE} fixes the column name issue, but \texttt{sep\ =
 \end{Highlighting}
 \end{Shaded}
 
-One space is strictly one space. Some rows have two, though. After digging into the documentation a bit further, you will notice that \texttt{""} works for ``one or more spaces, tabs, newlines or carriage returns.'' This is why \texttt{read.table()}, with its default arguments, works well.
+One space is strictly one space. Some rows have two, though. This causes there to be two too many columns filled with \texttt{NA}s.
+
+After digging into the documentation a bit further, you will notice that \texttt{""} works for ``one or more spaces, tabs, newlines or carriage returns.'' This is why \texttt{read.table()}, with its default arguments, works well.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{)}
-\FunctionTok{head}\NormalTok{(d)}
-\DocumentationTok{\#\#   V1 V2 V3 V4 V5}
-\DocumentationTok{\#\# 1  6  0 66 50  1}
-\DocumentationTok{\#\# 2  6  1 70 50  2}
-\DocumentationTok{\#\# 3  6  0 69 50  3}
-\DocumentationTok{\#\# 4  6  0 68 50  4}
-\DocumentationTok{\#\# 5  6  0 67 50  5}
-\DocumentationTok{\#\# 6  6  0 72 50  6}
-\FunctionTok{dim}\NormalTok{(d)}
-\DocumentationTok{\#\# [1] 23  5}
 \FunctionTok{str}\NormalTok{(d)}
 \DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    23 obs. of  5 variables:}
 \DocumentationTok{\#\#  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...}
@@ -3673,29 +3643,256 @@ One space is strictly one space. Some rows have two, though. After digging into 
 \end{Highlighting}
 \end{Shaded}
 
-This data set has columns whose widths are ``fixed'', too. It is in ``fixed width format'' because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters. The annoying thing about this method, though, is you have to specify what those widths are. This can be quite tedious if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.
+This data set has columns whose widths are ``fixed'', too. It is in ``fixed width format'' because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters.
+
+You may choose to exploit this and use a specialized function that reads in data in a fixed width format (e.g.~\texttt{read.fwf()}). The frustrating thing about this approach, though, is that you have to specify what those widths are. This can be quite tedious, particularly if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.
+
+In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified \texttt{widths=c(2,2,4,4,1)}, which includes spaces to the \emph{right} of digits, then columns would have been recognized as \texttt{character}s.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{read.fwf}\NormalTok{(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }\AttributeTok{widths =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{read.fwf}\NormalTok{(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+              \AttributeTok{widths =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{)) }\CommentTok{\# or try c(2,2,4,4,1)}
 \FunctionTok{str}\NormalTok{(d)}
-\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    23 obs. of  4 variables:}
+\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    23 obs. of  5 variables:}
 \DocumentationTok{\#\#  $ V1: int  6 6 6 6 6 6 6 6 6 6 ...}
 \DocumentationTok{\#\#  $ V2: int  0 1 0 0 0 0 0 0 1 1 ...}
 \DocumentationTok{\#\#  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...}
-\DocumentationTok{\#\#  $ V4: int  5 5 5 5 5 5 10 10 20 20 ...}
+\DocumentationTok{\#\#  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...}
+\DocumentationTok{\#\#  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{reading-in-text-files-with-python}{%
-\section{Reading in Text Files with Python}\label{reading-in-text-files-with-python}}
+If you need to read in some text data that does not possess a tabular structure, then you may need \texttt{readLines()}. This function will read in all of the text, separate each line into an element of a \texttt{character} \texttt{vector}, and will not make any attempt to parse lines into columns. Further processing can be accomplished using the techniques from chapter @(working-with-text-data).
 
-TODO
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{html\_data }\OtherTok{\textless{}{-}} \FunctionTok{readLines}\NormalTok{(}\StringTok{"data/Google.html"}\NormalTok{, }\AttributeTok{warn =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(html\_data, }\DecValTok{2}\NormalTok{)}
+\DocumentationTok{\#\# [1] "\textless{}!DOCTYPE html\textgreater{}"                                                               }
+\DocumentationTok{\#\# [2] "\textless{}html itemscope=\textbackslash{}"\textbackslash{}" itemtype=\textbackslash{}"http://schema.org/WebPage\textbackslash{}" lang=\textbackslash{}"en\textbackslash{}"\textgreater{}\textless{}head\textgreater{}"}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{output}{%
-\section{Output}\label{output}}
+\hypertarget{reading-in-text-files-with-pandas}{%
+\section{Reading in Text Files with Pandas}\label{reading-in-text-files-with-pandas}}
 
-After we have created something useful, we might be interested in storing our results. We can write out to a database, a text file, or we can save a digitized version of our work space.
+A \href{https://pandas.pydata.org/pandas-docs/stable/reference/io.html}{wide variety of different file formats can be read in with Pandas.} I will only mention a few functions here.
+
+Recall R has \texttt{read.table()} and \texttt{read.csv()}, and that they are very similar. In Pandas, \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html}{\texttt{pd.read\_csv()}} and \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html}{\texttt{pd.read\_table()}} have a lot in common, too. Their primary difference is the default column separator, as well.
+
+Recall the O-Ring data from above. The columns are \emph{not} separated by commas, so if we treat it as a comma-separated file, the resulting Pandas \texttt{DataFrame} is going to be missing all but one of its columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{)}
+\NormalTok{d.shape }\CommentTok{\# one column and missing a row}
+\CommentTok{\#\# (22, 1)}
+\NormalTok{d.columns }\CommentTok{\# column labels are data}
+\CommentTok{\#\# Index([\textquotesingle{}6 0 66  50  1\textquotesingle{}], dtype=\textquotesingle{}object\textquotesingle{})}
+\end{Highlighting}
+\end{Shaded}
+
+By default, \texttt{pd.read\_csv()} is expecting column labels, which is also a problem. Unlike R, though, the \texttt{header=} argument is not expected to be a Boolean. You will need to provide a \texttt{None}, instead. The separator needs to be just right, too.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+\NormalTok{            header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{" "}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 1 space: no}
+\CommentTok{\#\#    0  1   2   3     4   5    6}
+\CommentTok{\#\# 0  6  0  66 NaN  50.0 NaN  1.0}
+\CommentTok{\#\# 1  6  1  70 NaN  50.0 NaN  2.0}
+\NormalTok{pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+\NormalTok{            header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# tabs: no}
+\CommentTok{\#\#                0}
+\CommentTok{\#\# 0  6 0 66  50  1}
+\CommentTok{\#\# 1  6 1 70  50  2}
+\NormalTok{pd.read\_table(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+\NormalTok{              header}\OperatorTok{=}\VariableTok{None}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# default sep is tabs, so no}
+\CommentTok{\#\#                0}
+\CommentTok{\#\# 0  6 0 66  50  1}
+\CommentTok{\#\# 1  6 1 70  50  2}
+\NormalTok{pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+\NormalTok{            header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"\textbackslash{}s+"}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 1 or more spaces: yes}
+\CommentTok{\#\#    0  1   2   3  4}
+\CommentTok{\#\# 0  6  0  66  50  1}
+\CommentTok{\#\# 1  6  1  70  50  2}
+\end{Highlighting}
+\end{Shaded}
+
+Reading in fixed width files can be done in a way that is nearly identical to the way we did it in R. Here is an example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_fwf(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+\NormalTok{                widths }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{], header}\OperatorTok{=}\VariableTok{None}\NormalTok{) }\CommentTok{\# or try [2,2,4,4,1]}
+\NormalTok{d.info()}
+\CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.frame.DataFrame\textquotesingle{}\textgreater{}}
+\CommentTok{\#\# RangeIndex: 23 entries, 0 to 22}
+\CommentTok{\#\# Data columns (total 5 columns):}
+\CommentTok{\#\#  \#   Column  Non{-}Null Count  Dtype}
+\CommentTok{\#\# {-}{-}{-}  {-}{-}{-}{-}{-}{-}  {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}  {-}{-}{-}{-}{-}}
+\CommentTok{\#\#  0   0       23 non{-}null     int64}
+\CommentTok{\#\#  1   1       23 non{-}null     int64}
+\CommentTok{\#\#  2   2       23 non{-}null     int64}
+\CommentTok{\#\#  3   3       23 non{-}null     int64}
+\CommentTok{\#\#  4   4       23 non{-}null     int64}
+\CommentTok{\#\# dtypes: int64(5)}
+\CommentTok{\#\# memory usage: 1.0 KB}
+\end{Highlighting}
+\end{Shaded}
+
+If you had chosen \texttt{widths={[}2,2,4,4,1{]}}, instead, then the trailing whitespace will cause Pandas to recognize a \texttt{dtype} of \texttt{object}. The reason it is not recognized as a string is because strings can be of different length, and all string types specify a maximum length. If you want to enforce a maximum length, there may be some speed advantages. In the below example, we use \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.astype.html}{\texttt{d.astype()}} to convert two columns' types to \href{https://pandas.pydata.org/docs/reference/api/pandas.StringDtype.html\#pandas.StringDtype}{\texttt{pd.StringDtype}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_fwf(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
+\NormalTok{                widths }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{], header}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\BuiltInTok{list}\NormalTok{(d.dtypes)}
+\CommentTok{\#\# [dtype(\textquotesingle{}int64\textquotesingle{}), dtype(\textquotesingle{}int64\textquotesingle{}), dtype(\textquotesingle{}O\textquotesingle{}), dtype(\textquotesingle{}O\textquotesingle{}), dtype(\textquotesingle{}int64\textquotesingle{})]}
+\NormalTok{d }\OperatorTok{=}\NormalTok{ d.astype(\{}\DecValTok{2}\NormalTok{:}\StringTok{\textquotesingle{}string\textquotesingle{}}\NormalTok{, }\DecValTok{3}\NormalTok{:}\StringTok{\textquotesingle{}string\textquotesingle{}}\NormalTok{\}) }
+\BuiltInTok{list}\NormalTok{(d.dtypes)}
+\CommentTok{\#\# [dtype(\textquotesingle{}int64\textquotesingle{}), dtype(\textquotesingle{}int64\textquotesingle{}), StringDtype, StringDtype, dtype(\textquotesingle{}int64\textquotesingle{})]}
+\end{Highlighting}
+\end{Shaded}
+
+You may also read in unstructured, nontabular data with Python. Use the built-in \href{https://docs.python.org/3/library/functions.html\#open}{\texttt{open()}} function to open up a file in read mode, and then use \texttt{f.readlines()} to return a \texttt{list} of strings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"data/Google.html"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\NormalTok{d }\OperatorTok{=}\NormalTok{ f.readlines()}
+\NormalTok{d[:}\DecValTok{2}\NormalTok{]}
+\CommentTok{\#\# [\textquotesingle{}\textless{}!DOCTYPE html\textgreater{}\textbackslash{}n\textquotesingle{}, \textquotesingle{}\textless{}html itemscope="" itemtype="http://schema.org/WebPage" lang="en"\textgreater{}\textless{}head\textgreater{}\textbackslash{}n\textquotesingle{}]}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{type}\NormalTok{(d), }\BuiltInTok{type}\NormalTok{(d[}\DecValTok{0}\NormalTok{]))}
+\CommentTok{\#\# \textless{}class \textquotesingle{}list\textquotesingle{}\textgreater{} \textless{}class \textquotesingle{}str\textquotesingle{}\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{saving-data-in-r}{%
+\section{Saving Data in R}\label{saving-data-in-r}}
+
+Storing data is important for saving your progress. For example, sometimes running a script that performs data cleaning can take a very long time. Saving your progress might free you from the responsibility of running that script many times.
+
+In R, there are many options for storing data. I will mention two: writing data out to a plain text file, and saving a serialized object.
+
+\hypertarget{writing-out-tabular-plain-text-data-in-r}{%
+\subsection{Writing Out Tabular Plain Text Data in R}\label{writing-out-tabular-plain-text-data-in-r}}
+
+If you want to write out tabular data to a text file, use \texttt{write.table()} or \texttt{write.csv()}. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a \texttt{matrix} or \texttt{data.frame}), and the second argument is the file path on your hard drive.
+
+Here is an example of writing out \texttt{d} to a file called \texttt{oring\_out.csv}. I choose to include column names, but not row names. I also use commas to separate columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.table}\NormalTok{(d, }\AttributeTok{file =} \StringTok{"data/oring\_out.csv"}\NormalTok{, }
+            \AttributeTok{col.names =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{sep =} \StringTok{";"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.
+
+\begin{verbatim}
+"V1";"V2";"V3";"V4";"V5"
+6;0;66;50;1
+6;1;70;50;2
+\end{verbatim}
+
+\hypertarget{serialization-in-r}{%
+\subsection{Serialization in R}\label{serialization-in-r}}
+
+Alternatively you may choose to store your data in a \textbf{serialized} form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that's usually more memory efficient.
+
+For instance, let's save the object \texttt{d} in a file called \texttt{oring.rds}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{saveRDS}\NormalTok{(d, }\AttributeTok{file =} \StringTok{"data/oring.rds"}\NormalTok{)}
+\FunctionTok{rm}\NormalTok{(d)}
+\FunctionTok{exists}\NormalTok{(}\StringTok{"d"}\NormalTok{)}
+\DocumentationTok{\#\# [1] FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+After it is saved with \texttt{saveRDS()}, we are free to delete the variable with \texttt{rm()}, because it can be read back in later on. To do this, call \texttt{readRDS()}. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, \texttt{.rds} files are typically smaller--\texttt{oring.rds} is only 248 bytes, while \texttt{oring\_out.csv} is 332 bytes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d2 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\AttributeTok{file =} \StringTok{"data/oring.rds"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(d2, }\DecValTok{3}\NormalTok{)}
+\DocumentationTok{\#\#   V1 V2 V3 V4 V5}
+\DocumentationTok{\#\# 1  6  0 66 50  1}
+\DocumentationTok{\#\# 2  6  1 70 50  2}
+\DocumentationTok{\#\# 3  6  0 69 50  3}
+\end{Highlighting}
+\end{Shaded}
+
+You can serialize multiple objects at once, too! Convention dictates that these files end with the \texttt{.RData} suffix. Save your entire global environment with \texttt{save()} or \texttt{save.image()}, and bring it back with \texttt{load()} or \texttt{attach()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{()) }\CommentTok{\# remove everything}
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{2}
+\FunctionTok{save.image}\NormalTok{(}\AttributeTok{file =} \StringTok{"data/my{-}current{-}workspace.RData"}\NormalTok{)}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{()) }
+\FunctionTok{load}\NormalTok{(}\StringTok{"data/my{-}current{-}workspace.RData"}\NormalTok{)}
+\FunctionTok{ls}\NormalTok{() }\CommentTok{\# print all objects in your workspace}
+\DocumentationTok{\#\# [1] "a" "b"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{saving-data-in-python}{%
+\section{Saving Data in Python}\label{saving-data-in-python}}
+
+\hypertarget{writing-out-tabular-plain-text-data-in-python}{%
+\subsection{Writing Out Tabular Plain Text Data in Python}\label{writing-out-tabular-plain-text-data-in-python}}
+
+You can write out tabular data with a variety of \href{https://pandas.pydata.org/pandas-docs/stable/reference/io.html\#input-output}{\texttt{DataFrame} methods that are named \texttt{to\_*()}.}. \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html\#pandas.DataFrame.to_csv}{\texttt{pd.DataFrame.to\_csv()}} has a lot of common with \texttt{write.csv()} in R. Below we write out \texttt{d} to a file called \texttt{oring\_out2.csv}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"\textbackslash{}s+"}\NormalTok{)}
+\NormalTok{d.to\_csv(}\StringTok{"data/oring\_out2.csv"}\NormalTok{, header}\OperatorTok{=}\VariableTok{True}\NormalTok{, index}\OperatorTok{=}\VariableTok{False}\NormalTok{, sep }\OperatorTok{=} \StringTok{","}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Here is how the first few rows of that file looks in a text editor.
+
+\begin{verbatim}
+0,1,2,3,4
+6,0,66,50,1
+6,1,70,50,2
+\end{verbatim}
+
+\hypertarget{serialization-in-python}{%
+\subsection{Serialization in Python}\label{serialization-in-python}}
+
+Serialization functionality is readily available in Python, just like it is in R. In Python, the \href{https://docs.python.org/3/library/pickle.html}{\texttt{pickle}} and \texttt{cPickle} libraries are probably the most commonly used. Serializing objects with these libraries is known as \emph{pickling} an object.
+
+Pandas has a \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_pickle.html}{\texttt{.to\_pickle()}} wrapper method attached to every \texttt{DataFrame}. Once the pickled object is saved, the file can be read back into Python with \href{https://pandas.pydata.org/docs/reference/api/pandas.read_pickle.html\#pandas.read_pickle}{\texttt{pd.read\_pickle()}}. These functions are extremely convenient, because they call all the required \texttt{pickle} code and hide a decent amount of complexity.
+
+Here is an example of writing out \texttt{d} and then reading the pickled object back in. In Python 3, the file suffix for pickled objects is usually \texttt{.pickle}, but there are many other choices.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d.to\_pickle(}\StringTok{"data/oring.pickle"}\NormalTok{)}
+\KeywordTok{del}\NormalTok{ d}
+\NormalTok{d\_is\_back }\OperatorTok{=}\NormalTok{ pd.read\_pickle(}\StringTok{"data/oring.pickle"}\NormalTok{)}
+\NormalTok{d\_is\_back.head(}\DecValTok{2}\NormalTok{)}
+\CommentTok{\#\#    0  1   2   3  4}
+\CommentTok{\#\# 0  6  0  66  50  1}
+\CommentTok{\#\# 1  6  1  70  50  2}
+\end{Highlighting}
+\end{Shaded}
+
+Unfortunately, \texttt{oring.pickle} is much larger (1,676 bytes) than the original text file \texttt{o-ring-erosion-only.data} (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like \texttt{d\_is\_back.to\_pickle("data/oring.zip")} it will become smaller.
+
+In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library.
+
+Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security\footnote{The \href{https://docs.python.org/2/library/pickle.html}{documentation for \texttt{pickle}} mentions that the library is ``not secure against erroneous or maliciously constructed data'' and recommends that you ``{[}n{]}ever unpickle data received from an untrusted or unauthenticated source.''}, improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research.
 
 \hypertarget{using-third-party-code}{%
 \chapter{Using Third-Party Code}\label{using-third-party-code}}
@@ -3765,12 +3962,10 @@ Moreover, all of these environments are connected in a chain-like structure. To 
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
 \DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:Hmisc"     }
-\DocumentationTok{\#\#  [5] "package:Formula"    "package:survival"   "package:lattice"    "package:reticulate"}
-\DocumentationTok{\#\#  [9] "package:forcats"    "package:stringr"    "package:dplyr"      "package:purrr"     }
-\DocumentationTok{\#\# [13] "package:readr"      "package:tidyr"      "package:tibble"     "package:ggplot2"   }
-\DocumentationTok{\#\# [17] "package:tidyverse"  "package:magrittr"   "tools:rstudio"      "package:stats"     }
-\DocumentationTok{\#\# [21] "package:graphics"   "package:grDevices"  "package:utils"      "package:datasets"  }
-\DocumentationTok{\#\# [25] "package:methods"    "Autoloads"          "package:base"}
+\DocumentationTok{\#\#  [5] "package:ggplot2"    "package:Formula"    "package:survival"   "package:lattice"   }
+\DocumentationTok{\#\#  [9] "package:reticulate" "tools:rstudio"      "package:stats"      "package:graphics"  }
+\DocumentationTok{\#\# [13] "package:grDevices"  "package:utils"      "package:datasets"   "package:methods"   }
+\DocumentationTok{\#\# [17] "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3861,8 +4056,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 0.55477724,  0.41413355,  0.96085134,  0.1407009 , {-}0.47968853,}
-\CommentTok{\#\#        {-}1.22610964, {-}1.23971318,  1.57319349,  1.48325094,  0.28352799])}
+\CommentTok{\#\# array([{-}1.1416028 ,  2.4227105 , {-}0.78047792,  0.25874745,  0.98078554,}
+\CommentTok{\#\#         0.32225761, {-}0.67841237, {-}1.97486693, {-}0.66764751, {-}0.19969417])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3874,8 +4069,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.43911781,  0.26582995,  1.0565605 , {-}0.88607198, {-}0.03710272,}
-\CommentTok{\#\#         0.37917265,  0.20273979, {-}0.139861  , {-}0.91155849,  0.72214628])}
+\CommentTok{\#\# array([{-}0.79196381,  0.48829134, {-}0.17250772, {-}0.55757612, {-}0.11343845,}
+\CommentTok{\#\#         0.80768471, {-}0.34305494,  1.39598039,  0.24474748,  0.43876784])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3887,8 +4082,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.16799018,  0.27867374, {-}0.07853349, {-}0.26096722,  0.06495153,}
-\CommentTok{\#\#         1.32838682,  0.47719804, {-}0.96904138,  0.78508845,  0.81323274])}
+\CommentTok{\#\# array([ 1.58616977,  0.95907429, {-}0.14483928, {-}0.35752808,  0.38286771,}
+\CommentTok{\#\#         0.35002415,  0.50302786,  1.26251868,  1.7100355 ,  0.34530797])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4154,7 +4349,7 @@ q(x) =
 We can plot all three functions.
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-140-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-140}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-154-1} \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-154}
 \end{figure}
 
 Here's some Python code that attempts to sample once from \(p(x)\). Sometimes proposals are not accepted. When that happens, the function returns \texttt{None}.
@@ -4201,7 +4396,7 @@ Here's some Python code that attempts to sample once from \(p(x)\). Sometimes pr
 \end{enumerate}
 
 In chapter \ref{visualization}, we'll show you the code that you can use to generate the plot below.
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-143-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-157-1.pdf}
 
 \hypertarget{reshaping-and-combining-data-sets}{%
 \chapter{Reshaping and Combining Data Sets}\label{reshaping-and-combining-data-sets}}
@@ -4228,11 +4423,11 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \begin{Highlighting}[]
 \NormalTok{sillyData }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)}
 \FunctionTok{print}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.069159  1.597054 {-}1.103327  0.596831 {-}1.207086}
+\DocumentationTok{\#\# [1]  0.06376613  0.83713936 {-}0.36781013  0.66551273 {-}0.15947992}
 \FunctionTok{sort}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] {-}1.207086 {-}1.103327 {-}1.069159  0.596831  1.597054}
+\DocumentationTok{\#\# [1] {-}0.36781013 {-}0.15947992  0.06376613  0.66551273  0.83713936}
 \FunctionTok{order}\NormalTok{(sillyData)}
-\DocumentationTok{\#\# [1] 5 3 1 4 2}
+\DocumentationTok{\#\# [1] 3 5 1 4 2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4264,11 +4459,11 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
-\CommentTok{\#\# [ 1.00326035  1.33570318  1.13763402 {-}1.29912552  0.74210305]}
+\CommentTok{\#\# [ 0.26003204 {-}0.50793957  0.98885971  0.44265345  0.4566311 ]}
 \NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}1.29912552,  0.74210305,  1.00326035,  1.13763402,  1.33570318])}
+\CommentTok{\#\# array([{-}0.50793957,  0.26003204,  0.44265345,  0.4566311 ,  0.98885971])}
 \NormalTok{np.argsort(silly\_data)}
-\CommentTok{\#\# array([3, 4, 0, 2, 1])}
+\CommentTok{\#\# array([1, 0, 3, 4, 2])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4722,8 +4917,8 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-167-1.pdf}
-\caption{\label{fig:unnamed-chunk-167}A Simple Histogram}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-181-1.pdf}
+\caption{\label{fig:unnamed-chunk-181}A Simple Histogram}
 \end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
@@ -4745,8 +4940,8 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-168-1.pdf}
-\caption{\label{fig:unnamed-chunk-168}Some Scatterplots}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-182-1.pdf}
+\caption{\label{fig:unnamed-chunk-182}Some Scatterplots}
 \end{figure}
 
 \begin{Shaded}
@@ -4780,7 +4975,7 @@ Consider this first example.
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-169-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-169}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-183-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-183}
 \end{figure}
 
 You'll notice a few things about the code and the result produced:
@@ -4809,8 +5004,8 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-170-1.pdf}
-\caption{\label{fig:unnamed-chunk-170}A Second Scatterplot}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-184-1.pdf}
+\caption{\label{fig:unnamed-chunk-184}A Second Scatterplot}
 \end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point}. The aesthetic mappings were used by the new layer.
@@ -4837,8 +5032,8 @@ Additionally, notice that the same layer will behave much differently if we chan
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-172-1.pdf}
-\caption{\label{fig:unnamed-chunk-172}Adding Some Color}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-186-1.pdf}
+\caption{\label{fig:unnamed-chunk-186}Adding Some Color}
 \end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}.
@@ -4856,8 +5051,8 @@ We can change attributes of the axes like this.
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-173-1.pdf}
-\caption{\label{fig:unnamed-chunk-173}Changing Scales}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-187-1.pdf}
+\caption{\label{fig:unnamed-chunk-187}Changing Scales}
 \end{figure}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
@@ -4872,8 +5067,8 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-174-1.pdf}
-\caption{\label{fig:unnamed-chunk-174}Changing the Fill}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-188-1.pdf}
+\caption{\label{fig:unnamed-chunk-188}Changing the Fill}
 \end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
@@ -4889,8 +5084,8 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-175-1.pdf}
-\caption{\label{fig:unnamed-chunk-175}Changing the Fill Again}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-189-1.pdf}
+\caption{\label{fig:unnamed-chunk-189}Changing the Fill Again}
 \end{figure}
 
 There are many to choose from, though. Try to run the following code on your own to see what it produces.
@@ -4917,13 +5112,13 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([  4.,  24.,  97., 189., 227., 220., 153.,  66.,  17.,   3.]), array([{-}3.04637573, {-}2.4199116 , {-}1.79344748, {-}1.16698336, {-}0.54051924,}
-\CommentTok{\#\#         0.08594489,  0.71240901,  1.33887313,  1.96533725,  2.59180138,}
-\CommentTok{\#\#         3.2182655 ]), \textless{}a list of 10 Patch objects\textgreater{})}
+\CommentTok{\#\# (array([  5.,  27., 108., 194., 256., 206., 141.,  51.,   9.,   3.]), array([{-}3.1177748 , {-}2.44591428, {-}1.77405377, {-}1.10219325, {-}0.43033274,}
+\CommentTok{\#\#         0.24152778,  0.91338829,  1.58524881,  2.25710932,  2.92896984,}
+\CommentTok{\#\#         3.60083036]), \textless{}a list of 10 Patch objects\textgreater{})}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-178-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-192-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. It also follows the most commonly-used convention.
 
@@ -4967,10 +5162,10 @@ If you want to make figures more elaborate, just keep calling different methods 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-179-3.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-193-3.pdf}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-180-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-180}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-194-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-194}
 \end{figure}
 
 import numpy as np
@@ -5378,7 +5573,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x556b7db0fd40>
+## <bytecode: 0x55a8151db620>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -5394,29 +5589,26 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 ##  [1] plot,ANY-method                plot,color-method              plot.aareg*                   
 ##  [4] plot.acf*                      plot.agnes*                    plot.areg*                    
 ##  [7] plot.areg.boot*                plot.aregImpute*               plot.biVar*                   
-## [10] plot.chobTA*                   plot.clusGap*                  plot.cox.zph*                 
-## [13] plot.curveRep*                 plot.data.frame*               plot.decomposed.ts*           
-## [16] plot.default                   plot.dendrogram*               plot.density*                 
-## [19] plot.describe*                 plot.diana*                    plot.drawPlot*                
-## [22] plot.ecdf                      plot.factor*                   plot.formula*                 
-## [25] plot.function                  plot.gbayes*                   plot.ggplot*                  
-## [28] plot.gtable*                   plot.hcl_palettes*             plot.hclust*                  
-## [31] plot.histogram*                plot.HoltWinters*              plot.isoreg*                  
-## [34] plot.lm*                       plot.medpolish*                plot.mlm*                     
-## [37] plot.mona*                     plot.numpy.ndarray*            plot.partition*               
-## [40] plot.ppr*                      plot.prcomp*                   plot.princomp*                
-## [43] plot.profile.nls*              plot.Quantile2*                plot.quantmod*                
-## [46] plot.quantmodResults*          plot.R6*                       plot.raster*                  
-## [49] plot.replot*                   plot.replot_xts*               plot.rm.boot*                 
-## [52] plot.rpart*                    plot.shingle*                  plot.silhouette*              
-## [55] plot.spec*                     plot.spline*                   plot.stepfun                  
-## [58] plot.stl*                      plot.summary.formula.response* plot.summary.formula.reverse* 
-## [61] plot.summaryM*                 plot.summaryP*                 plot.summaryS*                
-## [64] plot.Surv*                     plot.survfit*                  plot.table*                   
-## [67] plot.trans*                    plot.transcan*                 plot.trellis*                 
-## [70] plot.ts                        plot.tskernel*                 plot.TukeyHSD*                
-## [73] plot.varclus*                  plot.xts*                      plot.xyVector*                
-## [76] plot.zoo*                     
+## [10] plot.clusGap*                  plot.cox.zph*                  plot.curveRep*                
+## [13] plot.data.frame*               plot.decomposed.ts*            plot.default                  
+## [16] plot.dendrogram*               plot.density*                  plot.describe*                
+## [19] plot.diana*                    plot.drawPlot*                 plot.ecdf                     
+## [22] plot.factor*                   plot.formula*                  plot.function                 
+## [25] plot.gbayes*                   plot.ggplot*                   plot.gtable*                  
+## [28] plot.hcl_palettes*             plot.hclust*                   plot.histogram*               
+## [31] plot.HoltWinters*              plot.isoreg*                   plot.lm*                      
+## [34] plot.medpolish*                plot.mlm*                      plot.mona*                    
+## [37] plot.numpy.ndarray*            plot.partition*                plot.ppr*                     
+## [40] plot.prcomp*                   plot.princomp*                 plot.profile.nls*             
+## [43] plot.Quantile2*                plot.R6*                       plot.raster*                  
+## [46] plot.rm.boot*                  plot.rpart*                    plot.shingle*                 
+## [49] plot.silhouette*               plot.spec*                     plot.spline*                  
+## [52] plot.stepfun                   plot.stl*                      plot.summary.formula.response*
+## [55] plot.summary.formula.reverse*  plot.summaryM*                 plot.summaryP*                
+## [58] plot.summaryS*                 plot.Surv*                     plot.survfit*                 
+## [61] plot.table*                    plot.trans*                    plot.transcan*                
+## [64] plot.trellis*                  plot.ts                        plot.tskernel*                
+## [67] plot.TukeyHSD*                 plot.varclus*                  plot.xyVector*                
 ## see '?methods' for accessing help and source code
 \end{verbatim}
 
@@ -5443,7 +5635,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-193-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-207-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -5460,7 +5652,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-194-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-208-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -5881,7 +6073,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-207-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-221-1.pdf}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -6008,7 +6200,7 @@ Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \te
 \NormalTok{myMeans }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(myDF, mean)}
 \FunctionTok{head}\NormalTok{(myMeans)}
 \DocumentationTok{\#\#          X1          X2          X3          X4          X5          X6 }
-\DocumentationTok{\#\#  0.20459645  0.07652842  0.56611007  0.12396402 {-}0.47183324 {-}0.14797574}
+\DocumentationTok{\#\#  0.18582195  0.39453297 {-}0.20907506  0.43780278  0.27222881  0.05448903}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6047,14 +6239,14 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \DocumentationTok{\#\# lm(formula = y \textasciitilde{} 1)}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Residuals:}
-\DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}2.1875 {-}0.8623  0.5223  0.7790  1.6196 }
+\DocumentationTok{\#\#      Min       1Q   Median       3Q      Max }
+\DocumentationTok{\#\# {-}2.28812 {-}0.69881  0.04728  0.88157  2.33837 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Coefficients:}
 \DocumentationTok{\#\#             Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\DocumentationTok{\#\# (Intercept)   0.4956     0.4014   1.235    0.248}
+\DocumentationTok{\#\# (Intercept)  {-}0.2205     0.4751  {-}0.464    0.654}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# Residual standard error: 1.269 on 9 degrees of freedom}
+\DocumentationTok{\#\# Residual standard error: 1.502 on 9 degrees of freedom}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6068,8 +6260,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.0160339412 {-}0.0786430531  0.0004604979 {-}0.1351301905  0.1509747881  0.1905770962  0.1108207936}
-\DocumentationTok{\#\#  [8] {-}0.1186822605 {-}0.0329771221 {-}0.0869986459}
+\DocumentationTok{\#\#  [1] {-}0.22422906  0.13121161  0.14425574 {-}0.02193597  0.02330238  0.07642754  0.04282988  0.16981676}
+\DocumentationTok{\#\#  [9]  0.02713235 {-}0.04249718}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6198,7 +6390,7 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 \end{Shaded}
 
 \begin{verbatim}
-## [1]   -0.01354974   99.99540987 -100.00283908
+## [1]   -0.01004801  100.01423756 -100.01254878
 \end{verbatim}
 
 \begin{Shaded}
@@ -6209,13 +6401,13 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 
 \begin{verbatim}
 ## [[1]]
-## [1]  0.008918389  0.010288593 -0.011230676
+## [1]  0.01270003 -0.02849345 -0.00562138
 ## 
 ## [[2]]
-## [1] 100.01665  99.99541
+## [1] 99.99746 99.98995
 ## 
 ## [[3]]
-## [1] -100.0188
+## [1] -100.0081
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
@@ -6344,7 +6536,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid()} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-224-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-238-1.pdf}
 
 If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -6359,7 +6551,7 @@ If you prefer using \texttt{apply()}, that is also possible, but you would need 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-225-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-239-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -6387,7 +6579,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-227-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-241-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -6647,7 +6839,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-241-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-255-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6687,7 +6879,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-243-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-257-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6713,7 +6905,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-245-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-259-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}
