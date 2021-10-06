@@ -207,3 +207,92 @@ iris_data.head(3)
 ::: {.rmd-caution}
 Above we were assigning Numpy arrays to columns of a `DataFrame`. Be careful when you're assigning `Series` objects. You'll see in the documentation that ["pandas aligns all AXES when setting Series and `DataFrame` from `.loc`, and `.iloc`."](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#basics). 
 ::: 
+
+
+## Exercises
+
+### R Questions
+
+
+1. 
+
+Consider the data set `original_rt_snippets.txt` [@SocherEtAl2013:RNTN]. We will calculate the *term frequency-inverse document frequency statistics* [@Jones72astatistical] on this data set, which is a common data transformation technique used in text mining and natural language processing. You may use the `stringr` library for this question, if you wish. 
+
+
+  - read in this data set as a `vector` and call it `corpus`.
+  - create a `vector` called `dictionary` that contains the following phrases: "charming","fantasy", "hate", and "boring".
+  - Construct a `data.frame` with four columns called `bagOfWords` that contains the number of appearances of each word in the dictionary. Match the exact phrases. Label the columns of this `data.frame` with the phrases you're searching for. Try to write code that is easy to modify if you decide to change the set of phrases in your dictionary.
+  - Create a `data.frame` with four columns called `termFrequency`. Each element should correspond with the count from the previous `data.frame`. Instead of the count, each element should be $\log(1 + \text{count})$.
+  - Create a `vector` of length four called `invDocFrequency`. The inverse document frequency formula for any term $t$ is $\log([\text{number of documents in corpus}] / [\text{number of documents that contain term } t])$ Make sure the names of this vector are the same as the words in the dictionary. 
+  - Create a `data.frame` called `tfidf` (short for "term frequency-inverse document frequency"). For row/document $d$, and column/term $t$, the formula is the product: $[\text{term frequency of term } t \text{ and document } d ] \times [\text{inverse doc. freq. of term } t]$.
+  - Extract the elements of `corpus` that have at least one nonzero element in the corresponding row of `tfidf`. Call the `vector` `informativeDocuments`.
+  - Do you see any documents that were labeled as informative, that do not actually contain the words you searched for?
+  
+2.
+
+`mtcars` is a data set that is built into R, so you don't need to read it in. You can read more about it by typing `?datasets::mtcars`. 
+
+  - Create a new `data.frame` called `withoutDisp` that is the same as `mtcars`, but has its `disp` column removed. 
+  - Create a new column for `withoutDisp` called `coolnessScore`. The formula is $\frac{1}{\text{mpg}} + \text{quarter mile time}$.
+  - Create a new `data.frame` called `sortedWD` that is equal to `withoutDisp`, but sorted in descending order by the coolness score. 
+  - Create a new `data.frame` from `sortedWD` called `specialRows` that keeps only rows where $\text{weight (1000lbs)} + \text{rear axle ratio} < 7$
+  - Calculate the percent reduction in number of rows, going from `sortedWD` to `specialRows`. Call it `percReduction`. Make sure it is between $0$ and $100$.
+  
+  
+3.
+
+  This question investigates the [*Zillow Home Value Index (ZHVI)*](https://www.zillow.com/research/data/) for single family homes.
+
+  - read in your data from `Zip_zhvi_uc_sfr_tier_0.33_0.67_sm_sa_month.csv`. Call the `data.frame` `homeData`. Remember to be careful with file paths. Also, when looking at the data set with a text editor, be sure that "word wrap" is not turned on.
+  - Extract the rows of `homeData` that correspond with Charlottesville, VA, and assign them as a `data.frame` to the variable `cvilleData`
+  - Assign all the unique zip codes to a `character vector` called `cvilleZips`.
+  - Extract the columns of `cvilleData` that correspond with home prices, and transpose them so that each row of the result corresponds with a different month. Call this new `data.frame` `timeSeriesData`. Also, make sure that the column names of this new `data.frame` are set equal to the appropriate zip codes. 
+  - Write a function called `getAveMonthlyChange` that takes in a numeric `vector`, and returns the average change. Your function should not return an `NA`, so be sure to deal with `NA`s appropriately.
+  - Calculate the average monthly price change for each zip code. Store your results in a `vector` called `aveMonthlyChanges`. Make sure this `vector` has named elements so one can extract elements by zip code.
+
+
+### Python Questions
+
+1. 
+
+This question deals with looking at historical prices of the S\&P500 Index. This data was downloaded from [https://finance.yahoo.com](https://finance.yahoo.com) [@gspc_data]. It contains prices starting from "2007-01-03" and going until "2021-10-01".
+
+  - Read in the data `gspc.csv` as a `data.frame` and call the variable `gspc`.
+  - Use [`.set_index()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html) to change the index of `gspc` to its `"Index"` column. Store the new `DataFrame` as `gspc_good_idx`.
+  - Add a column to `gspc_good_idx` called `log_returns`. Calculate them from the column `GSPC.Adjusted`. Make sure to scale them by $100$ and put an `np.nan` in the first element where you don't have a return. 
+  - Extract all the returns that are available for the year 2021, and store them as a `Series` called `this_year_returns`.
+  - Add a column to `gspc_good_idx` containing the *drawdown* time series. Call this column `drawdown`. To calculate drawdown at a given date, subtract that date's price from the running maximum price that is current at that date. Use only adjusted close prices for this calculation.  
+  - Add a column to `gspc_good_idx` containing the percent drawdown time series. Call this column `perc_drawdown`. Use the previous column, but make this number a percent of the corresponding running maximum. 
+  - What is the maximum drawdown of this time series? Store it as a percent in the value `mdd`.
+
+
+2.
+
+In this question we'll look at [some data on radon measurements](https://www.tensorflow.org/datasets/catalog/radon) [@GelmanHill:2007]. Instead of reading in a text file, we will load the data into Python using the [`tensorflow_datasets` module](https://www.tensorflow.org/datasets) [@TFDS]. 
+
+Please include the following code in your submission. 
+
+```{python, eval=FALSE}
+#%pip install tensorflow
+#%pip install tensorflow_datasets
+import tensorflow_datasets as tfds
+import pandas as pd
+import numpy as np
+d = tfds.load("radon")
+d = pd.DataFrame(tfds.as_dataframe(d['train']))
+```
+
+Many of you will need to install `tensorflow` and `tensorflow_datasets` before you're able to `import` it. If that's so, please see the [text for more information](https://randpythonbook.netlify.app/using-third-party-code.html#installing-packages-in-python) on how to install packages. On my machine, I was able to install it with the commented out line, however, that may not be the case for you. After it is installed, please comment out all lines in your script that attempt to install packages. They will not work on the Gradescope server. 
+
+
+
+  - Assign to `worst_row` the row of `d` that is associated the highest recorded level of radon. Make sure it a `DataFrame`.
+  - Assign to `nrows` and `ncols` the number of rows and columns of `d`, respectively.
+  - Assign the most common column data type to `most_common_dtype`. Make sure the variable is of type `numpy.dtype`
+  - Are there any observations from Virginia in this data set? If so, assign `True` to `any_va`. Otherwise assign `False`.
+  - Create a  new column in `d` called `dist_from_cville`. Use the **Haversine formula** to calculate distance between each row and the University of Virginia, in kilometers. 
+    * Assume the University of Virginia is at 38.0336$^\circ$ N, 78.5080$^\circ$W
+    * Assume the Earth's radius $r = 6378.137$ kilometers.
+    * The formula for distance between $(\lambda_1, \phi_1)$ (longitude, latitude) and $(\lambda_2, \phi_2)$ is $$2 r \text{arcsin}\left( \sqrt{ \sin^2\left( \frac{\phi_2 - \phi_1}{2}\right)  + \cos(\phi_1)\cos(\phi_2) \sin^2\left( \frac{\lambda_2 - \lambda_1}{2} \right)  } \right)$$
+  - What is the average radon measurement between all measurements taken at the place that is closest to where we are now? Assign your answer as a `float` to `close_ave`
+  

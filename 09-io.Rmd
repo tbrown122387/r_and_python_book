@@ -33,7 +33,8 @@ Instead, **focus on developing your ability to identify and diagnose data input 
 1. Check that **the correct column *separator* was used, or the correct "fixed-width format" was expected.** If mistakes are made, data frame columns are going to be combined or split apart in weird ways, and often the wrong types are going to be used for pieces of data (e.g. `"2,3"` instead of `2` and `3`.) Also, watch out for when separators are found inside data elements or column names. For example, sometimes it's unclear whether people's names in the "last, first" format can be stored in one or two columns. Also, text data might surprise you with unexpected spaces or other whitespace is a common separator.
 2. Check that **the column names were parsed and stored correctly.** Column names should not be stored as data in R/Python. Functions that read in data should not expect column names when they don't exist in the actual file. 
 3. Check that **empty space and metadata was ignored correctly.** Data descriptions are sometimes stored in the same file as the data itself, and that should be skipped over when it's being read in. Empty space between column names and data shouldn't be stored. This can occur at the beginning of the file, and even at the end of the file. 
-4. **Type choice and recognition of special characters are performed correctly.** Are letters stored as strings or as something else such as an R `factor`? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like $-9999$ to represent missing data--don't store that as a float or integer!
+4. **Check that type choice and recognition of special characters are performed correctly.** Are letters stored as strings or as something else such as an R `factor`? Are dates and times stored as a special date/time type, or as strings? Is missing data correctly identified? Sometimes data providers use outrageous numbers like $-9999$ to represent missing data--don't store that as a float or integer!
+5. **Be ready to prompt R or Python to recognize a specific character encoding if you are reading in text data written in another language.** All text data has a character encoding, which is a mapping of numbers to characters. Any specific encoding will dictate what characters are recognizable in a program. If you try to read in data written in another language, the function you are using will likely complain about unrecognized characters. Fortunately, these errors and warnings are easily fixed by specifying a nondefault argument such as `encoding=` or `fileEncoding=`.
 
 
 This is no small task. To make matters worse:
@@ -97,6 +98,30 @@ html_data <- readLines("data/Google.html", warn = FALSE)
 head(html_data, 2)
 ```
 
+Some of you may have had difficulty reading in the above data. This can happen if your machine's default character encoding is different than mine. For instance, if your character encoding is ["GBK"](https://en.wikipedia.org/wiki/GBK_(character_encoding)), then the following warning message might appear. This message means that your machine didn't recognize some of the characters in the data set. 
+
+```{r, echo=FALSE}
+options(encoding = "GBK") # change my encoding to GBK 
+```
+
+
+```{r, collapse=TRUE, error=TRUE}
+tmp <- read.table("data/Google.html", sep = "~")
+```
+
+These errors are easy to fix, though, so don't worry. Just specify an encoding argument in your function that reads in data. 
+
+```{r, collapse=TRUE, error=TRUE}
+tmp <- read.table("data/Google.html", sep = "~", 
+                  fileEncoding = "UTF-8") # this makes errors disappear
+```
+
+
+```{r, echo=FALSE}
+options(encoding = "UTF-8")
+```
+
+
 
 ## Reading in Text Files with Pandas
 
@@ -143,6 +168,18 @@ d = pd.read_fwf("data/o-ring-erosion-only.data",
 list(d.dtypes)
 d = d.astype({2:'string', 3:'string'}) 
 list(d.dtypes)
+```
+
+Just like in R, you may run into an encoding issue with a file. For instance, the following will not work because the file contains Chinese characters.
+
+```{python, collapse = TRUE, error = TRUE}
+pd.read_csv("data/message.txt")
+```
+
+However, the error messages disappear when you specify `encoding="gbk"`.^[A list of more options of encodings that are built into Python,are available [here.](https://docs.python.org/3/library/codecs.html#standard-encodings)]
+
+```{python, collapse = TRUE, error = TRUE}
+pd.read_csv("data/message.txt", encoding = "gbk")
 ```
 
 You may also read in unstructured, nontabular data with Python. Use the built-in [`open()`](https://docs.python.org/3/library/functions.html#open) function to open up a file in read mode, and then use `f.readlines()` to return a `list` of strings. 
@@ -252,3 +289,21 @@ Unfortunately, `oring.pickle` is much larger (1,676 bytes) than the original tex
 In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library. 
 
 Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security^[The [documentation for `pickle`](https://docs.python.org/2/library/pickle.html) mentions that the library is "not secure against erroneous or maliciously constructed data" and recommends that you "[n]ever unpickle data received from an untrusted or unauthenticated source."], improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research. 
+
+
+## Exercises
+
+### R Questions
+
+### Python Questions
+
+
+1.
+
+We will use the `"Google.html"` data set mentioned in the chapter. 
+
+  - Use `open()` to open the `"Google.html"` file. Store the output of the function as `my_file`.
+  - Use the `.readlines()` method of the file to write the contents of the file as a `list` called `html_data`
+  - Coerce the `list` to a `DataFrame` with one column called `html`
+  - Create a `Series` called `nchars_ineach` that stores the number of characters in each line of text. Hint: the [`Series.str` attribute has a lot of helpful methods](https://pandas.pydata.org/pandas-docs/stable/reference/series.html#api-series-str).
+  - Create an `int`-like variable called `num_div_tags` that holds the total number of times the phrase "`<div>`" appears in the file.

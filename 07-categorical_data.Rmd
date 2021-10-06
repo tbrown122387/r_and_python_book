@@ -197,7 +197,15 @@ head(d)
   - What percent (between $0$ and $100$) of the time is the first column equal to `'f'`? Assign your answer to `percentF`.
   
   
+2. 
 
+Suppose you have the following `vector`. Please make sure to include this code in your script. 
+
+```{r, collapse = TRUE}
+normSamps <- rnorm(100)
+```
+
+  - create a `factor` from `normSamps`. Map each element to `"within 1 sd"` or `"outside 1 sd"` depending on whether the element is within $1$ theoretical standard deviation of $0$ or not. Call the `factor` `withinOrNot`.
 
 
 ### Python Questions
@@ -221,5 +229,22 @@ student2 = np.random.choice(poss_grades, size = 12, replace = True)
   - These data are categorical. Are they ordinal? Make sure to adjust `s1` and `s2` accordingly.
   - Calculate the two student GPAs. Assign the floating point numbers to variables named `s1_gpa` and `s2_gpa`. Use `grade_values` to convert each letter grade to a number, and then average all the numbers for each student together using equal weights. 
   - Is each category equally-spaced? If yes, then these are said to be *interval data*. Does your answer to this question affect the legitimacy of averaging together any ordinal data? Assign a `str` response to the variable `ave_ord_data_response`. Hint: consider (any) two different data sets that happen to produce the same GPA. Is the equality of these two GPAs misleading?
-  - Compute the mode grade for each student. Assign your answers as `str`s to the variables `s1_mode` and `s2_mode`.
+  - Compute the mode grade for each student. Assign your answers as `str`s to the variables `s1_mode` and `s2_mode`. If there are more than one modes, then assign the one that comes first alphabetically.
 
+
+2. 
+
+Suppose you are creating a *classifier* whose job it is to predict labels. Consider the following `DataFrame` of predicted labels next to their corresponding actual labels. Please make sure to include this code in your script. 
+
+```{python, collapse = TRUE}
+import pandas as pd
+import numpy as np
+d = pd.DataFrame({'predicted label' : [1,2,2,1,2,2,1,2,3,2,2,3], 
+                  'actual label': [1,2,3,1,2,3,1,2,3,1,2,3]}, 
+                 dtype='category')
+list(d.dtypes)
+```
+  
+  
+  - Assign the prediction accuracy, as a percent (between $0$ and $100$), to the variable `perc_acc`.
+  - Create a *confusion matrix* to better assess *which* labels your classifier has a difficult time with. This should be a $3 \times 3$ Numpy `ndarray` of percentages. The row will correspond to the predicted label, the column will correspond to the actual label, and number in location $(0,2)$, say, will be the percent of observations where your model predicted label `1` and the actual was a label `3`. Call the variable `confusion`.
