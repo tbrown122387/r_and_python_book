@@ -324,11 +324,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
 <li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
-<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#a-longer-example"><i class="fa fa-check"></i><b>11.3</b> A Longer Example</a>
-<ul>
-<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#description-of-accept-reject-sampling"><i class="fa fa-check"></i><b>11.3.1</b> Description of Accept-Reject Sampling</a></li>
-<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#a-specific-example"><i class="fa fa-check"></i><b>11.3.2</b> A Specific Example</a></li>
-</ul></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
 <ul>
@@ -372,7 +368,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>17.2.8</b> Creating Reference Classes</a></li>
 <li class="chapter" data-level="17.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>17.2.9</b> Creating R6 Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-8"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
+<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-9"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>18</b> Functional Programming</a>
 <ul>
@@ -421,203 +417,126 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 11</span> Control Flow</h1>
 <div id="conditional-logic" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> Conditional Logic</h2>
-<p>We discussed Boolean objects in <a href="basic-types.html#basic-types">2</a>. We used these for</p>
+<p>We discussed Boolean/logical objects in <a href="basic-types.html#basic-types">2</a>. We used these for</p>
 <ul>
-<li>counting up number of times a condition appeared, and</li>
-<li>subsetting.</li>
+<li>counting the number of times a condition appeared, and</li>
+<li>subsetting vectors and data frames.</li>
 </ul>
-<p>Another way to use them is to conditionally execute code, depending on whether or truth condition of a Boolean.</p>
-<p>In R,</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="control-flow.html#cb156-1" aria-hidden="true" tabindex="-1"></a>myName <span class="ot">&lt;-</span> <span class="st">&quot;Clare&quot;</span></span>
-<span id="cb156-2"><a href="control-flow.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(myName <span class="sc">!=</span> <span class="st">&quot;Taylor&quot;</span>){</span>
-<span id="cb156-3"><a href="control-flow.html#cb156-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;you are not Taylor&quot;</span>)</span>
-<span id="cb156-4"><a href="control-flow.html#cb156-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb156-5"><a href="control-flow.html#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;you are not Taylor&quot;</span></span></code></pre></div>
+<p>Another way to use them is to conditionally execute code. You can choose to execute code depending on whether or not a Boolean/logical value is true or not.</p>
+<p>This is what an <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#if">if statement looks like In R</a>:</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="control-flow.html#cb157-1" aria-hidden="true" tabindex="-1"></a>myName <span class="ot">&lt;-</span> <span class="st">&quot;Taylor&quot;</span></span>
+<span id="cb157-2"><a href="control-flow.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(myName <span class="sc">!=</span> <span class="st">&quot;Clare&quot;</span>){</span>
+<span id="cb157-3"><a href="control-flow.html#cb157-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;you are not Clare&quot;</span>)</span>
+<span id="cb157-4"><a href="control-flow.html#cb157-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb157-5"><a href="control-flow.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;you are not Clare&quot;</span></span></code></pre></div>
 <p><a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">In Python</a>, you don’t need curly braces, but the indentation needs to be just right, and you need a colon.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb157-1"><a href="control-flow.html#cb157-1" aria-hidden="true" tabindex="-1"></a>my_name <span class="op">=</span> <span class="st">&quot;Taylor&quot;</span></span>
-<span id="cb157-2"><a href="control-flow.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_name <span class="op">==</span> <span class="st">&quot;Taylor&quot;</span>:</span>
-<span id="cb157-3"><a href="control-flow.html#cb157-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
-<span id="cb157-4"><a href="control-flow.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
-<p>There can be more than one truth test. To test alternative Boolean conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
-<p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="control-flow.html#cb158-1" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
-<span id="cb158-2"><a href="control-flow.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
-<span id="cb158-3"><a href="control-flow.html#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
-<span id="cb158-4"><a href="control-flow.html#cb158-4" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
-<span id="cb158-5"><a href="control-flow.html#cb158-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
-<span id="cb158-6"><a href="control-flow.html#cb158-6" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
-<span id="cb158-7"><a href="control-flow.html#cb158-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
-<span id="cb158-8"><a href="control-flow.html#cb158-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb158-9"><a href="control-flow.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb159"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb159-1"><a href="control-flow.html#cb159-1" aria-hidden="true" tabindex="-1"></a>my_num <span class="op">=</span> <span class="fl">42.999</span></span>
-<span id="cb159-2"><a href="control-flow.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb159-3"><a href="control-flow.html#cb159-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num is even&quot;</span>)</span>
-<span id="cb159-4"><a href="control-flow.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb159-5"><a href="control-flow.html#cb159-5" aria-hidden="true" tabindex="-1"></a>    my_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb159-6"><a href="control-flow.html#cb159-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num was made even&quot;</span>)</span>
-<span id="cb159-7"><a href="control-flow.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb159-8"><a href="control-flow.html#cb159-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
-<span id="cb159-9"><a href="control-flow.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb158-1"><a href="control-flow.html#cb158-1" aria-hidden="true" tabindex="-1"></a>my_name <span class="op">=</span> <span class="st">&quot;Taylor&quot;</span></span>
+<span id="cb158-2"><a href="control-flow.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_name <span class="op">==</span> <span class="st">&quot;Taylor&quot;</span>:</span>
+<span id="cb158-3"><a href="control-flow.html#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
+<span id="cb158-4"><a href="control-flow.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
+<p>There can be more than one test of truth. To test alternative conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
+<p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks. If there is no <code>else</code> block, and none of the previous conditions are true, nothing will execute.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="control-flow.html#cb159-1" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
+<span id="cb159-2"><a href="control-flow.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
+<span id="cb159-3"><a href="control-flow.html#cb159-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
+<span id="cb159-4"><a href="control-flow.html#cb159-4" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
+<span id="cb159-5"><a href="control-flow.html#cb159-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
+<span id="cb159-6"><a href="control-flow.html#cb159-6" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb159-7"><a href="control-flow.html#cb159-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
+<span id="cb159-8"><a href="control-flow.html#cb159-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb159-9"><a href="control-flow.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb160-1"><a href="control-flow.html#cb160-1" aria-hidden="true" tabindex="-1"></a>my_num <span class="op">=</span> <span class="fl">42.999</span></span>
+<span id="cb160-2"><a href="control-flow.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb160-3"><a href="control-flow.html#cb160-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num is even&quot;</span>)</span>
+<span id="cb160-4"><a href="control-flow.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb160-5"><a href="control-flow.html#cb160-5" aria-hidden="true" tabindex="-1"></a>    my_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb160-6"><a href="control-flow.html#cb160-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num was made even&quot;</span>)</span>
+<span id="cb160-7"><a href="control-flow.html#cb160-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb160-8"><a href="control-flow.html#cb160-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
+<span id="cb160-9"><a href="control-flow.html#cb160-9" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
 </div>
 <div id="loops" class="section level2" number="11.2">
 <h2><span class="header-section-number">11.2</span> Loops</h2>
 <p>One line of code generally does one “thing,” unless you’re using loops. Code written inside a loop will execute many times.</p>
-<p>The most common loop for us will be a <code>for</code> loop. A simple <code>for</code> loop in R might look like this</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="control-flow.html#cb160-1" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb160-2"><a href="control-flow.html#cb160-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
-<span id="cb160-3"><a href="control-flow.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
-<span id="cb160-4"><a href="control-flow.html#cb160-4" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
-<span id="cb160-5"><a href="control-flow.html#cb160-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb160-6"><a href="control-flow.html#cb160-6" aria-hidden="true" tabindex="-1"></a>r</span>
-<span id="cb160-7"><a href="control-flow.html#cb160-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
+<p>The most common loop for us will be a <code>for</code> loop. A simple <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#for"><code>for</code> loop in R</a> might look like this</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="control-flow.html#cb161-1" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb161-2"><a href="control-flow.html#cb161-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
+<span id="cb161-3"><a href="control-flow.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
+<span id="cb161-4"><a href="control-flow.html#cb161-4" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
+<span id="cb161-5"><a href="control-flow.html#cb161-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb161-6"><a href="control-flow.html#cb161-6" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb161-7"><a href="control-flow.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
-<li><code>seq_len(myLength)</code> gives us a <code>vector</code></li>
-<li><code>i</code> is a variable that takes on the values found in the <code>vector</code></li>
-<li>Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code></li>
+<li><code>seq_len(myLength)</code> gives us a <code>vector</code>.</li>
+<li><code>i</code> is a variable that takes on the values found in <code>seq_len(myLength)</code>.</li>
+<li>Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code>.</li>
 </ol>
-<p><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">In Python</a></p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb161-1"><a href="control-flow.html#cb161-1" aria-hidden="true" tabindex="-1"></a>my_length <span class="op">=</span> <span class="dv">9</span></span>
-<span id="cb161-2"><a href="control-flow.html#cb161-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
-<span id="cb161-3"><a href="control-flow.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(my_length):</span>
-<span id="cb161-4"><a href="control-flow.html#cb161-4" aria-hidden="true" tabindex="-1"></a>    r.append(i)</span>
-<span id="cb161-5"><a href="control-flow.html#cb161-5" aria-hidden="true" tabindex="-1"></a>r</span>
-<span id="cb161-6"><a href="control-flow.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 2, 3, 4, 5, 6, 7, 8]</span></span></code></pre></div>
+<p><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">Here is an example of a for loop in Python</a>:</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb162-1"><a href="control-flow.html#cb162-1" aria-hidden="true" tabindex="-1"></a>my_length <span class="op">=</span> <span class="dv">9</span></span>
+<span id="cb162-2"><a href="control-flow.html#cb162-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
+<span id="cb162-3"><a href="control-flow.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(my_length):</span>
+<span id="cb162-4"><a href="control-flow.html#cb162-4" aria-hidden="true" tabindex="-1"></a>    r.append(i)</span>
+<span id="cb162-5"><a href="control-flow.html#cb162-5" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb162-6"><a href="control-flow.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 2, 3, 4, 5, 6, 7, 8]</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
-<li>Unsurprisingly, Python’s syntax opts for indentation and colons instead of curly braces and parentheses,</li>
-<li>Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code></li>
-<li><code>for</code> loops in Python are more flexible because they iterate over many different types of data structures,</li>
-<li>The <a href="https://docs.python.org/3/tutorial/controlflow.html#the-range-function"><code>range</code></a> doesn’t generate all the numbers in the sequence at once, so it saves on memory. This can be quite useful for certain applications. However, <code>r</code> is a list that <em>does</em> store all the consecutive integers.</li>
+<li>Unsurprisingly, Python’s syntax opts for indentation and colons instead of curly braces and parentheses.</li>
+<li>Code inside the loop (indented underneath the <code>for</code> line), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code>.</li>
+<li><code>for</code> loops in Python are more flexible because they iterate over many different types of data structures–in this case <a href="https://docs.python.org/3/library/stdtypes.html#range"><code>range()</code> returns an object of type <code>range</code></a>.</li>
+<li>The <a href="https://docs.python.org/3/tutorial/controlflow.html#the-range-function"><code>range</code></a> doesn’t generate all the numbers in the sequence at once, so it saves on memory. This can be quite useful if you’re looping over a large collection, and you don’t need to store everything all at once. However, in this example, <code>r</code> is a list that <em>does</em> store all the consecutive integers.</li>
 </ol>
+<p>Loops are for repeatedly executing code. <code>for</code> loops are great when you know the number of iterations needed ahead of time. If the number of iterations is not known, then you’ll need a <code>while</code> loop. While loops will only terminate after a condition is found to be true. Here are some examples <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#while">in R</a> and <a href="https://docs.python.org/3/reference/compound_stmts.html#while">in Python</a>.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="control-flow.html#cb163-1" aria-hidden="true" tabindex="-1"></a>keepGoing <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb163-2"><a href="control-flow.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(keepGoing){</span>
+<span id="cb163-3"><a href="control-flow.html#cb163-3" aria-hidden="true" tabindex="-1"></a>    oneOrZero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>)</span>
+<span id="cb163-4"><a href="control-flow.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;oneOrZero:&quot;</span>, oneOrZero))</span>
+<span id="cb163-5"><a href="control-flow.html#cb163-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(oneOrZero <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb163-6"><a href="control-flow.html#cb163-6" aria-hidden="true" tabindex="-1"></a>        keepGoing <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb163-7"><a href="control-flow.html#cb163-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb163-8"><a href="control-flow.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
+<span id="cb163-9"><a href="control-flow.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
+<span id="cb163-10"><a href="control-flow.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb164-1"><a href="control-flow.html#cb164-1" aria-hidden="true" tabindex="-1"></a>keep_going <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb164-2"><a href="control-flow.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> keep_going:</span>
+<span id="cb164-3"><a href="control-flow.html#cb164-3" aria-hidden="true" tabindex="-1"></a>    one_or_zero <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, <span class="fl">.5</span>) </span>
+<span id="cb164-4"><a href="control-flow.html#cb164-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;one_or_zero: &quot;</span>, one_or_zero)</span>
+<span id="cb164-5"><a href="control-flow.html#cb164-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> one_or_zero <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb164-6"><a href="control-flow.html#cb164-6" aria-hidden="true" tabindex="-1"></a>        keep_going <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb164-7"><a href="control-flow.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="co">## one_or_zero:  0</span></span>
+<span id="cb164-8"><a href="control-flow.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="co">## one_or_zero:  1</span></span></code></pre></div>
 <div class="rmd-caution">
-<p>Loop tips:</p>
+<p>Here are some tips for writing loops:</p>
 <ol style="list-style-type: decimal">
-<li>If you find yourself copy/paste-ing code, changing only a small portion of text on each line of code, you should consider using a loop,</li>
+<li>If you find yourself copying and pasting code, changing only a small portion of text on each line of code, you should consider using a loop.</li>
 <li>If a <code>for</code> loop works for something you are trying to do, first try to find a replacement function that does what you want. The examples above just made a <code>vector</code>/<code>list</code> of consecutive integers. There are many built in functions that accomplish this. Avoiding loops in this case would make your program shorter, easier to read, and (potentially) much faster.</li>
 <li>A third option between looping, and a built-in function, is to try the functional approach. This will be explained more in the last chapter.</li>
 <li>Watch out for <a href="https://en.wikipedia.org/wiki/Off-by-one_error"><strong>off-by-one</strong> errors</a>. Iterating over the wrong sequence is a common mistake, considering
 <ul>
 <li>Python starts counting from <span class="math inline">\(0\)</span>, while R starts counting from <span class="math inline">\(1\)</span></li>
 <li>sometimes iteration <code>i</code> references the <code>i-1</code>th element of a container</li>
-<li>The behavior of loops is sometimes more difficult to understand if they’re using <code>break</code> or <code>continue</code>/<code>next</code> statements</li>
+<li>The behavior of loops is sometimes more difficult to understand if they’re using <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Looping"><code>break</code></a> or <a href="https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops"><code>continue</code>/<code>next</code> statements</a>.</li>
 </ul></li>
-<li><em>Don’t hardcode variables.</em> Minimize the number of places you have to make changes to your code. You will change your code consistently, so save your future self some time.</li>
+<li><em>Don’t hardcode variables.</em> In other words, don’t write code that is specific to particulars of your script’s current draft. Write code that will still run if your program is fed different data, or if you need to calculate something else that’s closely-related (e.g. run the same calculations on different data sets, or vary the number of simulations, or make the same plot several times in similar situations, etc.). I can guarantee that most of the code you write will need to be run in many different situations. If, at every time you decide to make a change, you need to hunt down multiple places and make multiple changes, there is a nontrivial probability you will miss at least one. As a result, you will introduce a bug into your program, and waste (sometimes a lot of) time trying to find it.</li>
+<li>Watch out for infinite <code>while</code> loops. Make sure that your stopping criterion is guaranteed to eventually become true.</li>
 </ol>
 </div>
-<div class="rmd-caution">
-<p>The last point bears repeating: <em>don’t hardcode variables</em>. In statistical programs, there are often “tuning parameters,” for instance that must be changed frequently to affect the overall behavior of the program. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility.</p>
-<p>In the example above, the <code>myLength</code> or <code>my_length</code> variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you <em>did</em> hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes!</p>
-</div>
-<p>Python provides an alternative way to construct lists similar to the one we constructed in the above example. They are called <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions"><strong>list comprehensions</strong></a>. You can incorporate iteration and conditional logic in one line of code.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb162-1"><a href="control-flow.html#cb162-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span><span class="op">*</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb162-2"><a href="control-flow.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 6, 12, 18, 24]</span></span></code></pre></div>
+<!-- Above I provide some advice that is worth repeating: *don't hardcode variables*. The goal is to minimize the number of places you have to make changes to your code, if such a need arises. , so try to save your future self some time.  -->
+<!-- For example, in statistical programs, there are often "tuning parameters" that must be changed frequently to affect the overall behavior of the program. For instance, you might need to re-run some plotting script after changing a few graphical parameters, or you might need to change the confidence or significance level of some interval or hypothesis test, or change a variable you're using to subset values in a data frame, or alter the number of simulations you're performing, or the number of iterations you're performing, etc. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility. If they don't need to be changed at all, even better!  -->
+<!-- On the other hand, if you refer to specific choices in the code of your program, then every time you make a change, you will need to hunt down all of those lines of code, and make multiple changes. -->
+<!-- In the code examples above, the  `myLength` and `my_length` variables could be referenced in many places later on in our programs.  -->
+<!-- Even better, use a function to calculate the length of the container. Then, even if your container changes in size, the program will still run as intended.  -->
+<!-- TODO -->
+<p>Python also provides an alternative way to construct lists similar to the one we constructed in the above example. They are called <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions"><strong>list comprehensions</strong></a>. These are convenient because you can incorporate iteration and conditional logic in one line of code.</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb165-1"><a href="control-flow.html#cb165-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span><span class="op">*</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb165-2"><a href="control-flow.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 6, 12, 18, 24]</span></span></code></pre></div>
 <p>You might also have a look at <a href="https://www.python.org/dev/peps/pep-0289/"><em>generator expressions</em></a> and <a href="https://www.python.org/dev/peps/pep-0274/"><em>dictionary comprehensions</em></a>.</p>
 <p>R can come close to replicating the above behavior with vectorization, but the conditional part is hard to achieve without subsetting.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="control-flow.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)[<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)<span class="sc">%%</span><span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span>
-<span id="cb163-2"><a href="control-flow.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0  6 12 18 24</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="control-flow.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)[<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)<span class="sc">%%</span><span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span>
+<span id="cb166-2"><a href="control-flow.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0  6 12 18 24</span></span></code></pre></div>
 </div>
-<div id="a-longer-example" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> A Longer Example</h2>
-<div id="description-of-accept-reject-sampling" class="section level3" number="11.3.1">
-<h3><span class="header-section-number">11.3.1</span> Description of Accept-Reject Sampling</h3>
-<p>An example of an algorithm that uses conditional logic is the <strong>accept-reject sampling method</strong> <span class="citation">(<a href="#ref-monte-carlo-stat-methods" role="doc-biblioref">Robert and Casella 2005</a>)</span>. This is useful for when we want to sample from a <em>target probability density</em> <span class="math inline">\(p(x)\)</span>, using another distribution called a <em>proposal distribution</em> <span class="math inline">\(q(x)\)</span>.</p>
-<p><span class="math inline">\(q(x)\)</span> is probably a distribution that is easy to sample from and is easy to evaluate pointwise. For example, a uniform distribution satisfies these criteria because both R and Python have functions that accomplish these two things (e.g. sampling can be done with <code>runif</code> in R and <code>np.random.uniform</code> in Python). <span class="math inline">\(p(x)\)</span> is generally more “complicated.” If it wasn’t, we would try to find some built-in function for it.</p>
-<p>One common way a distribution can be complicated is that it can have an unknown <strong>normalizing constant</strong>–one that is difficult or impossible to solve using calculus. This happens a lot in <em>Bayesian Statistics</em>, for example.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>. We might write down
-<span class="math display">\[
-p(x) = \frac{f(x)}{\int f(x) dx},
-\]</span>
-and this is guaranteed to be a probability density function as long as <span class="math inline">\(f(x) \ge 0\)</span> and <span class="math inline">\(\int f(x) dx &lt; \infty\)</span>, but we might have no idea how to solve the denominator. In this case, <span class="math inline">\(f(x)\)</span> is easy to evaluate pointwise, but <span class="math inline">\(p(x)\)</span> is not.</p>
-<p>This algorithm makes use of an auxiliary random variable that is sampled from a <span class="math inline">\(\text{Bernoulli}(p)\)</span> distribution. As long as <span class="math inline">\(0 &lt; p &lt; 1\)</span>, a Bernoulli random variable <span class="math inline">\(Y\)</span> is either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. The probability it takes the value <span class="math inline">\(1\)</span> is <span class="math inline">\(p\)</span>, while the probability that it takes the value <span class="math inline">\(0\)</span> is <span class="math inline">\(1-p\)</span>. A coin flip is a good example use-case for this distribution. Coin flips are commonly assumed to be distributed as<span class="math inline">\(\text{Bernoulli}(.5)\)</span>. At least for fair coins, there is an equal chance that the coin lands heads (i.e. <span class="math inline">\(0\)</span>) or tails (i.e. <span class="math inline">\(1\)</span>).</p>
-<p>The most difficult part about using this algorithm is that one must calculate the probability parameter of this Bernoulli random variable. This involves calculating (by hand) an upper bound <span class="math inline">\(M\)</span> for the ratio <span class="math inline">\(f(x) / q(x)\)</span>. This bound has to hold uniformly, meaning that it is a constant number that is greater than the ratio no matter what <span class="math inline">\(x\)</span> we plug in.</p>
-<p>Below is one step of the accept-reject algorithm.</p>
-<hr />
-<p><strong>Algorithm 1</strong>: Accept-Reject Sampling (One Step)</p>
-<hr />
-<ol style="list-style-type: decimal">
-<li>Calculate <span class="math inline">\(M &gt; \frac{f(x)}{q(x)}\)</span> (the smaller the better)</li>
-<li>Sample <span class="math inline">\(X\)</span> from <span class="math inline">\(q(x)\)</span></li>
-<li>Sample <span class="math inline">\(Y \mid X\)</span> from <span class="math inline">\(\text{Bernoulli}\left(\frac{f(X)}{q(X)M}\right)\)</span></li>
-<li>If <span class="math inline">\(Y = 1\)</span>, then return <span class="math inline">\(X\)</span></li>
-<li>Otherwise, return nothing</li>
-</ol>
-<hr />
-<p>Multiple samples will be required, so this process needs to be iterated many times. There are two ways to do this. If you want to iterate a fixed number of times, you can use a <code>for</code> loop. However, in that case, you will end up with a random number of samples. On the other hand, if you want a nonrandom number of samples, you will probably want a <code>while</code> loop. This is the approach the example below takes. The <code>while</code> loop will continue iterating until a condition is false. In our case, we want to loop until we receive the total number of samples we requested.</p>
-</div>
-<div id="a-specific-example" class="section level3" number="11.3.2">
-<h3><span class="header-section-number">11.3.2</span> A Specific Example</h3>
-<p>Here is a specific example. Let’s say our target<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> is
-<span class="math display">\[
-p(x) = 
-\begin{cases}
-\frac{x^2(1-x)}{\int_0^1 x^2(1-x) dx} &amp; 0 &lt; x &lt; 1 \\
-0 &amp; \text{otherwise}
-\end{cases}.
-\]</span>
-The denominator, <span class="math inline">\(\int_0^1 x^2(1-x) dx\)</span>, is the target’s normalizing constant. You might know how to solve this integral, but let’s pretend for the sake of our example that it’s too difficult for us. We want to sample from <span class="math inline">\(p(x)\)</span> while only being able to evaluate (not sample) from its normalized version.</p>
-<p>Next, let’s choose a uniform distribution for our proposal distribution:
-<span class="math display">\[
-q(x) = 
-\begin{cases}
-1 &amp; 0 &lt; x &lt; 1 \\
-0 &amp; \text{otherwise}
-\end{cases}
-\]</span>
-We can plot all three functions.</p>
-<div class="figure"><span id="fig:unnamed-chunk-163"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-163-1.png" alt="Visualizing Our Three Functions" width="80%" />
-<p class="caption">
-Figure 11.1: Visualizing Our Three Functions
-</p>
-</div>
-<p>Here’s some Python code that attempts to sample once from <span class="math inline">\(p(x)\)</span>. Sometimes proposals are not accepted. When that happens, the function returns <code>None</code>.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb164-1"><a href="control-flow.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb164-2"><a href="control-flow.html#cb164-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb164-3"><a href="control-flow.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(samp):</span>
-<span id="cb164-4"><a href="control-flow.html#cb164-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;the unnormalized density&quot;&quot;&quot;</span></span>
-<span id="cb164-5"><a href="control-flow.html#cb164-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">1</span><span class="op">-</span>samp)<span class="op">*</span>(samp<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb164-6"><a href="control-flow.html#cb164-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb164-7"><a href="control-flow.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> attempt_one_samp():</span>
-<span id="cb164-8"><a href="control-flow.html#cb164-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;attempts to sample from target distribution, using uniform as a proposal&quot;&quot;&quot;</span></span>
-<span id="cb164-9"><a href="control-flow.html#cb164-9" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.uniform()</span>
-<span id="cb164-10"><a href="control-flow.html#cb164-10" aria-hidden="true" tabindex="-1"></a>    M <span class="op">=</span> <span class="dv">4</span><span class="op">/</span><span class="dv">27</span></span>
-<span id="cb164-11"><a href="control-flow.html#cb164-11" aria-hidden="true" tabindex="-1"></a>    bern_prob_param <span class="op">=</span> f(x)<span class="op">/</span>M</span>
-<span id="cb164-12"><a href="control-flow.html#cb164-12" aria-hidden="true" tabindex="-1"></a>    accept <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, bern_prob_param) <span class="op">==</span> <span class="dv">1</span></span>
-<span id="cb164-13"><a href="control-flow.html#cb164-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> accept:</span>
-<span id="cb164-14"><a href="control-flow.html#cb164-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code></pre></div>
-<div class="sourceCode" id="cb165"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb165-1"><a href="control-flow.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_from_target(num_times):</span>
-<span id="cb165-2"><a href="control-flow.html#cb165-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;sample num_times from the target distribution&quot;&quot;&quot;</span></span>
-<span id="cb165-3"><a href="control-flow.html#cb165-3" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> []</span>
-<span id="cb165-4"><a href="control-flow.html#cb165-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="bu">len</span>(samps) <span class="op">&lt;</span> num_times:</span>
-<span id="cb165-5"><a href="control-flow.html#cb165-5" aria-hidden="true" tabindex="-1"></a>        potential_samp <span class="op">=</span> attempt_one_samp()</span>
-<span id="cb165-6"><a href="control-flow.html#cb165-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> potential_samp <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb165-7"><a href="control-flow.html#cb165-7" aria-hidden="true" tabindex="-1"></a>            samps.append(potential_samp)</span>
-<span id="cb165-8"><a href="control-flow.html#cb165-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samps</span></code></pre></div>
-<ol style="list-style-type: decimal">
-<li>we used a <code>while</code> loop instead of a <code>for</code> loop because we did not know how many iterations it would take to get <code>num_times</code> samples</li>
-<li>We are following the <a href="https://www.python.org/dev/peps/pep-0008/#other-recommendations">Python style guide</a> and using the <code>is not</code> keyword to check if something is <code>None</code></li>
-</ol>
-In chapter <a href="visualization.html#visualization">13</a>, we’ll show you the code that you can use to generate the plot below.
-<div class="figure"><span id="fig:unnamed-chunk-166"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-166-1.png" alt="Comparing Random Samples With Theory" width="672" />
-<p class="caption">
-Figure 11.2: Comparing Random Samples With Theory
-</p>
-</div>
+<div id="exercises-8" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Exercises</h2>
 
 </div>
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-monte-carlo-stat-methods" class="csl-entry">
-Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Methods (Springer Texts in Statistics)</em>. Berlin, Heidelberg: Springer-Verlag.
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="16">
-<li id="fn16"><p>The posterior distribution is usually the object of interest in Bayesian statistics. According to Bayes’ Rule, the unnormalized posterior is usually the product of two “easy” functions. However, integrating the product is not always possible!<a href="control-flow.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>This is the density of a <span class="math inline">\(\text{Beta}(3,2)\)</span> random variable, if you’re curious.<a href="control-flow.html#fnref17" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 

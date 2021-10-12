@@ -2,18 +2,18 @@
 
 ## Conditional Logic 
 
-We discussed Boolean objects in \@ref(basic-types). We used these for
+We discussed Boolean/logical objects in \@ref(basic-types). We used these for
 
-- counting up number of times a condition appeared, and 
-- subsetting.
+- counting the number of times a condition appeared, and 
+- subsetting vectors and data frames.
 
-Another way to use them is to conditionally execute code, depending on whether or truth condition of a Boolean. 
+Another way to use them is to conditionally execute code. You can choose to execute code depending on whether or not a Boolean/logical value is true or not. 
 
-In R, 
+This is what an [if statement looks like In R](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#if): 
 ```{r, collapse = TRUE}
-myName <- "Clare"
-if(myName != "Taylor"){
-    print("you are not Taylor")
+myName <- "Taylor"
+if(myName != "Clare"){
+    print("you are not Clare")
 }
 ```
 
@@ -25,9 +25,9 @@ if my_name == "Taylor":
     print("hi Taylor")
 ```
 
-There can be more than one truth test. To test alternative Boolean conditions, you can add one or more `else if` (in R) or `elif` (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.  
+There can be more than one test of truth. To test alternative conditions, you can add one or more `else if` (in R) or `elif` (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.  
 
-If no `if` block or `else if`/`elif` block executes, an `else` block will always execute. That's why `else` blocks don't need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks.
+If no `if` block or `else if`/`elif` block executes, an `else` block will always execute. That's why `else` blocks don't need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks. If there is no `else` block, and none of the previous conditions are true, nothing will execute.
 
 ```{r, collapse = TRUE}
 food <- "muffin"
@@ -55,7 +55,7 @@ else:
 
 One line of code generally does one "thing," unless you're using loops. Code written inside a loop will execute many times. 
 
-The most common loop for us will be a `for` loop. A simple `for` loop in R might look like this
+The most common loop for us will be a `for` loop. A simple [`for` loop in R](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#for) might look like this
 
 ```{r, collapse = TRUE}
 myLength <- 9
@@ -66,11 +66,11 @@ for(i in seq_len(myLength)){
 r
 ```
 
-1. `seq_len(myLength)` gives us a `vector`
-2. `i` is a variable that takes on the values found in the `vector`
-3. Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable `i`
+1. `seq_len(myLength)` gives us a `vector`.
+2. `i` is a variable that takes on the values found in `seq_len(myLength)`.
+3. Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable `i`.
 
-[In Python](https://docs.python.org/3/tutorial/controlflow.html#for-statements)
+[Here is an example of a for loop in Python](https://docs.python.org/3/tutorial/controlflow.html#for-statements):
 
 ```{python, collapse = TRUE}
 my_length = 9
@@ -80,31 +80,67 @@ for i in range(my_length):
 r
 ```
 
-1. Unsurprisingly, Python's syntax opts for indentation and colons instead of curly braces and parentheses,
-2. Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable `i`
-3. `for` loops in Python are more flexible because they iterate over many different types of data structures,
-4. The [`range`](https://docs.python.org/3/tutorial/controlflow.html#the-range-function) doesn't generate all the numbers in the sequence at once, so it saves on memory. This can be quite useful for certain applications. However, `r` is a list that *does* store all the consecutive integers.
+1. Unsurprisingly, Python's syntax opts for indentation and colons instead of curly braces and parentheses.
+2. Code inside the loop (indented underneath the `for` line), is repeatedly executed, and it may or may not reference the dynamic variable `i`.
+3. `for` loops in Python are more flexible because they iterate over many different types of data structures--in this case [`range()` returns an object of type `range`](https://docs.python.org/3/library/stdtypes.html#range). 
+4. The [`range`](https://docs.python.org/3/tutorial/controlflow.html#the-range-function) doesn't generate all the numbers in the sequence at once, so it saves on memory. This can be quite useful if you're looping over a large collection, and you don't need to store everything all at once. However, in this example, `r` is a list that *does* store all the consecutive integers.
+
+Loops are for repeatedly executing code. `for` loops are great when you know the number of iterations needed ahead of time. If the number of iterations is not known, then you'll need a `while` loop. While loops will only terminate after a condition is found to be true. Here are some examples [in R](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#while) and [in Python](https://docs.python.org/3/reference/compound_stmts.html#while).  
+
+```{r, collapse = TRUE, echo=FALSE}
+set.seed(8)
+```
+```{r, collapse = TRUE}
+keepGoing <- TRUE
+while(keepGoing){
+    oneOrZero <- rbinom(1, 1, .5)
+    print(paste("oneOrZero:", oneOrZero))
+    if(oneOrZero == 1)
+        keepGoing <- FALSE
+}
+```
+```{python, collapse = TRUE, echo = FALSE}
+import numpy as np
+np.random.seed(1)
+```
+
+```{python, collapse = TRUE}
+keep_going = True
+while keep_going:
+    one_or_zero = np.random.binomial(1, .5) 
+    print("one_or_zero: ", one_or_zero)
+    if one_or_zero == 1:
+        keep_going = False
+```
+
+
 
 ::: {.rmd-caution}
-Loop tips:
+Here are some tips for writing loops:
 
-1. If you find yourself copy/paste-ing code, changing only a small portion of text on each line of code, you should consider using a loop, 
+1. If you find yourself copying and pasting code, changing only a small portion of text on each line of code, you should consider using a loop. 
 2. If a `for` loop works for something you are trying to do, first try to find a replacement function that does what you want. The examples above just made a `vector`/`list` of consecutive integers. There are many built in functions that accomplish this. Avoiding loops in this case would make your program shorter, easier to read, and (potentially) much faster. 
 3. A third option between looping, and a built-in function, is to try the functional approach. This will be explained more in the last chapter. 
 3. Watch out for [**off-by-one** errors](https://en.wikipedia.org/wiki/Off-by-one_error). Iterating over the wrong sequence is a common mistake, considering 
     * Python starts counting from $0$, while R starts counting from $1$
     * sometimes iteration `i` references the `i-1`th element of a container
-    * The behavior of loops is sometimes more difficult to understand if they're using `break` or `continue`/`next` statements
-4. *Don't hardcode variables.* Minimize the number of places you have to make changes to your code. You will change your code consistently, so save your future self some time. 
+    * The behavior of loops is sometimes more difficult to understand if they're using [`break`](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Looping) or [`continue`/`next` statements](https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops).
+4. *Don't hardcode variables.* In other words, don't write code that is specific to particulars of your script's current draft. Write code that will still run if your program is fed different data, or if you need to calculate something else that's closely-related (e.g. run the same calculations on different data sets, or vary the number of simulations, or make the same plot several times in similar situations, etc.). I can guarantee that most of the code you write will need to be run in many different situations. If, at every time you decide to make a change, you need to hunt down multiple places and make multiple changes, there is a nontrivial probability you will miss at least one. As a result, you will introduce a bug into your program, and waste (sometimes a lot of) time trying to find it.
+5. Watch out for infinite `while` loops. Make sure that your stopping criterion is guaranteed to eventually become true.
 :::
 
-::: {.rmd-caution}
-The last point bears repeating: *don't hardcode variables*. In statistical programs, there are often "tuning parameters," for instance that must be changed frequently to affect the overall behavior of the program. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility. 
+<!-- Above I provide some advice that is worth repeating: *don't hardcode variables*. The goal is to minimize the number of places you have to make changes to your code, if such a need arises. , so try to save your future self some time.  -->
 
-In the example above, the  `myLength` or `my_length` variable could be referenced in many places throughout the entire program. If you wanted to change the number of iterations in your program (which happens all the time), and you *did* hardcode the length in a bunch of places throughout the program, you would need to hunt down all those changes!
-:::
+<!-- For example, in statistical programs, there are often "tuning parameters" that must be changed frequently to affect the overall behavior of the program. For instance, you might need to re-run some plotting script after changing a few graphical parameters, or you might need to change the confidence or significance level of some interval or hypothesis test, or change a variable you're using to subset values in a data frame, or alter the number of simulations you're performing, or the number of iterations you're performing, etc. If these variables only need to be changed in one location, that saves you a lot of time and gives you more flexibility. If they don't need to be changed at all, even better!  -->
 
-Python provides an alternative way to construct lists similar to the one we constructed in the above example. They are called [**list comprehensions**](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions). You can incorporate iteration and conditional logic in one line of code. 
+<!-- On the other hand, if you refer to specific choices in the code of your program, then every time you make a change, you will need to hunt down all of those lines of code, and make multiple changes. -->
+
+<!-- In the code examples above, the  `myLength` and `my_length` variables could be referenced in many places later on in our programs.  -->
+
+<!-- Even better, use a function to calculate the length of the container. Then, even if your container changes in size, the program will still run as intended.  -->
+
+<!-- TODO -->
+Python also provides an alternative way to construct lists similar to the one we constructed in the above example. They are called [**list comprehensions**](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions). These are convenient because you can incorporate iteration and conditional logic in one line of code. 
 
 ```{python, collapse = TRUE}
 [3*i for i in range(10) if i%2 == 0]
@@ -120,111 +156,4 @@ R can come close to replicating the above behavior with vectorization, but the c
 
 
 
-## A Longer Example
-
-### Description of Accept-Reject Sampling
-
-An example of an algorithm that uses conditional logic is the **accept-reject sampling method** [@monte-carlo-stat-methods]. This is useful for when we want to sample from a *target probability density* $p(x)$, using another distribution called a *proposal distribution* $q(x)$. 
-
-$q(x)$ is probably a distribution that is easy to sample from and is easy to evaluate pointwise. For example, a uniform distribution satisfies these criteria because both R and Python have functions that accomplish these two things (e.g. sampling can be done with `runif` in R and `np.random.uniform` in Python). $p(x)$ is generally more "complicated." If it wasn't, we would try to find some built-in function for it. 
-
-One common way a distribution can be complicated is that it can have an unknown **normalizing constant**--one that is difficult or impossible to solve using calculus. This happens a lot in *Bayesian Statistics*, for example.^[The posterior distribution is usually the object of interest in Bayesian statistics. According to Bayes' Rule, the unnormalized posterior is usually the product of two "easy" functions. However, integrating the product is not always possible!]. We might write down 
-$$
-p(x) = \frac{f(x)}{\int f(x) dx},
-$$
-and this is guaranteed to be a probability density function as long as $f(x) \ge 0$  and $\int f(x) dx < \infty$, but we might have no idea how to solve the denominator. In this case, $f(x)$ is easy to evaluate pointwise, but $p(x)$ is not. 
-
-This algorithm makes use of an auxiliary random variable that is sampled from a $\text{Bernoulli}(p)$ distribution. As long as $0 < p < 1$, a Bernoulli random variable $Y$ is either $0$ or $1$. The probability it takes the value $1$ is $p$, while the probability that it takes the value $0$ is $1-p$. A coin flip is a good example use-case for this distribution. Coin flips are commonly assumed to be distributed as$\text{Bernoulli}(.5)$. At least for fair coins, there is an equal chance that the coin lands heads (i.e. $0$) or tails (i.e. $1$).
-
-The most difficult part about using this algorithm is that one must calculate the probability parameter of this Bernoulli random variable. This involves calculating (by hand) an upper bound $M$ for the ratio $f(x) / q(x)$. This bound has to hold uniformly, meaning that it is a constant number that is greater than the ratio no matter what $x$ we plug in. 
-
-Below is one step of the accept-reject algorithm. 
-
-******
-**Algorithm 1**:  Accept-Reject Sampling (One Step)
-
-******
-1. Calculate $M > \frac{f(x)}{q(x)}$ (the smaller the better)
-2.  Sample $X$ from $q(x)$
-3.  Sample $Y \mid X$ from $\text{Bernoulli}\left(\frac{f(X)}{q(X)M}\right)$
-4. If $Y = 1$, then return $X$
-5. Otherwise, return nothing
-
-******
-
-Multiple samples will be required, so this process needs to be iterated many times. There are two ways to do this. If you want to iterate a fixed number of times, you can use a `for` loop. However, in that case, you will end up with a random number of samples. On the other hand, if you want a nonrandom number of samples, you will probably want a `while` loop. This is the approach the example below takes. The `while` loop will continue iterating until a condition is false. In our case, we want to loop until we receive the total number of samples we requested. 
-
-### A Specific Example
-
-Here is a specific example. Let's say our target^[This is the density of a $\text{Beta}(3,2)$ random variable, if you're curious.] is 
-$$
-p(x) = 
-\begin{cases}
-\frac{x^2(1-x)}{\int_0^1 x^2(1-x) dx} & 0 < x < 1 \\
-0 & \text{otherwise}
-\end{cases}.
-$$
-The denominator, $\int_0^1 x^2(1-x) dx$, is the target's normalizing constant. You might know how to solve this integral, but let's pretend for the sake of our example that it's too difficult for us. We want to sample from $p(x)$ while only being able to evaluate (not sample) from its normalized version.
-
-Next, let's choose a uniform distribution for our proposal distribution: 
-$$
-q(x) = 
-\begin{cases}
-1 & 0 < x < 1 \\
-0 & \text{otherwise}
-\end{cases}
-$$
-We can plot all three functions.
-
-```{r, echo=F, out.width='80%', fig.cap = "Visualizing Our Three Functions"}
-xGrid <- seq(0,1,by=.01)
-f <- function(x) x^2*(1-x)
-plot(xGrid, dbeta(xGrid,3,2), ylab = "", xlab = "x", type = "l", col = "black")
-lines(xGrid, f(xGrid), col = "red")
-lines(xGrid, rep(1, length(xGrid)), col = "green")
-legend("topright", c("p(x)","f(x)", "q(x)"), col = c("black", "red", "green"), pch = 4)
-```
-
-Here's some Python code that attempts to sample once from $p(x)$. Sometimes proposals are not accepted. When that happens, the function returns `None`.
-
-```{python, collapse = TRUE}
-import numpy as np
-
-def f(samp):
-    """the unnormalized density"""
-    return (1-samp)*(samp**2)
-
-def attempt_one_samp():
-    """attempts to sample from target distribution, using uniform as a proposal"""
-    x = np.random.uniform()
-    M = 4/27
-    bern_prob_param = f(x)/M
-    accept = np.random.binomial(1, bern_prob_param) == 1
-    if accept:
-        return x
-```
-
-```{python, collapse = TRUE}
-def sample_from_target(num_times):
-    """sample num_times from the target distribution"""
-    samps = []
-    while len(samps) < num_times:
-        potential_samp = attempt_one_samp()
-        if potential_samp is not None:
-            samps.append(potential_samp)
-    return samps
-```
-
-
-1. we used a `while` loop instead of a `for` loop because we did not know how many iterations it would take to get `num_times` samples
-2. We are following the [Python style guide](https://www.python.org/dev/peps/pep-0008/#other-recommendations) and using the `is not` keyword to check if something is `None` 
-
-
-In chapter \@ref(visualization), we'll show you the code that you can use to generate the plot below. 
-```{r, collapse = TRUE, echo=F, fig.cap = "Comparing Random Samples With Theory"}
-samps <- rbeta(10000,3,2)
-xGrid <- seq(min(samps), max(samps), length.out = 100)
-hist(samps, main = "", xlab = "x", probability = T)
-lines(xGrid, dbeta(xGrid,3,2), type = "l", col = "red")
-```
-
+## Exercises

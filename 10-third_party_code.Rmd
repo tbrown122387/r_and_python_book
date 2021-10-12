@@ -65,9 +65,9 @@ When you call `library(thePackage)`, the package has an environment created for 
 
  - First, **don't define variables in the global environment that are already named in another environment.** There are many variables that come pre-loaded in the `base` package (to see them, type `ls("package:base")`), and if you like using a lot of packages, you're increasing the number of names you should avoid using. 
 
- - Second, **don't `library` in a package unless you need it, and if you do, be aware of all the names it will mask it packages you loaded in before**. The good news is that `library` will often print warnings letting you know which names have been masked. The bad news is that it's somewhat out of your control--if you need two packages, then they might have a shared name, and the only thing you can do about it is watch the ordering you load them in.
+ - Second, **don't `library()` in a package unless you need it, and if you do, be aware of all the names it will mask it packages you loaded in before**. The good news is that `library` will often print warnings letting you know which names have been masked. The bad news is that it's somewhat out of your control--if you need two packages, then they might have a shared name, and the only thing you can do about it is watch the ordering you load them in.
  
- - Third, don't use `library()` inside code that is `source`'d in other files. For example, if you attach a package to the search path from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
+ - Third, don't use `library()` inside code that is `source()`'d in other files. For example, if you attach a package to the search path from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
 
 All is not lost if there is a name conflict. The variables haven't disappeared. It's just slightly more difficult to refer to them. For instance, if I load in `Hmisc` [@hmisc], I get the warning warning that `format.pval` and `units` are now masked because they were names that were in `"package:base"`. I can still refer to these masked variables with the double colon operator (`::`).
 
@@ -152,8 +152,16 @@ n(size=10)
 
 Keep in mind, you're always at risk of accidentally re-using names, even if you aren't `import`ing anything. For example, consider the following code. 
 ```{python, eval = FALSE}
-# don't do this!
-sum = 3
+n = 3 # now you can't use n as a function 
+n()   
 ```
 
-This is very bad, because now you cannot use the `sum` function that was named in the built-in module. To see what is in your built in module, type the following into your Python interpreter: `dir(__builtins__)`.
+This is very bad, because now you cannot use the `n()` function that was imported from the `numpy.random` sub-module earlier. In other words, it is longer *callable*. The error message from the above code will be something like `TypeError: 'int' object is not callable`.
+
+Use the `dir()` function to see what is available inside a module. Here are a few examples. Type them into your own machine to see what they output.
+
+```{python, eval = FALSE}
+dir(np) # numpy stuff
+dir(__builtins__) #built-in stuff
+```
+
