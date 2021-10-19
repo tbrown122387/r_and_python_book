@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -343,7 +343,13 @@ div.csl-indent {
 <li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
 <li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
 <li class="chapter" data-level="16" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>16</b> Running Scripts from the Command Line</a></li>
 <li class="part"><span><b>III Programming Styles</b></span></li>
@@ -436,48 +442,52 @@ div.csl-indent {
 <span id="cb158-4"><a href="control-flow.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
 <p>There can be more than one test of truth. To test alternative conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
 <p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks. If there is no <code>else</code> block, and none of the previous conditions are true, nothing will execute.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="control-flow.html#cb159-1" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
-<span id="cb159-2"><a href="control-flow.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
-<span id="cb159-3"><a href="control-flow.html#cb159-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
-<span id="cb159-4"><a href="control-flow.html#cb159-4" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
-<span id="cb159-5"><a href="control-flow.html#cb159-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
-<span id="cb159-6"><a href="control-flow.html#cb159-6" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
-<span id="cb159-7"><a href="control-flow.html#cb159-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
-<span id="cb159-8"><a href="control-flow.html#cb159-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb159-9"><a href="control-flow.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb160"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb160-1"><a href="control-flow.html#cb160-1" aria-hidden="true" tabindex="-1"></a>my_num <span class="op">=</span> <span class="fl">42.999</span></span>
-<span id="cb160-2"><a href="control-flow.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb160-3"><a href="control-flow.html#cb160-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num is even&quot;</span>)</span>
-<span id="cb160-4"><a href="control-flow.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb160-5"><a href="control-flow.html#cb160-5" aria-hidden="true" tabindex="-1"></a>    my_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb160-6"><a href="control-flow.html#cb160-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num was made even&quot;</span>)</span>
-<span id="cb160-7"><a href="control-flow.html#cb160-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb160-8"><a href="control-flow.html#cb160-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
-<span id="cb160-9"><a href="control-flow.html#cb160-9" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="control-flow.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb159-2"><a href="control-flow.html#cb159-2" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="st">&quot;muffin&quot;</span></span>
+<span id="cb159-3"><a href="control-flow.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
+<span id="cb159-4"><a href="control-flow.html#cb159-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
+<span id="cb159-5"><a href="control-flow.html#cb159-5" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
+<span id="cb159-6"><a href="control-flow.html#cb159-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
+<span id="cb159-7"><a href="control-flow.html#cb159-7" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb159-8"><a href="control-flow.html#cb159-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
+<span id="cb159-9"><a href="control-flow.html#cb159-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb159-10"><a href="control-flow.html#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb160-1"><a href="control-flow.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb160-2"><a href="control-flow.html#cb160-2" aria-hidden="true" tabindex="-1"></a>my_num <span class="op">=</span> <span class="fl">42.999</span></span>
+<span id="cb160-3"><a href="control-flow.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb160-4"><a href="control-flow.html#cb160-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num is even&quot;</span>)</span>
+<span id="cb160-5"><a href="control-flow.html#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> my_num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb160-6"><a href="control-flow.html#cb160-6" aria-hidden="true" tabindex="-1"></a>    my_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb160-7"><a href="control-flow.html#cb160-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;my_num was made even&quot;</span>)</span>
+<span id="cb160-8"><a href="control-flow.html#cb160-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb160-9"><a href="control-flow.html#cb160-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
+<span id="cb160-10"><a href="control-flow.html#cb160-10" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
 </div>
 <div id="loops" class="section level2" number="11.2">
 <h2><span class="header-section-number">11.2</span> Loops</h2>
 <p>One line of code generally does one “thing,” unless you’re using loops. Code written inside a loop will execute many times.</p>
 <p>The most common loop for us will be a <code>for</code> loop. A simple <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#for"><code>for</code> loop in R</a> might look like this</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="control-flow.html#cb161-1" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb161-2"><a href="control-flow.html#cb161-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
-<span id="cb161-3"><a href="control-flow.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
-<span id="cb161-4"><a href="control-flow.html#cb161-4" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
-<span id="cb161-5"><a href="control-flow.html#cb161-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb161-6"><a href="control-flow.html#cb161-6" aria-hidden="true" tabindex="-1"></a>r</span>
-<span id="cb161-7"><a href="control-flow.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="control-flow.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co">#in R</span></span>
+<span id="cb161-2"><a href="control-flow.html#cb161-2" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb161-3"><a href="control-flow.html#cb161-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
+<span id="cb161-4"><a href="control-flow.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
+<span id="cb161-5"><a href="control-flow.html#cb161-5" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
+<span id="cb161-6"><a href="control-flow.html#cb161-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb161-7"><a href="control-flow.html#cb161-7" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb161-8"><a href="control-flow.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li><code>seq_len(myLength)</code> gives us a <code>vector</code>.</li>
 <li><code>i</code> is a variable that takes on the values found in <code>seq_len(myLength)</code>.</li>
 <li>Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code>.</li>
 </ol>
 <p><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">Here is an example of a for loop in Python</a>:</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb162-1"><a href="control-flow.html#cb162-1" aria-hidden="true" tabindex="-1"></a>my_length <span class="op">=</span> <span class="dv">9</span></span>
-<span id="cb162-2"><a href="control-flow.html#cb162-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
-<span id="cb162-3"><a href="control-flow.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(my_length):</span>
-<span id="cb162-4"><a href="control-flow.html#cb162-4" aria-hidden="true" tabindex="-1"></a>    r.append(i)</span>
-<span id="cb162-5"><a href="control-flow.html#cb162-5" aria-hidden="true" tabindex="-1"></a>r</span>
-<span id="cb162-6"><a href="control-flow.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 2, 3, 4, 5, 6, 7, 8]</span></span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb162-1"><a href="control-flow.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co">#in Python</span></span>
+<span id="cb162-2"><a href="control-flow.html#cb162-2" aria-hidden="true" tabindex="-1"></a>my_length <span class="op">=</span> <span class="dv">9</span></span>
+<span id="cb162-3"><a href="control-flow.html#cb162-3" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
+<span id="cb162-4"><a href="control-flow.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(my_length):</span>
+<span id="cb162-5"><a href="control-flow.html#cb162-5" aria-hidden="true" tabindex="-1"></a>    r.append(i)</span>
+<span id="cb162-6"><a href="control-flow.html#cb162-6" aria-hidden="true" tabindex="-1"></a>r</span>
+<span id="cb162-7"><a href="control-flow.html#cb162-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 2, 3, 4, 5, 6, 7, 8]</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Unsurprisingly, Python’s syntax opts for indentation and colons instead of curly braces and parentheses.</li>
 <li>Code inside the loop (indented underneath the <code>for</code> line), is repeatedly executed, and it may or may not reference the dynamic variable <code>i</code>.</li>
@@ -485,24 +495,26 @@ div.csl-indent {
 <li>The <a href="https://docs.python.org/3/tutorial/controlflow.html#the-range-function"><code>range</code></a> doesn’t generate all the numbers in the sequence at once, so it saves on memory. This can be quite useful if you’re looping over a large collection, and you don’t need to store everything all at once. However, in this example, <code>r</code> is a list that <em>does</em> store all the consecutive integers.</li>
 </ol>
 <p>Loops are for repeatedly executing code. <code>for</code> loops are great when you know the number of iterations needed ahead of time. If the number of iterations is not known, then you’ll need a <code>while</code> loop. While loops will only terminate after a condition is found to be true. Here are some examples <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#while">in R</a> and <a href="https://docs.python.org/3/reference/compound_stmts.html#while">in Python</a>.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="control-flow.html#cb163-1" aria-hidden="true" tabindex="-1"></a>keepGoing <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb163-2"><a href="control-flow.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(keepGoing){</span>
-<span id="cb163-3"><a href="control-flow.html#cb163-3" aria-hidden="true" tabindex="-1"></a>    oneOrZero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>)</span>
-<span id="cb163-4"><a href="control-flow.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;oneOrZero:&quot;</span>, oneOrZero))</span>
-<span id="cb163-5"><a href="control-flow.html#cb163-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(oneOrZero <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb163-6"><a href="control-flow.html#cb163-6" aria-hidden="true" tabindex="-1"></a>        keepGoing <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb163-7"><a href="control-flow.html#cb163-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb163-8"><a href="control-flow.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="control-flow.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb163-2"><a href="control-flow.html#cb163-2" aria-hidden="true" tabindex="-1"></a>keepGoing <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb163-3"><a href="control-flow.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(keepGoing){</span>
+<span id="cb163-4"><a href="control-flow.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    oneOrZero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>)</span>
+<span id="cb163-5"><a href="control-flow.html#cb163-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;oneOrZero:&quot;</span>, oneOrZero))</span>
+<span id="cb163-6"><a href="control-flow.html#cb163-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(oneOrZero <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb163-7"><a href="control-flow.html#cb163-7" aria-hidden="true" tabindex="-1"></a>        keepGoing <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb163-8"><a href="control-flow.html#cb163-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb163-9"><a href="control-flow.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
-<span id="cb163-10"><a href="control-flow.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 1&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb164"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb164-1"><a href="control-flow.html#cb164-1" aria-hidden="true" tabindex="-1"></a>keep_going <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb164-2"><a href="control-flow.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> keep_going:</span>
-<span id="cb164-3"><a href="control-flow.html#cb164-3" aria-hidden="true" tabindex="-1"></a>    one_or_zero <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, <span class="fl">.5</span>) </span>
-<span id="cb164-4"><a href="control-flow.html#cb164-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;one_or_zero: &quot;</span>, one_or_zero)</span>
-<span id="cb164-5"><a href="control-flow.html#cb164-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> one_or_zero <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb164-6"><a href="control-flow.html#cb164-6" aria-hidden="true" tabindex="-1"></a>        keep_going <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb164-7"><a href="control-flow.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="co">## one_or_zero:  0</span></span>
-<span id="cb164-8"><a href="control-flow.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="co">## one_or_zero:  1</span></span></code></pre></div>
+<span id="cb163-10"><a href="control-flow.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
+<span id="cb163-11"><a href="control-flow.html#cb163-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb164-1"><a href="control-flow.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb164-2"><a href="control-flow.html#cb164-2" aria-hidden="true" tabindex="-1"></a>keep_going <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb164-3"><a href="control-flow.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> keep_going:</span>
+<span id="cb164-4"><a href="control-flow.html#cb164-4" aria-hidden="true" tabindex="-1"></a>    one_or_zero <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, <span class="fl">.5</span>) </span>
+<span id="cb164-5"><a href="control-flow.html#cb164-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;one_or_zero: &quot;</span>, one_or_zero)</span>
+<span id="cb164-6"><a href="control-flow.html#cb164-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> one_or_zero <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb164-7"><a href="control-flow.html#cb164-7" aria-hidden="true" tabindex="-1"></a>        keep_going <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb164-8"><a href="control-flow.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="co">## one_or_zero:  0</span></span>
+<span id="cb164-9"><a href="control-flow.html#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="co">## one_or_zero:  1</span></span></code></pre></div>
 <div class="rmd-caution">
 <p>Here are some tips for writing loops:</p>
 <ol style="list-style-type: decimal">
@@ -548,7 +560,6 @@ div.csl-indent {
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -588,6 +599,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

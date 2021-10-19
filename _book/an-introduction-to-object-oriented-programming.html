@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 17 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="running-scripts-from-the-command-line.html"/>
 <link rel="next" href="functional-programming.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -343,7 +343,13 @@ div.csl-indent {
 <li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
 <li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
 <li class="chapter" data-level="16" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>16</b> Running Scripts from the Command Line</a></li>
 <li class="part"><span><b>III Programming Styles</b></span></li>
@@ -427,7 +433,7 @@ div.csl-indent {
 <li><p><strong>Polymorphism</strong> is the idea that the programmer can use the same code on objects of different types. For example, built-in functions in both R and Python can work on arguments of a wide variety of different types.</p></li>
 <li><p><strong>Encapsulation</strong> is another word for complexity hiding. Do you have to understand every line of code in a package you’re using? No, because a lot of details are purposefully hidden from you.</p></li>
 <li><p><strong>Modularity</strong> is an idea related to encapsulation–it means splitting something into independent pieces. How you split code into different files, different functions, different classes–all of that has to do with modularity. It promotes encapsulation, and it allows you to think about only a few lines of code at a time.</p></li>
-<li><p>The <strong>interface</strong>, between you and the code you’re using, describes <em>what</em> can happen, but not <em>how</em> it happens. In other words, it describes some functionality so that you can decide whether you want to use it, but there are not enough details for you to make it work yourself. For example, all you have to do to be able to estimate a complicated statistical model is to look up some documentation.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a> In other words, you only need to be familiar with the interface, not the implementation.</p></li>
+<li><p>The <strong>interface</strong>, between you and the code you’re using, describes <em>what</em> can happen, but not <em>how</em> it happens. In other words, it describes some functionality so that you can decide whether you want to use it, but there are not enough details for you to make it work yourself. For example, all you have to do to be able to estimate a complicated statistical model is to look up some documentation.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> In other words, you only need to be familiar with the interface, not the implementation.</p></li>
 <li><p>The <strong>implementation</strong> of some code you’re using describes <em>how</em> it works in detail. If you are a package author, you can change your code’s implementation “behind the scenes” and ideally, your end-users would never notice.</p></li>
 </ul>
 <div id="oop-in-python" class="section level2" number="17.1">
@@ -455,15 +461,15 @@ We might consider taking advantage of a recursive formula for the sample means.<
 \bar{x}_n =  \frac{(n-1) \bar{x}_{n-1} + x_n}{n}
 \]</span></p>
 <p>How would we program this in Python? A first option: we might create a variable <code>my_running_ave</code>, and after every data point arrives, we could</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb203-1"><a href="an-introduction-to-object-oriented-programming.html#cb203-1" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb203-2"><a href="an-introduction-to-object-oriented-programming.html#cb203-2" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
-<span id="cb203-3"><a href="an-introduction-to-object-oriented-programming.html#cb203-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.0</span></span>
-<span id="cb203-4"><a href="an-introduction-to-object-oriented-programming.html#cb203-4" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> ((<span class="dv">2</span><span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>my_running_ave <span class="op">+</span> <span class="fl">3.0</span>)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb203-5"><a href="an-introduction-to-object-oriented-programming.html#cb203-5" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
-<span id="cb203-6"><a href="an-introduction-to-object-oriented-programming.html#cb203-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.0</span></span>
-<span id="cb203-7"><a href="an-introduction-to-object-oriented-programming.html#cb203-7" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> ((<span class="dv">3</span><span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>my_running_ave <span class="op">+</span> <span class="fl">2.0</span>)<span class="op">/</span><span class="dv">3</span></span>
-<span id="cb203-8"><a href="an-introduction-to-object-oriented-programming.html#cb203-8" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
-<span id="cb203-9"><a href="an-introduction-to-object-oriented-programming.html#cb203-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb208-1"><a href="an-introduction-to-object-oriented-programming.html#cb208-1" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb208-2"><a href="an-introduction-to-object-oriented-programming.html#cb208-2" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
+<span id="cb208-3"><a href="an-introduction-to-object-oriented-programming.html#cb208-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.0</span></span>
+<span id="cb208-4"><a href="an-introduction-to-object-oriented-programming.html#cb208-4" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> ((<span class="dv">2</span><span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>my_running_ave <span class="op">+</span> <span class="fl">3.0</span>)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb208-5"><a href="an-introduction-to-object-oriented-programming.html#cb208-5" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
+<span id="cb208-6"><a href="an-introduction-to-object-oriented-programming.html#cb208-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.0</span></span>
+<span id="cb208-7"><a href="an-introduction-to-object-oriented-programming.html#cb208-7" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> ((<span class="dv">3</span><span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>my_running_ave <span class="op">+</span> <span class="fl">2.0</span>)<span class="op">/</span><span class="dv">3</span></span>
+<span id="cb208-8"><a href="an-introduction-to-object-oriented-programming.html#cb208-8" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
+<span id="cb208-9"><a href="an-introduction-to-object-oriented-programming.html#cb208-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.0</span></span></code></pre></div>
 <p>There are a few problems with this. Every time we add a data point, the formula slightly changes. Every time we update the average, we have to write a different line of code. This opens up the possibility for more bugs, and it makes your code less likely to be used by other people and more difficult to understand. And if we were trying to code up something more complicated than a running average? That would make matters even worse.</p>
 <p>A second option: write a class that holds onto the running average, and that has</p>
 <ol style="list-style-type: decimal">
@@ -471,34 +477,34 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <li>a <code>get_current_xbar</code> method that gets the most up-to-date information for us.</li>
 </ol>
 <p>Using our code would look like this:</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="an-introduction-to-object-oriented-programming.html#cb204-1" aria-hidden="true" tabindex="-1"></a>my_ave <span class="op">=</span> RunningMean() <span class="co"># create running average object</span></span>
-<span id="cb204-2"><a href="an-introduction-to-object-oriented-programming.html#cb204-2" aria-hidden="true" tabindex="-1"></a>my_ave.get_current_xbar() <span class="co"># no data yet!</span></span>
-<span id="cb204-3"><a href="an-introduction-to-object-oriented-programming.html#cb204-3" aria-hidden="true" tabindex="-1"></a>my_ave.update(<span class="fl">1.</span>) <span class="co"># first data point</span></span>
-<span id="cb204-4"><a href="an-introduction-to-object-oriented-programming.html#cb204-4" aria-hidden="true" tabindex="-1"></a>my_ave.get_current_xbar() <span class="co"># xbar_1</span></span>
-<span id="cb204-5"><a href="an-introduction-to-object-oriented-programming.html#cb204-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.0</span></span>
-<span id="cb204-6"><a href="an-introduction-to-object-oriented-programming.html#cb204-6" aria-hidden="true" tabindex="-1"></a>my_ave.update(<span class="fl">3.</span>)  <span class="co"># second data point</span></span>
-<span id="cb204-7"><a href="an-introduction-to-object-oriented-programming.html#cb204-7" aria-hidden="true" tabindex="-1"></a>my_ave.get_current_xbar()  <span class="co">#xbar_2</span></span>
-<span id="cb204-8"><a href="an-introduction-to-object-oriented-programming.html#cb204-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.0</span></span>
-<span id="cb204-9"><a href="an-introduction-to-object-oriented-programming.html#cb204-9" aria-hidden="true" tabindex="-1"></a>my_ave.n   <span class="co"># my_ave.n instead of self.n</span></span>
-<span id="cb204-10"><a href="an-introduction-to-object-oriented-programming.html#cb204-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb209-1"><a href="an-introduction-to-object-oriented-programming.html#cb209-1" aria-hidden="true" tabindex="-1"></a>my_ave <span class="op">=</span> RunningMean() <span class="co"># create running average object</span></span>
+<span id="cb209-2"><a href="an-introduction-to-object-oriented-programming.html#cb209-2" aria-hidden="true" tabindex="-1"></a>my_ave.get_current_xbar() <span class="co"># no data yet!</span></span>
+<span id="cb209-3"><a href="an-introduction-to-object-oriented-programming.html#cb209-3" aria-hidden="true" tabindex="-1"></a>my_ave.update(<span class="fl">1.</span>) <span class="co"># first data point</span></span>
+<span id="cb209-4"><a href="an-introduction-to-object-oriented-programming.html#cb209-4" aria-hidden="true" tabindex="-1"></a>my_ave.get_current_xbar() <span class="co"># xbar_1</span></span>
+<span id="cb209-5"><a href="an-introduction-to-object-oriented-programming.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.0</span></span>
+<span id="cb209-6"><a href="an-introduction-to-object-oriented-programming.html#cb209-6" aria-hidden="true" tabindex="-1"></a>my_ave.update(<span class="fl">3.</span>)  <span class="co"># second data point</span></span>
+<span id="cb209-7"><a href="an-introduction-to-object-oriented-programming.html#cb209-7" aria-hidden="true" tabindex="-1"></a>my_ave.get_current_xbar()  <span class="co">#xbar_2</span></span>
+<span id="cb209-8"><a href="an-introduction-to-object-oriented-programming.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.0</span></span>
+<span id="cb209-9"><a href="an-introduction-to-object-oriented-programming.html#cb209-9" aria-hidden="true" tabindex="-1"></a>my_ave.n   <span class="co"># my_ave.n instead of self.n</span></span>
+<span id="cb209-10"><a href="an-introduction-to-object-oriented-programming.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span></code></pre></div>
 <div class="rmd-details">
 <p>There is a Python convention that stipules class names should be written in <code>UpperCamelCase</code> (e.g. <code>RunningMean</code>).</p>
 </div>
 <p>That’s much better! Notice the <em>encapsulation</em>. Looking at this code we don’t need to think about the mathematical formula and the data being received. We only need to think about the latter. In other words, the <em>implementation</em> is separated from the <em>interface</em>. The interface in this case, is just the name of the class methods, and the arguments they expect. That’s all we need to know about to use this code.</p>
 <p>Classes (obviously) need to be defined before they are used, so here is the definition of our class.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb205-1"><a href="an-introduction-to-object-oriented-programming.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningMean:</span>
-<span id="cb205-2"><a href="an-introduction-to-object-oriented-programming.html#cb205-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average&quot;&quot;&quot;</span></span>
-<span id="cb205-3"><a href="an-introduction-to-object-oriented-programming.html#cb205-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb205-4"><a href="an-introduction-to-object-oriented-programming.html#cb205-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.current_xbar <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb205-5"><a href="an-introduction-to-object-oriented-programming.html#cb205-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.n <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb205-6"><a href="an-introduction-to-object-oriented-programming.html#cb205-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> update(<span class="va">self</span>, new_x):</span>
-<span id="cb205-7"><a href="an-introduction-to-object-oriented-programming.html#cb205-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.n <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb205-8"><a href="an-introduction-to-object-oriented-programming.html#cb205-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.current_xbar <span class="op">=</span> (<span class="va">self</span>.current_xbar<span class="op">*</span>(<span class="va">self</span>.n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> new_x) <span class="op">/</span> <span class="va">self</span>.n</span>
-<span id="cb205-9"><a href="an-introduction-to-object-oriented-programming.html#cb205-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_xbar(<span class="va">self</span>):</span>
-<span id="cb205-10"><a href="an-introduction-to-object-oriented-programming.html#cb205-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb205-11"><a href="an-introduction-to-object-oriented-programming.html#cb205-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb205-12"><a href="an-introduction-to-object-oriented-programming.html#cb205-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb205-13"><a href="an-introduction-to-object-oriented-programming.html#cb205-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.current_xbar</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb210-1"><a href="an-introduction-to-object-oriented-programming.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningMean:</span>
+<span id="cb210-2"><a href="an-introduction-to-object-oriented-programming.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average&quot;&quot;&quot;</span></span>
+<span id="cb210-3"><a href="an-introduction-to-object-oriented-programming.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb210-4"><a href="an-introduction-to-object-oriented-programming.html#cb210-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.current_xbar <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb210-5"><a href="an-introduction-to-object-oriented-programming.html#cb210-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.n <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb210-6"><a href="an-introduction-to-object-oriented-programming.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> update(<span class="va">self</span>, new_x):</span>
+<span id="cb210-7"><a href="an-introduction-to-object-oriented-programming.html#cb210-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.n <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb210-8"><a href="an-introduction-to-object-oriented-programming.html#cb210-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.current_xbar <span class="op">=</span> (<span class="va">self</span>.current_xbar<span class="op">*</span>(<span class="va">self</span>.n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> new_x) <span class="op">/</span> <span class="va">self</span>.n</span>
+<span id="cb210-9"><a href="an-introduction-to-object-oriented-programming.html#cb210-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_xbar(<span class="va">self</span>):</span>
+<span id="cb210-10"><a href="an-introduction-to-object-oriented-programming.html#cb210-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb210-11"><a href="an-introduction-to-object-oriented-programming.html#cb210-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb210-12"><a href="an-introduction-to-object-oriented-programming.html#cb210-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb210-13"><a href="an-introduction-to-object-oriented-programming.html#cb210-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.current_xbar</span></code></pre></div>
 <div class="rmd-details">
 <p>Methods that look like <code>\_\_init\_\_</code>, or that possess names that begin and end with two underscores, are called <strong>dunder (double underscore) methods</strong>, <strong>special methods</strong> or <strong>magic methods</strong>. There are many that you can take advantage of! For more information see <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">this</a>.</p>
 </div>
@@ -520,54 +526,54 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <div id="adding-inheritance" class="section level3" number="17.1.3">
 <h3><span class="header-section-number">17.1.3</span> Adding Inheritance</h3>
 <p>How can we use inheritance in statistical programming? A primary benefit of inheritance is code re-use, so one example of inheritance is writing a generic algorithm as a base class, and a specific algorithm as a class that inherits from the base class. For example, we could re-use the code in the <code>RunningMean</code> class in a variety of other classes.</p>
-<p>Let’s make some assumptions about a <em>parametric model</em> that is generating our data. Suppose I assume that the data points <span class="math inline">\(x_1, \ldots, x_n\)</span> are a “random sample”<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> from a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>. <span class="math inline">\(\mu\)</span> is assumed to be unknown (this is, after all, and interval for <span class="math inline">\(\mu\)</span>), and <span class="math inline">\(\sigma^2\)</span> is assumed to be known, for simplicity.</p>
+<p>Let’s make some assumptions about a <em>parametric model</em> that is generating our data. Suppose I assume that the data points <span class="math inline">\(x_1, \ldots, x_n\)</span> are a “random sample”<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> from a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>. <span class="math inline">\(\mu\)</span> is assumed to be unknown (this is, after all, and interval for <span class="math inline">\(\mu\)</span>), and <span class="math inline">\(\sigma^2\)</span> is assumed to be known, for simplicity.</p>
 <p>A <span class="math inline">\(95\%\)</span> confidence interval for the true unknown population mean <span class="math inline">\(\mu\)</span> is
 <span class="math display">\[
 \left[\bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right].
 \]</span>
 The width of the interval shrinks as we get more data (as <span class="math inline">\(n \to \infty\)</span>). We can write another class that, not only calculates the center of this interval, <span class="math inline">\(\bar{x}\)</span>, but also returns the interval endpoints.</p>
 <p>If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of <code>RunningMean</code>. Instead, we’ll use the idea of <a href="https://docs.python.org/3/tutorial/classes.html#inheritance"><em>inheritance</em></a>.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb206-1"><a href="an-introduction-to-object-oriented-programming.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb206-2"><a href="an-introduction-to-object-oriented-programming.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean):</span>
-<span id="cb206-3"><a href="an-introduction-to-object-oriented-programming.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
-<span id="cb206-4"><a href="an-introduction-to-object-oriented-programming.html#cb206-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
-<span id="cb206-5"><a href="an-introduction-to-object-oriented-programming.html#cb206-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb206-6"><a href="an-introduction-to-object-oriented-programming.html#cb206-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
-<span id="cb206-7"><a href="an-introduction-to-object-oriented-programming.html#cb206-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
-<span id="cb206-8"><a href="an-introduction-to-object-oriented-programming.html#cb206-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb206-9"><a href="an-introduction-to-object-oriented-programming.html#cb206-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb206-10"><a href="an-introduction-to-object-oriented-programming.html#cb206-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb206-11"><a href="an-introduction-to-object-oriented-programming.html#cb206-11" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
-<span id="cb206-12"><a href="an-introduction-to-object-oriented-programming.html#cb206-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([<span class="va">self</span>.current_xbar <span class="op">-</span> half_width, <span class="va">self</span>.current_xbar <span class="op">+</span> half_width])</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb211-1"><a href="an-introduction-to-object-oriented-programming.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb211-2"><a href="an-introduction-to-object-oriented-programming.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean):</span>
+<span id="cb211-3"><a href="an-introduction-to-object-oriented-programming.html#cb211-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
+<span id="cb211-4"><a href="an-introduction-to-object-oriented-programming.html#cb211-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
+<span id="cb211-5"><a href="an-introduction-to-object-oriented-programming.html#cb211-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb211-6"><a href="an-introduction-to-object-oriented-programming.html#cb211-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
+<span id="cb211-7"><a href="an-introduction-to-object-oriented-programming.html#cb211-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
+<span id="cb211-8"><a href="an-introduction-to-object-oriented-programming.html#cb211-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb211-9"><a href="an-introduction-to-object-oriented-programming.html#cb211-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb211-10"><a href="an-introduction-to-object-oriented-programming.html#cb211-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb211-11"><a href="an-introduction-to-object-oriented-programming.html#cb211-11" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
+<span id="cb211-12"><a href="an-introduction-to-object-oriented-programming.html#cb211-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([<span class="va">self</span>.current_xbar <span class="op">-</span> half_width, <span class="va">self</span>.current_xbar <span class="op">+</span> half_width])</span></code></pre></div>
 <p>The parentheses in the first line of the class definition signal that this new class definition is inheriting from <code>RunningMean</code>. Inside the definition of this new class, when I refer to <code>self.current_xbar</code> Python knows what I’m referring to because it is defined in the base class. Last, I am using <code>super()</code> to access the base class’s methods, such as <code>__init__</code>.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb207-1"><a href="an-introduction-to-object-oriented-programming.html#cb207-1" aria-hidden="true" tabindex="-1"></a>my_ci <span class="op">=</span> RunningCI(<span class="dv">1</span>) <span class="co"># create running average object</span></span>
-<span id="cb207-2"><a href="an-introduction-to-object-oriented-programming.html#cb207-2" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_xbar() <span class="co"># no data yet!</span></span>
-<span id="cb207-3"><a href="an-introduction-to-object-oriented-programming.html#cb207-3" aria-hidden="true" tabindex="-1"></a>my_ci.update(<span class="fl">1.</span>) </span>
-<span id="cb207-4"><a href="an-introduction-to-object-oriented-programming.html#cb207-4" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_interval() </span>
-<span id="cb207-5"><a href="an-introduction-to-object-oriented-programming.html#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.96,  2.96])</span></span>
-<span id="cb207-6"><a href="an-introduction-to-object-oriented-programming.html#cb207-6" aria-hidden="true" tabindex="-1"></a>my_ci.update(<span class="fl">3.</span>)  </span>
-<span id="cb207-7"><a href="an-introduction-to-object-oriented-programming.html#cb207-7" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_interval()  </span>
-<span id="cb207-8"><a href="an-introduction-to-object-oriented-programming.html#cb207-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.61407071, 3.38592929])</span></span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb212-1"><a href="an-introduction-to-object-oriented-programming.html#cb212-1" aria-hidden="true" tabindex="-1"></a>my_ci <span class="op">=</span> RunningCI(<span class="dv">1</span>) <span class="co"># create running average object</span></span>
+<span id="cb212-2"><a href="an-introduction-to-object-oriented-programming.html#cb212-2" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_xbar() <span class="co"># no data yet!</span></span>
+<span id="cb212-3"><a href="an-introduction-to-object-oriented-programming.html#cb212-3" aria-hidden="true" tabindex="-1"></a>my_ci.update(<span class="fl">1.</span>) </span>
+<span id="cb212-4"><a href="an-introduction-to-object-oriented-programming.html#cb212-4" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_interval() </span>
+<span id="cb212-5"><a href="an-introduction-to-object-oriented-programming.html#cb212-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.96,  2.96])</span></span>
+<span id="cb212-6"><a href="an-introduction-to-object-oriented-programming.html#cb212-6" aria-hidden="true" tabindex="-1"></a>my_ci.update(<span class="fl">3.</span>)  </span>
+<span id="cb212-7"><a href="an-introduction-to-object-oriented-programming.html#cb212-7" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_interval()  </span>
+<span id="cb212-8"><a href="an-introduction-to-object-oriented-programming.html#cb212-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.61407071, 3.38592929])</span></span></code></pre></div>
 <p>This example also demonstrates <strong>polymorphism.</strong> Polymorphism comes from the Greek for “many forms.” “Forms” means “type” or “class” in this case. If the same code (usually a function or method) works on objects of different types, that’s polymorphic. Here, the <code>update</code> method worked on an object of class <code>RunningCI</code>, as well as an object of <code>RunningMean</code>.</p>
 <p>Why is this useful? Consider this example.</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb208-1"><a href="an-introduction-to-object-oriented-programming.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datum <span class="kw">in</span> time_series:</span>
-<span id="cb208-2"><a href="an-introduction-to-object-oriented-programming.html#cb208-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
-<span id="cb208-3"><a href="an-introduction-to-object-oriented-programming.html#cb208-3" aria-hidden="true" tabindex="-1"></a>    thing.update(xt)</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb213-1"><a href="an-introduction-to-object-oriented-programming.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datum <span class="kw">in</span> time_series:</span>
+<span id="cb213-2"><a href="an-introduction-to-object-oriented-programming.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
+<span id="cb213-3"><a href="an-introduction-to-object-oriented-programming.html#cb213-3" aria-hidden="true" tabindex="-1"></a>    thing.update(xt)</span></code></pre></div>
 <p>Inside the inner <code>for</code> loop, there is no need for include conditional logic that tests for what kind of type each <code>thing</code> is. We can iterate through time more succinctly.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb209-1"><a href="an-introduction-to-object-oriented-programming.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datum <span class="kw">in</span> time_series:</span>
-<span id="cb209-2"><a href="an-introduction-to-object-oriented-programming.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
-<span id="cb209-3"><a href="an-introduction-to-object-oriented-programming.html#cb209-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class1):</span>
-<span id="cb209-4"><a href="an-introduction-to-object-oriented-programming.html#cb209-4" aria-hidden="true" tabindex="-1"></a>      thing.updatec1(xt)</span>
-<span id="cb209-5"><a href="an-introduction-to-object-oriented-programming.html#cb209-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class2):</span>
-<span id="cb209-6"><a href="an-introduction-to-object-oriented-programming.html#cb209-6" aria-hidden="true" tabindex="-1"></a>      thing.updatec2(xt)</span>
-<span id="cb209-7"><a href="an-introduction-to-object-oriented-programming.html#cb209-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class3):</span>
-<span id="cb209-8"><a href="an-introduction-to-object-oriented-programming.html#cb209-8" aria-hidden="true" tabindex="-1"></a>      thing.updatec3(xt)</span>
-<span id="cb209-9"><a href="an-introduction-to-object-oriented-programming.html#cb209-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class4):</span>
-<span id="cb209-10"><a href="an-introduction-to-object-oriented-programming.html#cb209-10" aria-hidden="true" tabindex="-1"></a>      thing.updatec4(xt)</span>
-<span id="cb209-11"><a href="an-introduction-to-object-oriented-programming.html#cb209-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class5):</span>
-<span id="cb209-12"><a href="an-introduction-to-object-oriented-programming.html#cb209-12" aria-hidden="true" tabindex="-1"></a>      thing.updatec5(xt)</span>
-<span id="cb209-13"><a href="an-introduction-to-object-oriented-programming.html#cb209-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class6):</span>
-<span id="cb209-14"><a href="an-introduction-to-object-oriented-programming.html#cb209-14" aria-hidden="true" tabindex="-1"></a>      thing.updatec6(xt)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb214-1"><a href="an-introduction-to-object-oriented-programming.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datum <span class="kw">in</span> time_series:</span>
+<span id="cb214-2"><a href="an-introduction-to-object-oriented-programming.html#cb214-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
+<span id="cb214-3"><a href="an-introduction-to-object-oriented-programming.html#cb214-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class1):</span>
+<span id="cb214-4"><a href="an-introduction-to-object-oriented-programming.html#cb214-4" aria-hidden="true" tabindex="-1"></a>      thing.updatec1(xt)</span>
+<span id="cb214-5"><a href="an-introduction-to-object-oriented-programming.html#cb214-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class2):</span>
+<span id="cb214-6"><a href="an-introduction-to-object-oriented-programming.html#cb214-6" aria-hidden="true" tabindex="-1"></a>      thing.updatec2(xt)</span>
+<span id="cb214-7"><a href="an-introduction-to-object-oriented-programming.html#cb214-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class3):</span>
+<span id="cb214-8"><a href="an-introduction-to-object-oriented-programming.html#cb214-8" aria-hidden="true" tabindex="-1"></a>      thing.updatec3(xt)</span>
+<span id="cb214-9"><a href="an-introduction-to-object-oriented-programming.html#cb214-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class4):</span>
+<span id="cb214-10"><a href="an-introduction-to-object-oriented-programming.html#cb214-10" aria-hidden="true" tabindex="-1"></a>      thing.updatec4(xt)</span>
+<span id="cb214-11"><a href="an-introduction-to-object-oriented-programming.html#cb214-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class5):</span>
+<span id="cb214-12"><a href="an-introduction-to-object-oriented-programming.html#cb214-12" aria-hidden="true" tabindex="-1"></a>      thing.updatec5(xt)</span>
+<span id="cb214-13"><a href="an-introduction-to-object-oriented-programming.html#cb214-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class6):</span>
+<span id="cb214-14"><a href="an-introduction-to-object-oriented-programming.html#cb214-14" aria-hidden="true" tabindex="-1"></a>      thing.updatec6(xt)</span></code></pre></div>
 <p>If, in the future, you add a new class called <code>class7</code>, then you need to change this inner <code>for</code> loop, as well as provide new code for the class.</p>
 </div>
 <div id="adding-in-composition" class="section level3" number="17.1.4">
@@ -588,19 +594,19 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 </div>
 <hr />
 <p>Here is an example implementation of a confidence interval using composition. Notice that this class “owns” a <code>RunningMean</code> instance called <code>self.mean</code>. This is contrast with <em>inheriting</em> from the <code>RunningMean</code> class.</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb210-1"><a href="an-introduction-to-object-oriented-programming.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI2:</span>
-<span id="cb210-2"><a href="an-introduction-to-object-oriented-programming.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
-<span id="cb210-3"><a href="an-introduction-to-object-oriented-programming.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
-<span id="cb210-4"><a href="an-introduction-to-object-oriented-programming.html#cb210-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.mean <span class="op">=</span> RunningMean()</span>
-<span id="cb210-5"><a href="an-introduction-to-object-oriented-programming.html#cb210-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
-<span id="cb210-6"><a href="an-introduction-to-object-oriented-programming.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> update(<span class="va">self</span>, new_x):    </span>
-<span id="cb210-7"><a href="an-introduction-to-object-oriented-programming.html#cb210-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.mean.update(new_x)</span>
-<span id="cb210-8"><a href="an-introduction-to-object-oriented-programming.html#cb210-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
-<span id="cb210-9"><a href="an-introduction-to-object-oriented-programming.html#cb210-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb210-10"><a href="an-introduction-to-object-oriented-programming.html#cb210-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb210-11"><a href="an-introduction-to-object-oriented-programming.html#cb210-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb210-12"><a href="an-introduction-to-object-oriented-programming.html#cb210-12" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
-<span id="cb210-13"><a href="an-introduction-to-object-oriented-programming.html#cb210-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([<span class="va">self</span>.mean.get_current_xbar() <span class="op">-</span> half_width, <span class="va">self</span>.mean.get_current_xbar() <span class="op">+</span> half_width])</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb215-1"><a href="an-introduction-to-object-oriented-programming.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI2:</span>
+<span id="cb215-2"><a href="an-introduction-to-object-oriented-programming.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
+<span id="cb215-3"><a href="an-introduction-to-object-oriented-programming.html#cb215-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
+<span id="cb215-4"><a href="an-introduction-to-object-oriented-programming.html#cb215-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.mean <span class="op">=</span> RunningMean()</span>
+<span id="cb215-5"><a href="an-introduction-to-object-oriented-programming.html#cb215-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
+<span id="cb215-6"><a href="an-introduction-to-object-oriented-programming.html#cb215-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> update(<span class="va">self</span>, new_x):    </span>
+<span id="cb215-7"><a href="an-introduction-to-object-oriented-programming.html#cb215-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.mean.update(new_x)</span>
+<span id="cb215-8"><a href="an-introduction-to-object-oriented-programming.html#cb215-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
+<span id="cb215-9"><a href="an-introduction-to-object-oriented-programming.html#cb215-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb215-10"><a href="an-introduction-to-object-oriented-programming.html#cb215-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb215-11"><a href="an-introduction-to-object-oriented-programming.html#cb215-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb215-12"><a href="an-introduction-to-object-oriented-programming.html#cb215-12" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
+<span id="cb215-13"><a href="an-introduction-to-object-oriented-programming.html#cb215-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([<span class="va">self</span>.mean.get_current_xbar() <span class="op">-</span> half_width, <span class="va">self</span>.mean.get_current_xbar() <span class="op">+</span> half_width])</span></code></pre></div>
 </div>
 </div>
 <div id="oop-in-r" class="section level2" number="17.2">
@@ -622,10 +628,10 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <p>Instead, it will look like this:</p>
 <pre><code>print(my_obj)</code></pre>
 <p>The primary goal of S3 is <em>polymorphism</em>. We want functions like <code>print</code>, <code>summary</code> and <code>plot</code> to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right? So we can write code like the following, we only have to remember fewer functions as an end-user, and the “right” thing will always happen. If you’re writing a package, it’s also nice for your users that they’re able to use the regular functions that they’re familiar with. For instance, I allow users of my package <a href="https://cran.r-project.org/web/packages/cPseudoMaRg/index.html"><code>cPseudoMaRg</code></a> <span class="citation">(<a href="#ref-cpm" role="doc-biblioref">Brown 2021</a>)</span> to call <code>print</code> on objects of type <code>cpmResults</code>. In section <a href="visualization.html#plotting-with-ggplot2">13.2</a>, <code>ggplot2</code> instances, which are much more complicated than plain <code>numeric</code> <code>vector</code>s, are <code>+</code>ed together.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="an-introduction-to-object-oriented-programming.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print works on pretty much everything</span></span>
-<span id="cb213-2"><a href="an-introduction-to-object-oriented-programming.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(myObj)</span>
-<span id="cb213-3"><a href="an-introduction-to-object-oriented-programming.html#cb213-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(myObjOfADifferentClass)</span>
-<span id="cb213-4"><a href="an-introduction-to-object-oriented-programming.html#cb213-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(aThirdClassObject)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="an-introduction-to-object-oriented-programming.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print works on pretty much everything</span></span>
+<span id="cb218-2"><a href="an-introduction-to-object-oriented-programming.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(myObj)</span>
+<span id="cb218-3"><a href="an-introduction-to-object-oriented-programming.html#cb218-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(myObjOfADifferentClass)</span>
+<span id="cb218-4"><a href="an-introduction-to-object-oriented-programming.html#cb218-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(aThirdClassObject)</span></code></pre></div>
 <p>This works because these “high-level” functions (like <code>print</code>), will look at its input and choose the most appropriate function to call, based on what kind of type the input has. <code>print</code> is the high-level function. When you run some of the above code, it might not be obvious which specific function <code>print</code> chooses for each input. You can’t see that happening, yet.</p>
 <p>Last, recall that this discussion only applies to S3 objects. Not all objects are S3 objects, though. To find out if an object <code>x</code> is an S3 object, use <code>is.object(x)</code>.</p>
 </div>
@@ -636,21 +642,20 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <p><code>print</code> is a <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Method-dispatching"><strong>generic function</strong></a> which is a function that looks at the type of its first argument, and then calls another, more specialized function depending on what type that argument is. Not all functions in <code>R</code> are generic, but some are. In addition to <code>print</code>, <code>summary</code> and <code>plot</code> are the most ubiquitous generic functions. Generic functions are an <em>interface</em>, because the user does not need to concern himself with the details going on behind the scenes.</p>
 <p>In R, a <strong>method</strong> is a specialized function that gets chosen by the generic function for a particular type of input. The method is the <em>implementation</em>. When the generic function chooses a particular method, this is called <strong>method dispatch</strong>.</p>
 <p>If you look at the definition of a generic function, let’s take <code>plot</code> for instance, it has a single line that calls <code>UseMethod</code>.</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="an-introduction-to-object-oriented-programming.html#cb214-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="an-introduction-to-object-oriented-programming.html#cb219-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x556ebc883508&gt;
+## &lt;bytecode: 0x56369a4aec60&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods</code> function.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="an-introduction-to-object-oriented-programming.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(plot)</span></code></pre></div>
-<pre><code>##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
-##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
-## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
-## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
-## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
-## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
-## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
-## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="an-introduction-to-object-oriented-programming.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(plot)</span></code></pre></div>
+<pre><code>##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts* plot.default       
+##  [7] plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*        plot.formula*       plot.function      
+## [13] plot.ggplot*        plot.gtable*        plot.hcl_palettes*  plot.hclust*        plot.histogram*     plot.HoltWinters*  
+## [19] plot.isoreg*        plot.lm*            plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*          
+## [25] plot.prcomp*        plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
+## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*         plot.trellis*      
+## [37] plot.ts             plot.tskernel*      plot.TukeyHSD*     
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
 <p>All of these S3 class methods share the same naming convention. Their name has the generic function’s name as a prefix, then a dot (<code>.</code>), then the name of the class that they are specifically written to be used with.</p>
 <div class="rmd-caution">
@@ -662,47 +667,47 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 </div>
 <p>Also, these methods are not <em>encapsulated</em> inside a class definition like they are in Python, either. They just look like loose functions–the method definition for a particular class is not defined inside the class. These class methods can be defined just as ordinary functions, out on their own, in whatever file you think is appropriate to define functions in.</p>
 <p>As an example, let’s try to <code>plot</code> some specific objects.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="an-introduction-to-object-oriented-programming.html#cb218-1" aria-hidden="true" tabindex="-1"></a>aDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">10</span>))</span>
-<span id="cb218-2"><a href="an-introduction-to-object-oriented-programming.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(aDF) <span class="co"># is this s3?</span></span>
-<span id="cb218-3"><a href="an-introduction-to-object-oriented-programming.html#cb218-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb218-4"><a href="an-introduction-to-object-oriented-programming.html#cb218-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aDF)</span>
-<span id="cb218-5"><a href="an-introduction-to-object-oriented-programming.html#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
-<span id="cb218-6"><a href="an-introduction-to-object-oriented-programming.html#cb218-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aDF)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-218-1.png" width="50%" /></p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="an-introduction-to-object-oriented-programming.html#cb223-1" aria-hidden="true" tabindex="-1"></a>aDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">10</span>))</span>
+<span id="cb223-2"><a href="an-introduction-to-object-oriented-programming.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(aDF) <span class="co"># is this s3?</span></span>
+<span id="cb223-3"><a href="an-introduction-to-object-oriented-programming.html#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb223-4"><a href="an-introduction-to-object-oriented-programming.html#cb223-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aDF)</span>
+<span id="cb223-5"><a href="an-introduction-to-object-oriented-programming.html#cb223-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
+<span id="cb223-6"><a href="an-introduction-to-object-oriented-programming.html#cb223-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aDF)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-222-1.png" width="50%" /></p>
 <p>Because <code>aDF</code> has its <code>class</code> set to <code>data.frame</code>, this causes <code>plot</code> to try to find a <code>plot.data.frame</code> method. If this method was not found, R would attempt to find/use a <code>plot.default</code> method. If no default method existed, an error would be thrown.</p>
-<p>As another example, we can play around with objects created with the <code>ecdf</code> function. This function computes an <em>empirical cumulative distribution function</em>, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="an-introduction-to-object-oriented-programming.html#cb219-1" aria-hidden="true" tabindex="-1"></a>myECDF <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
-<span id="cb219-2"><a href="an-introduction-to-object-oriented-programming.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(myECDF)</span>
-<span id="cb219-3"><a href="an-introduction-to-object-oriented-programming.html#cb219-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb219-4"><a href="an-introduction-to-object-oriented-programming.html#cb219-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myECDF)</span>
-<span id="cb219-5"><a href="an-introduction-to-object-oriented-programming.html#cb219-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ecdf&quot;     &quot;stepfun&quot;  &quot;function&quot;</span></span>
-<span id="cb219-6"><a href="an-introduction-to-object-oriented-programming.html#cb219-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myECDF)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-219-1.png" width="50%" /></p>
+<p>As another example, we can play around with objects created with the <code>ecdf</code> function. This function computes an <em>empirical cumulative distribution function</em>, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a></p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="an-introduction-to-object-oriented-programming.html#cb224-1" aria-hidden="true" tabindex="-1"></a>myECDF <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb224-2"><a href="an-introduction-to-object-oriented-programming.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(myECDF)</span>
+<span id="cb224-3"><a href="an-introduction-to-object-oriented-programming.html#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb224-4"><a href="an-introduction-to-object-oriented-programming.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myECDF)</span>
+<span id="cb224-5"><a href="an-introduction-to-object-oriented-programming.html#cb224-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ecdf&quot;     &quot;stepfun&quot;  &quot;function&quot;</span></span>
+<span id="cb224-6"><a href="an-introduction-to-object-oriented-programming.html#cb224-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myECDF)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-223-1.png" width="50%" /></p>
 <p>This is how <em>inheritance</em> works in R. The <code>ecdf</code> class inherits from the <code>stepfun</code> class, which in turn inherits from the <code>function</code> class. When you call <code>plot(myECDF)</code>, ultimately <code>plot.ecdf</code> is used on this object. However, if <code>plot.ecdf</code> did not exist, <code>plot.stepfun</code> would be tried. S3 inheritance in R is much simpler than Python’s inheritance!</p>
 </div>
 <div id="creating-s3-objects" class="section level3" number="17.2.3">
 <h3><span class="header-section-number">17.2.3</span> Creating S3 objects</h3>
 <p>Creating an S3 object is very easy, and is a nice way to spruce up some bundled up object that you’re returning from a function, say. All you have to do is tag an object by changing its class attribute. Just assign a character <code>vector</code> to it!</p>
 <p>Here is an example of creating an object of <code>CoolClass</code>.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="an-introduction-to-object-oriented-programming.html#cb220-1" aria-hidden="true" tabindex="-1"></a>myThing <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb220-2"><a href="an-introduction-to-object-oriented-programming.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(myThing)</span>
-<span id="cb220-3"><a href="an-introduction-to-object-oriented-programming.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="do">## NULL</span></span>
-<span id="cb220-4"><a href="an-introduction-to-object-oriented-programming.html#cb220-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myThing) <span class="ot">&lt;-</span> <span class="st">&quot;CoolClass&quot;</span></span>
-<span id="cb220-5"><a href="an-introduction-to-object-oriented-programming.html#cb220-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(myThing) <span class="co"># also try class(myThing)</span></span>
-<span id="cb220-6"><a href="an-introduction-to-object-oriented-programming.html#cb220-6" aria-hidden="true" tabindex="-1"></a><span class="do">## $class</span></span>
-<span id="cb220-7"><a href="an-introduction-to-object-oriented-programming.html#cb220-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CoolClass&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="an-introduction-to-object-oriented-programming.html#cb225-1" aria-hidden="true" tabindex="-1"></a>myThing <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb225-2"><a href="an-introduction-to-object-oriented-programming.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(myThing)</span>
+<span id="cb225-3"><a href="an-introduction-to-object-oriented-programming.html#cb225-3" aria-hidden="true" tabindex="-1"></a><span class="do">## NULL</span></span>
+<span id="cb225-4"><a href="an-introduction-to-object-oriented-programming.html#cb225-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myThing) <span class="ot">&lt;-</span> <span class="st">&quot;CoolClass&quot;</span></span>
+<span id="cb225-5"><a href="an-introduction-to-object-oriented-programming.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(myThing) <span class="co"># also try class(myThing)</span></span>
+<span id="cb225-6"><a href="an-introduction-to-object-oriented-programming.html#cb225-6" aria-hidden="true" tabindex="-1"></a><span class="do">## $class</span></span>
+<span id="cb225-7"><a href="an-introduction-to-object-oriented-programming.html#cb225-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CoolClass&quot;</span></span></code></pre></div>
 <p><code>myThing</code> is now an instance of <code>CoolClass</code>, even though I never defined what a <code>CoolClass</code> was ahead of time! If you’re used to Python, this should seem very strange. Compared to Python, this approach is very flexible, but also, kind of dangerous, because you can change the <code>class</code>es of existing objects. You shouldn’t do that, but you could if you wanted to.</p>
 <p>After you start creating your own S3 objects, you can write your own methods associated with these objects. That way, when a user of your code uses typical generic functions, such as <code>summary</code>, on your S3 object, you can control what interesting things will happen to the user of your package. Here’s an example.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="an-introduction-to-object-oriented-programming.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myThing)</span>
-<span id="cb221-2"><a href="an-introduction-to-object-oriented-programming.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;No summary available!&quot;</span></span>
-<span id="cb221-3"><a href="an-introduction-to-object-oriented-programming.html#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Cool Classes are too cool for summaries!&quot;</span></span>
-<span id="cb221-4"><a href="an-introduction-to-object-oriented-programming.html#cb221-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;:)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="an-introduction-to-object-oriented-programming.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myThing)</span>
+<span id="cb226-2"><a href="an-introduction-to-object-oriented-programming.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;No summary available!&quot;</span></span>
+<span id="cb226-3"><a href="an-introduction-to-object-oriented-programming.html#cb226-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Cool Classes are too cool for summaries!&quot;</span></span>
+<span id="cb226-4"><a href="an-introduction-to-object-oriented-programming.html#cb226-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;:)&quot;</span></span></code></pre></div>
 <p>The <code>summary</code> method I wrote for this class is the following.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="an-introduction-to-object-oriented-programming.html#cb222-1" aria-hidden="true" tabindex="-1"></a>summary.CoolClass <span class="ot">&lt;-</span> <span class="cf">function</span>(object,...){</span>
-<span id="cb222-2"><a href="an-introduction-to-object-oriented-programming.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;No summary available!&quot;</span>)</span>
-<span id="cb222-3"><a href="an-introduction-to-object-oriented-programming.html#cb222-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Cool Classes are too cool for summaries!&quot;</span>)</span>
-<span id="cb222-4"><a href="an-introduction-to-object-oriented-programming.html#cb222-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;:)&quot;</span>)</span>
-<span id="cb222-5"><a href="an-introduction-to-object-oriented-programming.html#cb222-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="an-introduction-to-object-oriented-programming.html#cb227-1" aria-hidden="true" tabindex="-1"></a>summary.CoolClass <span class="ot">&lt;-</span> <span class="cf">function</span>(object,...){</span>
+<span id="cb227-2"><a href="an-introduction-to-object-oriented-programming.html#cb227-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;No summary available!&quot;</span>)</span>
+<span id="cb227-3"><a href="an-introduction-to-object-oriented-programming.html#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Cool Classes are too cool for summaries!&quot;</span>)</span>
+<span id="cb227-4"><a href="an-introduction-to-object-oriented-programming.html#cb227-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;:)&quot;</span>)</span>
+<span id="cb227-5"><a href="an-introduction-to-object-oriented-programming.html#cb227-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>When writing this, I kept the signature the same as <code>summary</code>’s.</p>
 </div>
 <div id="s4-objects-the-big-picture" class="section level3" number="17.2.4">
@@ -724,19 +729,19 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="rmd-details">
 <p>Bioconductor is kind of like CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided <a href="https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html">here</a>.</p>
 </div>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="an-introduction-to-object-oriented-programming.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb223-2"><a href="an-introduction-to-object-oriented-programming.html#cb223-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">Matrix</span>(<span class="dv">10</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">4</span>, <span class="dv">7</span>)</span>
-<span id="cb223-3"><a href="an-introduction-to-object-oriented-programming.html#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="fu">isS4</span>(M)</span>
-<span id="cb223-4"><a href="an-introduction-to-object-oriented-programming.html#cb223-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb223-5"><a href="an-introduction-to-object-oriented-programming.html#cb223-5" aria-hidden="true" tabindex="-1"></a>M</span>
-<span id="cb223-6"><a href="an-introduction-to-object-oriented-programming.html#cb223-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 x 7 Matrix of class &quot;dgeMatrix&quot;</span></span>
-<span id="cb223-7"><a href="an-introduction-to-object-oriented-programming.html#cb223-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]</span></span>
-<span id="cb223-8"><a href="an-introduction-to-object-oriented-programming.html#cb223-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]   11   15   19   23   27   31   35</span></span>
-<span id="cb223-9"><a href="an-introduction-to-object-oriented-programming.html#cb223-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]   12   16   20   24   28   32   36</span></span>
-<span id="cb223-10"><a href="an-introduction-to-object-oriented-programming.html#cb223-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]   13   17   21   25   29   33   37</span></span>
-<span id="cb223-11"><a href="an-introduction-to-object-oriented-programming.html#cb223-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,]   14   18   22   26   30   34   38</span></span>
-<span id="cb223-12"><a href="an-introduction-to-object-oriented-programming.html#cb223-12" aria-hidden="true" tabindex="-1"></a>M<span class="sc">@</span>Dim</span>
-<span id="cb223-13"><a href="an-introduction-to-object-oriented-programming.html#cb223-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4 7</span></span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="an-introduction-to-object-oriented-programming.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb228-2"><a href="an-introduction-to-object-oriented-programming.html#cb228-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">Matrix</span>(<span class="dv">10</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">4</span>, <span class="dv">7</span>)</span>
+<span id="cb228-3"><a href="an-introduction-to-object-oriented-programming.html#cb228-3" aria-hidden="true" tabindex="-1"></a><span class="fu">isS4</span>(M)</span>
+<span id="cb228-4"><a href="an-introduction-to-object-oriented-programming.html#cb228-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb228-5"><a href="an-introduction-to-object-oriented-programming.html#cb228-5" aria-hidden="true" tabindex="-1"></a>M</span>
+<span id="cb228-6"><a href="an-introduction-to-object-oriented-programming.html#cb228-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 x 7 Matrix of class &quot;dgeMatrix&quot;</span></span>
+<span id="cb228-7"><a href="an-introduction-to-object-oriented-programming.html#cb228-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]</span></span>
+<span id="cb228-8"><a href="an-introduction-to-object-oriented-programming.html#cb228-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]   11   15   19   23   27   31   35</span></span>
+<span id="cb228-9"><a href="an-introduction-to-object-oriented-programming.html#cb228-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]   12   16   20   24   28   32   36</span></span>
+<span id="cb228-10"><a href="an-introduction-to-object-oriented-programming.html#cb228-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]   13   17   21   25   29   33   37</span></span>
+<span id="cb228-11"><a href="an-introduction-to-object-oriented-programming.html#cb228-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,]   14   18   22   26   30   34   38</span></span>
+<span id="cb228-12"><a href="an-introduction-to-object-oriented-programming.html#cb228-12" aria-hidden="true" tabindex="-1"></a>M<span class="sc">@</span>Dim</span>
+<span id="cb228-13"><a href="an-introduction-to-object-oriented-programming.html#cb228-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4 7</span></span></code></pre></div>
 <p>Inside an S4 object, data members are called <strong>slots</strong>, and they are accessed with the <code>@</code> operator (instead of the <code>$</code> operator). Objects can be tested if they are S4 with the function <code>isS4</code>. Otherwise, they look and feel just like S3 objects.</p>
 </div>
 <div id="creating-s4-objects" class="section level3" number="17.2.6">
@@ -748,86 +753,85 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <li>S4 classes have a fixed amount of slots, a name, and a fixed inheritance structure</li>
 </ul>
 <p>Let’s do an example that resembles the example we did in Python, where we defined a <code>RunningMean</code> class and a <code>RunningCI</code> class.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="an-introduction-to-object-oriented-programming.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;RunningMean&quot;</span>,</span>
-<span id="cb224-2"><a href="an-introduction-to-object-oriented-programming.html#cb224-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">slots =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="st">&quot;integer&quot;</span>, </span>
-<span id="cb224-3"><a href="an-introduction-to-object-oriented-programming.html#cb224-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">currentXbar =</span> <span class="st">&quot;numeric&quot;</span>))</span>
-<span id="cb224-4"><a href="an-introduction-to-object-oriented-programming.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;RunningCI&quot;</span>,</span>
-<span id="cb224-5"><a href="an-introduction-to-object-oriented-programming.html#cb224-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">slots =</span> <span class="fu">list</span>(<span class="at">knownVar =</span> <span class="st">&quot;numeric&quot;</span>),</span>
-<span id="cb224-6"><a href="an-introduction-to-object-oriented-programming.html#cb224-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">contains =</span> <span class="st">&quot;RunningMean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="an-introduction-to-object-oriented-programming.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;RunningMean&quot;</span>,</span>
+<span id="cb229-2"><a href="an-introduction-to-object-oriented-programming.html#cb229-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">slots =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="st">&quot;integer&quot;</span>, </span>
+<span id="cb229-3"><a href="an-introduction-to-object-oriented-programming.html#cb229-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">currentXbar =</span> <span class="st">&quot;numeric&quot;</span>))</span>
+<span id="cb229-4"><a href="an-introduction-to-object-oriented-programming.html#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;RunningCI&quot;</span>,</span>
+<span id="cb229-5"><a href="an-introduction-to-object-oriented-programming.html#cb229-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">slots =</span> <span class="fu">list</span>(<span class="at">knownVar =</span> <span class="st">&quot;numeric&quot;</span>),</span>
+<span id="cb229-6"><a href="an-introduction-to-object-oriented-programming.html#cb229-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">contains =</span> <span class="st">&quot;RunningMean&quot;</span>)</span></code></pre></div>
 <p>Here, unlike in S3 class’s, we actually have to define a class with <code>setClass</code>. In the parlance of S4, <code>slots</code> are a class’ data members, and <code>contains</code> signals that one class inherits from another (even though it kind of sounds like <em>composition</em>).</p>
 <p>New objects can be created with the <code>new</code> function after this is accomplished.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="an-introduction-to-object-oriented-programming.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>)</span>
-<span id="cb225-2"><a href="an-introduction-to-object-oriented-programming.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="an-introduction-to-object-oriented-programming.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>)</span>
+<span id="cb230-2"><a href="an-introduction-to-object-oriented-programming.html#cb230-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span></code></pre></div>
 <p>Let’s set one of those up. To achieve we want this <code>update</code> method to be generic, and it will work on objects of type “RunningMean” and “RunningCI.”</p>
 <p>Next we want to define an <code>update</code> generic function that will work on objects of both types. This is what gives us <em>polymorphism</em> . The generic <code>update</code> will call specialized methods for objects of class “RunningMean” and “RunningCI.”</p>
 <p>Recall that in the Python example, each class had its own update method. Here, we still have a specialized method for each class, but S4 methods don’t have to be defined inside the class definition, as we can see below.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="an-introduction-to-object-oriented-programming.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;update&quot;</span>, <span class="cf">function</span>(oldMean, newNum) {</span>
-<span id="cb226-2"><a href="an-introduction-to-object-oriented-programming.html#cb226-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">standardGeneric</span>(<span class="st">&quot;update&quot;</span>)</span>
-<span id="cb226-3"><a href="an-introduction-to-object-oriented-programming.html#cb226-3" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb226-4"><a href="an-introduction-to-object-oriented-programming.html#cb226-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Creating a new generic function for &#39;update&#39; in the global environment</span></span>
-<span id="cb226-5"><a href="an-introduction-to-object-oriented-programming.html#cb226-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;update&quot;</span></span>
-<span id="cb226-6"><a href="an-introduction-to-object-oriented-programming.html#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;update&quot;</span>,</span>
-<span id="cb226-7"><a href="an-introduction-to-object-oriented-programming.html#cb226-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">c</span>(<span class="at">oldMean =</span> <span class="st">&quot;RunningMean&quot;</span>, <span class="at">newNum =</span> <span class="st">&quot;numeric&quot;</span>),</span>
-<span id="cb226-8"><a href="an-introduction-to-object-oriented-programming.html#cb226-8" aria-hidden="true" tabindex="-1"></a>          <span class="cf">function</span>(oldMean, newNum) {</span>
-<span id="cb226-9"><a href="an-introduction-to-object-oriented-programming.html#cb226-9" aria-hidden="true" tabindex="-1"></a>            oldN <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>n</span>
-<span id="cb226-10"><a href="an-introduction-to-object-oriented-programming.html#cb226-10" aria-hidden="true" tabindex="-1"></a>            oldAve <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>currentXbar</span>
-<span id="cb226-11"><a href="an-introduction-to-object-oriented-programming.html#cb226-11" aria-hidden="true" tabindex="-1"></a>            newAve <span class="ot">&lt;-</span> (oldAve<span class="sc">*</span>oldN <span class="sc">+</span> newNum)<span class="sc">/</span>(oldN <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb226-12"><a href="an-introduction-to-object-oriented-programming.html#cb226-12" aria-hidden="true" tabindex="-1"></a>            newN <span class="ot">&lt;-</span> oldN <span class="sc">+</span> 1L</span>
-<span id="cb226-13"><a href="an-introduction-to-object-oriented-programming.html#cb226-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> newN, <span class="at">currentXbar =</span> newAve))</span>
-<span id="cb226-14"><a href="an-introduction-to-object-oriented-programming.html#cb226-14" aria-hidden="true" tabindex="-1"></a>          }</span>
-<span id="cb226-15"><a href="an-introduction-to-object-oriented-programming.html#cb226-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb226-16"><a href="an-introduction-to-object-oriented-programming.html#cb226-16" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;update&quot;</span>,</span>
-<span id="cb226-17"><a href="an-introduction-to-object-oriented-programming.html#cb226-17" aria-hidden="true" tabindex="-1"></a>          <span class="fu">c</span>(<span class="at">oldMean =</span> <span class="st">&quot;RunningCI&quot;</span>, <span class="at">newNum =</span> <span class="st">&quot;numeric&quot;</span>),</span>
-<span id="cb226-18"><a href="an-introduction-to-object-oriented-programming.html#cb226-18" aria-hidden="true" tabindex="-1"></a>          <span class="cf">function</span>(oldMean, newNum) {</span>
-<span id="cb226-19"><a href="an-introduction-to-object-oriented-programming.html#cb226-19" aria-hidden="true" tabindex="-1"></a>            oldN <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>n</span>
-<span id="cb226-20"><a href="an-introduction-to-object-oriented-programming.html#cb226-20" aria-hidden="true" tabindex="-1"></a>            oldAve <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>currentXbar</span>
-<span id="cb226-21"><a href="an-introduction-to-object-oriented-programming.html#cb226-21" aria-hidden="true" tabindex="-1"></a>            newAve <span class="ot">&lt;-</span> (oldAve<span class="sc">*</span>oldN <span class="sc">+</span> newNum)<span class="sc">/</span>(oldN <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb226-22"><a href="an-introduction-to-object-oriented-programming.html#cb226-22" aria-hidden="true" tabindex="-1"></a>            newN <span class="ot">&lt;-</span> oldN <span class="sc">+</span> 1L</span>
-<span id="cb226-23"><a href="an-introduction-to-object-oriented-programming.html#cb226-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> newN, <span class="at">currentXbar =</span> newAve, <span class="at">knownVar =</span> oldMean<span class="sc">@</span>knownVar))</span>
-<span id="cb226-24"><a href="an-introduction-to-object-oriented-programming.html#cb226-24" aria-hidden="true" tabindex="-1"></a>          }</span>
-<span id="cb226-25"><a href="an-introduction-to-object-oriented-programming.html#cb226-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="an-introduction-to-object-oriented-programming.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;update&quot;</span>, <span class="cf">function</span>(oldMean, newNum) {</span>
+<span id="cb231-2"><a href="an-introduction-to-object-oriented-programming.html#cb231-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">standardGeneric</span>(<span class="st">&quot;update&quot;</span>)</span>
+<span id="cb231-3"><a href="an-introduction-to-object-oriented-programming.html#cb231-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb231-4"><a href="an-introduction-to-object-oriented-programming.html#cb231-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Creating a new generic function for &#39;update&#39; in the global environment</span></span>
+<span id="cb231-5"><a href="an-introduction-to-object-oriented-programming.html#cb231-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;update&quot;</span></span>
+<span id="cb231-6"><a href="an-introduction-to-object-oriented-programming.html#cb231-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;update&quot;</span>,</span>
+<span id="cb231-7"><a href="an-introduction-to-object-oriented-programming.html#cb231-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">c</span>(<span class="at">oldMean =</span> <span class="st">&quot;RunningMean&quot;</span>, <span class="at">newNum =</span> <span class="st">&quot;numeric&quot;</span>),</span>
+<span id="cb231-8"><a href="an-introduction-to-object-oriented-programming.html#cb231-8" aria-hidden="true" tabindex="-1"></a>          <span class="cf">function</span>(oldMean, newNum) {</span>
+<span id="cb231-9"><a href="an-introduction-to-object-oriented-programming.html#cb231-9" aria-hidden="true" tabindex="-1"></a>            oldN <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>n</span>
+<span id="cb231-10"><a href="an-introduction-to-object-oriented-programming.html#cb231-10" aria-hidden="true" tabindex="-1"></a>            oldAve <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>currentXbar</span>
+<span id="cb231-11"><a href="an-introduction-to-object-oriented-programming.html#cb231-11" aria-hidden="true" tabindex="-1"></a>            newAve <span class="ot">&lt;-</span> (oldAve<span class="sc">*</span>oldN <span class="sc">+</span> newNum)<span class="sc">/</span>(oldN <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb231-12"><a href="an-introduction-to-object-oriented-programming.html#cb231-12" aria-hidden="true" tabindex="-1"></a>            newN <span class="ot">&lt;-</span> oldN <span class="sc">+</span> 1L</span>
+<span id="cb231-13"><a href="an-introduction-to-object-oriented-programming.html#cb231-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> newN, <span class="at">currentXbar =</span> newAve))</span>
+<span id="cb231-14"><a href="an-introduction-to-object-oriented-programming.html#cb231-14" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb231-15"><a href="an-introduction-to-object-oriented-programming.html#cb231-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb231-16"><a href="an-introduction-to-object-oriented-programming.html#cb231-16" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;update&quot;</span>,</span>
+<span id="cb231-17"><a href="an-introduction-to-object-oriented-programming.html#cb231-17" aria-hidden="true" tabindex="-1"></a>          <span class="fu">c</span>(<span class="at">oldMean =</span> <span class="st">&quot;RunningCI&quot;</span>, <span class="at">newNum =</span> <span class="st">&quot;numeric&quot;</span>),</span>
+<span id="cb231-18"><a href="an-introduction-to-object-oriented-programming.html#cb231-18" aria-hidden="true" tabindex="-1"></a>          <span class="cf">function</span>(oldMean, newNum) {</span>
+<span id="cb231-19"><a href="an-introduction-to-object-oriented-programming.html#cb231-19" aria-hidden="true" tabindex="-1"></a>            oldN <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>n</span>
+<span id="cb231-20"><a href="an-introduction-to-object-oriented-programming.html#cb231-20" aria-hidden="true" tabindex="-1"></a>            oldAve <span class="ot">&lt;-</span> oldMean<span class="sc">@</span>currentXbar</span>
+<span id="cb231-21"><a href="an-introduction-to-object-oriented-programming.html#cb231-21" aria-hidden="true" tabindex="-1"></a>            newAve <span class="ot">&lt;-</span> (oldAve<span class="sc">*</span>oldN <span class="sc">+</span> newNum)<span class="sc">/</span>(oldN <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb231-22"><a href="an-introduction-to-object-oriented-programming.html#cb231-22" aria-hidden="true" tabindex="-1"></a>            newN <span class="ot">&lt;-</span> oldN <span class="sc">+</span> 1L</span>
+<span id="cb231-23"><a href="an-introduction-to-object-oriented-programming.html#cb231-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> newN, <span class="at">currentXbar =</span> newAve, <span class="at">knownVar =</span> oldMean<span class="sc">@</span>knownVar))</span>
+<span id="cb231-24"><a href="an-introduction-to-object-oriented-programming.html#cb231-24" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb231-25"><a href="an-introduction-to-object-oriented-programming.html#cb231-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Here’s a demonstration of using these two classes that mirrors the example in subsection <a href="an-introduction-to-object-oriented-programming.html#adding-inheritance">17.1.3</a></p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="an-introduction-to-object-oriented-programming.html#cb227-1" aria-hidden="true" tabindex="-1"></a>myAve <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>)</span>
-<span id="cb227-2"><a href="an-introduction-to-object-oriented-programming.html#cb227-2" aria-hidden="true" tabindex="-1"></a>myAve <span class="ot">&lt;-</span> <span class="fu">update</span>(myAve, <span class="dv">3</span>)</span>
-<span id="cb227-3"><a href="an-introduction-to-object-oriented-programming.html#cb227-3" aria-hidden="true" tabindex="-1"></a>myAve</span>
-<span id="cb227-4"><a href="an-introduction-to-object-oriented-programming.html#cb227-4" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningMean&quot;</span></span>
-<span id="cb227-5"><a href="an-introduction-to-object-oriented-programming.html#cb227-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
-<span id="cb227-6"><a href="an-introduction-to-object-oriented-programming.html#cb227-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb227-7"><a href="an-introduction-to-object-oriented-programming.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb227-8"><a href="an-introduction-to-object-oriented-programming.html#cb227-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
-<span id="cb227-9"><a href="an-introduction-to-object-oriented-programming.html#cb227-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
-<span id="cb227-10"><a href="an-introduction-to-object-oriented-programming.html#cb227-10" aria-hidden="true" tabindex="-1"></a>myAve <span class="ot">&lt;-</span> <span class="fu">update</span>(myAve, <span class="dv">1</span>)</span>
-<span id="cb227-11"><a href="an-introduction-to-object-oriented-programming.html#cb227-11" aria-hidden="true" tabindex="-1"></a>myAve</span>
-<span id="cb227-12"><a href="an-introduction-to-object-oriented-programming.html#cb227-12" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningMean&quot;</span></span>
-<span id="cb227-13"><a href="an-introduction-to-object-oriented-programming.html#cb227-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
-<span id="cb227-14"><a href="an-introduction-to-object-oriented-programming.html#cb227-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb227-15"><a href="an-introduction-to-object-oriented-programming.html#cb227-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb227-16"><a href="an-introduction-to-object-oriented-programming.html#cb227-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
-<span id="cb227-17"><a href="an-introduction-to-object-oriented-programming.html#cb227-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb227-18"><a href="an-introduction-to-object-oriented-programming.html#cb227-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-19"><a href="an-introduction-to-object-oriented-programming.html#cb227-19" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span>
-<span id="cb227-20"><a href="an-introduction-to-object-oriented-programming.html#cb227-20" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">3</span>)</span>
-<span id="cb227-21"><a href="an-introduction-to-object-oriented-programming.html#cb227-21" aria-hidden="true" tabindex="-1"></a>myCI</span>
-<span id="cb227-22"><a href="an-introduction-to-object-oriented-programming.html#cb227-22" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
-<span id="cb227-23"><a href="an-introduction-to-object-oriented-programming.html#cb227-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
-<span id="cb227-24"><a href="an-introduction-to-object-oriented-programming.html#cb227-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb227-25"><a href="an-introduction-to-object-oriented-programming.html#cb227-25" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb227-26"><a href="an-introduction-to-object-oriented-programming.html#cb227-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
-<span id="cb227-27"><a href="an-introduction-to-object-oriented-programming.html#cb227-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb227-28"><a href="an-introduction-to-object-oriented-programming.html#cb227-28" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb227-29"><a href="an-introduction-to-object-oriented-programming.html#cb227-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
-<span id="cb227-30"><a href="an-introduction-to-object-oriented-programming.html#cb227-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
-<span id="cb227-31"><a href="an-introduction-to-object-oriented-programming.html#cb227-31" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">1</span>)</span>
-<span id="cb227-32"><a href="an-introduction-to-object-oriented-programming.html#cb227-32" aria-hidden="true" tabindex="-1"></a>myCI</span>
-<span id="cb227-33"><a href="an-introduction-to-object-oriented-programming.html#cb227-33" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
-<span id="cb227-34"><a href="an-introduction-to-object-oriented-programming.html#cb227-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
-<span id="cb227-35"><a href="an-introduction-to-object-oriented-programming.html#cb227-35" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb227-36"><a href="an-introduction-to-object-oriented-programming.html#cb227-36" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb227-37"><a href="an-introduction-to-object-oriented-programming.html#cb227-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
-<span id="cb227-38"><a href="an-introduction-to-object-oriented-programming.html#cb227-38" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb227-39"><a href="an-introduction-to-object-oriented-programming.html#cb227-39" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb227-40"><a href="an-introduction-to-object-oriented-programming.html#cb227-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
-<span id="cb227-41"><a href="an-introduction-to-object-oriented-programming.html#cb227-41" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="an-introduction-to-object-oriented-programming.html#cb232-1" aria-hidden="true" tabindex="-1"></a>myAve <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>)</span>
+<span id="cb232-2"><a href="an-introduction-to-object-oriented-programming.html#cb232-2" aria-hidden="true" tabindex="-1"></a>myAve <span class="ot">&lt;-</span> <span class="fu">update</span>(myAve, <span class="dv">3</span>)</span>
+<span id="cb232-3"><a href="an-introduction-to-object-oriented-programming.html#cb232-3" aria-hidden="true" tabindex="-1"></a>myAve</span>
+<span id="cb232-4"><a href="an-introduction-to-object-oriented-programming.html#cb232-4" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningMean&quot;</span></span>
+<span id="cb232-5"><a href="an-introduction-to-object-oriented-programming.html#cb232-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
+<span id="cb232-6"><a href="an-introduction-to-object-oriented-programming.html#cb232-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb232-7"><a href="an-introduction-to-object-oriented-programming.html#cb232-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb232-8"><a href="an-introduction-to-object-oriented-programming.html#cb232-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
+<span id="cb232-9"><a href="an-introduction-to-object-oriented-programming.html#cb232-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb232-10"><a href="an-introduction-to-object-oriented-programming.html#cb232-10" aria-hidden="true" tabindex="-1"></a>myAve <span class="ot">&lt;-</span> <span class="fu">update</span>(myAve, <span class="dv">1</span>)</span>
+<span id="cb232-11"><a href="an-introduction-to-object-oriented-programming.html#cb232-11" aria-hidden="true" tabindex="-1"></a>myAve</span>
+<span id="cb232-12"><a href="an-introduction-to-object-oriented-programming.html#cb232-12" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningMean&quot;</span></span>
+<span id="cb232-13"><a href="an-introduction-to-object-oriented-programming.html#cb232-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
+<span id="cb232-14"><a href="an-introduction-to-object-oriented-programming.html#cb232-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb232-15"><a href="an-introduction-to-object-oriented-programming.html#cb232-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb232-16"><a href="an-introduction-to-object-oriented-programming.html#cb232-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
+<span id="cb232-17"><a href="an-introduction-to-object-oriented-programming.html#cb232-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb232-18"><a href="an-introduction-to-object-oriented-programming.html#cb232-18" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span>
+<span id="cb232-19"><a href="an-introduction-to-object-oriented-programming.html#cb232-19" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">3</span>)</span>
+<span id="cb232-20"><a href="an-introduction-to-object-oriented-programming.html#cb232-20" aria-hidden="true" tabindex="-1"></a>myCI</span>
+<span id="cb232-21"><a href="an-introduction-to-object-oriented-programming.html#cb232-21" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
+<span id="cb232-22"><a href="an-introduction-to-object-oriented-programming.html#cb232-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
+<span id="cb232-23"><a href="an-introduction-to-object-oriented-programming.html#cb232-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb232-24"><a href="an-introduction-to-object-oriented-programming.html#cb232-24" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb232-25"><a href="an-introduction-to-object-oriented-programming.html#cb232-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
+<span id="cb232-26"><a href="an-introduction-to-object-oriented-programming.html#cb232-26" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb232-27"><a href="an-introduction-to-object-oriented-programming.html#cb232-27" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb232-28"><a href="an-introduction-to-object-oriented-programming.html#cb232-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
+<span id="cb232-29"><a href="an-introduction-to-object-oriented-programming.html#cb232-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb232-30"><a href="an-introduction-to-object-oriented-programming.html#cb232-30" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">1</span>)</span>
+<span id="cb232-31"><a href="an-introduction-to-object-oriented-programming.html#cb232-31" aria-hidden="true" tabindex="-1"></a>myCI</span>
+<span id="cb232-32"><a href="an-introduction-to-object-oriented-programming.html#cb232-32" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
+<span id="cb232-33"><a href="an-introduction-to-object-oriented-programming.html#cb232-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
+<span id="cb232-34"><a href="an-introduction-to-object-oriented-programming.html#cb232-34" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb232-35"><a href="an-introduction-to-object-oriented-programming.html#cb232-35" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb232-36"><a href="an-introduction-to-object-oriented-programming.html#cb232-36" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
+<span id="cb232-37"><a href="an-introduction-to-object-oriented-programming.html#cb232-37" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb232-38"><a href="an-introduction-to-object-oriented-programming.html#cb232-38" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb232-39"><a href="an-introduction-to-object-oriented-programming.html#cb232-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
+<span id="cb232-40"><a href="an-introduction-to-object-oriented-programming.html#cb232-40" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 <p>This looks more <em>functional</em> (more information on functional programming is available in chapter <a href="functional-programming.html#functional-programming">18</a>) than the Python example because the <code>update</code> function does not change a <em>mutable</em> object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (<code>&lt;-</code>) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.</p>
 <p>The big takeaway here is that S3 and S4 don’t feel like Python’s encapsulated OOP. If we wanted to write stateful programs, we might consider using Reference Classes, or R6 classes.</p>
 </div>
@@ -843,32 +847,32 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div id="creating-reference-classes" class="section level3" number="17.2.8">
 <h3><span class="header-section-number">17.2.8</span> Creating Reference Classes</h3>
 <p>Creating reference classes is done with the function <code>setRefClass</code>. I create a class called <code>RunningMean</code> that produces the same behavior as that in the previous example.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="an-introduction-to-object-oriented-programming.html#cb228-1" aria-hidden="true" tabindex="-1"></a>RunningMeanRC <span class="ot">&lt;-</span> <span class="fu">setRefClass</span>(<span class="st">&quot;RunningMeanRC&quot;</span>, </span>
-<span id="cb228-2"><a href="an-introduction-to-object-oriented-programming.html#cb228-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fields =</span> <span class="fu">list</span>(<span class="at">current_xbar =</span> <span class="st">&quot;numeric&quot;</span>, </span>
-<span id="cb228-3"><a href="an-introduction-to-object-oriented-programming.html#cb228-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">n =</span> <span class="st">&quot;integer&quot;</span>),</span>
-<span id="cb228-4"><a href="an-introduction-to-object-oriented-programming.html#cb228-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">methods =</span> <span class="fu">list</span>(</span>
-<span id="cb228-5"><a href="an-introduction-to-object-oriented-programming.html#cb228-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">update =</span> <span class="cf">function</span>(new_x){</span>
-<span id="cb228-6"><a href="an-introduction-to-object-oriented-programming.html#cb228-6" aria-hidden="true" tabindex="-1"></a>                               n <span class="ot">&lt;&lt;-</span> n <span class="sc">+</span> 1L</span>
-<span id="cb228-7"><a href="an-introduction-to-object-oriented-programming.html#cb228-7" aria-hidden="true" tabindex="-1"></a>                               current_xbar <span class="ot">&lt;&lt;-</span> (current_xbar<span class="sc">*</span>(n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> new_x) <span class="sc">/</span> n</span>
-<span id="cb228-8"><a href="an-introduction-to-object-oriented-programming.html#cb228-8" aria-hidden="true" tabindex="-1"></a>                              }))</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="an-introduction-to-object-oriented-programming.html#cb233-1" aria-hidden="true" tabindex="-1"></a>RunningMeanRC <span class="ot">&lt;-</span> <span class="fu">setRefClass</span>(<span class="st">&quot;RunningMeanRC&quot;</span>, </span>
+<span id="cb233-2"><a href="an-introduction-to-object-oriented-programming.html#cb233-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fields =</span> <span class="fu">list</span>(<span class="at">current_xbar =</span> <span class="st">&quot;numeric&quot;</span>, </span>
+<span id="cb233-3"><a href="an-introduction-to-object-oriented-programming.html#cb233-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">n =</span> <span class="st">&quot;integer&quot;</span>),</span>
+<span id="cb233-4"><a href="an-introduction-to-object-oriented-programming.html#cb233-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">methods =</span> <span class="fu">list</span>(</span>
+<span id="cb233-5"><a href="an-introduction-to-object-oriented-programming.html#cb233-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">update =</span> <span class="cf">function</span>(new_x){</span>
+<span id="cb233-6"><a href="an-introduction-to-object-oriented-programming.html#cb233-6" aria-hidden="true" tabindex="-1"></a>                               n <span class="ot">&lt;&lt;-</span> n <span class="sc">+</span> 1L</span>
+<span id="cb233-7"><a href="an-introduction-to-object-oriented-programming.html#cb233-7" aria-hidden="true" tabindex="-1"></a>                               current_xbar <span class="ot">&lt;&lt;-</span> (current_xbar<span class="sc">*</span>(n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> new_x) <span class="sc">/</span> n</span>
+<span id="cb233-8"><a href="an-introduction-to-object-oriented-programming.html#cb233-8" aria-hidden="true" tabindex="-1"></a>                              }))</span></code></pre></div>
 <p>This tells us a few things. First, data members are called <em>fields</em> now. Second, changing class variables is done with the <code>&lt;&lt;-</code>. We can use it just as before.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="an-introduction-to-object-oriented-programming.html#cb229-1" aria-hidden="true" tabindex="-1"></a>my_ave <span class="ot">&lt;-</span> RunningMeanRC<span class="sc">$</span><span class="fu">new</span>(<span class="at">current_xbar=</span><span class="dv">0</span>, <span class="at">n=</span>0L)</span>
-<span id="cb229-2"><a href="an-introduction-to-object-oriented-programming.html#cb229-2" aria-hidden="true" tabindex="-1"></a>my_ave</span>
-<span id="cb229-3"><a href="an-introduction-to-object-oriented-programming.html#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Reference class object of class &quot;RunningMeanRC&quot;</span></span>
-<span id="cb229-4"><a href="an-introduction-to-object-oriented-programming.html#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Field &quot;current_xbar&quot;:</span></span>
-<span id="cb229-5"><a href="an-introduction-to-object-oriented-programming.html#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
-<span id="cb229-6"><a href="an-introduction-to-object-oriented-programming.html#cb229-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Field &quot;n&quot;:</span></span>
-<span id="cb229-7"><a href="an-introduction-to-object-oriented-programming.html#cb229-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
-<span id="cb229-8"><a href="an-introduction-to-object-oriented-programming.html#cb229-8" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">1.</span>) </span>
-<span id="cb229-9"><a href="an-introduction-to-object-oriented-programming.html#cb229-9" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>current_xbar</span>
-<span id="cb229-10"><a href="an-introduction-to-object-oriented-programming.html#cb229-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb229-11"><a href="an-introduction-to-object-oriented-programming.html#cb229-11" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>n   </span>
-<span id="cb229-12"><a href="an-introduction-to-object-oriented-programming.html#cb229-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb229-13"><a href="an-introduction-to-object-oriented-programming.html#cb229-13" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">3.</span>)  </span>
-<span id="cb229-14"><a href="an-introduction-to-object-oriented-programming.html#cb229-14" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>current_xbar</span>
-<span id="cb229-15"><a href="an-introduction-to-object-oriented-programming.html#cb229-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb229-16"><a href="an-introduction-to-object-oriented-programming.html#cb229-16" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>n   </span>
-<span id="cb229-17"><a href="an-introduction-to-object-oriented-programming.html#cb229-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="an-introduction-to-object-oriented-programming.html#cb234-1" aria-hidden="true" tabindex="-1"></a>my_ave <span class="ot">&lt;-</span> RunningMeanRC<span class="sc">$</span><span class="fu">new</span>(<span class="at">current_xbar=</span><span class="dv">0</span>, <span class="at">n=</span>0L)</span>
+<span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a>my_ave</span>
+<span id="cb234-3"><a href="an-introduction-to-object-oriented-programming.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Reference class object of class &quot;RunningMeanRC&quot;</span></span>
+<span id="cb234-4"><a href="an-introduction-to-object-oriented-programming.html#cb234-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Field &quot;current_xbar&quot;:</span></span>
+<span id="cb234-5"><a href="an-introduction-to-object-oriented-programming.html#cb234-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
+<span id="cb234-6"><a href="an-introduction-to-object-oriented-programming.html#cb234-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Field &quot;n&quot;:</span></span>
+<span id="cb234-7"><a href="an-introduction-to-object-oriented-programming.html#cb234-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
+<span id="cb234-8"><a href="an-introduction-to-object-oriented-programming.html#cb234-8" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">1.</span>) </span>
+<span id="cb234-9"><a href="an-introduction-to-object-oriented-programming.html#cb234-9" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>current_xbar</span>
+<span id="cb234-10"><a href="an-introduction-to-object-oriented-programming.html#cb234-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb234-11"><a href="an-introduction-to-object-oriented-programming.html#cb234-11" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>n   </span>
+<span id="cb234-12"><a href="an-introduction-to-object-oriented-programming.html#cb234-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb234-13"><a href="an-introduction-to-object-oriented-programming.html#cb234-13" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">3.</span>)  </span>
+<span id="cb234-14"><a href="an-introduction-to-object-oriented-programming.html#cb234-14" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>current_xbar</span>
+<span id="cb234-15"><a href="an-introduction-to-object-oriented-programming.html#cb234-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb234-16"><a href="an-introduction-to-object-oriented-programming.html#cb234-16" aria-hidden="true" tabindex="-1"></a>my_ave<span class="sc">$</span>n   </span>
+<span id="cb234-17"><a href="an-introduction-to-object-oriented-programming.html#cb234-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 <p>Compare how similar this code looks to the code in <a href="an-introduction-to-object-oriented-programming.html#a-first-example">17.1.2</a>! Note the paucity of assignment operators, and plenty of side-effects.</p>
 </div>
 <div id="creating-r6-classes" class="section level3" number="17.2.9">
@@ -879,41 +883,41 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <li>they have <a href="https://r6.r-lib.org/articles/Performance.html">better performance than reference classes</a>, and</li>
 <li>they don’t make use of the <code>&lt;&lt;-</code> operator.</li>
 </ol>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="an-introduction-to-object-oriented-programming.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
-<span id="cb230-2"><a href="an-introduction-to-object-oriented-programming.html#cb230-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb230-3"><a href="an-introduction-to-object-oriented-programming.html#cb230-3" aria-hidden="true" tabindex="-1"></a>RunningMeanR6 <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;RunningMeanR6&quot;</span>,</span>
-<span id="cb230-4"><a href="an-introduction-to-object-oriented-programming.html#cb230-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">public =</span> <span class="fu">list</span>(</span>
-<span id="cb230-5"><a href="an-introduction-to-object-oriented-programming.html#cb230-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">current_xbar =</span> <span class="cn">NULL</span>,</span>
-<span id="cb230-6"><a href="an-introduction-to-object-oriented-programming.html#cb230-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">n =</span> <span class="cn">NULL</span>,</span>
-<span id="cb230-7"><a href="an-introduction-to-object-oriented-programming.html#cb230-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">initialize =</span> <span class="cf">function</span>(<span class="at">current_xbar =</span> <span class="cn">NA</span>, <span class="at">n =</span> <span class="cn">NA</span>) {</span>
-<span id="cb230-8"><a href="an-introduction-to-object-oriented-programming.html#cb230-8" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>current_xbar <span class="ot">&lt;-</span> current_xbar</span>
-<span id="cb230-9"><a href="an-introduction-to-object-oriented-programming.html#cb230-9" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>n <span class="ot">&lt;-</span> n</span>
-<span id="cb230-10"><a href="an-introduction-to-object-oriented-programming.html#cb230-10" aria-hidden="true" tabindex="-1"></a>                    },</span>
-<span id="cb230-11"><a href="an-introduction-to-object-oriented-programming.html#cb230-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">update =</span> <span class="cf">function</span>(new_x) {</span>
-<span id="cb230-12"><a href="an-introduction-to-object-oriented-programming.html#cb230-12" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>n <span class="ot">&lt;-</span> self<span class="sc">$</span>n <span class="sc">+</span> 1L</span>
-<span id="cb230-13"><a href="an-introduction-to-object-oriented-programming.html#cb230-13" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>current_xbar <span class="ot">&lt;-</span> (self<span class="sc">$</span>current_xbar<span class="sc">*</span>(self<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> new_x) <span class="sc">/</span> self<span class="sc">$</span>n</span>
-<span id="cb230-14"><a href="an-introduction-to-object-oriented-programming.html#cb230-14" aria-hidden="true" tabindex="-1"></a>                    }</span>
-<span id="cb230-15"><a href="an-introduction-to-object-oriented-programming.html#cb230-15" aria-hidden="true" tabindex="-1"></a>                  )</span>
-<span id="cb230-16"><a href="an-introduction-to-object-oriented-programming.html#cb230-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb230-17"><a href="an-introduction-to-object-oriented-programming.html#cb230-17" aria-hidden="true" tabindex="-1"></a>my_r6_ave <span class="ot">&lt;-</span> RunningMeanR6<span class="sc">$</span><span class="fu">new</span>(<span class="at">current_xbar=</span><span class="dv">0</span>, <span class="at">n=</span>0L)</span>
-<span id="cb230-18"><a href="an-introduction-to-object-oriented-programming.html#cb230-18" aria-hidden="true" tabindex="-1"></a>my_r6_ave</span>
-<span id="cb230-19"><a href="an-introduction-to-object-oriented-programming.html#cb230-19" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;RunningMeanR6&gt;</span></span>
-<span id="cb230-20"><a href="an-introduction-to-object-oriented-programming.html#cb230-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   Public:</span></span>
-<span id="cb230-21"><a href="an-introduction-to-object-oriented-programming.html#cb230-21" aria-hidden="true" tabindex="-1"></a><span class="do">##     clone: function (deep = FALSE) </span></span>
-<span id="cb230-22"><a href="an-introduction-to-object-oriented-programming.html#cb230-22" aria-hidden="true" tabindex="-1"></a><span class="do">##     current_xbar: 0</span></span>
-<span id="cb230-23"><a href="an-introduction-to-object-oriented-programming.html#cb230-23" aria-hidden="true" tabindex="-1"></a><span class="do">##     initialize: function (current_xbar = NA, n = NA) </span></span>
-<span id="cb230-24"><a href="an-introduction-to-object-oriented-programming.html#cb230-24" aria-hidden="true" tabindex="-1"></a><span class="do">##     n: 0</span></span>
-<span id="cb230-25"><a href="an-introduction-to-object-oriented-programming.html#cb230-25" aria-hidden="true" tabindex="-1"></a><span class="do">##     update: function (new_x)</span></span>
-<span id="cb230-26"><a href="an-introduction-to-object-oriented-programming.html#cb230-26" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">1.</span>) </span>
-<span id="cb230-27"><a href="an-introduction-to-object-oriented-programming.html#cb230-27" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>current_xbar</span>
-<span id="cb230-28"><a href="an-introduction-to-object-oriented-programming.html#cb230-28" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb230-29"><a href="an-introduction-to-object-oriented-programming.html#cb230-29" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>n   </span>
-<span id="cb230-30"><a href="an-introduction-to-object-oriented-programming.html#cb230-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb230-31"><a href="an-introduction-to-object-oriented-programming.html#cb230-31" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">3.</span>)  </span>
-<span id="cb230-32"><a href="an-introduction-to-object-oriented-programming.html#cb230-32" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>current_xbar</span>
-<span id="cb230-33"><a href="an-introduction-to-object-oriented-programming.html#cb230-33" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb230-34"><a href="an-introduction-to-object-oriented-programming.html#cb230-34" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>n   </span>
-<span id="cb230-35"><a href="an-introduction-to-object-oriented-programming.html#cb230-35" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="an-introduction-to-object-oriented-programming.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
+<span id="cb235-2"><a href="an-introduction-to-object-oriented-programming.html#cb235-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-3"><a href="an-introduction-to-object-oriented-programming.html#cb235-3" aria-hidden="true" tabindex="-1"></a>RunningMeanR6 <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;RunningMeanR6&quot;</span>,</span>
+<span id="cb235-4"><a href="an-introduction-to-object-oriented-programming.html#cb235-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">public =</span> <span class="fu">list</span>(</span>
+<span id="cb235-5"><a href="an-introduction-to-object-oriented-programming.html#cb235-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">current_xbar =</span> <span class="cn">NULL</span>,</span>
+<span id="cb235-6"><a href="an-introduction-to-object-oriented-programming.html#cb235-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">n =</span> <span class="cn">NULL</span>,</span>
+<span id="cb235-7"><a href="an-introduction-to-object-oriented-programming.html#cb235-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">initialize =</span> <span class="cf">function</span>(<span class="at">current_xbar =</span> <span class="cn">NA</span>, <span class="at">n =</span> <span class="cn">NA</span>) {</span>
+<span id="cb235-8"><a href="an-introduction-to-object-oriented-programming.html#cb235-8" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>current_xbar <span class="ot">&lt;-</span> current_xbar</span>
+<span id="cb235-9"><a href="an-introduction-to-object-oriented-programming.html#cb235-9" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>n <span class="ot">&lt;-</span> n</span>
+<span id="cb235-10"><a href="an-introduction-to-object-oriented-programming.html#cb235-10" aria-hidden="true" tabindex="-1"></a>                    },</span>
+<span id="cb235-11"><a href="an-introduction-to-object-oriented-programming.html#cb235-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">update =</span> <span class="cf">function</span>(new_x) {</span>
+<span id="cb235-12"><a href="an-introduction-to-object-oriented-programming.html#cb235-12" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>n <span class="ot">&lt;-</span> self<span class="sc">$</span>n <span class="sc">+</span> 1L</span>
+<span id="cb235-13"><a href="an-introduction-to-object-oriented-programming.html#cb235-13" aria-hidden="true" tabindex="-1"></a>                      self<span class="sc">$</span>current_xbar <span class="ot">&lt;-</span> (self<span class="sc">$</span>current_xbar<span class="sc">*</span>(self<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> new_x) <span class="sc">/</span> self<span class="sc">$</span>n</span>
+<span id="cb235-14"><a href="an-introduction-to-object-oriented-programming.html#cb235-14" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb235-15"><a href="an-introduction-to-object-oriented-programming.html#cb235-15" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb235-16"><a href="an-introduction-to-object-oriented-programming.html#cb235-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb235-17"><a href="an-introduction-to-object-oriented-programming.html#cb235-17" aria-hidden="true" tabindex="-1"></a>my_r6_ave <span class="ot">&lt;-</span> RunningMeanR6<span class="sc">$</span><span class="fu">new</span>(<span class="at">current_xbar=</span><span class="dv">0</span>, <span class="at">n=</span>0L)</span>
+<span id="cb235-18"><a href="an-introduction-to-object-oriented-programming.html#cb235-18" aria-hidden="true" tabindex="-1"></a>my_r6_ave</span>
+<span id="cb235-19"><a href="an-introduction-to-object-oriented-programming.html#cb235-19" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;RunningMeanR6&gt;</span></span>
+<span id="cb235-20"><a href="an-introduction-to-object-oriented-programming.html#cb235-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   Public:</span></span>
+<span id="cb235-21"><a href="an-introduction-to-object-oriented-programming.html#cb235-21" aria-hidden="true" tabindex="-1"></a><span class="do">##     clone: function (deep = FALSE) </span></span>
+<span id="cb235-22"><a href="an-introduction-to-object-oriented-programming.html#cb235-22" aria-hidden="true" tabindex="-1"></a><span class="do">##     current_xbar: 0</span></span>
+<span id="cb235-23"><a href="an-introduction-to-object-oriented-programming.html#cb235-23" aria-hidden="true" tabindex="-1"></a><span class="do">##     initialize: function (current_xbar = NA, n = NA) </span></span>
+<span id="cb235-24"><a href="an-introduction-to-object-oriented-programming.html#cb235-24" aria-hidden="true" tabindex="-1"></a><span class="do">##     n: 0</span></span>
+<span id="cb235-25"><a href="an-introduction-to-object-oriented-programming.html#cb235-25" aria-hidden="true" tabindex="-1"></a><span class="do">##     update: function (new_x)</span></span>
+<span id="cb235-26"><a href="an-introduction-to-object-oriented-programming.html#cb235-26" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">1.</span>) </span>
+<span id="cb235-27"><a href="an-introduction-to-object-oriented-programming.html#cb235-27" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>current_xbar</span>
+<span id="cb235-28"><a href="an-introduction-to-object-oriented-programming.html#cb235-28" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb235-29"><a href="an-introduction-to-object-oriented-programming.html#cb235-29" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>n   </span>
+<span id="cb235-30"><a href="an-introduction-to-object-oriented-programming.html#cb235-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb235-31"><a href="an-introduction-to-object-oriented-programming.html#cb235-31" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span><span class="fu">update</span>(<span class="fl">3.</span>)  </span>
+<span id="cb235-32"><a href="an-introduction-to-object-oriented-programming.html#cb235-32" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>current_xbar</span>
+<span id="cb235-33"><a href="an-introduction-to-object-oriented-programming.html#cb235-33" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb235-34"><a href="an-introduction-to-object-oriented-programming.html#cb235-34" aria-hidden="true" tabindex="-1"></a>my_r6_ave<span class="sc">$</span>n   </span>
+<span id="cb235-35"><a href="an-introduction-to-object-oriented-programming.html#cb235-35" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 <p>TODO
 a more detailed</p>
 <p><a href="https://adv-r.hadley.nz/r6.html" class="uri">https://adv-r.hadley.nz/r6.html</a></p>
@@ -971,25 +975,25 @@ and the estimate for the coefficient vector can be written as
 <li>have one method called <code>fit</code> that takes a numpy arrays <code>X</code> (the design matrix), and <code>y</code></li>
 <li>every time <code>fit</code> is called, reset the <code>coeffs</code> using the formula above</li>
 </ul>
-<div class="sourceCode" id="cb231"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb231-1"><a href="an-introduction-to-object-oriented-programming.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb231-2"><a href="an-introduction-to-object-oriented-programming.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb231-3"><a href="an-introduction-to-object-oriented-programming.html#cb231-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-4"><a href="an-introduction-to-object-oriented-programming.html#cb231-4" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t hardcode variables!</span></span>
-<span id="cb231-5"><a href="an-introduction-to-object-oriented-programming.html#cb231-5" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb231-6"><a href="an-introduction-to-object-oriented-programming.html#cb231-6" aria-hidden="true" tabindex="-1"></a>num_predictors <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb231-7"><a href="an-introduction-to-object-oriented-programming.html#cb231-7" aria-hidden="true" tabindex="-1"></a>num_x_columns <span class="op">=</span> num_predictors <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb231-8"><a href="an-introduction-to-object-oriented-programming.html#cb231-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-9"><a href="an-introduction-to-object-oriented-programming.html#cb231-9" aria-hidden="true" tabindex="-1"></a><span class="co"># generate fake data </span></span>
-<span id="cb231-10"><a href="an-introduction-to-object-oriented-programming.html#cb231-10" aria-hidden="true" tabindex="-1"></a>true_coefficients <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="op">-</span><span class="dv">3</span>]).reshape((num_x_columns,<span class="dv">1</span>))</span>
-<span id="cb231-11"><a href="an-introduction-to-object-oriented-programming.html#cb231-11" aria-hidden="true" tabindex="-1"></a>x_array <span class="op">=</span> np.empty((num_rows, num_x_columns))</span>
-<span id="cb231-12"><a href="an-introduction-to-object-oriented-programming.html#cb231-12" aria-hidden="true" tabindex="-1"></a>x_array[:,<span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb231-13"><a href="an-introduction-to-object-oriented-programming.html#cb231-13" aria-hidden="true" tabindex="-1"></a>x_array[:,<span class="dv">1</span>] <span class="op">=</span> np.random.normal(size<span class="op">=</span>num_rows)</span>
-<span id="cb231-14"><a href="an-introduction-to-object-oriented-programming.html#cb231-14" aria-hidden="true" tabindex="-1"></a>y_array <span class="op">=</span> np.dot(x_array, true_coefficients) </span>
-<span id="cb231-15"><a href="an-introduction-to-object-oriented-programming.html#cb231-15" aria-hidden="true" tabindex="-1"></a>y_array <span class="op">=</span> y_array <span class="op">+</span> np.random.normal(scale <span class="op">=</span> <span class="fl">.3</span>, size <span class="op">=</span> num_rows).reshape((num_rows,<span class="dv">1</span>))</span>
-<span id="cb231-16"><a href="an-introduction-to-object-oriented-programming.html#cb231-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-17"><a href="an-introduction-to-object-oriented-programming.html#cb231-17" aria-hidden="true" tabindex="-1"></a><span class="co"># plot fake data </span></span>
-<span id="cb231-18"><a href="an-introduction-to-object-oriented-programming.html#cb231-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_array[:,<span class="dv">1</span>], y_array)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb236-1"><a href="an-introduction-to-object-oriented-programming.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb236-2"><a href="an-introduction-to-object-oriented-programming.html#cb236-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb236-3"><a href="an-introduction-to-object-oriented-programming.html#cb236-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-4"><a href="an-introduction-to-object-oriented-programming.html#cb236-4" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t hardcode variables!</span></span>
+<span id="cb236-5"><a href="an-introduction-to-object-oriented-programming.html#cb236-5" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb236-6"><a href="an-introduction-to-object-oriented-programming.html#cb236-6" aria-hidden="true" tabindex="-1"></a>num_predictors <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb236-7"><a href="an-introduction-to-object-oriented-programming.html#cb236-7" aria-hidden="true" tabindex="-1"></a>num_x_columns <span class="op">=</span> num_predictors <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb236-8"><a href="an-introduction-to-object-oriented-programming.html#cb236-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-9"><a href="an-introduction-to-object-oriented-programming.html#cb236-9" aria-hidden="true" tabindex="-1"></a><span class="co"># generate fake data </span></span>
+<span id="cb236-10"><a href="an-introduction-to-object-oriented-programming.html#cb236-10" aria-hidden="true" tabindex="-1"></a>true_coefficients <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="op">-</span><span class="dv">3</span>]).reshape((num_x_columns,<span class="dv">1</span>))</span>
+<span id="cb236-11"><a href="an-introduction-to-object-oriented-programming.html#cb236-11" aria-hidden="true" tabindex="-1"></a>x_array <span class="op">=</span> np.empty((num_rows, num_x_columns))</span>
+<span id="cb236-12"><a href="an-introduction-to-object-oriented-programming.html#cb236-12" aria-hidden="true" tabindex="-1"></a>x_array[:,<span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb236-13"><a href="an-introduction-to-object-oriented-programming.html#cb236-13" aria-hidden="true" tabindex="-1"></a>x_array[:,<span class="dv">1</span>] <span class="op">=</span> np.random.normal(size<span class="op">=</span>num_rows)</span>
+<span id="cb236-14"><a href="an-introduction-to-object-oriented-programming.html#cb236-14" aria-hidden="true" tabindex="-1"></a>y_array <span class="op">=</span> np.dot(x_array, true_coefficients) </span>
+<span id="cb236-15"><a href="an-introduction-to-object-oriented-programming.html#cb236-15" aria-hidden="true" tabindex="-1"></a>y_array <span class="op">=</span> y_array <span class="op">+</span> np.random.normal(scale <span class="op">=</span> <span class="fl">.3</span>, size <span class="op">=</span> num_rows).reshape((num_rows,<span class="dv">1</span>))</span>
+<span id="cb236-16"><a href="an-introduction-to-object-oriented-programming.html#cb236-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-17"><a href="an-introduction-to-object-oriented-programming.html#cb236-17" aria-hidden="true" tabindex="-1"></a><span class="co"># plot fake data </span></span>
+<span id="cb236-18"><a href="an-introduction-to-object-oriented-programming.html#cb236-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_array[:,<span class="dv">1</span>], y_array)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-236-1.png" width="672" /></p>
 <p>Here is an example class definition, and then its use. The class holds onto</p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Come up with a list of Python classes that are written in third party libraries, and that you will find useful in the future!</p></li>
@@ -1009,10 +1013,10 @@ and the estimate for the coefficient vector can be written as
 </div>
 <div class="footnotes">
 <hr />
-<ol start="18">
-<li id="fn18"><p>Just because you can do this, doesn’t mean you <em>should</em>, though!<a href="an-introduction-to-object-oriented-programming.html#fnref18" class="footnote-back">↩︎</a></p></li>
-<li id="fn19"><p>Otherwise known as an independent and identically distributed sample<a href="an-introduction-to-object-oriented-programming.html#fnref19" class="footnote-back">↩︎</a></p></li>
-<li id="fn20"><p>It’s defined as <span class="math inline">\(\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)\)</span>.<a href="an-introduction-to-object-oriented-programming.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<ol start="19">
+<li id="fn19"><p>Just because you can do this, doesn’t mean you <em>should</em>, though!<a href="an-introduction-to-object-oriented-programming.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Otherwise known as an independent and identically distributed sample<a href="an-introduction-to-object-oriented-programming.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>It’s defined as <span class="math inline">\(\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)\)</span>.<a href="an-introduction-to-object-oriented-programming.html#fnref21" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1025,7 +1029,6 @@ and the estimate for the coefficient vector can be written as
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1065,6 +1068,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

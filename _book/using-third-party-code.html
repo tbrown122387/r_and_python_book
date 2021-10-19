@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="input-and-output.html"/>
 <link rel="next" href="control-flow.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -343,7 +343,13 @@ div.csl-indent {
 <li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
 <li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
 <li class="chapter" data-level="16" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>16</b> Running Scripts from the Command Line</a></li>
 <li class="part"><span><b>III Programming Styles</b></span></li>
@@ -446,12 +452,10 @@ div.csl-indent {
 </div>
 <p>Moreover, all of these environments are connected in a chain-like structure. To see what environments are loaded on your machine, and what order they were loaded in, use the <code>search()</code> function. This displays the <a href="https://cran.r-project.org/doc/manuals/R-lang.html#Search-path"><strong>search path</strong></a>, or the ordered sequence of all of your environments.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="using-third-party-code.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span>
-<span id="cb149-2"><a href="using-third-party-code.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:R6&quot;         &quot;package:Matrix&quot;     &quot;package:ggplot2&quot;   </span></span>
-<span id="cb149-3"><a href="using-third-party-code.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;package:reticulate&quot; &quot;tools:rstudio&quot;      &quot;package:stats&quot;      &quot;package:graphics&quot;  </span></span>
-<span id="cb149-4"><a href="using-third-party-code.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;package:grDevices&quot;  &quot;package:utils&quot;      &quot;package:datasets&quot;   &quot;package:methods&quot;   </span></span>
-<span id="cb149-5"><a href="using-third-party-code.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;Autoloads&quot;          &quot;package:base&quot;</span></span></code></pre></div>
+<span id="cb149-2"><a href="using-third-party-code.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;.GlobalEnv&quot;         &quot;package:reticulate&quot; &quot;tools:rstudio&quot;      &quot;package:stats&quot;      &quot;package:graphics&quot;   &quot;package:grDevices&quot; </span></span>
+<span id="cb149-3"><a href="using-third-party-code.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;package:utils&quot;      &quot;package:datasets&quot;   &quot;package:methods&quot;    &quot;Autoloads&quot;          &quot;package:base&quot;</span></span></code></pre></div>
 <p>Alternatively, if you’re using RStudio, the search path, and the contents of each of its environments, are displayed in the “Environment” window. You can choose which environment you’d like to look at by selecting it from the drop-down menu. This allows you to see all of the variables in that particular environment. The <strong>global environment</strong> (i.e. <code>".GlobalEnv"</code>) is displayed by default, because that is where you store all the objects you are creating in the console.</p>
-<div class="figure" style="text-align: center"><span id="fig:rstudiodisp"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rstudiodisp"></span>
 <img src="pics/environments_display_rstudio.png" alt="The Environment Window in RStudio" width="80%" />
 <p class="caption">
 Figure 10.1: The Environment Window in RStudio
@@ -505,20 +509,20 @@ Figure 10.1: The Environment Window in RStudio
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb152-1"><a href="using-third-party-code.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
 <span id="cb152-2"><a href="using-third-party-code.html#cb152-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb152-3"><a href="using-third-party-code.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.15725561, -0.64268353,  0.772961  ,  2.58881485,  1.12923721,</span></span>
-<span id="cb152-4"><a href="using-third-party-code.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.7004831 ,  0.41764471, -0.004293  ,  0.09973858, -0.36178936])</span></span></code></pre></div>
+<span id="cb152-3"><a href="using-third-party-code.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.38278941, -0.20288733, -0.27674537, -0.84093544, -2.0472228 ,</span></span>
+<span id="cb152-4"><a href="using-third-party-code.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.24813245, -0.78808198, -0.57127423,  0.57237834, -0.70419656])</span></span></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">17</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
 <div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="using-third-party-code.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb153-2"><a href="using-third-party-code.html#cb153-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb153-3"><a href="using-third-party-code.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.56848511,  2.02837944, -1.77829261,  0.34862187,  0.46629243,</span></span>
-<span id="cb153-4"><a href="using-third-party-code.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -1.74993994, -0.6993167 ,  0.78743974,  0.92866873,  0.37362412])</span></span></code></pre></div>
+<span id="cb153-3"><a href="using-third-party-code.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.07506795, -0.61998841, -0.37803064, -1.47142691,  0.19777668,</span></span>
+<span id="cb153-4"><a href="using-third-party-code.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.20612149,  1.68732776,  0.50532405,  0.01403405, -0.4176118 ])</span></span></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="using-third-party-code.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
 <span id="cb154-2"><a href="using-third-party-code.html#cb154-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb154-3"><a href="using-third-party-code.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.19377   ,  0.48827819, -0.85572182,  2.31763207, -0.04484889,</span></span>
-<span id="cb154-4"><a href="using-third-party-code.html#cb154-4" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.13729251, -0.46657455,  0.5993776 ,  1.51584595, -0.49565957])</span></span></code></pre></div>
+<span id="cb154-3"><a href="using-third-party-code.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.44870365,  0.07585544, -0.84700904, -1.38891973,  0.52841263,</span></span>
+<span id="cb154-4"><a href="using-third-party-code.html#cb154-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        -0.2013461 ,  0.84120331,  1.6803766 ,  0.36246481, -1.19039019])</span></span></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="using-third-party-code.html#cb155-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span> <span class="co"># now you can&#39;t use n as a function </span></span>
 <span id="cb155-2"><a href="using-third-party-code.html#cb155-2" aria-hidden="true" tabindex="-1"></a>n()   </span></code></pre></div>
@@ -554,7 +558,6 @@ Harrell Jr, Frank E, with contributions from Charles Dupont, and many others. 20
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -594,6 +597,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

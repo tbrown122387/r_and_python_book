@@ -1,6 +1,65 @@
 # Working With Text Data
 
-TODO
+We have already talked a little about how to work with text data in this book. Regarding Python, section \@ref(vectorization-in-python) mentioned that Pandas `Series` objects have a [`.str` accessor attribute](https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods) that has plenty of special methods that will work on string data. The same tools can be used whether or not these `Series` objects are contained in a Pandas `DataFrame`. 
 
-- regular expressions
+Regarding R, `character` `vector`s were mentioned in chapter \@ref(r-vectors-versus-numpy-arrays-and-pandas-series). There are many functions that operate on these, too, whether or not they are held inside an R `data.frame`. They might be a little harder to find because they aren't methods, so pressing `<Tab>` and using your GUI's autocomplete feature doesn't reveal them as easily.
+
+Suppose you're interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there's probably a function for it. 
+
+Notice what all of these tasks have in common--they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase "a"s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this chapter is primarily concerned with discussing **regular expressions,** which are a tool that help you describe the patterns in text.
+
+
+## An Introducton to Regular Expressions
+
+### Literal Characters and Metacharacters
+
+Every character in a regular expression is interpreted in one of two ways. Either it is interpreted as a 
+
+  1. literal character, or as a 
+  2. metacharacter.
+  
+If it is a literal character, then the character is the *literal* pattern. For example, in the regular expression "e", the character "e" has a literal interpretation. If you seek to capitalize all instances of "e" in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you're good. The pattern is trivial to specify. 
+
+There are many in R, but in this case, I use `gsub()`.
+
+```{r, collapse = TRUE}
+gsub(pattern = "e", replacement = "E", x = "I don't need a regex for this!")
+```
+If you look at `gsub()`'s documentation, the argument `fixed` is `TRUE` by default, which means that the pattern, `"e"` is being considered as a regular expression. 
+
+In Pandas, I can use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html), to do this.
+
+```{python, collapse = TRUE}
+import pandas as pd
+pd.Series(["I don't need a regex for this!"]).str.replace(pat="e",repl="E")
+```
+
+On the other hand, if I asked you to remove `$`s from price or salary data, you might have a little more difficulty. This is because `$` is a *metacharacter* in regular expressions, and so it has a special meaning.^[The dollar sign is useful if you only want to find certain patterns that finish a line. It takes the characters preceding it, and says, only look for that pattern if it comes at the end of a string.] 
+
+```{r, collapse = TRUE, error=TRUE}
+# in R this doesn't work as intended
+stringr::str_remove_all(c("$100, $200"), pattern = "$")
+```
+
+If you wanted to count the number of *literal* dollar signs, you would need to *escape* the dollar sign. That (usually) means you need to put a backslash (i.e. `\`) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character. Here we use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html).
+
+```{python, collapse = TRUE}
+pd.Series(["$100, $200"]).str.replace(pat="\$",repl="")
+```
+
+Unfortunately, sometimes you need to use two backslashes to escape metacharacters. Here's an example in R. We'll talk about why in a minute. 
+
+```{r, collapse = TRUE}
+stringr::str_remove_all(c("$100, $200"), pattern = "\\$")
+```
+
+
+
+<!-- str_count(string = "First sentence. Second sentence.", pattern = r"\.") -->
+
+TODO
+  - raw strings
+  - text in files or finding files by name
+  - backslashes are a nightmare
+  - citations
 

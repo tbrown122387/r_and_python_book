@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="reshaping-and-combining-data-sets.html"/>
 <link rel="next" href="working-with-text-data.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -343,7 +343,13 @@ div.csl-indent {
 <li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
 <li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
 <li class="chapter" data-level="16" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>16</b> Running Scripts from the Command Line</a></li>
 <li class="part"><span><b>III Programming Styles</b></span></li>
@@ -423,25 +429,18 @@ div.csl-indent {
 <p>Recall our Albemarle Real Estate data set.</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="visualization.html#cb189-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb189-2"><a href="visualization.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
-<span id="cb189-3"><a href="visualization.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize</span></span>
-<span id="cb189-4"><a href="visualization.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000</span></span>
-<span id="cb189-5"><a href="visualization.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189</span></span>
-<span id="cb189-6"><a href="visualization.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760</span></span>
-<span id="cb189-7"><a href="visualization.html#cb189-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648</span></span>
-<span id="cb189-8"><a href="visualization.html#cb189-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880</span></span>
-<span id="cb189-9"><a href="visualization.html#cb189-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838</span></span>
-<span id="cb189-10"><a href="visualization.html#cb189-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   TotalValue        City</span></span>
-<span id="cb189-11"><a href="visualization.html#cb189-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     409900      CROZET</span></span>
-<span id="cb189-12"><a href="visualization.html#cb189-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     523100      CROZET</span></span>
-<span id="cb189-13"><a href="visualization.html#cb189-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3     180900 EARLYSVILLE</span></span>
-<span id="cb189-14"><a href="visualization.html#cb189-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4     620700      CROZET</span></span>
-<span id="cb189-15"><a href="visualization.html#cb189-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5     162500      CROZET</span></span>
-<span id="cb189-16"><a href="visualization.html#cb189-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6     167200      CROZET</span></span></code></pre></div>
+<span id="cb189-3"><a href="visualization.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb189-4"><a href="visualization.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
+<span id="cb189-5"><a href="visualization.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb189-6"><a href="visualization.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb189-7"><a href="visualization.html#cb189-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
+<span id="cb189-8"><a href="visualization.html#cb189-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
+<span id="cb189-9"><a href="visualization.html#cb189-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span></code></pre></div>
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="visualization.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb190-2"><a href="visualization.html#cb190-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-192"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-192-1.png" alt="A Simple Histogram" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-191"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-191-1.png" alt="A Simple Histogram" width="672" />
 <p class="caption">
 Figure 13.1: A Simple Histogram
 </p>
@@ -456,8 +455,8 @@ Figure 13.1: A Simple Histogram
 <span id="cb191-6"><a href="visualization.html#cb191-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;log. total value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log. lot size&quot;</span>, </span>
 <span id="cb191-7"><a href="visualization.html#cb191-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
 <span id="cb191-8"><a href="visualization.html#cb191-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">log</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LotSize)), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-193"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-193-1.png" alt="Some Scatterplots" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-192"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-192-1.png" alt="Some Scatterplots" width="672" />
 <p class="caption">
 Figure 13.2: Some Scatterplots
 </p>
@@ -475,8 +474,8 @@ Figure 13.2: Some Scatterplots
 <p>Consider this first example.</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="visualization.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb193-2"><a href="visualization.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-194"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-194-1.png" alt="A Blank Canvas" width="80%" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-193"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-193-1.png" alt="A Blank Canvas" width="80%" />
 <p class="caption">
 Figure 13.3: A Blank Canvas
 </p>
@@ -492,8 +491,8 @@ Figure 13.3: A Blank Canvas
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="visualization.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb194-2"><a href="visualization.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb194-3"><a href="visualization.html#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-195"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-195-1.png" alt="A Second Scatterplot" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-194"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-194-1.png" alt="A Second Scatterplot" width="672" />
 <p class="caption">
 Figure 13.4: A Second Scatterplot
 </p>
@@ -507,8 +506,8 @@ Figure 13.4: A Second Scatterplot
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="visualization.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb196-2"><a href="visualization.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb196-3"><a href="visualization.html#cb196-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-197"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-197-1.png" alt="Adding Some Color" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-196"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-196-1.png" alt="Adding Some Color" width="672" />
 <p class="caption">
 Figure 13.5: Adding Some Color
 </p>
@@ -519,8 +518,8 @@ Figure 13.5: Adding Some Color
 <span id="cb197-2"><a href="visualization.html#cb197-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb197-3"><a href="visualization.html#cb197-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span>
 <span id="cb197-4"><a href="visualization.html#cb197-4" aria-hidden="true" tabindex="-1"></a>base_plot <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-198"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-198-1.png" alt="Changing Scales" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-197"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-197-1.png" alt="Changing Scales" width="672" />
 <p class="caption">
 Figure 13.6: Changing Scales
 </p>
@@ -529,8 +528,8 @@ Figure 13.6: Changing Scales
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="visualization.html#cb198-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb198-2"><a href="visualization.html#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb198-3"><a href="visualization.html#cb198-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() </span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-199"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-199-1.png" alt="Changing the Fill" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-198"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-198-1.png" alt="Changing the Fill" width="672" />
 <p class="caption">
 Figure 13.7: Changing the Fill
 </p>
@@ -540,8 +539,8 @@ Figure 13.7: Changing the Fill
 <span id="cb199-2"><a href="visualization.html#cb199-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb199-3"><a href="visualization.html#cb199-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb199-4"><a href="visualization.html#cb199-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_b</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-200"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-200-1.png" alt="Changing the Fill Again" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-199"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-199-1.png" alt="Changing the Fill Again" width="672" />
 <p class="caption">
 Figure 13.8: Changing the Fill Again
 </p>
@@ -565,7 +564,7 @@ Figure 13.8: Changing the Fill Again
 <span id="cb201-5"><a href="visualization.html#cb201-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([ 11.,  36., 103., 224., 287., 224.,  88.,  24.,   1.,   2.]), array([-3.05376438, -2.35252767, -1.65129096, -0.95005426, -0.24881755,</span></span>
 <span id="cb201-6"><a href="visualization.html#cb201-6" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.45241916,  1.15365587,  1.85489258,  2.55612929,  3.257366  ,</span></span>
 <span id="cb201-7"><a href="visualization.html#cb201-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.9586027 ]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-203-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-202-1.png" width="80%" /></p>
 <p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. It also follows the most commonly-used convention.</p>
 <p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
 <p>Third, we call the <code>subplots()</code> function, and use <em>sequence unpacking</em> to unpack the returned container into individual objects without storing the overall container. “Subplots” sounds like it will make many different plots all on one figure, but if you look at the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots">documentation</a> the number of rows and columns defaults to one and one, respectively.</p>
@@ -593,9 +592,9 @@ Figure 13.8: Changing the Fill Again
 <span id="cb202-15"><a href="visualization.html#cb202-15" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
 <span id="cb202-16"><a href="visualization.html#cb202-16" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
 <span id="cb202-17"><a href="visualization.html#cb202-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-204-3.png" width="672" /></p>
-<div class="figure"><span id="fig:unnamed-chunk-205"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-205-5.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-203-3.png" width="672" /></p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-204"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-204-5.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
 <p class="caption">
 Figure 13.9: Side-By-Side Line Plots in Matplotlib
 </p>
@@ -638,7 +637,6 @@ Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)<
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -678,6 +676,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
