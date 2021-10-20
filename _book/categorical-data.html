@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="functions.html"/>
 <link rel="next" href="data-frames.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -347,7 +347,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
@@ -447,7 +449,7 @@ div.csl-indent {
 <p>You should be careful if you are not specifying them directly. What happens when you use the default option and replace the second assignment in the above code with <code>responses &lt;- factor(c("autumn", "summer", "summer"))</code>? The documentation of <code>factor()</code> will tell you that, by default, <code>factor()</code> will just take the unique values found in the data. In this case, nobody prefers winter or spring, and so neither will show up in <code>levels(responses)</code>. This may or may not be what you want.</p>
 </div>
 <p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for <em>ordinal</em> data. Ordinal data is a particular type of categorical data that recognizes the categories have a natural order (e.g. low/ medium/high and not red/green/blue).</p>
-<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it,” “it’s okay” or “hate it.” The data might look something like this.</p>
+<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it”, “it’s okay” or “hate it”. The data might look something like this.</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="categorical-data.html#cb97-1" aria-hidden="true" tabindex="-1"></a>ordFeelOptions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;hate it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>)</span>
 <span id="cb97-2"><a href="categorical-data.html#cb97-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
 <span id="cb97-3"><a href="categorical-data.html#cb97-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
@@ -482,7 +484,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="categorical-data.html#cb98-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb98-2"><a href="categorical-data.html#cb98-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb98-3"><a href="categorical-data.html#cb98-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0]</span></span>
+<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf]</span></span>
 <span id="cb98-5"><a href="categorical-data.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb98-6"><a href="categorical-data.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb98-7"><a href="categorical-data.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -662,6 +664,7 @@ Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> U
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -702,7 +705,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

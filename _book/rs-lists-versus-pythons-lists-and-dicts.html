@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"/>
 <link rel="next" href="functions.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -347,7 +347,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
@@ -438,8 +440,8 @@ div.csl-indent {
 <span id="cb62-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
 <span id="cb62-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
 <span id="cb62-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results) </span>
-<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  </span></span>
-<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
+<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;           </span></span>
+<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
 <span id="cb62-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-8" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
 <span id="cb62-9"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
 <span id="cb62-10"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
@@ -542,6 +544,7 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -582,7 +585,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

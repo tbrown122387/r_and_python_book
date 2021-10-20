@@ -11,7 +11,7 @@ Notice what all of these tasks have in common--they all require the ability to f
 
 ## An Introducton to Regular Expressions
 
-### Literal Characters and Metacharacters
+### Literal Characters versus Metacharacters
 
 Every character in a regular expression is interpreted in one of two ways. Either it is interpreted as a 
 
@@ -20,42 +20,81 @@ Every character in a regular expression is interpreted in one of two ways. Eithe
   
 If it is a literal character, then the character is the *literal* pattern. For example, in the regular expression "e", the character "e" has a literal interpretation. If you seek to capitalize all instances of "e" in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you're good. The pattern is trivial to specify. 
 
-There are many in R, but in this case, I use `gsub()`.
+On the other hand, if I asked you to remove `$`s from price or salary data, you might have a little more difficulty. This is because `$` is a *metacharacter* in regular expressions, and so it has a special meaning.^[The dollar sign is useful if you only want to find certain patterns that finish a line. It takes the characters preceding it, and says, only look for that pattern if it comes at the end of a string.] In the examples below, if `$` is interpreted as a regular expression, the pattern will not be found at all, despite the prevalence of *literal* dollar signs. 
+
+There are a few functions in R that perform find-and-replace, but in this case, I use `gsub()`. In Pandas, I can use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html), to do this. Here are the examples that find patterns that are described by literal characters. 
 
 ```{r, collapse = TRUE}
+# in R
 gsub(pattern = "e", replacement = "E", x = "I don't need a regex for this!")
 ```
-If you look at `gsub()`'s documentation, the argument `fixed` is `TRUE` by default, which means that the pattern, `"e"` is being considered as a regular expression. 
-
-In Pandas, I can use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html), to do this.
 
 ```{python, collapse = TRUE}
+# in Python
 import pandas as pd
 pd.Series(["I don't need a regex for this!"]).str.replace(pat="e",repl="E")
 ```
 
-On the other hand, if I asked you to remove `$`s from price or salary data, you might have a little more difficulty. This is because `$` is a *metacharacter* in regular expressions, and so it has a special meaning.^[The dollar sign is useful if you only want to find certain patterns that finish a line. It takes the characters preceding it, and says, only look for that pattern if it comes at the end of a string.] 
+On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters. 
 
-```{r, collapse = TRUE, error=TRUE}
-# in R this doesn't work as intended
-stringr::str_remove_all(c("$100, $200"), pattern = "$")
-```
-
-If you wanted to count the number of *literal* dollar signs, you would need to *escape* the dollar sign. That (usually) means you need to put a backslash (i.e. `\`) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character. Here we use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html).
+  1. We can *escape* the dollar sign. That means you need to put a backslash (i.e. `\`) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character. 
+  2. Alternatively, we can tell the function to ignore regular expressions. `gsub()` can take `fixed=TRUE`, and `.str.replace()` can take `regex=False`. 
+  
 
 ```{python, collapse = TRUE}
+# in Python
+pd.Series(["$100, $200"]).str.replace(pat="$",repl="",regex=False)
 pd.Series(["$100, $200"]).str.replace(pat="\$",repl="")
 ```
 
-Unfortunately, sometimes you need to use two backslashes to escape metacharacters. Here's an example in R. We'll talk about why in a minute. 
-
 ```{r, collapse = TRUE}
+# in R
+gsub(pattern = "$", replacement = "", x = c("$100, $200"), fixed=TRUE)
 stringr::str_remove_all(c("$100, $200"), pattern = "\\$")
 ```
 
+  
+### The Trouble With Backslashes: Escape Sequences
+
+You might have noticed above and gotten confused--sometimes in Python and in R, we need *two* backslashes instead of *one*. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as **escape sequences**. We need to be able to do this even if we aren't using regular expressions. 
+
+For instance, consider the way we type the "newline" character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. `\` is one character, and `n` is another, but together they are one!
+
+```{r, collapse = TRUE}
+nchar('\n') #in R
+```
+
+```{python, collapse = TRUE}
+len('\n') #in Python
+```
+
+`str`s in Python and `character` `vectors` in R will look for these combinations by default. When we specify regular expressions with strings, the backslashes will be used first for this purpose. Their regular expression purpose is a second priority. 
+
+The reason we used `\\$` in the above example is to escape the second backslash. `\$` is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won't complain that it didn't. On the other hand, R will throw an error that it can't recognize it. 
+
+```{python, collapse = TRUE}
+len('\$') # in Python, not special
+```
+
+```{r, error = TRUE, collapse = TRUE}
+nchar('\$') # R gets confused
+```
+
+There is another way to deal with this issue--**raw strings!** Raw strings make life easier because they do not interpret backslashes as the beginning of escape sequences. You can make them in R and Python by putting an "r" in front of the quotation marks. However, it is slightly more complicated in R because you need a delimiter pair inside the quotation marks--for more information type `?Quotes` in your R console.
+
+```{python, collapse = TRUE}
+len(r'\n') # in Python 
+```
+
+```{r, error = TRUE, collapse = TRUE}
+nchar(r'{\$}') # in R
+```
 
 
-<!-- str_count(string = "First sentence. Second sentence.", pattern = r"\.") -->
+### More Examples of Using Regular Expressions
+
+
+
 
 TODO
   - raw strings

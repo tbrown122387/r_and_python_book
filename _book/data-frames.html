@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="categorical-data.html"/>
 <link rel="next" href="input-and-output.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -347,7 +347,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
@@ -513,9 +515,9 @@ div.csl-indent {
 <span id="cb114-4"><a href="data-frames.html#cb114-4" aria-hidden="true" tabindex="-1"></a>irisData[irisData<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SETOSA!&quot;</span></span>
 <span id="cb114-5"><a href="data-frames.html#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData,<span class="dv">3</span>)</span>
 <span id="cb114-6"><a href="data-frames.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      sepal.length sepal.width petal.length petal.width species columnOfOnes</span></span>
-<span id="cb114-7"><a href="data-frames.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1001     999.2556   -998.2781          1.4         0.2 SETOSA!            1</span></span>
-<span id="cb114-8"><a href="data-frames.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002    1000.0485   -996.9854          1.4         0.2 SETOSA!            1</span></span>
-<span id="cb114-9"><a href="data-frames.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1003       4.7000   -999.6731          1.3         0.2 SETOSA!            1</span></span></code></pre></div>
+<span id="cb114-7"><a href="data-frames.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1001     998.7539   -999.0453          1.4         0.2 SETOSA!            1</span></span>
+<span id="cb114-8"><a href="data-frames.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002     997.3561   -997.3033          1.4         0.2 SETOSA!            1</span></span>
+<span id="cb114-9"><a href="data-frames.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1003       4.7000   -998.5585          1.3         0.2 SETOSA!            1</span></span></code></pre></div>
 </div>
 <div id="data-frames-in-python" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Data Frames in Python</h2>
@@ -631,16 +633,16 @@ div.csl-indent {
 <span id="cb120-6"><a href="data-frames.html#cb120-6" aria-hidden="true" tabindex="-1"></a>iris_data.loc[iris_data[<span class="st">&#39;species&#39;</span>] <span class="op">==</span> <span class="st">&quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] <span class="op">=</span> <span class="st">&quot;SETOSA!&quot;</span></span>
 <span id="cb120-7"><a href="data-frames.html#cb120-7" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
 <span id="cb120-8"><a href="data-frames.html#cb120-8" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.length  petal.width  species  col_ones</span></span>
-<span id="cb120-9"><a href="data-frames.html#cb120-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.872890 -1000.076586           1.4          0.2  SETOSA!       1.0</span></span>
-<span id="cb120-10"><a href="data-frames.html#cb120-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    998.850273  -999.848022           1.4          0.2  SETOSA!       1.0</span></span>
-<span id="cb120-11"><a href="data-frames.html#cb120-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -997.689249           1.3          0.2  SETOSA!       1.0</span></span></code></pre></div>
+<span id="cb120-9"><a href="data-frames.html#cb120-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 149   1000.853751  -998.998421           1.4          0.2  SETOSA!       1.0</span></span>
+<span id="cb120-10"><a href="data-frames.html#cb120-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    998.405925  -997.959980           1.4          0.2  SETOSA!       1.0</span></span>
+<span id="cb120-11"><a href="data-frames.html#cb120-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -998.861673           1.3          0.2  SETOSA!       1.0</span></span></code></pre></div>
 <p>You can also use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html"><code>.assign()</code> method</a> to create a new column. This method does not modify the data frame in place. It returns a new <code>DataFrame</code> with the additional column.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="data-frames.html#cb121-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.assign(new_col_name <span class="op">=</span> np.arange(n_rows))</span>
 <span id="cb121-2"><a href="data-frames.html#cb121-2" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
 <span id="cb121-3"><a href="data-frames.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.length  ...  species col_ones  new_col_name</span></span>
-<span id="cb121-4"><a href="data-frames.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.872890 -1000.076586           1.4  ...  SETOSA!      1.0             0</span></span>
-<span id="cb121-5"><a href="data-frames.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    998.850273  -999.848022           1.4  ...  SETOSA!      1.0             1</span></span>
-<span id="cb121-6"><a href="data-frames.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -997.689249           1.3  ...  SETOSA!      1.0             2</span></span>
+<span id="cb121-4"><a href="data-frames.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 149   1000.853751  -998.998421           1.4  ...  SETOSA!      1.0             0</span></span>
+<span id="cb121-5"><a href="data-frames.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    998.405925  -997.959980           1.4  ...  SETOSA!      1.0             1</span></span>
+<span id="cb121-6"><a href="data-frames.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -998.861673           1.3  ...  SETOSA!      1.0             2</span></span>
 <span id="cb121-7"><a href="data-frames.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
 <span id="cb121-8"><a href="data-frames.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [3 rows x 7 columns]</span></span></code></pre></div>
 <div class="rmd-caution">
@@ -657,7 +659,7 @@ div.csl-indent {
 <p>Consider the data set <code>original_rt_snippets.txt</code> <span class="citation">(<a href="#ref-SocherEtAl2013:RNTN" role="doc-biblioref">Socher et al. 2013</a>)</span>. We will calculate the <em>term frequency-inverse document frequency statistics</em> <span class="citation">(<a href="#ref-Jones72astatistical" role="doc-biblioref">Jones 1972</a>)</span> on this data set, which is a common data transformation technique used in text mining and natural language processing. You may use the <code>stringr</code> library for this question, if you wish.</p>
 <ul>
 <li>read in this data set as a <code>vector</code> and call it <code>corpus</code>.</li>
-<li>create a <code>vector</code> called <code>dictionary</code> that contains the following phrases: “charming,”“fantasy,” “hate,” and “boring.”</li>
+<li>create a <code>vector</code> called <code>dictionary</code> that contains the following phrases: “charming”,“fantasy”, “hate”, and “boring”.</li>
 <li>Construct a <code>data.frame</code> with four columns called <code>bagOfWords</code> that contains the number of appearances of each word in the dictionary. Match the exact phrases. Label the columns of this <code>data.frame</code> with the phrases you’re searching for. Try to write code that is easy to modify if you decide to change the set of phrases in your dictionary.</li>
 <li>Create a <code>data.frame</code> with four columns called <code>termFrequency</code>. Each element should correspond with the count from the previous <code>data.frame</code>. Instead of the count, each element should be <span class="math inline">\(\log(1 + \text{count})\)</span>.</li>
 <li>Create a <code>vector</code> of length four called <code>invDocFrequency</code>. The inverse document frequency formula for any term <span class="math inline">\(t\)</span> is <span class="math inline">\(\log([\text{number of documents in corpus}] / [\text{number of documents that contain term } t])\)</span> Make sure the names of this vector are the same as the words in the dictionary.</li>
@@ -693,7 +695,7 @@ div.csl-indent {
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>This question deals with looking at historical prices of the S&amp;P500 Index. This data was downloaded from <a href="https://finance.yahoo.com">https://finance.yahoo.com</a> <span class="citation">(<a href="#ref-gspc_data" role="doc-biblioref"><span>“GSPC DATA,”</span> n.d.</a>)</span>. It contains prices starting from “2007-01-03” and going until “2021-10-01.”</p>
+<p>This question deals with looking at historical prices of the S&amp;P500 Index. This data was downloaded from <a href="https://finance.yahoo.com">https://finance.yahoo.com</a> <span class="citation">(<a href="#ref-gspc_data" role="doc-biblioref"><span>“GSPC DATA,”</span> n.d.</a>)</span>. It contains prices starting from “2007-01-03” and going until “2021-10-01”.</p>
 <ul>
 <li>Read in the data <code>gspc.csv</code> as a <code>data.frame</code> and call the variable <code>gspc</code>.</li>
 <li>Use <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html"><code>.set_index()</code></a> to change the index of <code>gspc</code> to its <code>"Index"</code> column. Store the new <code>DataFrame</code> as <code>gspc_good_idx</code>.</li>
@@ -768,6 +770,7 @@ Socher, Richard, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, And
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -808,7 +811,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

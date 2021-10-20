@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 Working With Text Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 14 Working With Text Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 Working With Text Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="visualization.html"/>
 <link rel="next" href="dates-and-times.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -347,7 +347,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
@@ -427,35 +429,64 @@ div.csl-indent {
 <p>Notice what all of these tasks have in common–they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase “a”s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this chapter is primarily concerned with discussing <strong>regular expressions,</strong> which are a tool that help you describe the patterns in text.</p>
 <div id="an-introducton-to-regular-expressions" class="section level2" number="14.1">
 <h2><span class="header-section-number">14.1</span> An Introducton to Regular Expressions</h2>
-<div id="literal-characters-and-metacharacters" class="section level3" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Literal Characters and Metacharacters</h3>
+<div id="literal-characters-versus-metacharacters" class="section level3" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Literal Characters versus Metacharacters</h3>
 <p>Every character in a regular expression is interpreted in one of two ways. Either it is interpreted as a</p>
 <ol style="list-style-type: decimal">
 <li>literal character, or as a</li>
 <li>metacharacter.</li>
 </ol>
-<p>If it is a literal character, then the character is the <em>literal</em> pattern. For example, in the regular expression “e,” the character “e” has a literal interpretation. If you seek to capitalize all instances of “e” in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you’re good. The pattern is trivial to specify.</p>
-<p>There are many in R, but in this case, I use <code>gsub()</code>.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="working-with-text-data.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;e&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;E&quot;</span>, <span class="at">x =</span> <span class="st">&quot;I don&#39;t need a regex for this!&quot;</span>)</span>
-<span id="cb203-2"><a href="working-with-text-data.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;I don&#39;t nEEd a rEgEx for this!&quot;</span></span></code></pre></div>
-<p>If you look at <code>gsub()</code>’s documentation, the argument <code>fixed</code> is <code>TRUE</code> by default, which means that the pattern, <code>"e"</code> is being considered as a regular expression.</p>
-<p>In Pandas, I can use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html"><code>.str.replace()</code></a>, to do this.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="working-with-text-data.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb204-2"><a href="working-with-text-data.html#cb204-2" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;I don&#39;t need a regex for this!&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;e&quot;</span>,repl<span class="op">=</span><span class="st">&quot;E&quot;</span>)</span>
-<span id="cb204-3"><a href="working-with-text-data.html#cb204-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    I don&#39;t nEEd a rEgEx for this!</span></span>
-<span id="cb204-4"><a href="working-with-text-data.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
-<p>On the other hand, if I asked you to remove <code>$</code>s from price or salary data, you might have a little more difficulty. This is because <code>$</code> is a <em>metacharacter</em> in regular expressions, and so it has a special meaning.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="working-with-text-data.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R this doesn&#39;t work as intended</span></span>
-<span id="cb205-2"><a href="working-with-text-data.html#cb205-2" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(<span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;$&quot;</span>)</span>
-<span id="cb205-3"><a href="working-with-text-data.html#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;$100, $200&quot;</span></span></code></pre></div>
-<p>If you wanted to count the number of <em>literal</em> dollar signs, you would need to <em>escape</em> the dollar sign. That (usually) means you need to put a backslash (i.e. <code>\</code>) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character. Here we use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html"><code>.str.replace()</code></a>.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb206-1"><a href="working-with-text-data.html#cb206-1" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;$100, $200&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;\$&quot;</span>,repl<span class="op">=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb206-2"><a href="working-with-text-data.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    100, 200</span></span>
-<span id="cb206-3"><a href="working-with-text-data.html#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
-<p>Unfortunately, sometimes you need to use two backslashes to escape metacharacters. Here’s an example in R. We’ll talk about why in a minute.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="working-with-text-data.html#cb207-1" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(<span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$&quot;</span>)</span>
-<span id="cb207-2"><a href="working-with-text-data.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;100, 200&quot;</span></span></code></pre></div>
-<!-- str_count(string = "First sentence. Second sentence.", pattern = r"\.") -->
+<p>If it is a literal character, then the character is the <em>literal</em> pattern. For example, in the regular expression “e”, the character “e” has a literal interpretation. If you seek to capitalize all instances of “e” in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you’re good. The pattern is trivial to specify.</p>
+<p>On the other hand, if I asked you to remove <code>$</code>s from price or salary data, you might have a little more difficulty. This is because <code>$</code> is a <em>metacharacter</em> in regular expressions, and so it has a special meaning.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a> In the examples below, if <code>$</code> is interpreted as a regular expression, the pattern will not be found at all, despite the prevalence of <em>literal</em> dollar signs.</p>
+<p>There are a few functions in R that perform find-and-replace, but in this case, I use <code>gsub()</code>. In Pandas, I can use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html"><code>.str.replace()</code></a>, to do this. Here are the examples that find patterns that are described by literal characters.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="working-with-text-data.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb203-2"><a href="working-with-text-data.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;e&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;E&quot;</span>, <span class="at">x =</span> <span class="st">&quot;I don&#39;t need a regex for this!&quot;</span>)</span>
+<span id="cb203-3"><a href="working-with-text-data.html#cb203-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;I don&#39;t nEEd a rEgEx for this!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="working-with-text-data.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb204-2"><a href="working-with-text-data.html#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb204-3"><a href="working-with-text-data.html#cb204-3" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;I don&#39;t need a regex for this!&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;e&quot;</span>,repl<span class="op">=</span><span class="st">&quot;E&quot;</span>)</span>
+<span id="cb204-4"><a href="working-with-text-data.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    I don&#39;t nEEd a rEgEx for this!</span></span>
+<span id="cb204-5"><a href="working-with-text-data.html#cb204-5" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
+<p>On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters.</p>
+<ol style="list-style-type: decimal">
+<li>We can <em>escape</em> the dollar sign. That means you need to put a backslash (i.e. <code>\</code>) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character.</li>
+<li>Alternatively, we can tell the function to ignore regular expressions. <code>gsub()</code> can take <code>fixed=TRUE</code>, and <code>.str.replace()</code> can take <code>regex=False</code>.</li>
+</ol>
+<div class="sourceCode" id="cb205"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb205-1"><a href="working-with-text-data.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb205-2"><a href="working-with-text-data.html#cb205-2" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;$100, $200&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;$&quot;</span>,repl<span class="op">=</span><span class="st">&quot;&quot;</span>,regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb205-3"><a href="working-with-text-data.html#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    100, 200</span></span>
+<span id="cb205-4"><a href="working-with-text-data.html#cb205-4" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span>
+<span id="cb205-5"><a href="working-with-text-data.html#cb205-5" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;$100, $200&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;\$&quot;</span>,repl<span class="op">=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb205-6"><a href="working-with-text-data.html#cb205-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    100, 200</span></span>
+<span id="cb205-7"><a href="working-with-text-data.html#cb205-7" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="working-with-text-data.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb206-2"><a href="working-with-text-data.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;$&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">fixed=</span><span class="cn">TRUE</span>)</span>
+<span id="cb206-3"><a href="working-with-text-data.html#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;100, 200&quot;</span></span>
+<span id="cb206-4"><a href="working-with-text-data.html#cb206-4" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(<span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$&quot;</span>)</span>
+<span id="cb206-5"><a href="working-with-text-data.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;100, 200&quot;</span></span></code></pre></div>
+</div>
+<div id="the-trouble-with-backslashes-escape-sequences" class="section level3" number="14.1.2">
+<h3><span class="header-section-number">14.1.2</span> The Trouble With Backslashes: Escape Sequences</h3>
+<p>You might have noticed above and gotten confused–sometimes in Python and in R, we need <em>two</em> backslashes instead of <em>one</em>. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as <strong>escape sequences</strong>. We need to be able to do this even if we aren’t using regular expressions.</p>
+<p>For instance, consider the way we type the “newline” character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. <code>\</code> is one character, and <code>n</code> is another, but together they are one!</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="working-with-text-data.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="co">#in R</span></span>
+<span id="cb207-2"><a href="working-with-text-data.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb208-1"><a href="working-with-text-data.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="co">#in Python</span></span>
+<span id="cb208-2"><a href="working-with-text-data.html#cb208-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
+<p><code>str</code>s in Python and <code>character</code> <code>vectors</code> in R will look for these combinations by default. When we specify regular expressions with strings, the backslashes will be used first for this purpose. Their regular expression purpose is a second priority.</p>
+<p>The reason we used <code>\\$</code> in the above example is to escape the second backslash. <code>\$</code> is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won’t complain that it didn’t. On the other hand, R will throw an error that it can’t recognize it.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb209-1"><a href="working-with-text-data.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="st">&#39;\$&#39;</span>) <span class="co"># in Python, not special</span></span>
+<span id="cb209-2"><a href="working-with-text-data.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="working-with-text-data.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">&#39;\$&#39;</span>) <span class="co"># R gets confused</span></span>
+<span id="cb210-2"><a href="working-with-text-data.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: &#39;\$&#39; is an unrecognized escape in character string starting &quot;&#39;\$&quot;</span></span></code></pre></div>
+<p>There is another way to deal with this issue–<strong>raw strings!</strong> Raw strings make life easier because they do not interpret backslashes as the beginning of escape sequences. You can make them in R and Python by putting an “r” in front of the quotation marks. However, it is slightly more complicated in R because you need a delimiter pair inside the quotation marks–for more information type <code>?Quotes</code> in your R console.</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb211-1"><a href="working-with-text-data.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="vs">r&#39;\n&#39;</span>) <span class="co"># in Python </span></span>
+<span id="cb211-2"><a href="working-with-text-data.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="working-with-text-data.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(r<span class="st">&#39;{\$}&#39;</span>) <span class="co"># in R</span></span>
+<span id="cb212-2"><a href="working-with-text-data.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+</div>
+<div id="more-examples-of-using-regular-expressions" class="section level3" number="14.1.3">
+<h3><span class="header-section-number">14.1.3</span> More Examples of Using Regular Expressions</h3>
 <p>TODO
 - raw strings
 - text in files or finding files by name
@@ -481,6 +512,7 @@ div.csl-indent {
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -521,7 +553,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

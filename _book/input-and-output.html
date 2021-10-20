@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -347,7 +347,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
@@ -460,7 +462,8 @@ div.csl-indent {
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>.</p>
 <p>If you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press the <code>&lt;Enter&gt;</code> key), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
 <p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first few rows of the raw text file<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> looks like this.</p>
-<pre><code>6 0 66  50  1
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3</code></pre>
 <p>It does not use commas as separators, and there is no header information, so <code>read.csv()</code> used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.</p>
@@ -491,7 +494,7 @@ div.csl-indent {
 <span id="cb126-6"><a href="input-and-output.html#cb126-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
 <span id="cb126-7"><a href="input-and-output.html#cb126-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
 <span id="cb126-8"><a href="input-and-output.html#cb126-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
-<p>This data set has columns whose widths are “fixed,” too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters.</p>
+<p>This data set has columns whose widths are “fixed”, too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters.</p>
 <p>You may choose to exploit this and use a specialized function that reads in data in a fixed width format (e.g. <code>read.fwf()</code>). The frustrating thing about this approach, though, is that you have to specify what those widths are. This can be quite tedious, particularly if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
 <p>In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified <code>widths=c(2,2,4,4,1)</code>, which includes spaces to the <em>right</em> of digits, then columns would have been recognized as <code>character</code>s.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="input-and-output.html#cb127-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
@@ -510,8 +513,8 @@ div.csl-indent {
 <span id="cb128-4"><a href="input-and-output.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;&lt;html itemscope=\&quot;\&quot; itemtype=\&quot;http://schema.org/WebPage\&quot; lang=\&quot;en\&quot;&gt;&lt;head&gt;&quot;</span></span></code></pre></div>
 <p>Some of you may have had difficulty reading in the above data. This can happen if your machine’s default character encoding is different than mine. For instance, if your character encoding is <a href="https://en.wikipedia.org/wiki/GBK_(character_encoding)">“GBK”</a>, then the following warning message might appear. This message means that your machine didn’t recognize some of the characters in the data set.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="input-and-output.html#cb129-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>)</span>
-<span id="cb129-2"><a href="input-and-output.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection &#39;data/</span></span>
-<span id="cb129-3"><a href="input-and-output.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Google.html&#39;</span></span>
+<span id="cb129-2"><a href="input-and-output.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection</span></span>
+<span id="cb129-3"><a href="input-and-output.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data/Google.html&#39;</span></span>
 <span id="cb129-4"><a href="input-and-output.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string</span></span></code></pre></div>
 <p>These errors are easy to fix, though, so don’t worry. Just specify an encoding argument in your function that reads in data.</p>
 <div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="input-and-output.html#cb130-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>, </span>
@@ -600,7 +603,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="input-and-output.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring_out.csv&quot;</span>, </span>
 <span id="cb138-2"><a href="input-and-output.html#cb138-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span></code></pre></div>
 <p>The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.</p>
-<pre><code>&quot;V1&quot;;&quot;V2&quot;;&quot;V3&quot;;&quot;V4&quot;;&quot;V5&quot;
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+&quot;V1&quot;;&quot;V2&quot;;&quot;V3&quot;;&quot;V4&quot;;&quot;V5&quot;
 6;0;66;50;1
 6;1;70;50;2</code></pre>
 </div>
@@ -639,7 +643,8 @@ div.csl-indent {
 <span id="cb143-2"><a href="input-and-output.html#cb143-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;\s+&quot;</span>)</span>
 <span id="cb143-3"><a href="input-and-output.html#cb143-3" aria-hidden="true" tabindex="-1"></a>d.to_csv(<span class="st">&quot;data/oring_out2.csv&quot;</span>, header<span class="op">=</span><span class="va">True</span>, index<span class="op">=</span><span class="va">False</span>, sep <span class="op">=</span> <span class="st">&quot;,&quot;</span>)</span></code></pre></div>
 <p>Here is how the first few rows of that file looks in a text editor.</p>
-<pre><code>0,1,2,3,4
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+0,1,2,3,4
 6,0,66,50,1
 6,1,70,50,2</code></pre>
 </div>
@@ -708,6 +713,7 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -748,7 +754,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

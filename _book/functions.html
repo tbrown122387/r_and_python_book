@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="rs-lists-versus-pythons-lists-and-dicts.html"/>
 <link rel="next" href="categorical-data.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -347,7 +347,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-and-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters and Metacharacters</a></li>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
@@ -747,7 +749,7 @@ div.csl-indent {
 <span id="cb88-9"><a href="functions.html#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb88-10"><a href="functions.html#cb88-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
 <span id="cb88-11"><a href="functions.html#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg)) <span class="co"># different!`</span></span>
-<span id="cb88-12"><a href="functions.html#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 139704669799776 139704669799808</span></span>
+<span id="cb88-12"><a href="functions.html#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140590371222880 140590371222912</span></span>
 <span id="cb88-13"><a href="functions.html#cb88-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb88-14"><a href="functions.html#cb88-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
@@ -769,7 +771,7 @@ div.csl-indent {
 <span id="cb89-11"><a href="functions.html#cb89-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
 <span id="cb89-12"><a href="functions.html#cb89-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb89-13"><a href="functions.html#cb89-13" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
-<p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place,” and all variables can access the mutated object.</p>
+<p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place”, and all variables can access the mutated object.</p>
 <p>Why did the third example produce unexpected results? The difference is in the line <code>arg = [2]</code>. This rebinds the name <code>arg</code> to a different variable. <code>list</code>s are still mutable, but this has nothing to do with re-binding–re-binding a name works no matter what type of object you’re binding it to. In this case we are re-binding <code>arg</code> to a completely different list.</p>
 </div>
 </div>
@@ -966,6 +968,7 @@ Guttman, Louis. 1946. <span>“<span class="nocase">Enlargement Methods for Comp
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1006,7 +1009,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {
