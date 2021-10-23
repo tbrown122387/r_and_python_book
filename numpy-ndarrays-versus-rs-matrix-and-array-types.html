@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="tbrown122387/r_and_python_book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  
+  
+  
+
+<meta name="author" content="Taylor R. Brown" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
+<link rel="next" href="rs-lists-versus-pythons-lists-and-dicts.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to R and Python For Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-sample-course"><i class="fa fa-check"></i>A Sample Course</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#licenses"><i class="fa fa-check"></i>License(s)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-the-required-software"><i class="fa fa-check"></i>Installing the Required Software</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-python-by-installing-anaconda"><i class="fa fa-check"></i>Installing Python by Installing Anaconda</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Introducing the Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#hello-world-in-r"><i class="fa fa-check"></i><b>1.1</b> Hello World in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#hello-world-in-python"><i class="fa fa-check"></i><b>1.2</b> Hello World in Python</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#reading-documentation"><i class="fa fa-check"></i><b>1.3.1</b> Reading Documentation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#understanding-file-paths"><i class="fa fa-check"></i><b>1.3.2</b> Understanding File Paths</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-types.html"><a href="basic-types.html"><i class="fa fa-check"></i><b>2</b> Basic Types</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-python"><i class="fa fa-check"></i><b>2.1</b> Basic Types In Python</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-python"><i class="fa fa-check"></i><b>2.1.1</b> Type Conversions in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-r"><i class="fa fa-check"></i><b>2.2</b> Basic Types In R</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-r"><i class="fa fa-check"></i><b>2.2.1</b> Type Conversions in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basic-types.html"><a href="basic-types.html#rs-simplification"><i class="fa fa-check"></i><b>2.2.2</b> R’s Simplification</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basic-types.html"><a href="basic-types.html#exercises"><i class="fa fa-check"></i><b>2.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-types.html"><a href="basic-types.html#r-questions"><i class="fa fa-check"></i><b>2.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-types.html"><a href="basic-types.html#python-questions"><i class="fa fa-check"></i><b>2.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html"><i class="fa fa-check"></i><b>3</b> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-r"><i class="fa fa-check"></i><b>3.1</b> Overview of R</a></li>
+<li class="chapter" data-level="3.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python"><i class="fa fa-check"></i><b>3.2</b> Overview of Python</a></li>
+<li class="chapter" data-level="3.3" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-r"><i class="fa fa-check"></i><b>3.3</b> Vectorization in R</a></li>
+<li class="chapter" data-level="3.4" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python"><i class="fa fa-check"></i><b>3.4</b> Vectorization in Python</a></li>
+<li class="chapter" data-level="3.5" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-vectors-in-r"><i class="fa fa-check"></i><b>3.5</b> Indexing Vectors in R</a></li>
+<li class="chapter" data-level="3.6" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-numpy-arrays"><i class="fa fa-check"></i><b>3.6</b> Indexing Numpy arrays</a></li>
+<li class="chapter" data-level="3.7" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-pandas-series"><i class="fa fa-check"></i><b>3.7</b> Indexing Pandas’ Series</a></li>
+<li class="chapter" data-level="3.8" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#some-gotchas"><i class="fa fa-check"></i><b>3.8</b> Some Gotchas</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#shallow-versus-deep-copies"><i class="fa fa-check"></i><b>3.8.1</b> Shallow versus Deep Copies</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#how-r-and-python-handle-missing-values"><i class="fa fa-check"></i><b>3.8.2</b> How R and Python Handle Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#exercises-1"><i class="fa fa-check"></i><b>3.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-questions-1"><i class="fa fa-check"></i><b>3.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#python-questions-1"><i class="fa fa-check"></i><b>3.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><i class="fa fa-check"></i><b>4</b> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#numpy-ndarrays-in-python"><i class="fa fa-check"></i><b>4.1</b> Numpy <code>ndarray</code>s In Python</a></li>
+<li class="chapter" data-level="4.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#the-matrix-and-array-classes-in-r"><i class="fa fa-check"></i><b>4.2</b> The <code>matrix</code> and <code>array</code> classes in R</a></li>
+<li class="chapter" data-level="4.3" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#exercises-2"><i class="fa fa-check"></i><b>4.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#r-questions-2"><i class="fa fa-check"></i><b>4.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#python-questions-2"><i class="fa fa-check"></i><b>4.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> <code>list</code>s In R</a></li>
+<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> <code>list</code>s In Python</a></li>
+<li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
+<li class="chapter" data-level="5.4" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3"><i class="fa fa-check"></i><b>5.4.1</b> R Questions</a></li>
+<li class="chapter" data-level="5.4.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3"><i class="fa fa-check"></i><b>5.4.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="functions.html"><a href="functions.html#defining-r-functions"><i class="fa fa-check"></i><b>6.1</b> Defining R Functions</a></li>
+<li class="chapter" data-level="6.2" data-path="functions.html"><a href="functions.html#defining-python-functions"><i class="fa fa-check"></i><b>6.2</b> Defining Python Functions</a></li>
+<li class="chapter" data-level="6.3" data-path="functions.html"><a href="functions.html#more-details-on-rs-user-defined-functions"><i class="fa fa-check"></i><b>6.3</b> More Details On R’s User-Defined Functions</a></li>
+<li class="chapter" data-level="6.4" data-path="functions.html"><a href="functions.html#more-details-on-pythons-user-defined-functions"><i class="fa fa-check"></i><b>6.4</b> More details on Python’s user-defined functions</a></li>
+<li class="chapter" data-level="6.5" data-path="functions.html"><a href="functions.html#function-scope-in-r"><i class="fa fa-check"></i><b>6.5</b> Function Scope in R</a></li>
+<li class="chapter" data-level="6.6" data-path="functions.html"><a href="functions.html#function-scope-in-python"><i class="fa fa-check"></i><b>6.6</b> Function Scope in Python</a></li>
+<li class="chapter" data-level="6.7" data-path="functions.html"><a href="functions.html#modifying-a-functions-arguments"><i class="fa fa-check"></i><b>6.7</b> Modifying a Function’s Arguments</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="functions.html"><a href="functions.html#passing-by-value-in-r"><i class="fa fa-check"></i><b>6.7.1</b> Passing By Value In R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="functions.html"><a href="functions.html#passing-by-assignment-in-python"><i class="fa fa-check"></i><b>6.7.2</b> Passing By Assignment In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="functions.html"><a href="functions.html#accessing-and-modifying-captured-variables"><i class="fa fa-check"></i><b>6.8</b> Accessing and Modifying Captured Variables</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.1</b> Accessing Captured Variables in R</a></li>
+<li class="chapter" data-level="6.8.2" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.2</b> Accessing Captured Variables in Python</a></li>
+<li class="chapter" data-level="6.8.3" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.3</b> Modifying Captured Variables In R</a></li>
+<li class="chapter" data-level="6.8.4" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.4</b> Modifying Captured Variables In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="functions.html"><a href="functions.html#exercises-4"><i class="fa fa-check"></i><b>6.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="functions.html"><a href="functions.html#r-questions-4"><i class="fa fa-check"></i><b>6.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="6.9.2" data-path="functions.html"><a href="functions.html#python-questions-4"><i class="fa fa-check"></i><b>6.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="categorical-data.html"><a href="categorical-data.html"><i class="fa fa-check"></i><b>7</b> Categorical Data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#factors-in-r"><i class="fa fa-check"></i><b>7.1</b> <code>factor</code>s in R</a></li>
+<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#two-options-for-categorical-data-in-pandas"><i class="fa fa-check"></i><b>7.2</b> Two Options for Categorical Data in Pandas</a></li>
+<li class="chapter" data-level="7.3" data-path="categorical-data.html"><a href="categorical-data.html#exercises-5"><i class="fa fa-check"></i><b>7.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="categorical-data.html"><a href="categorical-data.html#r-questions-5"><i class="fa fa-check"></i><b>7.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="categorical-data.html"><a href="categorical-data.html#python-questions-5"><i class="fa fa-check"></i><b>7.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>8</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-r"><i class="fa fa-check"></i><b>8.1</b> Data Frames in R</a></li>
+<li class="chapter" data-level="8.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-python"><i class="fa fa-check"></i><b>8.2</b> Data Frames in Python</a></li>
+<li class="chapter" data-level="8.3" data-path="data-frames.html"><a href="data-frames.html#exercises-6"><i class="fa fa-check"></i><b>8.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="data-frames.html"><a href="data-frames.html#r-questions-6"><i class="fa fa-check"></i><b>8.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-frames.html"><a href="data-frames.html#python-questions-6"><i class="fa fa-check"></i><b>8.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Common Tasks and Patterns</b></span></li>
+<li class="chapter" data-level="9" data-path="input-and-output.html"><a href="input-and-output.html"><i class="fa fa-check"></i><b>9</b> Input and Output</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
+<li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
+<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-r"><i class="fa fa-check"></i><b>9.4.1</b> Writing Out Tabular Plain Text Data in R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-r"><i class="fa fa-check"></i><b>9.4.2</b> Serialization in R</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-python"><i class="fa fa-check"></i><b>9.5.1</b> Writing Out Tabular Plain Text Data in Python</a></li>
+<li class="chapter" data-level="9.5.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-python"><i class="fa fa-check"></i><b>9.5.2</b> Serialization in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="input-and-output.html"><a href="input-and-output.html#exercises-7"><i class="fa fa-check"></i><b>9.6</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="input-and-output.html"><a href="input-and-output.html#r-questions-7"><i class="fa fa-check"></i><b>9.6.1</b> R Questions</a></li>
+<li class="chapter" data-level="9.6.2" data-path="input-and-output.html"><a href="input-and-output.html#python-questions-7"><i class="fa fa-check"></i><b>9.6.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-r"><i class="fa fa-check"></i><b>10.1</b> Installing Packages In R</a></li>
+<li class="chapter" data-level="10.2" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-python"><i class="fa fa-check"></i><b>10.2</b> Installing Packages In Python</a></li>
+<li class="chapter" data-level="10.3" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-r"><i class="fa fa-check"></i><b>10.3</b> Loading Packages In R</a></li>
+<li class="chapter" data-level="10.4" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-python"><i class="fa fa-check"></i><b>10.4</b> Loading Packages In Python</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
+<li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#ordering-and-sorting-data"><i class="fa fa-check"></i><b>12.1</b> Ordering and Sorting Data</a></li>
+<li class="chapter" data-level="12.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder"><i class="fa fa-check"></i><b>12.2</b> Stacking Data Sets and Placing Them Shoulder to Shoulder</a></li>
+<li class="chapter" data-level="12.3" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets"><i class="fa fa-check"></i><b>12.3</b> Merging or Joining Data Sets</a></li>
+<li class="chapter" data-level="12.4" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-data"><i class="fa fa-check"></i><b>12.4</b> Long Versus Wide Data</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-r"><i class="fa fa-check"></i><b>12.4.1</b> Long Versus Wide in R</a></li>
+<li class="chapter" data-level="12.4.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-python"><i class="fa fa-check"></i><b>12.4.2</b> Long Versus Wide in Python</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>13</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="visualization.html"><a href="visualization.html#base-r-plotting"><i class="fa fa-check"></i><b>13.1</b> Base R Plotting</a></li>
+<li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
+<li class="chapter" data-level="16" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>16</b> Running Scripts from the Command Line</a></li>
+<li class="part"><span><b>III Programming Styles</b></span></li>
+<li class="chapter" data-level="17" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>17</b> An Introduction to Object-Oriented Programming</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-python"><i class="fa fa-check"></i><b>17.1</b> OOP In Python</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#overview"><i class="fa fa-check"></i><b>17.1.1</b> Overview</a></li>
+<li class="chapter" data-level="17.1.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#a-first-example"><i class="fa fa-check"></i><b>17.1.2</b> A First Example</a></li>
+<li class="chapter" data-level="17.1.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-inheritance"><i class="fa fa-check"></i><b>17.1.3</b> Adding Inheritance</a></li>
+<li class="chapter" data-level="17.1.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-in-composition"><i class="fa fa-check"></i><b>17.1.4</b> Adding in Composition</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-r"><i class="fa fa-check"></i><b>17.2</b> OOP In R</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s3-objects-the-big-picture"><i class="fa fa-check"></i><b>17.2.1</b> S3 objects: The Big Picture</a></li>
+<li class="chapter" data-level="17.2.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s3-objects"><i class="fa fa-check"></i><b>17.2.2</b> Using S3 objects</a></li>
+<li class="chapter" data-level="17.2.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s3-objects"><i class="fa fa-check"></i><b>17.2.3</b> Creating S3 objects</a></li>
+<li class="chapter" data-level="17.2.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s4-objects-the-big-picture"><i class="fa fa-check"></i><b>17.2.4</b> S4 objects: The Big Picture</a></li>
+<li class="chapter" data-level="17.2.5" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s4-objects"><i class="fa fa-check"></i><b>17.2.5</b> Using S4 objects</a></li>
+<li class="chapter" data-level="17.2.6" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s4-objects"><i class="fa fa-check"></i><b>17.2.6</b> Creating S4 objects</a></li>
+<li class="chapter" data-level="17.2.7" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#reference-classes-the-big-picture"><i class="fa fa-check"></i><b>17.2.7</b> Reference Classes: The Big Picture</a></li>
+<li class="chapter" data-level="17.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>17.2.8</b> Creating Reference Classes</a></li>
+<li class="chapter" data-level="17.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>17.2.9</b> Creating R6 Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>18</b> Functional Programming</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-r"><i class="fa fa-check"></i><b>18.1</b> Functions as Function Inputs in R</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="functional-programming.html"><a href="functional-programming.html#sapply-and-vapply"><i class="fa fa-check"></i><b>18.1.1</b> <code>sapply()</code> and <code>vapply()</code></a></li>
+<li class="chapter" data-level="18.1.2" data-path="functional-programming.html"><a href="functional-programming.html#lapply"><i class="fa fa-check"></i><b>18.1.2</b> <code>lapply()</code></a></li>
+<li class="chapter" data-level="18.1.3" data-path="functional-programming.html"><a href="functional-programming.html#apply"><i class="fa fa-check"></i><b>18.1.3</b> <code>apply()</code></a></li>
+<li class="chapter" data-level="18.1.4" data-path="functional-programming.html"><a href="functional-programming.html#tapply"><i class="fa fa-check"></i><b>18.1.4</b> <code>tapply()</code></a></li>
+<li class="chapter" data-level="18.1.5" data-path="functional-programming.html"><a href="functional-programming.html#mapply"><i class="fa fa-check"></i><b>18.1.5</b> <code>mapply()</code></a></li>
+<li class="chapter" data-level="18.1.6" data-path="functional-programming.html"><a href="functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>18.1.6</b> <code>Reduce()</code> and <code>do.call()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="functional-programming.html"><a href="functional-programming.html#another-example-in-r"><i class="fa fa-check"></i><b>18.2</b> Another Example in R</a></li>
+<li class="chapter" data-level="18.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>18.3</b> Functions as Function Inputs in Base Python</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="functional-programming.html"><a href="functional-programming.html#map"><i class="fa fa-check"></i><b>18.3.1</b> <code>map()</code></a></li>
+<li class="chapter" data-level="18.3.2" data-path="functional-programming.html"><a href="functional-programming.html#filter"><i class="fa fa-check"></i><b>18.3.2</b> <code>filter()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>18.4</b> Functions as Function Inputs in Numpy</a></li>
+<li class="chapter" data-level="18.5" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>18.5</b> Functional Methods in Pandas</a></li>
+<li class="chapter" data-level="18.6" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-miscellany"><i class="fa fa-check"></i><b>18.6</b> Functions as Function Inputs (miscellany)</a></li>
+<li class="chapter" data-level="18.7" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>18.7</b> Functions as Function Outputs in R</a></li>
+<li class="chapter" data-level="18.8" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>18.8</b> Functions as Function Outputs in Python</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to R and Python For Data Analysis: A Side By Side Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="numpy-ndarrays-versus-rs-matrix-and-array-types" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types</h1>
+<p>Sometimes you want a collection of elements that are <em>all the same type</em>, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you’re writing, or that you need to use tensors for a computer vision project you’re working on.</p>
+<div id="numpy-ndarrays-in-python" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Numpy <code>ndarray</code>s In Python</h2>
+<p>In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy <code>array</code>s we discussed earlier are a special case of <a href="https://numpy.org/doc/stable/reference/arrays.ndarray.html">Numpy’s N-dimensional arrays</a>. Each array will come with an enormous amount of <a href="https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods">methods</a> and <a href="https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes">attributes</a> (more on object-oriented program in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">17</a>) attached to it. A few are demonstrated below.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb51-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>]], np.<span class="bu">float</span>)</span>
+<span id="cb51-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-3" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb51-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[1., 2.],</span></span>
+<span id="cb51-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co">##        [3., 4.]])</span></span>
+<span id="cb51-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-6" aria-hidden="true" tabindex="-1"></a>a.shape</span>
+<span id="cb51-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co">## (2, 2)</span></span>
+<span id="cb51-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-8" aria-hidden="true" tabindex="-1"></a>a.ndim</span>
+<span id="cb51-9"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span>
+<span id="cb51-10"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-10" aria-hidden="true" tabindex="-1"></a>a.dtype</span>
+<span id="cb51-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype(&#39;float64&#39;)</span></span>
+<span id="cb51-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-12" aria-hidden="true" tabindex="-1"></a>a.<span class="bu">max</span>()</span>
+<span id="cb51-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 4.0</span></span>
+<span id="cb51-14"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-14" aria-hidden="true" tabindex="-1"></a>a.resize((<span class="dv">1</span>,<span class="dv">4</span>)) <span class="co"># modification is **in place**</span></span>
+<span id="cb51-15"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-15" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb51-16"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[1., 2., 3., 4.]])</span></span></code></pre></div>
+<p>Matrix and elementwise multiplication is often useful, too.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-1" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.ones(<span class="dv">4</span>).reshape((<span class="dv">4</span>,<span class="dv">1</span>)) </span>
+<span id="cb52-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-2" aria-hidden="true" tabindex="-1"></a>np.dot(b,a) <span class="co"># matrix mult.</span></span>
+<span id="cb52-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[1., 2., 3., 4.],</span></span>
+<span id="cb52-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.],</span></span>
+<span id="cb52-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.],</span></span>
+<span id="cb52-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.]])</span></span>
+<span id="cb52-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">@</span> a <span class="co"># infix matrix mult. from PEP 465</span></span>
+<span id="cb52-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[1., 2., 3., 4.],</span></span>
+<span id="cb52-9"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.],</span></span>
+<span id="cb52-10"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.],</span></span>
+<span id="cb52-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.]])</span></span>
+<span id="cb52-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-12" aria-hidden="true" tabindex="-1"></a>a <span class="op">*</span> np.arange(<span class="dv">4</span>) <span class="co"># elementwise mult.</span></span>
+<span id="cb52-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[ 0.,  2.,  6., 12.]])</span></span></code></pre></div>
+</div>
+<div id="the-matrix-and-array-classes-in-r" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> The <code>matrix</code> and <code>array</code> classes in R</h2>
+<p>In Python, adding a dimension to your “container” is simple. You keep using Numpy arrays, and you just change the <code>.shape</code> attribute (perhaps with a call to <code>.reshape()</code> or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the <code>matrix</code> class. Containers with 3 or more dimensions are of the <code>array</code> class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of <span class="citation">(<a href="#ref-matloff_r_book" role="doc-biblioref">Matloff 2011</a>)</span>.</p>
+<div class="rmd-caution">
+<p>Just like <code>vector</code>s, <code>matrix</code> objects do not necessarily have to be used to perform matrix arithmetic. Yes, they require all the elements are of the same type, but it doesn’t really make sense to “multiply” <code>matrix</code> objects that hold onto <code>character</code>s.</p>
+</div>
+<p>I usually create <code>matrix</code> objects with the <code>matrix()</code> function or the <code>as.matrix()</code> function. <code>matrix()</code> is to be preferred in my opinion. The first argument is explicitly a <code>vector</code> of all the flattened data that you want in your <code>matrix</code>. On the other hand, <code>as.matrix()</code> is more flexible; it takes in a variety of R objects (e.g. <code>data.frame</code>s), and tries to figure out what to do with them on a case-by-case basis. In other words, <code>as.matrix()</code> is a <em>generic function</em>. More information about generic functions is provided in <a href="an-introduction-to-object-oriented-programming.html#using-s3-objects">17.2.2</a>.</p>
+<p>Some other things to remember with <code>matrix()</code>: <code>byrow=</code> is <code>FALSE</code> by default, and you will also need to specify either <code>ncol=</code> and/or <code>nrow=</code> if you want anything that isn’t a 1-column <code>matrix</code>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb53-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-2" aria-hidden="true" tabindex="-1"></a>A</span>
+<span id="cb53-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]</span></span>
+<span id="cb53-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    1</span></span>
+<span id="cb53-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    2</span></span>
+<span id="cb53-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]    3</span></span>
+<span id="cb53-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,]    4</span></span>
+<span id="cb53-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb53-9"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2]</span></span>
+<span id="cb53-10"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    1    3</span></span>
+<span id="cb53-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    2    4</span></span>
+<span id="cb53-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb53-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2]</span></span>
+<span id="cb53-14"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    1    2</span></span>
+<span id="cb53-15"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    3    4</span></span>
+<span id="cb53-16"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="fu">as.matrix</span>(<span class="fu">data.frame</span>(<span class="at">firstCol =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">secondCol =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))) <span class="co"># coerces numbers to characters!</span></span>
+<span id="cb53-17"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="do">##      firstCol secondCol</span></span>
+<span id="cb53-18"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] &quot;1&quot;      &quot;a&quot;      </span></span>
+<span id="cb53-19"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] &quot;2&quot;      &quot;b&quot;      </span></span>
+<span id="cb53-20"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] &quot;3&quot;      &quot;c&quot;</span></span>
+<span id="cb53-21"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(A)</span>
+<span id="cb53-22"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4 1</span></span>
+<span id="cb53-23"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(A)</span>
+<span id="cb53-24"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb53-25"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(A)</span>
+<span id="cb53-26"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div>
+<p><code>array()</code> is used to create <code>array</code> objects. This type is used less than the <code>matrix</code> type, but this doesn’t mean you should avoid learning about it. This is mostly a reflection of what kind of data sets people prefer to work with, and the fact that matrix algebra is generally better understood than tensor algebra. You won’t be able to avoid 3-d data sets (3-dimensions, not a 3-column <code>matrix</code>) forever, though, particularly if you’re working in an area such as neuroimaging or computer vision.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-1" aria-hidden="true" tabindex="-1"></a>myArray <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">4</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb54-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-2" aria-hidden="true" tabindex="-1"></a>myArray</span>
+<span id="cb54-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="do">## , , 1</span></span>
+<span id="cb54-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb54-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2]</span></span>
+<span id="cb54-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    1    1</span></span>
+<span id="cb54-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    1    1</span></span>
+<span id="cb54-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb54-9"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="do">## , , 2</span></span>
+<span id="cb54-10"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb54-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2]</span></span>
+<span id="cb54-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    2    2</span></span>
+<span id="cb54-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    2    2</span></span>
+<span id="cb54-14"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb54-15"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="do">## , , 3</span></span>
+<span id="cb54-16"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb54-17"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2]</span></span>
+<span id="cb54-18"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    3    3</span></span>
+<span id="cb54-19"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb54-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    3    3</span></span></code></pre></div>
+<p>You can matrix-multiply <code>matrix</code> objects together with the <code>%*%</code> operator. If you’re working on this, then the transpose operator (i.e. <code>t()</code>) comes in handy, too. You can still use element-wise (Hadamard) multiplication. This is defined with the more familiar multiplication operator <code>*</code>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate a quadratic form y&#39;Qy</span></span>
+<span id="cb55-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb55-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb55-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb55-3" aria-hidden="true" tabindex="-1"></a>Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="dv">3</span>) <span class="co"># diag() gets and sets diagonal matrices</span></span>
+<span id="cb55-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(y) <span class="sc">%*%</span> Q <span class="sc">%*%</span> y</span>
+<span id="cb55-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]</span></span>
+<span id="cb55-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]   14</span></span></code></pre></div>
+<p>Sometimes you need to access or modify individual elements of a <code>matrix</code> object. You can use the familiar <code>[</code> and <code>[&lt;-</code> operators to do this. Here is a setting example. You don’t need to worry about coercion to different types here.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-1" aria-hidden="true" tabindex="-1"></a>Qcopy <span class="ot">&lt;-</span> Q</span>
+<span id="cb56-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-2" aria-hidden="true" tabindex="-1"></a>Qcopy[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb56-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-3" aria-hidden="true" tabindex="-1"></a>Qcopy[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb56-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-4" aria-hidden="true" tabindex="-1"></a>Qcopy</span>
+<span id="cb56-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2] [,3]</span></span>
+<span id="cb56-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    3    0    0</span></span>
+<span id="cb56-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    0    4    0</span></span>
+<span id="cb56-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]    0    0    1</span></span></code></pre></div>
+<p>Here are some extraction examples. Notice that, if it can, <code>[</code> will coerce a <code>matrix</code> to <code>vector</code>. If you wish to avoid this, you can specify <code>drop=FALSE</code>.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-1" aria-hidden="true" tabindex="-1"></a>Q</span>
+<span id="cb57-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2] [,3]</span></span>
+<span id="cb57-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    1    0    0</span></span>
+<span id="cb57-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]    0    1    0</span></span>
+<span id="cb57-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]    0    0    1</span></span>
+<span id="cb57-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-6" aria-hidden="true" tabindex="-1"></a>Q[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb57-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb57-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-8" aria-hidden="true" tabindex="-1"></a>Q[<span class="dv">2</span>,]</span>
+<span id="cb57-9"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 1 0</span></span>
+<span id="cb57-10"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-10" aria-hidden="true" tabindex="-1"></a>Q[<span class="dv">2</span>,,drop<span class="ot">=</span><span class="cn">FALSE</span>]</span>
+<span id="cb57-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1] [,2] [,3]</span></span>
+<span id="cb57-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    0    1    0</span></span>
+<span id="cb57-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Q)</span>
+<span id="cb57-14"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;matrix&quot; &quot;array&quot;</span></span>
+<span id="cb57-15"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Q[<span class="dv">2</span>,])</span>
+<span id="cb57-16"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;numeric&quot;</span></span>
+<span id="cb57-17"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-17" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Q[<span class="dv">2</span>,,<span class="at">drop=</span><span class="cn">FALSE</span>])  </span>
+<span id="cb57-18"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;matrix&quot; &quot;array&quot;</span></span>
+<span id="cb57-19"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-19" aria-hidden="true" tabindex="-1"></a><span class="fu">row</span>(Q) <span class="sc">&gt;</span> <span class="dv">1</span></span>
+<span id="cb57-20"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-20" aria-hidden="true" tabindex="-1"></a><span class="do">##       [,1]  [,2]  [,3]</span></span>
+<span id="cb57-21"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] FALSE FALSE FALSE</span></span>
+<span id="cb57-22"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,]  TRUE  TRUE  TRUE</span></span>
+<span id="cb57-23"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,]  TRUE  TRUE  TRUE</span></span>
+<span id="cb57-24"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-24" aria-hidden="true" tabindex="-1"></a>Q[<span class="fu">row</span>(Q) <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="co"># column-wise ordering</span></span>
+<span id="cb57-25"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb57-25" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 0 1 0 0 1</span></span></code></pre></div>
+<p>There are other functions that operate on one or more <code>matrix</code> objects in more interesting ways, but much of this will be covered in future sections. For instance, we will describe how <code>apply()</code> works with <code>matrix</code>s in section <a href="functional-programming.html#functional-programming">18</a>, and we will discuss combining <code>matrix</code> objects in different ways in section <a href="reshaping-and-combining-data-sets.html#reshaping-and-combining-data-sets">12</a>.</p>
+</div>
+<div id="exercises-2" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Exercises</h2>
+<div id="r-questions-2" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> R Questions</h3>
+<ol style="list-style-type: decimal">
+<li>Consider the following data set. Let <span class="math inline">\(N = 20\)</span> be the number of rows. For <span class="math inline">\(i=1,\ldots,N\)</span>, define <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^4\)</span> as the data in row <span class="math inline">\(i\)</span>.</li>
+</ol>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb58-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">1.1585476</span>,  <span class="fl">0.06059602</span>, <span class="sc">-</span><span class="fl">1.854421163</span>,  <span class="fl">1.62855626</span>,</span>
+<span id="cb58-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5619835</span>,  <span class="fl">0.74857327</span>, <span class="sc">-</span><span class="fl">0.830973409</span>,  <span class="fl">0.38432716</span>,</span>
+<span id="cb58-4"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">1.6949202</span>,  <span class="fl">1.24726626</span>,  <span class="fl">0.068601035</span>, <span class="sc">-</span><span class="fl">0.32505127</span>,</span>
+<span id="cb58-5"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">2.8260260</span>, <span class="sc">-</span><span class="fl">0.68567999</span>, <span class="sc">-</span><span class="fl">0.109012111</span>, <span class="sc">-</span><span class="fl">0.59738648</span>,</span>
+<span id="cb58-6"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.3128249</span>, <span class="sc">-</span><span class="fl">0.21192009</span>, <span class="sc">-</span><span class="fl">0.317923437</span>, <span class="sc">-</span><span class="fl">1.60813901</span>,</span>
+<span id="cb58-7"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.3830597</span>,  <span class="fl">0.68000706</span>,  <span class="fl">0.787044622</span>,  <span class="fl">0.13872087</span>,</span>
+<span id="cb58-8"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.2381630</span>,  <span class="fl">1.02531172</span>, <span class="sc">-</span><span class="fl">0.606091651</span>,  <span class="fl">1.80442260</span>,</span>
+<span id="cb58-9"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.5429671</span>, <span class="sc">-</span><span class="fl">0.05174198</span>, <span class="sc">-</span><span class="fl">1.950780046</span>, <span class="sc">-</span><span class="fl">0.87716787</span>,</span>
+<span id="cb58-10"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.5927925</span>, <span class="sc">-</span><span class="fl">0.40566883</span>, <span class="sc">-</span><span class="fl">0.309193162</span>,  <span class="fl">1.25575250</span>,</span>
+<span id="cb58-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.8970403</span>, <span class="sc">-</span><span class="fl">0.10111751</span>,  <span class="fl">1.555160257</span>, <span class="sc">-</span><span class="fl">0.54434356</span>,</span>
+<span id="cb58-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fl">2.4060504</span>, <span class="sc">-</span><span class="fl">0.08199934</span>, <span class="sc">-</span><span class="fl">0.472715155</span>,  <span class="fl">0.25254794</span>,</span>
+<span id="cb58-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">1.0145770</span>, <span class="sc">-</span><span class="fl">0.83132666</span>, <span class="sc">-</span><span class="fl">0.009597552</span>, <span class="sc">-</span><span class="fl">1.71378699</span>,</span>
+<span id="cb58-14"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-14" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.3590219</span>,  <span class="fl">0.84127504</span>,  <span class="fl">0.062052945</span>, <span class="sc">-</span><span class="fl">1.00587841</span>,</span>
+<span id="cb58-15"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-15" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.1335952</span>, <span class="sc">-</span><span class="fl">0.02769315</span>, <span class="sc">-</span><span class="fl">0.102229046</span>, <span class="sc">-</span><span class="fl">1.08526057</span>,</span>
+<span id="cb58-16"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-16" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.1641571</span>, <span class="sc">-</span><span class="fl">0.08308289</span>, <span class="sc">-</span><span class="fl">0.711009361</span>,  <span class="fl">0.06809487</span>,</span>
+<span id="cb58-17"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-17" aria-hidden="true" tabindex="-1"></a>  <span class="fl">2.2450975</span>,  <span class="fl">0.32619749</span>,  <span class="fl">1.280665384</span>,  <span class="fl">1.75090469</span>,</span>
+<span id="cb58-18"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.2147885</span>,  <span class="fl">0.10720830</span>, <span class="sc">-</span><span class="fl">2.018215962</span>,  <span class="fl">0.34602861</span>,</span>
+<span id="cb58-19"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-19" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.7309219</span>, <span class="sc">-</span><span class="fl">0.60083707</span>, <span class="sc">-</span><span class="fl">1.007344145</span>, <span class="sc">-</span><span class="fl">1.77345958</span>,</span>
+<span id="cb58-20"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-20" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.1791807</span>, <span class="sc">-</span><span class="fl">0.49500051</span>,  <span class="fl">0.402840566</span>,  <span class="fl">0.60532646</span>,</span>
+<span id="cb58-21"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb58-21" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.0454594</span>,  <span class="fl">1.09878293</span>,  <span class="fl">2.784986486</span>, <span class="sc">-</span><span class="fl">0.22579848</span>), <span class="at">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>For the following problems, make sure to only use the transpose function <code>t()</code>, matrix multiplication (i.e. <code>%*%</code>), and scalar multiplication/division. You may use other functions in interactive mode to check your work, but please do not use them in your submission.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Calculate the sample mean <span class="math inline">\(\bar{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i\)</span>. Check your work with <code>colMeans()</code>, <strong>but don’t use that function in your submitted code.</strong> Assign it to the variable <code>xbar</code>. Make sure it is a <span class="math inline">\(4 \times 1\)</span> <code>matrix</code> object.</p></li>
+<li><p>Calculate the <span class="math inline">\(4 \times 4\)</span> sample covariance of the following data. Call the variable <code>mySampCov</code>, and make sure it is also a <code>matrix</code> object.</p></li>
+</ol>
+<p>A formula for the sample covariance is
+<span class="math display">\[
+\frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
+\]</span>
+<strong>You can check your work with <code>cov()</code>, but don’t use it in your submitted code.</strong></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Create a <code>matrix</code> called <code>P</code> that has one hundred rows, one hundred columns, all of its elements positive, <span class="math inline">\(1/10\)</span> on every diagonal element, and all rows summing to one. This matrix is called <strong>stochastic</strong> and it describes how a Markov chain moves randomly through time.</p></li>
+<li><p>Create a <code>matrix</code> called <code>X</code> that has one thousand rows, four columns, has every element set to either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, has its first column set to all <span class="math inline">\(1\)</span>s, has the second column set to <span class="math inline">\(1\)</span> in the second <span class="math inline">\(250\)</span> elements and <span class="math inline">\(0\)</span> elsewhere, has the third column set to <span class="math inline">\(1\)</span> in the third <span class="math inline">\(250\)</span> spots and <span class="math inline">\(0\)</span> elsewhere, and has the fourth column set to <span class="math inline">\(1\)</span> in the last <span class="math inline">\(250\)</span> spots and <span class="math inline">\(0\)</span> elsewhere. In other words, it looks something like</p></li>
+</ol>
+<p><span class="math display">\[
+  \begin{bmatrix}
+  \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  &amp; \mathbf{1}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{1}_{250} &amp; \mathbf{0}_{250} \\
+  \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{1}_{250} \\
+  \end{bmatrix}
+  \]</span>
+where <span class="math inline">\(\mathbf{1}_{250}\)</span> and <span class="math inline">\(\mathbf{0}_{250}\)</span> are length <span class="math inline">\(250\)</span> column vectors with all of their elements set to <span class="math inline">\(1\)</span> or <span class="math inline">\(0\)</span>, respectively.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Compute the <strong>projection (or hat) matrix</strong> <span class="math inline">\(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal\)</span>. Make it a <code>matrix</code> and call it <code>H</code>.</p></li>
+<li><p>An <strong>exchangeable</strong> covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten <span class="math inline">\(100 \times 100\)</span> <strong>exchangeable</strong> covariance matrices, each with <span class="math inline">\(2\)</span> as the variance, and have the possible covariances take values in the collection <span class="math inline">\(0,.01,.02, ..., .09.\)</span> Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix’s row index, the second should be the column index of each matrix, and the third index should be the “layer” or “slice” indicating which of the <span class="math inline">\(10\)</span> matrices you have. Name this array <code>myCovMats</code></p></li>
+<li><p>In R, generate one hundred <span class="math inline">\(10 \times 10\)</span> <strong>exchangeable</strong> covariance matrices, each with <span class="math inline">\(2\)</span> as the variance, and have the possible covariances take values in the collection <span class="math inline">\(0,0.0009090909, ..., 0.0890909091, .09.\)</span> Store these <span class="math inline">\(100\)</span> covariance matrices in a three-dimensional array. The first index should be each matrix’s row index, the second should be the column index of each matrix, and the third index should be the “layer” or “slice” indicating which of the <span class="math inline">\(100\)</span> matrices you have. Name this array <code>myCovMats2</code></p></li>
+</ol>
+</div>
+<div id="python-questions-2" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Python Questions</h3>
+<ol style="list-style-type: decimal">
+<li>Let <span class="math inline">\(\mathbf{X}\)</span> be an <span class="math inline">\(n \times 1\)</span> random vector. It has a multivariate normal distribution with mean vector <span class="math inline">\(\mathbf{m}\)</span> and positive definite covariance matrix <span class="math inline">\(\mathbf{C}\)</span> if its probability density function can be written as</li>
+</ol>
+<p><span class="math display">\[
+f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
+\]</span></p>
+<p>Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider:</p>
+<ul>
+<li><p>inverting very large matrices with either <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html"><code>np.linalg.solve</code></a> or <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html"><code>np.linalg.inv</code></a> becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it’s a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?</p></li>
+<li><p>recall from the last lab that exponentiating numbers close to <span class="math inline">\(-\infty\)</span> risks numerical underflow. It’s better to prefer evaluating log densities. There are also <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html">special functions that evaluate log determinants</a> that are less likely to underflow/overflow, too!</p></li>
+</ul>
+<p>Complete the following problems. <strong>Do not use pre-made functions like <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html"><code>scipy.stats.norm</code></a> and <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html"><code>scipy.stats.multivariate_normal</code></a> in your submission, but you may use them to check your work. Use only “standard” functions and Numpy n-dimensional arrays.</strong> Use the following definitions for <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{m}\)</span>:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb59-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb59-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">1.1</span>, <span class="fl">.9</span>, <span class="fl">1.0</span>]).reshape((<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb59-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb59-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> np.ones(<span class="dv">3</span>).reshape((<span class="dv">3</span>,<span class="dv">1</span>))</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Let <span class="math inline">\(\mathbf{C} = \begin{bmatrix} 10 &amp; 0 &amp; 0 \\ 0 &amp; 10 &amp; 0 \\ 0 &amp; 0 &amp; 10 \end{bmatrix}\)</span>. Evaluate and assign the log density to a <code>float</code>-like called <code>log_dens1</code>. Can you do this without defining a numpy array for <span class="math inline">\(\mathbf{C}\)</span>?</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{C} = \begin{bmatrix} 10 &amp; 0 &amp; 0 \\ 0 &amp; 11 &amp; 0 \\ 0 &amp; 0 &amp; 12 \end{bmatrix}\)</span>. Evaluate and assign the log density to a <code>float</code>-like called <code>log_dens2</code>. Can you do this without defining a numpy array for <span class="math inline">\(\mathbf{C}\)</span>?</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{C} = \begin{bmatrix} 10 &amp; -.9 &amp; -.9 \\ -.9 &amp; 11 &amp; -.9 \\ -.9 &amp; -.9 &amp; 12 \end{bmatrix}\)</span>. Evaluate and assign the log density to a <code>float</code>-like called <code>log_dens3</code>. Can you do this without defining a numpy array for <span class="math inline">\(\mathbf{C}\)</span>?</p></li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>Consider this <a href="https://archive.ics.uci.edu/ml/datasets/Wine+Quality">wine data set</a> from <span class="citation">(<a href="#ref-wine_data" role="doc-biblioref">Cortez et al. 2009</a>)</span> hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. Read it in with the following code. Note that you might need to use <code>os.chdir()</code> first.</li>
+</ol>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb60-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb60-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">&quot;winequality-red.csv&quot;</span>, sep <span class="op">=</span> <span class="st">&quot;;&quot;</span>)</span>
+<span id="cb60-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb60-3" aria-hidden="true" tabindex="-1"></a>d.head()</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create the <strong>design matrix</strong> (denoted mathematically by <span class="math inline">\(\mathbf{X}\)</span>) by removing the <code>"quality"</code> column, and subtracting the column mean from each element. Call the variable <code>X</code>, and make sure that it is a Numpy <code>ndarray</code>, not a Pandas <code>DataFrame</code>.</p></li>
+<li><p>Compute the <strong>spectral decomposition</strong> of <span class="math inline">\(\mathbf{X}^\intercal \mathbf{X}\)</span>. In other words, find “special” matrices<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> <span class="math inline">\(\mathbf{V}\)</span> and <span class="math inline">\(\boldsymbol{\Lambda}\)</span> such that <span class="math inline">\(\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal\)</span>. Note that the <em>eigenvectors</em> are stored as columns in a matrix <span class="math inline">\(\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 &amp; \cdots &amp; \mathbf{V}_{11}\end{bmatrix}\)</span>, and the scalar <em>eigenvalues</em> are stored as diagonal elements <span class="math inline">\(\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})\)</span>. Store the eigenvectors in an <code>ndarray</code> called <code>eig_vecs</code>, and store the eigenvalues in a Numpy <code>array</code> called <code>eig_vals</code>. Hint: use <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html"><code>np.linalg.eig()</code></a>. Also, if you’re rusty with your linear algebra, don’t worry too much about refreshing your memory about what eigenvectors and eigenvalues are.</p></li>
+<li><p>Compute the <strong>singular value decomposition</strong> of <span class="math inline">\(\mathbf{X}\)</span>. In other words, find “special”<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> matrices <span class="math inline">\(\mathbf{U}\)</span>, <span class="math inline">\(\mathbf{\Sigma}\)</span>, and <span class="math inline">\(\mathbf{V}\)</span> such that <span class="math inline">\(\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal\)</span>. Use <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"><code>np.linalg.svd</code></a>, and don’t worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two <span class="math inline">\(\mathbf{V}\)</span> matrices should be the same, and the elements of <span class="math inline">\(\boldsymbol{\Sigma}\)</span> should be the square roots of the elements of <span class="math inline">\(\boldsymbol{\Lambda}\)</span>. Store the eigenvectors as columns in an <code>ndarray</code> called <code>eig_vecs_v2</code>, and store the singular values (diagonal elements of <span class="math inline">\(\boldsymbol{\Sigma}\)</span>) in a Numpy <code>array</code> called <code>sing_vals</code>.</p></li>
+<li><p>Compute the <strong>first principal component</strong> vector, and call it <code>first_pc_v1</code>. The mathematical formula is <span class="math inline">\(\mathbf{X} \mathbf{U}_1\)</span> where <span class="math inline">\(\mathbf{U}_1\)</span> is the eigenvector associated with the largest eigenvalue <span class="math inline">\(\lambda_1\)</span>. This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-wine_data" class="csl-entry">
+Cortez, Paulo, António Cerdeira, Fernando Almeida, Telmo Matos, and José Reis. 2009. <span>“Modeling Wine Preferences by Data Mining from Physicochemical Properties.”</span> <em>Decis. Support Syst.</em> 47 (4): 547–53. <a href="http://dblp.uni-trier.de/db/journals/dss/dss47.html#CortezCAMR09">http://dblp.uni-trier.de/db/journals/dss/dss47.html#CortezCAMR09</a>.
+</div>
+<div id="ref-uci_data" class="csl-entry">
+Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
+</div>
+<div id="ref-matloff_r_book" class="csl-entry">
+Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Software Design</em>. 1st ed. USA: No Starch Press.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>Do not worry too much about the properties of these matrices for this problem<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Again, do not worry too much about the properties of these matrices for this problem.<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rs-lists-versus-pythons-lists-and-dicts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/04-arrays_and_matrices.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

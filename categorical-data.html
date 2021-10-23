@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="tbrown122387/r_and_python_book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  
+  
+  
+
+<meta name="author" content="Taylor R. Brown" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="functions.html"/>
+<link rel="next" href="data-frames.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to R and Python For Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-sample-course"><i class="fa fa-check"></i>A Sample Course</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#licenses"><i class="fa fa-check"></i>License(s)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-the-required-software"><i class="fa fa-check"></i>Installing the Required Software</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-python-by-installing-anaconda"><i class="fa fa-check"></i>Installing Python by Installing Anaconda</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Introducing the Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#hello-world-in-r"><i class="fa fa-check"></i><b>1.1</b> Hello World in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#hello-world-in-python"><i class="fa fa-check"></i><b>1.2</b> Hello World in Python</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#reading-documentation"><i class="fa fa-check"></i><b>1.3.1</b> Reading Documentation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#understanding-file-paths"><i class="fa fa-check"></i><b>1.3.2</b> Understanding File Paths</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-types.html"><a href="basic-types.html"><i class="fa fa-check"></i><b>2</b> Basic Types</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-python"><i class="fa fa-check"></i><b>2.1</b> Basic Types In Python</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-python"><i class="fa fa-check"></i><b>2.1.1</b> Type Conversions in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-r"><i class="fa fa-check"></i><b>2.2</b> Basic Types In R</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-r"><i class="fa fa-check"></i><b>2.2.1</b> Type Conversions in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basic-types.html"><a href="basic-types.html#rs-simplification"><i class="fa fa-check"></i><b>2.2.2</b> R’s Simplification</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basic-types.html"><a href="basic-types.html#exercises"><i class="fa fa-check"></i><b>2.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-types.html"><a href="basic-types.html#r-questions"><i class="fa fa-check"></i><b>2.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-types.html"><a href="basic-types.html#python-questions"><i class="fa fa-check"></i><b>2.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html"><i class="fa fa-check"></i><b>3</b> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-r"><i class="fa fa-check"></i><b>3.1</b> Overview of R</a></li>
+<li class="chapter" data-level="3.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python"><i class="fa fa-check"></i><b>3.2</b> Overview of Python</a></li>
+<li class="chapter" data-level="3.3" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-r"><i class="fa fa-check"></i><b>3.3</b> Vectorization in R</a></li>
+<li class="chapter" data-level="3.4" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python"><i class="fa fa-check"></i><b>3.4</b> Vectorization in Python</a></li>
+<li class="chapter" data-level="3.5" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-vectors-in-r"><i class="fa fa-check"></i><b>3.5</b> Indexing Vectors in R</a></li>
+<li class="chapter" data-level="3.6" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-numpy-arrays"><i class="fa fa-check"></i><b>3.6</b> Indexing Numpy arrays</a></li>
+<li class="chapter" data-level="3.7" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-pandas-series"><i class="fa fa-check"></i><b>3.7</b> Indexing Pandas’ Series</a></li>
+<li class="chapter" data-level="3.8" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#some-gotchas"><i class="fa fa-check"></i><b>3.8</b> Some Gotchas</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#shallow-versus-deep-copies"><i class="fa fa-check"></i><b>3.8.1</b> Shallow versus Deep Copies</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#how-r-and-python-handle-missing-values"><i class="fa fa-check"></i><b>3.8.2</b> How R and Python Handle Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#exercises-1"><i class="fa fa-check"></i><b>3.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-questions-1"><i class="fa fa-check"></i><b>3.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#python-questions-1"><i class="fa fa-check"></i><b>3.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><i class="fa fa-check"></i><b>4</b> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#numpy-ndarrays-in-python"><i class="fa fa-check"></i><b>4.1</b> Numpy <code>ndarray</code>s In Python</a></li>
+<li class="chapter" data-level="4.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#the-matrix-and-array-classes-in-r"><i class="fa fa-check"></i><b>4.2</b> The <code>matrix</code> and <code>array</code> classes in R</a></li>
+<li class="chapter" data-level="4.3" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#exercises-2"><i class="fa fa-check"></i><b>4.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#r-questions-2"><i class="fa fa-check"></i><b>4.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#python-questions-2"><i class="fa fa-check"></i><b>4.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> <code>list</code>s In R</a></li>
+<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> <code>list</code>s In Python</a></li>
+<li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
+<li class="chapter" data-level="5.4" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3"><i class="fa fa-check"></i><b>5.4.1</b> R Questions</a></li>
+<li class="chapter" data-level="5.4.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3"><i class="fa fa-check"></i><b>5.4.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="functions.html"><a href="functions.html#defining-r-functions"><i class="fa fa-check"></i><b>6.1</b> Defining R Functions</a></li>
+<li class="chapter" data-level="6.2" data-path="functions.html"><a href="functions.html#defining-python-functions"><i class="fa fa-check"></i><b>6.2</b> Defining Python Functions</a></li>
+<li class="chapter" data-level="6.3" data-path="functions.html"><a href="functions.html#more-details-on-rs-user-defined-functions"><i class="fa fa-check"></i><b>6.3</b> More Details On R’s User-Defined Functions</a></li>
+<li class="chapter" data-level="6.4" data-path="functions.html"><a href="functions.html#more-details-on-pythons-user-defined-functions"><i class="fa fa-check"></i><b>6.4</b> More details on Python’s user-defined functions</a></li>
+<li class="chapter" data-level="6.5" data-path="functions.html"><a href="functions.html#function-scope-in-r"><i class="fa fa-check"></i><b>6.5</b> Function Scope in R</a></li>
+<li class="chapter" data-level="6.6" data-path="functions.html"><a href="functions.html#function-scope-in-python"><i class="fa fa-check"></i><b>6.6</b> Function Scope in Python</a></li>
+<li class="chapter" data-level="6.7" data-path="functions.html"><a href="functions.html#modifying-a-functions-arguments"><i class="fa fa-check"></i><b>6.7</b> Modifying a Function’s Arguments</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="functions.html"><a href="functions.html#passing-by-value-in-r"><i class="fa fa-check"></i><b>6.7.1</b> Passing By Value In R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="functions.html"><a href="functions.html#passing-by-assignment-in-python"><i class="fa fa-check"></i><b>6.7.2</b> Passing By Assignment In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="functions.html"><a href="functions.html#accessing-and-modifying-captured-variables"><i class="fa fa-check"></i><b>6.8</b> Accessing and Modifying Captured Variables</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.1</b> Accessing Captured Variables in R</a></li>
+<li class="chapter" data-level="6.8.2" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.2</b> Accessing Captured Variables in Python</a></li>
+<li class="chapter" data-level="6.8.3" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.3</b> Modifying Captured Variables In R</a></li>
+<li class="chapter" data-level="6.8.4" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.4</b> Modifying Captured Variables In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="functions.html"><a href="functions.html#exercises-4"><i class="fa fa-check"></i><b>6.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="functions.html"><a href="functions.html#r-questions-4"><i class="fa fa-check"></i><b>6.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="6.9.2" data-path="functions.html"><a href="functions.html#python-questions-4"><i class="fa fa-check"></i><b>6.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="categorical-data.html"><a href="categorical-data.html"><i class="fa fa-check"></i><b>7</b> Categorical Data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#factors-in-r"><i class="fa fa-check"></i><b>7.1</b> <code>factor</code>s in R</a></li>
+<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#two-options-for-categorical-data-in-pandas"><i class="fa fa-check"></i><b>7.2</b> Two Options for Categorical Data in Pandas</a></li>
+<li class="chapter" data-level="7.3" data-path="categorical-data.html"><a href="categorical-data.html#exercises-5"><i class="fa fa-check"></i><b>7.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="categorical-data.html"><a href="categorical-data.html#r-questions-5"><i class="fa fa-check"></i><b>7.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="categorical-data.html"><a href="categorical-data.html#python-questions-5"><i class="fa fa-check"></i><b>7.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>8</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-r"><i class="fa fa-check"></i><b>8.1</b> Data Frames in R</a></li>
+<li class="chapter" data-level="8.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-python"><i class="fa fa-check"></i><b>8.2</b> Data Frames in Python</a></li>
+<li class="chapter" data-level="8.3" data-path="data-frames.html"><a href="data-frames.html#exercises-6"><i class="fa fa-check"></i><b>8.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="data-frames.html"><a href="data-frames.html#r-questions-6"><i class="fa fa-check"></i><b>8.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-frames.html"><a href="data-frames.html#python-questions-6"><i class="fa fa-check"></i><b>8.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Common Tasks and Patterns</b></span></li>
+<li class="chapter" data-level="9" data-path="input-and-output.html"><a href="input-and-output.html"><i class="fa fa-check"></i><b>9</b> Input and Output</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
+<li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
+<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-r"><i class="fa fa-check"></i><b>9.4.1</b> Writing Out Tabular Plain Text Data in R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-r"><i class="fa fa-check"></i><b>9.4.2</b> Serialization in R</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-python"><i class="fa fa-check"></i><b>9.5.1</b> Writing Out Tabular Plain Text Data in Python</a></li>
+<li class="chapter" data-level="9.5.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-python"><i class="fa fa-check"></i><b>9.5.2</b> Serialization in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="input-and-output.html"><a href="input-and-output.html#exercises-7"><i class="fa fa-check"></i><b>9.6</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="input-and-output.html"><a href="input-and-output.html#r-questions-7"><i class="fa fa-check"></i><b>9.6.1</b> R Questions</a></li>
+<li class="chapter" data-level="9.6.2" data-path="input-and-output.html"><a href="input-and-output.html#python-questions-7"><i class="fa fa-check"></i><b>9.6.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-r"><i class="fa fa-check"></i><b>10.1</b> Installing Packages In R</a></li>
+<li class="chapter" data-level="10.2" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-python"><i class="fa fa-check"></i><b>10.2</b> Installing Packages In Python</a></li>
+<li class="chapter" data-level="10.3" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-r"><i class="fa fa-check"></i><b>10.3</b> Loading Packages In R</a></li>
+<li class="chapter" data-level="10.4" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-python"><i class="fa fa-check"></i><b>10.4</b> Loading Packages In Python</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
+<li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#ordering-and-sorting-data"><i class="fa fa-check"></i><b>12.1</b> Ordering and Sorting Data</a></li>
+<li class="chapter" data-level="12.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder"><i class="fa fa-check"></i><b>12.2</b> Stacking Data Sets and Placing Them Shoulder to Shoulder</a></li>
+<li class="chapter" data-level="12.3" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets"><i class="fa fa-check"></i><b>12.3</b> Merging or Joining Data Sets</a></li>
+<li class="chapter" data-level="12.4" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-data"><i class="fa fa-check"></i><b>12.4</b> Long Versus Wide Data</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-r"><i class="fa fa-check"></i><b>12.4.1</b> Long Versus Wide in R</a></li>
+<li class="chapter" data-level="12.4.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-python"><i class="fa fa-check"></i><b>12.4.2</b> Long Versus Wide in Python</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>13</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="visualization.html"><a href="visualization.html#base-r-plotting"><i class="fa fa-check"></i><b>13.1</b> Base R Plotting</a></li>
+<li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>15</b> Dates and Times</a></li>
+<li class="chapter" data-level="16" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>16</b> Running Scripts from the Command Line</a></li>
+<li class="part"><span><b>III Programming Styles</b></span></li>
+<li class="chapter" data-level="17" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>17</b> An Introduction to Object-Oriented Programming</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-python"><i class="fa fa-check"></i><b>17.1</b> OOP In Python</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#overview"><i class="fa fa-check"></i><b>17.1.1</b> Overview</a></li>
+<li class="chapter" data-level="17.1.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#a-first-example"><i class="fa fa-check"></i><b>17.1.2</b> A First Example</a></li>
+<li class="chapter" data-level="17.1.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-inheritance"><i class="fa fa-check"></i><b>17.1.3</b> Adding Inheritance</a></li>
+<li class="chapter" data-level="17.1.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-in-composition"><i class="fa fa-check"></i><b>17.1.4</b> Adding in Composition</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-r"><i class="fa fa-check"></i><b>17.2</b> OOP In R</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s3-objects-the-big-picture"><i class="fa fa-check"></i><b>17.2.1</b> S3 objects: The Big Picture</a></li>
+<li class="chapter" data-level="17.2.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s3-objects"><i class="fa fa-check"></i><b>17.2.2</b> Using S3 objects</a></li>
+<li class="chapter" data-level="17.2.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s3-objects"><i class="fa fa-check"></i><b>17.2.3</b> Creating S3 objects</a></li>
+<li class="chapter" data-level="17.2.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s4-objects-the-big-picture"><i class="fa fa-check"></i><b>17.2.4</b> S4 objects: The Big Picture</a></li>
+<li class="chapter" data-level="17.2.5" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s4-objects"><i class="fa fa-check"></i><b>17.2.5</b> Using S4 objects</a></li>
+<li class="chapter" data-level="17.2.6" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s4-objects"><i class="fa fa-check"></i><b>17.2.6</b> Creating S4 objects</a></li>
+<li class="chapter" data-level="17.2.7" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#reference-classes-the-big-picture"><i class="fa fa-check"></i><b>17.2.7</b> Reference Classes: The Big Picture</a></li>
+<li class="chapter" data-level="17.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>17.2.8</b> Creating Reference Classes</a></li>
+<li class="chapter" data-level="17.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>17.2.9</b> Creating R6 Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>18</b> Functional Programming</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-r"><i class="fa fa-check"></i><b>18.1</b> Functions as Function Inputs in R</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="functional-programming.html"><a href="functional-programming.html#sapply-and-vapply"><i class="fa fa-check"></i><b>18.1.1</b> <code>sapply()</code> and <code>vapply()</code></a></li>
+<li class="chapter" data-level="18.1.2" data-path="functional-programming.html"><a href="functional-programming.html#lapply"><i class="fa fa-check"></i><b>18.1.2</b> <code>lapply()</code></a></li>
+<li class="chapter" data-level="18.1.3" data-path="functional-programming.html"><a href="functional-programming.html#apply"><i class="fa fa-check"></i><b>18.1.3</b> <code>apply()</code></a></li>
+<li class="chapter" data-level="18.1.4" data-path="functional-programming.html"><a href="functional-programming.html#tapply"><i class="fa fa-check"></i><b>18.1.4</b> <code>tapply()</code></a></li>
+<li class="chapter" data-level="18.1.5" data-path="functional-programming.html"><a href="functional-programming.html#mapply"><i class="fa fa-check"></i><b>18.1.5</b> <code>mapply()</code></a></li>
+<li class="chapter" data-level="18.1.6" data-path="functional-programming.html"><a href="functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>18.1.6</b> <code>Reduce()</code> and <code>do.call()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="functional-programming.html"><a href="functional-programming.html#another-example-in-r"><i class="fa fa-check"></i><b>18.2</b> Another Example in R</a></li>
+<li class="chapter" data-level="18.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>18.3</b> Functions as Function Inputs in Base Python</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="functional-programming.html"><a href="functional-programming.html#map"><i class="fa fa-check"></i><b>18.3.1</b> <code>map()</code></a></li>
+<li class="chapter" data-level="18.3.2" data-path="functional-programming.html"><a href="functional-programming.html#filter"><i class="fa fa-check"></i><b>18.3.2</b> <code>filter()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>18.4</b> Functions as Function Inputs in Numpy</a></li>
+<li class="chapter" data-level="18.5" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>18.5</b> Functional Methods in Pandas</a></li>
+<li class="chapter" data-level="18.6" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-miscellany"><i class="fa fa-check"></i><b>18.6</b> Functions as Function Inputs (miscellany)</a></li>
+<li class="chapter" data-level="18.7" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>18.7</b> Functions as Function Outputs in R</a></li>
+<li class="chapter" data-level="18.8" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>18.8</b> Functions as Function Outputs in Python</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to R and Python For Data Analysis: A Side By Side Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="categorical-data" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Categorical Data</h1>
+<p>While statisticians may describe data as being either categorical or numerical, this classification is different than classifying data by its <em>type</em> in a program. So, strictly speaking, if you have categorical data, you are not obligated to use any particular type to represent it in your script.</p>
+<p>However, there are types that are specifically designed to be used with categorical data, and so they are especially advantageous to use if you end up with the opportunity. We describe a few of them here in this chapter.</p>
+<div id="factors-in-r" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> <code>factor</code>s in R</h2>
+<p>Categorical data in R is often stored in a <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors"><code>factor</code></a> variable. <code>factor</code>s are more special than <code>vector</code>s of integers because</p>
+<ul>
+<li>they have a <code>levels</code> attribute, which is comprised of all the possible values that each response could be;</li>
+<li>they may or may not be <em>ordered</em>, which will also control how they are used in mathematical functions;</li>
+<li>they might have a <code>contrasts</code> attribute, which will control how they are used in statistical modeling functions.</li>
+</ul>
+<p>Here is a first example. Say we asked three people what their favorite season was. The data might look something like this.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="categorical-data.html#cb96-1" aria-hidden="true" tabindex="-1"></a>allSeasons <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;spring&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;winter&quot;</span>)</span>
+<span id="cb96-2"><a href="categorical-data.html#cb96-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>), </span>
+<span id="cb96-3"><a href="categorical-data.html#cb96-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> allSeasons)</span>
+<span id="cb96-4"><a href="categorical-data.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(responses)</span>
+<span id="cb96-5"><a href="categorical-data.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;spring&quot; &quot;summer&quot; &quot;autumn&quot; &quot;winter&quot;</span></span>
+<span id="cb96-6"><a href="categorical-data.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(responses)</span>
+<span id="cb96-7"><a href="categorical-data.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb96-8"><a href="categorical-data.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(responses)</span>
+<span id="cb96-9"><a href="categorical-data.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
+<span id="cb96-10"><a href="categorical-data.html#cb96-10" aria-hidden="true" tabindex="-1"></a><span class="co">#contrasts(responses) # controls how factor is used in different  functions</span></span></code></pre></div>
+<p><code>factor</code>s always have levels, which is the collection of all possible unique values each observation can take.</p>
+<div class="rmd-caution">
+<p>You should be careful if you are not specifying them directly. What happens when you use the default option and replace the second assignment in the above code with <code>responses &lt;- factor(c("autumn", "summer", "summer"))</code>? The documentation of <code>factor()</code> will tell you that, by default, <code>factor()</code> will just take the unique values found in the data. In this case, nobody prefers winter or spring, and so neither will show up in <code>levels(responses)</code>. This may or may not be what you want.</p>
+</div>
+<p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for <em>ordinal</em> data. Ordinal data is a particular type of categorical data that recognizes the categories have a natural order (e.g. low/ medium/high and not red/green/blue).</p>
+<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it,” “it’s okay” or “hate it.” The data might look something like this.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="categorical-data.html#cb97-1" aria-hidden="true" tabindex="-1"></a>ordFeelOptions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;hate it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>)</span>
+<span id="cb97-2"><a href="categorical-data.html#cb97-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
+<span id="cb97-3"><a href="categorical-data.html#cb97-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
+<span id="cb97-4"><a href="categorical-data.html#cb97-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, </span>
+<span id="cb97-5"><a href="categorical-data.html#cb97-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;it&#39;s okay&quot;</span>), </span>
+<span id="cb97-6"><a href="categorical-data.html#cb97-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> ordFeelOptions,</span>
+<span id="cb97-7"><a href="categorical-data.html#cb97-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb97-8"><a href="categorical-data.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(responses)</span>
+<span id="cb97-9"><a href="categorical-data.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;hate it&quot;   &quot;it&#39;s okay&quot; &quot;love it&quot;</span></span>
+<span id="cb97-10"><a href="categorical-data.html#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(responses)</span>
+<span id="cb97-11"><a href="categorical-data.html#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb97-12"><a href="categorical-data.html#cb97-12" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(responses)</span>
+<span id="cb97-13"><a href="categorical-data.html#cb97-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb97-14"><a href="categorical-data.html#cb97-14" aria-hidden="true" tabindex="-1"></a><span class="co"># contrasts(responses)</span></span></code></pre></div>
+<div class="rmd-caution">
+<p>When creating ordered factors with <code>factor()</code>, be mindful that the <code>levels=</code> argument is assumed to be ordered when you plug it into <code>factor()</code>. In the above example, if you specified <code>levels = c("love it", "it's okay", "hate it")</code>, then the factor would assume <code>love it &lt; it's okay &lt; hate it</code>, which may or may not be what you want.</p>
+</div>
+<p>Last, <code>factor</code>s may or may not have a <code>contrast</code> attribute. You can get or set this with the <code>contrasts()</code> function. This will influence some of the functions you use on your data that estimate statistical models.</p>
+<p>I will not discuss specifics of contrasts in this text, but the overall motivation is important. In short, the primary reason for using <code>factor</code>s is that they are designed to allow control over <em>how</em> you model categorical data. To be more specific, changing attributes of a <code>factor</code> could control the paremeterization of a model you’re estimating. If you’re using a particular function for modeling with categorical data, you need to know how it treats factors. On the other hand, if you’re writing a function that performs modeling of categorical data, you should know how to treat factors.</p>
+<p>Here are two examples that you might come across in your studies.</p>
+<ol style="list-style-type: decimal">
+<li><p>Consider using <code>factor</code>s as inputs to a function that performs linear regression. With linear regression models, if you have categorical inputs, there are many choices for how to write down a model. In each model, the collection of parameters will mean different things. In R, you might pick the model by creating the <code>factor</code> in a specific way.</p></li>
+<li><p>Suppose you are interested in estimating a classification model. In this case, the <em>dependent</em> variable is categorical, not the independent variable. With these types of models, choosing whether or not your <code>factor</code> is ordered is critical. These options would estimate completely different models, so choose wisely!</p></li>
+</ol>
+<p>The mathematical details of these examples is outside of the scope of this text. If you have not learned about dummy variables in a regression course, or if you have not considered the difference between multinomial logistic regression and ordinal logistic regression, or if you have but you’re just a little rusty, that is totally fine. I only mention these as examples for how the <code>factor</code> type can trigger special behavior.</p>
+<p>In addition to creating one with <code>factor()</code>, there are two other common ways that you can end up with <code>factors</code>:</p>
+<ol style="list-style-type: decimal">
+<li>creating factors from numerical data, and</li>
+<li>when reading in an external data file, one of the columns is coerced to a <code>factor</code>.</li>
+</ol>
+<p>Here is an example of (1). We can take non-categorical data, and <code>cut()</code> it into something categorical.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="categorical-data.html#cb98-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
+<span id="cb98-2"><a href="categorical-data.html#cb98-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
+<span id="cb98-3"><a href="categorical-data.html#cb98-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
+<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0]</span></span>
+<span id="cb98-5"><a href="categorical-data.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
+<span id="cb98-6"><a href="categorical-data.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
+<span id="cb98-7"><a href="categorical-data.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
+<span id="cb98-8"><a href="categorical-data.html#cb98-8" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(typeOfDay)</span>
+<span id="cb98-9"><a href="categorical-data.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb98-10"><a href="categorical-data.html#cb98-10" aria-hidden="true" tabindex="-1"></a><span class="fu">is.ordered</span>(typeOfDay)</span>
+<span id="cb98-11"><a href="categorical-data.html#cb98-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
+<p>Finally, be mindful of how different functions read in external data sets. When reading in an external file, if a particular function comes across a column that has characters in it, it will need to decide whether to store that column as a character vector, or as a <code>factor</code>. For example, <code>read.csv()</code> and <code>read.table()</code> have a <code>stringsAsFactors=</code> argument that you should be mindful of.</p>
+</div>
+<div id="two-options-for-categorical-data-in-pandas" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Two Options for Categorical Data in Pandas</h2>
+<p>Pandas provides two options for storing categorical data. They are both very similar to R’s <code>factor</code>s. You may use either</p>
+<ol style="list-style-type: decimal">
+<li>a Pandas <code>Series</code> with a special <code>dtype</code>, or</li>
+<li>a Pandas <code>Categorical</code> container.</li>
+</ol>
+<p>Pandas’ <code>Series</code> were discussed earlier in sections <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python">3.2</a> and <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python">3.4</a>. These were containers that forced every element to share the same <code>dtype</code>. Here, we specify <code>dtype="category"</code> in <code>pd.Series()</code>.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="categorical-data.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb99-2"><a href="categorical-data.html#cb99-2" aria-hidden="true" tabindex="-1"></a>resp_series <span class="op">=</span> pd.Series([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], dtype <span class="op">=</span> <span class="st">&quot;category&quot;</span>) </span>
+<span id="cb99-3"><a href="categorical-data.html#cb99-3" aria-hidden="true" tabindex="-1"></a>resp_series.cat.categories</span>
+<span id="cb99-4"><a href="categorical-data.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;], dtype=&#39;object&#39;)</span></span>
+<span id="cb99-5"><a href="categorical-data.html#cb99-5" aria-hidden="true" tabindex="-1"></a>resp_series.cat.ordered</span>
+<span id="cb99-6"><a href="categorical-data.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
+<span id="cb99-7"><a href="categorical-data.html#cb99-7" aria-hidden="true" tabindex="-1"></a>resp_series.dtype</span>
+<span id="cb99-8"><a href="categorical-data.html#cb99-8" aria-hidden="true" tabindex="-1"></a><span class="co">## CategoricalDtype(categories=[&#39;autumn&#39;, &#39;summer&#39;], ordered=False)</span></span>
+<span id="cb99-9"><a href="categorical-data.html#cb99-9" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(resp_series)</span>
+<span id="cb99-10"><a href="categorical-data.html#cb99-10" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
+<p>The second option is to use Pandas’ <code>Categorical</code> containers. They are quite similar, so the choice is subtle. Like <code>Series</code> containers, they also force all of their elements to share the same shared <code>dtype</code>.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="categorical-data.html#cb100-1" aria-hidden="true" tabindex="-1"></a>resp_cat <span class="op">=</span> pd.Categorical([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>])</span>
+<span id="cb100-2"><a href="categorical-data.html#cb100-2" aria-hidden="true" tabindex="-1"></a>resp_cat.categories</span>
+<span id="cb100-3"><a href="categorical-data.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;], dtype=&#39;object&#39;)</span></span>
+<span id="cb100-4"><a href="categorical-data.html#cb100-4" aria-hidden="true" tabindex="-1"></a>resp_cat.ordered</span>
+<span id="cb100-5"><a href="categorical-data.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
+<span id="cb100-6"><a href="categorical-data.html#cb100-6" aria-hidden="true" tabindex="-1"></a>resp_cat.dtype</span>
+<span id="cb100-7"><a href="categorical-data.html#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="co">## CategoricalDtype(categories=[&#39;autumn&#39;, &#39;summer&#39;], ordered=False)</span></span>
+<span id="cb100-8"><a href="categorical-data.html#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(resp_cat)</span>
+<span id="cb100-9"><a href="categorical-data.html#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span></code></pre></div>
+<p>You might have noticed that, with the <code>Categorical</code> container, methods and data members were not accessed through the <code>.cat</code> accessor. It is also more similar to R’s <code>factor</code>s because you can specify more arguments in the constructor.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="categorical-data.html#cb101-1" aria-hidden="true" tabindex="-1"></a>all_szns <span class="op">=</span> [<span class="st">&quot;spring&quot;</span>,<span class="st">&quot;summer&quot;</span>, <span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;winter&quot;</span>]</span>
+<span id="cb101-2"><a href="categorical-data.html#cb101-2" aria-hidden="true" tabindex="-1"></a>resp_cat2 <span class="op">=</span> pd.Categorical([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], </span>
+<span id="cb101-3"><a href="categorical-data.html#cb101-3" aria-hidden="true" tabindex="-1"></a>                            categories <span class="op">=</span> all_szns, </span>
+<span id="cb101-4"><a href="categorical-data.html#cb101-4" aria-hidden="true" tabindex="-1"></a>                            ordered <span class="op">=</span> <span class="va">False</span>)</span></code></pre></div>
+<div class="rmd-caution">
+<p>In Pandas, just like in R, you need to be very careful about what the <code>categories</code> (c.f <code>levels</code>) are. If you are using ordinal data, they need to be specified in the correct order. If you are using small data sets, be cognizant of whether all the categories show up in the data–otherwise they will not be correctly inferred.</p>
+</div>
+<p>With Pandas’ <code>Series</code> it’s more difficult to specify a nondefault <code>dtype</code>. One option is to change them after the object has been created.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="categorical-data.html#cb102-1" aria-hidden="true" tabindex="-1"></a>resp_series <span class="op">=</span> resp_series.cat.set_categories([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>,<span class="st">&quot;spring&quot;</span>,<span class="st">&quot;winter&quot;</span>])</span>
+<span id="cb102-2"><a href="categorical-data.html#cb102-2" aria-hidden="true" tabindex="-1"></a>resp_series.cat.categories</span>
+<span id="cb102-3"><a href="categorical-data.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;, &#39;spring&#39;, &#39;winter&#39;], dtype=&#39;object&#39;)</span></span>
+<span id="cb102-4"><a href="categorical-data.html#cb102-4" aria-hidden="true" tabindex="-1"></a>resp_series <span class="op">=</span> resp_series.cat.remove_categories([<span class="st">&#39;spring&#39;</span>,<span class="st">&#39;winter&#39;</span>])</span>
+<span id="cb102-5"><a href="categorical-data.html#cb102-5" aria-hidden="true" tabindex="-1"></a>resp_series.cat.categories</span>
+<span id="cb102-6"><a href="categorical-data.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;], dtype=&#39;object&#39;)</span></span>
+<span id="cb102-7"><a href="categorical-data.html#cb102-7" aria-hidden="true" tabindex="-1"></a>resp_series <span class="op">=</span> resp_series.cat.add_categories([<span class="st">&quot;fall&quot;</span>, <span class="st">&quot;winter&quot;</span>])</span>
+<span id="cb102-8"><a href="categorical-data.html#cb102-8" aria-hidden="true" tabindex="-1"></a>resp_series.cat.categories</span>
+<span id="cb102-9"><a href="categorical-data.html#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Index([&#39;autumn&#39;, &#39;summer&#39;, &#39;fall&#39;, &#39;winter&#39;], dtype=&#39;object&#39;)</span></span></code></pre></div>
+<p>Another option is to create the <code>dtype</code> before you create the <code>Series</code>, and pass it into <code>pd.Series()</code>.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="categorical-data.html#cb103-1" aria-hidden="true" tabindex="-1"></a>cat_type <span class="op">=</span> pd.CategoricalDtype(</span>
+<span id="cb103-2"><a href="categorical-data.html#cb103-2" aria-hidden="true" tabindex="-1"></a>                  categories<span class="op">=</span>[<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;spring&quot;</span>, <span class="st">&quot;winter&quot;</span>],</span>
+<span id="cb103-3"><a href="categorical-data.html#cb103-3" aria-hidden="true" tabindex="-1"></a>                  ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb103-4"><a href="categorical-data.html#cb103-4" aria-hidden="true" tabindex="-1"></a>responses <span class="op">=</span> pd.Series([<span class="st">&quot;autumn&quot;</span>, <span class="st">&quot;summer&quot;</span>, <span class="st">&quot;summer&quot;</span>], dtype <span class="op">=</span> cat_type)</span>
+<span id="cb103-5"><a href="categorical-data.html#cb103-5" aria-hidden="true" tabindex="-1"></a>responses</span>
+<span id="cb103-6"><a href="categorical-data.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    autumn</span></span>
+<span id="cb103-7"><a href="categorical-data.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    summer</span></span>
+<span id="cb103-8"><a href="categorical-data.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    summer</span></span>
+<span id="cb103-9"><a href="categorical-data.html#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: category</span></span>
+<span id="cb103-10"><a href="categorical-data.html#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Categories (4, object): [&#39;autumn&#39; &lt; &#39;summer&#39; &lt; &#39;spring&#39; &lt; &#39;winter&#39;]</span></span></code></pre></div>
+<p>Just like in R, you can convert numerical data into categorical. The function even has the same name as in R: <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#series-creation"><code>pd.cut()</code></a>. Depending on the type of the input, <a href="https://pandas.pydata.org/docs/reference/api/pandas.cut.html">it will return either a <code>Series</code> or a <code>Categorical</code></a>.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="categorical-data.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb104-2"><a href="categorical-data.html#cb104-2" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">10</span>) <span class="co"># not categorical </span></span>
+<span id="cb104-3"><a href="categorical-data.html#cb104-3" aria-hidden="true" tabindex="-1"></a>type_of_day <span class="op">=</span> pd.cut(stock_returns, <span class="co"># array input means Categorical output</span></span>
+<span id="cb104-4"><a href="categorical-data.html#cb104-4" aria-hidden="true" tabindex="-1"></a>                     bins <span class="op">=</span> [<span class="op">-</span>np.inf, <span class="dv">0</span>, np.inf], </span>
+<span id="cb104-5"><a href="categorical-data.html#cb104-5" aria-hidden="true" tabindex="-1"></a>                     labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
+<span id="cb104-6"><a href="categorical-data.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day)</span>
+<span id="cb104-7"><a href="categorical-data.html#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;</span></span>
+<span id="cb104-8"><a href="categorical-data.html#cb104-8" aria-hidden="true" tabindex="-1"></a>type_of_day2 <span class="op">=</span> pd.cut(pd.Series(stock_returns), <span class="co"># Series in means Series out</span></span>
+<span id="cb104-9"><a href="categorical-data.html#cb104-9" aria-hidden="true" tabindex="-1"></a>                      bins <span class="op">=</span> [<span class="op">-</span>np.inf, <span class="dv">0</span>, np.inf], </span>
+<span id="cb104-10"><a href="categorical-data.html#cb104-10" aria-hidden="true" tabindex="-1"></a>                      labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
+<span id="cb104-11"><a href="categorical-data.html#cb104-11" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day2)</span>
+<span id="cb104-12"><a href="categorical-data.html#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
+<p>Finally, when reading in data from an external source, choose carefully whether you want character data to be stored as a string type, or as a categorical type. Here we use <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><code>pd.read_csv()</code></a> to read in Fisher’s Iris data set <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>. More information on Pandas’ <code>DataFrames</code> can be found in the next chapter.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="categorical-data.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb105-2"><a href="categorical-data.html#cb105-2" aria-hidden="true" tabindex="-1"></a>my_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/iris.csv&quot;</span>, header<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb105-3"><a href="categorical-data.html#cb105-3" aria-hidden="true" tabindex="-1"></a>                      dtype <span class="op">=</span> {<span class="dv">4</span>:<span class="st">&quot;category&quot;</span>}) <span class="co"># make 5th col categorical</span></span>
+<span id="cb105-4"><a href="categorical-data.html#cb105-4" aria-hidden="true" tabindex="-1"></a>my_data.head(<span class="dv">1</span>)</span>
+<span id="cb105-5"><a href="categorical-data.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co">##      0    1    2    3            4</span></span>
+<span id="cb105-6"><a href="categorical-data.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  5.1  3.5  1.4  0.2  Iris-setosa</span></span>
+<span id="cb105-7"><a href="categorical-data.html#cb105-7" aria-hidden="true" tabindex="-1"></a>my_data.dtypes</span>
+<span id="cb105-8"><a href="categorical-data.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     float64</span></span>
+<span id="cb105-9"><a href="categorical-data.html#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     float64</span></span>
+<span id="cb105-10"><a href="categorical-data.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 2     float64</span></span>
+<span id="cb105-11"><a href="categorical-data.html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 3     float64</span></span>
+<span id="cb105-12"><a href="categorical-data.html#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 4    category</span></span>
+<span id="cb105-13"><a href="categorical-data.html#cb105-13" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span>
+<span id="cb105-14"><a href="categorical-data.html#cb105-14" aria-hidden="true" tabindex="-1"></a>np.unique(my_data[<span class="dv">4</span>])</span>
+<span id="cb105-15"><a href="categorical-data.html#cb105-15" aria-hidden="true" tabindex="-1"></a><span class="co">## array([&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;], dtype=object)</span></span></code></pre></div>
+</div>
+<div id="exercises-5" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Exercises</h2>
+<div id="r-questions-5" class="section level3" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> R Questions</h3>
+<ol style="list-style-type: decimal">
+<li></li>
+</ol>
+<p>Read in this chess data set <span class="citation">(<a href="#ref-misc_chess" role="doc-biblioref"><span>“<span class="nocase">Chess (King-Rook vs. King-Pawn)</span>”</span> 1989</a>)</span> with the following code. You will probably have to change your working directory, but if you do, make sure to comment out that code before you submit your script to me.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="categorical-data.html#cb106-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;kr-vs-kp.data&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb106-2"><a href="categorical-data.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span></code></pre></div>
+<ul>
+<li>Are all of the columns <code>factor</code>s? Assign <code>TRUE</code> or <code>FALSE</code> to <code>allFactors</code>.</li>
+<li>Should any of these <code>factor</code>s be ordered? Assign <code>TRUE</code> or <code>FALSE</code> to <code>ideallyOrdered</code>. Hint: read the data set description from <a href="https://archive.ics.uci.edu/ml/datasets/Chess+%28King-Rook+vs.+King-Pawn%29">https://archive.ics.uci.edu/ml/datasets/Chess+%28King-Rook+vs.+King-Pawn%29</a>.</li>
+<li>Are any of these factors currently ordered? Assign <code>TRUE</code> or <code>FALSE</code> to <code>currentlyOrdered</code>.</li>
+<li>What percent (between <span class="math inline">\(0\)</span> and <span class="math inline">\(100\)</span>) of the time is the first column equal to <code>'f'</code>? Assign your answer to <code>percentF</code>.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li></li>
+</ol>
+<p>Suppose you have the following <code>vector</code>. Please make sure to include this code in your script.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="categorical-data.html#cb107-1" aria-hidden="true" tabindex="-1"></a>normSamps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span></code></pre></div>
+<ul>
+<li>create a <code>factor</code> from <code>normSamps</code>. Map each element to <code>"within 1 sd"</code> or <code>"outside 1 sd"</code> depending on whether the element is within <span class="math inline">\(1\)</span> theoretical standard deviation of <span class="math inline">\(0\)</span> or not. Call the <code>factor</code> <code>withinOrNot</code>.</li>
+</ul>
+</div>
+<div id="python-questions-5" class="section level3" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Python Questions</h3>
+<ol style="list-style-type: decimal">
+<li></li>
+</ol>
+<p>Consider the following simulated letter grade data for two students:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="categorical-data.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb108-2"><a href="categorical-data.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb108-3"><a href="categorical-data.html#cb108-3" aria-hidden="true" tabindex="-1"></a>poss_grades <span class="op">=</span> [<span class="st">&#39;A+&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A-&#39;</span>,<span class="st">&#39;B+&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B-&#39;</span>,<span class="st">&#39;C+&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;C-&#39;</span>,<span class="st">&#39;D+&#39;</span>,<span class="st">&#39;D&#39;</span>,<span class="st">&#39;D-&#39;</span>,<span class="st">&#39;F&#39;</span>]</span>
+<span id="cb108-4"><a href="categorical-data.html#cb108-4" aria-hidden="true" tabindex="-1"></a>grade_values <span class="op">=</span> {<span class="st">&#39;A+&#39;</span>:<span class="fl">4.0</span>,<span class="st">&#39;A&#39;</span>:<span class="fl">4.0</span>,<span class="st">&#39;A-&#39;</span>:<span class="fl">3.7</span>,<span class="st">&#39;B+&#39;</span>:<span class="fl">3.3</span>,<span class="st">&#39;B&#39;</span>:<span class="fl">3.0</span>,<span class="st">&#39;B-&#39;</span>:<span class="fl">2.7</span>,</span>
+<span id="cb108-5"><a href="categorical-data.html#cb108-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;C+&#39;</span>:<span class="fl">2.3</span>,<span class="st">&#39;C&#39;</span>:<span class="fl">2.0</span>,<span class="st">&#39;C-&#39;</span>:<span class="fl">1.7</span>,<span class="st">&#39;D+&#39;</span>:<span class="fl">1.3</span>,<span class="st">&#39;D&#39;</span>:<span class="fl">1.0</span>,<span class="st">&#39;D-&#39;</span>:<span class="fl">.67</span>,<span class="st">&#39;F&#39;</span>:<span class="fl">0.0</span>}</span>
+<span id="cb108-6"><a href="categorical-data.html#cb108-6" aria-hidden="true" tabindex="-1"></a>student1 <span class="op">=</span> np.random.choice(poss_grades, size <span class="op">=</span> <span class="dv">10</span>, replace <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb108-7"><a href="categorical-data.html#cb108-7" aria-hidden="true" tabindex="-1"></a>student2 <span class="op">=</span> np.random.choice(poss_grades, size <span class="op">=</span> <span class="dv">12</span>, replace <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div>
+<ul>
+<li>Convert the two Numpy arrays to one of the Pandas types for categorical data that the textbook discussed. Call these two variables <code>s1</code> and <code>s2</code>.</li>
+<li>These data are categorical. Are they ordinal? Make sure to adjust <code>s1</code> and <code>s2</code> accordingly.</li>
+<li>Calculate the two student GPAs. Assign the floating point numbers to variables named <code>s1_gpa</code> and <code>s2_gpa</code>. Use <code>grade_values</code> to convert each letter grade to a number, and then average all the numbers for each student together using equal weights.</li>
+<li>Is each category equally-spaced? If yes, then these are said to be <em>interval data</em>. Does your answer to this question affect the legitimacy of averaging together any ordinal data? Assign a <code>str</code> response to the variable <code>ave_ord_data_response</code>. Hint: consider (any) two different data sets that happen to produce the same GPA. Is the equality of these two GPAs misleading?</li>
+<li>Compute the mode grade for each student. Assign your answers as <code>str</code>s to the variables <code>s1_mode</code> and <code>s2_mode</code>. If there are more than one modes, then assign the one that comes first alphabetically.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li></li>
+</ol>
+<p>Suppose you are creating a <em>classifier</em> whose job it is to predict labels. Consider the following <code>DataFrame</code> of predicted labels next to their corresponding actual labels. Please make sure to include this code in your script.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb109-1"><a href="categorical-data.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb109-2"><a href="categorical-data.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb109-3"><a href="categorical-data.html#cb109-3" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.DataFrame({<span class="st">&#39;predicted label&#39;</span> : [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>], </span>
+<span id="cb109-4"><a href="categorical-data.html#cb109-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;actual label&#39;</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]}, </span>
+<span id="cb109-5"><a href="categorical-data.html#cb109-5" aria-hidden="true" tabindex="-1"></a>                 dtype<span class="op">=</span><span class="st">&#39;category&#39;</span>)</span>
+<span id="cb109-6"><a href="categorical-data.html#cb109-6" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(d.dtypes)</span>
+<span id="cb109-7"><a href="categorical-data.html#cb109-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [CategoricalDtype(categories=[1, 2, 3], ordered=False), CategoricalDtype(categories=[1, 2, 3], ordered=False)]</span></span></code></pre></div>
+<ul>
+<li>Assign the prediction accuracy, as a percent (between <span class="math inline">\(0\)</span> and <span class="math inline">\(100\)</span>), to the variable <code>perc_acc</code>.</li>
+<li>Create a <em>confusion matrix</em> to better assess <em>which</em> labels your classifier has a difficult time with. This should be a <span class="math inline">\(3 \times 3\)</span> Numpy <code>ndarray</code> of percentages. The row will correspond to the predicted label, the column will correspond to the actual label, and number in location <span class="math inline">\((0,2)\)</span>, say, will be the percent of observations where your model predicted label <code>1</code> and the actual was a label <code>3</code>. Call the variable <code>confusion</code>.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-misc_chess" class="csl-entry">
+<span>“<span class="nocase">Chess (King-Rook vs. King-Pawn)</span>.”</span> 1989. UCI Machine Learning Repository.
+</div>
+<div id="ref-misc_iris_53" class="csl-entry">
+Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> UCI Machine Learning Repository.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-frames.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/07-categorical_data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
