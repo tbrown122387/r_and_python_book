@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 18 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 18 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 18 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="an-introduction-to-object-oriented-programming.html"/>
 
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -319,12 +319,17 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
 </ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
 <li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
-<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
 <ul>
@@ -376,7 +381,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>17.2.8</b> Creating Reference Classes</a></li>
 <li class="chapter" data-level="17.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>17.2.9</b> Creating R6 Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-9"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
+<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>18</b> Functional Programming</a>
 <ul>
@@ -454,141 +459,155 @@ div.csl-indent {
 <p>This chapter avoids the philosophical discussion of FP. Instead, it takes the applied approach, and provides instructions on how to use FP in your own programs. I try to give examples of <em>how</em> you can use FP, and <em>when</em> these tools are especially suitable.</p>
 <p>One of the biggest tip-offs that you should be using functional programming is if you need to evaluate a single function many times, or in many different ways. This happens quite frequently in statistical computing. Instead of copy/pasting similar-looking lines of code, you might consider <em>higher-order</em> functions that take your function as an input, and intelligently call it in all the many ways you want it to. A third option you might also consider is to use a loop (c.f. <a href="control-flow.html#loops">11.2</a>). However, that approach is not very functional, and so it will not be heavily-discussed in this section.</p>
 <p>Another tip-off that you need FP is if you need many different functions that are all “related” to one another. Should you define each function separately, using excessive copy/paste-ing? Or should you write a function that can elegantly generate any function you need?</p>
-<p>Not repeating yourself and re-using code is a primary motivation, but it is not the only one. Another motivation for <strong>functional programming</strong> is clearly explained in <a href="https://adv-r.hadley.nz/fp.html">Advanced R</a><a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>:</p>
+<p>Not repeating yourself and re-using code is a primary motivation, but it is not the only one. Another motivation for <strong>functional programming</strong> is clearly explained in <a href="https://adv-r.hadley.nz/fp.html">Advanced R</a><a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>:</p>
 <blockquote>
 <p>A functional style tends to create functions that can easily be analysed in isolation (i.e. using only local information), and hence is often much easier to automatically optimise or parallelise.</p>
 </blockquote>
 <p>All of these sound like a good things to have in our code, so let’s get started with some examples!</p>
 <div id="functions-as-function-inputs-in-r" class="section level2" number="18.1">
 <h2><span class="header-section-number">18.1</span> Functions as Function Inputs in R</h2>
-<p>Many of the most commonly-used functionals in R have names that end in “apply”. The ones I discuss are <code>sapply()</code>, <code>vapply()</code>, <code>lapply()</code>, <code>apply()</code>, <code>tapply()</code> and <code>mapply()</code>. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.</p>
+<p>Many of the most commonly-used functionals in R have names that end in “apply.” The ones I discuss are <code>sapply()</code>, <code>vapply()</code>, <code>lapply()</code>, <code>apply()</code>, <code>tapply()</code> and <code>mapply()</code>. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.</p>
 <div id="sapply-and-vapply" class="section level3" number="18.1.1">
 <h3><span class="header-section-number">18.1.1</span> <code>sapply()</code> and <code>vapply()</code></h3>
 <p>Suppose we have a <code>data.frame</code> that has 10 rows and 100 columns. What if we want to take the mean of each column?</p>
 <p>An amateurish way to do this would be something like the following.</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="functional-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>myFirstMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">1</span>])</span>
-<span id="cb242-2"><a href="functional-programming.html#cb242-2" aria-hidden="true" tabindex="-1"></a>mySecondMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">2</span>])</span>
-<span id="cb242-3"><a href="functional-programming.html#cb242-3" aria-hidden="true" tabindex="-1"></a>myThirdMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">3</span>])</span>
-<span id="cb242-4"><a href="functional-programming.html#cb242-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ....</span></span>
-<span id="cb242-5"><a href="functional-programming.html#cb242-5" aria-hidden="true" tabindex="-1"></a><span class="co"># so on and so forth</span></span>
-<span id="cb242-6"><a href="functional-programming.html#cb242-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ....</span></span>
-<span id="cb242-7"><a href="functional-programming.html#cb242-7" aria-hidden="true" tabindex="-1"></a>myThirdMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">100</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="functional-programming.html#cb247-1" aria-hidden="true" tabindex="-1"></a>myFirstMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">1</span>])</span>
+<span id="cb247-2"><a href="functional-programming.html#cb247-2" aria-hidden="true" tabindex="-1"></a>mySecondMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">2</span>])</span>
+<span id="cb247-3"><a href="functional-programming.html#cb247-3" aria-hidden="true" tabindex="-1"></a>myThirdMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">3</span>])</span>
+<span id="cb247-4"><a href="functional-programming.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ....</span></span>
+<span id="cb247-5"><a href="functional-programming.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="co"># so on and so forth</span></span>
+<span id="cb247-6"><a href="functional-programming.html#cb247-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ....</span></span>
+<span id="cb247-7"><a href="functional-programming.html#cb247-7" aria-hidden="true" tabindex="-1"></a>myThirdMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(myDF[,<span class="dv">100</span>])</span></code></pre></div>
 <p>You will need one line of code for each column in the data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.</p>
 <div class="rmd-details">
 <p>“Don’t repeat yourself” (DRY) is an idea that’s been around for a while and is widely accepted <span class="citation">(<a href="#ref-hunt2000pragmatic" role="doc-biblioref">Hunt and Thomas 2000</a>)</span>. DRY is the opposite of <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET">WET</a>.</p>
 </div>
 <p>Instead, prefer the use of <code>sapply()</code> in this situation. The “s” in <code>sapply()</code> stands for “simplified.” In this bit of code <code>mean()</code> is called on each column of th data frame. <code>sapply()</code> applies the function over columns, instead of rows, because data frames are internally a <code>list</code> of columns.</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="functional-programming.html#cb243-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
-<span id="cb243-2"><a href="functional-programming.html#cb243-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
-<span id="cb243-3"><a href="functional-programming.html#cb243-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          X1          X2          X3          X4          X5          X6 </span></span>
-<span id="cb243-4"><a href="functional-programming.html#cb243-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  0.18577292  0.58759539 -0.05194271 -0.07027537 -0.35365358 -0.11115972</span></span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="functional-programming.html#cb248-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
+<span id="cb248-2"><a href="functional-programming.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
+<span id="cb248-3"><a href="functional-programming.html#cb248-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          X1          X2          X3          X4          X5          X6 </span></span>
+<span id="cb248-4"><a href="functional-programming.html#cb248-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  0.18577292  0.58759539 -0.05194271 -0.07027537 -0.35365358 -0.11115972</span></span></code></pre></div>
 <p>Each call to <code>mean()</code> returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(1\)</span>. This is necessary if you want to collect all the results into a <code>vector</code>–remember, all elements of a <code>vector</code> have to have the same type. To get the same behavior, you might also consider using <code>vapply(myDF, mean, numeric(1))</code>.</p>
 <p>In the above case, “simplify” referred to how one-hundred length-<span class="math inline">\(1\)</span> vectors were simplified into one length-<span class="math inline">\(100\)</span> <code>vector</code>. However, “simplified” does not necessarily imply that all elements will be stored in a <code>vector</code>. Consider the <code>summary</code> function, which returns a <code>double</code> <code>vector</code> of length <span class="math inline">\(6\)</span>. In this case, one-hundred length-<span class="math inline">\(6\)</span> vectors were simplified into one <span class="math inline">\(6 \times 100\)</span> matrix.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="functional-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a>mySummaries <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, summary)</span>
-<span id="cb244-2"><a href="functional-programming.html#cb244-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(mySummaries)</span>
-<span id="cb244-3"><a href="functional-programming.html#cb244-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb244-4"><a href="functional-programming.html#cb244-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mySummaries)</span>
-<span id="cb244-5"><a href="functional-programming.html#cb244-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]   6 100</span></span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="functional-programming.html#cb249-1" aria-hidden="true" tabindex="-1"></a>mySummaries <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, summary)</span>
+<span id="cb249-2"><a href="functional-programming.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(mySummaries)</span>
+<span id="cb249-3"><a href="functional-programming.html#cb249-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb249-4"><a href="functional-programming.html#cb249-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mySummaries)</span>
+<span id="cb249-5"><a href="functional-programming.html#cb249-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]   6 100</span></span></code></pre></div>
 <div class="rmd-details">
 <p>Another function that is worth mentioning is <code>replicate()</code>–it is a wrapper for <code>sapply()</code>. Consider a situation where you want to call a function many times with the same inputs. You might try something like <code>sapply(1:100, function(elem) {  return(myFunc(someInput)) } )</code>. Another, more readable, way to do this is <code>replicate(100, myFunc(someInput))</code>.</p>
 </div>
 </div>
 <div id="lapply" class="section level3" number="18.1.2">
 <h3><span class="header-section-number">18.1.2</span> <code>lapply()</code></h3>
-<p>For functions that do not return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply()</code>. The “l” in <code>lapply()</code> stands for “list”. <code>lapply()</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="functional-programming.html#cb245-1" aria-hidden="true" tabindex="-1"></a>regress <span class="ot">&lt;-</span> <span class="cf">function</span>(y){ <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>) }</span>
-<span id="cb245-2"><a href="functional-programming.html#cb245-2" aria-hidden="true" tabindex="-1"></a>myRegs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(myDF, regress)</span>
-<span id="cb245-3"><a href="functional-programming.html#cb245-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(myRegs)</span>
-<span id="cb245-4"><a href="functional-programming.html#cb245-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 100</span></span>
-<span id="cb245-5"><a href="functional-programming.html#cb245-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myRegs[[<span class="dv">1</span>]])</span>
-<span id="cb245-6"><a href="functional-programming.html#cb245-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;lm&quot;</span></span>
-<span id="cb245-7"><a href="functional-programming.html#cb245-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myRegs[[<span class="dv">12</span>]])</span>
-<span id="cb245-8"><a href="functional-programming.html#cb245-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb245-9"><a href="functional-programming.html#cb245-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb245-10"><a href="functional-programming.html#cb245-10" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ 1)</span></span>
-<span id="cb245-11"><a href="functional-programming.html#cb245-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb245-12"><a href="functional-programming.html#cb245-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb245-13"><a href="functional-programming.html#cb245-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb245-14"><a href="functional-programming.html#cb245-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -1.6149 -0.8692 -0.2541  0.7596  2.5718 </span></span>
-<span id="cb245-15"><a href="functional-programming.html#cb245-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb245-16"><a href="functional-programming.html#cb245-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb245-17"><a href="functional-programming.html#cb245-17" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb245-18"><a href="functional-programming.html#cb245-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   0.2104     0.4139   0.508    0.623</span></span>
-<span id="cb245-19"><a href="functional-programming.html#cb245-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb245-20"><a href="functional-programming.html#cb245-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.309 on 9 degrees of freedom</span></span></code></pre></div>
+<p>For functions that do not return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply()</code>. The “l” in <code>lapply()</code> stands for “list.” <code>lapply()</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="functional-programming.html#cb250-1" aria-hidden="true" tabindex="-1"></a>regress <span class="ot">&lt;-</span> <span class="cf">function</span>(y){ <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>) }</span>
+<span id="cb250-2"><a href="functional-programming.html#cb250-2" aria-hidden="true" tabindex="-1"></a>myRegs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(myDF, regress)</span>
+<span id="cb250-3"><a href="functional-programming.html#cb250-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(myRegs)</span>
+<span id="cb250-4"><a href="functional-programming.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 100</span></span>
+<span id="cb250-5"><a href="functional-programming.html#cb250-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myRegs[[<span class="dv">1</span>]])</span>
+<span id="cb250-6"><a href="functional-programming.html#cb250-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;lm&quot;</span></span>
+<span id="cb250-7"><a href="functional-programming.html#cb250-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myRegs[[<span class="dv">12</span>]])</span>
+<span id="cb250-8"><a href="functional-programming.html#cb250-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb250-9"><a href="functional-programming.html#cb250-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb250-10"><a href="functional-programming.html#cb250-10" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ 1)</span></span>
+<span id="cb250-11"><a href="functional-programming.html#cb250-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb250-12"><a href="functional-programming.html#cb250-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb250-13"><a href="functional-programming.html#cb250-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb250-14"><a href="functional-programming.html#cb250-14" aria-hidden="true" tabindex="-1"></a><span class="do">## -1.6149 -0.8692 -0.2541  0.7596  2.5718 </span></span>
+<span id="cb250-15"><a href="functional-programming.html#cb250-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb250-16"><a href="functional-programming.html#cb250-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb250-17"><a href="functional-programming.html#cb250-17" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span id="cb250-18"><a href="functional-programming.html#cb250-18" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   0.2104     0.4139   0.508    0.623</span></span>
+<span id="cb250-19"><a href="functional-programming.html#cb250-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb250-20"><a href="functional-programming.html#cb250-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 1.309 on 9 degrees of freedom</span></span></code></pre></div>
 </div>
 <div id="apply" class="section level3" number="18.1.3">
 <h3><span class="header-section-number">18.1.3</span> <code>apply()</code></h3>
-<p>I use <code>sapply()</code> and <code>lapply()</code> the most, personally. The next most common function I use is <code>apply()</code>. I use it to apply functions to <em>rows</em> instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a></p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="functional-programming.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(myDF)</span>
-<span id="cb246-2"><a href="functional-programming.html#cb246-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  10 100</span></span>
-<span id="cb246-3"><a href="functional-programming.html#cb246-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(myDF, <span class="dv">1</span>, mean)</span>
-<span id="cb246-4"><a href="functional-programming.html#cb246-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.18971263 -0.07595286  0.18400138  0.08895979 -0.08496412  0.06865526  0.08697484 -0.09550573  0.01071571</span></span>
-<span id="cb246-5"><a href="functional-programming.html#cb246-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [10]  0.02142769</span></span></code></pre></div>
+<p>I use <code>sapply()</code> and <code>lapply()</code> the most, personally. The next most common function I use is <code>apply()</code>. I use it to apply functions to <em>rows</em> instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a></p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="functional-programming.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(myDF)</span>
+<span id="cb251-2"><a href="functional-programming.html#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  10 100</span></span>
+<span id="cb251-3"><a href="functional-programming.html#cb251-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(myDF, <span class="dv">1</span>, mean)</span>
+<span id="cb251-4"><a href="functional-programming.html#cb251-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.18971263 -0.07595286  0.18400138  0.08895979 -0.08496412  0.06865526  0.08697484 -0.09550573  0.01071571</span></span>
+<span id="cb251-5"><a href="functional-programming.html#cb251-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [10]  0.02142769</span></span></code></pre></div>
 <p>Another example where it can be useful to apply a function to rows is <strong>predicate functions.</strong> A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a <code>data.frame</code>. Without a predicate function, filtering rows might look something like this.</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="functional-programming.html#cb247-1" aria-hidden="true" tabindex="-1"></a>albRealEstate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
-<span id="cb247-2"><a href="functional-programming.html#cb247-2" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(albRealEstate<span class="sc">$</span>YearBuilt <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> albRealEstate<span class="sc">$</span>Condition <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span>,]</span>
-<span id="cb247-3"><a href="functional-programming.html#cb247-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subDF)</span>
-<span id="cb247-4"><a href="functional-programming.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City</span></span>
-<span id="cb247-5"><a href="functional-programming.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET</span></span>
-<span id="cb247-6"><a href="functional-programming.html#cb247-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET</span></span>
-<span id="cb247-7"><a href="functional-programming.html#cb247-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET</span></span>
-<span id="cb247-8"><a href="functional-programming.html#cb247-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET</span></span>
-<span id="cb247-9"><a href="functional-programming.html#cb247-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET</span></span>
-<span id="cb247-10"><a href="functional-programming.html#cb247-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET</span></span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="functional-programming.html#cb252-1" aria-hidden="true" tabindex="-1"></a>albRealEstate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
+<span id="cb252-2"><a href="functional-programming.html#cb252-2" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(albRealEstate<span class="sc">$</span>YearBuilt <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> albRealEstate<span class="sc">$</span>Condition <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span>,]</span>
+<span id="cb252-3"><a href="functional-programming.html#cb252-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subDF)</span>
+<span id="cb252-4"><a href="functional-programming.html#cb252-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
+<span id="cb252-5"><a href="functional-programming.html#cb252-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
+<span id="cb252-6"><a href="functional-programming.html#cb252-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
+<span id="cb252-7"><a href="functional-programming.html#cb252-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
+<span id="cb252-8"><a href="functional-programming.html#cb252-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
+<span id="cb252-9"><a href="functional-programming.html#cb252-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
+<span id="cb252-10"><a href="functional-programming.html#cb252-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900</span></span>
+<span id="cb252-11"><a href="functional-programming.html#cb252-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     City</span></span>
+<span id="cb252-12"><a href="functional-programming.html#cb252-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 CROZET</span></span>
+<span id="cb252-13"><a href="functional-programming.html#cb252-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 CROZET</span></span>
+<span id="cb252-14"><a href="functional-programming.html#cb252-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 CROZET</span></span>
+<span id="cb252-15"><a href="functional-programming.html#cb252-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 CROZET</span></span>
+<span id="cb252-16"><a href="functional-programming.html#cb252-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 CROZET</span></span>
+<span id="cb252-17"><a href="functional-programming.html#cb252-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 CROZET</span></span></code></pre></div>
 <p>Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.</p>
 <ul>
 <li>Step 1: write a predicate function that returns TRUE or FALSE;</li>
 <li>Step 2: construct a <code>logical</code> <code>vector</code> by <code>apply()</code>ing the predicate over rows;</li>
 <li>Step 3: plug the <code>logical</code> <code>vector</code> into the <code>[</code> operator to remove the rows.</li>
 </ul>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="functional-programming.html#cb248-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="cf">function</span>(row){</span>
-<span id="cb248-2"><a href="functional-programming.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  (row[<span class="st">&#39;YearBuilt&#39;</span>] <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> row[<span class="st">&#39;Condition&#39;</span>] <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> row[<span class="st">&#39;City&#39;</span>] <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span></span>
-<span id="cb248-3"><a href="functional-programming.html#cb248-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb248-4"><a href="functional-programming.html#cb248-4" aria-hidden="true" tabindex="-1"></a>whichRows <span class="ot">&lt;-</span> <span class="fu">apply</span>(albRealEstate, <span class="dv">1</span>, pred)</span>
-<span id="cb248-5"><a href="functional-programming.html#cb248-5" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[whichRows,]</span>
-<span id="cb248-6"><a href="functional-programming.html#cb248-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subDF)</span>
-<span id="cb248-7"><a href="functional-programming.html#cb248-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City</span></span>
-<span id="cb248-8"><a href="functional-programming.html#cb248-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET</span></span>
-<span id="cb248-9"><a href="functional-programming.html#cb248-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET</span></span>
-<span id="cb248-10"><a href="functional-programming.html#cb248-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET</span></span>
-<span id="cb248-11"><a href="functional-programming.html#cb248-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET</span></span>
-<span id="cb248-12"><a href="functional-programming.html#cb248-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET</span></span>
-<span id="cb248-13"><a href="functional-programming.html#cb248-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET</span></span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="functional-programming.html#cb253-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="cf">function</span>(row){</span>
+<span id="cb253-2"><a href="functional-programming.html#cb253-2" aria-hidden="true" tabindex="-1"></a>  (row[<span class="st">&#39;YearBuilt&#39;</span>] <span class="sc">==</span> <span class="dv">2006</span> <span class="sc">&amp;</span> row[<span class="st">&#39;Condition&#39;</span>] <span class="sc">==</span> <span class="st">&quot;Average&quot;</span>) <span class="sc">|</span> row[<span class="st">&#39;City&#39;</span>] <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span></span>
+<span id="cb253-3"><a href="functional-programming.html#cb253-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb253-4"><a href="functional-programming.html#cb253-4" aria-hidden="true" tabindex="-1"></a>whichRows <span class="ot">&lt;-</span> <span class="fu">apply</span>(albRealEstate, <span class="dv">1</span>, pred)</span>
+<span id="cb253-5"><a href="functional-programming.html#cb253-5" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[whichRows,]</span>
+<span id="cb253-6"><a href="functional-programming.html#cb253-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subDF)</span>
+<span id="cb253-7"><a href="functional-programming.html#cb253-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
+<span id="cb253-8"><a href="functional-programming.html#cb253-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
+<span id="cb253-9"><a href="functional-programming.html#cb253-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
+<span id="cb253-10"><a href="functional-programming.html#cb253-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
+<span id="cb253-11"><a href="functional-programming.html#cb253-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
+<span id="cb253-12"><a href="functional-programming.html#cb253-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
+<span id="cb253-13"><a href="functional-programming.html#cb253-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900</span></span>
+<span id="cb253-14"><a href="functional-programming.html#cb253-14" aria-hidden="true" tabindex="-1"></a><span class="do">##     City</span></span>
+<span id="cb253-15"><a href="functional-programming.html#cb253-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 CROZET</span></span>
+<span id="cb253-16"><a href="functional-programming.html#cb253-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 CROZET</span></span>
+<span id="cb253-17"><a href="functional-programming.html#cb253-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 CROZET</span></span>
+<span id="cb253-18"><a href="functional-programming.html#cb253-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 CROZET</span></span>
+<span id="cb253-19"><a href="functional-programming.html#cb253-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 CROZET</span></span>
+<span id="cb253-20"><a href="functional-programming.html#cb253-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 CROZET</span></span></code></pre></div>
 </div>
 <div id="tapply" class="section level3" number="18.1.4">
 <h3><span class="header-section-number">18.1.4</span> <code>tapply()</code></h3>
-<p><code>tapply()</code> can be very handy when you need it. First, we’ve alluded to the definition before in subsection <a href="data-frames.html#data-frames-in-r">8.1</a>, but a <strong>ragged array</strong> is a collection of arrays that all have potentially different lengths. I don’t typically construct such an object and then pass it to <code>tapply()</code>. Rather, I let <code>tapply()</code> construct the ragged array for me. The first argument it expects is “typically vector-like”, while the second tells us how to break that <code>vector</code> into chunks. The third argument is a function that gets applied to each <code>vector</code> chunk.</p>
+<p><code>tapply()</code> can be very handy when you need it. First, we’ve alluded to the definition before in subsection <a href="data-frames.html#data-frames-in-r">8.1</a>, but a <strong>ragged array</strong> is a collection of arrays that all have potentially different lengths. I don’t typically construct such an object and then pass it to <code>tapply()</code>. Rather, I let <code>tapply()</code> construct the ragged array for me. The first argument it expects is “typically vector-like,” while the second tells us how to break that <code>vector</code> into chunks. The third argument is a function that gets applied to each <code>vector</code> chunk.</p>
 <p>If I wanted the average home price for each city, I could use something like this.</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="functional-programming.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(albRealEstate)</span>
-<span id="cb249-2"><a href="functional-programming.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb249-3"><a href="functional-programming.html#cb249-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb249-4"><a href="functional-programming.html#cb249-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb249-5"><a href="functional-programming.html#cb249-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb249-6"><a href="functional-programming.html#cb249-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb249-7"><a href="functional-programming.html#cb249-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb249-8"><a href="functional-programming.html#cb249-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb249-9"><a href="functional-programming.html#cb249-9" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb249-10"><a href="functional-programming.html#cb249-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb249-11"><a href="functional-programming.html#cb249-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb249-12"><a href="functional-programming.html#cb249-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb249-13"><a href="functional-programming.html#cb249-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb249-14"><a href="functional-programming.html#cb249-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb249-15"><a href="functional-programming.html#cb249-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
-<span id="cb249-16"><a href="functional-programming.html#cb249-16" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
-<span id="cb249-17"><a href="functional-programming.html#cb249-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;     &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
-<span id="cb249-18"><a href="functional-programming.html#cb249-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
-<span id="cb249-19"><a href="functional-programming.html#cb249-19" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE </span></span>
-<span id="cb249-20"><a href="functional-programming.html#cb249-20" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="functional-programming.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(albRealEstate)</span>
+<span id="cb254-2"><a href="functional-programming.html#cb254-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
+<span id="cb254-3"><a href="functional-programming.html#cb254-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
+<span id="cb254-4"><a href="functional-programming.html#cb254-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
+<span id="cb254-5"><a href="functional-programming.html#cb254-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
+<span id="cb254-6"><a href="functional-programming.html#cb254-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
+<span id="cb254-7"><a href="functional-programming.html#cb254-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
+<span id="cb254-8"><a href="functional-programming.html#cb254-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
+<span id="cb254-9"><a href="functional-programming.html#cb254-9" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
+<span id="cb254-10"><a href="functional-programming.html#cb254-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
+<span id="cb254-11"><a href="functional-programming.html#cb254-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
+<span id="cb254-12"><a href="functional-programming.html#cb254-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
+<span id="cb254-13"><a href="functional-programming.html#cb254-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
+<span id="cb254-14"><a href="functional-programming.html#cb254-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
+<span id="cb254-15"><a href="functional-programming.html#cb254-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
+<span id="cb254-16"><a href="functional-programming.html#cb254-16" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
+<span id="cb254-17"><a href="functional-programming.html#cb254-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;     &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
+<span id="cb254-18"><a href="functional-programming.html#cb254-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
+<span id="cb254-19"><a href="functional-programming.html#cb254-19" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE </span></span>
+<span id="cb254-20"><a href="functional-programming.html#cb254-20" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4</span></span></code></pre></div>
 <p>You might be wondering why we put <code>albRealEstate$City</code> into a <code>list</code>. That seems kind of unnecessary. This is because <code>tapply()</code> can be used with multiple <code>factor</code>s–this will break down the <code>vector</code> input into a finer partition. The second argument must be one object, though, so all of these <code>factor</code>s must be collected into a <code>list</code>. The following code produces a “pivot table.”</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="functional-programming.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City, albRealEstate<span class="sc">$</span>Condition), mean)</span>
-<span id="cb250-2"><a href="functional-programming.html#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                  Average Excellent     Fair     Good      Poor Substandard</span></span>
-<span id="cb250-3"><a href="functional-programming.html#cb250-3" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE 337913.4  491702.4 229336.2 444325.5 202420.00      457500</span></span>
-<span id="cb250-4"><a href="functional-programming.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="do">## CROZET          342133.4  552081.6 198009.5 390657.7 203806.25       53450</span></span>
-<span id="cb250-5"><a href="functional-programming.html#cb250-5" aria-hidden="true" tabindex="-1"></a><span class="do">## EARLYSVILLE     365990.6  652387.4 230646.2 470554.7 372442.86      160400</span></span>
-<span id="cb250-6"><a href="functional-programming.html#cb250-6" aria-hidden="true" tabindex="-1"></a><span class="do">## KESWICK         392998.6  871719.8 172790.9 672510.7 100337.50          NA</span></span>
-<span id="cb250-7"><a href="functional-programming.html#cb250-7" aria-hidden="true" tabindex="-1"></a><span class="do">## NORTH GARDEN    241187.7  966528.6 131997.0 440503.1 151187.50          NA</span></span>
-<span id="cb250-8"><a href="functional-programming.html#cb250-8" aria-hidden="true" tabindex="-1"></a><span class="do">## SCOTTSVILLE     214046.9  502273.8 157438.0 374600.4  95377.78          NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="functional-programming.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City, albRealEstate<span class="sc">$</span>Condition), mean)</span>
+<span id="cb255-2"><a href="functional-programming.html#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                  Average Excellent     Fair     Good      Poor Substandard</span></span>
+<span id="cb255-3"><a href="functional-programming.html#cb255-3" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE 337913.4  491702.4 229336.2 444325.5 202420.00      457500</span></span>
+<span id="cb255-4"><a href="functional-programming.html#cb255-4" aria-hidden="true" tabindex="-1"></a><span class="do">## CROZET          342133.4  552081.6 198009.5 390657.7 203806.25       53450</span></span>
+<span id="cb255-5"><a href="functional-programming.html#cb255-5" aria-hidden="true" tabindex="-1"></a><span class="do">## EARLYSVILLE     365990.6  652387.4 230646.2 470554.7 372442.86      160400</span></span>
+<span id="cb255-6"><a href="functional-programming.html#cb255-6" aria-hidden="true" tabindex="-1"></a><span class="do">## KESWICK         392998.6  871719.8 172790.9 672510.7 100337.50          NA</span></span>
+<span id="cb255-7"><a href="functional-programming.html#cb255-7" aria-hidden="true" tabindex="-1"></a><span class="do">## NORTH GARDEN    241187.7  966528.6 131997.0 440503.1 151187.50          NA</span></span>
+<span id="cb255-8"><a href="functional-programming.html#cb255-8" aria-hidden="true" tabindex="-1"></a><span class="do">## SCOTTSVILLE     214046.9  502273.8 157438.0 374600.4  95377.78          NA</span></span></code></pre></div>
 <div class="rmd-details">
 <p>For functions that return higher-dimensional output, you will have to use something like <code>by()</code> or <code>aggregate()</code> in place of <code>tapply()</code>.</p>
 </div>
@@ -597,9 +616,9 @@ div.csl-indent {
 <h3><span class="header-section-number">18.1.5</span> <code>mapply()</code></h3>
 <p>The <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html">documentation of <code>mapply()</code></a> states <code>mapply()</code> is a multivariate version of <code>sapply()</code>. <code>sapply()</code> worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use <code>mapply()</code>.</p>
 <p>Here is a short example. Regarding the <code>n=</code> argument of <code>rnorm()</code>, the documentation explains, “[i]f <code>length(n) &gt; 1</code>, the length is taken to be the number required.” This would be a problem if we want to sample a.) three times from a mean <span class="math inline">\(0\)</span> normal, b.) twice from a mean <span class="math inline">\(100\)</span> normal, and c.) once from a mean <span class="math inline">\(-100\)</span> normal distribution.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="functional-programming.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="functional-programming.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
 <pre><code>## [1]   0.01435773  99.99238144 -99.98256452</code></pre>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="functional-programming.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapply</span>(rnorm, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="functional-programming.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mapply</span>(rnorm, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="sc">-</span><span class="dv">100</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, .<span class="dv">01</span>))</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] -0.0122999207 -0.0064744814 -0.0002297629
 ## 
@@ -614,35 +633,35 @@ div.csl-indent {
 <p>In section <a href="reshaping-and-combining-data-sets.html#reshaping-and-combining-data-sets">12</a> we talked about several different ways of “combining” data sets. We discussed stacking data sets on top of one another with <code>rbind()</code> (c.f. subsection <a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder">12.2</a>), stacking them side-by-side with <code>cbind()</code> (also in <a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder">12.2</a>), and intelligently joining them together with <code>merge()</code> (c.f. <a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets">12.3</a>). Consider the task of combining <em>many</em> data sets. How do we write DRY code and abide by the DRY principle?</p>
 <p>We can use either <code>Reduce()</code> or <code>do.call()</code> as a higher-order function. Just like the aforementioned <code>*apply()</code> functions, they take in either <code>cbind()</code>, <code>rbind()</code>, or <code>merge()</code> as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take.</p>
 <p>Take a look at the documentation to <code>rbind()</code>. Its first argument is <code>...</code>, which is the <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot">dot-dot-dot</a> symbol. This means <code>rbind()</code> can take a varying number of <code>data.frame</code>s to stack on top of each other. In other words, <code>rbind()</code> is <em>variadic</em>.</p>
-<p>On the other hand, take a look at the documentation of <code>merge()</code>. It only takes two <code>data.frame</code>s at a time<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>.</p>
+<p>On the other hand, take a look at the documentation of <code>merge()</code>. It only takes two <code>data.frame</code>s at a time<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>.</p>
 <p>If we want to combine many data sets, <code>merge()</code> This is the difference between <code>Reduce()</code> and <code>do.call()</code>.</p>
 <p><code>do.call()</code> calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, <code>Reduce()</code> calls a binary function many times on pairs of arguments. <code>Reduce()</code>’s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.</p>
 <p>TODO diagram</p>
 <p>Here is an initial example that makes use of four data sets <code>d1.csv</code>, <code>d2.csv</code>, <code>d3.csv</code>, and <code>d4.csv</code>. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste <code>read.csv</code> calls, but that would violate the DRY principle. Instead, let’s use <code>lapply()</code> an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="functional-programming.html#cb255-1" aria-hidden="true" tabindex="-1"></a>numDataSets <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb255-2"><a href="functional-programming.html#cb255-2" aria-hidden="true" tabindex="-1"></a>dataSets <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;d&quot;</span>,<span class="dv">1</span><span class="sc">:</span>numDataSets)</span>
-<span id="cb255-3"><a href="functional-programming.html#cb255-3" aria-hidden="true" tabindex="-1"></a>dfs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dataSets, </span>
-<span id="cb255-4"><a href="functional-programming.html#cb255-4" aria-hidden="true" tabindex="-1"></a>              <span class="cf">function</span>(name) <span class="fu">read.csv</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/&quot;</span>, name, <span class="st">&quot;.csv&quot;</span>)))</span>
-<span id="cb255-5"><a href="functional-programming.html#cb255-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dfs[[<span class="dv">3</span>]])</span>
-<span id="cb255-6"><a href="functional-programming.html#cb255-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   id obs3</span></span>
-<span id="cb255-7"><a href="functional-programming.html#cb255-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  a    7</span></span>
-<span id="cb255-8"><a href="functional-programming.html#cb255-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  b    8</span></span>
-<span id="cb255-9"><a href="functional-programming.html#cb255-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  c    9</span></span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="functional-programming.html#cb260-1" aria-hidden="true" tabindex="-1"></a>numDataSets <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb260-2"><a href="functional-programming.html#cb260-2" aria-hidden="true" tabindex="-1"></a>dataSets <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;d&quot;</span>,<span class="dv">1</span><span class="sc">:</span>numDataSets)</span>
+<span id="cb260-3"><a href="functional-programming.html#cb260-3" aria-hidden="true" tabindex="-1"></a>dfs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dataSets, </span>
+<span id="cb260-4"><a href="functional-programming.html#cb260-4" aria-hidden="true" tabindex="-1"></a>              <span class="cf">function</span>(name) <span class="fu">read.csv</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/&quot;</span>, name, <span class="st">&quot;.csv&quot;</span>)))</span>
+<span id="cb260-5"><a href="functional-programming.html#cb260-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dfs[[<span class="dv">3</span>]])</span>
+<span id="cb260-6"><a href="functional-programming.html#cb260-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   id obs3</span></span>
+<span id="cb260-7"><a href="functional-programming.html#cb260-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  a    7</span></span>
+<span id="cb260-8"><a href="functional-programming.html#cb260-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  b    8</span></span>
+<span id="cb260-9"><a href="functional-programming.html#cb260-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  c    9</span></span></code></pre></div>
 <p>Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!</p>
 <p>Next, <code>cbind()</code>ing them all together can be done as follows. <code>do.call()</code> will call the function only once. <code>cbind()</code> takes many arguments at once, so this works.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="functional-programming.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(cbind, dfs) <span class="co"># DRY! :)</span></span>
-<span id="cb256-2"><a href="functional-programming.html#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   id obs1 id obs2 id obs3 id obs4</span></span>
-<span id="cb256-3"><a href="functional-programming.html#cb256-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  a    1  b    5  a    7  a   10</span></span>
-<span id="cb256-4"><a href="functional-programming.html#cb256-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  b    2  a    4  b    8  b   11</span></span>
-<span id="cb256-5"><a href="functional-programming.html#cb256-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  c    3  c    6  c    9  c   12</span></span>
-<span id="cb256-6"><a href="functional-programming.html#cb256-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cbind(df1,df2,df3,df4) # WET! :(</span></span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="functional-programming.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(cbind, dfs) <span class="co"># DRY! :)</span></span>
+<span id="cb261-2"><a href="functional-programming.html#cb261-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   id obs1 id obs2 id obs3 id obs4</span></span>
+<span id="cb261-3"><a href="functional-programming.html#cb261-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  a    1  b    5  a    7  a   10</span></span>
+<span id="cb261-4"><a href="functional-programming.html#cb261-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  b    2  a    4  b    8  b   11</span></span>
+<span id="cb261-5"><a href="functional-programming.html#cb261-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  c    3  c    6  c    9  c   12</span></span>
+<span id="cb261-6"><a href="functional-programming.html#cb261-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cbind(df1,df2,df3,df4) # WET! :(</span></span></code></pre></div>
 <p>This code is even better than the above code in that if <code>dfs</code> becomes longer, or changes at all, <em>nothing</em> will need to be changed.</p>
 <p>What if we wanted to <code>merge()</code> all these data sets together? After all, the <code>id</code> column appears to be repeating itself, and some data from <code>d2</code> isn’t lining up.</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="functional-programming.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Reduce</span>(merge, dfs)</span>
-<span id="cb257-2"><a href="functional-programming.html#cb257-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   id obs1 obs2 obs3 obs4</span></span>
-<span id="cb257-3"><a href="functional-programming.html#cb257-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  a    1    4    7   10</span></span>
-<span id="cb257-4"><a href="functional-programming.html#cb257-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  b    2    5    8   11</span></span>
-<span id="cb257-5"><a href="functional-programming.html#cb257-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  c    3    6    9   12</span></span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="functional-programming.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Reduce</span>(merge, dfs)</span>
+<span id="cb262-2"><a href="functional-programming.html#cb262-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   id obs1 obs2 obs3 obs4</span></span>
+<span id="cb262-3"><a href="functional-programming.html#cb262-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  a    1    4    7   10</span></span>
+<span id="cb262-4"><a href="functional-programming.html#cb262-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  b    2    5    8   11</span></span>
+<span id="cb262-5"><a href="functional-programming.html#cb262-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  c    3    6    9   12</span></span></code></pre></div>
 <p>Again, this is very DRY code. Nothing would need to be changed if <code>dfs</code> grew. Furthermore, trying to <code>do.call()</code> the <code>merge()</code> function wouldn’t work because it can only take two data sets at a time.</p>
 </div>
 </div>
@@ -659,37 +678,37 @@ The random elements <span class="math inline">\(x\)</span> and <span class="math
 <li>call some plotting function that takes this all and makes a pretty picture.</li>
 </ol>
 <p>There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use <code>mapply()</code>, we need the function to take two arguments.</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="functional-programming.html#cb258-1" aria-hidden="true" tabindex="-1"></a>fTwoArgs <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y){</span>
-<span id="cb258-2"><a href="functional-programming.html#cb258-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">5</span><span class="sc">*</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">/</span> pi</span>
-<span id="cb258-3"><a href="functional-programming.html#cb258-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="functional-programming.html#cb263-1" aria-hidden="true" tabindex="-1"></a>fTwoArgs <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y){</span>
+<span id="cb263-2"><a href="functional-programming.html#cb263-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">5</span><span class="sc">*</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">/</span> pi</span>
+<span id="cb263-3"><a href="functional-programming.html#cb263-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>We can construct every possible point on a grid with the <code>expand.grid()</code> function.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="functional-programming.html#cb259-1" aria-hidden="true" tabindex="-1"></a>xGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,.<span class="dv">1</span>)</span>
-<span id="cb259-2"><a href="functional-programming.html#cb259-2" aria-hidden="true" tabindex="-1"></a>yGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,.<span class="dv">1</span>)</span>
-<span id="cb259-3"><a href="functional-programming.html#cb259-3" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(xGrid, yGrid)</span>
-<span id="cb259-4"><a href="functional-programming.html#cb259-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(grid)</span>
-<span id="cb259-5"><a href="functional-programming.html#cb259-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Var1 Var2</span></span>
-<span id="cb259-6"><a href="functional-programming.html#cb259-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 -3.0   -3</span></span>
-<span id="cb259-7"><a href="functional-programming.html#cb259-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 -2.9   -3</span></span>
-<span id="cb259-8"><a href="functional-programming.html#cb259-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 -2.8   -3</span></span>
-<span id="cb259-9"><a href="functional-programming.html#cb259-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 -2.7   -3</span></span>
-<span id="cb259-10"><a href="functional-programming.html#cb259-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 -2.6   -3</span></span>
-<span id="cb259-11"><a href="functional-programming.html#cb259-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 -2.5   -3</span></span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="functional-programming.html#cb264-1" aria-hidden="true" tabindex="-1"></a>xGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,.<span class="dv">1</span>)</span>
+<span id="cb264-2"><a href="functional-programming.html#cb264-2" aria-hidden="true" tabindex="-1"></a>yGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,.<span class="dv">1</span>)</span>
+<span id="cb264-3"><a href="functional-programming.html#cb264-3" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(xGrid, yGrid)</span>
+<span id="cb264-4"><a href="functional-programming.html#cb264-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(grid)</span>
+<span id="cb264-5"><a href="functional-programming.html#cb264-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Var1 Var2</span></span>
+<span id="cb264-6"><a href="functional-programming.html#cb264-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 -3.0   -3</span></span>
+<span id="cb264-7"><a href="functional-programming.html#cb264-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 -2.9   -3</span></span>
+<span id="cb264-8"><a href="functional-programming.html#cb264-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 -2.8   -3</span></span>
+<span id="cb264-9"><a href="functional-programming.html#cb264-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 -2.7   -3</span></span>
+<span id="cb264-10"><a href="functional-programming.html#cb264-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 -2.6   -3</span></span>
+<span id="cb264-11"><a href="functional-programming.html#cb264-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 -2.5   -3</span></span></code></pre></div>
 <p><code>mapply()</code> would take <code>fTwoArgs=</code>, and effectively call it on every row pair. The pairs do not need to be organized in a <code>data.frame</code>, though.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="functional-programming.html#cb260-1" aria-hidden="true" tabindex="-1"></a>funcOut1 <span class="ot">&lt;-</span> <span class="fu">mapply</span>(fTwoArgs, grid[,<span class="dv">1</span>], grid[,<span class="dv">2</span>])</span>
-<span id="cb260-2"><a href="functional-programming.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(funcOut1)</span>
-<span id="cb260-3"><a href="functional-programming.html#cb260-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.964128e-05 2.638072e-05 3.508008e-05 4.618400e-05 6.019766e-05 7.768277e-05</span></span>
-<span id="cb260-4"><a href="functional-programming.html#cb260-4" aria-hidden="true" tabindex="-1"></a>rectangularOutput <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut1, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
-<span id="cb260-5"><a href="functional-programming.html#cb260-5" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(xGrid, yGrid, rectangularOutput, </span>
-<span id="cb260-6"><a href="functional-programming.html#cb260-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">zlab =</span> <span class="st">&quot;f(x,y)&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-258-1.png" width="672" /></p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="functional-programming.html#cb265-1" aria-hidden="true" tabindex="-1"></a>funcOut1 <span class="ot">&lt;-</span> <span class="fu">mapply</span>(fTwoArgs, grid[,<span class="dv">1</span>], grid[,<span class="dv">2</span>])</span>
+<span id="cb265-2"><a href="functional-programming.html#cb265-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(funcOut1)</span>
+<span id="cb265-3"><a href="functional-programming.html#cb265-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.964128e-05 2.638072e-05 3.508008e-05 4.618400e-05 6.019766e-05 7.768277e-05</span></span>
+<span id="cb265-4"><a href="functional-programming.html#cb265-4" aria-hidden="true" tabindex="-1"></a>rectangularOutput <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut1, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
+<span id="cb265-5"><a href="functional-programming.html#cb265-5" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(xGrid, yGrid, rectangularOutput, </span>
+<span id="cb265-6"><a href="functional-programming.html#cb265-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">zlab =</span> <span class="st">&quot;f(x,y)&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-434-1.png" width="672" /></p>
 <p>If you prefer using <code>apply()</code>, that is also possible, but you would need to rewrite the function to take one (length-two) argument.</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="functional-programming.html#cb261-1" aria-hidden="true" tabindex="-1"></a>fOneArg <span class="ot">&lt;-</span> <span class="cf">function</span>(vec){</span>
-<span id="cb261-2"><a href="functional-programming.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(vec<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span><span class="sc">/</span>pi</span>
-<span id="cb261-3"><a href="functional-programming.html#cb261-3" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb261-4"><a href="functional-programming.html#cb261-4" aria-hidden="true" tabindex="-1"></a>funcOut2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(grid, <span class="dv">1</span>, fOneArg)</span>
-<span id="cb261-5"><a href="functional-programming.html#cb261-5" aria-hidden="true" tabindex="-1"></a>moreRectOut <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut2, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
-<span id="cb261-6"><a href="functional-programming.html#cb261-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(xGrid, yGrid, moreRectOut, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-259-1.png" width="672" /></p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="functional-programming.html#cb266-1" aria-hidden="true" tabindex="-1"></a>fOneArg <span class="ot">&lt;-</span> <span class="cf">function</span>(vec){</span>
+<span id="cb266-2"><a href="functional-programming.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(vec<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span><span class="sc">/</span>pi</span>
+<span id="cb266-3"><a href="functional-programming.html#cb266-3" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb266-4"><a href="functional-programming.html#cb266-4" aria-hidden="true" tabindex="-1"></a>funcOut2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(grid, <span class="dv">1</span>, fOneArg)</span>
+<span id="cb266-5"><a href="functional-programming.html#cb266-5" aria-hidden="true" tabindex="-1"></a>moreRectOut <span class="ot">&lt;-</span> <span class="fu">matrix</span>(funcOut2, <span class="at">ncol =</span> <span class="fu">length</span>(xGrid))</span>
+<span id="cb266-6"><a href="functional-programming.html#cb266-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(xGrid, yGrid, moreRectOut, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-435-1.png" width="672" /></p>
 </div>
 <div id="functions-as-function-inputs-in-base-python" class="section level2" number="18.3">
 <h2><span class="header-section-number">18.3</span> Functions as Function Inputs in Base Python</h2>
@@ -697,133 +716,133 @@ The random elements <span class="math inline">\(x\)</span> and <span class="math
 <div id="map" class="section level3" number="18.3.1">
 <h3><span class="header-section-number">18.3.1</span> <code>map()</code></h3>
 <p><a href="https://docs.python.org/3/library/functions.html#map"><code>map()</code></a> can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a <em>spline</em> function, which can be useful for coming up with predictors in regression models. This particular spline function is <span class="math inline">\(f(x) = (x-k)1(x \ge k)\)</span>, where <span class="math inline">\(k\)</span> is some chosen “knot point.”</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb262-1"><a href="functional-programming.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb262-2"><a href="functional-programming.html#cb262-2" aria-hidden="true" tabindex="-1"></a>my_inputs <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="dv">0</span>, stop <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi)</span>
-<span id="cb262-3"><a href="functional-programming.html#cb262-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spline(x):</span>
-<span id="cb262-4"><a href="functional-programming.html#cb262-4" aria-hidden="true" tabindex="-1"></a>    knot <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb262-5"><a href="functional-programming.html#cb262-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> knot:</span>
-<span id="cb262-6"><a href="functional-programming.html#cb262-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x<span class="op">-</span>knot</span>
-<span id="cb262-7"><a href="functional-programming.html#cb262-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb262-8"><a href="functional-programming.html#cb262-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
-<span id="cb262-9"><a href="functional-programming.html#cb262-9" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(spline, my_inputs))</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb267-1"><a href="functional-programming.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb267-2"><a href="functional-programming.html#cb267-2" aria-hidden="true" tabindex="-1"></a>my_inputs <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="dv">0</span>, stop <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi)</span>
+<span id="cb267-3"><a href="functional-programming.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spline(x):</span>
+<span id="cb267-4"><a href="functional-programming.html#cb267-4" aria-hidden="true" tabindex="-1"></a>    knot <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb267-5"><a href="functional-programming.html#cb267-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> knot:</span>
+<span id="cb267-6"><a href="functional-programming.html#cb267-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x<span class="op">-</span>knot</span>
+<span id="cb267-7"><a href="functional-programming.html#cb267-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb267-8"><a href="functional-programming.html#cb267-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
+<span id="cb267-9"><a href="functional-programming.html#cb267-9" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(spline, my_inputs))</span></code></pre></div>
 <p>We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection <a href="visualization.html#visualization">13</a>.</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-1.png" width="70%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-437-1.png" width="70%" /></p>
 <p><code>map()</code> can also be used like <code>mapply()</code>. In other words, you can apply it to two containers,</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb263-1"><a href="functional-programming.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb263-2"><a href="functional-programming.html#cb263-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="op">-</span><span class="fl">1.</span>, stop <span class="op">=</span> <span class="fl">1.0</span>)</span>
-<span id="cb263-3"><a href="functional-programming.html#cb263-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="op">-</span><span class="fl">1.</span>, stop <span class="op">=</span> <span class="fl">1.0</span>)</span>
-<span id="cb263-4"><a href="functional-programming.html#cb263-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x):</span>
-<span id="cb263-5"><a href="functional-programming.html#cb263-5" aria-hidden="true" tabindex="-1"></a>    np.log(x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> y<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb263-6"><a href="functional-programming.html#cb263-6" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(spline, my_inputs))</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="functional-programming.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb268-2"><a href="functional-programming.html#cb268-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="op">-</span><span class="fl">1.</span>, stop <span class="op">=</span> <span class="fl">1.0</span>)</span>
+<span id="cb268-3"><a href="functional-programming.html#cb268-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="op">-</span><span class="fl">1.</span>, stop <span class="op">=</span> <span class="fl">1.0</span>)</span>
+<span id="cb268-4"><a href="functional-programming.html#cb268-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x):</span>
+<span id="cb268-5"><a href="functional-programming.html#cb268-5" aria-hidden="true" tabindex="-1"></a>    np.log(x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> y<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb268-6"><a href="functional-programming.html#cb268-6" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(spline, my_inputs))</span></code></pre></div>
 </div>
 <div id="filter" class="section level3" number="18.3.2">
 <h3><span class="header-section-number">18.3.2</span> <code>filter()</code></h3>
 <p><a href="https://docs.python.org/3/library/functions.html#filter"><code>filter()</code></a> helps remove unwanted elements from a container. It returns an iterable of type <code>filter</code>, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb264-1"><a href="functional-programming.html#cb264-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="fl">1.5</span>,<span class="fl">.01</span>)</span>
-<span id="cb264-2"><a href="functional-programming.html#cb264-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x : x<span class="op">**</span><span class="dv">2</span> <span class="op">&gt;</span> <span class="dv">2</span>, raw_data):</span>
-<span id="cb264-3"><a href="functional-programming.html#cb264-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
-<span id="cb264-4"><a href="functional-programming.html#cb264-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.42</span></span>
-<span id="cb264-5"><a href="functional-programming.html#cb264-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.43</span></span>
-<span id="cb264-6"><a href="functional-programming.html#cb264-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.44</span></span>
-<span id="cb264-7"><a href="functional-programming.html#cb264-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.45</span></span>
-<span id="cb264-8"><a href="functional-programming.html#cb264-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.46</span></span>
-<span id="cb264-9"><a href="functional-programming.html#cb264-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.47</span></span>
-<span id="cb264-10"><a href="functional-programming.html#cb264-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.48</span></span>
-<span id="cb264-11"><a href="functional-programming.html#cb264-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.49</span></span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb269-1"><a href="functional-programming.html#cb269-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="fl">1.5</span>,<span class="fl">.01</span>)</span>
+<span id="cb269-2"><a href="functional-programming.html#cb269-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x : x<span class="op">**</span><span class="dv">2</span> <span class="op">&gt;</span> <span class="dv">2</span>, raw_data):</span>
+<span id="cb269-3"><a href="functional-programming.html#cb269-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
+<span id="cb269-4"><a href="functional-programming.html#cb269-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.42</span></span>
+<span id="cb269-5"><a href="functional-programming.html#cb269-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.43</span></span>
+<span id="cb269-6"><a href="functional-programming.html#cb269-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.44</span></span>
+<span id="cb269-7"><a href="functional-programming.html#cb269-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.45</span></span>
+<span id="cb269-8"><a href="functional-programming.html#cb269-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.46</span></span>
+<span id="cb269-9"><a href="functional-programming.html#cb269-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.47</span></span>
+<span id="cb269-10"><a href="functional-programming.html#cb269-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.48</span></span>
+<span id="cb269-11"><a href="functional-programming.html#cb269-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.49</span></span></code></pre></div>
 </div>
 </div>
 <div id="functions-as-function-inputs-in-numpy" class="section level2" number="18.4">
 <h2><span class="header-section-number">18.4</span> Functions as Function Inputs in Numpy</h2>
 <p>Numpy provides a <a href="https://numpy.org/doc/stable/reference/routines.functional.html">number of functions</a> that facilitate working with <code>np.ndarray</code>s in a functional style. For example, <a href="https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html"><code>np.apply_along_axis()</code></a> is similar to R’s <code>apply()</code>. <code>apply()</code> had a <code>MARGIN=</code> input (<code>1</code> sums rows, <code>2</code> sums columns), whereas this function has a <code>axis=</code> input (<code>0</code> sums columns, <code>1</code> sums rows).</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb265-1"><a href="functional-programming.html#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb265-2"><a href="functional-programming.html#cb265-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape((<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb265-3"><a href="functional-programming.html#cb265-3" aria-hidden="true" tabindex="-1"></a>my_array</span>
-<span id="cb265-4"><a href="functional-programming.html#cb265-4" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[0, 1, 2],</span></span>
-<span id="cb265-5"><a href="functional-programming.html#cb265-5" aria-hidden="true" tabindex="-1"></a><span class="co">##        [3, 4, 5]])</span></span>
-<span id="cb265-6"><a href="functional-programming.html#cb265-6" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">0</span>, my_array) <span class="co"># summing columns</span></span>
-<span id="cb265-7"><a href="functional-programming.html#cb265-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([3, 5, 7])</span></span>
-<span id="cb265-8"><a href="functional-programming.html#cb265-8" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">1</span>, my_array) <span class="co"># summing rows</span></span>
-<span id="cb265-9"><a href="functional-programming.html#cb265-9" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 3, 12])</span></span></code></pre></div>
-<div class="sourceCode" id="cb266"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb266-1"><a href="functional-programming.html#cb266-1" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.random.normal(size<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">1000</span>))</span>
-<span id="cb266-2"><a href="functional-programming.html#cb266-2" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">0</span>, my_array).shape </span>
-<span id="cb266-3"><a href="functional-programming.html#cb266-3" aria-hidden="true" tabindex="-1"></a><span class="co">## (1000,)</span></span>
-<span id="cb266-4"><a href="functional-programming.html#cb266-4" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">1</span>, my_array).shape</span>
-<span id="cb266-5"><a href="functional-programming.html#cb266-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (10,)</span></span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb270-1"><a href="functional-programming.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb270-2"><a href="functional-programming.html#cb270-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape((<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb270-3"><a href="functional-programming.html#cb270-3" aria-hidden="true" tabindex="-1"></a>my_array</span>
+<span id="cb270-4"><a href="functional-programming.html#cb270-4" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[0, 1, 2],</span></span>
+<span id="cb270-5"><a href="functional-programming.html#cb270-5" aria-hidden="true" tabindex="-1"></a><span class="co">##        [3, 4, 5]])</span></span>
+<span id="cb270-6"><a href="functional-programming.html#cb270-6" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">0</span>, my_array) <span class="co"># summing columns</span></span>
+<span id="cb270-7"><a href="functional-programming.html#cb270-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([3, 5, 7])</span></span>
+<span id="cb270-8"><a href="functional-programming.html#cb270-8" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">1</span>, my_array) <span class="co"># summing rows</span></span>
+<span id="cb270-9"><a href="functional-programming.html#cb270-9" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 3, 12])</span></span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb271-1"><a href="functional-programming.html#cb271-1" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.random.normal(size<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">1000</span>))</span>
+<span id="cb271-2"><a href="functional-programming.html#cb271-2" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">0</span>, my_array).shape </span>
+<span id="cb271-3"><a href="functional-programming.html#cb271-3" aria-hidden="true" tabindex="-1"></a><span class="co">## (1000,)</span></span>
+<span id="cb271-4"><a href="functional-programming.html#cb271-4" aria-hidden="true" tabindex="-1"></a>np.apply_along_axis(<span class="bu">sum</span>, <span class="dv">1</span>, my_array).shape</span>
+<span id="cb271-5"><a href="functional-programming.html#cb271-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (10,)</span></span></code></pre></div>
 </div>
 <div id="functional-methods-in-pandas" class="section level2" number="18.5">
 <h2><span class="header-section-number">18.5</span> Functional Methods in Pandas</h2>
-<p>Pandas’ <code>DataFrame</code>s have an <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html"><code>.apply()</code> method</a> that is very similar to <code>apply()</code> in R,<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> but again, just like the above function, you have to think about an <code>axis=</code> argument instead of a <code>MARGIN=</code> argument.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb267-1"><a href="functional-programming.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb267-2"><a href="functional-programming.html#cb267-2" aria-hidden="true" tabindex="-1"></a>alb_real_est <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
-<span id="cb267-3"><a href="functional-programming.html#cb267-3" aria-hidden="true" tabindex="-1"></a>alb_real_est.shape</span>
-<span id="cb267-4"><a href="functional-programming.html#cb267-4" aria-hidden="true" tabindex="-1"></a><span class="co">## (27943, 12)</span></span>
-<span id="cb267-5"><a href="functional-programming.html#cb267-5" aria-hidden="true" tabindex="-1"></a>alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">0</span>) <span class="co"># length of columns</span></span>
-<span id="cb267-6"><a href="functional-programming.html#cb267-6" aria-hidden="true" tabindex="-1"></a><span class="co">## YearBuilt        27943</span></span>
-<span id="cb267-7"><a href="functional-programming.html#cb267-7" aria-hidden="true" tabindex="-1"></a><span class="co">## YearRemodeled    27943</span></span>
-<span id="cb267-8"><a href="functional-programming.html#cb267-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Condition        27943</span></span>
-<span id="cb267-9"><a href="functional-programming.html#cb267-9" aria-hidden="true" tabindex="-1"></a><span class="co">## NumStories       27943</span></span>
-<span id="cb267-10"><a href="functional-programming.html#cb267-10" aria-hidden="true" tabindex="-1"></a><span class="co">## FinSqFt          27943</span></span>
-<span id="cb267-11"><a href="functional-programming.html#cb267-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Bedroom          27943</span></span>
-<span id="cb267-12"><a href="functional-programming.html#cb267-12" aria-hidden="true" tabindex="-1"></a><span class="co">## FullBath         27943</span></span>
-<span id="cb267-13"><a href="functional-programming.html#cb267-13" aria-hidden="true" tabindex="-1"></a><span class="co">## HalfBath         27943</span></span>
-<span id="cb267-14"><a href="functional-programming.html#cb267-14" aria-hidden="true" tabindex="-1"></a><span class="co">## TotalRooms       27943</span></span>
-<span id="cb267-15"><a href="functional-programming.html#cb267-15" aria-hidden="true" tabindex="-1"></a><span class="co">## LotSize          27943</span></span>
-<span id="cb267-16"><a href="functional-programming.html#cb267-16" aria-hidden="true" tabindex="-1"></a><span class="co">## TotalValue       27943</span></span>
-<span id="cb267-17"><a href="functional-programming.html#cb267-17" aria-hidden="true" tabindex="-1"></a><span class="co">## City             27943</span></span>
-<span id="cb267-18"><a href="functional-programming.html#cb267-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
-<span id="cb267-19"><a href="functional-programming.html#cb267-19" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">1</span>)) <span class="co"># length of rows</span></span>
-<span id="cb267-20"><a href="functional-programming.html#cb267-20" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
-<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply()</code>ing a function to rows. Here is an example of computing each property’s “score”.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="functional-programming.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb268-2"><a href="functional-programming.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alb_real_est.apply(sum, axis=1) # can&#39;t add letters to numbers!</span></span>
-<span id="cb268-3"><a href="functional-programming.html#cb268-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_prop_score(row):</span>
-<span id="cb268-4"><a href="functional-programming.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>row[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>row[<span class="dv">1</span>]</span>
-<span id="cb268-5"><a href="functional-programming.html#cb268-5" aria-hidden="true" tabindex="-1"></a>alb_real_est[<span class="st">&#39;Score&#39;</span>] <span class="op">=</span> alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>(get_prop_score, <span class="dv">1</span>)</span>
-<span id="cb268-6"><a href="functional-programming.html#cb268-6" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>,<span class="st">&#39;Score&#39;</span>]].head(<span class="dv">2</span>)</span>
-<span id="cb268-7"><a href="functional-programming.html#cb268-7" aria-hidden="true" tabindex="-1"></a><span class="co">##    FinSqFt  LotSize     Score</span></span>
-<span id="cb268-8"><a href="functional-programming.html#cb268-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1922    5.000  3859.000</span></span>
-<span id="cb268-9"><a href="functional-programming.html#cb268-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     1848   61.189  3879.567</span></span></code></pre></div>
+<p>Pandas’ <code>DataFrame</code>s have an <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html"><code>.apply()</code> method</a> that is very similar to <code>apply()</code> in R,<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> but again, just like the above function, you have to think about an <code>axis=</code> argument instead of a <code>MARGIN=</code> argument.</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb272-1"><a href="functional-programming.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb272-2"><a href="functional-programming.html#cb272-2" aria-hidden="true" tabindex="-1"></a>alb_real_est <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
+<span id="cb272-3"><a href="functional-programming.html#cb272-3" aria-hidden="true" tabindex="-1"></a>alb_real_est.shape</span>
+<span id="cb272-4"><a href="functional-programming.html#cb272-4" aria-hidden="true" tabindex="-1"></a><span class="co">## (27943, 12)</span></span>
+<span id="cb272-5"><a href="functional-programming.html#cb272-5" aria-hidden="true" tabindex="-1"></a>alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">0</span>) <span class="co"># length of columns</span></span>
+<span id="cb272-6"><a href="functional-programming.html#cb272-6" aria-hidden="true" tabindex="-1"></a><span class="co">## YearBuilt        27943</span></span>
+<span id="cb272-7"><a href="functional-programming.html#cb272-7" aria-hidden="true" tabindex="-1"></a><span class="co">## YearRemodeled    27943</span></span>
+<span id="cb272-8"><a href="functional-programming.html#cb272-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Condition        27943</span></span>
+<span id="cb272-9"><a href="functional-programming.html#cb272-9" aria-hidden="true" tabindex="-1"></a><span class="co">## NumStories       27943</span></span>
+<span id="cb272-10"><a href="functional-programming.html#cb272-10" aria-hidden="true" tabindex="-1"></a><span class="co">## FinSqFt          27943</span></span>
+<span id="cb272-11"><a href="functional-programming.html#cb272-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Bedroom          27943</span></span>
+<span id="cb272-12"><a href="functional-programming.html#cb272-12" aria-hidden="true" tabindex="-1"></a><span class="co">## FullBath         27943</span></span>
+<span id="cb272-13"><a href="functional-programming.html#cb272-13" aria-hidden="true" tabindex="-1"></a><span class="co">## HalfBath         27943</span></span>
+<span id="cb272-14"><a href="functional-programming.html#cb272-14" aria-hidden="true" tabindex="-1"></a><span class="co">## TotalRooms       27943</span></span>
+<span id="cb272-15"><a href="functional-programming.html#cb272-15" aria-hidden="true" tabindex="-1"></a><span class="co">## LotSize          27943</span></span>
+<span id="cb272-16"><a href="functional-programming.html#cb272-16" aria-hidden="true" tabindex="-1"></a><span class="co">## TotalValue       27943</span></span>
+<span id="cb272-17"><a href="functional-programming.html#cb272-17" aria-hidden="true" tabindex="-1"></a><span class="co">## City             27943</span></span>
+<span id="cb272-18"><a href="functional-programming.html#cb272-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb272-19"><a href="functional-programming.html#cb272-19" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">1</span>)) <span class="co"># length of rows</span></span>
+<span id="cb272-20"><a href="functional-programming.html#cb272-20" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
+<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply()</code>ing a function to rows. Here is an example of computing each property’s “score.”</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb273-1"><a href="functional-programming.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb273-2"><a href="functional-programming.html#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alb_real_est.apply(sum, axis=1) # can&#39;t add letters to numbers!</span></span>
+<span id="cb273-3"><a href="functional-programming.html#cb273-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_prop_score(row):</span>
+<span id="cb273-4"><a href="functional-programming.html#cb273-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>row[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>row[<span class="dv">1</span>]</span>
+<span id="cb273-5"><a href="functional-programming.html#cb273-5" aria-hidden="true" tabindex="-1"></a>alb_real_est[<span class="st">&#39;Score&#39;</span>] <span class="op">=</span> alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>(get_prop_score, <span class="dv">1</span>)</span>
+<span id="cb273-6"><a href="functional-programming.html#cb273-6" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>,<span class="st">&#39;Score&#39;</span>]].head(<span class="dv">2</span>)</span>
+<span id="cb273-7"><a href="functional-programming.html#cb273-7" aria-hidden="true" tabindex="-1"></a><span class="co">##    FinSqFt  LotSize     Score</span></span>
+<span id="cb273-8"><a href="functional-programming.html#cb273-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1922    5.000  3859.000</span></span>
+<span id="cb273-9"><a href="functional-programming.html#cb273-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     1848   61.189  3879.567</span></span></code></pre></div>
 <p><code>.apply()</code> also works with more than one function at a time.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb269-1"><a href="functional-programming.html#cb269-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>([<span class="bu">sum</span>, <span class="bu">len</span>])</span>
-<span id="cb269-2"><a href="functional-programming.html#cb269-2" aria-hidden="true" tabindex="-1"></a><span class="co">##       FinSqFt     LotSize</span></span>
-<span id="cb269-3"><a href="functional-programming.html#cb269-3" aria-hidden="true" tabindex="-1"></a><span class="co">## sum  55559801  97856.8384</span></span>
-<span id="cb269-4"><a href="functional-programming.html#cb269-4" aria-hidden="true" tabindex="-1"></a><span class="co">## len     27943  27943.0000</span></span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb274-1"><a href="functional-programming.html#cb274-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>([<span class="bu">sum</span>, <span class="bu">len</span>])</span>
+<span id="cb274-2"><a href="functional-programming.html#cb274-2" aria-hidden="true" tabindex="-1"></a><span class="co">##       FinSqFt     LotSize</span></span>
+<span id="cb274-3"><a href="functional-programming.html#cb274-3" aria-hidden="true" tabindex="-1"></a><span class="co">## sum  55559801  97856.8384</span></span>
+<span id="cb274-4"><a href="functional-programming.html#cb274-4" aria-hidden="true" tabindex="-1"></a><span class="co">## len     27943  27943.0000</span></span></code></pre></div>
 <p>If you do not want to waste two lines defining a function with <code>def</code>, you can use an anonymous (unnamed) <a href="https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions"><strong>lambda function</strong></a>. Be careful, though–if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb270-1"><a href="functional-programming.html#cb270-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>(<span class="kw">lambda</span> row : <span class="bu">sum</span>(row<span class="op">*</span>[<span class="dv">2</span>,<span class="dv">3</span>]), <span class="dv">1</span>)[:<span class="dv">4</span>]</span>
-<span id="cb270-2"><a href="functional-programming.html#cb270-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    3859.000</span></span>
-<span id="cb270-3"><a href="functional-programming.html#cb270-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    3879.567</span></span>
-<span id="cb270-4"><a href="functional-programming.html#cb270-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    2501.280</span></span>
-<span id="cb270-5"><a href="functional-programming.html#cb270-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    2639.944</span></span>
-<span id="cb270-6"><a href="functional-programming.html#cb270-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb275-1"><a href="functional-programming.html#cb275-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].<span class="bu">apply</span>(<span class="kw">lambda</span> row : <span class="bu">sum</span>(row<span class="op">*</span>[<span class="dv">2</span>,<span class="dv">3</span>]), <span class="dv">1</span>)[:<span class="dv">4</span>]</span>
+<span id="cb275-2"><a href="functional-programming.html#cb275-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    3859.000</span></span>
+<span id="cb275-3"><a href="functional-programming.html#cb275-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    3879.567</span></span>
+<span id="cb275-4"><a href="functional-programming.html#cb275-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    2501.280</span></span>
+<span id="cb275-5"><a href="functional-programming.html#cb275-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    2639.944</span></span>
+<span id="cb275-6"><a href="functional-programming.html#cb275-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
 <p>If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap"><code>.applymap()</code></a>.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb271-1"><a href="functional-programming.html#cb271-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].applymap(<span class="kw">lambda</span> e : e <span class="op">+</span> <span class="dv">1</span>).head(<span class="dv">2</span>)</span>
-<span id="cb271-2"><a href="functional-programming.html#cb271-2" aria-hidden="true" tabindex="-1"></a><span class="co">##    FinSqFt  LotSize</span></span>
-<span id="cb271-3"><a href="functional-programming.html#cb271-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1923    6.000</span></span>
-<span id="cb271-4"><a href="functional-programming.html#cb271-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     1849   62.189</span></span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb276-1"><a href="functional-programming.html#cb276-1" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]].applymap(<span class="kw">lambda</span> e : e <span class="op">+</span> <span class="dv">1</span>).head(<span class="dv">2</span>)</span>
+<span id="cb276-2"><a href="functional-programming.html#cb276-2" aria-hidden="true" tabindex="-1"></a><span class="co">##    FinSqFt  LotSize</span></span>
+<span id="cb276-3"><a href="functional-programming.html#cb276-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1923    6.000</span></span>
+<span id="cb276-4"><a href="functional-programming.html#cb276-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     1849   62.189</span></span></code></pre></div>
 <p>Last, we have a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html"><code>.groupby()</code></a> method, which can be used to mirror the behavior of R’s <code>tapply()</code>, <code>aggregate()</code> or <code>by()</code>. It can take the <code>DataFrame</code> it belongs to, and group its rows into multiple sub-<code>DataFrame</code>s. The collection of sub-<code>DataFrames</code> has a lot of the same methods that an individual <code>DataFrame</code> has (e.g. the subsetting operators, and the <code>.apply()</code> method), which can all be used in a second step of calculating things on each sub-<code>DataFrame</code>.</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb272-1"><a href="functional-programming.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.groupby([<span class="st">&#39;City&#39;</span>]))</span>
-<span id="cb272-2"><a href="functional-programming.html#cb272-2" aria-hidden="true" tabindex="-1"></a><span class="co">## pandas.core.groupby.generic.DataFrameGroupBy</span></span>
-<span id="cb272-3"><a href="functional-programming.html#cb272-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.groupby([<span class="st">&#39;City&#39;</span>])[<span class="st">&#39;TotalValue&#39;</span>])</span>
-<span id="cb272-4"><a href="functional-programming.html#cb272-4" aria-hidden="true" tabindex="-1"></a><span class="co">## pandas.core.groupby.generic.SeriesGroupBy</span></span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb277-1"><a href="functional-programming.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.groupby([<span class="st">&#39;City&#39;</span>]))</span>
+<span id="cb277-2"><a href="functional-programming.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="co">## pandas.core.groupby.generic.DataFrameGroupBy</span></span>
+<span id="cb277-3"><a href="functional-programming.html#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.groupby([<span class="st">&#39;City&#39;</span>])[<span class="st">&#39;TotalValue&#39;</span>])</span>
+<span id="cb277-4"><a href="functional-programming.html#cb277-4" aria-hidden="true" tabindex="-1"></a><span class="co">## pandas.core.groupby.generic.SeriesGroupBy</span></span></code></pre></div>
 <p>Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which <code>City</code> they are in, extracts the <code>TotalValue</code> column in each sub-<code>DataFrame</code>, and then <code>.apply()</code>s the <code>np.average()</code> function on the sole column found in each sub-<code>DataFrame</code>. The second <code>.apply()</code>s a lambda function to each sub-<code>DataFrame</code> directly.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb273-1"><a href="functional-programming.html#cb273-1" aria-hidden="true" tabindex="-1"></a>alb_real_est.groupby([<span class="st">&#39;City&#39;</span>])[<span class="st">&#39;TotalValue&#39;</span>].<span class="bu">apply</span>(np.average)</span>
-<span id="cb273-2"><a href="functional-programming.html#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="co">## City</span></span>
-<span id="cb273-3"><a href="functional-programming.html#cb273-3" aria-hidden="true" tabindex="-1"></a><span class="co">## CHARLOTTESVILLE    381932.962760</span></span>
-<span id="cb273-4"><a href="functional-programming.html#cb273-4" aria-hidden="true" tabindex="-1"></a><span class="co">## CROZET             380425.678927</span></span>
-<span id="cb273-5"><a href="functional-programming.html#cb273-5" aria-hidden="true" tabindex="-1"></a><span class="co">## EARLYSVILLE        439140.987124</span></span>
-<span id="cb273-6"><a href="functional-programming.html#cb273-6" aria-hidden="true" tabindex="-1"></a><span class="co">## KESWICK            540532.605905</span></span>
-<span id="cb273-7"><a href="functional-programming.html#cb273-7" aria-hidden="true" tabindex="-1"></a><span class="co">## NORTH GARDEN       366597.750865</span></span>
-<span id="cb273-8"><a href="functional-programming.html#cb273-8" aria-hidden="true" tabindex="-1"></a><span class="co">## SCOTTSVILLE        268407.384615</span></span>
-<span id="cb273-9"><a href="functional-programming.html#cb273-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: TotalValue, dtype: float64</span></span>
-<span id="cb273-10"><a href="functional-programming.html#cb273-10" aria-hidden="true" tabindex="-1"></a>alb_real_est.groupby([<span class="st">&#39;City&#39;</span>]).<span class="bu">apply</span>(<span class="kw">lambda</span> df : np.average(df[<span class="st">&#39;TotalValue&#39;</span>]))</span>
-<span id="cb273-11"><a href="functional-programming.html#cb273-11" aria-hidden="true" tabindex="-1"></a><span class="co">## City</span></span>
-<span id="cb273-12"><a href="functional-programming.html#cb273-12" aria-hidden="true" tabindex="-1"></a><span class="co">## CHARLOTTESVILLE    381932.962760</span></span>
-<span id="cb273-13"><a href="functional-programming.html#cb273-13" aria-hidden="true" tabindex="-1"></a><span class="co">## CROZET             380425.678927</span></span>
-<span id="cb273-14"><a href="functional-programming.html#cb273-14" aria-hidden="true" tabindex="-1"></a><span class="co">## EARLYSVILLE        439140.987124</span></span>
-<span id="cb273-15"><a href="functional-programming.html#cb273-15" aria-hidden="true" tabindex="-1"></a><span class="co">## KESWICK            540532.605905</span></span>
-<span id="cb273-16"><a href="functional-programming.html#cb273-16" aria-hidden="true" tabindex="-1"></a><span class="co">## NORTH GARDEN       366597.750865</span></span>
-<span id="cb273-17"><a href="functional-programming.html#cb273-17" aria-hidden="true" tabindex="-1"></a><span class="co">## SCOTTSVILLE        268407.384615</span></span>
-<span id="cb273-18"><a href="functional-programming.html#cb273-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb278-1"><a href="functional-programming.html#cb278-1" aria-hidden="true" tabindex="-1"></a>alb_real_est.groupby([<span class="st">&#39;City&#39;</span>])[<span class="st">&#39;TotalValue&#39;</span>].<span class="bu">apply</span>(np.average)</span>
+<span id="cb278-2"><a href="functional-programming.html#cb278-2" aria-hidden="true" tabindex="-1"></a><span class="co">## City</span></span>
+<span id="cb278-3"><a href="functional-programming.html#cb278-3" aria-hidden="true" tabindex="-1"></a><span class="co">## CHARLOTTESVILLE    381932.962760</span></span>
+<span id="cb278-4"><a href="functional-programming.html#cb278-4" aria-hidden="true" tabindex="-1"></a><span class="co">## CROZET             380425.678927</span></span>
+<span id="cb278-5"><a href="functional-programming.html#cb278-5" aria-hidden="true" tabindex="-1"></a><span class="co">## EARLYSVILLE        439140.987124</span></span>
+<span id="cb278-6"><a href="functional-programming.html#cb278-6" aria-hidden="true" tabindex="-1"></a><span class="co">## KESWICK            540532.605905</span></span>
+<span id="cb278-7"><a href="functional-programming.html#cb278-7" aria-hidden="true" tabindex="-1"></a><span class="co">## NORTH GARDEN       366597.750865</span></span>
+<span id="cb278-8"><a href="functional-programming.html#cb278-8" aria-hidden="true" tabindex="-1"></a><span class="co">## SCOTTSVILLE        268407.384615</span></span>
+<span id="cb278-9"><a href="functional-programming.html#cb278-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: TotalValue, dtype: float64</span></span>
+<span id="cb278-10"><a href="functional-programming.html#cb278-10" aria-hidden="true" tabindex="-1"></a>alb_real_est.groupby([<span class="st">&#39;City&#39;</span>]).<span class="bu">apply</span>(<span class="kw">lambda</span> df : np.average(df[<span class="st">&#39;TotalValue&#39;</span>]))</span>
+<span id="cb278-11"><a href="functional-programming.html#cb278-11" aria-hidden="true" tabindex="-1"></a><span class="co">## City</span></span>
+<span id="cb278-12"><a href="functional-programming.html#cb278-12" aria-hidden="true" tabindex="-1"></a><span class="co">## CHARLOTTESVILLE    381932.962760</span></span>
+<span id="cb278-13"><a href="functional-programming.html#cb278-13" aria-hidden="true" tabindex="-1"></a><span class="co">## CROZET             380425.678927</span></span>
+<span id="cb278-14"><a href="functional-programming.html#cb278-14" aria-hidden="true" tabindex="-1"></a><span class="co">## EARLYSVILLE        439140.987124</span></span>
+<span id="cb278-15"><a href="functional-programming.html#cb278-15" aria-hidden="true" tabindex="-1"></a><span class="co">## KESWICK            540532.605905</span></span>
+<span id="cb278-16"><a href="functional-programming.html#cb278-16" aria-hidden="true" tabindex="-1"></a><span class="co">## NORTH GARDEN       366597.750865</span></span>
+<span id="cb278-17"><a href="functional-programming.html#cb278-17" aria-hidden="true" tabindex="-1"></a><span class="co">## SCOTTSVILLE        268407.384615</span></span>
+<span id="cb278-18"><a href="functional-programming.html#cb278-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
 <p>More tips on this programming pattern can be found <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html">here</a>.</p>
 </div>
 <div id="functions-as-function-inputs-miscellany" class="section level2" number="18.6">
@@ -835,16 +854,16 @@ The random elements <span class="math inline">\(x\)</span> and <span class="math
 <h2><span class="header-section-number">18.7</span> Functions as Function Outputs in R</h2>
 <p>Functions that create and return other functions are sometimes called <strong>function factories.</strong> Functions are first-class objects in R, so it’s easy to return them. What’s more interesting is that supposedly temporary objects inside the outer function can be accessed during the call of the inner function after it’s returned.</p>
 <p>Here is a first quick example.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="functional-programming.html#cb274-1" aria-hidden="true" tabindex="-1"></a>funcFactory <span class="ot">&lt;-</span> <span class="cf">function</span>(greetingMessage){</span>
-<span id="cb274-2"><a href="functional-programming.html#cb274-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(name){</span>
-<span id="cb274-3"><a href="functional-programming.html#cb274-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(greetingMessage, name)</span>
-<span id="cb274-4"><a href="functional-programming.html#cb274-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb274-5"><a href="functional-programming.html#cb274-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb274-6"><a href="functional-programming.html#cb274-6" aria-hidden="true" tabindex="-1"></a>greetWithHello <span class="ot">&lt;-</span> <span class="fu">funcFactory</span>(<span class="st">&quot;Hello&quot;</span>)</span>
-<span id="cb274-7"><a href="functional-programming.html#cb274-7" aria-hidden="true" tabindex="-1"></a><span class="fu">greetWithHello</span>(<span class="st">&quot;Taylor&quot;</span>)</span>
-<span id="cb274-8"><a href="functional-programming.html#cb274-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello Taylor&quot;</span></span>
-<span id="cb274-9"><a href="functional-programming.html#cb274-9" aria-hidden="true" tabindex="-1"></a><span class="fu">greetWithHello</span>(<span class="st">&quot;Charlie&quot;</span>)</span>
-<span id="cb274-10"><a href="functional-programming.html#cb274-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello Charlie&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="functional-programming.html#cb279-1" aria-hidden="true" tabindex="-1"></a>funcFactory <span class="ot">&lt;-</span> <span class="cf">function</span>(greetingMessage){</span>
+<span id="cb279-2"><a href="functional-programming.html#cb279-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(name){</span>
+<span id="cb279-3"><a href="functional-programming.html#cb279-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(greetingMessage, name)</span>
+<span id="cb279-4"><a href="functional-programming.html#cb279-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb279-5"><a href="functional-programming.html#cb279-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb279-6"><a href="functional-programming.html#cb279-6" aria-hidden="true" tabindex="-1"></a>greetWithHello <span class="ot">&lt;-</span> <span class="fu">funcFactory</span>(<span class="st">&quot;Hello&quot;</span>)</span>
+<span id="cb279-7"><a href="functional-programming.html#cb279-7" aria-hidden="true" tabindex="-1"></a><span class="fu">greetWithHello</span>(<span class="st">&quot;Taylor&quot;</span>)</span>
+<span id="cb279-8"><a href="functional-programming.html#cb279-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello Taylor&quot;</span></span>
+<span id="cb279-9"><a href="functional-programming.html#cb279-9" aria-hidden="true" tabindex="-1"></a><span class="fu">greetWithHello</span>(<span class="st">&quot;Charlie&quot;</span>)</span>
+<span id="cb279-10"><a href="functional-programming.html#cb279-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello Charlie&quot;</span></span></code></pre></div>
 <p>The <code>greetingMessage=</code> argument that is passed in, <code>"Hello"</code>, isn’t temporary anymore.</p>
 <p>Here is an example that implements a variance reduction technique called <strong>common random numbers</strong>.</p>
 <p>Suppose <span class="math inline">\(X \sim \text{Normal}(\mu, \sigma^2)\)</span>, and we are interested in approximating an expectation of a function of this random variable. Suppose that we don’t know that
@@ -857,28 +876,28 @@ for any particular choice of <span class="math inline">\(\mu\)</span> and <span 
 \]</span>
 where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)\)</span> is a large collection of draws from the appropriate normal distribution. In real life, the theoretical expectation might not be tractable (either because the random variable has a complicated distribution, or maybe because the functional is very complicated) and Monte Carlo, or some other approximation algorithm, might be our only hope!</p>
 <p>Here are two functions that calculate the above quantities for <span class="math inline">\(n=100\)</span>. <code>actualExpectSin()</code> is a function that computes the theoretical expectation for any particular parameter pair. <code>monteCarloSin()</code> is a function that implements the Monte Carlo approximate expectation.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="functional-programming.html#cb275-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># don&#39;t hardcode variables that aren&#39;t passed as arguments!</span></span>
-<span id="cb275-2"><a href="functional-programming.html#cb275-2" aria-hidden="true" tabindex="-1"></a>actualExpectSin <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
-<span id="cb275-3"><a href="functional-programming.html#cb275-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># second parameter is sigma</span></span>
-<span id="cb275-4"><a href="functional-programming.html#cb275-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sin</span>(params[<span class="dv">1</span>])<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">5</span><span class="sc">*</span>(params[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb275-5"><a href="functional-programming.html#cb275-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb275-6"><a href="functional-programming.html#cb275-6" aria-hidden="true" tabindex="-1"></a>monteCarloSin <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
-<span id="cb275-7"><a href="functional-programming.html#cb275-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
-<span id="cb275-8"><a href="functional-programming.html#cb275-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">sin</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> params[<span class="dv">1</span>], <span class="at">sd =</span> params[<span class="dv">2</span>])))</span>
-<span id="cb275-9"><a href="functional-programming.html#cb275-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb275-10"><a href="functional-programming.html#cb275-10" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSin(c(10,1))</span></span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="functional-programming.html#cb280-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># don&#39;t hardcode variables that aren&#39;t passed as arguments!</span></span>
+<span id="cb280-2"><a href="functional-programming.html#cb280-2" aria-hidden="true" tabindex="-1"></a>actualExpectSin <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
+<span id="cb280-3"><a href="functional-programming.html#cb280-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># second parameter is sigma</span></span>
+<span id="cb280-4"><a href="functional-programming.html#cb280-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sin</span>(params[<span class="dv">1</span>])<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">5</span><span class="sc">*</span>(params[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb280-5"><a href="functional-programming.html#cb280-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb280-6"><a href="functional-programming.html#cb280-6" aria-hidden="true" tabindex="-1"></a>monteCarloSin <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
+<span id="cb280-7"><a href="functional-programming.html#cb280-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb280-8"><a href="functional-programming.html#cb280-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">sin</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> params[<span class="dv">1</span>], <span class="at">sd =</span> params[<span class="dv">2</span>])))</span>
+<span id="cb280-9"><a href="functional-programming.html#cb280-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb280-10"><a href="functional-programming.html#cb280-10" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSin(c(10,1))</span></span></code></pre></div>
 <p>One-off approximations aren’t as interesting as visualizing many expectations for many parameter inputs. On the left, we have the true expectation function plotted with a contour plot. On the right,</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="functional-programming.html#cb276-1" aria-hidden="true" tabindex="-1"></a>muGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb276-2"><a href="functional-programming.html#cb276-2" aria-hidden="true" tabindex="-1"></a>sigmaGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">001</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb276-3"><a href="functional-programming.html#cb276-3" aria-hidden="true" tabindex="-1"></a>muSigmaGrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(muGrid, sigmaGrid)</span>
-<span id="cb276-4"><a href="functional-programming.html#cb276-4" aria-hidden="true" tabindex="-1"></a>actuals <span class="ot">&lt;-</span>  <span class="fu">matrix</span>(<span class="fu">apply</span>(muSigmaGrid, <span class="dv">1</span>, actualExpectSin), <span class="at">ncol =</span> <span class="fu">length</span>(muGrid))</span>
-<span id="cb276-5"><a href="functional-programming.html#cb276-5" aria-hidden="true" tabindex="-1"></a>mcApprox <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">apply</span>(muSigmaGrid, <span class="dv">1</span>, monteCarloSin), <span class="at">ncol =</span> <span class="fu">length</span>(muGrid))</span>
-<span id="cb276-6"><a href="functional-programming.html#cb276-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb276-7"><a href="functional-programming.html#cb276-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb276-8"><a href="functional-programming.html#cb276-8" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, actuals, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;actual expect.s&quot;</span>)</span>
-<span id="cb276-9"><a href="functional-programming.html#cb276-9" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-275-1.png" width="672" /></p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="functional-programming.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="functional-programming.html#cb281-1" aria-hidden="true" tabindex="-1"></a>muGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb281-2"><a href="functional-programming.html#cb281-2" aria-hidden="true" tabindex="-1"></a>sigmaGrid <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">001</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb281-3"><a href="functional-programming.html#cb281-3" aria-hidden="true" tabindex="-1"></a>muSigmaGrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(muGrid, sigmaGrid)</span>
+<span id="cb281-4"><a href="functional-programming.html#cb281-4" aria-hidden="true" tabindex="-1"></a>actuals <span class="ot">&lt;-</span>  <span class="fu">matrix</span>(<span class="fu">apply</span>(muSigmaGrid, <span class="dv">1</span>, actualExpectSin), <span class="at">ncol =</span> <span class="fu">length</span>(muGrid))</span>
+<span id="cb281-5"><a href="functional-programming.html#cb281-5" aria-hidden="true" tabindex="-1"></a>mcApprox <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">apply</span>(muSigmaGrid, <span class="dv">1</span>, monteCarloSin), <span class="at">ncol =</span> <span class="fu">length</span>(muGrid))</span>
+<span id="cb281-6"><a href="functional-programming.html#cb281-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-7"><a href="functional-programming.html#cb281-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb281-8"><a href="functional-programming.html#cb281-8" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, actuals, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;actual expect.s&quot;</span>)</span>
+<span id="cb281-9"><a href="functional-programming.html#cb281-9" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-451-1.png" width="672" /></p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="functional-programming.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>If we wanted to use common random numbers, we could generate <span class="math inline">\(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\)</span>, and use the fact that
 <span class="math display">\[
 X^i = \mu + \sigma Z^i
@@ -888,31 +907,31 @@ This leads to the Monte Carlo estimate
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
 \]</span>
 Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call <code>monteCarloSinCRNv1(c(10,1))</code>, you get the same answer.</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="functional-programming.html#cb278-1" aria-hidden="true" tabindex="-1"></a>commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n)</span>
-<span id="cb278-2"><a href="functional-programming.html#cb278-2" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv1 <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
-<span id="cb278-3"><a href="functional-programming.html#cb278-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
-<span id="cb278-4"><a href="functional-programming.html#cb278-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">sin</span>(params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>]<span class="sc">*</span>commonZs))</span>
-<span id="cb278-5"><a href="functional-programming.html#cb278-5" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb278-6"><a href="functional-programming.html#cb278-6" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSinCRNv1(c(10,1))</span></span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="functional-programming.html#cb283-1" aria-hidden="true" tabindex="-1"></a>commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n)</span>
+<span id="cb283-2"><a href="functional-programming.html#cb283-2" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv1 <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
+<span id="cb283-3"><a href="functional-programming.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb283-4"><a href="functional-programming.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">sin</span>(params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>]<span class="sc">*</span>commonZs))</span>
+<span id="cb283-5"><a href="functional-programming.html#cb283-5" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb283-6"><a href="functional-programming.html#cb283-6" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSinCRNv1(c(10,1))</span></span></code></pre></div>
 <p>Let’s compare using common random numbers to going without. As you can see, common random numbers make the plot look “smoother.”</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="functional-programming.html#cb279-1" aria-hidden="true" tabindex="-1"></a>mcApproxCRNv1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">apply</span>(muSigmaGrid, <span class="dv">1</span>, monteCarloSinCRNv1), <span class="at">ncol =</span> <span class="fu">length</span>(muGrid))</span>
-<span id="cb279-2"><a href="functional-programming.html#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb279-3"><a href="functional-programming.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span>
-<span id="cb279-4"><a href="functional-programming.html#cb279-4" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApproxCRNv1, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc with crn&quot;</span>)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="functional-programming.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="functional-programming.html#cb284-1" aria-hidden="true" tabindex="-1"></a>mcApproxCRNv1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">apply</span>(muSigmaGrid, <span class="dv">1</span>, monteCarloSinCRNv1), <span class="at">ncol =</span> <span class="fu">length</span>(muGrid))</span>
+<span id="cb284-2"><a href="functional-programming.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb284-3"><a href="functional-programming.html#cb284-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span>
+<span id="cb284-4"><a href="functional-programming.html#cb284-4" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApproxCRNv1, <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc with crn&quot;</span>)</span></code></pre></div>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-453-1.png" width="672" /></p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="functional-programming.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>The downside to this implementation is that we have a bunch of samples floating around in the global environment. We can implement this much more nicely with a function factory.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="functional-programming.html#cb281-1" aria-hidden="true" tabindex="-1"></a>makeMCFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb281-2"><a href="functional-programming.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n)</span>
-<span id="cb281-3"><a href="functional-programming.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(params){</span>
-<span id="cb281-4"><a href="functional-programming.html#cb281-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
-<span id="cb281-5"><a href="functional-programming.html#cb281-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">sin</span>(params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>]<span class="sc">*</span>commonZs))    </span>
-<span id="cb281-6"><a href="functional-programming.html#cb281-6" aria-hidden="true" tabindex="-1"></a>  }  </span>
-<span id="cb281-7"><a href="functional-programming.html#cb281-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb281-8"><a href="functional-programming.html#cb281-8" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv2 <span class="ot">&lt;-</span> <span class="fu">makeMCFunc</span>()</span>
-<span id="cb281-9"><a href="functional-programming.html#cb281-9" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSinCRNv2(c(10,1))</span></span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="functional-programming.html#cb286-1" aria-hidden="true" tabindex="-1"></a>makeMCFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb286-2"><a href="functional-programming.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n)</span>
+<span id="cb286-3"><a href="functional-programming.html#cb286-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(params){</span>
+<span id="cb286-4"><a href="functional-programming.html#cb286-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb286-5"><a href="functional-programming.html#cb286-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">sin</span>(params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>]<span class="sc">*</span>commonZs))    </span>
+<span id="cb286-6"><a href="functional-programming.html#cb286-6" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb286-7"><a href="functional-programming.html#cb286-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb286-8"><a href="functional-programming.html#cb286-8" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv2 <span class="ot">&lt;-</span> <span class="fu">makeMCFunc</span>()</span>
+<span id="cb286-9"><a href="functional-programming.html#cb286-9" aria-hidden="true" tabindex="-1"></a><span class="co"># monteCarloSinCRNv2(c(10,1))</span></span></code></pre></div>
 <p>Much better! Let’s just make sure this function works by comparing its output to the known true function.</p>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-455-1.png" width="672" /></p>
 </div>
 <div id="functions-as-function-outputs-in-python" class="section level2" number="18.8">
 <h2><span class="header-section-number">18.8</span> Functions as Function Outputs in Python</h2>
@@ -997,13 +1016,16 @@ Cortez, Paulo, António Cerdeira, Fernando Almeida, Telmo Matos, and José Reis.
 Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
 </div>
 <div class="csl-entry">
+Efron, B. 1979. <span>“<span class="nocase">Bootstrap Methods: Another Look at the Jackknife</span>.”</span> <em>The Annals of Statistics</em> 7 (1): 1–26. <a href="https://doi.org/10.1214/aos/1176344552">https://doi.org/10.1214/aos/1176344552</a>.
+</div>
+<div class="csl-entry">
 Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> UCI Machine Learning Repository.
 </div>
 <div class="csl-entry">
 Gelman, Andrew, and Jennifer Hill. 2007. <em>Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. Analytical Methods for Social Research. Cambridge University Press.
 </div>
 <div class="csl-entry">
-<span>“GSPC DATA.”</span> n.d. <a href="https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC">https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC</a>.
+<span>“GSPC DATA.”</span> 2021. <a href="https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC">https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC</a>.
 </div>
 <div class="csl-entry">
 Guttman, Louis. 1946. <span>“<span class="nocase">Enlargement Methods for Computing the Inverse Matrix</span>.”</span> <em>The Annals of Mathematical Statistics</em> 17 (3): 336–43. <a href="https://doi.org/10.1214/aoms/1177730946">https://doi.org/10.1214/aoms/1177730946</a>.
@@ -1030,6 +1052,9 @@ Jones, Karen Spärck. 1972. <span>“A Statistical Interpretation of Term Specif
 Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Software Design</em>. 1st ed. USA: No Starch Press.
 </div>
 <div class="csl-entry">
+Nadaraya, E. A. 1964. <span>“On Estimating Regression.”</span> <em>Theory of Probability &amp; Its Applications</em> 9 (1): 141–42. <a href="https://doi.org/10.1137/1109020">https://doi.org/10.1137/1109020</a>.
+</div>
+<div class="csl-entry">
 Pyles, Christopher. 2019. <span>“Otter-Grader: A Python and r Autograding Solution.”</span> UC Berkeley Data Science Education Program. <a href="https://github.com/ucbds-infra/otter-grader">https://github.com/ucbds-infra/otter-grader</a>.
 </div>
 <div class="csl-entry">
@@ -1039,7 +1064,10 @@ Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Meth
 Socher, Richard, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andrew Ng, and Christopher Potts. 2013. <span>“<span>Parsing With Compositional Vector Grammars</span>.”</span> In <em><span>EMNLP</span></em>.
 </div>
 <div class="csl-entry">
-<span>“<span>TensorFlow Datasets</span>, a Collection of Ready-to-Use Datasets.”</span> n.d. <a href="https://www.tensorflow.org/datasets">https://www.tensorflow.org/datasets</a>.
+<span>“<span>TensorFlow Datasets</span>, a Collection of Ready-to-Use Datasets.”</span> 2021. <a href="https://www.tensorflow.org/datasets">https://www.tensorflow.org/datasets</a>.
+</div>
+<div class="csl-entry">
+Watson, Geoffrey S. 1964. <span>“Smooth Regression Analysis.”</span> <em>Sankhyā: The Indian Journal of Statistics, Series A (1961-2002)</em> 26 (4): 359–72. <a href="http://www.jstor.org/stable/25049340">http://www.jstor.org/stable/25049340</a>.
 </div>
 <div class="csl-entry">
 Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
@@ -1050,6 +1078,7 @@ Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)<
 </div>
 </div>
 </div>
+
 
 
 
@@ -1091,11 +1120,11 @@ Hunt, Andrew, and David Thomas. 2000. <em>The Pragmatic Programmer : From Journe
 </div>
 <div class="footnotes">
 <hr />
-<ol start="22">
-<li id="fn22"><p>Even though this book only discusses <em>one</em> of our languages of interest, this quote applies to both langauges.<a href="functional-programming.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p><code>apply()</code> is everyone’s favorite whipping boy whenever it comes to comparing <code>apply()</code> against the other <code>*apply()</code> functions. This is because it is generally a little slower–it is written in R and doesn’t call out to compiled C code. However, in my humble opinion, it doesn’t matter all that much because the fractions of a second saved don’t always add up in practice. <a href="functional-programming.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>Although, it is still variadic. The difference is that the <code>dot-dot-dot</code> symbol does not refer to a varying number of <code>data.frame</code>s…just a varying number of other things we don’t care about at the present moment.<a href="functional-programming.html#fnref24" class="footnote-back">↩︎</a></p></li>
-<li id="fn25"><p>You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as <code>DataFrame</code> methods. For instance, <code>.mean()</code> would allow you to do something like <code>my_df.mean()</code>.<a href="functional-programming.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<ol start="23">
+<li id="fn23"><p>Even though this book only discusses <em>one</em> of our languages of interest, this quote applies to both langauges.<a href="functional-programming.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p><code>apply()</code> is everyone’s favorite whipping boy whenever it comes to comparing <code>apply()</code> against the other <code>*apply()</code> functions. This is because it is generally a little slower–it is written in R and doesn’t call out to compiled C code. However, in my humble opinion, it doesn’t matter all that much because the fractions of a second saved don’t always add up in practice. <a href="functional-programming.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>Although, it is still variadic. The difference is that the <code>dot-dot-dot</code> symbol does not refer to a varying number of <code>data.frame</code>s…just a varying number of other things we don’t care about at the present moment.<a href="functional-programming.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as <code>DataFrame</code> methods. For instance, <code>.mean()</code> would allow you to do something like <code>my_df.mean()</code>.<a href="functional-programming.html#fnref26" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1148,10 +1177,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

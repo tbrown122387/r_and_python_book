@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="functions.html"/>
 <link rel="next" href="data-frames.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -319,12 +319,17 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
 </ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
 <li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
-<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
 <ul>
@@ -376,7 +381,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>17.2.8</b> Creating Reference Classes</a></li>
 <li class="chapter" data-level="17.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>17.2.9</b> Creating R6 Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-9"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
+<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>18</b> Functional Programming</a>
 <ul>
@@ -449,7 +454,7 @@ div.csl-indent {
 <p>You should be careful if you are not specifying them directly. What happens when you use the default option and replace the second assignment in the above code with <code>responses &lt;- factor(c("autumn", "summer", "summer"))</code>? The documentation of <code>factor()</code> will tell you that, by default, <code>factor()</code> will just take the unique values found in the data. In this case, nobody prefers winter or spring, and so neither will show up in <code>levels(responses)</code>. This may or may not be what you want.</p>
 </div>
 <p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for <em>ordinal</em> data. Ordinal data is a particular type of categorical data that recognizes the categories have a natural order (e.g. low/ medium/high and not red/green/blue).</p>
-<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it”, “it’s okay” or “hate it”. The data might look something like this.</p>
+<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it,” “it’s okay” or “hate it.” The data might look something like this.</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="categorical-data.html#cb97-1" aria-hidden="true" tabindex="-1"></a>ordFeelOptions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;hate it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>)</span>
 <span id="cb97-2"><a href="categorical-data.html#cb97-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
 <span id="cb97-3"><a href="categorical-data.html#cb97-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
@@ -484,7 +489,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="categorical-data.html#cb98-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="co"># not categorical here</span></span>
 <span id="cb98-2"><a href="categorical-data.html#cb98-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb98-3"><a href="categorical-data.html#cb98-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf]</span></span>
+<span id="cb98-4"><a href="categorical-data.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (-Inf,0]</span></span>
 <span id="cb98-5"><a href="categorical-data.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb98-6"><a href="categorical-data.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb98-7"><a href="categorical-data.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -704,10 +709,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

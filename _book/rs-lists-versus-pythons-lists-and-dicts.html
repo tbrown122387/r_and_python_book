@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"/>
 <link rel="next" href="functions.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -319,12 +319,17 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
 </ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
 <li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
-<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
 <ul>
@@ -376,7 +381,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>17.2.8</b> Creating Reference Classes</a></li>
 <li class="chapter" data-level="17.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>17.2.9</b> Creating R6 Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-9"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
+<li class="chapter" data-level="17.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>17.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>18</b> Functional Programming</a>
 <ul>
@@ -440,14 +445,15 @@ div.csl-indent {
 <span id="cb62-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
 <span id="cb62-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
 <span id="cb62-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results) </span>
-<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;           </span></span>
-<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
-<span id="cb62-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-8" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
-<span id="cb62-9"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
-<span id="cb62-10"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
-<span id="cb62-11"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-11" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
-<span id="cb62-12"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
-<span id="cb62-13"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;       </span></span>
+<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;qr&quot;            &quot;df.residual&quot;   &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;        </span></span>
+<span id="cb62-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;model&quot;</span></span>
+<span id="cb62-9"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-9" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
+<span id="cb62-10"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
+<span id="cb62-11"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
+<span id="cb62-12"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-12" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
+<span id="cb62-13"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
+<span id="cb62-14"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
 <div class="rmd-caution">
 <p><code>results</code> is a <code>list</code> (<code>is.list(results)</code> returns <code>TRUE</code>), but to be more specific, it is an S3 object of class <code>lm</code>. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren’t confused if you type <code>class(results)</code> and see <code>lm</code> instead of <code>list</code>. Second, the fact that the authors of <code>lm()</code> wrote code that returns <code>result</code> as a “fancy list” suggests that they are encouraging another way to access elements of the <code>results</code>: to use specialized functions! For example, you can use <code>residuals(results)</code>, <code>coefficients(results)</code>, and <code>fitted.values(results)</code>. These functions do not work for all lists in R, but when they do work (for <code>lm</code> and <code>glm</code> objects only), you can be sure you are writing the kind of code that is encouraged by the authors of <code>lm()</code>.</p>
 </div>
@@ -584,10 +590,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }
