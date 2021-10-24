@@ -2,7 +2,7 @@
 
 We have already talked a little about how to work with text data in this book. Regarding Python, section \@ref(vectorization-in-python) mentioned that Pandas `Series` objects have a [`.str` accessor attribute](https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods) that has plenty of special methods that will work on string data. The same tools can be used whether or not these `Series` objects are contained in a Pandas `DataFrame`. 
 
-Regarding R, `character` `vector`s were mentioned in chapter \@ref(r-vectors-versus-numpy-arrays-and-pandas-series). There are many functions that operate on these, too, whether or not they are held inside an R `data.frame`. They might be a little harder to find because they aren't methods, so pressing `<Tab>` and using your GUI's autocomplete feature doesn't reveal them as easily.
+Regarding R, `character` `vector`s were mentioned in chapter \@ref(r-vectors-versus-numpy-arrays-and-pandas-series). There are many functions that operate on these, too, regardless of whether they are held in a `data.frame`. The functions might be a little harder to find because they aren't methods, so pressing `<Tab>` and using your GUI's autocomplete feature doesn't reveal them as easily.
 
 Suppose you're interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there's probably a function for it. 
 
@@ -93,12 +93,79 @@ nchar(r'{\$}') # in R
 
 ### More Examples of Using Regular Expressions
 
+[@rfords] pythonbookinoffice? `?regex` TODO citations
+
+Regular expressions that match many different types of characters are often very useful--these are called **character classes.** For example, `.` represents any character except a newline, `\d` represents any digit, and `\s` represents any whitespace character. You can sometimes capitalize the letters in the regular expression to get the opposite pattern. 
 
 
+```{r, collapse=TRUE}
+# anonymize phone numbers in R
+gsub(pattern = r"{\d}", replacement = "X", x = "(202)555-0191")
+```
 
-TODO
-  - raw strings
-  - text in files or finding files by name
-  - backslashes are a nightmare
-  - citations
+```{python, collapse=TRUE}
+# remove everything that isn't a number in Python
+pd.Series(["$100"]).str.replace(pat="\D",repl="")
+```
 
+Many character classes feature an opening and closing square brackets. For instance, `[1-5]` matches any digit between $1$ and $5$ (inclusive), `[aeiouy]` matches any lowercase vowel, and `[\^\-]` matches either `^` or `-` (we had to escape these two metacharacters because we are only interested in the literal pattern).
+
+```{r, collapse=TRUE}
+# remove vowels in R
+gsub(pattern = "[aeiouy]", replacement = "", x = "Can you still read this?")
+```
+Concatenating two patterns, one after another, forms a more specific pattern to be matched. 
+
+```{python, collapse=TRUE}
+# convert date formats in Python
+pd.Series(["2021-10-23","2021:10:23"]).str.replace(pat="[:\-]",repl="/")
+```
+
+If you would like one pattern or another to appear, you can use the **alternation operator** `|`. 
+
+```{python, collapse=TRUE}
+# one or the other in Python
+pd.Series(["this","that"]).str.contains(pat="this|that")
+```
+
+In addition to concatenation, alternation, and grouping, there are more general ways to *quantify* how many times the desired pattern will appear. `?` means zero or one time, `*` means zero or more, `+` will mean one or more, and there are a variety of ways to be even more specific with curly braces (e.g. `{3,17}` means anywhere from three to seventeen times).
+
+```{r, collapse=TRUE}
+# detect double o's in R
+grepl(pattern = "o{2}", x = c("look","book","box", "hellooo"))
+```
+
+```{python, collapse=TRUE}
+# detects phone number formats in Python
+pd.Series(["(202)555-0191","202-555-0191"]).str.contains(pat=r"\(\d{3}\)\d{3}-\d{4}")
+```
+
+Notice in the double "o" example, the word with three matched. To describe that not being desirable requires the ability to *look ahead* of the match, to the next character, and evaluate that. You can look ahead, or behind, and make assertions about what patterns are required or disallowed. 
+
+| Lookaround Regex |	Meaning |
+|-----------|-------------------|
+`(?=pattern)`	| Positive looking ahead for `pattern`
+`(?!pattern)`	| Negative looking ahead for `pattern`
+`(?<=pattern)`	| Positive looking behind for `pattern`
+`(?<!pattern)`	| Negative looking behind for `pattern`
+
+After `oo` we specify `(?!o)` to disallow a third, trailing `o`.
+
+```{python, collapse=TRUE}
+# exactly two "o"s in Python?
+pd.Series(["look","book","box", "hellooo"]).str.contains(pat="oo(?!o)")
+```
+
+However, this does not successfully remove `"hellooo"` because it will match on the *last* two "o"s of the word. To prevent this, we can prepend a `(?<!o)`, which disallows a leading "o", as well. In R, we also have to specify `perl=TRUE` to use Perl-compatible regular expressions. 
+
+```{r, collapse=TRUE}
+# exactly two "o"s in R
+grep(pattern = "(?<!o)oo(?!o)", x = c("look","book","box", "hellooo"), perl = TRUE)
+```
+We also mention *anchoring.* If you only want to find a pattern at the beginning of text, use `^`. If you only want to find a pattern at the end of text, use `$`. Below we use [`.str.extract()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html), whose documentation makes reference to *capture groups.* Capture groups are just regular expressions grouped inside parentheses (e.g. `(this)`).
+
+```{python, collapse=TRUE}
+# extract emails with Pandas
+s = pd.Series(["my email is fake@aol.com", "fake2@aol.com is hidden"])
+s.str.extract(r".( [a-z]+@[a-z]+\.com$)")
+```

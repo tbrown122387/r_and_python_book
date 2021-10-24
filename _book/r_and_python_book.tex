@@ -2554,7 +2554,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140343715792224 140343715792256}
+\CommentTok{\#\# 139706215388512 139706215388544}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -4296,10 +4296,9 @@ Moreover, all of these environments are connected in a chain-like structure. To 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
-\DocumentationTok{\#\#  [1] ".GlobalEnv"          "package:R6"          "package:ggplot2"     "package:reticulate"  "package:BayesFactor"}
-\DocumentationTok{\#\#  [6] "package:Matrix"      "package:coda"        "package:pacman"      "tools:rstudio"       "package:stats"      }
-\DocumentationTok{\#\# [11] "package:graphics"    "package:grDevices"   "package:utils"       "package:datasets"    "package:methods"    }
-\DocumentationTok{\#\# [16] "Autoloads"           "package:base"}
+\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:ggplot2"    "package:reticulate"}
+\DocumentationTok{\#\#  [6] "tools:rstudio"      "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"     }
+\DocumentationTok{\#\# [11] "package:datasets"   "package:methods"    "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4470,7 +4469,7 @@ What are important differences in the package installation procedures of R and P
 \item
   Installing R packages can be done from within R, while installing packages in Python can be done in the command line.
 \item
-  Installing R packages can be with the same function \texttt{install.packages()}, while installing packages in Python can be done with a variety of package installers such as \texttt{pip\ install} and \texttt{conda\ install}.
+  Installing R packages can usually be done with the same function \texttt{install.packages()}, while installing packages in Python can be done with a variety of package installers such as \texttt{pip\ install} and \texttt{conda\ install}.
 \item
   There is only one package repository for R, but many for Python.
 \item
@@ -5767,7 +5766,7 @@ very good! \url{https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-
 
 We have already talked a little about how to work with text data in this book. Regarding Python, section \ref{vectorization-in-python} mentioned that Pandas \texttt{Series} objects have a \href{https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html\#string-methods}{\texttt{.str} accessor attribute} that has plenty of special methods that will work on string data. The same tools can be used whether or not these \texttt{Series} objects are contained in a Pandas \texttt{DataFrame}.
 
-Regarding R, \texttt{character} \texttt{vector}s were mentioned in chapter \ref{r-vectors-versus-numpy-arrays-and-pandas-series}. There are many functions that operate on these, too, whether or not they are held inside an R \texttt{data.frame}. They might be a little harder to find because they aren't methods, so pressing \texttt{\textless{}Tab\textgreater{}} and using your GUI's autocomplete feature doesn't reveal them as easily.
+Regarding R, \texttt{character} \texttt{vector}s were mentioned in chapter \ref{r-vectors-versus-numpy-arrays-and-pandas-series}. There are many functions that operate on these, too, regardless of whether they are held in a \texttt{data.frame}. The functions might be a little harder to find because they aren't methods, so pressing \texttt{\textless{}Tab\textgreater{}} and using your GUI's autocomplete feature doesn't reveal them as easily.
 
 Suppose you're interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there's probably a function for it.
 
@@ -5905,16 +5904,131 @@ There is another way to deal with this issue--\textbf{raw strings!} Raw strings 
 \hypertarget{more-examples-of-using-regular-expressions}{%
 \subsection{More Examples of Using Regular Expressions}\label{more-examples-of-using-regular-expressions}}
 
-TODO
-- raw strings
-- text in files or finding files by name
-- backslashes are a nightmare
-- citations
+\citep{rfords} pythonbookinoffice? \texttt{?regex} TODO citations
 
-\hypertarget{dates-and-times}{%
-\chapter{Dates and Times}\label{dates-and-times}}
+Regular expressions that match many different types of characters are often very useful--these are called \textbf{character classes.} For example, \texttt{.} represents any character except a newline, \texttt{\textbackslash{}d} represents any digit, and \texttt{\textbackslash{}s} represents any whitespace character. You can sometimes capitalize the letters in the regular expression to get the opposite pattern.
 
-TODO
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# anonymize phone numbers in R}
+\FunctionTok{gsub}\NormalTok{(}\AttributeTok{pattern =}\NormalTok{ r}\StringTok{"\{\textbackslash{}d\}"}\NormalTok{, }\AttributeTok{replacement =} \StringTok{"X"}\NormalTok{, }\AttributeTok{x =} \StringTok{"(202)555{-}0191"}\NormalTok{)}
+\DocumentationTok{\#\# [1] "(XXX)XXX{-}XXXX"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# remove everything that isn\textquotesingle{}t a number in Python}
+\NormalTok{pd.Series([}\StringTok{"$100"}\NormalTok{]).}\BuiltInTok{str}\NormalTok{.replace(pat}\OperatorTok{=}\StringTok{"\textbackslash{}D"}\NormalTok{,repl}\OperatorTok{=}\StringTok{""}\NormalTok{)}
+\CommentTok{\#\# 0    100}
+\CommentTok{\#\# dtype: object}
+\end{Highlighting}
+\end{Shaded}
+
+Many character classes feature an opening and closing square brackets. For instance, \texttt{{[}1-5{]}} matches any digit between \(1\) and \(5\) (inclusive), \texttt{{[}aeiouy{]}} matches any lowercase vowel, and \texttt{{[}\textbackslash{}\^{}\textbackslash{}-{]}} matches either \texttt{\^{}} or \texttt{-} (we had to escape these two metacharacters because we are only interested in the literal pattern).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# remove vowels in R}
+\FunctionTok{gsub}\NormalTok{(}\AttributeTok{pattern =} \StringTok{"[aeiouy]"}\NormalTok{, }\AttributeTok{replacement =} \StringTok{""}\NormalTok{, }\AttributeTok{x =} \StringTok{"Can you still read this?"}\NormalTok{)}
+\DocumentationTok{\#\# [1] "Cn  stll rd ths?"}
+\end{Highlighting}
+\end{Shaded}
+
+Concatenating two patterns, one after another, forms a more specific pattern to be matched.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# convert date formats in Python}
+\NormalTok{pd.Series([}\StringTok{"2021{-}10{-}23"}\NormalTok{,}\StringTok{"2021:10:23"}\NormalTok{]).}\BuiltInTok{str}\NormalTok{.replace(pat}\OperatorTok{=}\StringTok{"[:\textbackslash{}{-}]"}\NormalTok{,repl}\OperatorTok{=}\StringTok{"/"}\NormalTok{)}
+\CommentTok{\#\# 0    2021/10/23}
+\CommentTok{\#\# 1    2021/10/23}
+\CommentTok{\#\# dtype: object}
+\end{Highlighting}
+\end{Shaded}
+
+If you would like one pattern or another to appear, you can use the \textbf{alternation operator} \texttt{\textbar{}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# one or the other in Python}
+\NormalTok{pd.Series([}\StringTok{"this"}\NormalTok{,}\StringTok{"that"}\NormalTok{]).}\BuiltInTok{str}\NormalTok{.contains(pat}\OperatorTok{=}\StringTok{"this|that"}\NormalTok{)}
+\CommentTok{\#\# 0    True}
+\CommentTok{\#\# 1    True}
+\CommentTok{\#\# dtype: bool}
+\end{Highlighting}
+\end{Shaded}
+
+In addition to concatenation, alternation, and grouping, there are more general ways to \emph{quantify} how many times the desired pattern will appear. \texttt{?} means zero or one time, \texttt{*} means zero or more, \texttt{+} will mean one or more, and there are a variety of ways to be even more specific with curly braces (e.g.~\texttt{\{3,17\}} means anywhere from three to seventeen times).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# detect double o\textquotesingle{}s in R}
+\FunctionTok{grepl}\NormalTok{(}\AttributeTok{pattern =} \StringTok{"o\{2\}"}\NormalTok{, }\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\StringTok{"look"}\NormalTok{,}\StringTok{"book"}\NormalTok{,}\StringTok{"box"}\NormalTok{, }\StringTok{"hellooo"}\NormalTok{))}
+\DocumentationTok{\#\# [1]  TRUE  TRUE FALSE  TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# detects phone number formats in Python}
+\NormalTok{pd.Series([}\StringTok{"(202)555{-}0191"}\NormalTok{,}\StringTok{"202{-}555{-}0191"}\NormalTok{]).}\BuiltInTok{str}\NormalTok{.contains(pat}\OperatorTok{=}\VerbatimStringTok{r"\textbackslash{}(\textbackslash{}d}\SpecialCharTok{\{3\}}\VerbatimStringTok{\textbackslash{})\textbackslash{}d}\SpecialCharTok{\{3\}}\VerbatimStringTok{{-}\textbackslash{}d}\SpecialCharTok{\{4\}}\VerbatimStringTok{"}\NormalTok{)}
+\CommentTok{\#\# 0     True}
+\CommentTok{\#\# 1    False}
+\CommentTok{\#\# dtype: bool}
+\end{Highlighting}
+\end{Shaded}
+
+Notice in the double ``o'' example, the word with three matched. To describe that not being desirable requires the ability to \emph{look ahead} of the match, to the next character, and evaluate that. You can look ahead, or behind, and make assertions about what patterns are required or disallowed.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Lookaround Regex & Meaning \\
+\midrule
+\endhead
+\texttt{(?=pattern)} & Positive looking ahead for \texttt{pattern} \\
+\texttt{(?!pattern)} & Negative looking ahead for \texttt{pattern} \\
+\texttt{(?\textless{}=pattern)} & Positive looking behind for \texttt{pattern} \\
+\texttt{(?\textless{}!pattern)} & Negative looking behind for \texttt{pattern} \\
+\bottomrule
+\end{longtable}
+
+After \texttt{oo} we specify \texttt{(?!o)} to disallow a third, trailing \texttt{o}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# exactly two "o"s in Python?}
+\NormalTok{pd.Series([}\StringTok{"look"}\NormalTok{,}\StringTok{"book"}\NormalTok{,}\StringTok{"box"}\NormalTok{, }\StringTok{"hellooo"}\NormalTok{]).}\BuiltInTok{str}\NormalTok{.contains(pat}\OperatorTok{=}\StringTok{"oo(?!o)"}\NormalTok{)}
+\CommentTok{\#\# 0     True}
+\CommentTok{\#\# 1     True}
+\CommentTok{\#\# 2    False}
+\CommentTok{\#\# 3     True}
+\CommentTok{\#\# dtype: bool}
+\end{Highlighting}
+\end{Shaded}
+
+However, this does not successfully remove \texttt{"hellooo"} because it will match on the \emph{last} two ``o''s of the word. To prevent this, we can prepend a \texttt{(?\textless{}!o)}, which disallows a leading ``o'', as well. In R, we also have to specify \texttt{perl=TRUE} to use Perl-compatible regular expressions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# exactly two "o"s in R}
+\FunctionTok{grep}\NormalTok{(}\AttributeTok{pattern =} \StringTok{"(?\textless{}!o)oo(?!o)"}\NormalTok{, }\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\StringTok{"look"}\NormalTok{,}\StringTok{"book"}\NormalTok{,}\StringTok{"box"}\NormalTok{, }\StringTok{"hellooo"}\NormalTok{), }\AttributeTok{perl =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# [1] 1 2}
+\end{Highlighting}
+\end{Shaded}
+
+We also mention \emph{anchoring.} If you only want to find a pattern at the beginning of text, use \texttt{\^{}}. If you only want to find a pattern at the end of text, use \texttt{\$}. Below we use \href{https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html}{\texttt{.str.extract()}}, whose documentation makes reference to \emph{capture groups.} Capture groups are just regular expressions grouped inside parentheses (e.g.~\texttt{(this)}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# extract emails with Pandas}
+\NormalTok{s }\OperatorTok{=}\NormalTok{ pd.Series([}\StringTok{"my email is fake@aol.com"}\NormalTok{, }\StringTok{"fake2@aol.com is hidden"}\NormalTok{])}
+\NormalTok{s.}\BuiltInTok{str}\NormalTok{.extract(}\VerbatimStringTok{r".( [a{-}z]+@[a{-}z]+\textbackslash{}.com$)"}\NormalTok{)}
+\CommentTok{\#\#                0}
+\CommentTok{\#\# 0   fake@aol.com}
+\CommentTok{\#\# 1            NaN}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{running-scripts-from-the-command-line}{%
 \chapter{Running Scripts from the Command Line}\label{running-scripts-from-the-command-line}}
@@ -6296,7 +6410,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x55b21747b1c0>
+## <bytecode: 0x55f00b69e3a0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -6309,17 +6423,14 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] plot,ANY-method        plot,color-method      plot.acf*              plot.BFBayesFactor*   
-##  [5] plot.BFBayesFactorTop* plot.data.frame*       plot.decomposed.ts*    plot.default          
-##  [9] plot.dendrogram*       plot.density*          plot.ecdf              plot.factor*          
-## [13] plot.formula*          plot.function          plot.ggplot*           plot.gtable*          
-## [17] plot.hcl_palettes*     plot.hclust*           plot.histogram*        plot.HoltWinters*     
-## [21] plot.isoreg*           plot.lm*               plot.mcmc*             plot.mcmc.list*       
-## [25] plot.medpolish*        plot.mlm*              plot.numpy.ndarray*    plot.ppr*             
-## [29] plot.prcomp*           plot.princomp*         plot.profile.nls*      plot.R6*              
-## [33] plot.raster*           plot.shingle*          plot.spec*             plot.stepfun          
-## [37] plot.stl*              plot.table*            plot.trans*            plot.trellis*         
-## [41] plot.ts                plot.tskernel*         plot.TukeyHSD*        
+##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
+##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
+## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
+## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
+## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
+## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
+## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
+## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
 ## see '?methods' for accessing help and source code
 \end{verbatim}
 
@@ -6346,7 +6457,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-232-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-242-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -6363,7 +6474,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-233-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-243-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -6784,7 +6895,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-246-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-256-1.pdf}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -7246,7 +7357,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid()} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-263-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-273-1.pdf}
 
 If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -7261,7 +7372,7 @@ If you prefer using \texttt{apply()}, that is also possible, but you would need 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-264-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-274-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -7289,7 +7400,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-266-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-276-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -7549,7 +7660,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-280-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-290-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7589,7 +7700,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-282-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-292-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7615,7 +7726,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-284-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-294-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}
