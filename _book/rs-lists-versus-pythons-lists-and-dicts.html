@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="tbrown122387/r_and_python_book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  
+  
+  
+
+<meta name="author" content="Taylor R. Brown" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"/>
+<link rel="next" href="functions.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to R and Python For Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-sample-course"><i class="fa fa-check"></i>A Sample Course</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#licenses"><i class="fa fa-check"></i>License(s)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-the-required-software"><i class="fa fa-check"></i>Installing the Required Software</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-python-by-installing-anaconda"><i class="fa fa-check"></i>Installing Python by Installing Anaconda</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Introducing the Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#hello-world-in-r"><i class="fa fa-check"></i><b>1.1</b> Hello World in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#hello-world-in-python"><i class="fa fa-check"></i><b>1.2</b> Hello World in Python</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#reading-documentation"><i class="fa fa-check"></i><b>1.3.1</b> Reading Documentation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#understanding-file-paths"><i class="fa fa-check"></i><b>1.3.2</b> Understanding File Paths</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-types.html"><a href="basic-types.html"><i class="fa fa-check"></i><b>2</b> Basic Types</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-python"><i class="fa fa-check"></i><b>2.1</b> Basic Types In Python</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-python"><i class="fa fa-check"></i><b>2.1.1</b> Type Conversions in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-r"><i class="fa fa-check"></i><b>2.2</b> Basic Types In R</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-r"><i class="fa fa-check"></i><b>2.2.1</b> Type Conversions in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basic-types.html"><a href="basic-types.html#rs-simplification"><i class="fa fa-check"></i><b>2.2.2</b> R’s Simplification</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basic-types.html"><a href="basic-types.html#exercises"><i class="fa fa-check"></i><b>2.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-types.html"><a href="basic-types.html#r-questions"><i class="fa fa-check"></i><b>2.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-types.html"><a href="basic-types.html#python-questions"><i class="fa fa-check"></i><b>2.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html"><i class="fa fa-check"></i><b>3</b> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-r"><i class="fa fa-check"></i><b>3.1</b> Overview of R</a></li>
+<li class="chapter" data-level="3.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python"><i class="fa fa-check"></i><b>3.2</b> Overview of Python</a></li>
+<li class="chapter" data-level="3.3" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-r"><i class="fa fa-check"></i><b>3.3</b> Vectorization in R</a></li>
+<li class="chapter" data-level="3.4" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python"><i class="fa fa-check"></i><b>3.4</b> Vectorization in Python</a></li>
+<li class="chapter" data-level="3.5" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-vectors-in-r"><i class="fa fa-check"></i><b>3.5</b> Indexing Vectors in R</a></li>
+<li class="chapter" data-level="3.6" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-numpy-arrays"><i class="fa fa-check"></i><b>3.6</b> Indexing Numpy arrays</a></li>
+<li class="chapter" data-level="3.7" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-pandas-series"><i class="fa fa-check"></i><b>3.7</b> Indexing Pandas’ Series</a></li>
+<li class="chapter" data-level="3.8" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#some-gotchas"><i class="fa fa-check"></i><b>3.8</b> Some Gotchas</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#shallow-versus-deep-copies"><i class="fa fa-check"></i><b>3.8.1</b> Shallow versus Deep Copies</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#how-r-and-python-handle-missing-values"><i class="fa fa-check"></i><b>3.8.2</b> How R and Python Handle Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#exercises-1"><i class="fa fa-check"></i><b>3.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-questions-1"><i class="fa fa-check"></i><b>3.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-vectors-versus-numpy-arrays-and-pandas-series.html"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#python-questions-1"><i class="fa fa-check"></i><b>3.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><i class="fa fa-check"></i><b>4</b> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#numpy-ndarrays-in-python"><i class="fa fa-check"></i><b>4.1</b> Numpy <code>ndarray</code>s In Python</a></li>
+<li class="chapter" data-level="4.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#the-matrix-and-array-classes-in-r"><i class="fa fa-check"></i><b>4.2</b> The <code>matrix</code> and <code>array</code> classes in R</a></li>
+<li class="chapter" data-level="4.3" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#exercises-2"><i class="fa fa-check"></i><b>4.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#r-questions-2"><i class="fa fa-check"></i><b>4.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#python-questions-2"><i class="fa fa-check"></i><b>4.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> <code>list</code>s In R</a></li>
+<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> <code>list</code>s In Python</a></li>
+<li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
+<li class="chapter" data-level="5.4" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3"><i class="fa fa-check"></i><b>5.4.1</b> R Questions</a></li>
+<li class="chapter" data-level="5.4.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3"><i class="fa fa-check"></i><b>5.4.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="functions.html"><a href="functions.html#defining-r-functions"><i class="fa fa-check"></i><b>6.1</b> Defining R Functions</a></li>
+<li class="chapter" data-level="6.2" data-path="functions.html"><a href="functions.html#defining-python-functions"><i class="fa fa-check"></i><b>6.2</b> Defining Python Functions</a></li>
+<li class="chapter" data-level="6.3" data-path="functions.html"><a href="functions.html#more-details-on-rs-user-defined-functions"><i class="fa fa-check"></i><b>6.3</b> More Details On R’s User-Defined Functions</a></li>
+<li class="chapter" data-level="6.4" data-path="functions.html"><a href="functions.html#more-details-on-pythons-user-defined-functions"><i class="fa fa-check"></i><b>6.4</b> More details on Python’s user-defined functions</a></li>
+<li class="chapter" data-level="6.5" data-path="functions.html"><a href="functions.html#function-scope-in-r"><i class="fa fa-check"></i><b>6.5</b> Function Scope in R</a></li>
+<li class="chapter" data-level="6.6" data-path="functions.html"><a href="functions.html#function-scope-in-python"><i class="fa fa-check"></i><b>6.6</b> Function Scope in Python</a></li>
+<li class="chapter" data-level="6.7" data-path="functions.html"><a href="functions.html#modifying-a-functions-arguments"><i class="fa fa-check"></i><b>6.7</b> Modifying a Function’s Arguments</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="functions.html"><a href="functions.html#passing-by-value-in-r"><i class="fa fa-check"></i><b>6.7.1</b> Passing By Value In R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="functions.html"><a href="functions.html#passing-by-assignment-in-python"><i class="fa fa-check"></i><b>6.7.2</b> Passing By Assignment In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="functions.html"><a href="functions.html#accessing-and-modifying-captured-variables"><i class="fa fa-check"></i><b>6.8</b> Accessing and Modifying Captured Variables</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.1</b> Accessing Captured Variables in R</a></li>
+<li class="chapter" data-level="6.8.2" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.2</b> Accessing Captured Variables in Python</a></li>
+<li class="chapter" data-level="6.8.3" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.3</b> Modifying Captured Variables In R</a></li>
+<li class="chapter" data-level="6.8.4" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.4</b> Modifying Captured Variables In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="functions.html"><a href="functions.html#exercises-4"><i class="fa fa-check"></i><b>6.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="functions.html"><a href="functions.html#r-questions-4"><i class="fa fa-check"></i><b>6.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="6.9.2" data-path="functions.html"><a href="functions.html#python-questions-4"><i class="fa fa-check"></i><b>6.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="categorical-data.html"><a href="categorical-data.html"><i class="fa fa-check"></i><b>7</b> Categorical Data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#factors-in-r"><i class="fa fa-check"></i><b>7.1</b> <code>factor</code>s in R</a></li>
+<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#two-options-for-categorical-data-in-pandas"><i class="fa fa-check"></i><b>7.2</b> Two Options for Categorical Data in Pandas</a></li>
+<li class="chapter" data-level="7.3" data-path="categorical-data.html"><a href="categorical-data.html#exercises-5"><i class="fa fa-check"></i><b>7.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="categorical-data.html"><a href="categorical-data.html#r-questions-5"><i class="fa fa-check"></i><b>7.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="categorical-data.html"><a href="categorical-data.html#python-questions-5"><i class="fa fa-check"></i><b>7.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>8</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-r"><i class="fa fa-check"></i><b>8.1</b> Data Frames in R</a></li>
+<li class="chapter" data-level="8.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-python"><i class="fa fa-check"></i><b>8.2</b> Data Frames in Python</a></li>
+<li class="chapter" data-level="8.3" data-path="data-frames.html"><a href="data-frames.html#exercises-6"><i class="fa fa-check"></i><b>8.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="data-frames.html"><a href="data-frames.html#r-questions-6"><i class="fa fa-check"></i><b>8.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-frames.html"><a href="data-frames.html#python-questions-6"><i class="fa fa-check"></i><b>8.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Common Tasks and Patterns</b></span></li>
+<li class="chapter" data-level="9" data-path="input-and-output.html"><a href="input-and-output.html"><i class="fa fa-check"></i><b>9</b> Input and Output</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
+<li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
+<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-r"><i class="fa fa-check"></i><b>9.4.1</b> Writing Out Tabular Plain Text Data in R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-r"><i class="fa fa-check"></i><b>9.4.2</b> Serialization in R</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-python"><i class="fa fa-check"></i><b>9.5.1</b> Writing Out Tabular Plain Text Data in Python</a></li>
+<li class="chapter" data-level="9.5.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-python"><i class="fa fa-check"></i><b>9.5.2</b> Serialization in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="input-and-output.html"><a href="input-and-output.html#exercises-7"><i class="fa fa-check"></i><b>9.6</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="input-and-output.html"><a href="input-and-output.html#r-questions-7"><i class="fa fa-check"></i><b>9.6.1</b> R Questions</a></li>
+<li class="chapter" data-level="9.6.2" data-path="input-and-output.html"><a href="input-and-output.html#python-questions-7"><i class="fa fa-check"></i><b>9.6.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-r"><i class="fa fa-check"></i><b>10.1</b> Installing Packages In R</a></li>
+<li class="chapter" data-level="10.2" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-python"><i class="fa fa-check"></i><b>10.2</b> Installing Packages In Python</a></li>
+<li class="chapter" data-level="10.3" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-r"><i class="fa fa-check"></i><b>10.3</b> Loading Packages In R</a></li>
+<li class="chapter" data-level="10.4" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-python"><i class="fa fa-check"></i><b>10.4</b> Loading Packages In Python</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
+<li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#ordering-and-sorting-data"><i class="fa fa-check"></i><b>12.1</b> Ordering and Sorting Data</a></li>
+<li class="chapter" data-level="12.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder"><i class="fa fa-check"></i><b>12.2</b> Stacking Data Sets and Placing Them Shoulder to Shoulder</a></li>
+<li class="chapter" data-level="12.3" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets"><i class="fa fa-check"></i><b>12.3</b> Merging or Joining Data Sets</a></li>
+<li class="chapter" data-level="12.4" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-data"><i class="fa fa-check"></i><b>12.4</b> Long Versus Wide Data</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-r"><i class="fa fa-check"></i><b>12.4.1</b> Long Versus Wide in R</a></li>
+<li class="chapter" data-level="12.4.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-python"><i class="fa fa-check"></i><b>12.4.2</b> Long Versus Wide in Python</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>13</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="visualization.html"><a href="visualization.html#base-r-plotting"><i class="fa fa-check"></i><b>13.1</b> Base R Plotting</a></li>
+<li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="working-with-text-data.html"><a href="working-with-text-data.html"><i class="fa fa-check"></i><b>14</b> Working With Text Data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#an-introducton-to-regular-expressions"><i class="fa fa-check"></i><b>14.1</b> An Introducton to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="working-with-text-data.html"><a href="working-with-text-data.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>14.1.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="14.1.2" data-path="working-with-text-data.html"><a href="working-with-text-data.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>14.1.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="14.1.3" data-path="working-with-text-data.html"><a href="working-with-text-data.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>14.1.3</b> More Examples of Using Regular Expressions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="running-scripts-from-the-command-line.html"><a href="running-scripts-from-the-command-line.html"><i class="fa fa-check"></i><b>15</b> Running Scripts from the Command Line</a></li>
+<li class="part"><span><b>III Programming Styles</b></span></li>
+<li class="chapter" data-level="16" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>16</b> An Introduction to Object-Oriented Programming</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-python"><i class="fa fa-check"></i><b>16.1</b> OOP In Python</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#overview"><i class="fa fa-check"></i><b>16.1.1</b> Overview</a></li>
+<li class="chapter" data-level="16.1.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#a-first-example"><i class="fa fa-check"></i><b>16.1.2</b> A First Example</a></li>
+<li class="chapter" data-level="16.1.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-inheritance"><i class="fa fa-check"></i><b>16.1.3</b> Adding Inheritance</a></li>
+<li class="chapter" data-level="16.1.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-in-composition"><i class="fa fa-check"></i><b>16.1.4</b> Adding in Composition</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-r"><i class="fa fa-check"></i><b>16.2</b> OOP In R</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s3-objects-the-big-picture"><i class="fa fa-check"></i><b>16.2.1</b> S3 objects: The Big Picture</a></li>
+<li class="chapter" data-level="16.2.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s3-objects"><i class="fa fa-check"></i><b>16.2.2</b> Using S3 objects</a></li>
+<li class="chapter" data-level="16.2.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s3-objects"><i class="fa fa-check"></i><b>16.2.3</b> Creating S3 objects</a></li>
+<li class="chapter" data-level="16.2.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s4-objects-the-big-picture"><i class="fa fa-check"></i><b>16.2.4</b> S4 objects: The Big Picture</a></li>
+<li class="chapter" data-level="16.2.5" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s4-objects"><i class="fa fa-check"></i><b>16.2.5</b> Using S4 objects</a></li>
+<li class="chapter" data-level="16.2.6" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s4-objects"><i class="fa fa-check"></i><b>16.2.6</b> Creating S4 objects</a></li>
+<li class="chapter" data-level="16.2.7" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#reference-classes-the-big-picture"><i class="fa fa-check"></i><b>16.2.7</b> Reference Classes: The Big Picture</a></li>
+<li class="chapter" data-level="16.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>16.2.8</b> Creating Reference Classes</a></li>
+<li class="chapter" data-level="16.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>16.2.9</b> Creating R6 Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>16.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>17</b> Functional Programming</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-r"><i class="fa fa-check"></i><b>17.1</b> Functions as Function Inputs in R</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="functional-programming.html"><a href="functional-programming.html#sapply-and-vapply"><i class="fa fa-check"></i><b>17.1.1</b> <code>sapply()</code> and <code>vapply()</code></a></li>
+<li class="chapter" data-level="17.1.2" data-path="functional-programming.html"><a href="functional-programming.html#lapply"><i class="fa fa-check"></i><b>17.1.2</b> <code>lapply()</code></a></li>
+<li class="chapter" data-level="17.1.3" data-path="functional-programming.html"><a href="functional-programming.html#apply"><i class="fa fa-check"></i><b>17.1.3</b> <code>apply()</code></a></li>
+<li class="chapter" data-level="17.1.4" data-path="functional-programming.html"><a href="functional-programming.html#tapply"><i class="fa fa-check"></i><b>17.1.4</b> <code>tapply()</code></a></li>
+<li class="chapter" data-level="17.1.5" data-path="functional-programming.html"><a href="functional-programming.html#mapply"><i class="fa fa-check"></i><b>17.1.5</b> <code>mapply()</code></a></li>
+<li class="chapter" data-level="17.1.6" data-path="functional-programming.html"><a href="functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>17.1.6</b> <code>Reduce()</code> and <code>do.call()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="functional-programming.html"><a href="functional-programming.html#another-example-in-r"><i class="fa fa-check"></i><b>17.2</b> Another Example in R</a></li>
+<li class="chapter" data-level="17.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>17.3</b> Functions as Function Inputs in Base Python</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="functional-programming.html"><a href="functional-programming.html#map"><i class="fa fa-check"></i><b>17.3.1</b> <code>map()</code></a></li>
+<li class="chapter" data-level="17.3.2" data-path="functional-programming.html"><a href="functional-programming.html#filter"><i class="fa fa-check"></i><b>17.3.2</b> <code>filter()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>17.4</b> Functions as Function Inputs in Numpy</a></li>
+<li class="chapter" data-level="17.5" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>17.5</b> Functional Methods in Pandas</a></li>
+<li class="chapter" data-level="17.6" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-miscellany"><i class="fa fa-check"></i><b>17.6</b> Functions as Function Inputs (miscellany)</a></li>
+<li class="chapter" data-level="17.7" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>17.7</b> Functions as Function Outputs in R</a></li>
+<li class="chapter" data-level="17.8" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>17.8</b> Functions as Function Outputs in Python</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to R and Python For Data Analysis: A Side By Side Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rs-lists-versus-pythons-lists-and-dicts" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</h1>
+<p>When you need to store elements in a container, but you can’t guarantee that these elements all have the same type, or you can’t guarantee that they all have the same size, then you need a <code>list</code> in R. In Python, you might need a <code>list</code> or <code>dict</code> (short for dictionary).</p>
+<div id="lists-in-r" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> <code>list</code>s In R</h2>
+<p><code>list</code>s are one of the most flexible data types in R. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-1" aria-hidden="true" tabindex="-1"></a>myList <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&quot;May 5th, 2021&quot;</span>, <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb61-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-2" aria-hidden="true" tabindex="-1"></a>myList[<span class="dv">1</span>] <span class="co"># length-1 list; first element is length 3 vector</span></span>
+<span id="cb61-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [[1]]</span></span>
+<span id="cb61-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3</span></span>
+<span id="cb61-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-5" aria-hidden="true" tabindex="-1"></a>myList[[<span class="dv">1</span>]] <span class="co"># length-3 vector</span></span>
+<span id="cb61-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3</span></span></code></pre></div>
+<p>If you want to extract an element, you need to decide between using single square brackets or double square brackets. The former returns a <code>list</code>, while the second returns the type of the individual element.</p>
+<p>You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below. The <code>lm()</code> function estimates a linear regression model. It returns a <code>list</code> with plenty of components.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-1" aria-hidden="true" tabindex="-1"></a>dataSet <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
+<span id="cb62-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Horsepower) <span class="sc">~</span> Type, <span class="at">data =</span> dataSet)</span>
+<span id="cb62-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
+<span id="cb62-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
+<span id="cb62-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(results) </span>
+<span id="cb62-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  </span></span>
+<span id="cb62-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;contrasts&quot;     &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</span></span>
+<span id="cb62-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-8" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>contrasts</span>
+<span id="cb62-9"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $Type</span></span>
+<span id="cb62-10"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span>
+<span id="cb62-11"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-11" aria-hidden="true" tabindex="-1"></a>results[<span class="st">&#39;rank&#39;</span>]</span>
+<span id="cb62-12"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $rank</span></span>
+<span id="cb62-13"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<div class="rmd-caution">
+<p><code>results</code> is a <code>list</code> (<code>is.list(results)</code> returns <code>TRUE</code>), but to be more specific, it is an S3 object of class <code>lm</code>. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren’t confused if you type <code>class(results)</code> and see <code>lm</code> instead of <code>list</code>. Second, the fact that the authors of <code>lm()</code> wrote code that returns <code>result</code> as a “fancy list” suggests that they are encouraging another way to access elements of the <code>results</code>: to use specialized functions! For example, you can use <code>residuals(results)</code>, <code>coefficients(results)</code>, and <code>fitted.values(results)</code>. These functions do not work for all lists in R, but when they do work (for <code>lm</code> and <code>glm</code> objects only), you can be sure you are writing the kind of code that is encouraged by the authors of <code>lm()</code>.</p>
+</div>
+</div>
+<div id="lists-in-python" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> <code>list</code>s In Python</h2>
+<p><a href="https://docs.python.org/3/library/stdtypes.html#lists">Python <code>list</code>s</a> are very flexible, too. There are fewer choices for accessing and modifying elements of lists in Python–you’ll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R’s lists.</p>
+<p>Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python <a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">dictionaries</a> (see section <a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python">5.3</a>) or Pandas’ <code>Series</code> objects (see section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python">3.2</a>).</p>
+<p>From the example below, you can see that we’ve been introduced to lists already. We have been constructing Numpy arrays from them.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb63-1" aria-hidden="true" tabindex="-1"></a>another_list <span class="op">=</span> [np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]), <span class="st">&quot;May 5th, 2021&quot;</span>, <span class="va">True</span>, [<span class="dv">42</span>,<span class="dv">42</span>]]</span>
+<span id="cb63-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb63-2" aria-hidden="true" tabindex="-1"></a>another_list[<span class="dv">2</span>]</span>
+<span id="cb63-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span>
+<span id="cb63-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb63-4" aria-hidden="true" tabindex="-1"></a>another_list[<span class="dv">2</span>] <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb63-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb63-5" aria-hidden="true" tabindex="-1"></a>another_list</span>
+<span id="cb63-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [array([1, 2, 3]), &#39;May 5th, 2021&#39;, 100, [42, 42]]</span></span></code></pre></div>
+<p>Python lists have <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">methods attached to them</a>, which can come in handy.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb64-1" aria-hidden="true" tabindex="-1"></a>another_list</span>
+<span id="cb64-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [array([1, 2, 3]), &#39;May 5th, 2021&#39;, 100, [42, 42]]</span></span>
+<span id="cb64-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb64-3" aria-hidden="true" tabindex="-1"></a>another_list.append(<span class="st">&#39;new element&#39;</span>)</span>
+<span id="cb64-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb64-4" aria-hidden="true" tabindex="-1"></a>another_list</span>
+<span id="cb64-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">## [array([1, 2, 3]), &#39;May 5th, 2021&#39;, 100, [42, 42], &#39;new element&#39;]</span></span></code></pre></div>
+<p>Creating lists can be done as above, with the square bracket operators. They can also be created with the <code>list()</code> function, and by creating a <em>list comprehension</em>. List comprehensions are discussed more in <a href="control-flow.html#loops">11.2</a>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb65-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="op">=</span> <span class="bu">list</span>((<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>)) <span class="co"># converting a tuple to a list</span></span>
+<span id="cb65-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb65-2" aria-hidden="true" tabindex="-1"></a>your_list <span class="op">=</span> [i<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)] <span class="co"># list comprehension</span></span>
+<span id="cb65-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb65-3" aria-hidden="true" tabindex="-1"></a>my_list</span>
+<span id="cb65-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span></span>
+<span id="cb65-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb65-5" aria-hidden="true" tabindex="-1"></a>your_list</span>
+<span id="cb65-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 4]</span></span></code></pre></div>
+</div>
+<div id="dictionaries-in-python" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Dictionaries In Python</h2>
+<p><a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries"><strong>Dictionaries</strong></a> in Python provide a container of key-value pairs. The keys are <em>unique</em>, and they must be <em>immutable</em>. <code>string</code>s are the most common key type, but <code>int</code>s can be used as well.</p>
+<p>Here is an example of creating a <code>dict</code> with curly braces (i.e. <code>{}</code>). This <code>dict</code> stores the current price of a few popular cryptocurrencies. Accessing an individual element’s value using its key is done with the square bracket operator (i.e. <code>[]</code>), and deleting elements is done with the <code>del</code> keyword.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-1" aria-hidden="true" tabindex="-1"></a>current_crypto_prices <span class="op">=</span> {<span class="st">&#39;BTC&#39;</span>: <span class="fl">38657.14</span>, <span class="st">&#39;ETH&#39;</span>: <span class="fl">2386.54</span>, <span class="st">&#39;DOGE&#39;</span>: <span class="fl">.308122</span>}</span>
+<span id="cb66-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-2" aria-hidden="true" tabindex="-1"></a>current_crypto_prices[<span class="st">&#39;DOGE&#39;</span>] <span class="co"># get the current price of Dogecoin</span></span>
+<span id="cb66-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0.308122</span></span>
+<span id="cb66-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> current_crypto_prices[<span class="st">&#39;BTC&#39;</span>] <span class="co"># remove the current price of Bitcoin</span></span>
+<span id="cb66-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-5" aria-hidden="true" tabindex="-1"></a>current_crypto_prices.keys()</span>
+<span id="cb66-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dict_keys([&#39;ETH&#39;, &#39;DOGE&#39;])</span></span>
+<span id="cb66-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-7" aria-hidden="true" tabindex="-1"></a>current_crypto_prices.values()</span>
+<span id="cb66-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb66-8" aria-hidden="true" tabindex="-1"></a><span class="co">## dict_values([2386.54, 0.308122])</span></span></code></pre></div>
+<p>You can also create <code>dict</code>s using <strong>dictionary comprehensions</strong>. Just like list comprehensions, these are discussed more in <a href="control-flow.html#loops">11.2</a>.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb67-1" aria-hidden="true" tabindex="-1"></a>incr_cryptos <span class="op">=</span> {key:val<span class="op">*</span><span class="fl">1.1</span> <span class="cf">for</span> (key,val) <span class="kw">in</span> current_crypto_prices.items()}</span>
+<span id="cb67-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb67-2" aria-hidden="true" tabindex="-1"></a>incr_cryptos</span>
+<span id="cb67-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co">## {&#39;ETH&#39;: 2625.194, &#39;DOGE&#39;: 0.3389342}</span></span></code></pre></div>
+<p>Personally, I don’t use dictionaries as much as lists. If I have a dictionary, I usually convert it to a pandas data frame (more information on those in <a href="data-frames.html#data-frames-in-python">8.2</a>).</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb68-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-2" aria-hidden="true" tabindex="-1"></a>df_from_dict <span class="op">=</span> pd.DataFrame({ <span class="st">&#39;col1&#39;</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>], <span class="st">&#39;col2&#39;</span> : [<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>]})</span>
+<span id="cb68-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-3" aria-hidden="true" tabindex="-1"></a>df_from_dict</span>
+<span id="cb68-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co">##    col1 col2</span></span>
+<span id="cb68-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1    a</span></span>
+<span id="cb68-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     2    b</span></span>
+<span id="cb68-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 2     3    c</span></span></code></pre></div>
+</div>
+<div id="exercises-3" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Exercises</h2>
+<div id="r-questions-3" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> R Questions</h3>
+<ol style="list-style-type: decimal">
+<li>Consider the data sets <code>adult.data</code>, <code>car.data</code>, <code>hungarian.data</code>, <code>iris.data</code>, <code>long-beach-va.data</code> and <code>switzerland.data</code> <span class="citation">(<a href="#ref-misc_heart_disease_45" role="doc-biblioref">Janosi et al. 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>. <span class="citation">(<a href="#ref-misc_adult_2" role="doc-biblioref"><span>“<span>Adult</span>”</span> 1996</a>)</span> and <span class="citation">(<a href="#ref-misc_car_evaluation_19" role="doc-biblioref"><span>“<span>Car Evaluation</span>”</span> 1997</a>)</span>. Read all of these in and store them all as a <code>list</code> of <code>data.frame</code>s. Call the list <code>listDfs</code>.</li>
+</ol>
+</div>
+<div id="python-questions-3" class="section level3" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Python Questions</h3>
+<ol style="list-style-type: decimal">
+<li>Read in <code>car.data</code> with <code>pd.read_csv()</code>, and use a <code>DataFrame</code> method to convert that to a <code>dict</code>. Store your answer as <code>car_dict</code>.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-misc_adult_2" class="csl-entry">
+<span>“<span>Adult</span>.”</span> 1996. UCI Machine Learning Repository.
+</div>
+<div id="ref-misc_car_evaluation_19" class="csl-entry">
+<span>“<span>Car Evaluation</span>.”</span> 1997. UCI Machine Learning Repository.
+</div>
+<div id="ref-misc_iris_53" class="csl-entry">
+Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> UCI Machine Learning Repository.
+</div>
+<div id="ref-misc_heart_disease_45" class="csl-entry">
+Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988. <span>“<span>Heart Disease</span>.”</span> UCI Machine Learning Repository.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/05-lists_and_dictionaries.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
