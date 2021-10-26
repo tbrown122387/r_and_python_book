@@ -9,7 +9,7 @@ Sorting a data set, in ascending order, say, is a common task. You might need to
 2. you want to inspect the most "extreme" observations in a data set, 
 3. it's a pre-processing step before generating visualizations.
 
-In R, it all starts with `vector`s. There are two common functions you should know: `sort` and `order`. `sort` returns the sorted *data*, while `order` returns the *order indexes*. 
+In R, it all starts with `vector`s. There are two common functions you should know: `sort()` and `order()`. `sort()` returns the sorted *data*, while `order()` returns the *order indexes*. 
 
 ```{r, collapse = TRUE}
 sillyData <- rnorm(5)
@@ -18,7 +18,7 @@ sort(sillyData)
 order(sillyData)
 ```
 
-`order` is useful if you're sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the `MSRP` (a `character` vector) a little first. We use the function `gsub` to find patterns in the text, and replace them with the empty string. 
+`order()` is useful if you're sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the `MSRP` (a `character` vector) a little first. We use the function `gsub()` to find patterns in the text, and replace them with the empty string. 
 
 ```{r}
 carData <- read.csv("data/cars.csv")
@@ -28,7 +28,7 @@ rowIndices <- order(carData$cleanMSRP, decreasing = TRUE)[1:5]
 carData[rowIndices,c("Make", "Model", "MSRP", "cleanMSRP")]
 ```
 
-In Python, Numpy has [`np.argsort`](https://numpy.org/doc/stable/reference/generated/numpy.argsort.html) and [`np.sort`](https://numpy.org/doc/stable/reference/generated/numpy.sort.html).
+In Python, Numpy has [`np.argsort()`](https://numpy.org/doc/stable/reference/generated/numpy.argsort.html) and [`np.sort()`](https://numpy.org/doc/stable/reference/generated/numpy.sort.html).
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -38,7 +38,7 @@ np.sort(silly_data)
 np.argsort(silly_data)
 ```
 
-For pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation.
+For Pandas' `DataFrame`s, most of the functions I find useful are methods attached to the `DataFrame` class. That means that, as long as something is inside a `DataFrame`, you can use dot notation.
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -49,9 +49,9 @@ car_data = car_data.sort_values(by='clean_MSRP', ascending = False)
 car_data[["Make", "Model", "MSRP", "clean_MSRP"]].head(5)
 ```
 
-pandas' `DataFrame`s and `Series` have a [`replace`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series` column before we used it. After the string was processed, we converted it to a `Series` of `float`s with the `astype` method. 
+Pandas' `DataFrame`s and `Series` have a [`.replace()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series` column before we used it. After the string was processed, we converted it to a `Series` of `float`s with the `astype()` method. 
 
-Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e. raw subsetting by row indexes), but there is a built in method called `sort_values` that will do it for us. 
+Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e. raw subsetting by row indexes), but there is a built-in method called [`sort_values()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sort_values.html) that will do it for us. 
 
 
 ## Stacking Data Sets and Placing Them Shoulder to Shoulder
@@ -63,7 +63,7 @@ Stacking data sets on top of each other is a common task. You might need to do i
 2. you need to recombine data sets (e.g. recombine a train/test split), or 
 3. you're creating a matrix in a step-by-step way. 
 
-In R, this can be done with `rbind` (short for "row bind")
+In R, this can be done with `rbind()` (short for "row bind")
 
 ```{r, collapse = TRUE}
 realEstate <- read.csv("data/albemarle_real_estate.csv")
@@ -73,7 +73,7 @@ head(rbind(test, train))
 sum(rbind(test, train) != realEstate)
 ```
 
-The above example was with `data.frame`s. This example of `rbind` is with `matrix` objects.
+The above example was with `data.frame`s. This example of `rbind()` is with `matrix` objects.
 
 ```{r, collapse=TRUE}
 rbind(matrix(1,nrow = 2, ncol = 3), 
@@ -81,7 +81,7 @@ rbind(matrix(1,nrow = 2, ncol = 3),
 ```
 
 
-In Python, you can stack data frames with [`pd.concat`](https://www.google.com/search?client=safari&rls=en&q=pandas+concat&ie=UTF-8&oe=UTF-8). It has a lot of options, so feel free to peruse those. You can also replace the call to `pd.concat` below with [`test.append(train)`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html). 
+In Python, you can stack data frames with [`pd.concat()`](https://www.google.com/search?client=safari&rls=en&q=pandas+concat&ie=UTF-8&oe=UTF-8). It has a lot of options, so feel free to peruse those. You can also replace the call to `pd.concat()` below with [`test.append(train)`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html). 
 
 
 ```{python, collapse = TRUE}
@@ -93,16 +93,17 @@ pd.concat([test,train], axis=0).head() # also
 (pd.concat([test,train], axis=0) != real_estate).sum().sum()
 ```
 
-Take note of the extra square brackets when we create `test`. If you use `real_estate.iloc[0,]` instead, it will return a `Series` with all the elements coerced to the same type, and this won't `pd.concat` properly with the rest of the data! 
+Take note of the extra square brackets when we create `test`. If you use `real_estate.iloc[0,]` instead, it will return a `Series` with all the elements coerced to the same type, and this won't `pd.concat()` properly with the rest of the data! 
 
 ## Merging or Joining Data Sets
 
 
-If you have two different data sets that provide different information about the same things, you put them together using a **`merge`** (aka **`join`**) statement. The resulting data set is wider, and possibly with fewer rows. In R, you can use the [`merge` function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge). In Python, you can use the [`merge` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas-dataframe-merge).
+If you have two different data sets that provide different information about the same things, you put them together using a **`merge`** (aka **`join`**) statement. The resulting data set is wider, and it may end up with either more or fewer rows. In R, you can use the [`merge()` function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge). In Python, you can use the [`.merge()` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas-dataframe-merge).
 
 Suppose you have to sets of supposedly anonymized data about individual accounts on some online platforms. 
 
 ```{r, collapse = TRUE}
+# in R
 baby1 <- read.csv("data/baby1.csv", stringsAsFactors = FALSE)
 baby2 <- read.csv("data/baby2.csv", stringsAsFactors = FALSE)
 head(baby1)
@@ -115,16 +116,16 @@ baby1 = pd.read_csv("data/baby1.csv")
 baby2 = pd.read_csv("data/baby2.csv")
 ```
 
-The first thing you need to ask yourself is "which column is the unique identifier that is shared between these two data sets?" In our case, they both have an "identification number" column, could that be it? Let's suppose for the sake of argument that these two data sets are coming from different online platforms, and these two places use different schemes to number their users. 
+The first thing you need to ask yourself is *"which column is the unique identifier that is shared between these two data sets?"* In our case, they both have an "identification number" column. However, these two data sets are coming from different online platforms, and these two places use different schemes to number their users. 
 
-In this case, they both share a column with (possibly) the same information about email addresses. They are named differently in each data set, so we must specify both column names.
+In this case, it is better to merge on the email addresses. Users might be using different email addresses on these two platforms, but there's a stronger guarantee that matched email addresses means that you're matching the right accounts. The columns are named differently in each data set, so we must specify them by name.
 
 ```{r, collapse = TRUE}
 # in R
 merge(baby1, baby2, by.x = "email_address", by.y = "email")
 ```
 
-In Python, `merge` is a method attached to each `DataFrame` instance.
+In Python, `merge()` is a method attached to each `DataFrame` instance.
 
 ```{python, collapse = TRUE}
 # in Python
@@ -155,6 +156,19 @@ baby1.merge(baby2,
 
 You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging). 
 
+Finally, if both data sets have multiple values in the column you're joining on, the result can have more rows than either table. This is because *every possible match* shows up. 
+
+```{r, collapse = TRUE}
+# in R
+first <- data.frame(category = c('a','a'), measurement = c(1,2))
+merge(first, first, by.x = "category", by.y = "category")
+```
+```{python, collapse = TRUE}
+# in Python
+first = pd.DataFrame({'category' : ['a','a'], 'measurement' : [1,2]})
+first.merge(first, left_on = "category", right_on = "category")
+```
+
 ## Long Versus Wide Data
 
 
@@ -162,78 +176,80 @@ You can see it's slightly more concise in Python. If you are familiar with SQL, 
 
 Many types of data can be stored in either a **wide** or **long** format. 
 
-The classical example is data from a *longitudinal study.* If an experimental unit (in the example below a person) is repeatedly measured over time, each row would correspond to an experimental unit *and* an observation time in a data set in a long form. 
+The classical example is data from a *longitudinal study.* If an experimental unit (in the example below this is a person) is repeatedly measured over time, each row would correspond to an experimental unit *and* an observation time in a data set in a long form. 
 
 ```{r, collapse = TRUE}
-fake_long_data1 <- data.frame(person = c("Taylor","Taylor","Charlie","Charlie"), 
+fakeLongData1 <- data.frame(person = c("Taylor","Taylor","Charlie","Charlie"), 
                              timeObserved = c(1, 2, 1, 2),
                              nums = c(100,101,300,301))
-fake_long_data1
+fakeLongData1
 ```
 
 A long format can also be used if you have multiple observations (at a single time point) on an experimental unit. Here is another example. 
 
 ```{r, collapse = TRUE}
-fake_long_data2 <- data.frame(person = c("Taylor", "Taylor", "Charlie","Charlie"), 
+fakeLongData2 <- data.frame(person = c("Taylor", "Taylor", "Charlie","Charlie"), 
                              attributeName = c("attrA","attrB","attrA","attrB"),
                              nums = c(100,101,300,301))
-fake_long_data2
+fakeLongData2
 ```
 
-If you would like to reshape the long data sets into a wide format, you can use the `reshape` function. You will need to specify which columns correspond with the experimental unit, and which column is the "factor" variable. 
+If you would like to reshape the long data sets into a wide format, you can use the `reshape()` function. You will need to specify which columns correspond with the experimental unit, and which column is the "factor" variable. 
 
 
 ```{r, collapse = TRUE}
-fake_wide_data1 <- reshape(fake_long_data1, 
+fakeWideData1 <- reshape(fakeLongData1, 
                            direction = "wide", 
                            timevar = "timeObserved", 
                            idvar = "person", 
                            varying = c("before","after")) # col names in new data set
-fake_long_data1
-fake_wide_data1
+fakeLongData1
+fakeWideData1
 ```
 
 ```{r, collapse = TRUE}
-fake_wide_data2 <- reshape(fake_long_data2, 
+fakeWideData2 <- reshape(fakeLongData2, 
                            direction = "wide", 
-                           timevar = "attributeName", # timevar is kind of a misnomer here
+                           timevar = "attributeName", # timevar is a misnomer here
                            idvar = "person", 
                            varying = c("attribute A","attribute B")) 
-fake_long_data2
-fake_wide_data2
+fakeLongData2
+fakeWideData2
 ```
 
-`reshape` will also go in the other direction: it can take wide data and convert it into long data
+`reshape()` will also go in the other direction: it can take wide data and convert it into long data
 
 ```{r, collapse = TRUE}
-reshape(fake_wide_data1, 
+reshape(fakeWideData1, 
         direction = "long",
         idvar = "person", 
         varying = list(c("before","after")),
         v.names = "nums")
-fake_long_data1
-reshape(fake_wide_data2, 
+fakeLongData1
+reshape(fakeWideData2, 
         direction = "long",
         idvar = "person", 
         varying = list(c("attribute A","attribute B")),
         v.names = "nums")
-fake_long_data2
+fakeLongData2
 ```
 
 ### Long Versus Wide in Python
 
-With pandas, we can take make wide data long with [`pd.DataFrame.pivot`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
+With Pandas, we can take make wide data long with [`pd.DataFrame.pivot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
 
 When going from wide to long, make sure to use the [`pd.DataFrame.reset_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#) method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
 
 ```{python, collapse = TRUE}
 import pandas as pd
-fake_long_data1 = pd.DataFrame({'person' : ["Taylor","Taylor","Charlie","Charlie"], 
-                               'time_observed' : [1, 2, 1, 2],
-                               'nums' : [100,101,300,301]})
+fake_long_data1 = pd.DataFrame(
+  {'person' : ["Taylor","Taylor","Charlie","Charlie"], 
+  'time_observed' : [1, 2, 1, 2],
+  'nums' : [100,101,300,301]})
 fake_long_data1
-pivot_data1 = fake_long_data1.pivot(index='person', columns='time_observed', values='nums')
-pivot_data1
+pivot_data1 = fake_long_data1.pivot(index='person', 
+                                    columns='time_observed', 
+                                    values='nums')
 fake_wide_data1 = pivot_data1.reset_index()
 fake_wide_data1
 ```
@@ -250,7 +266,7 @@ fake_wide_data2 = fake_long_data2.pivot(index='person',
 fake_wide_data2
 ```
 
-Here are some examples of going in the other direction: from wide to long with [`pd.DataFrame.melt`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). The first example specifies value columns by integers.
+Here are some examples of going in the other direction: from wide to long with [`pd.DataFrame.melt()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). The first example specifies value columns by integers.
 
 ```{python, collapse = TRUE}
 fake_wide_data1

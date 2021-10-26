@@ -164,3 +164,122 @@ R can come close to replicating the above behavior with vectorization, but the c
 
 
 ## Exercises
+
+
+### R Questions
+
+
+1. 
+
+Suppose you have a `vector` of `numeric` data: $x_1, \ldots, x_n$. Write a function called `cappedMoveAve(dataVector)` that takes in a `vector` and returns a 3-period "capped" moving average. Make sure to use a `for` loop. The formula you should use is 
+$$
+y_t = \min\left(10, \frac{1}{3}\sum_{i=0}^2x_{t-i} \right).
+$$
+The function should return $y_1, \ldots, y_n$ as a `vector`. Let $y_1 = y_2 = 0$.
+
+2.
+
+Say we have a target^[This is the density of a $\text{Beta}(3,2)$ random variable, if you're curious.] distribution that we want to sample from:
+$$
+p(x) = 
+\begin{cases}
+\frac{x^2(1-x)}{\int_0^1 y^2(1-y) dy} & 0 < x < 1 \\
+0 & \text{otherwise}
+\end{cases}.
+$$
+The denominator, $\int_0^1 y^2(1-y) dy$, is the target's normalizing constant. You might know how to solve this integral (it's equal to $1/12$), but let's pretend for the sake of our example that it's too difficult for us. We want to sample from $p(x)$ while only being able to evaluate (not sample) from its unnormalized version $f(x) := x^2(1-x)$. This is a situation that arises often--wanting to sample from some complicated distribution whose density you can only evaluate up to a constant of proportionality.
+
+Next, let's choose a uniform distribution for our *proposal distribution*: $q(x) = 1$ if $0 < x < 1$. This means we will sample from this distribution, because it's easier. We just need to "adjust" our samples somehow, because it's not the same as our target. 
+
+We can plot all three functions. The area under the $p(x)$ and $q(x)$ curves is $1$, because they are true probability density functions. $f(x)$, however, is not.
+
+```{r, echo=F, out.width='40%', fig.align='center', fig.cap = "Visualizing Our Three Functions"}
+xGrid <- seq(0,1,by=.01)
+f <- function(x) x^2*(1-x)
+plot(xGrid, dbeta(xGrid,3,2), ylab = "", xlab = "x", type = "l", col = "black")
+lines(xGrid, f(xGrid), col = "red")
+lines(xGrid, rep(1, length(xGrid)), col = "green")
+legend("topright", c("p(x)","f(x)", "q(x)"), col = c("black", "red", "green"), pch = 4)
+```
+
+
+  - Write a function called `arSamp(n)` that samples from $p(x)$ using accept-reject sampling. It should take a single argument that is equal to the number of samples desired. Below is one step of the accept-reject algorithm. You will need to do many iterations of this. The number of iterations will be random, because some of these proposals will not be accepted. 
+
+******
+**Algorithm 1**:  Accept-Reject Sampling (One Step)
+
+******
+1. Find $M$ such that $M > \frac{f(x)}{q(x)}$ for all possible $x$ (the smaller the better).
+2. Sample $X$ from $q(x)$.
+3. Sample $Y \mid X$ from $\text{Bernoulli}\left(\frac{f(X)}{q(X)M}\right)$.
+4. If $Y = 1$, then return $X$.
+5. Otherwise, return nothing.
+
+******
+
+3.
+
+Write a function called `multiplyTwoMats(A,B)` that performs matrix multiplication. It should take two `matrix` arguments: `A` and `B`. Then it should return the matrix product `AB`. Use two nested `for` loops to write this function. Make sure to test this function against the usual tool you use to multiply matrices together: `%*%`.
+
+4.
+
+Suppose you are trying to predict a value of $Y$ given some information about a corresponding independent variable $x$. Suppose further that you have a historical data set of observations $(x_1, y_1), \ldots, (x_n,y_n)$. One approach for coming up with predictions is to use **Nadaraya–Watson Kernel Regression** [@Nadaraya] [@Watson]. The prediction this approach provides is simply a weighted average of all of the historically-observed data points $y_1, \ldots, y_n$. The weight for a given $y_i$ will be larger if $x_i$ is "close" to the value $x$ that you are obtaining predictions for. On the other hand, if $x_j$ is far away from $x$, then the weight for $y_j$ will be relatively small, and so this data point won't influence the prediction much. 
+
+Write a function called `kernReg(xPred,xData,yData,kernFunc)` that computes the Nadaraya–Watson estimate of the prediction of $Y$ given $X=x$. Do not use a `for` loop in your function definition. The formula is
+  $$\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,$$ where $x$ is the point you're trying to get a prediction for. 
+
+    * Your function should return one floating point number. 
+    * The input `xPred` will be a floating point number.
+    * The input `xData` is a one-dimensional `vector` of numerical data of independent variables. 
+    * The input `yData` is a one-dimensional `vector` of numerical data of dependent variables.
+    * `kernFunc` is a function that accepts a `numeric` `vector` and returns a floating point. It's vectorized.
+    
+Below is some code that will help you test your predictions. The kernel function, `gaussKernel()`, implements the Gaussian kernel function $K(z) = \exp[-z^2/2]/\sqrt{2\pi}$. Notice the creation of `preds` was commented out. Use a `for` loop to generate predictions for all elements of `xTest` and store them in the vector `preds`. 
+    
+    
+```{r, eval = FALSE}
+gaussKernel <- dnorm
+xTest <- seq(0,10,length.out= 100)
+yTest <- xTest*2 
+# preds <- ?
+plot(xTest, yTest, type = "b")
+lines(xTest, preds, col = "red")
+```
+    
+
+### Python Questions
+
+1. 
+
+Suppose you go to the casino with $10$ dollars. You decide that your policy is to play until you go broke, or until you triple your money. The only game you play costs $\$1$ to play. If you lose, you lose that dollar. If you win, you get another $\$1$ in addition to getting your money back. 
+
+ - Write a function called `sim_night(p)` that simulates your night of gambling. Have it return a Pandas `Series` with the running balance of money you have over the course of a night. For example, if you lose $10$ games in a row, and go home early, the returned `Series` contains $9, \ldots, 1,0$. This function will only take one input, `p`, which is the probability of winning any/every game you play. 
+ - Use a `for` loop to call your function $5000$ times with probability `p=.5`. Each time, store the number of games played. Store them all in a Numpy `array` or Pandas `Series` called `simulated_durations`.
+ - Take the average of `simulated_durations`. This is your Monte Carlo estimate of the expected duration. How does it compare with what you think it should be theoretically?
+ - Perform the same analysis to estimate the expected duration when $p=.7$. Store your answer as a `float` called `expec_duration`.
+
+2.
+
+Suppose you have the following data set. Please include the following snippet in your submission. 
+
+```{python, collapse = TRUE, eval = FALSE}
+import numpy as np
+import pandas as pd
+my_data = pd.read_csv("sim_data.csv", header=None).values.flatten()
+```
+
+This question will demonstrate how to implement **The Bootstrap** [@bootstrap], which is a popular nonparametric approach to understand the distribution of a statistic of interest. The main idea is to calculate your statistic over and over again on *bootstrapped* data sets, which are data sets randomly chosen, with replacement, from your original data set `my_data`. Each bootstrapped data set is of the same size as the original data set, and each bootstrapped data set will yield one statistic. Collect all of these random statistics, and it is a good approximation to the statistic's theoretical distribution. 
+
+
+  - Calculate the mean of this data set and store it as a floating point number called `sample_mean`.
+  - Calculate $5,000$ bootstrap sample means. Store them in a Numpy `array` called `bootstrapped_means`. Use a `for` loop, and inside the loop, sample with replacement $1000$ times from the length $1000$ data set. You can use the function `np.random.choice()` to accomplish this. 
+  - Calculate the sample mean of these bootstrapped means. This is a good estimate of the *theoretical* mean/expectation of the sample mean. Call it `mean_of_means`.
+  - Calculate the sample variance of these bootstrapped means. This is a good estimate of the *theoretical* variance of the sample mean. Call it `var_of_means`.
+  
+3.
+
+Write a function called `ar_samp(n)` that samples from $p(x)$ using accept-reject sampling. Use any proposal distribution that you'd like. It should take a single argument that is equal to the number of samples desired. Sample from the following target:
+  $$
+  p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 < x < 1.
+  $$
+  
