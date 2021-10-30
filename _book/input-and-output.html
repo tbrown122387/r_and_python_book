@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -516,9 +516,8 @@ div.csl-indent {
 <span id="cb128-4"><a href="input-and-output.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;&lt;html itemscope=\&quot;\&quot; itemtype=\&quot;http://schema.org/WebPage\&quot; lang=\&quot;en\&quot;&gt;&lt;head&gt;&quot;</span></span></code></pre></div>
 <p>Some of you may have had difficulty reading in the above data. This can happen if your machine’s default character encoding is different than mine. For instance, if your character encoding is <a href="https://en.wikipedia.org/wiki/GBK_(character_encoding)">“GBK”</a>, then the following warning message might appear. This message means that your machine didn’t recognize some of the characters in the data set.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="input-and-output.html#cb129-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>)</span>
-<span id="cb129-2"><a href="input-and-output.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection &#39;data/</span></span>
-<span id="cb129-3"><a href="input-and-output.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Google.html&#39;</span></span>
-<span id="cb129-4"><a href="input-and-output.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string</span></span></code></pre></div>
+<span id="cb129-2"><a href="input-and-output.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection &#39;data/Google.html&#39;</span></span>
+<span id="cb129-3"><a href="input-and-output.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string</span></span></code></pre></div>
 <p>These errors are easy to fix, though, so don’t worry. Just specify an encoding argument in your function that reads in data.</p>
 <div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="input-and-output.html#cb130-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>, </span>
 <span id="cb130-2"><a href="input-and-output.html#cb130-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>) <span class="co"># this makes errors disappear</span></span></code></pre></div>
@@ -581,7 +580,22 @@ div.csl-indent {
 <span id="cb134-7"><a href="input-and-output.html#cb134-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [dtype(&#39;int64&#39;), dtype(&#39;int64&#39;), StringDtype, StringDtype, dtype(&#39;int64&#39;)]</span></span></code></pre></div>
 <p>Just like in R, you may run into an encoding issue with a file. For instance, the following will not work because the file contains Chinese characters.</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb135-1"><a href="input-and-output.html#cb135-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/message.txt&quot;</span>)</span>
-<span id="cb135-2"><a href="input-and-output.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xb9 in position 0: invalid start byte</span></span></code></pre></div>
+<span id="cb135-2"><a href="input-and-output.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Error in py_call_impl(callable, dots$args, dots$keywords): UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xb9 in position 0: invalid start byte</span></span>
+<span id="cb135-3"><a href="input-and-output.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
+<span id="cb135-4"><a href="input-and-output.html#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Detailed traceback:</span></span>
+<span id="cb135-5"><a href="input-and-output.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</span></span>
+<span id="cb135-6"><a href="input-and-output.html#cb135-6" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;/home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/python3.6/site-packages/pandas/io/parsers.py&quot;, line 688, in read_csv</span></span>
+<span id="cb135-7"><a href="input-and-output.html#cb135-7" aria-hidden="true" tabindex="-1"></a><span class="co">##     return _read(filepath_or_buffer, kwds)</span></span>
+<span id="cb135-8"><a href="input-and-output.html#cb135-8" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;/home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/python3.6/site-packages/pandas/io/parsers.py&quot;, line 454, in _read</span></span>
+<span id="cb135-9"><a href="input-and-output.html#cb135-9" aria-hidden="true" tabindex="-1"></a><span class="co">##     parser = TextFileReader(fp_or_buf, **kwds)</span></span>
+<span id="cb135-10"><a href="input-and-output.html#cb135-10" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;/home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/python3.6/site-packages/pandas/io/parsers.py&quot;, line 948, in __init__</span></span>
+<span id="cb135-11"><a href="input-and-output.html#cb135-11" aria-hidden="true" tabindex="-1"></a><span class="co">##     self._make_engine(self.engine)</span></span>
+<span id="cb135-12"><a href="input-and-output.html#cb135-12" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;/home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/python3.6/site-packages/pandas/io/parsers.py&quot;, line 1180, in _make_engine</span></span>
+<span id="cb135-13"><a href="input-and-output.html#cb135-13" aria-hidden="true" tabindex="-1"></a><span class="co">##     self._engine = CParserWrapper(self.f, **self.options)</span></span>
+<span id="cb135-14"><a href="input-and-output.html#cb135-14" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;/home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/python3.6/site-packages/pandas/io/parsers.py&quot;, line 2010, in __init__</span></span>
+<span id="cb135-15"><a href="input-and-output.html#cb135-15" aria-hidden="true" tabindex="-1"></a><span class="co">##     self._reader = parsers.TextReader(src, **kwds)</span></span>
+<span id="cb135-16"><a href="input-and-output.html#cb135-16" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;pandas/_libs/parsers.pyx&quot;, line 537, in pandas._libs.parsers.TextReader.__cinit__</span></span>
+<span id="cb135-17"><a href="input-and-output.html#cb135-17" aria-hidden="true" tabindex="-1"></a><span class="co">##   File &quot;pandas/_libs/parsers.pyx&quot;, line 740, in pandas._libs.parsers.TextReader._get_header</span></span></code></pre></div>
 <p>However, the error messages disappear when you specify <code>encoding="gbk"</code>.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="input-and-output.html#cb136-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/message.txt&quot;</span>, encoding <span class="op">=</span> <span class="st">&quot;gbk&quot;</span>)</span>
 <span id="cb136-2"><a href="input-and-output.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Empty DataFrame</span></span>
@@ -732,6 +746,7 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -771,10 +786,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

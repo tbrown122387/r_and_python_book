@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 16 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 16 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 16 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="running-scripts-from-the-command-line.html"/>
 <link rel="next" href="functional-programming.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -651,7 +651,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="an-introduction-to-object-oriented-programming.html#cb239-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x5621fc94cb10&gt;
+## &lt;bytecode: 0x558405b52e18&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods</code> function.</p>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="an-introduction-to-object-oriented-programming.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(plot)</span></code></pre></div>
@@ -815,29 +815,30 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <span id="cb252-15"><a href="an-introduction-to-object-oriented-programming.html#cb252-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb252-16"><a href="an-introduction-to-object-oriented-programming.html#cb252-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
 <span id="cb252-17"><a href="an-introduction-to-object-oriented-programming.html#cb252-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb252-18"><a href="an-introduction-to-object-oriented-programming.html#cb252-18" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span>
-<span id="cb252-19"><a href="an-introduction-to-object-oriented-programming.html#cb252-19" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">3</span>)</span>
-<span id="cb252-20"><a href="an-introduction-to-object-oriented-programming.html#cb252-20" aria-hidden="true" tabindex="-1"></a>myCI</span>
-<span id="cb252-21"><a href="an-introduction-to-object-oriented-programming.html#cb252-21" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
-<span id="cb252-22"><a href="an-introduction-to-object-oriented-programming.html#cb252-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
-<span id="cb252-23"><a href="an-introduction-to-object-oriented-programming.html#cb252-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb252-24"><a href="an-introduction-to-object-oriented-programming.html#cb252-24" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb252-25"><a href="an-introduction-to-object-oriented-programming.html#cb252-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
-<span id="cb252-26"><a href="an-introduction-to-object-oriented-programming.html#cb252-26" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb252-27"><a href="an-introduction-to-object-oriented-programming.html#cb252-27" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb252-28"><a href="an-introduction-to-object-oriented-programming.html#cb252-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
-<span id="cb252-29"><a href="an-introduction-to-object-oriented-programming.html#cb252-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
-<span id="cb252-30"><a href="an-introduction-to-object-oriented-programming.html#cb252-30" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">1</span>)</span>
-<span id="cb252-31"><a href="an-introduction-to-object-oriented-programming.html#cb252-31" aria-hidden="true" tabindex="-1"></a>myCI</span>
-<span id="cb252-32"><a href="an-introduction-to-object-oriented-programming.html#cb252-32" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
-<span id="cb252-33"><a href="an-introduction-to-object-oriented-programming.html#cb252-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
-<span id="cb252-34"><a href="an-introduction-to-object-oriented-programming.html#cb252-34" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb252-35"><a href="an-introduction-to-object-oriented-programming.html#cb252-35" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb252-36"><a href="an-introduction-to-object-oriented-programming.html#cb252-36" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
-<span id="cb252-37"><a href="an-introduction-to-object-oriented-programming.html#cb252-37" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb252-38"><a href="an-introduction-to-object-oriented-programming.html#cb252-38" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb252-39"><a href="an-introduction-to-object-oriented-programming.html#cb252-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
-<span id="cb252-40"><a href="an-introduction-to-object-oriented-programming.html#cb252-40" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<span id="cb252-18"><a href="an-introduction-to-object-oriented-programming.html#cb252-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-19"><a href="an-introduction-to-object-oriented-programming.html#cb252-19" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span>
+<span id="cb252-20"><a href="an-introduction-to-object-oriented-programming.html#cb252-20" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">3</span>)</span>
+<span id="cb252-21"><a href="an-introduction-to-object-oriented-programming.html#cb252-21" aria-hidden="true" tabindex="-1"></a>myCI</span>
+<span id="cb252-22"><a href="an-introduction-to-object-oriented-programming.html#cb252-22" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
+<span id="cb252-23"><a href="an-introduction-to-object-oriented-programming.html#cb252-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
+<span id="cb252-24"><a href="an-introduction-to-object-oriented-programming.html#cb252-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb252-25"><a href="an-introduction-to-object-oriented-programming.html#cb252-25" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb252-26"><a href="an-introduction-to-object-oriented-programming.html#cb252-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
+<span id="cb252-27"><a href="an-introduction-to-object-oriented-programming.html#cb252-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb252-28"><a href="an-introduction-to-object-oriented-programming.html#cb252-28" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb252-29"><a href="an-introduction-to-object-oriented-programming.html#cb252-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
+<span id="cb252-30"><a href="an-introduction-to-object-oriented-programming.html#cb252-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb252-31"><a href="an-introduction-to-object-oriented-programming.html#cb252-31" aria-hidden="true" tabindex="-1"></a>myCI <span class="ot">&lt;-</span> <span class="fu">update</span>(myCI, <span class="dv">1</span>)</span>
+<span id="cb252-32"><a href="an-introduction-to-object-oriented-programming.html#cb252-32" aria-hidden="true" tabindex="-1"></a>myCI</span>
+<span id="cb252-33"><a href="an-introduction-to-object-oriented-programming.html#cb252-33" aria-hidden="true" tabindex="-1"></a><span class="do">## An object of class &quot;RunningCI&quot;</span></span>
+<span id="cb252-34"><a href="an-introduction-to-object-oriented-programming.html#cb252-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;knownVar&quot;:</span></span>
+<span id="cb252-35"><a href="an-introduction-to-object-oriented-programming.html#cb252-35" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb252-36"><a href="an-introduction-to-object-oriented-programming.html#cb252-36" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb252-37"><a href="an-introduction-to-object-oriented-programming.html#cb252-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;n&quot;:</span></span>
+<span id="cb252-38"><a href="an-introduction-to-object-oriented-programming.html#cb252-38" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb252-39"><a href="an-introduction-to-object-oriented-programming.html#cb252-39" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb252-40"><a href="an-introduction-to-object-oriented-programming.html#cb252-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Slot &quot;currentXbar&quot;:</span></span>
+<span id="cb252-41"><a href="an-introduction-to-object-oriented-programming.html#cb252-41" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 <p>This looks more <em>functional</em> (more information on functional programming is available in chapter <a href="functional-programming.html#functional-programming">17</a>) than the Python example because the <code>update</code> function does not change a <em>mutable</em> object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (<code>&lt;-</code>) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.</p>
 <p>The big takeaway here is that S3 and S4 don’t feel like Python’s encapsulated OOP. If we wanted to write stateful programs, we might consider using Reference Classes, or R6 classes.</p>
 </div>
@@ -1035,6 +1036,7 @@ and the estimate for the coefficient vector can be written as
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1074,10 +1076,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }
