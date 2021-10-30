@@ -355,6 +355,178 @@ Be careful of using extreme values to stand in for what should be an `NA`. Be aw
 ::: 
 
 
+## An Introducton to Regular Expressions
+
+We have already talked a little about how to work with text data in this book. Regarding Python, section \@ref(vectorization-in-python) mentioned that Pandas `Series` objects have a [`.str` accessor attribute](https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods) that has plenty of special methods that will work on string data. The same tools can be used whether or not these `Series` objects are contained in a Pandas `DataFrame`. 
+
+Regarding R, `character` `vector`s were mentioned in chapter \@ref(r-vectors-versus-numpy-arrays-and-pandas-series). There are many functions that operate on these, too, regardless of whether they are held in a `data.frame`. The functions might be a little harder to find because they aren't methods, so pressing `<Tab>` and using your GUI's autocomplete feature doesn't reveal them as easily.
+
+Suppose you're interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there's probably a function for it. 
+
+Notice what all of these tasks have in common--they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase "a"s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this chapter is primarily concerned with discussing **regular expressions,** which are a tool that help you describe the patterns in text.
+
+
+### Literal Characters versus Metacharacters
+
+Every character in a regular expression is interpreted in one of two ways. Either it is interpreted as a 
+
+  1. literal character, or as a 
+  2. metacharacter.
+  
+If it is a literal character, then the character is the *literal* pattern. For example, in the regular expression "e", the character "e" has a literal interpretation. If you seek to capitalize all instances of "e" in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you're good. The pattern is trivial to specify. 
+
+On the other hand, if I asked you to remove `$`s from price or salary data, you might have a little more difficulty. This is because `$` is a *metacharacter* in regular expressions, and so it has a special meaning.^[The dollar sign is useful if you only want to find certain patterns that finish a line. It takes the characters preceding it, and says, only look for that pattern if it comes at the end of a string.] In the examples below, if `$` is interpreted as a regular expression, the pattern will not be found at all, despite the prevalence of *literal* dollar signs. 
+
+There are a few functions in R that perform find-and-replace, but in this case, I use `gsub()`. In Pandas, I can use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html), to do this. Here are the examples that find patterns that are described by literal characters. 
+
+```{r, collapse = TRUE}
+# in R
+gsub(pattern = "e", replacement = "E", x = "I don't need a regex for this!")
+```
+
+```{python, collapse = TRUE}
+# in Python
+import pandas as pd
+pd.Series(["I don't need a regex for this!"]).str.replace(pat="e",repl="E")
+```
+
+On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters. 
+
+  1. We can *escape* the dollar sign. That means you need to put a backslash (i.e. `\`) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character. 
+  2. Alternatively, we can tell the function to ignore regular expressions. `gsub()` can take `fixed=TRUE`, and `.str.replace()` can take `regex=False`. 
+  
+
+```{python, collapse = TRUE}
+# in Python
+pd.Series(["$100, $200"]).str.replace(pat="$",repl="",regex=False)
+pd.Series(["$100, $200"]).str.replace(pat="\$",repl="")
+```
+
+```{r, collapse = TRUE}
+# in R
+gsub(pattern = "$", replacement = "", x = c("$100, $200"), fixed=TRUE)
+stringr::str_remove_all(c("$100, $200"), pattern = "\\$")
+```
+
+  
+### The Trouble With Backslashes: Escape Sequences
+
+You might have noticed above and gotten confused--sometimes in Python and in R, we need *two* backslashes instead of *one*. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as **escape sequences**. We need to be able to do this even if we aren't using regular expressions. 
+
+For instance, consider the way we type the "newline" character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. `\` is one character, and `n` is another, but together they are one!
+
+```{r, collapse = TRUE}
+nchar('\n') #in R
+```
+
+```{python, collapse = TRUE}
+len('\n') #in Python
+```
+
+`str`s in Python and `character` `vectors` in R will look for these combinations by default. When we specify regular expressions with strings, the backslashes will be used first for this purpose. Their regular expression purpose is a second priority. 
+
+The reason we used `\\$` in the above example is to escape the second backslash. `\$` is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won't complain that it didn't. On the other hand, R will throw an error that it can't recognize it. 
+
+```{python, collapse = TRUE}
+len('\$') # in Python, not special
+```
+
+```{r, error = TRUE, collapse = TRUE}
+nchar('\$') # R gets confused
+```
+
+There is another way to deal with this issue--**raw strings!** Raw strings make life easier because they do not interpret backslashes as the beginning of escape sequences. You can make them in R and Python by putting an "r" in front of the quotation marks. However, it is slightly more complicated in R because you need a delimiter pair inside the quotation marks--for more information type `?Quotes` in your R console.
+
+```{python, collapse = TRUE}
+len(r'\n') # in Python 
+```
+
+```{r, error = TRUE, collapse = TRUE}
+nchar(r'{\$}') # in R
+```
+
+
+### More Examples of Using Regular Expressions
+
+[@rfords] pythonbookinoffice? `?regex` TODO citations
+
+Regular expressions that match many different types of characters are often very useful--these are called **character classes.** For example, `.` represents any character except a newline, `\d` represents any digit, and `\s` represents any whitespace character. You can sometimes capitalize the letters in the regular expression to get the opposite pattern. 
+
+
+```{r, collapse=TRUE}
+# anonymize phone numbers in R
+gsub(pattern = r"{\d}", replacement = "X", x = "(202)555-0191")
+```
+
+```{python, collapse=TRUE}
+# remove everything that isn't a number in Python
+pd.Series(["$100"]).str.replace(pat="\D",repl="")
+```
+
+Many character classes feature an opening and closing square brackets. For instance, `[1-5]` matches any digit between $1$ and $5$ (inclusive), `[aeiouy]` matches any lowercase vowel, and `[\^\-]` matches either `^` or `-` (we had to escape these two metacharacters because we are only interested in the literal pattern).
+
+```{r, collapse=TRUE}
+# remove vowels in R
+gsub(pattern = "[aeiouy]", replacement = "", x = "Can you still read this?")
+```
+Concatenating two patterns, one after another, forms a more specific pattern to be matched. 
+
+```{python, collapse=TRUE}
+# convert date formats in Python
+pd.Series(["2021-10-23","2021:10:23"]).str.replace(pat="[:\-]",repl="/")
+```
+
+If you would like one pattern or another to appear, you can use the **alternation operator** `|`. 
+
+```{python, collapse=TRUE}
+# one or the other in Python
+pd.Series(["this","that"]).str.contains(pat="this|that")
+```
+
+In addition to concatenation, alternation, and grouping, there are more general ways to *quantify* how many times the desired pattern will appear. `?` means zero or one time, `*` means zero or more, `+` will mean one or more, and there are a variety of ways to be even more specific with curly braces (e.g. `{3,17}` means anywhere from three to seventeen times).
+
+```{r, collapse=TRUE}
+# detect double o's in R
+grepl(pattern = "o{2}", x = c("look","book","box", "hellooo"))
+```
+
+```{python, collapse=TRUE}
+# detects phone number formats in Python
+pd.Series(["(202)555-0191","202-555-0191"]).str.contains(pat=r"\(\d{3}\)\d{3}-\d{4}")
+```
+
+Notice in the double "o" example, the word with three matched. To describe that not being desirable requires the ability to *look ahead* of the match, to the next character, and evaluate that. You can look ahead, or behind, and make assertions about what patterns are required or disallowed. 
+
+| Lookaround Regex |	Meaning |
+|-----------|-------------------|
+`(?=pattern)`	| Positive looking ahead for `pattern`
+`(?!pattern)`	| Negative looking ahead for `pattern`
+`(?<=pattern)`	| Positive looking behind for `pattern`
+`(?<!pattern)`	| Negative looking behind for `pattern`
+
+After `oo` we specify `(?!o)` to disallow a third, trailing `o`.
+
+```{python, collapse=TRUE}
+# exactly two "o"s in Python?
+pd.Series(["look","book","box", "hellooo"]).str.contains(pat="oo(?!o)")
+```
+
+However, this does not successfully remove `"hellooo"` because it will match on the *last* two "o"s of the word. To prevent this, we can prepend a `(?<!o)`, which disallows a leading "o", as well. In R, we also have to specify `perl=TRUE` to use Perl-compatible regular expressions. 
+
+```{r, collapse=TRUE}
+# exactly two "o"s in R
+grep(pattern = "(?<!o)oo(?!o)", x = c("look","book","box", "hellooo"), perl = TRUE)
+```
+We also mention *anchoring.* If you only want to find a pattern at the beginning of text, use `^`. If you only want to find a pattern at the end of text, use `$`. Below we use [`.str.extract()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html), whose documentation makes reference to *capture groups.* Capture groups are just regular expressions grouped inside parentheses (e.g. `(this)`).
+
+```{python, collapse=TRUE}
+# extract emails with Pandas
+s = pd.Series(["my email is fake@aol.com", "fake2@aol.com is hidden"])
+s.str.extract(r".( [a-z]+@[a-z]+\.com$)")
+```
+
+
+
 
 ## Exercises
 
