@@ -21,7 +21,8 @@ responses <- factor(c("autumn", "summer", "summer"),
 levels(responses)
 is.factor(responses)
 is.ordered(responses)
-#contrasts(responses) # controls how factor is used in different  functions
+#contrasts(responses) 
+# ^ controls how factor is used in different  functions
 ```
 
 
@@ -73,7 +74,7 @@ In addition to creating one with `factor()`, there are two other common ways tha
 Here is an example of (1). We can take non-categorical data, and `cut()` it into something categorical. 
 
 ```{r, collapse = TRUE}
-stockReturns <- rnorm(10) # not categorical here
+stockReturns <- rnorm(6) # not categorical here
 typeOfDay <- cut(stockReturns, breaks = c(-Inf, 0, Inf)) 
 typeOfDay
 levels(typeOfDay)
@@ -96,30 +97,30 @@ Pandas' `Series` were discussed earlier in sections \@ref(overview-of-python) an
 
 ```{python, collapse = TRUE}
 import pandas as pd
-resp_series = pd.Series(["autumn", "summer", "summer"], dtype = "category") 
-resp_series.cat.categories
-resp_series.cat.ordered
-resp_series.dtype
-type(resp_series)
+szn_s = pd.Series(["autumn", "summer", "summer"], dtype = "category") 
+szn_s.cat.categories
+szn_s.cat.ordered
+szn_s.dtype
+type(szn_s)
 ```
 
 The second option is to use Pandas' `Categorical` containers. They are quite similar, so the choice is subtle. Like `Series` containers, they also force all of their elements to share the same shared `dtype`.
 
 ```{python, collapse = TRUE}
-resp_cat = pd.Categorical(["autumn", "summer", "summer"])
-resp_cat.categories
-resp_cat.ordered
-resp_cat.dtype
-type(resp_cat)
+szn_c = pd.Categorical(["autumn", "summer", "summer"])
+szn_c.categories
+szn_c.ordered
+szn_c.dtype
+type(szn_c)
 ```
 
 You might have noticed that, with the `Categorical` container, methods and data members were not accessed through the `.cat` accessor. It is also more similar to R's `factor`s because you can specify more arguments in the constructor.
 
 ```{python, collapse = TRUE}
 all_szns = ["spring","summer", "autumn", "winter"]
-resp_cat2 = pd.Categorical(["autumn", "summer", "summer"], 
-                            categories = all_szns, 
-                            ordered = False)
+szn_c2 = pd.Categorical(["autumn", "summer", "summer"], 
+                        categories = all_szns, 
+                        ordered = False)
 ```
 
 
@@ -130,12 +131,12 @@ In Pandas, just like in R, you need to be very careful about what the `categorie
 With Pandas' `Series` it's more difficult to specify a nondefault `dtype`. One option is to change them after the object has been created. 
 
 ```{python, collapse = TRUE}
-resp_series = resp_series.cat.set_categories(["autumn", "summer","spring","winter"])
-resp_series.cat.categories
-resp_series = resp_series.cat.remove_categories(['spring','winter'])
-resp_series.cat.categories
-resp_series = resp_series.cat.add_categories(["fall", "winter"])
-resp_series.cat.categories
+szn_s = szn_s.cat.set_categories(["autumn", "summer","spring","winter"])
+szn_s.cat.categories
+szn_s = szn_s.cat.remove_categories(['spring','winter'])
+szn_s.cat.categories
+szn_s = szn_s.cat.add_categories(["fall", "winter"])
+szn_s.cat.categories
 ```
 
 Another option is to create the `dtype` before you create the `Series`, and pass it into `pd.Series()`.
@@ -154,11 +155,13 @@ Just like in R, you can convert numerical data into categorical. The function ev
 ```{python, collapse = TRUE}
 import numpy as np
 stock_returns = np.random.normal(size=10) # not categorical 
-type_of_day = pd.cut(stock_returns, # array input means Categorical output
+# array input means Categorical output
+type_of_day = pd.cut(stock_returns, 
                      bins = [-np.inf, 0, np.inf], 
                      labels = ['bad day', 'good day']) 
 type(type_of_day)
-type_of_day2 = pd.cut(pd.Series(stock_returns), # Series in means Series out
+# Series in means Series out
+type_of_day2 = pd.cut(pd.Series(stock_returns), 
                       bins = [-np.inf, 0, np.inf], 
                       labels = ['bad day', 'good day']) 
 type(type_of_day2)
@@ -170,11 +173,12 @@ Finally, when reading in data from an external source, choose carefully whether 
 
 ```{python, collapse = TRUE}
 import numpy as np
+# make 5th col categorical
 my_data = pd.read_csv("data/iris.csv", header=None, 
-                      dtype = {4:"category"}) # make 5th col categorical
+                      dtype = {4:"category"}) 
 my_data.head(1)
 my_data.dtypes
-np.unique(my_data[4])
+np.unique(my_data[4]).tolist()
 ```
 
 
@@ -217,9 +221,12 @@ Consider the following simulated letter grade data for two students:
 ```{python, collapse = TRUE}
 import pandas as pd
 import numpy as np
-poss_grades = ['A+','A','A-','B+','B','B-','C+','C','C-','D+','D','D-','F']
+poss_grades = ['A+','A','A-','B+','B','B-',
+               'C+','C','C-','D+','D','D-',
+               'F']
 grade_values = {'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,
-                'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'D-':.67,'F':0.0}
+                'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'D-':.67,
+                'F':0.0}
 student1 = np.random.choice(poss_grades, size = 10, replace = True)
 student2 = np.random.choice(poss_grades, size = 12, replace = True)
 ```
@@ -233,7 +240,7 @@ student2 = np.random.choice(poss_grades, size = 12, replace = True)
 
 
 2. 
-
+  
 Suppose you are creating a *classifier* whose job it is to predict labels. Consider the following `DataFrame` of predicted labels next to their corresponding actual labels. Please make sure to include this code in your script. 
 
 ```{python, collapse = TRUE}
@@ -242,7 +249,8 @@ import numpy as np
 d = pd.DataFrame({'predicted label' : [1,2,2,1,2,2,1,2,3,2,2,3], 
                   'actual label': [1,2,3,1,2,3,1,2,3,1,2,3]}, 
                  dtype='category')
-list(d.dtypes)
+d.dtypes[0]
+d.dtypes[1]
 ```
   
   

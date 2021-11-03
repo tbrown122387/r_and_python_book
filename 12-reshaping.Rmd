@@ -236,9 +236,9 @@ fakeLongData2
 
 ### Long Versus Wide in Python
 
-With Pandas, we can take make wide data long with [`pd.DataFrame.pivot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
+With Pandas, we can take make long data wide with [`pd.DataFrame.pivot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#), and we can go in the other direction with [`pd.DataFrame.melt()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt). 
 
-When going from wide to long, make sure to use the [`pd.DataFrame.reset_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#) method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
+When going from long to wide, make sure to use the [`pd.DataFrame.reset_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#) method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -254,7 +254,7 @@ fake_wide_data1 = pivot_data1.reset_index()
 fake_wide_data1
 ```
 
-Here's one more example showing the same functionality--going from wide to long format.
+Here's one more example showing the same functionality--going from long to wide format.
 
 ```{python, collapse = TRUE}
 fake_long_data2 = pd.DataFrame({'person' : ["Taylor","Taylor","Charlie","Charlie"], 

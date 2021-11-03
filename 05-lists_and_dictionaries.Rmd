@@ -21,13 +21,13 @@ You can also name the elements of a list. This can lead to more readable code. T
 dataSet <- read.csv("data/cars.csv")
 results <- lm(log(Horsepower) ~ Type, data = dataSet)
 length(results)
-names(results) 
+# names(results) # try this <-
 results$contrasts
 results['rank']
 ```
 
 ::: {.rmd-caution}
-`results` is a `list` (`is.list(results)` returns `TRUE`), but to be more specific, it is an S3 object of class `lm`. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren't confused if you type `class(results)` and see `lm` instead of `list`. Second, the fact that the authors  of `lm()` wrote code that returns `result` as a "fancy list" suggests that they are encouraging another way to access elements of the `results`: to use specialized functions! For example, you can use `residuals(results)`, `coefficients(results)`, and `fitted.values(results)`. These functions do not work for all lists in R, but when they do work (for `lm` and `glm` objects only), you can be sure you are writing the kind of code that is encouraged by the authors of `lm()`.
+`results` is a `list` (because `is.list(results)` returns `TRUE`), but to be more specific, it is an S3 object of class `lm`. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren't confused if you type `class(results)` and see `lm` instead of `list`. Second, the fact that the authors  of `lm()` wrote code that returns `result` as a "fancy list" suggests that they are encouraging another way to access elements of the `results`: to use specialized functions! For example, you can use `residuals(results)`, `coefficients(results)`, and `fitted.values(results)`. These functions do not work for all lists in R, but when they do work (for `lm` and `glm` objects only), you can be sure you are writing the kind of code that is encouraged by the authors of `lm()`.
 :::
 
 
@@ -73,17 +73,17 @@ your_list
 Here is an example of creating a `dict` with curly braces (i.e. `{}`). This `dict` stores the current price of a few popular cryptocurrencies. Accessing an individual element's value using its key is done with the square bracket operator (i.e. `[]`), and deleting elements is done with the `del` keyword.
 
 ```{python, collapse = TRUE}
-current_crypto_prices = {'BTC': 38657.14, 'ETH': 2386.54, 'DOGE': .308122}
-current_crypto_prices['DOGE'] # get the current price of Dogecoin
-del current_crypto_prices['BTC'] # remove the current price of Bitcoin
-current_crypto_prices.keys()
-current_crypto_prices.values()
+crypto_prices = {'BTC': 38657.14, 'ETH': 2386.54, 'DOGE': .308122}
+crypto_prices['DOGE'] # get the current price of Dogecoin
+del crypto_prices['BTC'] # remove the current price of Bitcoin
+crypto_prices.keys()
+crypto_prices.values()
 ```
 
 You can also create `dict`s using **dictionary comprehensions**. Just like list comprehensions, these are discussed more in \@ref(loops).
 
 ```{python, collapse= TRUE}
-incr_cryptos = {key:val*1.1 for (key,val) in current_crypto_prices.items()}
+incr_cryptos = {key:val*1.1 for (key,val) in crypto_prices.items()}
 incr_cryptos
 ```
 
@@ -92,7 +92,8 @@ Personally, I don't use dictionaries as much as lists. If I have a dictionary, I
 
 ```{python, collapse= TRUE}
 import pandas as pd
-df_from_dict = pd.DataFrame({ 'col1': [1,2,3], 'col2' : ['a','b','c']})
+a_dict = { 'col1': [1,2,3], 'col2' : ['a','b','c']}
+df_from_dict = pd.DataFrame(a_dict)
 df_from_dict
 ```
 
