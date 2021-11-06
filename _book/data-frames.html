@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="categorical-data.html"/>
 <link rel="next" href="input-and-output.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -353,6 +353,7 @@ div.csl-indent {
 <li class="chapter" data-level="13.1" data-path="visualization.html"><a href="visualization.html#base-r-plotting"><i class="fa fa-check"></i><b>13.1</b> Base R Plotting</a></li>
 <li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
 <li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
+<li class="chapter" data-level="13.4" data-path="visualization.html"><a href="visualization.html#plotting-with-pandas"><i class="fa fa-check"></i><b>13.4</b> Plotting with Pandas</a></li>
 </ul></li>
 <li class="part"><span><b>III Programming Styles</b></span></li>
 <li class="chapter" data-level="14" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>14</b> An Introduction to Object-Oriented Programming</a>
@@ -639,17 +640,17 @@ div.csl-indent {
 <span id="cb140-9"><a href="data-frames.html#cb140-9" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> iris_data[<span class="st">&#39;petal.length&#39;</span>]</span>
 <span id="cb140-10"><a href="data-frames.html#cb140-10" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
 <span id="cb140-11"><a href="data-frames.html#cb140-11" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.width  species  col_ones</span></span>
-<span id="cb140-12"><a href="data-frames.html#cb140-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.647670  -999.772495          0.2  SETOSA!       1.0</span></span>
-<span id="cb140-13"><a href="data-frames.html#cb140-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    997.539297  -999.998765          0.2  SETOSA!       1.0</span></span>
-<span id="cb140-14"><a href="data-frames.html#cb140-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -996.909943          0.2  SETOSA!       1.0</span></span></code></pre></div>
+<span id="cb140-12"><a href="data-frames.html#cb140-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.806447  -997.910412          0.2  SETOSA!       1.0</span></span>
+<span id="cb140-13"><a href="data-frames.html#cb140-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    998.811209  -997.997536          0.2  SETOSA!       1.0</span></span>
+<span id="cb140-14"><a href="data-frames.html#cb140-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000 -1000.499237          0.2  SETOSA!       1.0</span></span></code></pre></div>
 <p>You can also use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html"><code>.assign()</code> method</a> to create a new column. This method does not modify the data frame in place. It returns a new <code>DataFrame</code> with the additional column.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="data-frames.html#cb141-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.assign(new_col_name <span class="op">=</span> np.arange(n_rows))</span>
 <span id="cb141-2"><a href="data-frames.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> iris_data[<span class="st">&#39;sepal.length&#39;</span>]</span>
 <span id="cb141-3"><a href="data-frames.html#cb141-3" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
 <span id="cb141-4"><a href="data-frames.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.width  petal.width  species  col_ones  new_col_name</span></span>
-<span id="cb141-5"><a href="data-frames.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 149  -999.772495          0.2  SETOSA!       1.0             0</span></span>
-<span id="cb141-6"><a href="data-frames.html#cb141-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 148  -999.998765          0.2  SETOSA!       1.0             1</span></span>
-<span id="cb141-7"><a href="data-frames.html#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 147  -996.909943          0.2  SETOSA!       1.0             2</span></span></code></pre></div>
+<span id="cb141-5"><a href="data-frames.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 149  -997.910412          0.2  SETOSA!       1.0             0</span></span>
+<span id="cb141-6"><a href="data-frames.html#cb141-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 148  -997.997536          0.2  SETOSA!       1.0             1</span></span>
+<span id="cb141-7"><a href="data-frames.html#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 147 -1000.499237          0.2  SETOSA!       1.0             2</span></span></code></pre></div>
 <div class="rmd-caution">
 <p>Above we were assigning Numpy arrays to columns of a <code>DataFrame</code>. Be careful when you’re assigning <code>Series</code> objects. You’ll see in the documentation that <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#basics">“pandas aligns all AXES when setting Series and <code>DataFrame</code> from <code>.loc</code>, and <code>.iloc</code>.”</a>.</p>
 </div>
@@ -776,7 +777,6 @@ Socher, Richard, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, And
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -816,6 +816,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

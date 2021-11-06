@@ -5,7 +5,7 @@ I describe a few plotting paradigms in R and Python below. Note that these descr
 
 ## Base R Plotting
 
-R comes with some built-in functions `plot()`, `hist()`, `boxplot()`, etc. Many of these reside in `package:graphics`, which comes pre-loaded into the search path. `plot()` on the other hand, is higher up the search path in `package:base`--it is a generic method whose methods can reside in many places (e.g. in `package:graphics` or some place else). 
+R comes with some built-in plotting functions such as `plot()`, `hist()` and `boxplot()`. Many of these reside in `package:graphics`, which comes pre-loaded into the search path. `plot()` on the other hand, is higher up the search path in `package:base`--it is a generic method whose methods can reside in many places (e.g. in `package:graphics` or some place else). 
 
 Base plotting will usually cover most of your needs, so that is what we spend the most time learning about. However, there are a large number of third-party libraries for plotting that you might consider looking into if you want to use a certain aesthetic, or if you want plotting functionality that is specialized for certain cases (e.g. geospatial plots).
 
@@ -133,7 +133,7 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
 
 ## Plotting with Matplotlib
 
-Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It is the oldest and most heavily-used, so it's the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of [tutorials](https://matplotlib.org/stable/tutorials/index.html) on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code.
+Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of [tutorials](https://matplotlib.org/stable/tutorials/index.html) on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, [@py_ds_handbook] is also a terrific resource. It has an entire chapter dedicated to visualization with Matplotlib. 
 
 ::: {.rmd-details}
 You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
@@ -189,15 +189,52 @@ myAxes[1].legend()
 plt.show()                            
 ```
 
-import numpy as np
-my_inputs = np.linspace(start = 0, stop = 2*np.pi)
-outputs = np.sin(my_inputs)
-
-import matplotlib.pyplot as plt
-plt.plot(my_inputs, outputs)
+## Plotting with Pandas
 
 
-very good! https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html
+Pandas provides a bunch of `DataFrame` and `Series` methods that perform plotting. We describe a few options that are available, but [the documentation provides many more details](https://pandas.pydata.org/docs/user_guide/visualization.html#chart-visualization).
 
-mention that you don't discuss Pandas plotting even though it's quite conveneint.
+The [`.plot()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html) method is very handy because it allows you to choose between a line plot, horizontal and vertical bar plots, histograms, boxplots, density plots, area plots, pie charts, scatterplots and hexbin plots. 
+
+If you already have Pandas `import`ed, it's super fast to type, and you can make good-looking plots in just one line of code. The default plot type is a line plot, so there tends to be less typing if you're working with time series data. 
+
+```{python, collapse = TRUE}
+import pandas as pd
+df = pd.read_csv("data/gspc.csv")
+df.head()
+df['GSPC.Adjusted'].plot()
+type(df.plot)
+```
+
+```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Adjusted Closing Prices for the S&P500 Index"}
+plt.show()                            
+```
+
+
+Changing between the different plot types that were mentioned above can be done in two different ways. You can either use the `.plot` accessor data member, or you can pass in different strings to `plot()`'s `kind=` parameter. Third, some plot types (e.g. boxplots and histograms) happen to have their own dedicated methods. 
+
+```{python, collapse = TRUE}
+rets = np.diff(np.log(df['GSPC.Adjusted']))
+df['returns'] = np.append(0, rets)
+df['returns'].plot(kind='hist')
+# same as df['returns'].plot.hist()
+# same as df['returns'].hist()
+```
+
+```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Three Ways to Get the Same Histogram"}
+plt.show()                            
+```
+
+
+
+```{python, collapse = TRUE}
+from pandas.plotting import lag_plot
+lag_plot(df['returns'])
+```
+```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Lag Plot of S&P500 Returns"}
+plt.show()                            
+```
+
+
+
 
