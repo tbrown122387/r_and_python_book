@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="control-flow.html"/>
 <link rel="next" href="visualization.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -490,15 +490,22 @@ div.csl-indent {
 <span id="cb195-2"><a href="reshaping-and-combining-data-sets.html#cb195-2" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> realEstate[<span class="sc">-</span><span class="dv">1</span>,]</span>
 <span id="cb195-3"><a href="reshaping-and-combining-data-sets.html#cb195-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> realEstate[<span class="dv">1</span>,]</span>
 <span id="cb195-4"><a href="reshaping-and-combining-data-sets.html#cb195-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rbind</span>(test, train))</span>
-<span id="cb195-5"><a href="reshaping-and-combining-data-sets.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
-<span id="cb195-6"><a href="reshaping-and-combining-data-sets.html#cb195-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
-<span id="cb195-7"><a href="reshaping-and-combining-data-sets.html#cb195-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
-<span id="cb195-8"><a href="reshaping-and-combining-data-sets.html#cb195-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
-<span id="cb195-9"><a href="reshaping-and-combining-data-sets.html#cb195-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
-<span id="cb195-10"><a href="reshaping-and-combining-data-sets.html#cb195-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
-<span id="cb195-11"><a href="reshaping-and-combining-data-sets.html#cb195-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span>
-<span id="cb195-12"><a href="reshaping-and-combining-data-sets.html#cb195-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">rbind</span>(test, train) <span class="sc">!=</span> realEstate)</span>
-<span id="cb195-13"><a href="reshaping-and-combining-data-sets.html#cb195-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
+<span id="cb195-5"><a href="reshaping-and-combining-data-sets.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
+<span id="cb195-6"><a href="reshaping-and-combining-data-sets.html#cb195-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
+<span id="cb195-7"><a href="reshaping-and-combining-data-sets.html#cb195-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
+<span id="cb195-8"><a href="reshaping-and-combining-data-sets.html#cb195-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
+<span id="cb195-9"><a href="reshaping-and-combining-data-sets.html#cb195-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
+<span id="cb195-10"><a href="reshaping-and-combining-data-sets.html#cb195-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
+<span id="cb195-11"><a href="reshaping-and-combining-data-sets.html#cb195-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
+<span id="cb195-12"><a href="reshaping-and-combining-data-sets.html#cb195-12" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
+<span id="cb195-13"><a href="reshaping-and-combining-data-sets.html#cb195-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
+<span id="cb195-14"><a href="reshaping-and-combining-data-sets.html#cb195-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
+<span id="cb195-15"><a href="reshaping-and-combining-data-sets.html#cb195-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
+<span id="cb195-16"><a href="reshaping-and-combining-data-sets.html#cb195-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
+<span id="cb195-17"><a href="reshaping-and-combining-data-sets.html#cb195-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
+<span id="cb195-18"><a href="reshaping-and-combining-data-sets.html#cb195-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
+<span id="cb195-19"><a href="reshaping-and-combining-data-sets.html#cb195-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">rbind</span>(test, train) <span class="sc">!=</span> realEstate)</span>
+<span id="cb195-20"><a href="reshaping-and-combining-data-sets.html#cb195-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
 <p>The above example was with <code>data.frame</code>s. This example of <code>rbind()</code> is with <code>matrix</code> objects.</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="reshaping-and-combining-data-sets.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">matrix</span>(<span class="dv">1</span>,<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>), </span>
 <span id="cb196-2"><a href="reshaping-and-combining-data-sets.html#cb196-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(<span class="dv">2</span>,<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>))</span>
@@ -765,6 +772,7 @@ div.csl-indent {
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -805,7 +813,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

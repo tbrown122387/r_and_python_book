@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="visualization.html"/>
 <link rel="next" href="functional-programming.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -493,7 +493,11 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <div class="rmd-details">
 <p>There is a Python convention that stipules class names should be written in <code>UpperCamelCase</code> (e.g. <code>RunningMean</code>).</p>
 </div>
-<p>That’s much better! Notice the <em>encapsulation</em>. Looking at this code we don’t need to think about the mathematical formula and the data being received. We only need to think about the latter. In other words, the <em>implementation</em> is separated from the <em>interface</em>. The interface in this case, is just the name of the class methods, and the arguments they expect. That’s all we need to know about to use this code.</p>
+<p>That’s much better! Notice the <em>encapsulation</em>–while looking at this code we do not need to think about the mathematical formula that is used to process the data. We only need to type in the correct data being used. In other words, the <em>implementation</em> is separated from the <em>interface</em>. The interface in this case, is just the name of the class methods, and the arguments they expect. That’s all we need to know about to use this code.</p>
+<div class="rmd-caution">
+<p>After seeing these new words that are unfamiliar and long, it’s tempting to dismiss these new ideas as superfluous. After all, if you are confident that you can get your program working, why stress about all these new concepts? If it ain’t broke, don’t fix it, right?</p>
+<p>I urge you to try to keep an open mind, particularly if you are already confident that you understand the basics of programming in R and Python. The topics in this chapter are more centered around design choices. This material won’t help you write a first draft of a script even faster, but it will make your code much better. Even though you will have to slow down a bit before you start typing, thinking about your program more deeply will prevent bugs and allow more people to use your code.</p>
+</div>
 <p>Classes (obviously) need to be defined before they are used, so here is the definition of our class.</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb233-1"><a href="an-introduction-to-object-oriented-programming.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningMean:</span>
 <span id="cb233-2"><a href="an-introduction-to-object-oriented-programming.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average&quot;&quot;&quot;</span></span>
@@ -509,7 +513,7 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <span id="cb233-12"><a href="an-introduction-to-object-oriented-programming.html#cb233-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
 <span id="cb233-13"><a href="an-introduction-to-object-oriented-programming.html#cb233-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.current_xbar</span></code></pre></div>
 <div class="rmd-details">
-<p>Methods that look like <code>\_\_init\_\_</code>, or that possess names that begin and end with two underscores, are called <strong>dunder (double underscore) methods</strong>, <strong>special methods</strong> or <strong>magic methods</strong>. There are many that you can take advantage of! For more information see <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">this</a>.</p>
+<p>Methods that look like <code>__init__</code>, or that possess names that begin and end with two underscores, are called <strong>dunder (double underscore) methods</strong>, <strong>special methods</strong> or <strong>magic methods</strong>. There are many that you can take advantage of! For more information see <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">this</a>.</p>
 </div>
 <p>Here are the details of the class definition:</p>
 <ol style="list-style-type: decimal">
@@ -537,7 +541,7 @@ We might consider taking advantage of a recursive formula for the sample means.<
 The width of the interval shrinks as we get more data (as <span class="math inline">\(n \to \infty\)</span>). We can write another class that, not only calculates the center of this interval, <span class="math inline">\(\bar{x}\)</span>, but also returns the interval endpoints.</p>
 <p>If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of <code>RunningMean</code>. Instead, we’ll use the idea of <a href="https://docs.python.org/3/tutorial/classes.html#inheritance"><em>inheritance</em></a>.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb234-1"><a href="an-introduction-to-object-oriented-programming.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean):</span>
+<span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean): <span class="co"># &lt;- notice what&#39;s inside the parnentheses!</span></span>
 <span id="cb234-3"><a href="an-introduction-to-object-oriented-programming.html#cb234-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
 <span id="cb234-4"><a href="an-introduction-to-object-oriented-programming.html#cb234-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
 <span id="cb234-5"><a href="an-introduction-to-object-oriented-programming.html#cb234-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -648,15 +652,17 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="an-introduction-to-object-oriented-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x556fc4064c70&gt;
+## &lt;bytecode: 0x55b42a201a70&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods</code> function.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(plot)</span></code></pre></div>
-<pre><code>##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts* plot.default        plot.dendrogram*   
-##  [8] plot.density*       plot.ecdf           plot.factor*        plot.formula*       plot.function       plot.ggplot*        plot.gtable*       
-## [15] plot.hcl_palettes*  plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*            plot.medpolish*    
-## [22] plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*        plot.princomp*      plot.profile.nls*   plot.R6*           
-## [29] plot.raster*        plot.shingle*       plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
+<pre><code>##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
+##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
+## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
+## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
+## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
+## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
+## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
 ## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
 <p>All of these S3 class methods share the same naming convention. Their name has the generic function’s name as a prefix, then a dot (<code>.</code>), then the name of the class that they are specifically written to be used with.</p>
@@ -675,7 +681,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <span id="cb246-4"><a href="an-introduction-to-object-oriented-programming.html#cb246-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aDF)</span>
 <span id="cb246-5"><a href="an-introduction-to-object-oriented-programming.html#cb246-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
 <span id="cb246-6"><a href="an-introduction-to-object-oriented-programming.html#cb246-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aDF)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-279-1.png" width="50%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-244-1.png" width="50%" /></p>
 <p>Because <code>aDF</code> has its <code>class</code> set to <code>data.frame</code>, this causes <code>plot</code> to try to find a <code>plot.data.frame</code> method. If this method was not found, R would attempt to find/use a <code>plot.default</code> method. If no default method existed, an error would be thrown.</p>
 <p>As another example, we can play around with objects created with the <code>ecdf</code> function. This function computes an <em>empirical cumulative distribution function</em>, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a></p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="an-introduction-to-object-oriented-programming.html#cb247-1" aria-hidden="true" tabindex="-1"></a>myECDF <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
@@ -684,7 +690,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <span id="cb247-4"><a href="an-introduction-to-object-oriented-programming.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myECDF)</span>
 <span id="cb247-5"><a href="an-introduction-to-object-oriented-programming.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ecdf&quot;     &quot;stepfun&quot;  &quot;function&quot;</span></span>
 <span id="cb247-6"><a href="an-introduction-to-object-oriented-programming.html#cb247-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myECDF)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-280-1.png" width="50%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-245-1.png" width="50%" /></p>
 <p>This is how <em>inheritance</em> works in R. The <code>ecdf</code> class inherits from the <code>stepfun</code> class, which in turn inherits from the <code>function</code> class. When you call <code>plot(myECDF)</code>, ultimately <code>plot.ecdf</code> is used on this object. However, if <code>plot.ecdf</code> did not exist, <code>plot.stepfun</code> would be tried. S3 inheritance in R is much simpler than Python’s inheritance!</p>
 </div>
 <div id="creating-s3-objects" class="section level3" number="14.2.3">
@@ -996,7 +1002,7 @@ and the estimate for the coefficient vector can be written as
 <span id="cb259-16"><a href="an-introduction-to-object-oriented-programming.html#cb259-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb259-17"><a href="an-introduction-to-object-oriented-programming.html#cb259-17" aria-hidden="true" tabindex="-1"></a><span class="co"># plot fake data </span></span>
 <span id="cb259-18"><a href="an-introduction-to-object-oriented-programming.html#cb259-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_array[:,<span class="dv">1</span>], y_array)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-293-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>Here is an example class definition, and then its use. The class holds onto</p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Come up with a list of Python classes that are written in third party libraries, and that you will find useful in the future!</p></li>
@@ -1032,6 +1038,7 @@ and the estimate for the coefficient vector can be written as
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1072,7 +1079,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

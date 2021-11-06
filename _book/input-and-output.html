@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -463,7 +463,8 @@ div.csl-indent {
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>.</p>
 <p>If you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press the <code>&lt;Enter&gt;</code> key), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
 <p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first few rows of the raw text file<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> looks like this.</p>
-<pre><code>6 0 66  50  1
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3</code></pre>
 <p>It does not use commas as separators, and there is no header information, so <code>read.csv()</code> used with its default arguments will produce an incorrect result. It will miss the first row by counting it as a column name, and store everything in one column with the wrong type.</p>
@@ -513,8 +514,9 @@ div.csl-indent {
 <span id="cb148-4"><a href="input-and-output.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;&lt;html itemscope=\&quot;\&quot; itemtype=\&quot;http://schema.org/WebPage\&quot; lang=\&quot;en\&quot;&gt;&lt;head&gt;&quot;</span></span></code></pre></div>
 <p>Some of you may have had difficulty reading in the above data. This can happen if your machine’s default character encoding is different than mine. For instance, if your character encoding is <a href="https://en.wikipedia.org/wiki/GBK_(character_encoding)">“GBK”</a>, then the following warning message might appear. This message means that your machine didn’t recognize some of the characters in the data set.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="input-and-output.html#cb149-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>)</span>
-<span id="cb149-2"><a href="input-and-output.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection &#39;data/Google.html&#39;</span></span>
-<span id="cb149-3"><a href="input-and-output.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string</span></span></code></pre></div>
+<span id="cb149-2"><a href="input-and-output.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection</span></span>
+<span id="cb149-3"><a href="input-and-output.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data/Google.html&#39;</span></span>
+<span id="cb149-4"><a href="input-and-output.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string</span></span></code></pre></div>
 <p>These errors are easy to fix, though, so don’t worry. Just specify an encoding argument in your function that reads in data.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="input-and-output.html#cb150-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>, </span>
 <span id="cb150-2"><a href="input-and-output.html#cb150-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>) <span class="co"># this makes errors disappear</span></span></code></pre></div>
@@ -602,7 +604,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="input-and-output.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring_out.csv&quot;</span>, </span>
 <span id="cb158-2"><a href="input-and-output.html#cb158-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span></code></pre></div>
 <p>The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.</p>
-<pre><code>&quot;V1&quot;;&quot;V2&quot;;&quot;V3&quot;;&quot;V4&quot;;&quot;V5&quot;
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+&quot;V1&quot;;&quot;V2&quot;;&quot;V3&quot;;&quot;V4&quot;;&quot;V5&quot;
 6;0;66;50;1
 6;1;70;50;2</code></pre>
 </div>
@@ -641,7 +644,8 @@ div.csl-indent {
 <span id="cb163-2"><a href="input-and-output.html#cb163-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, header<span class="op">=</span><span class="va">None</span>, sep <span class="op">=</span> <span class="st">&quot;\s+&quot;</span>)</span>
 <span id="cb163-3"><a href="input-and-output.html#cb163-3" aria-hidden="true" tabindex="-1"></a>d.to_csv(<span class="st">&quot;data/oring_out2.csv&quot;</span>, header<span class="op">=</span><span class="va">True</span>, index<span class="op">=</span><span class="va">False</span>, sep <span class="op">=</span> <span class="st">&quot;,&quot;</span>)</span></code></pre></div>
 <p>Here is how the first few rows of that file looks in a text editor.</p>
-<pre><code>0,1,2,3,4
+<pre><code>bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
+0,1,2,3,4
 6,0,66,50,1
 6,1,70,50,2</code></pre>
 </div>
@@ -728,6 +732,7 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -768,7 +773,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

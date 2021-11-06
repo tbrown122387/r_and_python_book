@@ -2810,7 +2810,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140493631759712 140493631759744}
+\CommentTok{\#\# 139754705933664 139754705933696}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -3969,7 +3969,7 @@ Please include the following code in your submission.
 \end{Highlighting}
 \end{Shaded}
 
-Many of you will need to install \texttt{tensorflow} and \texttt{tensorflow\_datasets} before you're able to \texttt{import} it. If that's so, please see the \href{https://randpythonbook.netlify.app/using-third-party-code.html\#installing-packages-in-python}{text for more information} on how to install packages. On my machine, I was able to install it with the commented out line, however, that may not be the case for you. After it is installed, please comment out all lines in your script that attempt to install packages. They will not work on the Gradescope server.
+Many of you will need to install \texttt{tensorflow} and \texttt{tensorflow\_datasets} before you're able to \texttt{import} it. If that's so, please read section \ref{installing-packages-in-python} for more information on how to install packages. On my machine, I was able to install it with the commented out line, however, that may not be the case for you. After it is installed, please comment out all lines in your script that attempt to install packages. They will not work on the Gradescope server.
 
 \begin{itemize}
 \tightlist
@@ -4075,6 +4075,7 @@ If you look at the source code for \texttt{read.csv()} (type the name of the fun
 Consider the \href{https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring}{``Challenger USA Space Shuttle O-Ring Data Set''} from \citep{uci_data}. The first few rows of the raw text file\footnote{Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.} looks like this.
 
 \begin{verbatim}
+bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
@@ -4163,8 +4164,8 @@ Some of you may have had difficulty reading in the above data. This can happen i
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tmp }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"data/Google.html"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\textasciitilde{}"}\NormalTok{)}
-\DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on}
-\DocumentationTok{\#\# input connection \textquotesingle{}data/Google.html\textquotesingle{}}
+\DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection}
+\DocumentationTok{\#\# \textquotesingle{}data/Google.html\textquotesingle{}}
 \DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string}
 \end{Highlighting}
 \end{Shaded}
@@ -4267,21 +4268,6 @@ Just like in R, you may run into an encoding issue with a file. For instance, th
 \begin{Highlighting}[]
 \NormalTok{pd.read\_csv(}\StringTok{"data/message.txt"}\NormalTok{)}
 \CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): UnicodeDecodeError: \textquotesingle{}utf{-}8\textquotesingle{} codec can\textquotesingle{}t decode byte 0xb9 in position 0: invalid start byte}
-\CommentTok{\#\# }
-\CommentTok{\#\# Detailed traceback:}
-\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
-\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 688, in read\_csv}
-\CommentTok{\#\#     return \_read(filepath\_or\_buffer, kwds)}
-\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 454, in \_read}
-\CommentTok{\#\#     parser = TextFileReader(fp\_or\_buf, **kwds)}
-\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 948, in \_\_init\_\_}
-\CommentTok{\#\#     self.\_make\_engine(self.engine)}
-\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 1180, in \_make\_engine}
-\CommentTok{\#\#     self.\_engine = CParserWrapper(self.f, **self.options)}
-\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 2010, in \_\_init\_\_}
-\CommentTok{\#\#     self.\_reader = parsers.TextReader(src, **kwds)}
-\CommentTok{\#\#   File "pandas/\_libs/parsers.pyx", line 537, in pandas.\_libs.parsers.TextReader.\_\_cinit\_\_}
-\CommentTok{\#\#   File "pandas/\_libs/parsers.pyx", line 740, in pandas.\_libs.parsers.TextReader.\_get\_header}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4333,6 +4319,7 @@ Here is an example of writing out \texttt{d} to a file called \texttt{oring\_out
 The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.
 
 \begin{verbatim}
+bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 "V1";"V2";"V3";"V4";"V5"
 6;0;66;50;1
 6;1;70;50;2
@@ -4401,6 +4388,7 @@ You can write out tabular data with a variety of \href{https://pandas.pydata.org
 Here is how the first few rows of that file looks in a text editor.
 
 \begin{verbatim}
+bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 0,1,2,3,4
 6,0,66,50,1
 6,1,70,50,2
@@ -4568,10 +4556,9 @@ Moreover, all of these environments are connected in a chain-like structure. To 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
-\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:ggplot2"   }
-\DocumentationTok{\#\#  [5] "package:reticulate" "tools:rstudio"      "package:stats"      "package:graphics"  }
-\DocumentationTok{\#\#  [9] "package:grDevices"  "package:utils"      "package:datasets"   "package:methods"   }
-\DocumentationTok{\#\# [13] "Autoloads"          "package:base"}
+\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:ggplot2"    "package:reticulate"}
+\DocumentationTok{\#\#  [6] "tools:rstudio"      "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"     }
+\DocumentationTok{\#\# [11] "package:datasets"   "package:methods"    "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5342,20 +5329,20 @@ In R, this can be done with \texttt{rbind()} (short for ``row bind'')
 \NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
 \NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\DecValTok{1}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train))}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{sum}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train) }\SpecialCharTok{!=}\NormalTok{ realEstate)}
 \DocumentationTok{\#\# [1] 0}
 \end{Highlighting}
@@ -5647,9 +5634,9 @@ If you would like to reshape the long data sets into a wide format, you can use 
 \hypertarget{long-versus-wide-in-python}{%
 \subsection{Long Versus Wide in Python}\label{long-versus-wide-in-python}}
 
-With Pandas, we can take make wide data long with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html\#}{\texttt{pd.DataFrame.pivot()}}, and we can go in the other direction with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt}{\texttt{pd.DataFrame.melt()}}.
+With Pandas, we can take make long data wide with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html\#}{\texttt{pd.DataFrame.pivot()}}, and we can go in the other direction with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt}{\texttt{pd.DataFrame.melt()}}.
 
-When going from wide to long, make sure to use the \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html\#}{\texttt{pd.DataFrame.reset\_index()}} method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
+When going from long to wide, make sure to use the \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html\#}{\texttt{pd.DataFrame.reset\_index()}} method afterwards to reshape the data and remove the index. Here is an example similar to the one above.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5675,7 +5662,7 @@ When going from wide to long, make sure to use the \href{https://pandas.pydata.o
 \end{Highlighting}
 \end{Shaded}
 
-Here's one more example showing the same functionality--going from wide to long format.
+Here's one more example showing the same functionality--going from long to wide format.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5736,7 +5723,7 @@ I describe a few plotting paradigms in R and Python below. Note that these descr
 \hypertarget{base-r-plotting}{%
 \section{Base R Plotting}\label{base-r-plotting}}
 
-R comes with some built-in functions \texttt{plot()}, \texttt{hist()}, \texttt{boxplot()}, etc. Many of these reside in \texttt{package:graphics}, which comes pre-loaded into the search path. \texttt{plot()} on the other hand, is higher up the search path in \texttt{package:base}--it is a generic method whose methods can reside in many places (e.g.~in \texttt{package:graphics} or some place else).
+R comes with some built-in plotting functions such as \texttt{plot()}, \texttt{hist()} and \texttt{boxplot()}. Many of these reside in \texttt{package:graphics}, which comes pre-loaded into the search path. \texttt{plot()} on the other hand, is higher up the search path in \texttt{package:base}--it is a generic method whose methods can reside in many places (e.g.~in \texttt{package:graphics} or some place else).
 
 Base plotting will usually cover most of your needs, so that is what we spend the most time learning about. However, there are a large number of third-party libraries for plotting that you might consider looking into if you want to use a certain aesthetic, or if you want plotting functionality that is specialized for certain cases (e.g.~geospatial plots).
 
@@ -5746,20 +5733,20 @@ Recall our Albemarle Real Estate data set.
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \FunctionTok{head}\NormalTok{(df)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5957,7 +5944,7 @@ There are many to choose from, though. Try to run the following code on your own
 \hypertarget{plotting-with-matplotlib}{%
 \section{Plotting with Matplotlib}\label{plotting-with-matplotlib}}
 
-Matplotlib \citep{Hunter:2007} is a third-party visualization library in Python. It is the oldest and most heavily-used, so it's the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of \href{https://matplotlib.org/stable/tutorials/index.html}{tutorials} on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code.
+Matplotlib \citep{Hunter:2007} is a third-party visualization library in Python. It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of \href{https://matplotlib.org/stable/tutorials/index.html}{tutorials} on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, \citep{py_ds_handbook} is also a terrific resource. It has an entire chapter dedicated to visualization with Matplotlib.
 
 You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-oriented-style'' to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
 
@@ -5973,7 +5960,7 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-227-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. Calling it \texttt{plt} follows the most popular naming convention.
 
@@ -6004,35 +5991,90 @@ If you want to make figures that are more elaborate, just keep calling different
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddbdfd0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data on the axes...}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddc33c8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddc3748\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
+\CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
+\CommentTok{\#\# Text(0, 0.5, \textquotesingle{}y label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{"Simple Plot"}\NormalTok{)  }\CommentTok{\# Add a title to the axes.}
+\CommentTok{\#\# Text(0.5, 1.0, \textquotesingle{}Simple Plot\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f1afde72710\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddc3b38\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-228-3.pdf}
-
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-229-5} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-229}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-3} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-228}
 \end{figure}
 
-import numpy as np
-my\_inputs = np.linspace(start = 0, stop = 2*np.pi)
-outputs = np.sin(my\_inputs)
+\hypertarget{plotting-with-pandas}{%
+\section{Plotting with Pandas}\label{plotting-with-pandas}}
 
-import matplotlib.pyplot as plt
-plt.plot(my\_inputs, outputs)
+Pandas provides several \texttt{DataFrame} and \texttt{Series} methods that perform plotting. These methods are mostly just wrapper functions around Matplotlib code. They are written for convenience, so generally speaking, plotting can be done more quickly with Pandas compared to Matplotlib. Here I describe a few options that are available, and \href{https://pandas.pydata.org/docs/user_guide/visualization.html\#chart-visualization}{the documentation} provides many more details for the curious reader.
 
-very good! \url{https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html}
+The \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html}{\texttt{.plot()}} method is very all-encompassing because it allows you to choose between many different plot types: a line plot, horizontal and vertical bar plots, histograms, boxplots, density plots, area plots, pie charts, scatterplots and hexbin plots. If you only want to remember one function name for plotting in Pandas, this is it.
 
-mention that you don't discuss Pandas plotting even though it's quite conveneint.
+If you already have Pandas \texttt{import}ed, you can make good-looking plots in just one line of code. The default plot type for \texttt{.plot()} is a line plot, so there tends to be less typing if you're working with time series data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{df }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"data/gspc.csv"}\NormalTok{)}
+\NormalTok{df.head()}
+\CommentTok{\#\#         Index    GSPC.Open  ...   GSPC.Volume  GSPC.Adjusted}
+\CommentTok{\#\# 0  2007{-}01{-}03  1418.030029  ...  3.429160e+09    1416.599976}
+\CommentTok{\#\# 1  2007{-}01{-}04  1416.599976  ...  3.004460e+09    1418.339966}
+\CommentTok{\#\# 2  2007{-}01{-}05  1418.339966  ...  2.919400e+09    1409.709961}
+\CommentTok{\#\# 3  2007{-}01{-}08  1409.260010  ...  2.763340e+09    1412.839966}
+\CommentTok{\#\# 4  2007{-}01{-}09  1412.839966  ...  3.038380e+09    1412.109985}
+\CommentTok{\#\# }
+\CommentTok{\#\# [5 rows x 7 columns]}
+\NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-5} \caption{Adjusted Closing Prices for a Stock Price Index}\label{fig:unnamed-chunk-229}
+\end{figure}
+
+Choosing among nondefault plot types can be done in a variety of ways. You can either use the \texttt{.plot} accessor data member of a \texttt{DataFrame}, or you can pass in different strings to \texttt{.plot()}'s \texttt{kind=} parameter. Third, some plot types (e.g.~boxplots and histograms) have their own dedicated methods.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].pct\_change()}
+\NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
+\CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-7} \caption{Three Ways to Get the Same Histogram}\label{fig:unnamed-chunk-230}
+\end{figure}
+
+There are also \href{https://pandas.pydata.org/docs/user_guide/visualization.html\#visualization-tools}{several freestanding plotting functions} (not methods) that take in \texttt{DataFrame}s and \texttt{Series} objects. Each of these functions is typically imported individually from the \texttt{pandas.plotting} submodule.
+
+The following code is an example of creating a ``lag plot,'' which is simply a scatterplot between a time series' lagged and nonlagged values. The primary benefit of this function over \texttt{.plot()} is that this function does not require you to construct an additional column of lagged values, and it comes up with good default axis labels.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
+\NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-9} \caption{Lag Plot of Stock Index Returns}\label{fig:unnamed-chunk-231}
+\end{figure}
 
 \hypertarget{part-programming-styles}{%
 \part{Programming Styles}\label{part-programming-styles}}
@@ -6152,7 +6194,11 @@ Using our code would look like this:
 
 There is a Python convention that stipules class names should be written in \texttt{UpperCamelCase} (e.g.~\texttt{RunningMean}).
 
-That's much better! Notice the \emph{encapsulation}. Looking at this code we don't need to think about the mathematical formula and the data being received. We only need to think about the latter. In other words, the \emph{implementation} is separated from the \emph{interface}. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code.
+That's much better! Notice the \emph{encapsulation}--while looking at this code we do not need to think about the mathematical formula that is used to process the data. We only need to type in the correct data being used. In other words, the \emph{implementation} is separated from the \emph{interface}. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code.
+
+After seeing these new words that are unfamiliar and long, it's tempting to dismiss these new ideas as superfluous. After all, if you are confident that you can get your program working, why stress about all these new concepts? If it ain't broke, don't fix it, right?
+
+I urge you to try to keep an open mind, particularly if you are already confident that you understand the basics of programming in R and Python. The topics in this chapter are more centered around design choices. This material won't help you write a first draft of a script even faster, but it will make your code much better. Even though you will have to slow down a bit before you start typing, thinking about your program more deeply will prevent bugs and allow more people to use your code.
 
 Classes (obviously) need to be defined before they are used, so here is the definition of our class.
 
@@ -6174,7 +6220,7 @@ Classes (obviously) need to be defined before they are used, so here is the defi
 \end{Highlighting}
 \end{Shaded}
 
-Methods that look like \texttt{\textbackslash{}\_\textbackslash{}\_init\textbackslash{}\_\textbackslash{}\_}, or that possess names that begin and end with two underscores, are called \textbf{dunder (double underscore) methods}, \textbf{special methods} or \textbf{magic methods}. There are many that you can take advantage of! For more information see \href{https://docs.python.org/3/reference/datamodel.html\#special-method-names}{this}.
+Methods that look like \texttt{\_\_init\_\_}, or that possess names that begin and end with two underscores, are called \textbf{dunder (double underscore) methods}, \textbf{special methods} or \textbf{magic methods}. There are many that you can take advantage of! For more information see \href{https://docs.python.org/3/reference/datamodel.html\#special-method-names}{this}.
 
 Here are the details of the class definition:
 
@@ -6222,7 +6268,7 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 \begin{Shaded}
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
-\KeywordTok{class}\NormalTok{ RunningCI(RunningMean):}
+\KeywordTok{class}\NormalTok{ RunningCI(RunningMean): }\CommentTok{\# \textless{}{-} notice what\textquotesingle{}s inside the parnentheses!}
   \CommentTok{"""Updates a running average and gives you a known{-}variance confidence interval"""}
   \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, known\_var):}
     \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{()}
@@ -6409,7 +6455,7 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x55783158af68>
+## <bytecode: 0x55b42a201a70>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -6456,7 +6502,7 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-242-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-244-1}
 
 Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
 
@@ -6473,7 +6519,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-243-1}
+\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-245-1}
 
 This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
@@ -6894,7 +6940,7 @@ and the estimate for the coefficient vector can be written as
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-256-1.pdf}
+\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 Here is an example class definition, and then its use. The class holds onto
 
@@ -7081,8 +7127,8 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
 \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.18971263 {-}0.07595286  0.18400138  0.08895979 {-}0.08496412  0.06865526  0.08697484 {-}0.09550573}
-\DocumentationTok{\#\#  [9]  0.01071571  0.02142769}
+\DocumentationTok{\#\#  [1]  0.18971263 {-}0.07595286  0.18400138  0.08895979 {-}0.08496412  0.06865526  0.08697484 {-}0.09550573  0.01071571}
+\DocumentationTok{\#\# [10]  0.02142769}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7093,20 +7139,13 @@ Another example where it can be useful to apply a function to rows is \textbf{pr
 \NormalTok{albRealEstate }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(albRealEstate}\SpecialCharTok{$}\NormalTok{YearBuilt }\SpecialCharTok{==} \DecValTok{2006} \SpecialCharTok{\&}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{Condition }\SpecialCharTok{==} \StringTok{"Average"}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030}
-\DocumentationTok{\#\#   TotalValue   City}
-\DocumentationTok{\#\# 1     409900 CROZET}
-\DocumentationTok{\#\# 2     523100 CROZET}
-\DocumentationTok{\#\# 4     620700 CROZET}
-\DocumentationTok{\#\# 5     162500 CROZET}
-\DocumentationTok{\#\# 6     167200 CROZET}
-\DocumentationTok{\#\# 8     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7130,20 +7169,13 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030}
-\DocumentationTok{\#\#   TotalValue   City}
-\DocumentationTok{\#\# 1     409900 CROZET}
-\DocumentationTok{\#\# 2     523100 CROZET}
-\DocumentationTok{\#\# 4     620700 CROZET}
-\DocumentationTok{\#\# 5     162500 CROZET}
-\DocumentationTok{\#\# 6     167200 CROZET}
-\DocumentationTok{\#\# 8     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7157,23 +7189,22 @@ If I wanted the average home price for each city, I could use something like thi
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(albRealEstate)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838}
-\DocumentationTok{\#\#   TotalValue        City}
-\DocumentationTok{\#\# 1     409900      CROZET}
-\DocumentationTok{\#\# 2     523100      CROZET}
-\DocumentationTok{\#\# 3     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4     620700      CROZET}
-\DocumentationTok{\#\# 5     162500      CROZET}
-\DocumentationTok{\#\# 6     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City)}
-\DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"   }
-\DocumentationTok{\#\# [6] "KESWICK"}
+\DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"    "KESWICK"}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)}
 \DocumentationTok{\#\# CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE }
 \DocumentationTok{\#\#        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4}
@@ -7357,7 +7388,7 @@ We can construct every possible point on a grid with the \texttt{expand.grid()} 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-273-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-275-1.pdf}
 
 If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
 
@@ -7372,7 +7403,7 @@ If you prefer using \texttt{apply()}, that is also possible, but you would need 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-274-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-276-1.pdf}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
 \section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
@@ -7400,7 +7431,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-276-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -7660,7 +7691,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-290-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-292-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7700,7 +7731,7 @@ Let's compare using common random numbers to going without. As you can see, comm
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-292-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-294-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7726,7 +7757,7 @@ The downside to this implementation is that we have a bunch of samples floating 
 
 Much better! Let's just make sure this function works by comparing its output to the known true function.
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-294-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-296-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}

@@ -165,7 +165,7 @@ In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_a
 
 If you want to make figures that are more elaborate, just keep calling different methods of `ax`. If you want to fit more subplots to the same figure, add more `Axes` objects. Here is an example using some code from [one of the official Matplotlib tutorials](https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface).
 
-```{python, collapse = TRUE}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib"}
 x = np.linspace(0, 2*np.pi, 100) # x values grid shared by both subplots
 
 # create two subplots...one row two columns
@@ -185,54 +185,39 @@ myAxes[1].plot(x,np.sin(x), label='sine wave')
 myAxes[1].legend()
 ```
 
-```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Side-By-Side Line Plots in Matplotlib"}
-plt.show()                            
-```
 
 ## Plotting with Pandas
 
+Pandas provides several `DataFrame` and `Series` methods that perform plotting. These methods are mostly just wrapper functions around Matplotlib code. They are written for convenience, so generally speaking, plotting can be done more quickly with Pandas compared to Matplotlib. Here I describe a few options that are available, and [the documentation](https://pandas.pydata.org/docs/user_guide/visualization.html#chart-visualization) provides many more details for the curious reader.
 
-Pandas provides a bunch of `DataFrame` and `Series` methods that perform plotting. We describe a few options that are available, but [the documentation provides many more details](https://pandas.pydata.org/docs/user_guide/visualization.html#chart-visualization).
+The [`.plot()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html) method is very all-encompassing because it allows you to choose between many different plot types: a line plot, horizontal and vertical bar plots, histograms, boxplots, density plots, area plots, pie charts, scatterplots and hexbin plots. If you only want to remember one function name for plotting in Pandas, this is it. 
 
-The [`.plot()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html) method is very handy because it allows you to choose between a line plot, horizontal and vertical bar plots, histograms, boxplots, density plots, area plots, pie charts, scatterplots and hexbin plots. 
+If you already have Pandas `import`ed, you can make good-looking plots in just one line of code. The default plot type for `.plot()` is a line plot, so there tends to be less typing if you're working with time series data. 
 
-If you already have Pandas `import`ed, it's super fast to type, and you can make good-looking plots in just one line of code. The default plot type is a line plot, so there tends to be less typing if you're working with time series data. 
-
-```{python, collapse = TRUE}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Adjusted Closing Prices for a Stock Price Index" }
 import pandas as pd
 df = pd.read_csv("data/gspc.csv")
 df.head()
 df['GSPC.Adjusted'].plot()
-type(df.plot)
 ```
 
-```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Adjusted Closing Prices for the S&P500 Index"}
-plt.show()                            
-```
+Choosing among nondefault plot types can be done in a variety of ways. You can either use the `.plot` accessor data member of a `DataFrame`, or you can pass in different strings to `.plot()`'s `kind=` parameter. Third, some plot types (e.g. boxplots and histograms) have their own dedicated methods. 
 
-
-Changing between the different plot types that were mentioned above can be done in two different ways. You can either use the `.plot` accessor data member, or you can pass in different strings to `plot()`'s `kind=` parameter. Third, some plot types (e.g. boxplots and histograms) happen to have their own dedicated methods. 
-
-```{python, collapse = TRUE}
-rets = np.diff(np.log(df['GSPC.Adjusted']))
-df['returns'] = np.append(0, rets)
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Three Ways to Get the Same Histogram"}
+df['returns'] = df['GSPC.Adjusted'].pct_change()
 df['returns'].plot(kind='hist')
 # same as df['returns'].plot.hist()
 # same as df['returns'].hist()
 ```
 
-```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Three Ways to Get the Same Histogram"}
-plt.show()                            
-```
 
+There are also [several freestanding plotting functions](https://pandas.pydata.org/docs/user_guide/visualization.html#visualization-tools) (not methods) that take in `DataFrame`s and `Series` objects. Each of these functions is typically imported individually from the `pandas.plotting` submodule. 
 
+The following code is an example of creating a "lag plot," which is simply a scatterplot between a time series' lagged and nonlagged values. The primary benefit of this function over `.plot()` is that this function does not require you to construct an additional column of lagged values, and it comes up with good default axis labels. 
 
-```{python, collapse = TRUE}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Lag Plot of Stock Index Returns"}
 from pandas.plotting import lag_plot
 lag_plot(df['returns'])
-```
-```{python, collapse = TRUE, out.width='80%', echo= FALSE, fig.cap = "Lag Plot of S&P500 Returns"}
-plt.show()                            
 ```
 
 

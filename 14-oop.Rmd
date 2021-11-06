@@ -108,7 +108,13 @@ my_ave.n   # my_ave.n instead of self.n
 There is a Python convention that stipules class names should be written in `UpperCamelCase` (e.g. `RunningMean`).
 :::
 
-That's much better! Notice the *encapsulation*. Looking at this code we don't need to think about the mathematical formula and the data being received. We only need to think about the latter. In other words, the *implementation* is separated from the *interface*. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code. 
+That's much better! Notice the *encapsulation*--while looking at this code we do not need to think about the mathematical formula that is used to process the data. We only need to type in the correct data being used. In other words, the *implementation* is separated from the *interface*. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code. 
+
+::: {.rmd-caution}
+After seeing these new words that are unfamiliar and long, it's tempting to dismiss these new ideas as superfluous. After all, if you are confident that you can get your program working, why stress about all these new concepts? If it ain't broke, don't fix it, right?
+
+I urge you to try to keep an open mind, particularly if you are already confident that you understand the basics of programming in R and Python. The topics in this chapter are more centered around design choices. This material won't help you write a first draft of a script even faster, but it will make your code much better. Even though you will have to slow down a bit before you start typing, thinking about your program more deeply will prevent bugs and allow more people to use your code.  
+:::
 
 Classes (obviously) need to be defined before they are used, so here is the definition of our class. 
 
@@ -129,7 +135,7 @@ class RunningMean:
 ```
 
 ::: {.rmd-details}
-Methods that look like `\_\_init\_\_`, or that possess names that begin and end with two underscores, are called **dunder (double underscore) methods**, **special methods** or **magic methods**. There are many that you can take advantage of! For more information see [this](https://docs.python.org/3/reference/datamodel.html#special-method-names).
+Methods that look like `__init__`, or that possess names that begin and end with two underscores, are called **dunder (double underscore) methods**, **special methods** or **magic methods**. There are many that you can take advantage of! For more information see [this](https://docs.python.org/3/reference/datamodel.html#special-method-names).
 ::: 
 
 Here are the details of the class definition:
@@ -168,7 +174,7 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 
 ```{python, collapse = TRUE}
 import numpy as np
-class RunningCI(RunningMean):
+class RunningCI(RunningMean): # <- notice what's inside the parnentheses!
   """Updates a running average and gives you a known-variance confidence interval"""
   def __init__(self, known_var):
     super().__init__()
