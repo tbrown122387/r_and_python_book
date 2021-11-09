@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="visualization.html"/>
 <link rel="next" href="functional-programming.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -444,10 +444,10 @@ div.csl-indent {
 <div id="overview" class="section level3" number="14.1.1">
 <h3><span class="header-section-number">14.1.1</span> Overview</h3>
 <p>In Python, <a href="https://docs.python.org/3/tutorial/classes.html">classes</a> are user-defined types. When you define your own class, you describe what kind of information it holds onto, and how it behaves.</p>
-<p>To define your own type, use the <a href="https://docs.python.org/3/tutorial/classes.html#class-definition-syntax"><code>class</code> keyword</a>. Objects created with a user-defined class are sometimes called <strong>instances</strong>. The behave according to the rules written in the class definition–they always have data and/or functions bundled together in the same way, but these instances do not all have the same data.</p>
+<p>To define your own type, use the <a href="https://docs.python.org/3/tutorial/classes.html#class-definition-syntax"><code>class</code> keyword</a>. Objects created with a user-defined class are sometimes called <strong>instances</strong>. They behave according to the rules written in the class definition–they always have data and/or functions bundled together in the same way, but these instances do not all have the same data.</p>
 <p>To be more clear, classes may have the following two things in their definition.</p>
 <ul>
-<li><p><strong>Attributes</strong> are pieces of data “owned” by an instance created by the class.</p></li>
+<li><p><strong>Attributes (aka data members)</strong> are pieces of data “owned” by an instance created by the class.</p></li>
 <li><p><strong>(Instance) methods</strong> are functions “owned” by an instance created by the class. They can use and/or modify data belonging to the class.</p></li>
 </ul>
 </div>
@@ -652,18 +652,17 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="an-introduction-to-object-oriented-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x55b42a201a70&gt;
+## &lt;bytecode: 0x5578bbb71090&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods</code> function.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(plot)</span></code></pre></div>
-<pre><code>##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
-##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
-## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
-## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
-## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
-## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
-## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
-## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
+<pre><code>##  [1] plot,ANY-method      plot,color-method    plot.acf*            plot.cohesiveBlocks* plot.communities*    plot.data.frame*     plot.decomposed.ts* 
+##  [8] plot.default         plot.dendrogram*     plot.density*        plot.ecdf            plot.factor*         plot.formula*        plot.function       
+## [15] plot.ggplot*         plot.gtable*         plot.hcl_palettes*   plot.hclust*         plot.histogram*      plot.HoltWinters*    plot.igraph*        
+## [22] plot.isoreg*         plot.lm*             plot.mcmc*           plot.mcmc.list*      plot.medpolish*      plot.mlm*            plot.numpy.ndarray* 
+## [29] plot.ppr*            plot.prcomp*         plot.princomp*       plot.profile.nls*    plot.R6*             plot.raster*         plot.shingle*       
+## [36] plot.sir*            plot.spec*           plot.stepfun         plot.stl*            plot.table*          plot.trans*          plot.trellis*       
+## [43] plot.ts              plot.tskernel*       plot.TukeyHSD*      
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
 <p>All of these S3 class methods share the same naming convention. Their name has the generic function’s name as a prefix, then a dot (<code>.</code>), then the name of the class that they are specifically written to be used with.</p>
 <div class="rmd-caution">
@@ -1002,7 +1001,7 @@ and the estimate for the coefficient vector can be written as
 <span id="cb259-16"><a href="an-introduction-to-object-oriented-programming.html#cb259-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb259-17"><a href="an-introduction-to-object-oriented-programming.html#cb259-17" aria-hidden="true" tabindex="-1"></a><span class="co"># plot fake data </span></span>
 <span id="cb259-18"><a href="an-introduction-to-object-oriented-programming.html#cb259-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_array[:,<span class="dv">1</span>], y_array)</span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-258-1.png" width="672" /></p>
 <p>Here is an example class definition, and then its use. The class holds onto</p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Come up with a list of Python classes that are written in third party libraries, and that you will find useful in the future!</p></li>
@@ -1038,7 +1037,6 @@ and the estimate for the coefficient vector can be written as
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1079,7 +1077,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

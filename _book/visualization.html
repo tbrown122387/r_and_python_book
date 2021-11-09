@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="reshaping-and-combining-data-sets.html"/>
 <link rel="next" href="an-introduction-to-object-oriented-programming.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -432,20 +432,13 @@ div.csl-indent {
 <p>Recall our Albemarle Real Estate data set.</p>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="visualization.html#cb214-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb214-2"><a href="visualization.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
-<span id="cb214-3"><a href="visualization.html#cb214-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb214-4"><a href="visualization.html#cb214-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb214-5"><a href="visualization.html#cb214-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb214-6"><a href="visualization.html#cb214-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb214-7"><a href="visualization.html#cb214-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb214-8"><a href="visualization.html#cb214-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb214-9"><a href="visualization.html#cb214-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb214-10"><a href="visualization.html#cb214-10" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb214-11"><a href="visualization.html#cb214-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb214-12"><a href="visualization.html#cb214-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb214-13"><a href="visualization.html#cb214-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb214-14"><a href="visualization.html#cb214-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb214-15"><a href="visualization.html#cb214-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb214-16"><a href="visualization.html#cb214-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span></code></pre></div>
+<span id="cb214-3"><a href="visualization.html#cb214-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb214-4"><a href="visualization.html#cb214-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
+<span id="cb214-5"><a href="visualization.html#cb214-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb214-6"><a href="visualization.html#cb214-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb214-7"><a href="visualization.html#cb214-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
+<span id="cb214-8"><a href="visualization.html#cb214-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
+<span id="cb214-9"><a href="visualization.html#cb214-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span></code></pre></div>
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="visualization.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb215-2"><a href="visualization.html#cb215-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
@@ -573,7 +566,7 @@ Figure 13.8: Changing the Fill Again
 <span id="cb226-5"><a href="visualization.html#cb226-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([ 11.,  36., 103., 224., 287., 224.,  88.,  24.,   1.,   2.]), array([-3.05376438, -2.35252767, -1.65129096, -0.95005426, -0.24881755,</span></span>
 <span id="cb226-6"><a href="visualization.html#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.45241916,  1.15365587,  1.85489258,  2.55612929,  3.257366  ,</span></span>
 <span id="cb226-7"><a href="visualization.html#cb226-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.9586027 ]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-1-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-227-1.png" width="80%" /></p>
 <p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. Calling it <code>plt</code> follows the most popular naming convention.</p>
 <p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
 <p>Third, we call the <code>subplots()</code> function, and use <em>sequence unpacking</em> to unpack the returned container into individual objects without storing the overall container. “Subplots” sounds like it will make many different plots all on one figure, but if you look at the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots">documentation</a> the number of rows and columns defaults to one and one, respectively.</p>
@@ -591,26 +584,18 @@ Figure 13.8: Changing the Fill Again
 <span id="cb227-5"><a href="visualization.html#cb227-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb227-6"><a href="visualization.html#cb227-6" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
 <span id="cb227-7"><a href="visualization.html#cb227-7" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
-<span id="cb227-8"><a href="visualization.html#cb227-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f1b2f37a048&gt;]</span></span>
-<span id="cb227-9"><a href="visualization.html#cb227-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
-<span id="cb227-10"><a href="visualization.html#cb227-10" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f1b2f37a400&gt;]</span></span>
-<span id="cb227-11"><a href="visualization.html#cb227-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
-<span id="cb227-12"><a href="visualization.html#cb227-12" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f1b2f37a780&gt;]</span></span>
-<span id="cb227-13"><a href="visualization.html#cb227-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
-<span id="cb227-14"><a href="visualization.html#cb227-14" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
-<span id="cb227-15"><a href="visualization.html#cb227-15" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
-<span id="cb227-16"><a href="visualization.html#cb227-16" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0, 0.5, &#39;y label&#39;)</span></span>
-<span id="cb227-17"><a href="visualization.html#cb227-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_title(<span class="st">&quot;Simple Plot&quot;</span>)  <span class="co"># Add a title to the axes.</span></span>
-<span id="cb227-18"><a href="visualization.html#cb227-18" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 1.0, &#39;Simple Plot&#39;)</span></span>
-<span id="cb227-19"><a href="visualization.html#cb227-19" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
-<span id="cb227-20"><a href="visualization.html#cb227-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-21"><a href="visualization.html#cb227-21" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
-<span id="cb227-22"><a href="visualization.html#cb227-22" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f1b2f3959e8&gt;</span></span>
-<span id="cb227-23"><a href="visualization.html#cb227-23" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
-<span id="cb227-24"><a href="visualization.html#cb227-24" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f1b2f37ac50&gt;]</span></span>
-<span id="cb227-25"><a href="visualization.html#cb227-25" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
+<span id="cb227-8"><a href="visualization.html#cb227-8" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data on the axes...</span></span>
+<span id="cb227-9"><a href="visualization.html#cb227-9" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
+<span id="cb227-10"><a href="visualization.html#cb227-10" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
+<span id="cb227-11"><a href="visualization.html#cb227-11" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
+<span id="cb227-12"><a href="visualization.html#cb227-12" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_title(<span class="st">&quot;Simple Plot&quot;</span>)  <span class="co"># Add a title to the axes.</span></span>
+<span id="cb227-13"><a href="visualization.html#cb227-13" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
+<span id="cb227-14"><a href="visualization.html#cb227-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb227-15"><a href="visualization.html#cb227-15" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
+<span id="cb227-16"><a href="visualization.html#cb227-16" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
+<span id="cb227-17"><a href="visualization.html#cb227-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-228"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-1-3.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-228-3.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
 <p class="caption">
 Figure 13.9: Side-By-Side Line Plots in Matplotlib
 </p>
@@ -634,7 +619,7 @@ Figure 13.9: Side-By-Side Line Plots in Matplotlib
 <span id="cb228-11"><a href="visualization.html#cb228-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [5 rows x 7 columns]</span></span>
 <span id="cb228-12"><a href="visualization.html#cb228-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;GSPC.Adjusted&#39;</span>].plot()</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-229"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-1-5.png" alt="Adjusted Closing Prices for a Stock Price Index" width="80%" />
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-229-5.png" alt="Adjusted Closing Prices for a Stock Price Index" width="80%" />
 <p class="caption">
 Figure 13.10: Adjusted Closing Prices for a Stock Price Index
 </p>
@@ -645,7 +630,7 @@ Figure 13.10: Adjusted Closing Prices for a Stock Price Index
 <span id="cb229-3"><a href="visualization.html#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].plot.hist()</span></span>
 <span id="cb229-4"><a href="visualization.html#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].hist()</span></span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-230"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-1-7.png" alt="Three Ways to Get the Same Histogram" width="80%" />
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-230-7.png" alt="Three Ways to Get the Same Histogram" width="80%" />
 <p class="caption">
 Figure 13.11: Three Ways to Get the Same Histogram
 </p>
@@ -655,7 +640,7 @@ Figure 13.11: Three Ways to Get the Same Histogram
 <div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="visualization.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.plotting <span class="im">import</span> lag_plot</span>
 <span id="cb230-2"><a href="visualization.html#cb230-2" aria-hidden="true" tabindex="-1"></a>lag_plot(df[<span class="st">&#39;returns&#39;</span>])</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-231"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-1-9.png" alt="Lag Plot of Stock Index Returns" width="80%" />
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-231-9.png" alt="Lag Plot of Stock Index Returns" width="80%" />
 <p class="caption">
 Figure 13.12: Lag Plot of Stock Index Returns
 </p>
@@ -698,7 +683,6 @@ Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)<
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -739,7 +723,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
