@@ -391,16 +391,15 @@ div.csl-indent {
 <li class="chapter" data-level="15.1.6" data-path="functional-programming.html"><a href="functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>15.1.6</b> <code>Reduce()</code> and <code>do.call()</code></a></li>
 </ul></li>
 <li class="chapter" data-level="15.2" data-path="functional-programming.html"><a href="functional-programming.html#another-example-in-r"><i class="fa fa-check"></i><b>15.2</b> Another Example in R</a></li>
-<li class="chapter" data-level="15.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>15.3</b> Functions as Function Inputs in Base Python</a>
+<li class="chapter" data-level="15.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-python"><i class="fa fa-check"></i><b>15.3</b> Functions as Function Inputs in Python</a>
 <ul>
-<li class="chapter" data-level="15.3.1" data-path="functional-programming.html"><a href="functional-programming.html#map"><i class="fa fa-check"></i><b>15.3.1</b> <code>map()</code></a></li>
-<li class="chapter" data-level="15.3.2" data-path="functional-programming.html"><a href="functional-programming.html#filter"><i class="fa fa-check"></i><b>15.3.2</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="15.3.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>15.3.1</b> Functions as Function Inputs in Base Python</a></li>
+<li class="chapter" data-level="15.3.2" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>15.3.2</b> Functions as Function Inputs in Numpy</a></li>
+<li class="chapter" data-level="15.3.3" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>15.3.3</b> Functional Methods in Pandas</a></li>
+<li class="chapter" data-level="15.3.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-miscellany"><i class="fa fa-check"></i><b>15.3.4</b> Functions as Function Inputs (miscellany)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>15.4</b> Functions as Function Inputs in Numpy</a></li>
-<li class="chapter" data-level="15.5" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>15.5</b> Functional Methods in Pandas</a></li>
-<li class="chapter" data-level="15.6" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-miscellany"><i class="fa fa-check"></i><b>15.6</b> Functions as Function Inputs (miscellany)</a></li>
-<li class="chapter" data-level="15.7" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>15.7</b> Functions as Function Outputs in R</a></li>
-<li class="chapter" data-level="15.8" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.8</b> Functions as Function Outputs in Python</a></li>
+<li class="chapter" data-level="15.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>15.4</b> Functions as Function Outputs in R</a></li>
+<li class="chapter" data-level="15.5" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.5</b> Functions as Function Outputs in Python</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -486,7 +485,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="categorical-data.html#cb118-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">6</span>) <span class="co"># not categorical here</span></span>
 <span id="cb118-2"><a href="categorical-data.html#cb118-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb118-3"><a href="categorical-data.html#cb118-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb118-4"><a href="categorical-data.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf]</span></span>
+<span id="cb118-4"><a href="categorical-data.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] (-Inf,0] (0, Inf] (-Inf,0] (0, Inf] (-Inf,0] (-Inf,0]</span></span>
 <span id="cb118-5"><a href="categorical-data.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb118-6"><a href="categorical-data.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb118-7"><a href="categorical-data.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>

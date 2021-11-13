@@ -31,7 +31,7 @@ Unfortunately, violating the first of these three criteria is very easy to do in
 
 Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-captured-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two symbols are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
 
-Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
+Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python)), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
 
 -----------------------------------
 
@@ -69,14 +69,11 @@ An amateurish way to do this would be something like the following.
 ```{r, eval=F}
 myFirstMean <- mean(myDF[,1])
 mySecondMean <- mean(myDF[,2])
-myThirdMean <- mean(myDF[,3])
-# ....
-# so on and so forth
-# ....
+# ... so on and so forth ..
 myThirdMean <- mean(myDF[,100])
 ```
 
-You will need one line of code for each column in the data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
+You will need one line of code for each column in the data frame! For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
 ::: {.rmd-details}
 "Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).
@@ -119,18 +116,22 @@ summary(myRegs[[12]])
 
 ### `apply()`
 
-I use `sapply()` and `lapply()` the most, personally. The next most common function I use is `apply()`. I use it to apply functions to *rows* instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.^[`apply()` is everyone's favorite whipping boy whenever it comes to comparing `apply()` against the other `*apply()` functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice. ] 
+I use `sapply()` and `lapply()` the most, personally. The next most common function I use is `apply()`. You can use it to apply functions to *rows* of rectangular arrays instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.^[`apply()` is everyone's favorite whipping boy whenever it comes to comparing `apply()` against the other `*apply()` functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice. ] 
 
 ```{r, collapse = TRUE}
 dim(myDF)
-apply(myDF, 1, mean)
+results <- apply(myDF, 1, mean)
+results[1:4]
 ```
 
 Another example where it can be useful to apply a function to rows is  **predicate functions.** A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a `data.frame`. Without a predicate function, filtering rows might look something like this.
 
 ```{r, collapse = TRUE}
 albRealEstate <- read.csv("data/albemarle_real_estate.csv")
-subDF <- albRealEstate[(albRealEstate$YearBuilt == 2006 & albRealEstate$Condition == "Average") | albRealEstate$City == "CROZET",]
+firstB <- albRealEstate$YearBuilt == 2006 
+secondB <- albRealEstate$Condition == "Average"
+thirdB <- albRealEstate$City == "CROZET"
+subDF <- albRealEstate[(firstB & secondB) | thirdB,]
 head(subDF)
 ```
 
@@ -142,7 +143,10 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
    
 ```{r, collapse = TRUE}
 pred <- function(row){
-  (row['YearBuilt'] == 2006 & row['Condition'] == "Average") | row['City'] == "CROZET"
+  yrBuiltCorrect <- row['YearBuilt'] == 2006
+  aveCond <- row['Condition'] == "Average"
+  inCrozet <- row['City'] == "CROZET"
+  ( yrBuiltCorrect && aveCond) || inCrozet 
 }
 whichRows <- apply(albRealEstate, 1, pred)
 subDF <- albRealEstate[whichRows,]
@@ -151,7 +155,7 @@ head(subDF)
 
 ### `tapply()`
 
-`tapply()` can be very handy when you need it. First, we've alluded to the definition before in subsection \@ref(data-frames-in-r), but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply()`. Rather, I let `tapply()` construct the ragged array for me. The first argument it expects is "typically vector-like", while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
+`tapply()` can be very handy when you need it. First, we've alluded to the definition before in subsection \@ref(data-frames-in-r), but a **ragged array** is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to `tapply()`. Rather, I let `tapply()` construct the ragged array for me. The first argument it expects is, to quote the documentation, "typically vector-like," while the second tells us how to break that `vector` into chunks. The third argument is a function that gets applied to each `vector` chunk.
 
 If I wanted the average home price for each city, I could use something like this.
 
@@ -164,7 +168,9 @@ tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)
 You might be wondering why we put `albRealEstate$City` into a `list`. That seems kind of unnecessary. This is because `tapply()` can be used with multiple `factor`s--this will break down the `vector` input into a finer partition. The second argument must be one object, though, so all of these `factor`s must be collected into a `list`. The following code produces a "pivot table."
 
 ```{r, collapse = TRUE}
-tapply(albRealEstate$TotalValue, list(albRealEstate$City, albRealEstate$Condition), mean)
+tapply(albRealEstate$TotalValue, 
+       list(albRealEstate$City, albRealEstate$Condition), 
+       mean)
 ```
 
 
@@ -176,28 +182,28 @@ For functions that return higher-dimensional output, you will have to use someth
 ### `mapply()`
 
 
-The [documentation of `mapply()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply()` is a multivariate version of `sapply()`. `sapply()` worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use `mapply()`. 
+The [documentation of `mapply()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html) states `mapply()` is a multivariate version of `sapply()`. `sapply()` worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes *multiple arguments*, and you want those arguments to change each time the function is called, then you might be able to use `mapply()`. 
 
-Here is a short example. Regarding the `n=` argument of `rnorm()`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample a.) three times from a mean $0$ normal, b.) twice from a mean $100$ normal, and c.) once from a mean $-100$ normal distribution.
+Here is a short example. Regarding the `n=` argument of `rnorm()`, the documentation explains, "[i]f `length(n) > 1`, the length is taken to be the number required." This would be a problem if we want to sample three times from a mean $0$ normal first, then twice from a mean $100$ normal, and then third, once from a mean $42$ normal distribution. We only get three samples when we want six!
 
 ```{r}
-rnorm(n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
-mapply(rnorm, n = c(3,2,1), mean = c(0,100,-100), sd = c(.01, .01, .01))
+rnorm(n = c(3,2,1), mean = c(0,100,42), sd = c(.01, .01, .01))
+mapply(rnorm, n = c(3,2,1), mean = c(0,100,42), sd = c(.01, .01, .01))
 ```
 
 ### `Reduce()` and `do.call()`
 
-In section \@ref(reshaping-and-combining-data-sets) we talked about several different ways of "combining" data sets. We discussed stacking data sets on top of one another with `rbind()` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind()` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge()` (c.f. \@ref(merging-or-joining-data-sets)). Consider the task of combining *many* data sets. How do we write DRY code and abide by the DRY principle?
+Unlike the other examples of functions that take other functions as inputs, `Reduce()` and `do.call()` don't have many outputs. Instead of collecting many outputs into a container, they just output one thing.
 
-We can use either `Reduce()` or `do.call()` as a higher-order function. Just like the aforementioned `*apply()` functions, they take in either `cbind()`, `rbind()`, or `merge()` as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take. 
+Let's start with an example: "combining" data sets. In section \@ref(reshaping-and-combining-data-sets) we talked about several different ways of combining data sets. We discussed stacking data sets on top of one another with `rbind()` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind()` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge()` (c.f. \@ref(merging-or-joining-data-sets)). 
 
-Take a look at the documentation to `rbind()`. Its first argument is `...`, which is the [dot-dot-dot](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot) symbol. This means `rbind()` can take a varying number of `data.frame`s to stack on top of each other. In other words, `rbind()` is *variadic*.
+Now consider the task of combining *many* data sets. How can we combine three or more data sets into one? Also, how do we write DRY code and abide by the DRY principle? As the name of the subsection suggests, we can use either `Reduce()` or `do.call()` as a higher-order function. Just like the aforementioned `*apply()` functions, they take in either `cbind()`, `rbind()`, or `merge()` as a function input. Which one do we pick, though? The answer to that question deals with *how many arguments our lower-order function takes.* 
 
-On the other hand, take a look at the documentation of `merge()`. It only takes two `data.frame`s at a time^[Although, it is still variadic. The difference is that the `dot-dot-dot` symbol does not refer to a varying number of `data.frame`s...just a varying number of other things we don't care about at the present moment.].
+Take a look at the documentation to `rbind()`. Its first argument is `...`, which is the [dot-dot-dot](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot) symbol. This means `rbind()` can take a varying number of `data.frame`s to stack on top of each other. In other words, `rbind()` is **variadic**.
 
-If we want to combine many data sets, `merge()` This is the difference between `Reduce()` and `do.call()`. 
+On the other hand, take a look at the documentation of `merge()`. It only takes two `data.frame`s at a time^[Although, it is still variadic. The difference is that the `dot-dot-dot` symbol does not refer to a varying number of `data.frame`s, just a varying number of other things we don't care about in this example.]. If we want to combine many data sets, `merge()` needs a helper function. 
 
-`do.call()` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce()` calls a binary function many times on pairs of arguments. `Reduce()`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
+This is the difference between `Reduce()` and `do.call()`. `do.call()` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce()` calls a binary function many times on pairs of arguments. `Reduce()`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
 
 TODO diagram
 
@@ -211,16 +217,14 @@ dfs <- lapply(dataSets,
 head(dfs[[3]])
 ```
 
-Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!
+Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!^[To make it even more flexible, we could write code that doesn't assume the functions are all named the same way, or in the same directory together.]
 
-Next, `cbind()`ing them all together can be done as follows. `do.call()` will call the function only once. `cbind()` takes many arguments at once, so this works. 
+Next, `cbind()`ing them all together can be done as follows. `do.call()` will call the function only once. `cbind()` takes many arguments at once, so this works. This code is even better than the above code in that if `dfs` becomes longer, or changes at all, *nothing* will need to be changed. 
 
 ```{r, collapse = TRUE}
 do.call(cbind, dfs) # DRY! :)
 # cbind(df1,df2,df3,df4) # WET! :(
 ```
-
-This code is even better than the above code in that if `dfs` becomes longer, or changes at all, *nothing* will need to be changed. 
 
 What if we wanted to `merge()` all these data sets together? After all, the `id` column appears to be repeating itself, and some data from `d2` isn't lining up.
 
@@ -281,11 +285,14 @@ moreRectOut <- matrix(funcOut2, ncol = length(xGrid))
 contour(xGrid, yGrid, moreRectOut, xlab = "x", ylab = "y")
 ```
 
-## Functions as Function Inputs in Base Python
+## Functions as Function Inputs in Python
+
+
+### Functions as Function Inputs in Base Python
 
 I discuss two functions from base Python that take functions as input. Neither return a `list` or a `np.array`, but they do return different kinds of **iterables**, which are "objects capable of returning their members one at a time," [according to the Python documentation.](https://docs.python.org/3/glossary.html) `map()`, the function, will return objects of type `map`. `filter()`, the function, will return objects of type `filter`. Often times we will just convert these to the container we are more familiar with.
 
-### `map()`
+#### `map()`
 
 [`map()`](https://docs.python.org/3/library/functions.html#map) can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a *spline* function, which can be useful for coming up with predictors in regression models. This particular spline function is $f(x) = (x-k)1(x \ge k)$, where $k$ is some chosen "knot point."
 
@@ -314,25 +321,28 @@ plt.plot(my_inputs, output)
 import numpy as np
 x = np.linspace(start = -1., stop = 1.0)
 y = np.linspace(start = -1., stop = 1.0)
-def f(x):
-    np.log(x**2 + y**2)
-output = list(map(spline, my_inputs))
+def f(x,y):
+    return np.log(x**2 + y**2)
+list(map(f, x, y))[:3]
 ```
 
 
-### `filter()`
+#### `filter()`
 
 
 [`filter()`](https://docs.python.org/3/library/functions.html#filter) helps remove unwanted elements from a container. It returns an iterable of type `filter`, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
+This code also provides our first example of a [**lambda function**](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions). Lambda functions are simply another way to define functions. Notice that in this example, we didn't have to name our function. In other words, it was **anonymous**. We can also save a few lines of code. 
+
+
 ```{python, collapse = TRUE}
-raw_data = np.arange(0,1.5,.01)
+raw_data = np.arange(0,1.45,.01)
 for elem in filter(lambda x : x**2 > 2, raw_data):
     print(elem)
 ```
 
 
-## Functions as Function Inputs in Numpy
+### Functions as Function Inputs in Numpy
 
 Numpy provides a [number of functions](https://numpy.org/doc/stable/reference/routines.functional.html) that facilitate working with `np.ndarray`s in a functional style. For example, [`np.apply_along_axis()`](https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html) is similar to R's `apply()`. `apply()` had a `MARGIN=` input (`1` sums rows, `2` sums columns), whereas this function has a `axis=` input (`0` sums columns, `1` sums rows). 
 
@@ -345,14 +355,7 @@ np.apply_along_axis(sum, 1, my_array) # summing rows
 ```
 
 
-```{python, collapse = TRUE}
-my_array = np.random.normal(size=(10,1000))
-np.apply_along_axis(sum, 0, my_array).shape 
-np.apply_along_axis(sum, 1, my_array).shape
-```
-
-
-## Functional Methods in Pandas
+### Functional Methods in Pandas
 
 Pandas' `DataFrame`s have an [`.apply()` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) that is very similar to `apply()` in R,^[You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as `DataFrame` methods. For instance, `.mean()` would allow you to do something like `my_df.mean()`.] but again, just like the above function, you have to think about an `axis=` argument instead of a `MARGIN=` argument. 
 
@@ -381,7 +384,7 @@ alb_real_est[['FinSqFt','LotSize','Score']].head(2)
 alb_real_est[['FinSqFt','LotSize']].apply([sum, len])
 ```
 
-If you do not want to waste two lines defining a function with `def`, you can use an anonymous (unnamed) [**lambda function**](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions). Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
+If you do not want to waste two lines defining a function with `def`, you can use an anonymous lambda function. Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
 
 ```{python, collapse = TRUE}
 alb_real_est[['FinSqFt','LotSize']].apply(lambda row : sum(row*[2,3]), 1)[:4]
@@ -411,7 +414,7 @@ alb_real_est.groupby(['City']).apply(lambda df : np.average(df['TotalValue']))
 
 More tips on this programming pattern can be found [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html).
 
-## Functions as Function Inputs (miscellany)
+### Functions as Function Inputs (miscellany)
 
 functools.reduce
 
