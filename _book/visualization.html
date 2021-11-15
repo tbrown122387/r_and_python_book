@@ -396,10 +396,12 @@ div.csl-indent {
 <li class="chapter" data-level="15.3.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>15.3.1</b> Functions as Function Inputs in Base Python</a></li>
 <li class="chapter" data-level="15.3.2" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>15.3.2</b> Functions as Function Inputs in Numpy</a></li>
 <li class="chapter" data-level="15.3.3" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>15.3.3</b> Functional Methods in Pandas</a></li>
-<li class="chapter" data-level="15.3.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-miscellany"><i class="fa fa-check"></i><b>15.3.4</b> Functions as Function Inputs (miscellany)</a></li>
 </ul></li>
 <li class="chapter" data-level="15.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>15.4</b> Functions as Function Outputs in R</a></li>
-<li class="chapter" data-level="15.5" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.5</b> Functions as Function Outputs in Python</a></li>
+<li class="chapter" data-level="15.5" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.5</b> Functions as Function Outputs in Python</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="functional-programming.html"><a href="functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.5.1</b> Writing Our Own Decorators</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -448,8 +450,8 @@ div.csl-indent {
 <p>If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices.</p>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="visualization.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb215-2"><a href="visualization.html#cb215-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-216"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-216-1.png" alt="A Simple Histogram" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-217"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-217-1.png" alt="A Simple Histogram" width="672" />
 <p class="caption">
 Figure 13.1: A Simple Histogram
 </p>
@@ -464,8 +466,8 @@ Figure 13.1: A Simple Histogram
 <span id="cb216-6"><a href="visualization.html#cb216-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;log. total value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log. lot size&quot;</span>, </span>
 <span id="cb216-7"><a href="visualization.html#cb216-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
 <span id="cb216-8"><a href="visualization.html#cb216-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">log</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LotSize)), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-217"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-217-1.png" alt="Some Scatterplots" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-218"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-218-1.png" alt="Some Scatterplots" width="672" />
 <p class="caption">
 Figure 13.2: Some Scatterplots
 </p>
@@ -483,8 +485,8 @@ Figure 13.2: Some Scatterplots
 <p>Consider this first example.</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="visualization.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb218-2"><a href="visualization.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-218"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-218-1.png" alt="A Blank Canvas" width="80%" />
+<div class="figure"><span id="fig:unnamed-chunk-219"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-219-1.png" alt="A Blank Canvas" width="80%" />
 <p class="caption">
 Figure 13.3: A Blank Canvas
 </p>
@@ -500,8 +502,8 @@ Figure 13.3: A Blank Canvas
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="visualization.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb219-2"><a href="visualization.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb219-3"><a href="visualization.html#cb219-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-219"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-219-1.png" alt="A Second Scatterplot" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-220"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-220-1.png" alt="A Second Scatterplot" width="672" />
 <p class="caption">
 Figure 13.4: A Second Scatterplot
 </p>
@@ -515,8 +517,8 @@ Figure 13.4: A Second Scatterplot
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="visualization.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb221-2"><a href="visualization.html#cb221-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb221-3"><a href="visualization.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-221"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-221-1.png" alt="Adding Some Color" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-222"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-222-1.png" alt="Adding Some Color" width="672" />
 <p class="caption">
 Figure 13.5: Adding Some Color
 </p>
@@ -526,8 +528,8 @@ Figure 13.5: Adding Some Color
 <span id="cb222-2"><a href="visualization.html#cb222-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb222-3"><a href="visualization.html#cb222-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span>
 <span id="cb222-4"><a href="visualization.html#cb222-4" aria-hidden="true" tabindex="-1"></a>base_plot <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-222"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-222-1.png" alt="Changing Scales" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-223"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-223-1.png" alt="Changing Scales" width="672" />
 <p class="caption">
 Figure 13.6: Changing Scales
 </p>
@@ -536,8 +538,8 @@ Figure 13.6: Changing Scales
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="visualization.html#cb223-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb223-2"><a href="visualization.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb223-3"><a href="visualization.html#cb223-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() </span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-223"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-223-1.png" alt="Changing the Fill" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-224"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-224-1.png" alt="Changing the Fill" width="672" />
 <p class="caption">
 Figure 13.7: Changing the Fill
 </p>
@@ -547,8 +549,8 @@ Figure 13.7: Changing the Fill
 <span id="cb224-2"><a href="visualization.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb224-3"><a href="visualization.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb224-4"><a href="visualization.html#cb224-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_b</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-224"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-224-1.png" alt="Changing the Fill Again" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-225"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-225-1.png" alt="Changing the Fill Again" width="672" />
 <p class="caption">
 Figure 13.8: Changing the Fill Again
 </p>
@@ -572,7 +574,7 @@ Figure 13.8: Changing the Fill Again
 <span id="cb226-5"><a href="visualization.html#cb226-5" aria-hidden="true" tabindex="-1"></a><span class="co">## (array([ 11.,  36., 103., 224., 287., 224.,  88.,  24.,   1.,   2.]), array([-3.05376438, -2.35252767, -1.65129096, -0.95005426, -0.24881755,</span></span>
 <span id="cb226-6"><a href="visualization.html#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="co">##         0.45241916,  1.15365587,  1.85489258,  2.55612929,  3.257366  ,</span></span>
 <span id="cb226-7"><a href="visualization.html#cb226-7" aria-hidden="true" tabindex="-1"></a><span class="co">##         3.9586027 ]), &lt;a list of 10 Patch objects&gt;)</span></span></code></pre></div>
-<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-227-1.png" width="80%" /></p>
+<p><img src="r_and_python_book_files/figure-html/unnamed-chunk-228-1.png" width="80%" /></p>
 <p>In the first line, we import the <code>pyplot</code> submodule of <code>matplotlib</code>. We rename it to <code>plt</code>, which is short, and will save us some typing. Calling it <code>plt</code> follows the most popular naming convention.</p>
 <p>Second, we import Numpy in the same way we always have. Matplotlib is written to work with Numpy arrays. If you want to plot some data, and it isn’t in a Numpy array, you should convert it first.</p>
 <p>Third, we call the <code>subplots()</code> function, and use <em>sequence unpacking</em> to unpack the returned container into individual objects without storing the overall container. “Subplots” sounds like it will make many different plots all on one figure, but if you look at the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots">documentation</a> the number of rows and columns defaults to one and one, respectively.</p>
@@ -600,8 +602,8 @@ Figure 13.8: Changing the Fill Again
 <span id="cb227-15"><a href="visualization.html#cb227-15" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
 <span id="cb227-16"><a href="visualization.html#cb227-16" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
 <span id="cb227-17"><a href="visualization.html#cb227-17" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-228"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-228-3.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
+<div class="figure"><span id="fig:unnamed-chunk-229"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-229-3.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
 <p class="caption">
 Figure 13.9: Side-By-Side Line Plots in Matplotlib
 </p>
@@ -624,8 +626,8 @@ Figure 13.9: Side-By-Side Line Plots in Matplotlib
 <span id="cb228-10"><a href="visualization.html#cb228-10" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
 <span id="cb228-11"><a href="visualization.html#cb228-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [5 rows x 7 columns]</span></span>
 <span id="cb228-12"><a href="visualization.html#cb228-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;GSPC.Adjusted&#39;</span>].plot()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-229"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-229-5.png" alt="Adjusted Closing Prices for a Stock Price Index" width="80%" />
+<div class="figure"><span id="fig:unnamed-chunk-230"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-230-5.png" alt="Adjusted Closing Prices for a Stock Price Index" width="80%" />
 <p class="caption">
 Figure 13.10: Adjusted Closing Prices for a Stock Price Index
 </p>
@@ -635,8 +637,8 @@ Figure 13.10: Adjusted Closing Prices for a Stock Price Index
 <span id="cb229-2"><a href="visualization.html#cb229-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;returns&#39;</span>].plot(kind<span class="op">=</span><span class="st">&#39;hist&#39;</span>)</span>
 <span id="cb229-3"><a href="visualization.html#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].plot.hist()</span></span>
 <span id="cb229-4"><a href="visualization.html#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].hist()</span></span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-230"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-230-7.png" alt="Three Ways to Get the Same Histogram" width="80%" />
+<div class="figure"><span id="fig:unnamed-chunk-231"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-231-7.png" alt="Three Ways to Get the Same Histogram" width="80%" />
 <p class="caption">
 Figure 13.11: Three Ways to Get the Same Histogram
 </p>
@@ -645,8 +647,8 @@ Figure 13.11: Three Ways to Get the Same Histogram
 <p>The following code is an example of creating a “lag plot,” which is simply a scatterplot between a time series’ lagged and nonlagged values. The primary benefit of this function over <code>.plot()</code> is that this function does not require you to construct an additional column of lagged values, and it comes up with good default axis labels.</p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="visualization.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.plotting <span class="im">import</span> lag_plot</span>
 <span id="cb230-2"><a href="visualization.html#cb230-2" aria-hidden="true" tabindex="-1"></a>lag_plot(df[<span class="st">&#39;returns&#39;</span>])</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-231"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-231-9.png" alt="Lag Plot of Stock Index Returns" width="80%" />
+<div class="figure"><span id="fig:unnamed-chunk-232"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-232-9.png" alt="Lag Plot of Stock Index Returns" width="80%" />
 <p class="caption">
 Figure 13.12: Lag Plot of Stock Index Returns
 </p>

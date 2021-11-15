@@ -387,14 +387,14 @@ alb_real_est[['FinSqFt','LotSize']].apply([sum, len])
 If you do not want to waste two lines defining a function with `def`, you can use an anonymous lambda function. Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
 
 ```{python, collapse = TRUE}
-alb_real_est[['FinSqFt','LotSize']].apply(lambda row : sum(row*[2,3]), 1)[:4]
+alb_real_est[['FinSqFt','LotSize']].apply(lambda row : sum(row*[2,3]), 1)[:3]
 ```
 
 
-If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with [`.applymap()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap).
+The previous example `.apply()`s a *binary* function to each row. The function is binary because it takes two elements at a time. If you want to apply a *unary* function (i.e. it takes one argument at a time) function to each row for, and for each column, then you can use [`.applymap()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html#pandas.DataFrame.applymap).
 
 ```{python, collapse = TRUE}
-alb_real_est[['FinSqFt','LotSize']].applymap(lambda e : e + 1).head(2)
+alb_real_est[['FinSqFt','LotSize']].applymap(lambda e : e + 1).head(3)
 ```
 
 
@@ -405,20 +405,13 @@ type(alb_real_est.groupby(['City']))
 type(alb_real_est.groupby(['City'])['TotalValue'])
 ```
 
-Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which `City` they are in, extracts the `TotalValue` column in each sub-`DataFrame`, and then `.apply()`s the `np.average()` function on the sole column found in each sub-`DataFrame`. The second `.apply()`s a lambda function to each sub-`DataFrame` directly. 
+Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which `City` they are in, extracts the `TotalValue` column in each sub-`DataFrame`, and then `.apply()`s the `np.average()` function on the sole column found in each sub-`DataFrame`. The second `.apply()`s a lambda function to each sub-`DataFrame` directly. More details on this "split-apply-combine" strategy can be found in the [Pandas documentation.](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html)
 
 ```{python, collapse = TRUE}
 alb_real_est.groupby(['City'])['TotalValue'].apply(np.average)
 alb_real_est.groupby(['City']).apply(lambda df : np.average(df['TotalValue']))
 ```
 
-More tips on this programming pattern can be found [here](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html).
-
-### Functions as Function Inputs (miscellany)
-
-functools.reduce
-
-operator module
 
 ## Functions as Function Outputs in R
 
@@ -437,10 +430,9 @@ greetWithHello("Taylor")
 greetWithHello("Charlie")
 ```
 
-The `greetingMessage=` argument that is passed in, `"Hello"`, isn't temporary anymore. 
+Notice that **the `greetingMessage=` argument that is passed in, `"Hello"`, isn't temporary anymore.** It lives on so it can be used by all the functions created by `funcFactory()`. This is the most surprising aspect of writing function factories. 
 
-
-Here is an example that implements a variance reduction technique called **common random numbers**. 
+Let's now consider a more complicated and realistic example. Let's implement a variance reduction technique called **common random numbers**. 
 
 Suppose $X \sim \text{Normal}(\mu, \sigma^2)$, and we are interested in approximating an expectation of a function of this random variable. Suppose that we don't know that
 $$
@@ -450,9 +442,9 @@ for any particular choice of $\mu$ and $\sigma^2$, and instead, we choose to use
 $$
 \hat{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(X^i)
 $$
-where $X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)$ is a large collection of draws from the appropriate normal distribution. In real life, the theoretical expectation might not be tractable (either because the random variable has a complicated distribution, or maybe because the functional is very complicated) and Monte Carlo, or some other approximation algorithm, might be our only hope!
+where $X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)$ is a large collection of draws from the appropriate normal distribution, probably coming from a call to `rnorm()`. In more realistic situations, the theoretical expectation might not be tractable, either because the random variable has a complicated distribution, or maybe because the functional is very complicated. In these cases, a tool like Monte Carlo might be the only available approach.
 
-Here are two functions that calculate the above quantities for $n=100$. `actualExpectSin()` is a function that computes the theoretical expectation for any particular parameter pair. `monteCarloSin()` is a function that implements the Monte Carlo approximate expectation. 
+Here are two functions that calculate the above quantities for $n=1000$. `actualExpectSin()` is a function that computes the theoretical expectation for any particular parameter pair. `monteCarloSin()` is a function that implements the Monte Carlo approximate expectation. 
 
 ```{r, collapse = TRUE}
 n <- 1000 # don't hardcode variables that aren't passed as arguments!
@@ -467,19 +459,34 @@ monteCarloSin <- function(params){
 # monteCarloSin(c(10,1))
 ```
 
-One-off approximations aren't as interesting as visualizing many expectations for many parameter inputs. On the left, we have the true expectation function plotted with a contour plot. On the right, 
-```{r}
+One-off approximations aren't as interesting as visualizing many expectations for many parameter inputs. Below we plot the expectations for many different parameter vectors/configurations/settings. 
+
+```{r, collapse = TRUE, out.width='60%', fig.align='center', fig.cap = "Monte Carlo Approximations versus Exact Evaluations"}
 muGrid <- seq(-10,10, length.out = 100)
 sigmaGrid <- seq(.001, 5, length.out = 100)
 muSigmaGrid <- expand.grid(muGrid, sigmaGrid)
-actuals <-  matrix(apply(muSigmaGrid, 1, actualExpectSin), ncol = length(muGrid))
-mcApprox <- matrix(apply(muSigmaGrid, 1, monteCarloSin), ncol = length(muGrid))
+actuals <-  matrix(apply(muSigmaGrid, 1, actualExpectSin), 
+                   ncol = length(muGrid))
+mcApprox <- matrix(apply(muSigmaGrid, 1, monteCarloSin), 
+                   ncol = length(muGrid))
 
 par(mfrow=c(1,2))
-contour(muGrid, sigmaGrid, actuals, xlab = "mu", ylab = "sigma", main = "actual expect.s")
-contour(muGrid, sigmaGrid, mcApprox, xlab = "mu", ylab = "sigma", main = "mc without crn")
+contour(muGrid, sigmaGrid, actuals, 
+        xlab = "mu", ylab = "sigma", main = "actual expects")
+contour(muGrid, sigmaGrid, mcApprox, 
+        xlab = "mu", ylab = "sigma", main = "mc without crn")
+
+```
+
+```{r, echo=FALSE}
 par(mfrow=c(1,1))
 ```
+
+There are three problems with this implementation:
+
+  - `monteCarloSin()` is not pure because it captures the `n` variable, 
+  - the only way to increase the accuracy of the plot in the right panel is to increase `n`, and
+  - every time we re-run this code the plot on the right looks different.
 
 If we wanted to use common random numbers, we could generate $Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)$, and use the fact that
 $$
@@ -489,6 +496,7 @@ This leads to the Monte Carlo estimate
 $$
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
 $$
+
 Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call `monteCarloSinCRNv1(c(10,1))`, you get the same answer. 
 ```{r, collapse = TRUE}
 commonZs <- rnorm(n=n)
@@ -499,57 +507,186 @@ monteCarloSinCRNv1 <- function(params){
 # monteCarloSinCRNv1(c(10,1))
 ```
 
-Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look "smoother."
+Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look "smoother." In other words, we increase our sampling accuracy without spending more computational time.
 
 ```{r, collapse=TRUE}
-mcApproxCRNv1 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv1), ncol = length(muGrid))
+mcApproxCRNv1 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv1), 
+                        ncol = length(muGrid))
 par(mfrow=c(1,2))
-contour(muGrid, sigmaGrid, mcApprox, xlab = "mu", ylab = "sigma", main = "mc without crn")
-contour(muGrid, sigmaGrid, mcApproxCRNv1, xlab = "mu", ylab = "sigma", main = "mc with crn")
+contour(muGrid, sigmaGrid, mcApprox, 
+        xlab = "mu", ylab = "sigma", main = "mc without crn")
+contour(muGrid, sigmaGrid, mcApproxCRNv1, 
+        xlab = "mu", ylab = "sigma", main = "mc with crn")
+```
+
+```{r, echo=FALSE}
 par(mfrow=c(1,1))
 ```
 
-The downside to this implementation is that we have a bunch of samples floating around in the global environment. We can implement this much more nicely with a function factory.
+There are some new downsides to this implementation to consider:
+
+  - we have another global variable--a bunch of samples called `commonZs` floating around, and
+  - the dependence on the global variable for sample size is even further obscured.
+  
+We can fix these two problems very nicely by using a function factory.
 
 ```{r, collapse = TRUE}
-makeMCFunc <- function(){
-  commonZs <- rnorm(n=n)
+makeMCFunc <- function(n = 1000){
+  commonZs <- rnorm(n)
   function(params){
     stopifnot(params[2] > 0) 
     mean(sin(params[1] + params[2]*commonZs))    
   }  
 }
 monteCarloSinCRNv2 <- makeMCFunc()
-# monteCarloSinCRNv2(c(10,1))
+# now call monteCarloSinCRNv2 to approx. expectations
+# e.g. monteCarloSinCRNv2(c(10,1))
 ```
 
-Much better! Let's just make sure this function works by comparing its output to the known true function.
+This is much better because 
+
+  - the desired sample size must be passed in as a function argument instead of being captured, 
+  - the re-used standard normal variates are not in the global environment anymore, and
+  - a sensible default number of samples is provided in the event that the programmer forgets to specify one. 
+
+The inner function did in fact capture `commonZs`, but it captured from the enclosing scope, not the global scope. Capturing isn't always a terrible idea. It would be difficult to modify these variables, so we don't need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice--now the end-users of functions created by this factory don't need to worry about plugging in extra parameters. 
+
+Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function.
 
 ```{r, collapse=TRUE, echo=FALSE}
-mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), ncol = length(muGrid))
+mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), 
+                        ncol = length(muGrid))
 par(mfrow=c(1,2))
-contour(muGrid, sigmaGrid, mcApprox, xlab = "mu", ylab = "sigma", main = "mc without crn")
-contour(muGrid, sigmaGrid, mcApproxCRNv2, xlab = "mu", ylab = "sigma", main = "mc with crn")
+contour(muGrid, sigmaGrid, mcApprox, 
+        xlab = "mu", ylab = "sigma", main = "mc without crn")
+contour(muGrid, sigmaGrid, mcApproxCRNv2, 
+        xlab = "mu", ylab = "sigma", main = "mc with crn")
 par(mfrow=c(1,1))
 ```
 
 ## Functions as Function Outputs in Python
 
-Returning functions from functions, explaining mechanics
+We can write function factories in Python, too. Here is another implementation of the first example from the previous section. Again, just as it did in R, `str` passed in as `greeting_message` persists well after `func_factory()` is finished working. 
 
-[`np.vectorize()`](https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html#numpy.vectorize) is something that I use quite often.     
-
-decorators!
-
-TODO Both R and Python have reduce functions. R has `Reduce()`, while Python has `reduce()`.
-
-In R
-
-```{r, collapse = TRUE}
-
+```{python, collapse = TRUE}
+def func_factory(greeting_message):
+  def func(name):
+    print(greeting_message + ' ' + name)
+  return func
+greet_with_hello = func_factory("Hello")
+greet_with_hello("Taylor")
+greet_with_hello("Charlie")
 ```
 
-reduce,
+Let's consider another less trivial example. Recall the spline function from earlier in the chapter:
+
+```{python, collapse = TRUE}
+import numpy as np
+def spline(x):
+    knot = 3.0
+    if x >= knot:
+        return x-knot
+    else:
+        return 0.0
+```
+
+This function is limited in that it takes in only one element at a time. Unfortunately, we would not be able to provide an entire Numpy array as an argument (e.g. `spline(np.arange(3))`). Many functions do possess this behavior, and it is generally advantageous to take advantage of it. If you recall our discussion about universal functions in section \@ref(vectorization-in-python), you might have grown accustomed to taking advantage of writing vectorized code. 
+
+Fortunately there's a way to automatically vectorize functions like the one above: [`np.vectorize()`](https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html#numpy.vectorize). `np.vectorize()` takes in a unary function, and outputs a vectorized version of it that is able to take entire arrays as an input. Here's an example. Compare this to us using `map()` before. 
+
+```{python, collapse = TRUE}
+my_inputs = np.linspace(start = 0, stop = 2*np.pi)
+# make a vectorized function
+vec_spline = np.vectorize(spline) 
+vec_spline(my_inputs)[:4]
+# alternatively output = list(map(spline, my_inputs)) from last time
+```
+
+The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use **[function decorators](https://www.python.org/dev/peps/pep-0318/).** You can *decorate* a function by using the `@` operator. 
+
+If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place. 
+
+
+```{python, collapse = TRUE}
+# instead of spline = np.vectorize(spline) 
+@np.vectorize
+def spline(x):
+    knot = 3.0
+    if x >= knot:
+        return x-knot
+    else:
+        return 0.0
+spline(my_inputs)[:4]
+```
+
+
+### Writing Our Own Decorators
+
+We can write our own function factory that can be used as decoration. The main restriction is that this function factory must take a function as an argument, too. This can sometimes be restrictive. You might have noticed that the definition of `func_factory()` from earlier in this section did not do that. If you don't believe me, as an exercise, after you read this section, you might consider trying to rewrite the example from \@ref(functions-as-function-outputs-in-r) that implements Monte Carlo sampling using common random numbers. 
+
+Before we get too ahead of ourselves, let's describe the basics. Here is our first decorator function `add_greeting()`.
+
+```{python, collapse = TRUE}
+def add_greeting(func):
+  def wrapper(name):
+    print('Salutations, ')
+    func(name)
+  return wrapper
+```
+
+The decorator `add_greeting()` returns a function that is an embellished version of the function it is given. When we decorate a function with it, it looks like this. 
+
+```{python, collapse = TRUE}
+@add_greeting
+def print_name(first_name):
+  print(first_name)
+```
+
+You could get the same behavior by typing the following. They are equivalent!
+
+```{python, collapse = TRUE}
+def print_name(first_name):
+  print(first_name)
+print_name = add_greeting(print_name)
+```
+
+Things can get a little more complicated when your decorators take additional arguments. 
+
+```{python, collapse = TRUE, echo = F}
+def add_greeting(greet):
+  def decorator(func):
+    def wrapper(name):
+      print(greet)
+      func(name)
+    return wrapper
+  return decorator
+```
+
+
+```{python, collapse = TRUE}
+@add_greeting("How you doin'")
+def print_name(first_name):
+  print(first_name)
+print_name('Taylor')
+```
+
+
+So how do we write decorators that accomplish this? The important thing to remember is that the following is equivalent to this: `print_name = add_greeting("How you doin'")(print_name)`. This is a function returning a function returning a function! It could look something like this.
+
+```{python, collapse = TRUE}
+def add_greeting(greet):
+  def decorator(func):
+    def wrapper(name):
+      print(greet)
+      func(name)
+    return wrapper
+  return decorator
+```
+
+
+Now that you know how decorators work, you can feel comfortable using third-party ones. You might come across, for example, the `@jit` decorator from [Numba](https://numba.pydata.org/), which will translate your Python function into faster machine code, the `@lru_cache` decorator from the [`functools` module](https://docs.python.org/3/library/functools.html)--this can make your code faster by saving some of its outputs--or decorators that perform application specific tasks like [`@tf.function`](https://www.tensorflow.org/api_docs/python/tf/function) from Tensorflow. 
+
+
 
 
 
