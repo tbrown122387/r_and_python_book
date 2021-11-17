@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -390,17 +390,16 @@ div.csl-indent {
 <li class="chapter" data-level="15.1.5" data-path="functional-programming.html"><a href="functional-programming.html#mapply"><i class="fa fa-check"></i><b>15.1.5</b> <code>mapply()</code></a></li>
 <li class="chapter" data-level="15.1.6" data-path="functional-programming.html"><a href="functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>15.1.6</b> <code>Reduce()</code> and <code>do.call()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="15.2" data-path="functional-programming.html"><a href="functional-programming.html#another-example-in-r"><i class="fa fa-check"></i><b>15.2</b> Another Example in R</a></li>
-<li class="chapter" data-level="15.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-python"><i class="fa fa-check"></i><b>15.3</b> Functions as Function Inputs in Python</a>
+<li class="chapter" data-level="15.2" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-python"><i class="fa fa-check"></i><b>15.2</b> Functions as Function Inputs in Python</a>
 <ul>
-<li class="chapter" data-level="15.3.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>15.3.1</b> Functions as Function Inputs in Base Python</a></li>
-<li class="chapter" data-level="15.3.2" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>15.3.2</b> Functions as Function Inputs in Numpy</a></li>
-<li class="chapter" data-level="15.3.3" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>15.3.3</b> Functional Methods in Pandas</a></li>
+<li class="chapter" data-level="15.2.1" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>15.2.1</b> Functions as Function Inputs in Base Python</a></li>
+<li class="chapter" data-level="15.2.2" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>15.2.2</b> Functions as Function Inputs in Numpy</a></li>
+<li class="chapter" data-level="15.2.3" data-path="functional-programming.html"><a href="functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>15.2.3</b> Functional Methods in Pandas</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>15.4</b> Functions as Function Outputs in R</a></li>
-<li class="chapter" data-level="15.5" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.5</b> Functions as Function Outputs in Python</a>
+<li class="chapter" data-level="15.3" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>15.3</b> Functions as Function Outputs in R</a></li>
+<li class="chapter" data-level="15.4" data-path="functional-programming.html"><a href="functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.4</b> Functions as Function Outputs in Python</a>
 <ul>
-<li class="chapter" data-level="15.5.1" data-path="functional-programming.html"><a href="functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.5.1</b> Writing Our Own Decorators</a></li>
+<li class="chapter" data-level="15.4.1" data-path="functional-programming.html"><a href="functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -575,8 +574,8 @@ p(x) =
 The denominator, <span class="math inline">\(\int_0^1 y^2(1-y) dy\)</span>, is the target’s normalizing constant. You might know how to solve this integral (it’s equal to <span class="math inline">\(1/12\)</span>), but let’s pretend for the sake of our example that it’s too difficult for us. We want to sample from <span class="math inline">\(p(x)\)</span> while only being able to evaluate (not sample) from its unnormalized version <span class="math inline">\(f(x) := x^2(1-x)\)</span>. This is a situation that arises often–wanting to sample from some complicated distribution whose density you can only evaluate up to a constant of proportionality.</p>
 <p>Next, let’s choose a uniform distribution for our <em>proposal distribution</em>: <span class="math inline">\(q(x) = 1\)</span> if <span class="math inline">\(0 &lt; x &lt; 1\)</span>. This means we will sample from this distribution, because it’s easier. We just need to “adjust” our samples somehow, because it’s not the same as our target.</p>
 <p>We can plot all three functions. The area under the <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(q(x)\)</span> curves is <span class="math inline">\(1\)</span>, because they are true probability density functions. <span class="math inline">\(f(x)\)</span>, however, is not.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-189"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-189-1.png" alt="Visualizing Our Three Functions" width="40%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-195"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-195-1.png" alt="Visualizing Our Three Functions" width="40%" />
 <p class="caption">
 Figure 11.1: Visualizing Our Three Functions
 </p>
@@ -723,6 +722,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

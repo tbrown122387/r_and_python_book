@@ -234,56 +234,6 @@ Reduce(merge, dfs)
 Again, this is very DRY code. Nothing would need to be changed if `dfs` grew. Furthermore, trying to `do.call()` the `merge()` function wouldn't work because it can only take two data sets at a time. 
 
 
-## Another Example in R
-
-Consider another common example: plotting scalar-valued multivariate functions. Let's try to plot a bivariate Gaussian distribution. 
-
-$$
-f(x,y) = \frac{1}{2 \pi}  \exp\left[ -\frac{x ^2 + y^2}{2}     \right]
-$$
-The random elements $x$ and $y$, in this particular case, are uncorrelated, each have unit variance, and zero mean. This density is a surface in 3-d dimensional space. To visualize this, we would need to
-
-1. generate a "grid" of points in $\mathbb{R}^2$, 
-2. evaluate our function on each point, and then
-3. call some plotting function that takes this all and makes a pretty picture.
-
-There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use `mapply()`, we need the function to take two arguments.
-
-```{r, collapse = TRUE}
-fTwoArgs <- function(x,y){
-  exp(-.5*(x^2 + y^2)) / 2 / pi
-}
-```
-
-We can construct every possible point on a grid with the `expand.grid()` function.
-
-```{r, collapse = TRUE}
-xGrid <- seq(-3,3,.1)
-yGrid <- seq(-3,3,.1)
-grid <- expand.grid(xGrid, yGrid)
-head(grid)
-```
-
-`mapply()` would take `fTwoArgs=`, and effectively call it on every row pair. The pairs do not need to be organized in a `data.frame`, though.
-
-```{r, collapse=TRUE}
-funcOut1 <- mapply(fTwoArgs, grid[,1], grid[,2])
-head(funcOut1)
-rectangularOutput <- matrix(funcOut1, ncol = length(xGrid))
-persp(xGrid, yGrid, rectangularOutput, 
-      zlab = "f(x,y)", xlab = "x", ylab = "y")
-```
-
-If you prefer using `apply()`, that is also possible, but you would need to rewrite the function to take one (length-two) argument. 
-
-```{r, collapse=T}
-fOneArg <- function(vec){
-  exp(-sum(vec^2)/2)/2/pi
-} 
-funcOut2 <- apply(grid, 1, fOneArg)
-moreRectOut <- matrix(funcOut2, ncol = length(xGrid))
-contour(xGrid, yGrid, moreRectOut, xlab = "x", ylab = "y")
-```
 
 ## Functions as Function Inputs in Python
 
