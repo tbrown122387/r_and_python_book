@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 15 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="an-introduction-to-object-oriented-programming.html"/>
 
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -484,7 +484,7 @@ div.csl-indent {
 <div class="rmd-details">
 <p>“Don’t repeat yourself” (DRY) is an idea that’s been around for a while and is widely accepted <span class="citation">(<a href="#ref-hunt2000pragmatic" role="doc-biblioref">Hunt and Thomas 2000</a>)</span>. DRY is the opposite of <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET">WET</a>.</p>
 </div>
-<p>Instead, prefer the use of <code>sapply()</code> in this situation. The “s” in <code>sapply()</code> stands for “simplified.” In this bit of code <code>mean()</code> is called on each column of th data frame. <code>sapply()</code> applies the function over columns, instead of rows, because data frames are internally a <code>list</code> of columns.</p>
+<p>Instead, prefer the use of <code>sapply()</code> in this situation. The “s” in <code>sapply()</code> stands for “simplified.” In this bit of code <code>mean()</code> is called on each column of the data frame. <code>sapply()</code> applies the function over columns, instead of rows, because data frames are internally a <code>list</code> of columns.</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="functional-programming.html#cb263-1" aria-hidden="true" tabindex="-1"></a>myMeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(myDF, mean)</span>
 <span id="cb263-2"><a href="functional-programming.html#cb263-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myMeans)</span>
 <span id="cb263-3"><a href="functional-programming.html#cb263-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          X1          X2          X3          X4          X5          X6 </span></span>
@@ -539,20 +539,13 @@ div.csl-indent {
 <span id="cb267-4"><a href="functional-programming.html#cb267-4" aria-hidden="true" tabindex="-1"></a>thirdB <span class="ot">&lt;-</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span></span>
 <span id="cb267-5"><a href="functional-programming.html#cb267-5" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(firstB <span class="sc">&amp;</span> secondB) <span class="sc">|</span> thirdB,]</span>
 <span id="cb267-6"><a href="functional-programming.html#cb267-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subDF)</span>
-<span id="cb267-7"><a href="functional-programming.html#cb267-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb267-8"><a href="functional-programming.html#cb267-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb267-9"><a href="functional-programming.html#cb267-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb267-10"><a href="functional-programming.html#cb267-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb267-11"><a href="functional-programming.html#cb267-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb267-12"><a href="functional-programming.html#cb267-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb267-13"><a href="functional-programming.html#cb267-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900</span></span>
-<span id="cb267-14"><a href="functional-programming.html#cb267-14" aria-hidden="true" tabindex="-1"></a><span class="do">##     City</span></span>
-<span id="cb267-15"><a href="functional-programming.html#cb267-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 CROZET</span></span>
-<span id="cb267-16"><a href="functional-programming.html#cb267-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 CROZET</span></span>
-<span id="cb267-17"><a href="functional-programming.html#cb267-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 CROZET</span></span>
-<span id="cb267-18"><a href="functional-programming.html#cb267-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 CROZET</span></span>
-<span id="cb267-19"><a href="functional-programming.html#cb267-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 CROZET</span></span>
-<span id="cb267-20"><a href="functional-programming.html#cb267-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 CROZET</span></span></code></pre></div>
+<span id="cb267-7"><a href="functional-programming.html#cb267-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City</span></span>
+<span id="cb267-8"><a href="functional-programming.html#cb267-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET</span></span>
+<span id="cb267-9"><a href="functional-programming.html#cb267-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET</span></span>
+<span id="cb267-10"><a href="functional-programming.html#cb267-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET</span></span>
+<span id="cb267-11"><a href="functional-programming.html#cb267-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET</span></span>
+<span id="cb267-12"><a href="functional-programming.html#cb267-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET</span></span>
+<span id="cb267-13"><a href="functional-programming.html#cb267-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET</span></span></code></pre></div>
 <p>Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.</p>
 <ul>
 <li>Step 1: write a predicate function that returns TRUE or FALSE;</li>
@@ -568,45 +561,31 @@ div.csl-indent {
 <span id="cb268-7"><a href="functional-programming.html#cb268-7" aria-hidden="true" tabindex="-1"></a>whichRows <span class="ot">&lt;-</span> <span class="fu">apply</span>(albRealEstate, <span class="dv">1</span>, pred)</span>
 <span id="cb268-8"><a href="functional-programming.html#cb268-8" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[whichRows,]</span>
 <span id="cb268-9"><a href="functional-programming.html#cb268-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subDF)</span>
-<span id="cb268-10"><a href="functional-programming.html#cb268-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb268-11"><a href="functional-programming.html#cb268-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb268-12"><a href="functional-programming.html#cb268-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb268-13"><a href="functional-programming.html#cb268-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb268-14"><a href="functional-programming.html#cb268-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb268-15"><a href="functional-programming.html#cb268-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb268-16"><a href="functional-programming.html#cb268-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900</span></span>
-<span id="cb268-17"><a href="functional-programming.html#cb268-17" aria-hidden="true" tabindex="-1"></a><span class="do">##     City</span></span>
-<span id="cb268-18"><a href="functional-programming.html#cb268-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 CROZET</span></span>
-<span id="cb268-19"><a href="functional-programming.html#cb268-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 CROZET</span></span>
-<span id="cb268-20"><a href="functional-programming.html#cb268-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 CROZET</span></span>
-<span id="cb268-21"><a href="functional-programming.html#cb268-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 CROZET</span></span>
-<span id="cb268-22"><a href="functional-programming.html#cb268-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 CROZET</span></span>
-<span id="cb268-23"><a href="functional-programming.html#cb268-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 CROZET</span></span></code></pre></div>
+<span id="cb268-10"><a href="functional-programming.html#cb268-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City</span></span>
+<span id="cb268-11"><a href="functional-programming.html#cb268-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET</span></span>
+<span id="cb268-12"><a href="functional-programming.html#cb268-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET</span></span>
+<span id="cb268-13"><a href="functional-programming.html#cb268-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET</span></span>
+<span id="cb268-14"><a href="functional-programming.html#cb268-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET</span></span>
+<span id="cb268-15"><a href="functional-programming.html#cb268-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET</span></span>
+<span id="cb268-16"><a href="functional-programming.html#cb268-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET</span></span></code></pre></div>
 </div>
 <div id="tapply" class="section level3" number="15.1.4">
 <h3><span class="header-section-number">15.1.4</span> <code>tapply()</code></h3>
 <p><code>tapply()</code> can be very handy when you need it. First, we’ve alluded to the definition before in subsection <a href="data-frames.html#data-frames-in-r">8.1</a>, but a <strong>ragged array</strong> is a collection of arrays that all have potentially different lengths. I don’t typically construct such an object and then pass it to <code>tapply()</code>. Rather, I let <code>tapply()</code> construct the ragged array for me. The first argument it expects is, to quote the documentation, “typically vector-like,” while the second tells us how to break that <code>vector</code> into chunks. The third argument is a function that gets applied to each <code>vector</code> chunk.</p>
 <p>If I wanted the average home price for each city, I could use something like this.</p>
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="functional-programming.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(albRealEstate)</span>
-<span id="cb269-2"><a href="functional-programming.html#cb269-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue</span></span>
-<span id="cb269-3"><a href="functional-programming.html#cb269-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900</span></span>
-<span id="cb269-4"><a href="functional-programming.html#cb269-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100</span></span>
-<span id="cb269-5"><a href="functional-programming.html#cb269-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900</span></span>
-<span id="cb269-6"><a href="functional-programming.html#cb269-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700</span></span>
-<span id="cb269-7"><a href="functional-programming.html#cb269-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500</span></span>
-<span id="cb269-8"><a href="functional-programming.html#cb269-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200</span></span>
-<span id="cb269-9"><a href="functional-programming.html#cb269-9" aria-hidden="true" tabindex="-1"></a><span class="do">##          City</span></span>
-<span id="cb269-10"><a href="functional-programming.html#cb269-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      CROZET</span></span>
-<span id="cb269-11"><a href="functional-programming.html#cb269-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      CROZET</span></span>
-<span id="cb269-12"><a href="functional-programming.html#cb269-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 EARLYSVILLE</span></span>
-<span id="cb269-13"><a href="functional-programming.html#cb269-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      CROZET</span></span>
-<span id="cb269-14"><a href="functional-programming.html#cb269-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      CROZET</span></span>
-<span id="cb269-15"><a href="functional-programming.html#cb269-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      CROZET</span></span>
-<span id="cb269-16"><a href="functional-programming.html#cb269-16" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
-<span id="cb269-17"><a href="functional-programming.html#cb269-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;     &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
-<span id="cb269-18"><a href="functional-programming.html#cb269-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
-<span id="cb269-19"><a href="functional-programming.html#cb269-19" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE </span></span>
-<span id="cb269-20"><a href="functional-programming.html#cb269-20" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4</span></span></code></pre></div>
+<span id="cb269-2"><a href="functional-programming.html#cb269-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City</span></span>
+<span id="cb269-3"><a href="functional-programming.html#cb269-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET</span></span>
+<span id="cb269-4"><a href="functional-programming.html#cb269-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET</span></span>
+<span id="cb269-5"><a href="functional-programming.html#cb269-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE</span></span>
+<span id="cb269-6"><a href="functional-programming.html#cb269-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET</span></span>
+<span id="cb269-7"><a href="functional-programming.html#cb269-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET</span></span>
+<span id="cb269-8"><a href="functional-programming.html#cb269-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET</span></span>
+<span id="cb269-9"><a href="functional-programming.html#cb269-9" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(albRealEstate<span class="sc">$</span>City)</span>
+<span id="cb269-10"><a href="functional-programming.html#cb269-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;CROZET&quot;          &quot;EARLYSVILLE&quot;     &quot;CHARLOTTESVILLE&quot; &quot;SCOTTSVILLE&quot;     &quot;NORTH GARDEN&quot;    &quot;KESWICK&quot;</span></span>
+<span id="cb269-11"><a href="functional-programming.html#cb269-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City), mean)</span>
+<span id="cb269-12"><a href="functional-programming.html#cb269-12" aria-hidden="true" tabindex="-1"></a><span class="do">## CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK    NORTH GARDEN     SCOTTSVILLE </span></span>
+<span id="cb269-13"><a href="functional-programming.html#cb269-13" aria-hidden="true" tabindex="-1"></a><span class="do">##        381933.0        380425.7        439141.0        540532.6        366597.8        268407.4</span></span></code></pre></div>
 <p>You might be wondering why we put <code>albRealEstate$City</code> into a <code>list</code>. That seems kind of unnecessary. This is because <code>tapply()</code> can be used with multiple <code>factor</code>s–this will break down the <code>vector</code> input into a finer partition. The second argument must be one object, though, so all of these <code>factor</code>s must be collected into a <code>list</code>. The following code produces a “pivot table.”</p>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="functional-programming.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(albRealEstate<span class="sc">$</span>TotalValue, </span>
 <span id="cb270-2"><a href="functional-programming.html#cb270-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">list</span>(albRealEstate<span class="sc">$</span>City, albRealEstate<span class="sc">$</span>Condition), </span>
@@ -853,7 +832,7 @@ where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \t
 <span id="cb291-11"><a href="functional-programming.html#cb291-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;actual expects&quot;</span>)</span>
 <span id="cb291-12"><a href="functional-programming.html#cb291-12" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, </span>
 <span id="cb291-13"><a href="functional-programming.html#cb291-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-290"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-290"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-290-1.png" alt="Monte Carlo Approximations versus Exact Evaluations" width="60%" />
 <p class="caption">
 Figure 15.1: Monte Carlo Approximations versus Exact Evaluations
@@ -1199,7 +1178,6 @@ Hunt, Andrew, and David Thomas. 2000. <em>The Pragmatic Programmer : From Journe
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1239,6 +1217,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

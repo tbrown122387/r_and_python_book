@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="visualization.html"/>
 <link rel="next" href="functional-programming.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -659,18 +659,17 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x560f2b507940&gt;
+## &lt;bytecode: 0x561a8f3020d0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod()</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods()</code> function.</p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="an-introduction-to-object-oriented-programming.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(plot)</span></code></pre></div>
-<pre><code>##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
-##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
-## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
-## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
-## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
-## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
-## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
-## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
+<pre><code>##  [1] plot,ANY-method      plot,color-method    plot.acf*            plot.cohesiveBlocks* plot.communities*    plot.data.frame*     plot.decomposed.ts* 
+##  [8] plot.default         plot.dendrogram*     plot.density*        plot.ecdf            plot.factor*         plot.formula*        plot.function       
+## [15] plot.ggplot*         plot.gtable*         plot.hcl_palettes*   plot.hclust*         plot.histogram*      plot.HoltWinters*    plot.igraph*        
+## [22] plot.isoreg*         plot.lm*             plot.mcmc*           plot.mcmc.list*      plot.medpolish*      plot.mlm*            plot.numpy.ndarray* 
+## [29] plot.ppr*            plot.prcomp*         plot.princomp*       plot.profile.nls*    plot.R6*             plot.raster*         plot.shingle*       
+## [36] plot.sir*            plot.spec*           plot.stepfun         plot.stl*            plot.table*          plot.trans*          plot.trellis*       
+## [43] plot.ts              plot.tskernel*       plot.TukeyHSD*      
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
 <p>All of these S3 class methods share the same naming convention. Their name has the generic function’s name as a prefix, then a dot (<code>.</code>), then the name of the class that they are specifically written to be used with.</p>
 <div class="rmd-caution">
@@ -688,7 +687,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <span id="cb248-4"><a href="an-introduction-to-object-oriented-programming.html#cb248-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aDF)</span>
 <span id="cb248-5"><a href="an-introduction-to-object-oriented-programming.html#cb248-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
 <span id="cb248-6"><a href="an-introduction-to-object-oriented-programming.html#cb248-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aDF)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-247"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-247"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-247-1.png" alt="A Scatterplot Matrix" width="50%" />
 <p class="caption">
 Figure 14.1: A Scatterplot Matrix
@@ -702,7 +701,7 @@ Figure 14.1: A Scatterplot Matrix
 <span id="cb249-4"><a href="an-introduction-to-object-oriented-programming.html#cb249-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myECDF)</span>
 <span id="cb249-5"><a href="an-introduction-to-object-oriented-programming.html#cb249-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ecdf&quot;     &quot;stepfun&quot;  &quot;function&quot;</span></span>
 <span id="cb249-6"><a href="an-introduction-to-object-oriented-programming.html#cb249-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myECDF)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-248"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-248"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-248-1.png" alt="Plotting an Empirical Cumulative Distribution Function" width="50%" />
 <p class="caption">
 Figure 14.2: Plotting an Empirical Cumulative Distribution Function
@@ -1149,7 +1148,6 @@ Wickham, H. 2014. <em>Advanced r</em>. Chapman &amp; Hall/CRC the r Series. Tayl
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1189,6 +1187,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

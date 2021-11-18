@@ -162,6 +162,11 @@
 }
 \makeatother
 
+
+% details block styling
+\newenvironment{rmd-details}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
+
+
 \frontmatter
 \ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
@@ -201,13 +206,13 @@ To Clare
 \chapter*{Welcome}\label{welcome}}
 
 
-\hypertarget{a-sample-course}{%
-\section*{A Sample Course}\label{a-sample-course}}
+\hypertarget{teaching-a-course-with-this-textbook}{%
+\section*{Teaching a Course With This Textbook}\label{teaching-a-course-with-this-textbook}}
 
 
-Please email me for access to a private Github repository with course materials such as a syllabus, course schedule, and assignments.
+You will notice that some of the exercise questions are unusually specific. For example, they will ask the student to assign the answer in a certain form to a variable with a very specific name. This is because they are written with automatic grading in mind.
 
-You will notice that some of the exercise questions are unusually specific. For example, they will ask the student to assign the answer in a certain form to a variable with a very specific name. This is because they are written with automatic grading in mind. All of exercises have been very generously ``battle tested'' by the Fall 2021 STAT 5430 class at the University of Virginia. R scripts were graded with the \texttt{gradeR} package \citep{gradeR}, and Python scripts with the \href{https://otter-grader.readthedocs.io/en/latest/}{\texttt{Otter-Grader} library} \citep{otter}.
+All of the exercises in this text have been very generously ``battle tested'' by the Fall 2021 STAT 5430 class at the University of Virginia.
 
 \hypertarget{licenses}{%
 \section*{License(s)}\label{licenses}}
@@ -754,7 +759,7 @@ How do we create one of these? There are many ways. One common way is to read in
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \CommentTok{\# generate Gaussian random variables}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)                             }
-\DocumentationTok{\#\# [1]  0.6403955  0.2524081  1.3740108  2.2544786 {-}1.2988103}
+\DocumentationTok{\#\# [1]  1.1238150 {-}1.3012177 {-}0.3103590  0.1361254  0.1354697}
 \end{Highlighting}
 \end{Shaded}
 
@@ -781,7 +786,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.78583785, {-}0.13803104,  0.5196683 ])}
+\CommentTok{\#\# array([{-}0.7047086 , {-}2.06362777,  0.12240862])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2810,7 +2815,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 139754705933664 139754705933696}
+\CommentTok{\#\# 140425253578080 140425253578112}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -3224,7 +3229,7 @@ Here is an example of (1). We can take non-categorical data, and \texttt{cut()} 
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{6}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\# [1] (0, Inf] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf]}
+\DocumentationTok{\#\# [1] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -3646,9 +3651,9 @@ Code that modifies data usually looks quite similar to code extracting data. You
 \NormalTok{irisData[irisData}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{, }\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"SETOSA!"}
 \FunctionTok{head}\NormalTok{(irisData, }\DecValTok{3}\NormalTok{)}
 \DocumentationTok{\#\#      sepal.width petal.length petal.width species columnOfOnes}
-\DocumentationTok{\#\# 1001   {-}998.2750          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1002   {-}999.1644          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1003   {-}998.5575          1.3         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1001   {-}999.4124          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1002  {-}1000.0453          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1003  {-}1000.0906          1.3         0.2 SETOSA!            1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3813,9 +3818,9 @@ Modifying data inside a data frame looks quite similar to extracting data. You'l
 \KeywordTok{del}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}petal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.length  sepal.width  petal.width  species  col\_ones}
-\CommentTok{\#\# 149    998.647670  {-}999.772495          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 148    997.539297  {-}999.998765          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 147      4.700000  {-}996.909943          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 149    998.168466  {-}998.229668          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 148    999.172947  {-}998.717773          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 147      4.700000  {-}998.994657          0.2  SETOSA!       1.0}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3827,9 +3832,9 @@ You can also use the \href{https://pandas.pydata.org/pandas-docs/stable/referenc
 \KeywordTok{del}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}sepal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.width  petal.width  species  col\_ones  new\_col\_name}
-\CommentTok{\#\# 149  {-}999.772495          0.2  SETOSA!       1.0             0}
-\CommentTok{\#\# 148  {-}999.998765          0.2  SETOSA!       1.0             1}
-\CommentTok{\#\# 147  {-}996.909943          0.2  SETOSA!       1.0             2}
+\CommentTok{\#\# 149  {-}998.229668          0.2  SETOSA!       1.0             0}
+\CommentTok{\#\# 148  {-}998.717773          0.2  SETOSA!       1.0             1}
+\CommentTok{\#\# 147  {-}998.994657          0.2  SETOSA!       1.0             2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4075,7 +4080,6 @@ If you look at the source code for \texttt{read.csv()} (type the name of the fun
 Consider the \href{https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring}{``Challenger USA Space Shuttle O-Ring Data Set''} from \citep{uci_data}. The first few rows of the raw text file\footnote{Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.} looks like this.
 
 \begin{verbatim}
-bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3
@@ -4164,8 +4168,7 @@ Some of you may have had difficulty reading in the above data. This can happen i
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tmp }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"data/Google.html"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\textasciitilde{}"}\NormalTok{)}
-\DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection}
-\DocumentationTok{\#\# \textquotesingle{}data/Google.html\textquotesingle{}}
+\DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection \textquotesingle{}data/Google.html\textquotesingle{}}
 \DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string}
 \end{Highlighting}
 \end{Shaded}
@@ -4319,7 +4322,6 @@ Here is an example of writing out \texttt{d} to a file called \texttt{oring\_out
 The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.
 
 \begin{verbatim}
-bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 "V1";"V2";"V3";"V4";"V5"
 6;0;66;50;1
 6;1;70;50;2
@@ -4388,7 +4390,6 @@ You can write out tabular data with a variety of \href{https://pandas.pydata.org
 Here is how the first few rows of that file looks in a text editor.
 
 \begin{verbatim}
-bash: /home/taylor/.local/share/r-miniconda/envs/r-reticulate/lib/libtinfo.so.6: no version information available (required by bash)
 0,1,2,3,4
 6,0,66,50,1
 6,1,70,50,2
@@ -4556,9 +4557,8 @@ Moreover, all of these environments are connected in a chain-like structure. To 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
-\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:ggplot2"    "package:reticulate"}
-\DocumentationTok{\#\#  [6] "tools:rstudio"      "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"     }
-\DocumentationTok{\#\# [11] "package:datasets"   "package:methods"    "Autoloads"          "package:base"}
+\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:reticulate" "tools:rstudio"      "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"     }
+\DocumentationTok{\#\#  [8] "package:datasets"   "package:methods"    "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4662,8 +4662,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.1177849 ,  0.09242971,  1.70867542, {-}0.5152147 , {-}0.95926628,}
-\CommentTok{\#\#         1.44507218,  0.23446986, {-}0.41666161, {-}0.40232228, {-}1.76533545])}
+\CommentTok{\#\# array([{-}1.25821108,  0.7824675 ,  0.33939165,  0.87955643,  0.71642838,}
+\CommentTok{\#\#         1.59316399,  1.01870638, {-}0.59236906,  0.05294611, {-}1.09848869])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4675,8 +4675,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.25077337,  0.26024957, {-}0.5032605 ,  0.40672638,  0.36374873,}
-\CommentTok{\#\#        {-}1.00236825,  1.38125477,  0.57683001, {-}0.61989706, {-}0.26551659])}
+\CommentTok{\#\# array([{-}0.47958027,  0.93045372, {-}0.19295789,  1.20816071,  0.46236513,}
+\CommentTok{\#\#        {-}0.60287902, {-}0.23150056, {-}1.94314206,  1.35389999, {-}0.11365848])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4688,8 +4688,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([ 1.51261848,  1.3758968 , {-}0.16714459,  0.46187777, {-}0.65945332,}
-\CommentTok{\#\#         0.6232959 ,  0.570791  , {-}1.11566223, {-}0.36101484,  1.97399363])}
+\CommentTok{\#\# array([{-}0.40975081,  0.60062734, {-}2.75610629,  0.87653564,  0.93725255,}
+\CommentTok{\#\#        {-}1.0750923 , {-}1.56512452,  1.14127833, {-}0.56522432, {-}0.9957946 ])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5126,13 +5126,19 @@ Suppose you are trying to predict a value of \(Y\) given some information about 
 Write a function called \texttt{kernReg(xPred,xData,yData,kernFunc)} that computes the Nadaraya--Watson estimate of the prediction of \(Y\) given \(X=x\). Do not use a \texttt{for} loop in your function definition. The formula is
 \[\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,\] where \(x\) is the point you're trying to get a prediction for.
 
-\begin{verbatim}
-* Your function should return one floating point number. 
-* The input `xPred` will be a floating point number.
-* The input `xData` is a one-dimensional `vector` of numerical data of independent variables. 
-* The input `yData` is a one-dimensional `vector` of numerical data of dependent variables.
-* `kernFunc` is a function that accepts a `numeric` `vector` and returns a floating point. It's vectorized.
-\end{verbatim}
+\begin{itemize}
+\tightlist
+\item
+  Your function should return one floating point number.
+\item
+  The input \texttt{xPred} will be a floating point number.
+\item
+  The input \texttt{xData} is a one-dimensional \texttt{vector} of numerical data of independent variables.
+\item
+  The input \texttt{yData} is a one-dimensional \texttt{vector} of numerical data of dependent variables.
+\item
+  \texttt{kernFunc} is a function that accepts a \texttt{numeric} \texttt{vector} and returns a floating point. It's vectorized.
+\end{itemize}
 
 Below is some code that will help you test your predictions. The kernel function, \texttt{gaussKernel()}, implements the Gaussian kernel function \(K(z) = \exp[-z^2/2]/\sqrt{2\pi}\). Notice the creation of \texttt{preds} was commented out. Use a \texttt{for} loop to generate predictions for all elements of \texttt{xTest} and store them in the vector \texttt{preds}.
 
@@ -5329,20 +5335,13 @@ In R, this can be done with \texttt{rbind()} (short for ``row bind'')
 \NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
 \NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\DecValTok{1}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train))}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
-\DocumentationTok{\#\#          City}
-\DocumentationTok{\#\# 1      CROZET}
-\DocumentationTok{\#\# 2      CROZET}
-\DocumentationTok{\#\# 3 EARLYSVILLE}
-\DocumentationTok{\#\# 4      CROZET}
-\DocumentationTok{\#\# 5      CROZET}
-\DocumentationTok{\#\# 6      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET}
 \FunctionTok{sum}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train) }\SpecialCharTok{!=}\NormalTok{ realEstate)}
 \DocumentationTok{\#\# [1] 0}
 \end{Highlighting}
@@ -5713,7 +5712,224 @@ The second example uses strings to specify value columns.
 \end{Highlighting}
 \end{Shaded}
 
-TODO exercises just have them read in correctly Recall the file ``\texttt{long-beach-va.data}'' from \href{https://archive.ics.uci.edu/ml/datasets/heart+disease}{UCI Machine Learning Repository}.
+\hypertarget{exercises-10}{%
+\section{Exercises}\label{exercises-10}}
+
+\hypertarget{r-questions-9}{%
+\subsection{R Questions}\label{r-questions-9}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+Recall the \texttt{car.data} data set \citep{misc_car_evaluation_19}.
+
+\begin{itemize}
+\tightlist
+\item
+  Read in the data set as \texttt{carData}.
+\item
+  Convert the third and fourth columns to \emph{ordered} \texttt{factor}s.
+\item
+  Order the data by the third and then the fourth column (simultaneously). Do not change the data in place. Instead store it under the name \texttt{ordCarData1}
+\item
+  Order the data by the fourth and then the third column (simultaneously). Do not change the data in place. Instead store it under the name \texttt{ordCarData2}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{day1Data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{idNum =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }
+                       \AttributeTok{measure =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\NormalTok{day2Data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{idNum =} \DecValTok{11}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, }
+                       \AttributeTok{measure =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Pretend \texttt{day1Data} and \texttt{day2Data} are two separate data sets that possess the same type of measures but on different experimental units. Stack \texttt{day1Data} on top of \texttt{day2Data} and call the result \texttt{stackedData}.
+\item
+  Pretend \texttt{day1Data} and \texttt{day2Data} are different measurements on the same experimental units. Place them shoulder to shoulder and call the result \texttt{sideBySide}. Put \texttt{day1Data} first, and \texttt{day2Data} second.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+\end{enumerate}
+
+If you are dealing with random matrices, you might need to \textbf{vectorize} a matrix object. This is not the same as ``vectorization'' in programming. Instead, it means you write the matrix as a big column vector by stacking the columns on top of each other. Specifically, if you have a \(n \times p\) real-valued matrix \(\mathbf{X}\), then
+
+\[
+\text{vec}(\mathbf{X}) =\begin{bmatrix} \mathbf{X}_1 \\ \vdots \\ \mathbf{X}_p \end{bmatrix} 
+\]
+where \(\mathbf{X}_i\) is the \(i\)th column as an \(n \times 1\) column vector. There is another operator that we will use, the \textbf{Kronecker product:}
+\[
+\mathbf{A} \otimes \mathbf{B} = 
+\begin{bmatrix}
+a_{11} \mathbf{B} & \cdots & a_{1n} \mathbf{B} \\
+\vdots & \ddots & \vdots \\
+a_{m1} \mathbf{B} & \cdots & a_{mn} \mathbf{B} \\
+\end{bmatrix}.
+\]
+If \(\mathbf{A}\) is \(m \times n\) and \(\mathbf{B}\) is \(p \times q\), then \(\mathbf{A} \otimes \mathbf{B}\) is \(pm \times qn\).
+
+\begin{itemize}
+\tightlist
+\item
+  Write a function called \texttt{vec(myMatrix)}. Its input should be one \texttt{matrix} object. It's output should be a \texttt{vector}. Hint: \texttt{matrix} objects are stored in column-major order.
+\item
+  Write a function called \texttt{unVec(myVector,\ nRows)} that takes in the vectorized matrix as a \texttt{vector}, splits that into elements with \texttt{nRows} elements, and then places them together shoulder-to-shoulder as a \texttt{matrix}.
+\item
+  Write a function called \texttt{stackUp(m,\ BMat)} that returns \(\mathbf{1}_m \otimes \mathbf{B}\) where \(\mathbf{1}_m\) is a length \(m\) column vector of ones. You may check your work with \texttt{\%x\%}, but do not use this in your function.
+\item
+  Write a function called \texttt{shoulderToShoulder(n,\ BMat)} that returns \(\mathbf{1}^\intercal_n \otimes \mathbf{B}\) where \(\mathbf{1}_n^\intercal\) is a length \(n\) row vector of ones. You may check your work with \texttt{\%x\%}, but do not use this in your function.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+\end{enumerate}
+
+This problem uses the Militarized Interstate Disputes (v5.0) TODO cite data set from \href{https://correlatesofwar.org/}{The Correlates of War Project}. There are four \texttt{.csv} files we use for this problem. \texttt{MIDA\ 5.0.csv} contains the essential attributes of each militarized interstate dispute from 1/1/1816 through 12/31/2014. \texttt{MIDB\ 5.0.csv} describes the participants in each of those disputes. \texttt{MIDI\ 5.0.csv} contains the essential elements of each militarized interstate incident, and \texttt{MIDIP\ 5.0.csv} describes the participants in each of those incidents.
+
+\begin{itemize}
+\tightlist
+\item
+  Read in the four data sets and give them the names \texttt{mida}, \texttt{midb}, \texttt{midi}, and \texttt{midp}. Take care to convert all instances of \texttt{-9} to \texttt{NA}.
+\item
+  Examine all rows of \texttt{midb} where its \texttt{dispnum} column equals \texttt{2}. Do not change \texttt{midb} permanently. Are these two rows corresponding to the same conflict? If so, assign \texttt{TRUE} to \texttt{sameConflict}. Otherwise, assign \texttt{FALSE}.
+\item
+  Join the first two data sets together on the dispute number column (\texttt{dispnum}). Call the resulting \texttt{data.frame} \texttt{join1}. Do not address any concerns about duplicate columns.
+\item
+  Is there any difference between doing an inner join and an outer join in the previous question? If there was a difference, assign \texttt{TRUE} to \texttt{theyAreNotTheSame}. Otherwise, assign \texttt{FALSE} to it.
+\item
+  Join the last two data sets together by \texttt{incidnum} and call the result \texttt{join2}. Is there any difference between an inner and an outer join for this problem? Why or why not? Do not address any concerns about duplicate columns.
+\item
+  The codebook mentions that the last two data sets don't go as far back in time as the first two. Suppose then that we only care about the events in \texttt{join2}. Merge \texttt{join2} and \texttt{join1} in a way where all undesired rows from \texttt{join1} are discarded, and all rows from \texttt{join2} are kept. Call the resulting \texttt{data.frame} \texttt{midData}. Do not address any concerns about duplicate columns.
+\item
+  Use a scatterplot to display the relationship between the maximum duration and the end year. Plot each country as a different color.
+\item
+  Create a \texttt{data.frame} called \texttt{longData} that has the following three columns from \texttt{midp}: \texttt{incidnum} (incident identification number) \texttt{stabb} (state abbreviation of participant) and \texttt{fatalpre} (precise number of fatalities). Convert this to ``wide'' format. Make the new table called \texttt{wideData}. Use the incident number row as a unique row-identifying variable.
+\item
+  Bonus Question: identify all column pairs that contain duplicate information in \texttt{midData}, remove all but one of the columns, and change the column name back to its original name.
+\end{itemize}
+
+\hypertarget{python-questions-9}{%
+\subsection{Python Questions}\label{python-questions-9}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+Once again, recall the \texttt{car.data} data set \citep{misc_car_evaluation_19}.
+
+\begin{itemize}
+\tightlist
+\item
+  Read in the data set as \texttt{car\_data}.
+\item
+  Order the data by the third and then the fourth column. Do not change the data in place. Instead store it under the name \texttt{ord\_car\_data1}
+\item
+  Order the data by the fourth and then the third column. Do not change the data in place. Instead store it under the name \texttt{ord\_car\_data2}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+Consider the following random data set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{indexes  }\OperatorTok{=}\NormalTok{ np.random.choice(np.arange(}\DecValTok{20}\NormalTok{),size}\OperatorTok{=}\DecValTok{20}\NormalTok{,replace}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+\NormalTok{d1 }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{ : indexes, }
+                        \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{ : np.random.normal(size}\OperatorTok{=}\DecValTok{20}\NormalTok{)\})}
+\NormalTok{d2 }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{ : indexes }\OperatorTok{+} \DecValTok{20}\NormalTok{, }
+                        \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{ : np.random.normal(size}\OperatorTok{=}\DecValTok{20}\NormalTok{)\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Pretend \texttt{d1} and \texttt{d2} are two separate data sets that possess the same type of measures but on different experimental units. Stack \texttt{d1} on top of \texttt{d2} and call the result \texttt{stacked\_data\_sets}. Make sure the \texttt{index} of the result is the numbers \(0\) through \(39\)
+\item
+  Pretend \texttt{d1} and \texttt{d2} are different measurements on the same experimental units. Place them shoulder to shoulder and call the result \texttt{side\_by\_side\_data\_sets}. Put \texttt{d1} first, and \texttt{d2} second.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+\end{enumerate}
+
+Consider the following two data sets:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\NormalTok{dataset1 }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}\StringTok{\textquotesingle{}dog\textquotesingle{}}\NormalTok{:[}\StringTok{\textquotesingle{}Charlie\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Gus\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Stubby\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Toni\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Pearl\textquotesingle{}}\NormalTok{],}
+                        \StringTok{\textquotesingle{}nickname\textquotesingle{}}\NormalTok{:[}\StringTok{\textquotesingle{}Charles\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Gus The Bus\textquotesingle{}}\NormalTok{,np.nan,}\StringTok{\textquotesingle{}Toni Bologna\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Porl\textquotesingle{}}\NormalTok{]\})}
+\NormalTok{dataset2 }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}\StringTok{\textquotesingle{}dog\textquotesingle{}}\NormalTok{:[}\StringTok{\textquotesingle{}Charlie\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Gus\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Toni\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Arya\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Shelby\textquotesingle{}}\NormalTok{],}
+                        \StringTok{\textquotesingle{}breed\textquotesingle{}}\NormalTok{:[}\StringTok{\textquotesingle{}Black Lab\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Beagle\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Golden Retriever\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Husky\textquotesingle{}}\NormalTok{,np.nan]\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Join/merge the two data sets together in such a way that there is a row for every dog, whether or not both tables have information for that dog. Call the result \texttt{merged1}.
+\item
+  Join/merge the two data sets together in such a way that there are only rows for every dog in \texttt{dataset1}, whether or not there is information about these dogs' breeds. Call the result \texttt{merged2}.
+\item
+  Join/merge the two data sets together in such a way that there are only rows for every dog in \texttt{dataset2}, whether or not there is information about the dogs' nicknames. Call the result \texttt{merged3}.
+\item
+  Join/merge the two data sets together in such a way that all rows possess complete information. Call the result \texttt{merged4}.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+\end{enumerate}
+
+Let's consider Fisher's ``Iris'' data set \citep{misc_iris_53} again.
+
+\begin{itemize}
+\tightlist
+\item
+  Read in \texttt{iris.csv} and store the \texttt{DataFrame} with the name \texttt{iris}. Let it have the column names \texttt{\textquotesingle{}a\textquotesingle{}},\texttt{\textquotesingle{}b\textquotesingle{}},\texttt{\textquotesingle{}c\textquotesingle{}}, \texttt{\textquotesingle{}d\textquotesingle{}} and \texttt{\textquotesingle{}e\textquotesingle{}}.
+\item
+  Create a \texttt{DataFrame} called \texttt{name\_key} that stores correspondences between long names and short names. It should have three rows and two columns. The long names are the unique values of column five of \texttt{iris}. The short names are either \texttt{\textquotesingle{}s\textquotesingle{}}, \texttt{\textquotesingle{}vers\textquotesingle{}} or \texttt{\textquotesingle{}virg\textquotesingle{}}. Use the column names \texttt{\textquotesingle{}long\ name\textquotesingle{}} and \texttt{\textquotesingle{}short\ name\textquotesingle{}}.
+\item
+  Merge/join the two data sets together to give \texttt{iris} a new column with information about short names. Do not overwrite \texttt{iris}. Rather, give the \texttt{DataFrame} a new name: \texttt{iris\_with\_short\_names}. Remove any columns with duplicate information.
+\item
+  Change the first four column names of \texttt{iris\_with\_short\_names} to \texttt{s\_len}, \texttt{s\_wid}, \texttt{p\_len}, and \texttt{p\_wid}. Use Matplotlib to create a figure with 4 subplots arranged into a \(2 \times 2\) grid. On each subplot, plot a histogram of these four columns. Make sure to use x-axis labels so viewers can tell which column is being plotted in each subplot.
+\item
+  Let's go back to \texttt{iris}. Change that to long format. Store it as a \texttt{DataFrame} called \texttt{long\_iris}. Make the column names \texttt{row}, \texttt{variable} and \texttt{value}, in that order. Last, make sure it is sorted (simultaneously/once) by \texttt{row} and then \texttt{variable}.
+\end{itemize}
 
 \hypertarget{visualization}{%
 \chapter{Visualization}\label{visualization}}
@@ -5733,20 +5949,13 @@ Recall our Albemarle Real Estate data set.
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \FunctionTok{head}\NormalTok{(df)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
-\DocumentationTok{\#\#          City}
-\DocumentationTok{\#\# 1      CROZET}
-\DocumentationTok{\#\# 2      CROZET}
-\DocumentationTok{\#\# 3 EARLYSVILLE}
-\DocumentationTok{\#\# 4      CROZET}
-\DocumentationTok{\#\# 5      CROZET}
-\DocumentationTok{\#\# 6      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5761,8 +5970,8 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-216-1.pdf}
-\caption{\label{fig:unnamed-chunk-216}A Simple Histogram}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-219-1.pdf}
+\caption{\label{fig:unnamed-chunk-219}A Simple Histogram}
 \end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
@@ -5784,8 +5993,8 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-217-1.pdf}
-\caption{\label{fig:unnamed-chunk-217}Some Scatterplots}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-220-1.pdf}
+\caption{\label{fig:unnamed-chunk-220}Some Scatterplots}
 \end{figure}
 
 \begin{Shaded}
@@ -5819,7 +6028,7 @@ Consider this first example.
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-218-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-218}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-221-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-221}
 \end{figure}
 
 You'll notice a few things about the code and the result produced:
@@ -5848,8 +6057,8 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-219-1.pdf}
-\caption{\label{fig:unnamed-chunk-219}A Second Scatterplot}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-222-1.pdf}
+\caption{\label{fig:unnamed-chunk-222}A Second Scatterplot}
 \end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point()}--the aesthetic mappings were used by the new layer.
@@ -5876,8 +6085,8 @@ Additionally, notice that the same layer will behave much differently if we chan
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-221-1.pdf}
-\caption{\label{fig:unnamed-chunk-221}Adding Some Color}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-224-1.pdf}
+\caption{\label{fig:unnamed-chunk-224}Adding Some Color}
 \end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}. We can change attributes of the axes like this.
@@ -5893,8 +6102,8 @@ If we want tighter control on the aesthetic mapping, we can use \href{https://gg
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-222-1.pdf}
-\caption{\label{fig:unnamed-chunk-222}Changing Scales}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-225-1.pdf}
+\caption{\label{fig:unnamed-chunk-225}Changing Scales}
 \end{figure}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
@@ -5909,8 +6118,8 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-223-1.pdf}
-\caption{\label{fig:unnamed-chunk-223}Changing the Fill}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-226-1.pdf}
+\caption{\label{fig:unnamed-chunk-226}Changing the Fill}
 \end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
@@ -5926,8 +6135,8 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 
 \begin{figure}
 \centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-224-1.pdf}
-\caption{\label{fig:unnamed-chunk-224}Changing the Fill Again}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-227-1.pdf}
+\caption{\label{fig:unnamed-chunk-227}Changing the Fill Again}
 \end{figure}
 
 There are many to choose from, though. Try to run the following code on your own to see what it produces.
@@ -5960,7 +6169,7 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-230-1}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. Calling it \texttt{plt} follows the most popular naming convention.
 
@@ -5991,29 +6200,21 @@ If you want to make figures that are more elaborate, just keep calling different
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddbdfd0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data on the axes...}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddc33c8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddc3748\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
-\CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
-\CommentTok{\#\# Text(0, 0.5, \textquotesingle{}y label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{"Simple Plot"}\NormalTok{)  }\CommentTok{\# Add a title to the axes.}
-\CommentTok{\#\# Text(0.5, 1.0, \textquotesingle{}Simple Plot\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f1afde72710\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f1afddc3b38\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-3} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-228}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-231-3} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-231}
 \end{figure}
 
 \hypertarget{plotting-with-pandas}{%
@@ -6043,7 +6244,7 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-5} \caption{Adjusted Closing Prices for a Stock Price Index}\label{fig:unnamed-chunk-229}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-232-5} \caption{Adjusted Closing Prices for a Stock Price Index}\label{fig:unnamed-chunk-232}
 \end{figure}
 
 Choosing among nondefault plot types can be done in a variety of ways. You can either use the \texttt{.plot} accessor data member of a \texttt{DataFrame}, or you can pass in different strings to \texttt{.plot()}'s \texttt{kind=} parameter. Third, some plot types (e.g.~boxplots and histograms) have their own dedicated methods.
@@ -6058,7 +6259,7 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-7} \caption{Three Ways to Get the Same Histogram}\label{fig:unnamed-chunk-230}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-233-7} \caption{Three Ways to Get the Same Histogram}\label{fig:unnamed-chunk-233}
 \end{figure}
 
 There are also \href{https://pandas.pydata.org/docs/user_guide/visualization.html\#visualization-tools}{several freestanding plotting functions} (not methods) that take in \texttt{DataFrame}s and \texttt{Series} objects. Each of these functions is typically imported individually from the \texttt{pandas.plotting} submodule.
@@ -6073,7 +6274,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-9} \caption{Lag Plot of Stock Index Returns}\label{fig:unnamed-chunk-231}
+\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-234-9} \caption{Lag Plot of Stock Index Returns}\label{fig:unnamed-chunk-234}
 \end{figure}
 
 \hypertarget{part-programming-styles}{%
@@ -6119,13 +6320,13 @@ Here are a few abstract concepts that will help thinking about OOP. They are not
 
 In Python, \href{https://docs.python.org/3/tutorial/classes.html}{classes} are user-defined types. When you define your own class, you describe what kind of information it holds onto, and how it behaves.
 
-To define your own type, use the \href{https://docs.python.org/3/tutorial/classes.html\#class-definition-syntax}{\texttt{class} keyword}. Objects created with a user-defined class are sometimes called \textbf{instances}. The behave according to the rules written in the class definition--they always have data and/or functions bundled together in the same way, but these instances do not all have the same data.
+To define your own type, use the \href{https://docs.python.org/3/tutorial/classes.html\#class-definition-syntax}{\texttt{class} keyword}. Objects created with a user-defined class are sometimes called \textbf{instances}. They behave according to the rules written in the class definition--they always have data and/or functions bundled together in the same way, but these instances do not all have the same data.
 
 To be more clear, classes may have the following two things in their definition.
 
 \begin{itemize}
 \item
-  \textbf{Attributes} are pieces of data ``owned'' by an instance created by the class.
+  \textbf{Attributes (aka data members)} are pieces of data ``owned'' by an instance created by the class.
 \item
   \textbf{(Instance) methods} are functions ``owned'' by an instance created by the class. They can use and/or modify data belonging to the class.
 \end{itemize}
@@ -6383,14 +6584,14 @@ Here is an example implementation of a confidence interval using composition. No
 \hypertarget{oop-in-r}{%
 \section{OOP In R}\label{oop-in-r}}
 
-R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! This list isn't exhaustive, but I will discuss
+R, unlike Python, has many different kinds of classes. In R, there is not only one way to make a class. There are many! I will discuss
 
 \begin{itemize}
 \tightlist
 \item
-  S3 classes
+  S3 classes,
 \item
-  S4 classes
+  S4 classes,
 \item
   Reference classes, and
 \item
@@ -6399,14 +6600,12 @@ R, unlike Python, has many different kinds of classes. In R, there is not only o
 
 If you like how Python does OOP, you will like reference classes and R6 classes, while S3 and S4 classes will feel strange to you.
 
-It's best to learn about them chronologically, in my opinion. S3 classes came first, S4 classes sought to improve upon those. Reference classes rely on S4 classes, and R6 classes are an improved version of Reference classes.
-
-TODO a picture of a wide variety of choices
+It's best to learn about them chronologically, in my opinion. S3 classes came first, S4 classes sought to improve upon those. Reference classes rely on S4 classes, and R6 classes are an improved version of Reference classes \citep{wickham2014advanced}.
 
 \hypertarget{s3-objects-the-big-picture}{%
 \subsection{S3 objects: The Big Picture}\label{s3-objects-the-big-picture}}
 
-With S3 (and S4) objects, calling a method \texttt{print} will not look like this.
+With S3 (and S4) objects, calling a method \texttt{print()} will not look like this.
 
 \begin{verbatim}
 my_obj.print()
@@ -6418,7 +6617,7 @@ Instead, it will look like this:
 print(my_obj)
 \end{verbatim}
 
-The primary goal of S3 is \emph{polymorphism}. We want functions like \texttt{print}, \texttt{summary} and \texttt{plot} to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right? So we can write code like the following, we only have to remember fewer functions as an end-user, and the ``right'' thing will always happen. If you're writing a package, it's also nice for your users that they're able to use the regular functions that they're familiar with. For instance, I allow users of my package \href{https://cran.r-project.org/web/packages/cPseudoMaRg/index.html}{\texttt{cPseudoMaRg}} \citep{cpm} to call \texttt{print} on objects of type \texttt{cpmResults}. In section \ref{plotting-with-ggplot2}, \texttt{ggplot2} instances, which are much more complicated than plain \texttt{numeric} \texttt{vector}s, are \texttt{+}ed together.
+The primary goal of S3 is \emph{polymorphism}. We want functions like \texttt{print()}, \texttt{summary()} and \texttt{plot()} to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right? So we can write code like the following, we only have to remember fewer functions as an end-user, and the ``right'' thing will always happen. If you're writing a package, it's also nice for your users that they're able to use the regular functions that they're familiar with. For instance, I allow users of my package \href{https://cran.r-project.org/web/packages/cPseudoMaRg/index.html}{\texttt{cPseudoMaRg}} \citep{cpm} to call \texttt{print()} on objects of type \texttt{cpmResults}. In section \ref{plotting-with-ggplot2}, \texttt{ggplot2} instances, which are much more complicated than plain \texttt{numeric} \texttt{vector}s, are \texttt{+}ed together.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6429,22 +6628,20 @@ The primary goal of S3 is \emph{polymorphism}. We want functions like \texttt{pr
 \end{Highlighting}
 \end{Shaded}
 
-This works because these ``high-level'' functions (like \texttt{print}), will look at its input and choose the most appropriate function to call, based on what kind of type the input has. \texttt{print} is the high-level function. When you run some of the above code, it might not be obvious which specific function \texttt{print} chooses for each input. You can't see that happening, yet.
+This works because these ``high-level'' functions (such as \texttt{print()}), will look at its input and choose the most appropriate function to call, based on what kind of type the input has. \texttt{print()} is the high-level function. When you run some of the above code, it might not be obvious which specific function \texttt{print()} chooses for each input. You can't see that happening, yet.
 
 Last, recall that this discussion only applies to S3 objects. Not all objects are S3 objects, though. To find out if an object \texttt{x} is an S3 object, use \texttt{is.object(x)}.
 
 \hypertarget{using-s3-objects}{%
 \subsection{Using S3 objects}\label{using-s3-objects}}
 
-Using S3 objects is so easy that you probably don't even know that you're actually using them. You can just try to call functions on objects, look at the output, and if you're happy with it, you're good. However, if you've ever asked yourself: ``why does \texttt{print} (for another function) do different things all the time?'' then this section will be useful for you to read.
+Using S3 objects is so easy that you probably don't even know that you're actually using them. You can just try to call functions on objects, look at the output, and if you're happy with it, you're good. However, if you've ever asked yourself: ``why does \texttt{print()} (or another function) do different things all the time?'' then this section will be useful to you.
 
-TODO: picture of looking into one door but going down a lot of avenues
-
-\texttt{print} is a \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Method-dispatching}{\textbf{generic function}} which is a function that looks at the type of its first argument, and then calls another, more specialized function depending on what type that argument is. Not all functions in \texttt{R} are generic, but some are. In addition to \texttt{print}, \texttt{summary} and \texttt{plot} are the most ubiquitous generic functions. Generic functions are an \emph{interface}, because the user does not need to concern himself with the details going on behind the scenes.
+\texttt{print()} is a \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Method-dispatching}{\textbf{generic function}} which is a function that looks at the type of its first argument, and then calls another, more specialized function depending on what type that argument is. Not all functions in R are generic, but some are. In addition to \texttt{print()}, \texttt{summary()} and \texttt{plot()} are the most ubiquitous generic functions. Generic functions are an \emph{interface}, because the user does not need to concern himself with the details going on behind the scenes.
 
 In R, a \textbf{method} is a specialized function that gets chosen by the generic function for a particular type of input. The method is the \emph{implementation}. When the generic function chooses a particular method, this is called \textbf{method dispatch}.
 
-If you look at the definition of a generic function, let's take \texttt{plot} for instance, it has a single line that calls \texttt{UseMethod}.
+If you look at the definition of a generic function, let's take \texttt{plot()} for instance, it has a single line that calls \texttt{UseMethod()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6455,11 +6652,11 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x55b42a201a70>
+## <bytecode: 0x561a8f3020d0>
 ## <environment: namespace:base>
 \end{verbatim}
 
-\texttt{UseMethod} performs method dispatch. Which methods can be dispatched to? To see that, use the \texttt{methods} function.
+\texttt{UseMethod()} performs method dispatch. Which methods can be dispatched to? To see that, use the \texttt{methods()} function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6468,14 +6665,13 @@ If you look at the definition of a generic function, let's take \texttt{plot} fo
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
-##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
-## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
-## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
-## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
-## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
-## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
-## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
+##  [1] plot,ANY-method      plot,color-method    plot.acf*            plot.cohesiveBlocks* plot.communities*    plot.data.frame*     plot.decomposed.ts* 
+##  [8] plot.default         plot.dendrogram*     plot.density*        plot.ecdf            plot.factor*         plot.formula*        plot.function       
+## [15] plot.ggplot*         plot.gtable*         plot.hcl_palettes*   plot.hclust*         plot.histogram*      plot.HoltWinters*    plot.igraph*        
+## [22] plot.isoreg*         plot.lm*             plot.mcmc*           plot.mcmc.list*      plot.medpolish*      plot.mlm*            plot.numpy.ndarray* 
+## [29] plot.ppr*            plot.prcomp*         plot.princomp*       plot.profile.nls*    plot.R6*             plot.raster*         plot.shingle*       
+## [36] plot.sir*            plot.spec*           plot.stepfun         plot.stl*            plot.table*          plot.trans*          plot.trellis*       
+## [43] plot.ts              plot.tskernel*       plot.TukeyHSD*      
 ## see '?methods' for accessing help and source code
 \end{verbatim}
 
@@ -6485,11 +6681,11 @@ R's dot-notation is nothing like Python's dot-notation! In R, functions do not \
 
 Method dispatch works by looking at the \texttt{class} attribute of an S3 object argument. An object in R may or may not have a set of \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Attributes}{\textbf{attributes}}, which are a collection of name/value pairs that give a particular object extra functionality. Regular \texttt{vector}s in R don't have attributes (e.g.~try running \texttt{attributes(1:3)}), but objects that are ``embellished'' versions of a \texttt{vector} might (e.g.~run \texttt{attributes(factor(1:3))}).
 
-\texttt{class} will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with \texttt{is.object} first.
+\texttt{class()} will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with \texttt{is.object()} first.
 
 Also, these methods are not \emph{encapsulated} inside a class definition like they are in Python, either. They just look like loose functions--the method definition for a particular class is not defined inside the class. These class methods can be defined just as ordinary functions, out on their own, in whatever file you think is appropriate to define functions in.
 
-As an example, let's try to \texttt{plot} some specific objects.
+As an example, let's try to \texttt{plot()} some specific objects.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6502,11 +6698,18 @@ As an example, let's try to \texttt{plot} some specific objects.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-244-1}
+\begin{figure}
 
-Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot} to try to find a \texttt{plot.data.frame} method. If this method was not found, R would attempt to find/use a \texttt{plot.default} method. If no default method existed, an error would be thrown.
+{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-247-1} 
 
-As another example, we can play around with objects created with the \texttt{ecdf} function. This function computes an \emph{empirical cumulative distribution function}, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input\footnote{It's defined as \(\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)\).}
+}
+
+\caption{A Scatterplot Matrix}\label{fig:unnamed-chunk-247}
+\end{figure}
+
+Because \texttt{aDF} has its \texttt{class} set to \texttt{data.frame}, this causes \texttt{plot()} to try to find a \texttt{plot.data.frame()} method. If this method was not found, R would attempt to find/use a \texttt{plot.default()} method. If no default method existed, an error would be thrown.
+
+As another example, we can play around with objects created with the \texttt{ecdf()} function. This function computes an \emph{empirical cumulative distribution function}, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input\footnote{It's defined as \(\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)\).}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6519,9 +6722,16 @@ As another example, we can play around with objects created with the \texttt{ecd
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-245-1}
+\begin{figure}
 
-This is how \emph{inheritance} works in R. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf} is used on this object. However, if \texttt{plot.ecdf} did not exist, \texttt{plot.stepfun} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
+{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-248-1} 
+
+}
+
+\caption{Plotting an Empirical Cumulative Distribution Function}\label{fig:unnamed-chunk-248}
+\end{figure}
+
+This is how \emph{inheritance} works in S3. The \texttt{ecdf} class inherits from the \texttt{stepfun} class, which in turn inherits from the \texttt{function} class. When you call \texttt{plot(myECDF)}, ultimately \texttt{plot.ecdf()} is used on this object. However, if \texttt{plot.ecdf()} did not exist, \texttt{plot.stepfun()} would be tried. S3 inheritance in R is much simpler than Python's inheritance!
 
 \hypertarget{creating-s3-objects}{%
 \subsection{Creating S3 objects}\label{creating-s3-objects}}
@@ -6544,7 +6754,7 @@ Here is an example of creating an object of \texttt{CoolClass}.
 
 \texttt{myThing} is now an instance of \texttt{CoolClass}, even though I never defined what a \texttt{CoolClass} was ahead of time! If you're used to Python, this should seem very strange. Compared to Python, this approach is very flexible, but also, kind of dangerous, because you can change the \texttt{class}es of existing objects. You shouldn't do that, but you could if you wanted to.
 
-After you start creating your own S3 objects, you can write your own methods associated with these objects. That way, when a user of your code uses typical generic functions, such as \texttt{summary}, on your S3 object, you can control what interesting things will happen to the user of your package. Here's an example.
+After you start creating your own S3 objects, you can write your own methods associated with these objects. That way, when a user of your code uses typical generic functions, such as \texttt{summary()}, on your S3 object, you can control what interesting things will happen to the user of your package. Here's an example.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6555,7 +6765,7 @@ After you start creating your own S3 objects, you can write your own methods ass
 \end{Highlighting}
 \end{Shaded}
 
-The \texttt{summary} method I wrote for this class is the following.
+The \texttt{summary()} method I wrote for this class is the following.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6567,23 +6777,21 @@ The \texttt{summary} method I wrote for this class is the following.
 \end{Highlighting}
 \end{Shaded}
 
-When writing this, I kept the signature the same as \texttt{summary}'s.
+When writing this, I kept the signature the same as \texttt{summary()}'s.
 
 \hypertarget{s4-objects-the-big-picture}{%
 \subsection{S4 objects: The Big Picture}\label{s4-objects-the-big-picture}}
 
-S4 was developed after S3. If you look at your search path (type \texttt{search()}), you will see \texttt{package:methods}. That's where all the code you need to do S4 is.
-
-Here are the similarities and differences between S3 and S4:
+S4 was developed after S3. If you look at your search path (type \texttt{search()}), you will see \texttt{package:methods}. That's where all the code you need to do S4 is. Here are the similarities and differences between S3 and S4.
 
 \begin{itemize}
 \tightlist
 \item
-  they both use generic functions and methods work in the same way
+  They both use generic functions and methods work in the same way.
 \item
-  unlike in S3, S4 classes allow you to use multiple dispatch, which means the generic function can dispatch on multiple arguments, instead of just the first argument
+  Unlike in S3, S4 classes allow you to use multiple dispatch, which means the generic function can dispatch on multiple arguments, instead of just the first argument.
 \item
-  S4 class definitions are strict. They aren't just name tags like in S3.
+  S4 class definitions are strict--they aren't just name tags like in S3.
 \item
   S4 inheritance feels more like Python's. You can think of a base class object living inside a child class object.
 \item
@@ -6617,21 +6825,21 @@ Bioconductor is kind of like CRAN, but its software has a much more specific foc
 \end{Highlighting}
 \end{Shaded}
 
-Inside an S4 object, data members are called \textbf{slots}, and they are accessed with the \texttt{@} operator (instead of the \texttt{\$} operator). Objects can be tested if they are S4 with the function \texttt{isS4}. Otherwise, they look and feel just like S3 objects.
+Inside an S4 object, data members are called \textbf{slots}, and they are accessed with the \texttt{@} operator (instead of the \texttt{\$} operator). Objects can be tested if they are S4 with the function \texttt{isS4()}. Otherwise, they look and feel just like S3 objects.
 
 \hypertarget{creating-s4-objects}{%
 \subsection{Creating S4 objects}\label{creating-s4-objects}}
 
-Here are the key takeaways
+Here are the key takeaways:
 
 \begin{itemize}
 \tightlist
 \item
-  create a new S4 class with \texttt{setClass}
+  create a new S4 class with \texttt{setClass()},
 \item
-  create a new S4 object with \texttt{new}
+  create a new S4 object with \texttt{new()},
 \item
-  S4 classes have a fixed amount of slots, a name, and a fixed inheritance structure
+  S4 classes have a fixed amount of slots, a name, and a fixed inheritance structure.
 \end{itemize}
 
 Let's do an example that resembles the example we did in Python, where we defined a \texttt{RunningMean} class and a \texttt{RunningCI} class.
@@ -6647,9 +6855,9 @@ Let's do an example that resembles the example we did in Python, where we define
 \end{Highlighting}
 \end{Shaded}
 
-Here, unlike in S3 class's, we actually have to define a class with \texttt{setClass}. In the parlance of S4, \texttt{slots} are a class' data members, and \texttt{contains} signals that one class inherits from another (even though it kind of sounds like \emph{composition}).
+Here, unlike in S3 class's, we actually have to define a class with \texttt{setClass()}. In the parlance of S4, \texttt{slots=} are a class' data members, and \texttt{contains=} signals that one class inherits from another (even though it kind of sounds like \emph{composition}).
 
-New objects can be created with the \texttt{new} function after this is accomplished.
+New objects can be created with the \texttt{new()} function after this is accomplished.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6658,9 +6866,7 @@ New objects can be created with the \texttt{new} function after this is accompli
 \end{Highlighting}
 \end{Shaded}
 
-Let's set one of those up. To achieve we want this \texttt{update} method to be generic, and it will work on objects of type ``RunningMean'' and ``RunningCI''.
-
-Next we want to define an \texttt{update} generic function that will work on objects of both types. This is what gives us \emph{polymorphism} . The generic \texttt{update} will call specialized methods for objects of class ``RunningMean'' and ``RunningCI''.
+Next we want to define an \texttt{update()} generic function that will work on objects of both types. This is what gives us \emph{polymorphism} . The generic \texttt{update()} will call specialized methods for objects of class \texttt{RunningMean} and \texttt{RunningCI}.
 
 Recall that in the Python example, each class had its own update method. Here, we still have a specialized method for each class, but S4 methods don't have to be defined inside the class definition, as we can see below.
 
@@ -6742,14 +6948,14 @@ Here's a demonstration of using these two classes that mirrors the example in su
 \end{Highlighting}
 \end{Shaded}
 
-This looks more \emph{functional} (more information on functional programming is available in chapter \ref{functional-programming}) than the Python example because the \texttt{update} function does not change a \emph{mutable} object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (\texttt{\textless{}-}) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.
+This looks more \emph{functional} (more information on functional programming is available in chapter \ref{functional-programming}) than the Python example because the \texttt{update()} function does not change an object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (\texttt{\textless{}-}) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.
 
 The big takeaway here is that S3 and S4 don't feel like Python's encapsulated OOP. If we wanted to write stateful programs, we might consider using Reference Classes, or R6 classes.
 
 \hypertarget{reference-classes-the-big-picture}{%
 \subsection{Reference Classes: The Big Picture}\label{reference-classes-the-big-picture}}
 
-\href{https://www.rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses}{\textbf{Reference Classes.}} are built on top of S4 classes, and were released in \href{https://stat.ethz.ch/pipermail/r-announce/2010/000529.html}{late 2010}. They feel very different from S3 and S4 classes, and they more closely resemble Python classes, because
+\href{https://www.rdocumentation.org/packages/methods/versions/3.6.2/topics/ReferenceClasses}{\textbf{Reference Classes}} are built on top of S4 classes, and were released in late 2010. They feel very different from S3 and S4 classes, and they more closely resemble Python classes, because
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6770,13 +6976,13 @@ Creating reference classes is done with the function \texttt{setRefClass}. I cre
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{RunningMeanRC }\OtherTok{\textless{}{-}} \FunctionTok{setRefClass}\NormalTok{(}\StringTok{"RunningMeanRC"}\NormalTok{, }
-                           \AttributeTok{fields =} \FunctionTok{list}\NormalTok{(}\AttributeTok{current\_xbar =} \StringTok{"numeric"}\NormalTok{, }
-                                         \AttributeTok{n =} \StringTok{"integer"}\NormalTok{),}
-                           \AttributeTok{methods =} \FunctionTok{list}\NormalTok{(}
-                             \AttributeTok{update =} \ControlFlowTok{function}\NormalTok{(new\_x)\{}
-\NormalTok{                               n }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ n }\SpecialCharTok{+}\NormalTok{ 1L}
-\NormalTok{                               current\_xbar }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ (current\_xbar}\SpecialCharTok{*}\NormalTok{(n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ new\_x) }\SpecialCharTok{/}\NormalTok{ n}
-\NormalTok{                              \}))}
+                             \AttributeTok{fields =} \FunctionTok{list}\NormalTok{(}\AttributeTok{current\_xbar =} \StringTok{"numeric"}\NormalTok{,}
+                                           \AttributeTok{n =} \StringTok{"integer"}\NormalTok{),}
+                             \AttributeTok{methods =} \FunctionTok{list}\NormalTok{(}
+                               \AttributeTok{update =} \ControlFlowTok{function}\NormalTok{(new\_x)\{}
+\NormalTok{                                 n }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ n }\SpecialCharTok{+}\NormalTok{ 1L}
+\NormalTok{                                 current\_xbar }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ (current\_xbar}\SpecialCharTok{*}\NormalTok{(n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ new\_x) }\SpecialCharTok{/}\NormalTok{ n}
+\NormalTok{                                \}))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6835,8 +7041,9 @@ You'll notice the reappearance of the \texttt{self} keyword. R6 classes have a \
 \NormalTok{                      self}\SpecialCharTok{$}\NormalTok{n }\OtherTok{\textless{}{-}}\NormalTok{ n}
 \NormalTok{                    \},}
                     \AttributeTok{update =} \ControlFlowTok{function}\NormalTok{(new\_x) \{}
+\NormalTok{                      newSum }\OtherTok{\textless{}{-}}\NormalTok{ self}\SpecialCharTok{$}\NormalTok{current\_xbar}\SpecialCharTok{*}\NormalTok{self}\SpecialCharTok{$}\NormalTok{n }\SpecialCharTok{+}\NormalTok{ new\_x}
 \NormalTok{                      self}\SpecialCharTok{$}\NormalTok{n }\OtherTok{\textless{}{-}}\NormalTok{ self}\SpecialCharTok{$}\NormalTok{n }\SpecialCharTok{+}\NormalTok{ 1L}
-\NormalTok{                      self}\SpecialCharTok{$}\NormalTok{current\_xbar }\OtherTok{\textless{}{-}}\NormalTok{ (self}\SpecialCharTok{$}\NormalTok{current\_xbar}\SpecialCharTok{*}\NormalTok{(self}\SpecialCharTok{$}\NormalTok{n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ new\_x) }\SpecialCharTok{/}\NormalTok{ self}\SpecialCharTok{$}\NormalTok{n}
+\NormalTok{                      self}\SpecialCharTok{$}\NormalTok{current\_xbar }\OtherTok{\textless{}{-}}\NormalTok{ newSum }\SpecialCharTok{/}\NormalTok{ self}\SpecialCharTok{$}\NormalTok{n}
 \NormalTok{                    \}}
 \NormalTok{                  )}
 \NormalTok{)}
@@ -6862,102 +7069,271 @@ You'll notice the reappearance of the \texttt{self} keyword. R6 classes have a \
 \end{Highlighting}
 \end{Shaded}
 
-TODO
-a more detailed
+\hypertarget{exercises-11}{%
+\section{Exercises}\label{exercises-11}}
 
-\url{https://adv-r.hadley.nz/r6.html}
-
-\url{https://adv-r.hadley.nz/r6.html\#why-r6}
-
-\hypertarget{exercises-10}{%
-\section{Exercises}\label{exercises-10}}
-
-All answers to questions related to R should be written in a file named \texttt{data\_types\_exercises.R}. All answers to questions related to Python should be written in a file named \texttt{data\_types\_exercises.py}.
+\hypertarget{python-questions-10}{%
+\subsection{Python Questions}\label{python-questions-10}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
-  In Python, write a class that implements a running sample variance.`
-\item
-  In Python, write a class that estimates a linear regression model.
 \end{enumerate}
 
-Let
+If you are interested in estimating a linear regression model, there is a \href{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{\texttt{LinearRegression} class} that you might consider using in the \texttt{sklearn.linear\_model} submodule. In this lab, we will create something similar, but a little more simplified.
+
+A simple linear regression model will take in \(n\) independent variables \(x_1, \ldots, x_n\), and \(n\) dependent variables \(y_1, \ldots, y_n\), and try to describe their relationship with a function:
+\[
+y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
+\]
+The coefficients \(\beta_0\) and \(\beta_1\) are unknown, and so must be estimated with the data. Estimating the variance of the noise terms \(\epsilon_i\) may also be of interest, but we do not concern ourselves with that here.
+
+The formulas for the estimated slope (i.e.~\(\hat{\beta}_1\)) and the estimated intercept (i.e.~\(\hat{\beta}_0\)) are as follows:
+\[
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} \\
+\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}.
+\]
+
+Create a class that performs simple linear regression.
 
 \begin{itemize}
 \tightlist
 \item
-  Let \(\begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_{10} \end{bmatrix}\) be a \(10 \times 1\) vector of predictor variables.
+  Name it \texttt{SimpleLinReg}.
 \item
-  \(\mathbf{X} = \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_{10} \end{bmatrix}\) be a \(10 \times 2\) ``design matrix'',
+  Its \texttt{.\_\_init\_\_()} method should not take any additional parameters. It should set two data attributes/members \texttt{est\_intercept} and \texttt{est\_slope}, to \texttt{np.nan}.
 \item
-  \(\mathbf{y} = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_{10} \end{bmatrix}\) be a \(10 \times 1\) vector of dependent observations, and
+  Give it a \texttt{.fit()} method that takes in two 1-dimensional Numpy arrays. The first should be the array of independent values, and the second should be the set of dependent values.
 \item
-  \(\boldsymbol{\epsilon} = \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_{10} \end{bmatrix}\) be a \(10 \times 1\) vector of mean \(0\) random errors. The assumed regression model can be written as
+  \texttt{.fit(x,y)} should not \texttt{return} anything, but it should store two data attributes/members: \texttt{est\_intercept} and \texttt{est\_slope}. Every time \texttt{.fit()} is called, it will re-calculate the coefficient/parameter estimates.
+\item
+  Give it a \texttt{.get\_coeffs()} method. It should not make any changes to the data attributes/members of the class. It should simply \texttt{return} a Numpy array with the parameter estimates inside. Make the first element the estimated intercept, and the second element the estimated slope. If no such coefficients have been estimated at the time of its calling, it should return the same size array but with the initial \texttt{np.nan}s inside.
 \end{itemize}
 
-\[
-\mathbf{y} = 
-\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon},
-\]
-and the estimate for the coefficient vector can be written as
-\[
-\hat{\boldsymbol{\beta}} = \left(\mathbf{X}^\intercal \mathbf{X} \right)^{-1}\mathbf{X}^\intercal \mathbf{y}.
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  Make the class called \texttt{LinearModel}, and use only the numpy package
-\item
-  have the only attribute be a numpy array of estimated coefficients \texttt{coeffs}
-\item
-  have one method called \texttt{fit} that takes a numpy arrays \texttt{X} (the design matrix), and \texttt{y}
-\item
-  every time \texttt{fit} is called, reset the \texttt{coeffs} using the formula above
-\end{itemize}
+After you've finished writing your first class, you can bask in the glory and run the following test code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
-\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
-
-\CommentTok{\# don\textquotesingle{}t hardcode variables!}
-\NormalTok{num\_rows }\OperatorTok{=} \DecValTok{10}
-\NormalTok{num\_predictors }\OperatorTok{=} \DecValTok{1}
-\NormalTok{num\_x\_columns }\OperatorTok{=}\NormalTok{ num\_predictors }\OperatorTok{+} \DecValTok{1}
-
-\CommentTok{\# generate fake data }
-\NormalTok{true\_coefficients }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{,}\OperatorTok{{-}}\DecValTok{3}\NormalTok{]).reshape((num\_x\_columns,}\DecValTok{1}\NormalTok{))}
-\NormalTok{x\_array }\OperatorTok{=}\NormalTok{ np.empty((num\_rows, num\_x\_columns))}
-\NormalTok{x\_array[:,}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{1}
-\NormalTok{x\_array[:,}\DecValTok{1}\NormalTok{] }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\NormalTok{num\_rows)}
-\NormalTok{y\_array }\OperatorTok{=}\NormalTok{ np.dot(x\_array, true\_coefficients) }
-\NormalTok{y\_array }\OperatorTok{=}\NormalTok{ y\_array }\OperatorTok{+}\NormalTok{ np.random.normal(scale }\OperatorTok{=} \FloatTok{.3}\NormalTok{, size }\OperatorTok{=}\NormalTok{ num\_rows).reshape((num\_rows,}\DecValTok{1}\NormalTok{))}
-
-\CommentTok{\# plot fake data }
-\NormalTok{plt.scatter(x\_array[:,}\DecValTok{1}\NormalTok{], y\_array)}
+\NormalTok{mod }\OperatorTok{=}\NormalTok{ SimpleLinReg()}
+\NormalTok{mod.get\_coeffs()}
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.arange(}\DecValTok{10}\NormalTok{)}
+\NormalTok{y }\OperatorTok{=} \DecValTok{1} \OperatorTok{+} \FloatTok{.2} \OperatorTok{*}\NormalTok{ x }\OperatorTok{+}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
+\NormalTok{mod.fit(x,y)}
+\NormalTok{mod.get\_coeffs()}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=18.67in]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
 
-Here is an example class definition, and then its use. The class holds onto
+Reconsider the above question that asked you to write a class called \texttt{LinearRegression}.
+
+\begin{itemize}
+\tightlist
+\item
+  Write a new class called \texttt{LinearRegression2} that preserves all of the existing functionality of \texttt{LinearRegression}. Do this in a way that does not excessively copy and paste code from \texttt{LinearRegression}.
+\item
+  Give your new class a method called \texttt{.visualize()} that takes no arguments and plots the most recent data, the data most recently provided to \texttt{.fit()}, in a scatterplot with the estimated regression line superimposed.
+\item
+  Unfortunately, \texttt{LinearRegression().fit(x,y).get\_coeffs()} will not return estimated regression coefficients. Give your new class this functionality. In other words, make \texttt{LinearRegression2().fit(x,y).get\_coeffs()} spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the \texttt{self} keyword.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
+\tightlist
 \item
-  Come up with a list of Python classes that are written in third party libraries, and that you will find useful in the future!
-\item
-  Come up with a list of R classes that are written in third party libraries, and that you will find useful in the future!
-\item
-  Finish the R6 class example by adding a method \texttt{get\_current\_xbar} that takes no arguments, and returns \texttt{NULL} if \texttt{n} is equal to \(0\), and \(n\) otherwise. This class should behave exactly the same as the Python class that goes by the same name.
-\item
-  Come up with some ideas for (base class, derived class, object) triples.
-\item
-  Come up with some examples of when composition would be better than inheritance, and vice versa.
 \end{enumerate}
+
+Consider the following time series model \citep{West1989BayesianFA}
+\[
+y_t = \beta_t + \epsilon_t \\
+\beta_t = \beta_{t-1} + w_t \\
+\beta_1 = w_1
+\]
+Here \(y_t\) is observed time series data, each \(\epsilon_t\) is measurement noise with variance \(V\) and each \(w_t\) is also noise but with variance \(W\). Think of \(\beta_t\) as a time-varying regression coefficient.
+
+Imagine our data are arriving sequentially. The Kalman Filter \citep{kalman_filt} cite provides an ``optimal'' estimate of each \(\beta_t\) given all of the information we have up to time \(t\). What's better is that the algorithm is recursive. Future estimates of \(\beta_t\) will be easy to calculate given our estimates of \(\beta_{t-1}\).
+
+Let's call the mean of \(\beta_{t-1}\) (given all the information up to time \(t-1\)) \(m_{t-1}\), and the variance of \(\beta_{t-1}\) (given all the information up to time \(t-1\)) \(P_{t-1}\). Then the Kalman recursions for this particular model are
+
+\[
+M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) \\
+P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
+\]
+for \(t \ge 1\).
+
+\begin{itemize}
+\tightlist
+\item
+  Write a class called \texttt{TVIKalman} (TVI stands for time-varying intercept).
+\item
+  Have \texttt{TVIKalman} take two floating points in to its \texttt{.\_\_init\_\_()} method in this order: \texttt{V} and \texttt{W}. These two numbers are positive, and are the variance parameters of the model. Store these two numbers. Also, store \(0\) and \(W+V\) as members/attributes called \texttt{filter\_mean} and \texttt{filter\_variance}, respectively.
+\item
+  Give \texttt{TVIKalman} another method: \texttt{.update(yt)}. This function should not return anything, but it should update the filtering distribution's mean and variance numbers, \texttt{filter\_mean} and \texttt{filter\_variance}, given a new data point.
+\item
+  Give \texttt{TVIKalman} another method: \texttt{.get\_confidence\_interval()}. It should not take any arguments, and it should return a length two Numpy array. The ordered elements of that array should be \(M_t\) plus and minus two standard deviations--a standard deviation at time \(t\) is \(\sqrt{P_t}\).
+\item
+  Create a \texttt{DataFrame} called \texttt{results} with the three columns called \texttt{yt}, \texttt{lower}, and \texttt{upper}. The last two columns should be a sequence of confidence intervals given to you by the method you wrote. The first column should contain the following data: \texttt{{[}-1.7037539,\ -0.5966818,\ -0.7061919,\ -0.1226606,\ -0.5431923{]}}. Plot all three columns in a single line plot. Initialize your Kalman Filter object with both \texttt{V} and \texttt{W} set equal to \(.5\).
+\end{itemize}
+
+\hypertarget{r-questions-10}{%
+\subsection{R Questions}\label{r-questions-10}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following classes in R produce objects that are mutable? Select all that apply: S3, S4, reference classes, and R6.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following classes in R produce objects that can have methods? Select all that apply: S3, S4, reference classes, and R6.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following classes in R produce objects that can store data? Select all that apply: S3, S4, reference classes, and R6.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following classes in R have encapsulated definitions? Select all that apply: S3, S4, reference classes, and R6.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following classes in R have ``slots''? Select all that apply: S3, S4, reference classes, and R6.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following class systems in R is the newest? S3, S4, reference classes, or R6?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following class systems in R is the oldest? S3, S4, reference classes, or R6?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+\end{enumerate}
+
+Which of the following classes in R requires you to \texttt{library()} in something? Select all that apply: S3, S4, reference classes, and R6.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+\end{enumerate}
+
+TODO cite
+Suppose you have the following data set: \(X_1, \ldots, X_n\). You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by \(\mu\) and \(\sigma^2\), respectively. Consider testing the hypothesis that \(\mu = 0\) at a significance level of \(\alpha\). To carry out this test, you calculate
+\[
+t = \frac{\bar{X}}{S/\sqrt{n}}
+\]
+and you reject the null if \(|t| > t_{n-1,\alpha/2}\). Here \(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\) is the sample variance, and \(t_{n-1,\alpha/2}\) is the \(1-\alpha/2\) quantile of a t-distribution with \(n-1\) degrees of freedom.
+
+\begin{itemize}
+\tightlist
+\item
+  Write a function called \texttt{doTTest()} that performs the above hypothesis test. It should accept two parameters: \texttt{dataVec} (a \texttt{vector} of data) and \texttt{significanceLevel} (which is \(\alpha\)). Have the second parameter default to \texttt{.05}.
+\item
+  Have it return an S3 object created from a \texttt{list}. The \texttt{class} of this \texttt{list} should be \texttt{"TwoSidedTTest"}. The elements in the \texttt{list} should be named \texttt{decision} and \texttt{testStat}. The \texttt{decision} object should be either \texttt{"reject"} or \texttt{"fail\ to\ reject"}. The test stat should be equal to the calculation you made above for \(t\).
+\item
+  Create a \texttt{summary} method for this new class you created: \texttt{TwoSidedTTest}.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+\end{enumerate}
+
+Suppose you have a target density \(p(x)\) that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some \(c > 0\), \(p(x) = f(x) / c\), and you are only able to evaluate \(f(\cdot)\). Your goal is that you would like to be able to approximate the expected value of \(p(x)\) (i.e.~\(\int x p(x) dx\)) using some proposal distribution \(q(x)\). \(q(x)\) is flexible in that you can sample from it, and you can evaluate it. We will use \textbf{importance sampling} to achieve this.\footnote{Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Algorithm 1}: Importance Sampling TODO cite
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Sample \(X^1, \ldots, X^n\) from \(q(x)\),
+\item
+  For each sample \(x^i\), calculate an unnormalized weight \(\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}\),
+\item
+  Calculate the normalized weights \(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\).
+\item
+  Calculate the weighted average \(\sum_{i=1}^n w^i x^i\).
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each \(\log \tilde{w}^i\), before you exponentiate them, subtract a number \(m\) from all the values. A good choice for \(m\) is \(\max_i (\log \tilde{w}^i)\). These new values will produce the same normalized weights because
+\[
+w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  Create an R6 class called \texttt{ImpSamp} that performs importance sampling.
+\item
+  It should store function data values \texttt{qSamp}, \texttt{logQEval}, and \texttt{logFEval}.
+\item
+  Give it an \texttt{initialize()} method that takes in three arguments: \texttt{logFEvalFunc}, \texttt{qSampFunc} and \texttt{logQEvalFunc}.
+\item
+  \texttt{initialize()} will set the stored function values equal to the function objects passed in.
+\item
+  The functions performing random sampling should only take a single argument referring to the number of samples desired.
+\item
+  The evaluation functions should take a \texttt{vector} as an input and return a \texttt{vector} as an output.
+\item
+  Write a method called \texttt{computeApproxExpec} that computes the importance sampling estimate of \(\int x p(x) dx\).
+\item
+  Is it better to make this code object-oriented, or would you prefer a simple function that spits out the answer? Why?
+\end{itemize}
 
 \hypertarget{functional-programming}{%
 \chapter{Functional Programming}\label{functional-programming}}
@@ -7014,7 +7390,7 @@ Unfortunately, violating the first of these three criteria is very easy to do in
 
 Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection \ref{accessing-and-modifying-captured-variables}. In Python, you need to make use of the \texttt{global} keyword (mentioned in section \ref{passing-by-assignment-in-python}), and in R, you need to use the rare super assignment operator (it looks like \texttt{\textless{}\textless{}-}, and it was mentioned in \ref{passing-by-value-in-r}). Because these two symbols are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
 
-Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \ref{modifying-a-functions-arguments}. Python can mutate/change arguments that have a mutable type because it has \emph{pass-by-assignment} semantics (mentioned in section \ref{passing-by-assignment-in-python}, and R generally can't modify its arguments at all because it has \emph{pass-by-value} semantics \ref{passing-by-value-in-r}.
+Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \ref{modifying-a-functions-arguments}. Python can mutate/change arguments that have a mutable type because it has \emph{pass-by-assignment} semantics (mentioned in section \ref{passing-by-assignment-in-python}), and R generally can't modify its arguments at all because it has \emph{pass-by-value} semantics \ref{passing-by-value-in-r}.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -7048,15 +7424,12 @@ An amateurish way to do this would be something like the following.
 \begin{Highlighting}[]
 \NormalTok{myFirstMean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(myDF[,}\DecValTok{1}\NormalTok{])}
 \NormalTok{mySecondMean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(myDF[,}\DecValTok{2}\NormalTok{])}
-\NormalTok{myThirdMean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(myDF[,}\DecValTok{3}\NormalTok{])}
-\CommentTok{\# ....}
-\CommentTok{\# so on and so forth}
-\CommentTok{\# ....}
+\CommentTok{\# ... so on and so forth ..}
 \NormalTok{myThirdMean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(myDF[,}\DecValTok{100}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
-You will need one line of code for each column in the data frame. For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
+You will need one line of code for each column in the data frame! For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
 ``Don't repeat yourself'' (DRY) is an idea that's been around for a while and is widely accepted \citep{hunt2000pragmatic}. DRY is the opposite of \href{https://en.wikipedia.org/wiki/Don\%27t_repeat_yourself\#WET}{WET}.
 
@@ -7120,15 +7493,15 @@ For functions that do not return amenable types that fit into a \texttt{vector},
 \hypertarget{apply}{%
 \subsection{\texorpdfstring{\texttt{apply()}}{apply()}}\label{apply}}
 
-I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next most common function I use is \texttt{apply()}. I use it to apply functions to \emph{rows} instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.\footnote{\texttt{apply()} is everyone's favorite whipping boy whenever it comes to comparing \texttt{apply()} against the other \texttt{*apply()} functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice.}
+I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next most common function I use is \texttt{apply()}. You can use it to apply functions to \emph{rows} of rectangular arrays instead of columns. However, it can also apply functions over columns, just as the other functions we discussed can.\footnote{\texttt{apply()} is everyone's favorite whipping boy whenever it comes to comparing \texttt{apply()} against the other \texttt{*apply()} functions. This is because it is generally a little slower--it is written in R and doesn't call out to compiled C code. However, in my humble opinion, it doesn't matter all that much because the fractions of a second saved don't always add up in practice.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{dim}\NormalTok{(myDF)}
 \DocumentationTok{\#\# [1]  10 100}
-\FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
-\DocumentationTok{\#\#  [1]  0.18971263 {-}0.07595286  0.18400138  0.08895979 {-}0.08496412  0.06865526  0.08697484 {-}0.09550573  0.01071571}
-\DocumentationTok{\#\# [10]  0.02142769}
+\NormalTok{results }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(myDF, }\DecValTok{1}\NormalTok{, mean)}
+\NormalTok{results[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+\DocumentationTok{\#\# [1]  0.18971263 {-}0.07595286  0.18400138  0.08895979}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7137,7 +7510,10 @@ Another example where it can be useful to apply a function to rows is \textbf{pr
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{albRealEstate }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
-\NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(albRealEstate}\SpecialCharTok{$}\NormalTok{YearBuilt }\SpecialCharTok{==} \DecValTok{2006} \SpecialCharTok{\&}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{Condition }\SpecialCharTok{==} \StringTok{"Average"}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}\NormalTok{,]}
+\NormalTok{firstB }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{YearBuilt }\SpecialCharTok{==} \DecValTok{2006} 
+\NormalTok{secondB }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{Condition }\SpecialCharTok{==} \StringTok{"Average"}
+\NormalTok{thirdB }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}
+\NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(firstB }\SpecialCharTok{\&}\NormalTok{ secondB) }\SpecialCharTok{|}\NormalTok{ thirdB,]}
 \FunctionTok{head}\NormalTok{(subDF)}
 \DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
 \DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
@@ -7164,7 +7540,10 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pred }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(row)\{}
-\NormalTok{  (row[}\StringTok{\textquotesingle{}YearBuilt\textquotesingle{}}\NormalTok{] }\SpecialCharTok{==} \DecValTok{2006} \SpecialCharTok{\&}\NormalTok{ row[}\StringTok{\textquotesingle{}Condition\textquotesingle{}}\NormalTok{] }\SpecialCharTok{==} \StringTok{"Average"}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ row[}\StringTok{\textquotesingle{}City\textquotesingle{}}\NormalTok{] }\SpecialCharTok{==} \StringTok{"CROZET"}
+\NormalTok{  yrBuiltCorrect }\OtherTok{\textless{}{-}}\NormalTok{ row[}\StringTok{\textquotesingle{}YearBuilt\textquotesingle{}}\NormalTok{] }\SpecialCharTok{==} \DecValTok{2006}
+\NormalTok{  aveCond }\OtherTok{\textless{}{-}}\NormalTok{ row[}\StringTok{\textquotesingle{}Condition\textquotesingle{}}\NormalTok{] }\SpecialCharTok{==} \StringTok{"Average"}
+\NormalTok{  inCrozet }\OtherTok{\textless{}{-}}\NormalTok{ row[}\StringTok{\textquotesingle{}City\textquotesingle{}}\NormalTok{] }\SpecialCharTok{==} \StringTok{"CROZET"}
+\NormalTok{  ( yrBuiltCorrect }\SpecialCharTok{\&\&}\NormalTok{ aveCond) }\SpecialCharTok{||}\NormalTok{ inCrozet }
 \NormalTok{\}}
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
@@ -7182,27 +7561,20 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \hypertarget{tapply}{%
 \subsection{\texorpdfstring{\texttt{tapply()}}{tapply()}}\label{tapply}}
 
-\texttt{tapply()} can be very handy when you need it. First, we've alluded to the definition before in subsection \ref{data-frames-in-r}, but a \textbf{ragged array} is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to \texttt{tapply()}. Rather, I let \texttt{tapply()} construct the ragged array for me. The first argument it expects is ``typically vector-like'', while the second tells us how to break that \texttt{vector} into chunks. The third argument is a function that gets applied to each \texttt{vector} chunk.
+\texttt{tapply()} can be very handy when you need it. First, we've alluded to the definition before in subsection \ref{data-frames-in-r}, but a \textbf{ragged array} is a collection of arrays that all have potentially different lengths. I don't typically construct such an object and then pass it to \texttt{tapply()}. Rather, I let \texttt{tapply()} construct the ragged array for me. The first argument it expects is, to quote the documentation, ``typically vector-like,'' while the second tells us how to break that \texttt{vector} into chunks. The third argument is a function that gets applied to each \texttt{vector} chunk.
 
 If I wanted the average home price for each city, I could use something like this.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(albRealEstate)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
-\DocumentationTok{\#\#          City}
-\DocumentationTok{\#\# 1      CROZET}
-\DocumentationTok{\#\# 2      CROZET}
-\DocumentationTok{\#\# 3 EARLYSVILLE}
-\DocumentationTok{\#\# 4      CROZET}
-\DocumentationTok{\#\# 5      CROZET}
-\DocumentationTok{\#\# 6      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET}
 \FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City)}
 \DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"    "KESWICK"}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)}
@@ -7215,7 +7587,9 @@ You might be wondering why we put \texttt{albRealEstate\$City} into a \texttt{li
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City, albRealEstate}\SpecialCharTok{$}\NormalTok{Condition), mean)}
+\FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }
+       \FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City, albRealEstate}\SpecialCharTok{$}\NormalTok{Condition), }
+\NormalTok{       mean)}
 \DocumentationTok{\#\#                  Average Excellent     Fair     Good      Poor Substandard}
 \DocumentationTok{\#\# CHARLOTTESVILLE 337913.4  491702.4 229336.2 444325.5 202420.00      457500}
 \DocumentationTok{\#\# CROZET          342133.4  552081.6 198009.5 390657.7 203806.25       53450}
@@ -7231,23 +7605,23 @@ For functions that return higher-dimensional output, you will have to use someth
 \hypertarget{mapply}{%
 \subsection{\texorpdfstring{\texttt{mapply()}}{mapply()}}\label{mapply}}
 
-The \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html}{documentation of \texttt{mapply()}} states \texttt{mapply()} is a multivariate version of \texttt{sapply()}. \texttt{sapply()} worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes multiple arguments, and you want those arguments to change each time the function is called, then you might be able to use \texttt{mapply()}.
+The \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/mapply.html}{documentation of \texttt{mapply()}} states \texttt{mapply()} is a multivariate version of \texttt{sapply()}. \texttt{sapply()} worked with univariate functions; the function was called multiple times, but each time with a single argument. If you have a function that takes \emph{multiple arguments}, and you want those arguments to change each time the function is called, then you might be able to use \texttt{mapply()}.
 
-Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()}, the documentation explains, ``{[}i{]}f \texttt{length(n)\ \textgreater{}\ 1}, the length is taken to be the number required.'' This would be a problem if we want to sample a.) three times from a mean \(0\) normal, b.) twice from a mean \(100\) normal, and c.) once from a mean \(-100\) normal distribution.
+Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()}, the documentation explains, ``{[}i{]}f \texttt{length(n)\ \textgreater{}\ 1}, the length is taken to be the number required.'' This would be a problem if we want to sample three times from a mean \(0\) normal first, then twice from a mean \(100\) normal, and then third, once from a mean \(42\) normal distribution. We only get three samples when we want six!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mean =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{100}\NormalTok{), }\AttributeTok{sd =} \FunctionTok{c}\NormalTok{(.}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{))}
+\FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mean =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{,}\DecValTok{42}\NormalTok{), }\AttributeTok{sd =} \FunctionTok{c}\NormalTok{(.}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1]   0.01435773  99.99238144 -99.98256452
+## [1]  0.01435773 99.99238144 42.01743548
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mapply}\NormalTok{(rnorm, }\AttributeTok{n =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mean =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{100}\NormalTok{), }\AttributeTok{sd =} \FunctionTok{c}\NormalTok{(.}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{))}
+\FunctionTok{mapply}\NormalTok{(rnorm, }\AttributeTok{n =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mean =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{,}\DecValTok{42}\NormalTok{), }\AttributeTok{sd =} \FunctionTok{c}\NormalTok{(.}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{, .}\DecValTok{01}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7259,23 +7633,23 @@ Here is a short example. Regarding the \texttt{n=} argument of \texttt{rnorm()},
 ## [1] 100.02077  99.99853
 ## 
 ## [[3]]
-## [1] -100.003
+## [1] 41.99704
 \end{verbatim}
 
 \hypertarget{reduce-and-do.call}{%
 \subsection{\texorpdfstring{\texttt{Reduce()} and \texttt{do.call()}}{Reduce() and do.call()}}\label{reduce-and-do.call}}
 
-In section \ref{reshaping-and-combining-data-sets} we talked about several different ways of ``combining'' data sets. We discussed stacking data sets on top of one another with \texttt{rbind()} (c.f. subsection \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), stacking them side-by-side with \texttt{cbind()} (also in \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), and intelligently joining them together with \texttt{merge()} (c.f. \ref{merging-or-joining-data-sets}). Consider the task of combining \emph{many} data sets. How do we write DRY code and abide by the DRY principle?
+Unlike the other examples of functions that take other functions as inputs, \texttt{Reduce()} and \texttt{do.call()} don't have many outputs. Instead of collecting many outputs into a container, they just output one thing.
 
-We can use either \texttt{Reduce()} or \texttt{do.call()} as a higher-order function. Just like the aforementioned \texttt{*apply()} functions, they take in either \texttt{cbind()}, \texttt{rbind()}, or \texttt{merge()} as a function input. Which one do we pick, though? The answer to that question deals with how many arguments our lower-order functions take.
+Let's start with an example: ``combining'' data sets. In section \ref{reshaping-and-combining-data-sets} we talked about several different ways of combining data sets. We discussed stacking data sets on top of one another with \texttt{rbind()} (c.f. subsection \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), stacking them side-by-side with \texttt{cbind()} (also in \ref{stacking-data-sets-and-placing-them-shoulder-to-shoulder}), and intelligently joining them together with \texttt{merge()} (c.f. \ref{merging-or-joining-data-sets}).
 
-Take a look at the documentation to \texttt{rbind()}. Its first argument is \texttt{...}, which is the \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Dot_002ddot_002ddot}{dot-dot-dot} symbol. This means \texttt{rbind()} can take a varying number of \texttt{data.frame}s to stack on top of each other. In other words, \texttt{rbind()} is \emph{variadic}.
+Now consider the task of combining \emph{many} data sets. How can we combine three or more data sets into one? Also, how do we write DRY code and abide by the DRY principle? As the name of the subsection suggests, we can use either \texttt{Reduce()} or \texttt{do.call()} as a higher-order function. Just like the aforementioned \texttt{*apply()} functions, they take in either \texttt{cbind()}, \texttt{rbind()}, or \texttt{merge()} as a function input. Which one do we pick, though? The answer to that question deals with \emph{how many arguments our lower-order function takes.}
 
-On the other hand, take a look at the documentation of \texttt{merge()}. It only takes two \texttt{data.frame}s at a time\footnote{Although, it is still variadic. The difference is that the \texttt{dot-dot-dot} symbol does not refer to a varying number of \texttt{data.frame}s\ldots just a varying number of other things we don't care about at the present moment.}.
+Take a look at the documentation to \texttt{rbind()}. Its first argument is \texttt{...}, which is the \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Dot_002ddot_002ddot}{dot-dot-dot} symbol. This means \texttt{rbind()} can take a varying number of \texttt{data.frame}s to stack on top of each other. In other words, \texttt{rbind()} is \textbf{variadic}.
 
-If we want to combine many data sets, \texttt{merge()} This is the difference between \texttt{Reduce()} and \texttt{do.call()}.
+On the other hand, take a look at the documentation of \texttt{merge()}. It only takes two \texttt{data.frame}s at a time\footnote{Although, it is still variadic. The difference is that the \texttt{dot-dot-dot} symbol does not refer to a varying number of \texttt{data.frame}s, just a varying number of other things we don't care about in this example.}. If we want to combine many data sets, \texttt{merge()} needs a helper function.
 
-\texttt{do.call()} calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, \texttt{Reduce()} calls a binary function many times on pairs of arguments. \texttt{Reduce()}'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.
+This is the difference between \texttt{Reduce()} and \texttt{do.call()}. \texttt{do.call()} calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, \texttt{Reduce()} calls a binary function many times on pairs of arguments. \texttt{Reduce()}'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.
 
 TODO diagram
 
@@ -7295,9 +7669,9 @@ Here is an initial example that makes use of four data sets \texttt{d1.csv}, \te
 \end{Highlighting}
 \end{Shaded}
 
-Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!
+Notice how the above code would only need to be changed by one character if we wanted to increase the number of data sets being read in!\footnote{To make it even more flexible, we could write code that doesn't assume the functions are all named the same way, or in the same directory together.}
 
-Next, \texttt{cbind()}ing them all together can be done as follows. \texttt{do.call()} will call the function only once. \texttt{cbind()} takes many arguments at once, so this works.
+Next, \texttt{cbind()}ing them all together can be done as follows. \texttt{do.call()} will call the function only once. \texttt{cbind()} takes many arguments at once, so this works. This code is even better than the above code in that if \texttt{dfs} becomes longer, or changes at all, \emph{nothing} will need to be changed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7309,8 +7683,6 @@ Next, \texttt{cbind()}ing them all together can be done as follows. \texttt{do.c
 \CommentTok{\# cbind(df1,df2,df3,df4) \# WET! :(}
 \end{Highlighting}
 \end{Shaded}
-
-This code is even better than the above code in that if \texttt{dfs} becomes longer, or changes at all, \emph{nothing} will need to be changed.
 
 What if we wanted to \texttt{merge()} all these data sets together? After all, the \texttt{id} column appears to be repeating itself, and some data from \texttt{d2} isn't lining up.
 
@@ -7326,92 +7698,16 @@ What if we wanted to \texttt{merge()} all these data sets together? After all, t
 
 Again, this is very DRY code. Nothing would need to be changed if \texttt{dfs} grew. Furthermore, trying to \texttt{do.call()} the \texttt{merge()} function wouldn't work because it can only take two data sets at a time.
 
-\hypertarget{another-example-in-r}{%
-\section{Another Example in R}\label{another-example-in-r}}
-
-Consider another common example: plotting scalar-valued multivariate functions. Let's try to plot a bivariate Gaussian distribution.
-
-\[
-f(x,y) = \frac{1}{2 \pi}  \exp\left[ -\frac{x ^2 + y^2}{2}     \right]
-\]
-The random elements \(x\) and \(y\), in this particular case, are uncorrelated, each have unit variance, and zero mean. This density is a surface in 3-d dimensional space. To visualize this, we would need to
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  generate a ``grid'' of points in \(\mathbb{R}^2\),
-\item
-  evaluate our function on each point, and then
-\item
-  call some plotting function that takes this all and makes a pretty picture.
-\end{enumerate}
-
-There are a couple ways you could write this function. One way might take two arguments, and another might take one argument. If we are to use \texttt{mapply()}, we need the function to take two arguments.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fTwoArgs }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x,y)\{}
-  \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{.}\DecValTok{5}\SpecialCharTok{*}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ y}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/} \DecValTok{2} \SpecialCharTok{/}\NormalTok{ pi}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-We can construct every possible point on a grid with the \texttt{expand.grid()} function.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{xGrid }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,.}\DecValTok{1}\NormalTok{)}
-\NormalTok{yGrid }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,.}\DecValTok{1}\NormalTok{)}
-\NormalTok{grid }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(xGrid, yGrid)}
-\FunctionTok{head}\NormalTok{(grid)}
-\DocumentationTok{\#\#   Var1 Var2}
-\DocumentationTok{\#\# 1 {-}3.0   {-}3}
-\DocumentationTok{\#\# 2 {-}2.9   {-}3}
-\DocumentationTok{\#\# 3 {-}2.8   {-}3}
-\DocumentationTok{\#\# 4 {-}2.7   {-}3}
-\DocumentationTok{\#\# 5 {-}2.6   {-}3}
-\DocumentationTok{\#\# 6 {-}2.5   {-}3}
-\end{Highlighting}
-\end{Shaded}
-
-\texttt{mapply()} would take \texttt{fTwoArgs=}, and effectively call it on every row pair. The pairs do not need to be organized in a \texttt{data.frame}, though.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{funcOut1 }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(fTwoArgs, grid[,}\DecValTok{1}\NormalTok{], grid[,}\DecValTok{2}\NormalTok{])}
-\FunctionTok{head}\NormalTok{(funcOut1)}
-\DocumentationTok{\#\# [1] 1.964128e{-}05 2.638072e{-}05 3.508008e{-}05 4.618400e{-}05 6.019766e{-}05 7.768277e{-}05}
-\NormalTok{rectangularOutput }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(funcOut1, }\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(xGrid))}
-\FunctionTok{persp}\NormalTok{(xGrid, yGrid, rectangularOutput, }
-      \AttributeTok{zlab =} \StringTok{"f(x,y)"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"x"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"y"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-275-1.pdf}
-
-If you prefer using \texttt{apply()}, that is also possible, but you would need to rewrite the function to take one (length-two) argument.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fOneArg }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(vec)\{}
-  \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(vec}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\DecValTok{2}\SpecialCharTok{/}\NormalTok{pi}
-\NormalTok{\} }
-\NormalTok{funcOut2 }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(grid, }\DecValTok{1}\NormalTok{, fOneArg)}
-\NormalTok{moreRectOut }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(funcOut2, }\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(xGrid))}
-\FunctionTok{contour}\NormalTok{(xGrid, yGrid, moreRectOut, }\AttributeTok{xlab =} \StringTok{"x"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"y"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-276-1.pdf}
+\hypertarget{functions-as-function-inputs-in-python}{%
+\section{Functions as Function Inputs in Python}\label{functions-as-function-inputs-in-python}}
 
 \hypertarget{functions-as-function-inputs-in-base-python}{%
-\section{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
+\subsection{Functions as Function Inputs in Base Python}\label{functions-as-function-inputs-in-base-python}}
 
 I discuss two functions from base Python that take functions as input. Neither return a \texttt{list} or a \texttt{np.array}, but they do return different kinds of \textbf{iterables}, which are ``objects capable of returning their members one at a time,'' \href{https://docs.python.org/3/glossary.html}{according to the Python documentation.} \texttt{map()}, the function, will return objects of type \texttt{map}. \texttt{filter()}, the function, will return objects of type \texttt{filter}. Often times we will just convert these to the container we are more familiar with.
 
 \hypertarget{map}{%
-\subsection{\texorpdfstring{\texttt{map()}}{map()}}\label{map}}
+\subsubsection{\texorpdfstring{\texttt{map()}}{map()}}\label{map}}
 
 \href{https://docs.python.org/3/library/functions.html\#map}{\texttt{map()}} can call a function repeatedly using elements of a container as inputs. Here is an example of calculating outputs of a \emph{spline} function, which can be useful for coming up with predictors in regression models. This particular spline function is \(f(x) = (x-k)1(x \ge k)\), where \(k\) is some chosen ``knot point.''
 
@@ -7431,7 +7727,7 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-html/unnamed-chunk-1-1}
+\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-277-1}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -7440,35 +7736,33 @@ We can visualize the mathematical function by plotting its outputs against its i
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{x }\OperatorTok{=}\NormalTok{ np.linspace(start }\OperatorTok{=} \OperatorTok{{-}}\FloatTok{1.}\NormalTok{, stop }\OperatorTok{=} \FloatTok{1.0}\NormalTok{)}
 \NormalTok{y }\OperatorTok{=}\NormalTok{ np.linspace(start }\OperatorTok{=} \OperatorTok{{-}}\FloatTok{1.}\NormalTok{, stop }\OperatorTok{=} \FloatTok{1.0}\NormalTok{)}
-\KeywordTok{def}\NormalTok{ f(x):}
-\NormalTok{    np.log(x}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\NormalTok{ y}\OperatorTok{**}\DecValTok{2}\NormalTok{)}
-\NormalTok{output }\OperatorTok{=} \BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(spline, my\_inputs))}
+\KeywordTok{def}\NormalTok{ f(x,y):}
+    \ControlFlowTok{return}\NormalTok{ np.log(x}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\NormalTok{ y}\OperatorTok{**}\DecValTok{2}\NormalTok{)}
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(f, x, y))[:}\DecValTok{3}\NormalTok{]}
+\CommentTok{\#\# [0.6931471805599453, 0.6098017877588092, 0.5228315638793316]}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{filter}{%
-\subsection{\texorpdfstring{\texttt{filter()}}{filter()}}\label{filter}}
+\subsubsection{\texorpdfstring{\texttt{filter()}}{filter()}}\label{filter}}
 
 \href{https://docs.python.org/3/library/functions.html\#filter}{\texttt{filter()}} helps remove unwanted elements from a container. It returns an iterable of type \texttt{filter}, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
+This code also provides our first example of a \href{https://docs.python.org/3/tutorial/controlflow.html\#lambda-expressions}{\textbf{lambda function}}. Lambda functions are simply another way to define functions. Notice that in this example, we didn't have to name our function. In other words, it was \textbf{anonymous}. We can also save a few lines of code.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{raw\_data }\OperatorTok{=}\NormalTok{ np.arange(}\DecValTok{0}\NormalTok{,}\FloatTok{1.5}\NormalTok{,}\FloatTok{.01}\NormalTok{)}
+\NormalTok{raw\_data }\OperatorTok{=}\NormalTok{ np.arange(}\DecValTok{0}\NormalTok{,}\FloatTok{1.45}\NormalTok{,}\FloatTok{.01}\NormalTok{)}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in} \BuiltInTok{filter}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x : x}\OperatorTok{**}\DecValTok{2} \OperatorTok{\textgreater{}} \DecValTok{2}\NormalTok{, raw\_data):}
     \BuiltInTok{print}\NormalTok{(elem)}
 \CommentTok{\#\# 1.42}
 \CommentTok{\#\# 1.43}
 \CommentTok{\#\# 1.44}
-\CommentTok{\#\# 1.45}
-\CommentTok{\#\# 1.46}
-\CommentTok{\#\# 1.47}
-\CommentTok{\#\# 1.48}
-\CommentTok{\#\# 1.49}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{functions-as-function-inputs-in-numpy}{%
-\section{Functions as Function Inputs in Numpy}\label{functions-as-function-inputs-in-numpy}}
+\subsection{Functions as Function Inputs in Numpy}\label{functions-as-function-inputs-in-numpy}}
 
 Numpy provides a \href{https://numpy.org/doc/stable/reference/routines.functional.html}{number of functions} that facilitate working with \texttt{np.ndarray}s in a functional style. For example, \href{https://numpy.org/doc/stable/reference/generated/numpy.apply_along_axis.html}{\texttt{np.apply\_along\_axis()}} is similar to R's \texttt{apply()}. \texttt{apply()} had a \texttt{MARGIN=} input (\texttt{1} sums rows, \texttt{2} sums columns), whereas this function has a \texttt{axis=} input (\texttt{0} sums columns, \texttt{1} sums rows).
 
@@ -7486,18 +7780,8 @@ Numpy provides a \href{https://numpy.org/doc/stable/reference/routines.functiona
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my\_array }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{1000}\NormalTok{))}
-\NormalTok{np.apply\_along\_axis(}\BuiltInTok{sum}\NormalTok{, }\DecValTok{0}\NormalTok{, my\_array).shape }
-\CommentTok{\#\# (1000,)}
-\NormalTok{np.apply\_along\_axis(}\BuiltInTok{sum}\NormalTok{, }\DecValTok{1}\NormalTok{, my\_array).shape}
-\CommentTok{\#\# (10,)}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{functional-methods-in-pandas}{%
-\section{Functional Methods in Pandas}\label{functional-methods-in-pandas}}
+\subsection{Functional Methods in Pandas}\label{functional-methods-in-pandas}}
 
 Pandas' \texttt{DataFrame}s have an \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html}{\texttt{.apply()} method} that is very similar to \texttt{apply()} in R,\footnote{You should know that a lot of special-case functions that you typically apply to rows or columns come built-in as \texttt{DataFrame} methods. For instance, \texttt{.mean()} would allow you to do something like \texttt{my\_df.mean()}.} but again, just like the above function, you have to think about an \texttt{axis=} argument instead of a \texttt{MARGIN=} argument.
 
@@ -7553,27 +7837,27 @@ Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarra
 \end{Highlighting}
 \end{Shaded}
 
-If you do not want to waste two lines defining a function with \texttt{def}, you can use an anonymous (unnamed) \href{https://docs.python.org/3/tutorial/controlflow.html\#lambda-expressions}{\textbf{lambda function}}. Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
+If you do not want to waste two lines defining a function with \texttt{def}, you can use an anonymous lambda function. Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]].}\BuiltInTok{apply}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ row : }\BuiltInTok{sum}\NormalTok{(row}\OperatorTok{*}\NormalTok{[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]), }\DecValTok{1}\NormalTok{)[:}\DecValTok{4}\NormalTok{]}
+\NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]].}\BuiltInTok{apply}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ row : }\BuiltInTok{sum}\NormalTok{(row}\OperatorTok{*}\NormalTok{[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]), }\DecValTok{1}\NormalTok{)[:}\DecValTok{3}\NormalTok{]}
 \CommentTok{\#\# 0    3859.000}
 \CommentTok{\#\# 1    3879.567}
 \CommentTok{\#\# 2    2501.280}
-\CommentTok{\#\# 3    2639.944}
 \CommentTok{\#\# dtype: float64}
 \end{Highlighting}
 \end{Shaded}
 
-If you want to apply a (scalar-valued) function that takes only individual elements, you should try to use a unary function (recall that this was discussed in TODO). If no such unary function exists, you can apply it with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html\#pandas.DataFrame.applymap}{\texttt{.applymap()}}.
+The previous example \texttt{.apply()}s a \emph{binary} function to each row. The function is binary because it takes two elements at a time. If you want to apply a \emph{unary} function (i.e.~it takes one argument at a time) function to each row for, and for each column, then you can use \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html\#pandas.DataFrame.applymap}{\texttt{.applymap()}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]].applymap(}\KeywordTok{lambda}\NormalTok{ e : e }\OperatorTok{+} \DecValTok{1}\NormalTok{).head(}\DecValTok{2}\NormalTok{)}
+\NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]].applymap(}\KeywordTok{lambda}\NormalTok{ e : e }\OperatorTok{+} \DecValTok{1}\NormalTok{).head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#    FinSqFt  LotSize}
 \CommentTok{\#\# 0     1923    6.000}
 \CommentTok{\#\# 1     1849   62.189}
+\CommentTok{\#\# 2     1249    2.760}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7588,7 +7872,7 @@ Last, we have a \href{https://pandas.pydata.org/pandas-docs/stable/reference/api
 \end{Highlighting}
 \end{Shaded}
 
-Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which \texttt{City} they are in, extracts the \texttt{TotalValue} column in each sub-\texttt{DataFrame}, and then \texttt{.apply()}s the \texttt{np.average()} function on the sole column found in each sub-\texttt{DataFrame}. The second \texttt{.apply()}s a lambda function to each sub-\texttt{DataFrame} directly.
+Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which \texttt{City} they are in, extracts the \texttt{TotalValue} column in each sub-\texttt{DataFrame}, and then \texttt{.apply()}s the \texttt{np.average()} function on the sole column found in each sub-\texttt{DataFrame}. The second \texttt{.apply()}s a lambda function to each sub-\texttt{DataFrame} directly. More details on this ``split-apply-combine'' strategy can be found in the \href{https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html}{Pandas documentation.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7613,15 +7897,6 @@ Here is an example that models some pretty typical functionality. It shows two w
 \end{Highlighting}
 \end{Shaded}
 
-More tips on this programming pattern can be found \href{https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html}{here}.
-
-\hypertarget{functions-as-function-inputs-miscellany}{%
-\section{Functions as Function Inputs (miscellany)}\label{functions-as-function-inputs-miscellany}}
-
-functools.reduce
-
-operator module
-
 \hypertarget{functions-as-function-outputs-in-r}{%
 \section{Functions as Function Outputs in R}\label{functions-as-function-outputs-in-r}}
 
@@ -7644,9 +7919,9 @@ Here is a first quick example.
 \end{Highlighting}
 \end{Shaded}
 
-The \texttt{greetingMessage=} argument that is passed in, \texttt{"Hello"}, isn't temporary anymore.
+Notice that \textbf{the \texttt{greetingMessage=} argument that is passed in, \texttt{"Hello"}, isn't temporary anymore.} It lives on so it can be used by all the functions created by \texttt{funcFactory()}. This is the most surprising aspect of writing function factories.
 
-Here is an example that implements a variance reduction technique called \textbf{common random numbers}.
+Let's now consider a more complicated and realistic example. Let's implement a variance reduction technique called \textbf{common random numbers}.
 
 Suppose \(X \sim \text{Normal}(\mu, \sigma^2)\), and we are interested in approximating an expectation of a function of this random variable. Suppose that we don't know that
 \[
@@ -7656,9 +7931,9 @@ for any particular choice of \(\mu\) and \(\sigma^2\), and instead, we choose to
 \[
 \hat{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(X^i)
 \]
-where \(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)\) is a large collection of draws from the appropriate normal distribution. In real life, the theoretical expectation might not be tractable (either because the random variable has a complicated distribution, or maybe because the functional is very complicated) and Monte Carlo, or some other approximation algorithm, might be our only hope!
+where \(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)\) is a large collection of draws from the appropriate normal distribution, probably coming from a call to \texttt{rnorm()}. In more realistic situations, the theoretical expectation might not be tractable, either because the random variable has a complicated distribution, or maybe because the functional is very complicated. In these cases, a tool like Monte Carlo might be the only available approach.
 
-Here are two functions that calculate the above quantities for \(n=100\). \texttt{actualExpectSin()} is a function that computes the theoretical expectation for any particular parameter pair. \texttt{monteCarloSin()} is a function that implements the Monte Carlo approximate expectation.
+Here are two functions that calculate the above quantities for \(n=1000\). \texttt{actualExpectSin()} is a function that computes the theoretical expectation for any particular parameter pair. \texttt{monteCarloSin()} is a function that implements the Monte Carlo approximate expectation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7675,29 +7950,46 @@ Here are two functions that calculate the above quantities for \(n=100\). \textt
 \end{Highlighting}
 \end{Shaded}
 
-One-off approximations aren't as interesting as visualizing many expectations for many parameter inputs. On the left, we have the true expectation function plotted with a contour plot. On the right,
+One-off approximations aren't as interesting as visualizing many expectations for many parameter inputs. Below we plot the expectations for many different parameter vectors/configurations/settings.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{muGrid }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{,}\DecValTok{10}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
 \NormalTok{sigmaGrid }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(.}\DecValTok{001}\NormalTok{, }\DecValTok{5}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
 \NormalTok{muSigmaGrid }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(muGrid, sigmaGrid)}
-\NormalTok{actuals }\OtherTok{\textless{}{-}}  \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, actualExpectSin), }\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
-\NormalTok{mcApprox }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, monteCarloSin), }\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
+\NormalTok{actuals }\OtherTok{\textless{}{-}}  \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, actualExpectSin), }
+                   \AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
+\NormalTok{mcApprox }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, monteCarloSin), }
+                   \AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
 
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
-\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, actuals, }\AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"actual expect.s"}\NormalTok{)}
-\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApprox, }\AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc without crn"}\NormalTok{)}
+\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, actuals, }
+        \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"actual expects"}\NormalTok{)}
+\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApprox, }
+        \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc without crn"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-292-1.pdf}
+\begin{figure}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
+{\centering \includegraphics[width=0.6\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-290-1} 
+
+}
+
+\caption{Monte Carlo Approximations versus Exact Evaluations}\label{fig:unnamed-chunk-290}
+\end{figure}
+
+There are three problems with this implementation:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{monteCarloSin()} is not pure because it captures the \texttt{n} variable,
+\item
+  the only way to increase the accuracy of the plot in the right panel is to increase \texttt{n}, and
+\item
+  every time we re-run this code the plot on the right looks different.
+\end{itemize}
 
 If we wanted to use common random numbers, we could generate \(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\), and use the fact that
 \[
@@ -7707,6 +7999,7 @@ This leads to the Monte Carlo estimate
 \[
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
 \]
+
 Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call \texttt{monteCarloSinCRNv1(c(10,1))}, you get the same answer.
 
 \begin{Shaded}
@@ -7720,59 +8013,199 @@ Here is one function that naively implements Monte Carlo with common random numb
 \end{Highlighting}
 \end{Shaded}
 
-Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look ``smoother.''
+Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look ``smoother.'' In other words, we increase our sampling accuracy without spending more computational time.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mcApproxCRNv1 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, monteCarloSinCRNv1), }\AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
+\NormalTok{mcApproxCRNv1 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, monteCarloSinCRNv1), }
+                        \AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
-\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApprox, }\AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc without crn"}\NormalTok{)}
-\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApproxCRNv1, }\AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc with crn"}\NormalTok{)}
+\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApprox, }
+        \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc without crn"}\NormalTok{)}
+\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApproxCRNv1, }
+        \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc with crn"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-294-1.pdf}
+\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-293-1.pdf}
+
+There are some new downsides to this implementation to consider:
+
+\begin{itemize}
+\tightlist
+\item
+  we have another global variable--a bunch of samples called \texttt{commonZs} floating around, and
+\item
+  the dependence on the global variable for sample size is even further obscured.
+\end{itemize}
+
+We can fix these two problems very nicely by using a function factory.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-The downside to this implementation is that we have a bunch of samples floating around in the global environment. We can implement this much more nicely with a function factory.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{makeMCFunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{}
-\NormalTok{  commonZs }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\AttributeTok{n=}\NormalTok{n)}
+\NormalTok{makeMCFunc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{)\{}
+\NormalTok{  commonZs }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
   \ControlFlowTok{function}\NormalTok{(params)\{}
     \FunctionTok{stopifnot}\NormalTok{(params[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }
     \FunctionTok{mean}\NormalTok{(}\FunctionTok{sin}\NormalTok{(params[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ params[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\NormalTok{commonZs))    }
 \NormalTok{  \}  }
 \NormalTok{\}}
 \NormalTok{monteCarloSinCRNv2 }\OtherTok{\textless{}{-}} \FunctionTok{makeMCFunc}\NormalTok{()}
-\CommentTok{\# monteCarloSinCRNv2(c(10,1))}
+\CommentTok{\# now call monteCarloSinCRNv2 to approx. expectations}
+\CommentTok{\# e.g. monteCarloSinCRNv2(c(10,1))}
 \end{Highlighting}
 \end{Shaded}
 
-Much better! Let's just make sure this function works by comparing its output to the known true function.
+This is much better because
+
+\begin{itemize}
+\tightlist
+\item
+  the desired sample size must be passed in as a function argument instead of being captured,
+\item
+  the re-used standard normal variates are not in the global environment anymore, and
+\item
+  a sensible default number of samples is provided in the event that the programmer forgets to specify one.
+\end{itemize}
+
+The inner function did in fact capture \texttt{commonZs}, but it captured from the enclosing scope, not the global scope. Capturing isn't always a terrible idea. It would be difficult to modify these variables, so we don't need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice--now the end-users of functions created by this factory don't need to worry about plugging in extra parameters.
+
+Let's use \(1000\) samples again and make sure this function works by comparing its output to the known true function.
 
 \includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-296-1.pdf}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}
 
-Returning functions from functions, explaining mechanics
+We can write function factories in Python, too. Here is another implementation of the first example from the previous section. Again, just as it did in R, \texttt{str} passed in as \texttt{greeting\_message} persists well after \texttt{func\_factory()} is finished working.
 
-\href{https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html\#numpy.vectorize}{\texttt{np.vectorize()}} is something that I use quite often.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ func\_factory(greeting\_message):}
+  \KeywordTok{def}\NormalTok{ func(name):}
+    \BuiltInTok{print}\NormalTok{(greeting\_message }\OperatorTok{+} \StringTok{\textquotesingle{} \textquotesingle{}} \OperatorTok{+}\NormalTok{ name)}
+  \ControlFlowTok{return}\NormalTok{ func}
+\NormalTok{greet\_with\_hello }\OperatorTok{=}\NormalTok{ func\_factory(}\StringTok{"Hello"}\NormalTok{)}
+\NormalTok{greet\_with\_hello(}\StringTok{"Taylor"}\NormalTok{)}
+\CommentTok{\#\# Hello Taylor}
+\NormalTok{greet\_with\_hello(}\StringTok{"Charlie"}\NormalTok{)}
+\CommentTok{\#\# Hello Charlie}
+\end{Highlighting}
+\end{Shaded}
 
-decorators!
+Let's consider another less trivial example. Recall the spline function from earlier in the chapter:
 
-TODO Both R and Python have reduce functions. R has \texttt{Reduce()}, while Python has \texttt{reduce()}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\KeywordTok{def}\NormalTok{ spline(x):}
+\NormalTok{    knot }\OperatorTok{=} \FloatTok{3.0}
+    \ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\textgreater{}=}\NormalTok{ knot:}
+        \ControlFlowTok{return}\NormalTok{ x}\OperatorTok{{-}}\NormalTok{knot}
+    \ControlFlowTok{else}\NormalTok{:}
+        \ControlFlowTok{return} \FloatTok{0.0}
+\end{Highlighting}
+\end{Shaded}
 
-In R
+This function is limited in that it takes in only one element at a time. Unfortunately, we would not be able to provide an entire Numpy array as an argument (e.g.~\texttt{spline(np.arange(3))}). Many functions do possess this behavior, and it is generally advantageous to take advantage of it. If you recall our discussion about universal functions in section \ref{vectorization-in-python}, you might have grown accustomed to taking advantage of writing vectorized code.
 
-reduce,
+Fortunately there's a way to automatically vectorize functions like the one above: \href{https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html\#numpy.vectorize}{\texttt{np.vectorize()}}. \texttt{np.vectorize()} takes in a unary function, and outputs a vectorized version of it that is able to take entire arrays as an input. Here's an example. Compare this to us using \texttt{map()} before.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_inputs }\OperatorTok{=}\NormalTok{ np.linspace(start }\OperatorTok{=} \DecValTok{0}\NormalTok{, stop }\OperatorTok{=} \DecValTok{2}\OperatorTok{*}\NormalTok{np.pi)}
+\CommentTok{\# make a vectorized function}
+\NormalTok{vec\_spline }\OperatorTok{=}\NormalTok{ np.vectorize(spline) }
+\NormalTok{vec\_spline(my\_inputs)[:}\DecValTok{4}\NormalTok{]}
+\CommentTok{\# alternatively output = list(map(spline, my\_inputs)) from last time}
+\CommentTok{\#\# array([0., 0., 0., 0.])}
+\end{Highlighting}
+\end{Shaded}
+
+The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use \textbf{\href{https://www.python.org/dev/peps/pep-0318/}{function decorators}.} You can \emph{decorate} a function by using the \texttt{@} operator.
+
+If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# instead of spline = np.vectorize(spline) }
+\AttributeTok{@np.vectorize}
+\KeywordTok{def}\NormalTok{ spline(x):}
+\NormalTok{    knot }\OperatorTok{=} \FloatTok{3.0}
+    \ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\textgreater{}=}\NormalTok{ knot:}
+        \ControlFlowTok{return}\NormalTok{ x}\OperatorTok{{-}}\NormalTok{knot}
+    \ControlFlowTok{else}\NormalTok{:}
+        \ControlFlowTok{return} \FloatTok{0.0}
+\NormalTok{spline(my\_inputs)[:}\DecValTok{4}\NormalTok{]}
+\CommentTok{\#\# array([0., 0., 0., 0.])}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{writing-our-own-decorators}{%
+\subsection{Writing Our Own Decorators}\label{writing-our-own-decorators}}
+
+We can write our own function factory that can be used as decoration. The main restriction is that this function factory must take a function as an argument, too. This can sometimes be restrictive. You might have noticed that the definition of \texttt{func\_factory()} from earlier in this section did not do that. If you don't believe me, as an exercise, after you read this section, you might consider trying to rewrite the example from \ref{functions-as-function-outputs-in-r} that implements Monte Carlo sampling using common random numbers.
+
+Before we get too ahead of ourselves, let's describe the basics. Here is our first decorator function \texttt{add\_greeting()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ add\_greeting(func):}
+  \KeywordTok{def}\NormalTok{ wrapper(name):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}Salutations, \textquotesingle{}}\NormalTok{)}
+\NormalTok{    func(name)}
+  \ControlFlowTok{return}\NormalTok{ wrapper}
+\end{Highlighting}
+\end{Shaded}
+
+The decorator \texttt{add\_greeting()} returns a function that is an embellished version of the function it is given. When we decorate a function with it, it looks like this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\AttributeTok{@add\_greeting}
+\KeywordTok{def}\NormalTok{ print\_name(first\_name):}
+  \BuiltInTok{print}\NormalTok{(first\_name)}
+\end{Highlighting}
+\end{Shaded}
+
+You could get the same behavior by typing the following. They are equivalent!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ print\_name(first\_name):}
+  \BuiltInTok{print}\NormalTok{(first\_name)}
+\NormalTok{print\_name }\OperatorTok{=}\NormalTok{ add\_greeting(print\_name)}
+\end{Highlighting}
+\end{Shaded}
+
+Things can get a little more complicated when your decorators take additional arguments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\AttributeTok{@add\_greeting}\NormalTok{(}\StringTok{"How you doin\textquotesingle{}"}\NormalTok{)}
+\KeywordTok{def}\NormalTok{ print\_name(first\_name):}
+  \BuiltInTok{print}\NormalTok{(first\_name)}
+\NormalTok{print\_name(}\StringTok{\textquotesingle{}Taylor\textquotesingle{}}\NormalTok{)}
+\CommentTok{\#\# How you doin\textquotesingle{}}
+\CommentTok{\#\# Taylor}
+\end{Highlighting}
+\end{Shaded}
+
+So how do we write decorators that accomplish this? The important thing to remember is that the following is equivalent to this: \texttt{print\_name\ =\ add\_greeting("How\ you\ doin\textquotesingle{}")(print\_name)}. This is a function returning a function returning a function! It could look something like this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ add\_greeting(greet):}
+  \KeywordTok{def}\NormalTok{ decorator(func):}
+    \KeywordTok{def}\NormalTok{ wrapper(name):}
+      \BuiltInTok{print}\NormalTok{(greet)}
+\NormalTok{      func(name)}
+    \ControlFlowTok{return}\NormalTok{ wrapper}
+  \ControlFlowTok{return}\NormalTok{ decorator}
+\end{Highlighting}
+\end{Shaded}
+
+Now that you know how decorators work, you can feel comfortable using third-party ones. You might come across, for example, the \texttt{@jit} decorator from \href{https://numba.pydata.org/}{Numba}, which will translate your Python function into faster machine code, the \texttt{@lru\_cache} decorator from the \href{https://docs.python.org/3/library/functools.html}{\texttt{functools} module}--this can make your code faster by saving some of its outputs--or decorators that perform application specific tasks like \href{https://www.tensorflow.org/api_docs/python/tf/function}{\texttt{@tf.function}} from Tensorflow.
 
   \bibliography{book.bib,packages.bib}
 
