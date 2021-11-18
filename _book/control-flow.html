@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -160,7 +160,7 @@ div.csl-indent {
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-sample-course"><i class="fa fa-check"></i>A Sample Course</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#teaching-a-course-with-this-textbook"><i class="fa fa-check"></i>Teaching a Course With This Textbook</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#licenses"><i class="fa fa-check"></i>License(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
@@ -347,6 +347,11 @@ div.csl-indent {
 <li class="chapter" data-level="12.4.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-r"><i class="fa fa-check"></i><b>12.4.1</b> Long Versus Wide in R</a></li>
 <li class="chapter" data-level="12.4.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-python"><i class="fa fa-check"></i><b>12.4.2</b> Long Versus Wide in Python</a></li>
 </ul></li>
+<li class="chapter" data-level="12.5" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#exercises-10"><i class="fa fa-check"></i><b>12.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#r-questions-9"><i class="fa fa-check"></i><b>12.5.1</b> R Questions</a></li>
+<li class="chapter" data-level="12.5.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#python-questions-9"><i class="fa fa-check"></i><b>12.5.2</b> Python Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>13</b> Visualization</a>
 <ul>
@@ -377,7 +382,11 @@ div.csl-indent {
 <li class="chapter" data-level="14.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>14.2.8</b> Creating Reference Classes</a></li>
 <li class="chapter" data-level="14.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>14.2.9</b> Creating R6 Classes</a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-10"><i class="fa fa-check"></i><b>14.3</b> Exercises</a></li>
+<li class="chapter" data-level="14.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-11"><i class="fa fa-check"></i><b>14.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#python-questions-10"><i class="fa fa-check"></i><b>14.3.1</b> Python Questions</a></li>
+<li class="chapter" data-level="14.3.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#r-questions-10"><i class="fa fa-check"></i><b>14.3.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="functional-programming.html"><a href="functional-programming.html"><i class="fa fa-check"></i><b>15</b> Functional Programming</a>
 <ul>
@@ -574,8 +583,8 @@ p(x) =
 The denominator, <span class="math inline">\(\int_0^1 y^2(1-y) dy\)</span>, is the target’s normalizing constant. You might know how to solve this integral (it’s equal to <span class="math inline">\(1/12\)</span>), but let’s pretend for the sake of our example that it’s too difficult for us. We want to sample from <span class="math inline">\(p(x)\)</span> while only being able to evaluate (not sample) from its unnormalized version <span class="math inline">\(f(x) := x^2(1-x)\)</span>. This is a situation that arises often–wanting to sample from some complicated distribution whose density you can only evaluate up to a constant of proportionality.</p>
 <p>Next, let’s choose a uniform distribution for our <em>proposal distribution</em>: <span class="math inline">\(q(x) = 1\)</span> if <span class="math inline">\(0 &lt; x &lt; 1\)</span>. This means we will sample from this distribution, because it’s easier. We just need to “adjust” our samples somehow, because it’s not the same as our target.</p>
 <p>We can plot all three functions. The area under the <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(q(x)\)</span> curves is <span class="math inline">\(1\)</span>, because they are true probability density functions. <span class="math inline">\(f(x)\)</span>, however, is not.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-195"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-195-1.png" alt="Visualizing Our Three Functions" width="40%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-188"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-188-1.png" alt="Visualizing Our Three Functions" width="40%" />
 <p class="caption">
 Figure 11.1: Visualizing Our Three Functions
 </p>
@@ -604,18 +613,20 @@ Figure 11.1: Visualizing Our Three Functions
 <p>Suppose you are trying to predict a value of <span class="math inline">\(Y\)</span> given some information about a corresponding independent variable <span class="math inline">\(x\)</span>. Suppose further that you have a historical data set of observations <span class="math inline">\((x_1, y_1), \ldots, (x_n,y_n)\)</span>. One approach for coming up with predictions is to use <strong>Nadaraya–Watson Kernel Regression</strong> <span class="citation">(<a href="#ref-Nadaraya" role="doc-biblioref">Nadaraya 1964</a>)</span> <span class="citation">(<a href="#ref-Watson" role="doc-biblioref">Watson 1964</a>)</span>. The prediction this approach provides is simply a weighted average of all of the historically-observed data points <span class="math inline">\(y_1, \ldots, y_n\)</span>. The weight for a given <span class="math inline">\(y_i\)</span> will be larger if <span class="math inline">\(x_i\)</span> is “close” to the value <span class="math inline">\(x\)</span> that you are obtaining predictions for. On the other hand, if <span class="math inline">\(x_j\)</span> is far away from <span class="math inline">\(x\)</span>, then the weight for <span class="math inline">\(y_j\)</span> will be relatively small, and so this data point won’t influence the prediction much.</p>
 <p>Write a function called <code>kernReg(xPred,xData,yData,kernFunc)</code> that computes the Nadaraya–Watson estimate of the prediction of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span>. Do not use a <code>for</code> loop in your function definition. The formula is
 <span class="math display">\[\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,\]</span> where <span class="math inline">\(x\)</span> is the point you’re trying to get a prediction for.</p>
-<pre><code>* Your function should return one floating point number. 
-* The input `xPred` will be a floating point number.
-* The input `xData` is a one-dimensional `vector` of numerical data of independent variables. 
-* The input `yData` is a one-dimensional `vector` of numerical data of dependent variables.
-* `kernFunc` is a function that accepts a `numeric` `vector` and returns a floating point. It&#39;s vectorized.</code></pre>
+<ul>
+<li>Your function should return one floating point number.</li>
+<li>The input <code>xPred</code> will be a floating point number.</li>
+<li>The input <code>xData</code> is a one-dimensional <code>vector</code> of numerical data of independent variables.</li>
+<li>The input <code>yData</code> is a one-dimensional <code>vector</code> of numerical data of dependent variables.</li>
+<li><code>kernFunc</code> is a function that accepts a <code>numeric</code> <code>vector</code> and returns a floating point. It’s vectorized.</li>
+</ul>
 <p>Below is some code that will help you test your predictions. The kernel function, <code>gaussKernel()</code>, implements the Gaussian kernel function <span class="math inline">\(K(z) = \exp[-z^2/2]/\sqrt{2\pi}\)</span>. Notice the creation of <code>preds</code> was commented out. Use a <code>for</code> loop to generate predictions for all elements of <code>xTest</code> and store them in the vector <code>preds</code>.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="control-flow.html#cb188-1" aria-hidden="true" tabindex="-1"></a>gaussKernel <span class="ot">&lt;-</span> dnorm</span>
-<span id="cb188-2"><a href="control-flow.html#cb188-2" aria-hidden="true" tabindex="-1"></a>xTest <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="at">length.out=</span> <span class="dv">100</span>)</span>
-<span id="cb188-3"><a href="control-flow.html#cb188-3" aria-hidden="true" tabindex="-1"></a>yTest <span class="ot">&lt;-</span> xTest<span class="sc">*</span><span class="dv">2</span> </span>
-<span id="cb188-4"><a href="control-flow.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="co"># preds &lt;- ?</span></span>
-<span id="cb188-5"><a href="control-flow.html#cb188-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xTest, yTest, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
-<span id="cb188-6"><a href="control-flow.html#cb188-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xTest, preds, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="control-flow.html#cb187-1" aria-hidden="true" tabindex="-1"></a>gaussKernel <span class="ot">&lt;-</span> dnorm</span>
+<span id="cb187-2"><a href="control-flow.html#cb187-2" aria-hidden="true" tabindex="-1"></a>xTest <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="at">length.out=</span> <span class="dv">100</span>)</span>
+<span id="cb187-3"><a href="control-flow.html#cb187-3" aria-hidden="true" tabindex="-1"></a>yTest <span class="ot">&lt;-</span> xTest<span class="sc">*</span><span class="dv">2</span> </span>
+<span id="cb187-4"><a href="control-flow.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="co"># preds &lt;- ?</span></span>
+<span id="cb187-5"><a href="control-flow.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xTest, yTest, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb187-6"><a href="control-flow.html#cb187-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xTest, preds, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 </div>
 <div id="python-questions-8" class="section level3" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> Python Questions</h3>
@@ -633,9 +644,9 @@ Figure 11.1: Visualizing Our Three Functions
 <li></li>
 </ol>
 <p>Suppose you have the following data set. Please include the following snippet in your submission.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb189-1"><a href="control-flow.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb189-2"><a href="control-flow.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb189-3"><a href="control-flow.html#cb189-3" aria-hidden="true" tabindex="-1"></a>my_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;sim_data.csv&quot;</span>, header<span class="op">=</span><span class="va">None</span>).values.flatten()</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb188-1"><a href="control-flow.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb188-2"><a href="control-flow.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb188-3"><a href="control-flow.html#cb188-3" aria-hidden="true" tabindex="-1"></a>my_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;sim_data.csv&quot;</span>, header<span class="op">=</span><span class="va">None</span>).values.flatten()</span></code></pre></div>
 <p>This question will demonstrate how to implement <strong>The Bootstrap</strong> <span class="citation">(<a href="#ref-bootstrap" role="doc-biblioref">Efron 1979</a>)</span>, which is a popular nonparametric approach to understand the distribution of a statistic of interest. The main idea is to calculate your statistic over and over again on <em>bootstrapped</em> data sets, which are data sets randomly chosen, with replacement, from your original data set <code>my_data</code>. Each bootstrapped data set is of the same size as the original data set, and each bootstrapped data set will yield one statistic. Collect all of these random statistics, and it is a good approximation to the statistic’s theoretical distribution.</p>
 <ul>
 <li>Calculate the mean of this data set and store it as a floating point number called <code>sample_mean</code>.</li>
@@ -722,10 +733,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

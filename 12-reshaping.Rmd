@@ -281,4 +281,124 @@ fake_wide_data2.melt(id_vars = "person", value_vars = ['attrA','attrB'])
 ```
 
 
-TODO exercises just have them read in correctly Recall the file "`long-beach-va.data`" from [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/heart+disease).
+## Exercises
+
+
+### R Questions
+
+
+1. 
+
+Recall the `car.data` data set [@misc_car_evaluation_19]. 
+
+  - Read in the data set as `carData`. 
+  - Convert the third and fourth columns to *ordered* `factor`s. 
+  - Order the data by the third and then the fourth column (simultaneously). Do not change the data in place. Instead store it under the name `ordCarData1`
+  - Order the data by the fourth and then the third column (simultaneously). Do not change the data in place. Instead store it under the name `ordCarData2`
+
+2. 
+
+```{r, eval = FALSE}
+day1Data <- data.frame(idNum = 1:10, 
+                       measure = rnorm(10))
+day2Data <- data.frame(idNum = 11:20, 
+                       measure = rnorm(10))
+```
+
+  - Pretend `day1Data` and `day2Data` are two separate data sets that possess the same type of measures but on different experimental units. Stack `day1Data`  on top of `day2Data` and call the result `stackedData`. 
+  - Pretend `day1Data` and `day2Data` are different measurements on the same experimental units. Place them shoulder to shoulder and call the result `sideBySide`. Put `day1Data` first, and `day2Data` second.
+  
+3. 
+
+If you are dealing with random matrices, you might need to  **vectorize** a matrix object. This is not the same as "vectorization" in programming. Instead, it means you write the matrix as a big column vector by stacking the columns on top of each other. Specifically, if you have a $n \times p$ real-valued matrix $\mathbf{X}$, then
+
+$$
+\text{vec}(\mathbf{X}) =\begin{bmatrix} \mathbf{X}_1 \\ \vdots \\ \mathbf{X}_p \end{bmatrix} 
+$$
+where $\mathbf{X}_i$ is the $i$th column as an $n \times 1$ column vector. There is another operator that we will use, the **Kronecker product:** 
+$$
+\mathbf{A} \otimes \mathbf{B} = 
+\begin{bmatrix}
+a_{11} \mathbf{B} & \cdots & a_{1n} \mathbf{B} \\
+\vdots & \ddots & \vdots \\
+a_{m1} \mathbf{B} & \cdots & a_{mn} \mathbf{B} \\
+\end{bmatrix}.
+$$
+If $\mathbf{A}$ is $m \times n$ and $\mathbf{B}$ is $p \times q$, then $\mathbf{A} \otimes \mathbf{B}$ is $pm \times qn$.
+
+  - Write a function called `vec(myMatrix)`. Its input should be one `matrix` object. It's output should be a `vector`. Hint: `matrix` objects are stored in column-major order.
+  - Write a function called `unVec(myVector, nRows)` that takes in the vectorized matrix as a `vector`, splits that into elements with `nRows` elements, and then places them together shoulder-to-shoulder as a `matrix`. 
+  - Write a function called `stackUp(m, BMat)` that returns $\mathbf{1}_m \otimes \mathbf{B}$ where $\mathbf{1}_m$ is a length $m$ column vector of ones. You may check your work with `%x%`, but do not use this in your function. 
+  - Write a function called `shoulderToShoulder(n, BMat)` that returns $\mathbf{1}^\intercal_n \otimes \mathbf{B}$ where $\mathbf{1}_n^\intercal$ is a length $n$ row vector of ones. You may check your work with `%x%`, but do not use this in your function. 
+
+4.
+
+This problem uses the Militarized Interstate Disputes (v5.0) TODO cite data set from [The Correlates of War Project](https://correlatesofwar.org/). There are four `.csv` files we use for this problem. `MIDA 5.0.csv` contains the essential attributes of each militarized interstate dispute from 1/1/1816 through 12/31/2014. `MIDB 5.0.csv` describes the participants in each of those disputes. `MIDI 5.0.csv` contains the essential elements of each militarized interstate incident, and `MIDIP 5.0.csv` describes the participants in each of those incidents.
+    
+  - Read in the four data sets and give them the names `mida`, `midb`, `midi`, and `midp`. Take care to convert all instances of `-9` to `NA`.
+  - Examine all rows of `midb` where its `dispnum` column equals `2`. Do not change `midb` permanently. Are these two rows corresponding to the same conflict? If so, assign `TRUE` to `sameConflict`. Otherwise, assign `FALSE`.
+  - Join the first two data sets together on the dispute number column (`dispnum`). Call the resulting `data.frame` `join1`. Do not address any concerns about duplicate columns. 
+  - Is there any difference between doing an inner join and an outer join in the previous question? If there was a difference, assign `TRUE` to `theyAreNotTheSame`. Otherwise, assign `FALSE` to it.
+  - Join the last two data sets together by `incidnum` and call the result `join2`. Is there any difference between an inner and an outer join for this problem? Why or why not?  Do not address any concerns about duplicate columns.
+  - The codebook mentions that the last two data sets don't go as far back in time as the first two. Suppose then that we only care about the events in `join2`. Merge `join2` and `join1` in a way where all undesired rows from `join1` are discarded, and all rows from `join2` are kept. Call the resulting `data.frame` `midData`.  Do not address any concerns about duplicate columns.
+  - Use a scatterplot to display the relationship between the maximum duration and the end year. Plot each country as a different color. 
+  - Create a `data.frame` called `longData` that has the following three columns from `midp`: `incidnum` (incident identification number) `stabb` (state abbreviation of participant) and `fatalpre` (precise number of fatalities). Convert this to "wide" format. Make the new table called `wideData`. Use the incident number row as a unique row-identifying variable. 
+  - Bonus Question: identify all column pairs that contain duplicate information in `midData`, remove all but one of the columns, and change the column name back to its original name. 
+  
+  
+
+### Python Questions
+
+1. 
+
+Once again, recall the `car.data` data set [@misc_car_evaluation_19]. 
+
+  - Read in the data set as `car_data`. 
+  - Order the data by the third and then the fourth column. Do not change the data in place. Instead store it under the name `ord_car_data1`
+  - Order the data by the fourth and then the third column. Do not change the data in place. Instead store it under the name `ord_car_data2`
+  
+2. 
+
+Consider the following random data set. 
+
+```{python, eval=FALSE}
+indexes  = np.random.choice(np.arange(20),size=20,replace=False)
+d1 = pd.DataFrame({'a' : indexes, 
+                        'b' : np.random.normal(size=20)})
+d2 = pd.DataFrame({'a' : indexes + 20, 
+                        'b' : np.random.normal(size=20)})
+```
+
+
+  - Pretend `d1` and `d2` are two separate data sets that possess the same type of measures but on different experimental units. Stack `d1` on top of `d2` and call the result `stacked_data_sets`. Make sure the `index` of the result is the numbers $0$ through $39$
+  - Pretend `d1` and `d2` are different measurements on the same experimental units. Place them shoulder to shoulder and call the result `side_by_side_data_sets`. Put `d1` first, and `d2` second.
+  
+3. 
+
+Consider the following two data sets:
+
+```{python, collapse = TRUE, eval=F}
+import numpy as np
+import pandas as pd
+dataset1 = pd.DataFrame({'dog':['Charlie','Gus', 'Stubby', 'Toni','Pearl'],
+                        'nickname':['Charles','Gus The Bus',np.nan,'Toni Bologna','Porl']})
+dataset2 = pd.DataFrame({'dog':['Charlie','Gus', 'Toni','Arya','Shelby'],
+                        'breed':['Black Lab','Beagle','Golden Retriever', 'Husky',np.nan]})
+```
+
+
+  - Join/merge the two data sets together in such a way that there is a row for every dog, whether or not both tables have information for that dog. Call the result `merged1`.
+  - Join/merge the two data sets together in such a way that there are only rows for every dog in `dataset1`, whether or not there is information about these dogs' breeds. Call the result `merged2`.
+  - Join/merge the two data sets together in such a way that there are only rows for every dog in `dataset2`, whether or not there is information about the dogs' nicknames. Call the result `merged3`.
+  - Join/merge the two data sets together in such a way that all rows possess complete information. Call the result `merged4`.
+
+
+4.
+
+Let's consider Fisher's "Iris" data set [@misc_iris_53] again. 
+
+  - Read in `iris.csv` and store the `DataFrame` with the name `iris`. Let it have the column names `'a'`,`'b'`,`'c'`, `'d'` and `'e'`.
+  - Create a `DataFrame` called `name_key` that stores correspondences between long names and short names. It should have three rows and two columns. The long names are the unique values of column five of `iris`. The short names are either `'s'`, `'vers'` or `'virg'`. Use the column names `'long name'` and `'short name'`.
+  - Merge/join the two data sets together to give `iris` a new column with information about short names. Do not overwrite `iris`. Rather, give the `DataFrame` a new name: `iris_with_short_names`. Remove any columns with duplicate information.
+  - Change the first four column names of `iris_with_short_names` to `s_len`, `s_wid`, `p_len`, and `p_wid`. Use Matplotlib to create a figure with 4 subplots arranged into a $2 \times 2$ grid. On each subplot, plot a histogram of these four columns. Make sure to use x-axis labels so viewers can tell which column is being plotted in each subplot.
+  - Let's go back to `iris`. Change that to long format. Store it as a `DataFrame` called `long_iris`. Make the column names `row`, `variable` and `value`, in that order. Last, make sure it is sorted (simultaneously/once) by `row` and then `variable`.  

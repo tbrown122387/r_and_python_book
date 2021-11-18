@@ -638,3 +638,156 @@ my_r6_ave$n
 ## Exercises
 
 
+### Python Questions
+
+
+1. 
+
+If you are interested in estimating a linear regression model, there is a [`LinearRegression` class](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) that you might consider using in the `sklearn.linear_model` submodule. In this lab, we will create something similar, but a little more simplified. 
+
+A simple linear regression model will take in $n$ independent variables $x_1, \ldots, x_n$, and $n$ dependent variables $y_1, \ldots, y_n$, and try to describe their relationship with a function:
+$$
+y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
+$$
+The coefficients $\beta_0$ and $\beta_1$ are unknown, and so must be estimated with the data. Estimating the variance of the noise terms $\epsilon_i$ may also be of interest, but we do not concern ourselves with that here. 
+
+The formulas for the estimated slope (i.e. $\hat{\beta}_1$) and the estimated intercept (i.e. $\hat{\beta}_0$) are as follows:
+$$
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} \\
+\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}.
+$$
+
+
+
+Create a class that performs simple linear regression. 
+
+
+  - Name it `SimpleLinReg`.
+  - Its `.__init__()` method should not take any additional parameters. It should set two data attributes/members `est_intercept` and `est_slope`, to `np.nan`. 
+  - Give it a `.fit()` method that takes in two 1-dimensional Numpy arrays. The first should be the array of independent values, and the second should be the set of dependent values.
+  - `.fit(x,y)` should not `return` anything, but it should store two data attributes/members: `est_intercept` and `est_slope`. Every time `.fit()` is called, it will re-calculate the coefficient/parameter estimates.
+  - Give it a `.get_coeffs()` method. It should not make any changes to the data attributes/members of the class. It should simply `return` a Numpy array with the parameter estimates inside. Make the first element the estimated intercept, and the second element the estimated slope. If no such coefficients have been estimated at the time of its calling, it should return the same size array but with the initial `np.nan`s inside.
+
+After you've finished writing your first class, you can bask in the glory and run the following test code:
+
+```{python, eval = FALSE}
+mod = SimpleLinReg()
+mod.get_coeffs()
+x = np.arange(10)
+y = 1 + .2 * x + np.random.normal(size=10)
+mod.fit(x,y)
+mod.get_coeffs()
+```
+
+
+2.
+
+Reconsider the above question that asked you to write a class called `LinearRegression`. 
+
+  - Write a new class called `LinearRegression2` that preserves all of the existing functionality of `LinearRegression`. Do this in a way that does not excessively copy and paste code from `LinearRegression`.
+  - Give your new class a method called `.visualize()` that takes no arguments and plots the most recent data, the data most recently provided to `.fit()`, in a scatterplot with the estimated regression line superimposed.
+  - Unfortunately, `LinearRegression().fit(x,y).get_coeffs()` will not return estimated regression coefficients. Give your new class this functionality. In other words, make `LinearRegression2().fit(x,y).get_coeffs()` spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the `self` keyword.
+
+3.
+
+Consider the following time series model [@West1989BayesianFA]
+$$
+y_t = \beta_t + \epsilon_t \\
+\beta_t = \beta_{t-1} + w_t \\
+\beta_1 = w_1
+$$
+Here $y_t$ is observed time series data, each $\epsilon_t$ is measurement noise with variance $V$ and each $w_t$ is also noise but with variance $W$. Think of $\beta_t$ as a time-varying regression coefficient. 
+
+Imagine our data are arriving sequentially. The Kalman Filter [@kalman_filt] cite provides an "optimal" estimate of each $\beta_t$ given all of the information we have up to time $t$. What's better is that the algorithm is recursive. Future estimates of $\beta_t$ will be easy to calculate given our estimates of $\beta_{t-1}$.
+
+Let's call the mean of $\beta_{t-1}$ (given all the information up to time $t-1$) $m_{t-1}$, and the variance of $\beta_{t-1}$ (given all the information up to time $t-1$) $P_{t-1}$. Then the Kalman recursions for this particular model are
+
+$$
+M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) \\
+P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
+$$
+for $t \ge 1$.
+
+  - Write a class called `TVIKalman` (TVI stands for time-varying intercept). 
+  - Have `TVIKalman` take two floating points in to its `.__init__()` method in this order: `V` and `W`. These two numbers are positive, and are the variance parameters of the model. Store these two numbers. Also, store $0$ and $W+V$ as members/attributes called `filter_mean` and `filter_variance`, respectively.
+  - Give `TVIKalman` another method: `.update(yt)`. This function should not return anything, but it should update the filtering distribution's mean and variance numbers, `filter_mean` and `filter_variance`, given a new data point. 
+  - Give `TVIKalman` another method: `.get_confidence_interval()`. It should not take any arguments, and it should return a length two Numpy array. The ordered elements of that array should be $M_t$ plus and minus two standard deviations--a standard deviation at time $t$ is $\sqrt{P_t}$.
+  - Create a `DataFrame` called `results` with the three columns called `yt`, `lower`, and `upper`. The last two columns should be a sequence of confidence intervals given to you by the method you wrote. The first column should contain the following data: `[-1.7037539, -0.5966818, -0.7061919, -0.1226606, -0.5431923]`. Plot all three columns in a single line plot. Initialize your Kalman Filter object with both `V` and `W` set equal to $.5$.
+
+
+
+### R Questions
+
+1. 
+
+Which of the following classes in R produce objects that are mutable? Select all that apply: S3, S4, reference classes, and R6.
+
+2.
+
+Which of the following classes in R produce objects that can have methods? Select all that apply: S3, S4, reference classes, and R6.
+
+3.
+
+Which of the following classes in R produce objects that can store data? Select all that apply: S3, S4, reference classes, and R6.
+
+4.
+
+Which of the following classes in R have encapsulated definitions? Select all that apply: S3, S4, reference classes, and R6.
+
+5.
+
+Which of the following classes in R have "slots"? Select all that apply: S3, S4, reference classes, and R6.
+
+6.
+
+Which of the following class systems in R is the newest? S3, S4, reference classes, or R6?
+
+7.
+
+Which of the following class systems in R is the oldest? S3, S4, reference classes, or R6?
+
+8.
+
+Which of the following classes in R requires you to `library()` in something? Select all that apply: S3, S4, reference classes, and R6.
+
+9.
+
+TODO cite
+Suppose you have the following data set: $X_1, \ldots, X_n$. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by $\mu$ and $\sigma^2$, respectively. Consider testing the hypothesis that $\mu = 0$ at a significance level of $\alpha$. To carry out this test, you calculate 
+$$
+t = \frac{\bar{X}}{S/\sqrt{n}}
+$$
+and you reject the null if $|t| > t_{n-1,\alpha/2}$. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
+
+  - Write a function called `doTTest()` that performs the above hypothesis test. It should accept two parameters: `dataVec` (a `vector` of data) and `significanceLevel` (which is $\alpha$). Have the second parameter default to `.05`.
+  - Have it return an S3 object created from a `list`. The `class` of this `list` should be `"TwoSidedTTest"`. The elements in the `list` should be named `decision` and `testStat`. The `decision` object should be either `"reject"` or `"fail to reject"`. The test stat should be equal to the calculation you made above for $t$.
+  - Create a `summary` method for this new class you created: `TwoSidedTTest`. 
+
+10.
+
+Suppose you have a target density $p(x)$ that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some $c > 0$, $p(x) = f(x) / c$, and you are only able to evaluate $f(\cdot)$. Your goal is that you would like to be able to approximate the expected value of $p(x)$ (i.e. $\int x p(x) dx$) using some proposal distribution $q(x)$. $q(x)$ is flexible in that you can sample from it, and you can evaluate it. We will use **importance sampling** to achieve this.^[Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.]
+
+******
+**Algorithm 1**:  Importance Sampling TODO cite
+
+******
+1. Sample $X^1, \ldots, X^n$ from $q(x)$,
+2. For each sample $x^i$, calculate an unnormalized weight $\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}$,
+3. Calculate the normalized weights $w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j$.
+4. Calculate the weighted average $\sum_{i=1}^n w^i x^i$.
+
+******
+
+In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each $\log \tilde{w}^i$, before you exponentiate them, subtract a number $m$ from all the values. A good choice for $m$ is $\max_i (\log \tilde{w}^i)$. These new values will produce the same normalized weights because
+$$
+w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
+$$
+
+  - Create an R6 class called `ImpSamp` that performs importance sampling.
+  - It should store function data values `qSamp`, `logQEval`, and `logFEval`.
+  - Give it an `initialize()` method that takes in three arguments: `logFEvalFunc`, `qSampFunc` and `logQEvalFunc`. 
+  - `initialize()` will set the stored function values equal to the function objects passed in.
+  - The functions performing random sampling should only take a single argument referring to the number of samples desired. 
+  - The evaluation functions should take a `vector` as an input and return a `vector` as an output. 
+  - Write a method called `computeApproxExpec` that computes the importance sampling estimate of $\int x p(x) dx$.
+  - Is it better to make this code object-oriented, or would you prefer a simple function that spits out the answer? Why?
