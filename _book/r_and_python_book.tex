@@ -165,6 +165,7 @@
 
 % details block styling
 \newenvironment{rmd-details}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
+\newenvironment{rmd-caution}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
 
 
 \frontmatter
@@ -334,7 +335,10 @@ I changed my ``Editor Theme'' from the default to ``Cobalt'' because it's easier
 
 The \textbf{console}, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the \texttt{print()} function.
 
+\begin{rmd-details}
 In R, functions are ``first-class objects,'' which means can refer to the name of a function without asking it to do anything. However, when we \emph{do} want to use it, we put parentheses after the name. This is called \textbf{calling} the function or \textbf{invoking} the function. If a function call takes any \textbf{arguments} (aka inputs), then the programmer supplies them between the two parentheses. A function may \textbf{return} values to be subsequently used, or it may just produce a ``side-effect'' such as printing some text, displaying a chart, or read/writing information to an external data source.
+
+\end{rmd-details}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -377,11 +381,17 @@ After we have a saved script, we can run it by sending all the lines of code ove
 
 The first line changes the \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/getwd.html}{\textbf{working directory}} to \texttt{Desktop/}. You, dear reader, should change this line by replacing \texttt{Desktop/} to whichever folder you chose to save \texttt{awesomeScript.R} in. If you would like to find out what your working directory is currently set to, you can use \texttt{getwd()}.
 
+\begin{rmd-details}
 Every computer has a different folder/directory structure--that is why it is highly recommended you refer to file locations as seldom as possible in your scripts. This makes your code more \emph{portable.} When you send your file to someone else (e.g.~your instructor or your boss), she will have to remove or change every mention of any directory. This is because those directories (probably) won't exist on her machine.
+
+\end{rmd-details}
 
 The second line calls \texttt{source()}. This function finds the script file and executes all the commands found in that file sequentially.
 
+\begin{rmd-details}
 Deleting all saved variables, and then \texttt{source()}ing your script can be a very good debugging strategy. You can remove all saved variables by running \texttt{rm(list=ls())}. Don't worry--the variables will come back as soon as you \texttt{source()} your entire script again!
+
+\end{rmd-details}
 
 \hypertarget{hello-world-in-python}{%
 \section{Hello World in Python}\label{hello-world-in-python}}
@@ -487,7 +497,10 @@ On Windows, things are a bit different. For one, a full path starts with a drive
 
 Unfortunately, backslashes are a special character in both R and Python (read section \ref{an-introduction-to-regular-expressions} to find out more about this). Whenever you type a \texttt{\textbackslash{}}, it will change the meaning of whatever comes after it. In other words, \texttt{\textbackslash{}} is known as an \textbf{escape character}.
 
+\begin{rmd-details}
 In both R and Python, the backslash character is used to start an ``escape'' sequence. You can see some examples in R by clicking \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html}{here}, and some examples in Python by clicking \href{https://docs.python.org/3/reference/lexical_analysis.html}{here}. In Python it may also be used to \href{https://docs.python.org/3/reference/lexical_analysis.html\#explicit-line-joining}{allow long lines of code to take up more than one line in a text file.}
+
+\end{rmd-details}
 
 The recommended way of handling this is to just use forward slashes instead. For example, if you are running Windows, \texttt{C:/Users/taylor/Desktop/myScript.R} will work in R, and \texttt{C:/Users/taylor/Desktop/myScript.py} will work in Python.
 
@@ -742,7 +755,10 @@ This section is for describing the data types that let us store collections of e
 
 In the previous section, I mentioned that R does not have scalar types--it just has \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Vector-objects}{\textbf{vectors}}. So, whether you want to store one number (or \texttt{logical}, or \texttt{character}, or \ldots), or many numbers, you will need a \texttt{vector}.
 
+\begin{rmd-caution}
 For many, the word ``vector'' evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g.~inner products, transposes, etc.). You can perform these operations on \texttt{vector}s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with \texttt{vector}s in R have little to do with linear algebra!
+
+\end{rmd-caution}
 
 How do we create one of these? There are many ways. One common way is to read in elements from an external data set. Another way is to generate \texttt{vector}s from code.
 
@@ -759,17 +775,20 @@ How do we create one of these? There are many ways. One common way is to read in
 \DocumentationTok{\#\# [1] "5/2/2021" "5/3/2021" "5/4/2021"}
 \CommentTok{\# generate Gaussian random variables}
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\NormalTok{)                             }
-\DocumentationTok{\#\# [1]  1.1238150 {-}1.3012177 {-}0.3103590  0.1361254  0.1354697}
+\DocumentationTok{\#\# [1]  0.6403955  0.2524081  1.3740108  2.2544786 {-}1.2988103}
 \end{Highlighting}
 \end{Shaded}
 
 \texttt{c()} is short for ``combine''. \texttt{seq()} and \texttt{rep()} are short for ``sequence'' and ``replicate'', respectively. \texttt{rnorm()} samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.
 
+\begin{rmd-details}
 I should mention that functions such as \texttt{rnorm()} don't create truly random numbers, just \emph{pseudorandom} ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic.
 
 First, a \emph{seed}, or starting number is chosen. Then, the \emph{pseudorandom number generator (PRNG)} maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic.
 
 Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don't set the seed, and I don't think about the distinction between random and pseudorandom numbers.
+
+\end{rmd-details}
 
 \hypertarget{overview-of-python}{%
 \section{Overview of Python}\label{overview-of-python}}
@@ -786,7 +805,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.7047086 , {-}2.06362777,  0.12240862])}
+\CommentTok{\#\# array([0.60874908, 0.5616381 , 1.51475038])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1319,7 +1338,10 @@ Also, as of version \texttt{1.0.0}, the \href{https://pandas.pydata.org/docs/use
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
 Be careful of using extreme values to stand in for what should be an \texttt{NA}. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!
+
+\end{rmd-caution}
 
 \hypertarget{an-introduction-to-regular-expressions}{%
 \section{An Introduction to Regular Expressions}\label{an-introduction-to-regular-expressions}}
@@ -1875,7 +1897,10 @@ Matrix and elementwise multiplication is often useful, too.
 
 In Python, adding a dimension to your ``container'' is simple. You keep using Numpy arrays, and you just change the \texttt{.shape} attribute (perhaps with a call to \texttt{.reshape()} or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the \texttt{matrix} class. Containers with 3 or more dimensions are of the \texttt{array} class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of \citep{matloff_r_book}.
 
+\begin{rmd-caution}
 Just like \texttt{vector}s, \texttt{matrix} objects do not necessarily have to be used to perform matrix arithmetic. Yes, they require all the elements are of the same type, but it doesn't really make sense to ``multiply'' \texttt{matrix} objects that hold onto \texttt{character}s.
+
+\end{rmd-caution}
 
 I usually create \texttt{matrix} objects with the \texttt{matrix()} function or the \texttt{as.matrix()} function. \texttt{matrix()} is to be preferred in my opinion. The first argument is explicitly a \texttt{vector} of all the flattened data that you want in your \texttt{matrix}. On the other hand, \texttt{as.matrix()} is more flexible; it takes in a variety of R objects (e.g.~\texttt{data.frame}s), and tries to figure out what to do with them on a case-by-case basis. In other words, \texttt{as.matrix()} is a \emph{generic function}. More information about generic functions is provided in \ref{using-s3-objects}.
 
@@ -2199,7 +2224,10 @@ You can also name the elements of a list. This can lead to more readable code. T
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
 \texttt{results} is a \texttt{list} (because \texttt{is.list(results)} returns \texttt{TRUE}), but to be more specific, it is an S3 object of class \texttt{lm}. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren't confused if you type \texttt{class(results)} and see \texttt{lm} instead of \texttt{list}. Second, the fact that the authors of \texttt{lm()} wrote code that returns \texttt{result} as a ``fancy list'' suggests that they are encouraging another way to access elements of the \texttt{results}: to use specialized functions! For example, you can use \texttt{residuals(results)}, \texttt{coefficients(results)}, and \texttt{fitted.values(results)}. These functions do not work for all lists in R, but when they do work (for \texttt{lm} and \texttt{glm} objects only), you can be sure you are writing the kind of code that is encouraged by the authors of \texttt{lm()}.
+
+\end{rmd-caution}
 
 \hypertarget{lists-in-python}{%
 \section{\texorpdfstring{\texttt{list}s In Python}{lists In Python}}\label{lists-in-python}}
@@ -2363,7 +2391,10 @@ Below the definition, the function is called with an input of \texttt{41}. When 
 
 We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away after they are no longer needed.
 
+\begin{rmd-caution}
 If you are interested in writing a function, I recommend that you first write the logic outside of a function. This initial code will be easier to debug because your temporary variables will not be destroyed after the final result has been obtained. Once you are happy with the working code, you can copy and paste the logic into a function definition, and replace permanent variables with function inputs like \texttt{myInput} above.
+
+\end{rmd-caution}
 
 \hypertarget{defining-python-functions}{%
 \section{Defining Python Functions}\label{defining-python-functions}}
@@ -2455,7 +2486,10 @@ The function's \emph{body} is also exactly what it sounds like. It is the work t
 
 Every function you create also has a \emph{parent environment}\footnote{Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.}. You can get/set this using the \texttt{environment()} function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was \emph{created}, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called \emph{scoping}. When you create functions in R, you are primarily using \textbf{lexical scoping}. This is discussed in more detail in section \ref{function-scope-in-r}.
 
+\begin{rmd-details}
 There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has \href{http://adv-r.had.co.nz/Environments.html\#function-envs}{binding, execution, and calling environments associated with it}, and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
+
+\end{rmd-details}
 
 \hypertarget{more-details-on-pythons-user-defined-functions}{%
 \section{More details on Python's user-defined functions}\label{more-details-on-pythons-user-defined-functions}}
@@ -2482,7 +2516,10 @@ So, for instance, let's try to find the \emph{formal parameter list} of a user-d
 
 The \texttt{\_\_code\_\_} attribute has much more to offer. To see a list of names of all its contents, you can use \texttt{dir(add\_number.\_\_code\_\_)}.
 
+\begin{rmd-details}
 Don't worry if the notation \texttt{add\_number.\_\_code\_\_} looks strange. The dot (\texttt{.}) operator will become more clear in the future chapter on \emph{object-oriented programming}. For now, just think of \texttt{\_\_code\_\_} as being an object \emph{belonging to} \texttt{add\_number}. Objects that belong to other objects are called \textbf{attributes} in Python. The dot operator helps us access attributes \emph{inside} other objects. It also helps us access objects belonging to modules that we \texttt{import} into our scripts.
+
+\end{rmd-details}
 
 \hypertarget{function-scope-in-r}{%
 \section{Function Scope in R}\label{function-scope-in-r}}
@@ -2591,7 +2628,10 @@ Here's another interesting example. If we ask \texttt{outerFunc()} to return the
 
 We use this property all the time when we create functions that return other functions. This is discussed in more detail in chapter \ref{functional-programming}. In the above example, \texttt{outerFuncV2()}, the function that returned another function, is called a \emph{function factory}.
 
+\begin{rmd-details}
 Sometimes people will refer to R's functions as \textbf{closures} to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with.
+
+\end{rmd-details}
 
 \hypertarget{function-scope-in-python}{%
 \section{Function Scope in Python}\label{function-scope-in-python}}
@@ -2815,13 +2855,16 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140425253578080 140425253578112}
+\CommentTok{\#\# 139895183746400 139895183746432}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-details}
 The \href{https://docs.python.org/3/library/functions.html\#id}{\texttt{id()}} function returns the \textbf{identity} of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, \texttt{a} and \texttt{b} say, have the same identity, \texttt{a\ is\ b} will evaluate to \texttt{True}. Otherwise, it will evaluate to \texttt{False}.
+
+\end{rmd-details}
 
 In the first line, the \emph{name} \texttt{a} is bound to the \emph{object} \texttt{1}. In the second line, the name \texttt{arg} is bound to the \emph{object} that is referred to by the \emph{name} \texttt{a}. After the second line finishes, \texttt{arg} and \texttt{a} are two names for the same object (a fact that you can confirm by inserting \texttt{arg\ is\ a} immediately after this line).
 
@@ -2960,7 +3003,10 @@ This is problematic because you are pre-occupying your mind with one function: \
 
 There is something in Python that is similar to R's super assignment operator (\texttt{\textless{}\textless{}-}). It is the \texttt{global} keyword. This keyword will let you modify global variables from inside a function.
 
+\begin{rmd-details}
 The upside to the \texttt{global} keyword is that it makes hunting for \textbf{side effects} relatively easy (A function's side effects are changes it makes to non-local variables). Yes, this keyword should be used sparingly, even more sparingly than merely referring to global variables, but if you are ever debugging, and you want to hunt down places where variables are surprisingly being changed, you can hit \texttt{Ctrl-F} and search for the phrase ``global.''
+
+\end{rmd-details}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3168,7 +3214,10 @@ Here is a first example. Say we asked three people what their favorite season wa
 
 \texttt{factor}s always have levels, which is the collection of all possible unique values each observation can take.
 
+\begin{rmd-caution}
 You should be careful if you are not specifying them directly. What happens when you use the default option and replace the second assignment in the above code with \texttt{responses\ \textless{}-\ factor(c("autumn",\ "summer",\ "summer"))}? The documentation of \texttt{factor()} will tell you that, by default, \texttt{factor()} will just take the unique values found in the data. In this case, nobody prefers winter or spring, and so neither will show up in \texttt{levels(responses)}. This may or may not be what you want.
+
+\end{rmd-caution}
 
 \texttt{factor}s can be ordered or unordered. Ordered \texttt{factor}s are for \emph{ordinal} data. Ordinal data is a particular type of categorical data that recognizes the categories have a natural order (e.g.~low/ medium/high and not red/green/blue).
 
@@ -3193,7 +3242,10 @@ As another example, say we asked ten people how much they liked statistical comp
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
 When creating ordered factors with \texttt{factor()}, be mindful that the \texttt{levels=} argument is assumed to be ordered when you plug it into \texttt{factor()}. In the above example, if you specified \texttt{levels\ =\ c("love\ it",\ "it\textquotesingle{}s\ okay",\ "hate\ it")}, then the factor would assume \texttt{love\ it\ \textless{}\ it\textquotesingle{}s\ okay\ \textless{}\ hate\ it}, which may or may not be what you want.
+
+\end{rmd-caution}
 
 Last, \texttt{factor}s may or may not have a \texttt{contrast} attribute. You can get or set this with the \texttt{contrasts()} function. This will influence some of the functions you use on your data that estimate statistical models.
 
@@ -3229,7 +3281,7 @@ Here is an example of (1). We can take non-categorical data, and \texttt{cut()} 
 \NormalTok{stockReturns }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{6}\NormalTok{) }\CommentTok{\# not categorical here}
 \NormalTok{typeOfDay }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(stockReturns, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\ConstantTok{Inf}\NormalTok{, }\DecValTok{0}\NormalTok{, }\ConstantTok{Inf}\NormalTok{)) }
 \NormalTok{typeOfDay}
-\DocumentationTok{\#\# [1] (0, Inf] (0, Inf] ({-}Inf,0] (0, Inf] ({-}Inf,0] (0, Inf]}
+\DocumentationTok{\#\# [1] (0, Inf] (0, Inf] ({-}Inf,0] ({-}Inf,0] ({-}Inf,0] (0, Inf]}
 \DocumentationTok{\#\# Levels: ({-}Inf,0] (0, Inf]}
 \FunctionTok{levels}\NormalTok{(typeOfDay)}
 \DocumentationTok{\#\# [1] "({-}Inf,0]" "(0, Inf]"}
@@ -3300,7 +3352,10 @@ You might have noticed that, with the \texttt{Categorical} container, methods an
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
 In Pandas, just like in R, you need to be very careful about what the \texttt{categories} (c.f \texttt{levels}) are. If you are using ordinal data, they need to be specified in the correct order. If you are using small data sets, be cognizant of whether all the categories show up in the data--otherwise they will not be correctly inferred.
+
+\end{rmd-caution}
 
 With Pandas' \texttt{Series} it's more difficult to specify a nondefault \texttt{dtype}. One option is to change them after the object has been created.
 
@@ -3558,6 +3613,8 @@ Let's consider as an example Fisher's ``Iris'' data set \citep{misc_iris_53}. We
 
 There are some exceptions, but most data sets can be stored as a \texttt{data.frame}. These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g.~person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations.
 
+\begin{rmd-caution}
+
 Do not rely on the default arguments of \texttt{read.csv()} or \texttt{read.table()}! After you read in a data frame, always check to make sure that
 
 \begin{enumerate}
@@ -3576,6 +3633,8 @@ Do not rely on the default arguments of \texttt{read.csv()} or \texttt{read.tabl
 \item
   special characters signifying missing data were correctly identified (c.f. \texttt{na.strings=}).
 \end{enumerate}
+
+\end{rmd-caution}
 
 \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Data-frame-objects}{A \texttt{data.frame} is a special case of a \texttt{list}}. Every element of the list is a column. Columns can be \texttt{vector}s or \texttt{factor}s, and they can all be of a different type. This is one of the biggest differences between data frames and \texttt{matrix}s. They are both two-dimensional, but a \texttt{matrix} needs elements to be all the same type. Unlike a general \texttt{list}, a \texttt{data.frame} requires all of its columns to have the same number of elements. In other words, the \texttt{data.frame} is not a ``\emph{ragged}'' list.
 
@@ -3623,7 +3682,10 @@ The \texttt{{[}} operator is also useful for selecting rows and columns by index
 
 In the code above, \texttt{irisData\$species\ ==\ "Iris-setosa"} creates a logical vector (try it!) using the vectorized \texttt{==} operator. The \texttt{{[}} operator selects the rows for which the corresponding element of this logical vector is \texttt{TRUE}.
 
+\begin{rmd-details}
 Be careful: depending on how you use the square brackets, you can either get a \texttt{data.frame} or a \texttt{vector.} As an example, try both \texttt{class(irisData{[},1{]})} and \texttt{class(irisData{[},c(1,2){]})}.
+
+\end{rmd-details}
 
 In R, \texttt{data.frame}s might have row names. You can get and set this character \texttt{vector} with the \texttt{rownames()} function. You can access rows by name using the square bracket operator.
 
@@ -3651,9 +3713,9 @@ Code that modifies data usually looks quite similar to code extracting data. You
 \NormalTok{irisData[irisData}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{, }\StringTok{\textquotesingle{}species\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"SETOSA!"}
 \FunctionTok{head}\NormalTok{(irisData, }\DecValTok{3}\NormalTok{)}
 \DocumentationTok{\#\#      sepal.width petal.length petal.width species columnOfOnes}
-\DocumentationTok{\#\# 1001   {-}999.4124          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1002  {-}1000.0453          1.4         0.2 SETOSA!            1}
-\DocumentationTok{\#\# 1003  {-}1000.0906          1.3         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1001   {-}998.2750          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1002   {-}999.1644          1.4         0.2 SETOSA!            1}
+\DocumentationTok{\#\# 1003   {-}998.5575          1.3         0.2 SETOSA!            1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3686,6 +3748,8 @@ The Pandas library in Python has data frames that are modeled after R's.
 
 The structure is very similar to that of R's data frame. It's two dimensional, and you can \href{https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html}{access columns and rows by name or number.} Each column is a \texttt{Series} object, and each column can have a different \texttt{dtype}, which is analogous to R's situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy \texttt{ndarray}s and \texttt{DataFrame}s (c.f. R's \texttt{matrix} versus R's \texttt{data.frame}).
 
+\begin{rmd-caution}
+
 Again, do not rely on the default arguments of \texttt{pd.read\_csv()}! After you read in a data set, always check that
 
 \begin{enumerate}
@@ -3704,6 +3768,8 @@ Again, do not rely on the default arguments of \texttt{pd.read\_csv()}! After yo
 \item
   special characters signifying missing data were correctly identified (c.f. \texttt{na.values=}).
 \end{enumerate}
+
+\end{rmd-caution}
 
 Square brackets are a little different in Python than they are in R. Just like in R, you can access columns by name with square brackets, and you can also access rows. Unlike R, though, you don't have to specify both rows and columns every time you use the square brackets.
 
@@ -3728,7 +3794,10 @@ Square brackets are a little different in Python than they are in R. Just like i
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-details}
 Notice that \texttt{iris\_data{[}\textquotesingle{}sepal.length\textquotesingle{}{]}} returns a \texttt{Series} and \texttt{iris\_data{[}{[}"sepal.length",\ "sepal.width"{]}{]}} returns a Pandas \texttt{DataFrame}. This behavior is similar to what happened in R. For more details, click \href{https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html\#indexing-selection}{here}.
+
+\end{rmd-details}
 
 You can select columns and rows by number with the \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html}{\texttt{.iloc} method}. \texttt{iloc} is (probably) short for ``integer location.''
 
@@ -3818,9 +3887,9 @@ Modifying data inside a data frame looks quite similar to extracting data. You'l
 \KeywordTok{del}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}petal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.length  sepal.width  petal.width  species  col\_ones}
-\CommentTok{\#\# 149    998.168466  {-}998.229668          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 148    999.172947  {-}998.717773          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 147      4.700000  {-}998.994657          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 149    998.754705  {-}998.754039          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 148    999.664928  {-}997.516306          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 147      4.700000  {-}999.069372          0.2  SETOSA!       1.0}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3832,13 +3901,16 @@ You can also use the \href{https://pandas.pydata.org/pandas-docs/stable/referenc
 \KeywordTok{del}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}sepal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.width  petal.width  species  col\_ones  new\_col\_name}
-\CommentTok{\#\# 149  {-}998.229668          0.2  SETOSA!       1.0             0}
-\CommentTok{\#\# 148  {-}998.717773          0.2  SETOSA!       1.0             1}
-\CommentTok{\#\# 147  {-}998.994657          0.2  SETOSA!       1.0             2}
+\CommentTok{\#\# 149  {-}998.754039          0.2  SETOSA!       1.0             0}
+\CommentTok{\#\# 148  {-}997.516306          0.2  SETOSA!       1.0             1}
+\CommentTok{\#\# 147  {-}999.069372          0.2  SETOSA!       1.0             2}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
 Above we were assigning Numpy arrays to columns of a \texttt{DataFrame}. Be careful when you're assigning \texttt{Series} objects. You'll see in the documentation that \href{https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html\#basics}{``pandas aligns all AXES when setting Series and \texttt{DataFrame} from \texttt{.loc}, and \texttt{.iloc}.''}.
+
+\end{rmd-caution}
 
 \hypertarget{exercises-6}{%
 \section{Exercises}\label{exercises-6}}
@@ -4036,11 +4108,14 @@ When discussing reading in data, this text mostly focuses on the first category.
   the third category is programmatically self-explanatory.
 \end{enumerate}
 
+\begin{rmd-details}
 The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in \textbf{simulation studies.} Authors writing statistical papers need to demonstrate that their techniques work on ``nice'' data: data simulated from a \emph{known} data-generating process. In a simulation study, unlike in the ``real-world,'' you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model.
 
 Can your code/technique/algorithm, at the very least, obtain parameter estimates that are ``in-line'' with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g.~\texttt{rnorm()} in R or \texttt{np.random.choice()} in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility.
 
 Also, \emph{benchmark data sets} are often readily available through specialized function calls.
+
+\end{rmd-details}
 
 Even though this chapter is written to teach you how to read in files into R and Python, you should not expect that you will know how to read in \emph{all} data sets after reading this section. For both R and Python, there are an enormous amount of functions, different functions have different return types, different functions are suited for different file types, many functions are spread across a plethora of third party libraries, and many of these functions have an enormous amount of arguments. You will probably not be able to memorize everything. In my very humble opinion, I doubt you should want to.
 
@@ -4168,7 +4243,8 @@ Some of you may have had difficulty reading in the above data. This can happen i
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tmp }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"data/Google.html"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\textasciitilde{}"}\NormalTok{)}
-\DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input connection \textquotesingle{}data/Google.html\textquotesingle{}}
+\DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : invalid input found on input}
+\DocumentationTok{\#\# connection \textquotesingle{}data/Google.html\textquotesingle{}}
 \DocumentationTok{\#\# Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : EOF within quoted string}
 \end{Highlighting}
 \end{Shaded}
@@ -4271,6 +4347,21 @@ Just like in R, you may run into an encoding issue with a file. For instance, th
 \begin{Highlighting}[]
 \NormalTok{pd.read\_csv(}\StringTok{"data/message.txt"}\NormalTok{)}
 \CommentTok{\#\# Error in py\_call\_impl(callable, dots$args, dots$keywords): UnicodeDecodeError: \textquotesingle{}utf{-}8\textquotesingle{} codec can\textquotesingle{}t decode byte 0xb9 in position 0: invalid start byte}
+\CommentTok{\#\# }
+\CommentTok{\#\# Detailed traceback:}
+\CommentTok{\#\#   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
+\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 688, in read\_csv}
+\CommentTok{\#\#     return \_read(filepath\_or\_buffer, kwds)}
+\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 454, in \_read}
+\CommentTok{\#\#     parser = TextFileReader(fp\_or\_buf, **kwds)}
+\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 948, in \_\_init\_\_}
+\CommentTok{\#\#     self.\_make\_engine(self.engine)}
+\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 1180, in \_make\_engine}
+\CommentTok{\#\#     self.\_engine = CParserWrapper(self.f, **self.options)}
+\CommentTok{\#\#   File "/home/taylor/.local/share/r{-}miniconda/envs/r{-}reticulate/lib/python3.6/site{-}packages/pandas/io/parsers.py", line 2010, in \_\_init\_\_}
+\CommentTok{\#\#     self.\_reader = parsers.TextReader(src, **kwds)}
+\CommentTok{\#\#   File "pandas/\_libs/parsers.pyx", line 537, in pandas.\_libs.parsers.TextReader.\_\_cinit\_\_}
+\CommentTok{\#\#   File "pandas/\_libs/parsers.pyx", line 740, in pandas.\_libs.parsers.TextReader.\_get\_header}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4416,7 +4507,10 @@ Here is an example of writing out \texttt{d} and then reading the pickled object
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
 Unfortunately, \texttt{oring.pickle} is much larger (1,676 bytes) than the original text file \texttt{o-ring-erosion-only.data} (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like \texttt{d\_is\_back.to\_pickle("data/oring.zip")} it will become smaller.
+
+\end{rmd-caution}
 
 In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library.
 
@@ -4550,15 +4644,19 @@ To understand this more deeply, we need to talk about \textbf{environments} agai
 
 An \href{https://cran.r-project.org/doc/manuals/R-lang.html\#Environment-objects}{environment} holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in R pre-loaded have their own environment.
 
+\begin{rmd-details}
 Formally, each environment is pair of two things: a \textbf{frame} and an \textbf{enclosure}. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you've heard of a \emph{linked list} in a computer science class, it's the same thing.
+
+\end{rmd-details}
 
 Moreover, all of these environments are connected in a chain-like structure. To see what environments are loaded on your machine, and what order they were loaded in, use the \texttt{search()} function. This displays the \href{https://cran.r-project.org/doc/manuals/R-lang.html\#Search-path}{\textbf{search path}}, or the ordered sequence of all of your environments.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{search}\NormalTok{()}
-\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:reticulate" "tools:rstudio"      "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"     }
-\DocumentationTok{\#\#  [8] "package:datasets"   "package:methods"    "Autoloads"          "package:base"}
+\DocumentationTok{\#\#  [1] ".GlobalEnv"         "package:R6"         "package:Matrix"     "package:ggplot2"    "package:reticulate"}
+\DocumentationTok{\#\#  [6] "tools:rstudio"      "package:stats"      "package:graphics"   "package:grDevices"  "package:utils"     }
+\DocumentationTok{\#\# [11] "package:datasets"   "package:methods"    "Autoloads"          "package:base"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4625,6 +4723,8 @@ The sequence of places Python looks for a module is called the search path. This
 
 After a module is found, the variable names inside it become available to the \texttt{import}ing module. These variables are available in the global scope, but the names you use to access them will depend on what kind of \texttt{import} statement you used. From there, you are using the same scoping rules that we described in \ref{function-scope-in-python}, which means the LEGB acronym still applies.
 
+\begin{rmd-details}
+
 In both languages, an (unqualified) variable name can only refer to one object at any time. This does not necessarily have anything to do with using third-party code--you can redefine objects, but don't expect to be able to access the old object after you do it.
 
 The same thing can happen when you use third-party code.
@@ -4653,6 +4753,8 @@ The way variable names are stored are only slightly different between R and Pyth
   Also, Python modules may be organized into a nested or tree-like structure, whereas R packages will always have a flat structure.
 \end{itemize}
 
+\end{rmd-details}
+
 \hypertarget{importing-examples}{%
 \subsection{\texorpdfstring{\texttt{import}ing Examples}{importing Examples}}\label{importing-examples}}
 
@@ -4662,8 +4764,8 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.25821108,  0.7824675 ,  0.33939165,  0.87955643,  0.71642838,}
-\CommentTok{\#\#         1.59316399,  1.01870638, {-}0.59236906,  0.05294611, {-}1.09848869])}
+\CommentTok{\#\# array([{-}0.61461946,  0.77477326, {-}1.39826058, {-}0.58426638,  0.43157525,}
+\CommentTok{\#\#        {-}0.43308396, {-}0.33478351,  0.61724302, {-}1.2197469 , {-}2.49463229])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4675,8 +4777,8 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.47958027,  0.93045372, {-}0.19295789,  1.20816071,  0.46236513,}
-\CommentTok{\#\#        {-}0.60287902, {-}0.23150056, {-}1.94314206,  1.35389999, {-}0.11365848])}
+\CommentTok{\#\# array([{-}1.04528684,  0.39691898, {-}1.91277849,  0.55199024, {-}0.50026077,}
+\CommentTok{\#\#         0.39573255, {-}0.81697826, {-}1.0035666 , {-}0.7428634 ,  0.35951528])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4688,8 +4790,8 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.40975081,  0.60062734, {-}2.75610629,  0.87653564,  0.93725255,}
-\CommentTok{\#\#        {-}1.0750923 , {-}1.56512452,  1.14127833, {-}0.56522432, {-}0.9957946 ])}
+\CommentTok{\#\# array([ 0.02831044, {-}0.24188505, {-}0.04813886, {-}0.01644689,  0.5575949 ,}
+\CommentTok{\#\#         0.54825458,  0.38244334,  0.83070234,  2.16034278, {-}1.72490461])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4979,6 +5081,8 @@ Loops are for repeatedly executing code. \texttt{for} loops are great when you k
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-caution}
+
 Here are some tips for writing loops:
 
 \begin{enumerate}
@@ -5007,6 +5111,8 @@ Here are some tips for writing loops:
 \item
   Watch out for infinite \texttt{while} loops. Make sure that your stopping criterion is guaranteed to eventually become true.
 \end{enumerate}
+
+\end{rmd-caution}
 
 Python also provides an alternative way to construct lists similar to the one we constructed in the above example. They are called \href{https://docs.python.org/3/tutorial/datastructures.html\#list-comprehensions}{\textbf{list comprehensions}}. These are convenient because you can incorporate iteration and conditional logic in one line of code.
 
@@ -5335,13 +5441,20 @@ In R, this can be done with \texttt{rbind()} (short for ``row bind'')
 \NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
 \NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\DecValTok{1}\NormalTok{,]}
 \FunctionTok{head}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train))}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{sum}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train) }\SpecialCharTok{!=}\NormalTok{ realEstate)}
 \DocumentationTok{\#\# [1] 0}
 \end{Highlighting}
@@ -5949,13 +6062,20 @@ Recall our Albemarle Real Estate data set.
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \FunctionTok{head}\NormalTok{(df)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6155,7 +6275,10 @@ There are many to choose from, though. Try to run the following code on your own
 
 Matplotlib \citep{Hunter:2007} is a third-party visualization library in Python. It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of \href{https://matplotlib.org/stable/tutorials/index.html}{tutorials} on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, \citep{py_ds_handbook} is also a terrific resource. It has an entire chapter dedicated to visualization with Matplotlib.
 
+\begin{rmd-details}
 You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-oriented-style'' to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
+
+\end{rmd-details}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6393,13 +6516,19 @@ Using our code would look like this:
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-details}
 There is a Python convention that stipules class names should be written in \texttt{UpperCamelCase} (e.g.~\texttt{RunningMean}).
+
+\end{rmd-details}
 
 That's much better! Notice the \emph{encapsulation}--while looking at this code we do not need to think about the mathematical formula that is used to process the data. We only need to type in the correct data being used. In other words, the \emph{implementation} is separated from the \emph{interface}. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code.
 
+\begin{rmd-caution}
 After seeing these new words that are unfamiliar and long, it's tempting to dismiss these new ideas as superfluous. After all, if you are confident that you can get your program working, why stress about all these new concepts? If it ain't broke, don't fix it, right?
 
 I urge you to try to keep an open mind, particularly if you are already confident that you understand the basics of programming in R and Python. The topics in this chapter are more centered around design choices. This material won't help you write a first draft of a script even faster, but it will make your code much better. Even though you will have to slow down a bit before you start typing, thinking about your program more deeply will prevent bugs and allow more people to use your code.
+
+\end{rmd-caution}
 
 Classes (obviously) need to be defined before they are used, so here is the definition of our class.
 
@@ -6421,7 +6550,10 @@ Classes (obviously) need to be defined before they are used, so here is the defi
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-details}
 Methods that look like \texttt{\_\_init\_\_}, or that possess names that begin and end with two underscores, are called \textbf{dunder (double underscore) methods}, \textbf{special methods} or \textbf{magic methods}. There are many that you can take advantage of! For more information see \href{https://docs.python.org/3/reference/datamodel.html\#special-method-names}{this}.
+
+\end{rmd-details}
 
 Here are the details of the class definition:
 
@@ -6557,7 +6689,10 @@ Regarding the example above, you might argue that a confidence interval isn't a 
   Many-to-one relationships are easier. It's generally easier to ``own'' many base class instances rather than inherit from many base classes at once. This is especially true if this is the only book on programming you plan on reading--I completely avoid the topic of multiple inheritance!
 \end{enumerate}
 
+\begin{rmd-caution}
 Sometimes it is very difficult to choose between using composition or using inheritance. However, this choice should be made very carefully. If you make the wrong one, and realize too late, \emph{refactoring} your code might be very time consuming!
+
+\end{rmd-caution}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -6652,7 +6787,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x561a8f3020d0>
+## <bytecode: 0x5629ce3379a0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -6665,23 +6800,30 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] plot,ANY-method      plot,color-method    plot.acf*            plot.cohesiveBlocks* plot.communities*    plot.data.frame*     plot.decomposed.ts* 
-##  [8] plot.default         plot.dendrogram*     plot.density*        plot.ecdf            plot.factor*         plot.formula*        plot.function       
-## [15] plot.ggplot*         plot.gtable*         plot.hcl_palettes*   plot.hclust*         plot.histogram*      plot.HoltWinters*    plot.igraph*        
-## [22] plot.isoreg*         plot.lm*             plot.mcmc*           plot.mcmc.list*      plot.medpolish*      plot.mlm*            plot.numpy.ndarray* 
-## [29] plot.ppr*            plot.prcomp*         plot.princomp*       plot.profile.nls*    plot.R6*             plot.raster*         plot.shingle*       
-## [36] plot.sir*            plot.spec*           plot.stepfun         plot.stl*            plot.table*          plot.trans*          plot.trellis*       
-## [43] plot.ts              plot.tskernel*       plot.TukeyHSD*      
+##  [1] plot,ANY-method     plot,color-method   plot.acf*           plot.data.frame*    plot.decomposed.ts*
+##  [6] plot.default        plot.dendrogram*    plot.density*       plot.ecdf           plot.factor*       
+## [11] plot.formula*       plot.function       plot.ggplot*        plot.gtable*        plot.hcl_palettes* 
+## [16] plot.hclust*        plot.histogram*     plot.HoltWinters*   plot.isoreg*        plot.lm*           
+## [21] plot.medpolish*     plot.mlm*           plot.numpy.ndarray* plot.ppr*           plot.prcomp*       
+## [26] plot.princomp*      plot.profile.nls*   plot.R6*            plot.raster*        plot.shingle*      
+## [31] plot.spec*          plot.stepfun        plot.stl*           plot.table*         plot.trans*        
+## [36] plot.trellis*       plot.ts             plot.tskernel*      plot.TukeyHSD*     
 ## see '?methods' for accessing help and source code
 \end{verbatim}
 
 All of these S3 class methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (\texttt{.}), then the name of the class that they are specifically written to be used with.
 
+\begin{rmd-caution}
 R's dot-notation is nothing like Python's dot-notation! In R, functions do not \emph{belong} to types/classes like they do in Python!
+
+\end{rmd-caution}
 
 Method dispatch works by looking at the \texttt{class} attribute of an S3 object argument. An object in R may or may not have a set of \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Attributes}{\textbf{attributes}}, which are a collection of name/value pairs that give a particular object extra functionality. Regular \texttt{vector}s in R don't have attributes (e.g.~try running \texttt{attributes(1:3)}), but objects that are ``embellished'' versions of a \texttt{vector} might (e.g.~run \texttt{attributes(factor(1:3))}).
 
+\begin{rmd-caution}
 \texttt{class()} will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with \texttt{is.object()} first.
+
+\end{rmd-caution}
 
 Also, these methods are not \emph{encapsulated} inside a class definition like they are in Python, either. They just look like loose functions--the method definition for a particular class is not defined inside the class. These class methods can be defined just as ordinary functions, out on their own, in whatever file you think is appropriate to define functions in.
 
@@ -6805,7 +6947,10 @@ Much more information about S4 classes can be obtained by reading \href{https://
 
 One CRAN package that uses S4 is the \href{https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf}{Matrix package.} S4 objects are also extremely popular in packages hosted on \href{https://www.bioconductor.org/}{Bioconductor}.
 
+\begin{rmd-details}
 Bioconductor is kind of like CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided \href{https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html}{here}.
+
+\end{rmd-details}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7431,9 +7576,12 @@ An amateurish way to do this would be something like the following.
 
 You will need one line of code for each column in the data frame! For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
+\begin{rmd-details}
 ``Don't repeat yourself'' (DRY) is an idea that's been around for a while and is widely accepted \citep{hunt2000pragmatic}. DRY is the opposite of \href{https://en.wikipedia.org/wiki/Don\%27t_repeat_yourself\#WET}{WET}.
 
-Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \texttt{sapply()} stands for ``simplified.'' In this bit of code \texttt{mean()} is called on each column of th data frame. \texttt{sapply()} applies the function over columns, instead of rows, because data frames are internally a \texttt{list} of columns.
+\end{rmd-details}
+
+Instead, prefer the use of \texttt{sapply()} in this situation. The ``s'' in \texttt{sapply()} stands for ``simplified.'' In this bit of code \texttt{mean()} is called on each column of the data frame. \texttt{sapply()} applies the function over columns, instead of rows, because data frames are internally a \texttt{list} of columns.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7458,7 +7606,10 @@ In the above case, ``simplify'' referred to how one-hundred length-\(1\) vectors
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-details}
 Another function that is worth mentioning is \texttt{replicate()}--it is a wrapper for \texttt{sapply()}. Consider a situation where you want to call a function many times with the same inputs. You might try something like \texttt{sapply(1:100,\ function(elem)\ \{\ \ return(myFunc(someInput))\ \}\ )}. Another, more readable, way to do this is \texttt{replicate(100,\ myFunc(someInput))}.
+
+\end{rmd-details}
 
 \hypertarget{lapply}{%
 \subsection{\texorpdfstring{\texttt{lapply()}}{lapply()}}\label{lapply}}
@@ -7515,13 +7666,20 @@ Another example where it can be useful to apply a function to rows is \textbf{pr
 \NormalTok{thirdB }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(firstB }\SpecialCharTok{\&}\NormalTok{ secondB) }\SpecialCharTok{|}\NormalTok{ thirdB,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900}
+\DocumentationTok{\#\#     City}
+\DocumentationTok{\#\# 1 CROZET}
+\DocumentationTok{\#\# 2 CROZET}
+\DocumentationTok{\#\# 4 CROZET}
+\DocumentationTok{\#\# 5 CROZET}
+\DocumentationTok{\#\# 6 CROZET}
+\DocumentationTok{\#\# 8 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7548,13 +7706,20 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
 \FunctionTok{head}\NormalTok{(subDF)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue   City}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900 CROZET}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100 CROZET}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700 CROZET}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500 CROZET}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200 CROZET}
-\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900 CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\# 8      1975          1982   Average       1.00    1520       3        1        0          4   2.030     151900}
+\DocumentationTok{\#\#     City}
+\DocumentationTok{\#\# 1 CROZET}
+\DocumentationTok{\#\# 2 CROZET}
+\DocumentationTok{\#\# 4 CROZET}
+\DocumentationTok{\#\# 5 CROZET}
+\DocumentationTok{\#\# 6 CROZET}
+\DocumentationTok{\#\# 8 CROZET}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7568,13 +7733,20 @@ If I wanted the average home price for each city, I could use something like thi
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(albRealEstate)}
-\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue        City}
-\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900      CROZET}
-\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100      CROZET}
-\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900 EARLYSVILLE}
-\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700      CROZET}
-\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500      CROZET}
-\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200      CROZET}
+\DocumentationTok{\#\#   YearBuilt YearRemodeled Condition NumStories FinSqFt Bedroom FullBath HalfBath TotalRooms LotSize TotalValue}
+\DocumentationTok{\#\# 1      2006             0   Average       1.00    1922       3        3        0         10   5.000     409900}
+\DocumentationTok{\#\# 2      2003             0   Average       1.00    1848       3        2        0          7  61.189     523100}
+\DocumentationTok{\#\# 3      1972             0   Average       1.00    1248       2        1        0          4   1.760     180900}
+\DocumentationTok{\#\# 4      1998             0      Good       1.00    1244       1        1        0          3  50.648     620700}
+\DocumentationTok{\#\# 5      1886             0   Average       1.86    1861       4        1        0          6   3.880     162500}
+\DocumentationTok{\#\# 6      1910             0      Fair       1.53    1108       3        1        0          6   8.838     167200}
+\DocumentationTok{\#\#          City}
+\DocumentationTok{\#\# 1      CROZET}
+\DocumentationTok{\#\# 2      CROZET}
+\DocumentationTok{\#\# 3 EARLYSVILLE}
+\DocumentationTok{\#\# 4      CROZET}
+\DocumentationTok{\#\# 5      CROZET}
+\DocumentationTok{\#\# 6      CROZET}
 \FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City)}
 \DocumentationTok{\#\# [1] "CROZET"          "EARLYSVILLE"     "CHARLOTTESVILLE" "SCOTTSVILLE"     "NORTH GARDEN"    "KESWICK"}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)}
@@ -7600,7 +7772,10 @@ You might be wondering why we put \texttt{albRealEstate\$City} into a \texttt{li
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmd-details}
 For functions that return higher-dimensional output, you will have to use something like \texttt{by()} or \texttt{aggregate()} in place of \texttt{tapply()}.
+
+\end{rmd-details}
 
 \hypertarget{mapply}{%
 \subsection{\texorpdfstring{\texttt{mapply()}}{mapply()}}\label{mapply}}

@@ -32,7 +32,7 @@ Below the definition, the function is called with an input of `41`. When this ha
 We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away after they are no longer needed. 
 
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 If you are interested in writing a function, I recommend that you first write the logic outside of a function. This initial code will be easier to debug because your temporary variables will not be destroyed after the final result has been obtained. Once you are happy with the working code, you can copy and paste the logic into a function definition, and replace permanent variables with function inputs like `myInput` above. 
 :::
 
@@ -94,7 +94,7 @@ body(addNumber)
 
 Every function you create also has a *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. This is discussed in more detail in section \@ref(function-scope-in-r).
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
 :::
 
@@ -139,7 +139,7 @@ add_number.__defaults__
 
 The `__code__` attribute has much more to offer. To see a list of names of all its contents, you can use `dir(add_number.__code__)`.
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) operator will become more clear in the future chapter on *object-oriented programming*. For now, just think of `__code__` as being an object *belonging to* `add_number`. Objects that belong to other objects are called **attributes** in Python. The dot operator helps us access attributes *inside* other objects. It also helps us access objects belonging to modules that we `import` into our scripts.
 :::
 
@@ -228,7 +228,7 @@ myFunc()
 We use this property all the time when we create functions that return other functions. This is discussed in more detail in chapter \@ref(functional-programming). In the above example, `outerFuncV2()`, the function that returned another function, is called a *function factory*. 
 
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 Sometimes people will refer to R's functions as **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with. 
 :::
 
@@ -403,7 +403,7 @@ print(id(a), id(arg)) # different!`
 print(a)
 ```
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 The [`id()`](https://docs.python.org/3/library/functions.html#id) function returns the **identity** of an object, which is kind of like its memory address. Identities of objects are unique and constant. If two variables, `a` and `b` say, have the same identity, `a is b` will evaluate to `True`. Otherwise, it will evaluate to `False`.
 :::
 
@@ -521,7 +521,7 @@ This is problematic because you are pre-occupying your mind with one function: `
 
 There is something in Python that is similar to R's super assignment operator (`<<-`). It is the `global` keyword. This keyword will let you modify global variables from inside a function. 
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 The upside to the `global` keyword is that it makes hunting for **side effects** relatively easy (A function's side effects are changes it makes to non-local variables). Yes, this keyword should be used sparingly, even more sparingly than merely referring to global variables, but if you are ever debugging, and you want to hunt down places where variables are surprisingly being changed, you can hit `Ctrl-F` and search for the phrase "global."
 :::
 

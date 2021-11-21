@@ -104,13 +104,13 @@ my_ave.get_current_xbar()  #xbar_2
 my_ave.n   # my_ave.n instead of self.n
 ```
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 There is a Python convention that stipules class names should be written in `UpperCamelCase` (e.g. `RunningMean`).
 :::
 
 That's much better! Notice the *encapsulation*--while looking at this code we do not need to think about the mathematical formula that is used to process the data. We only need to type in the correct data being used. In other words, the *implementation* is separated from the *interface*. The interface in this case, is just the name of the class methods, and the arguments they expect. That's all we need to know about to use this code. 
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 After seeing these new words that are unfamiliar and long, it's tempting to dismiss these new ideas as superfluous. After all, if you are confident that you can get your program working, why stress about all these new concepts? If it ain't broke, don't fix it, right?
 
 I urge you to try to keep an open mind, particularly if you are already confident that you understand the basics of programming in R and Python. The topics in this chapter are more centered around design choices. This material won't help you write a first draft of a script even faster, but it will make your code much better. Even though you will have to slow down a bit before you start typing, thinking about your program more deeply will prevent bugs and allow more people to use your code.  
@@ -134,7 +134,7 @@ class RunningMean:
       return self.current_xbar
 ```
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 Methods that look like `__init__`, or that possess names that begin and end with two underscores, are called **dunder (double underscore) methods**, **special methods** or **magic methods**. There are many that you can take advantage of! For more information see [this](https://docs.python.org/3/reference/datamodel.html#special-method-names).
 ::: 
 
@@ -246,7 +246,7 @@ Regarding the example above, you might argue that a confidence interval isn't a 
 
 3. Many-to-one relationships are easier. It's generally easier to "own" many base class instances rather than inherit from many base classes at once. This is especially true if this is the only book on programming you plan on reading--I completely avoid the topic of multiple inheritance!
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 Sometimes it is very difficult to choose between using composition or using inheritance. However, this choice should be made very carefully. If you make the wrong one, and realize too late, *refactoring* your code might be very time consuming! 
 :::
 
@@ -335,13 +335,13 @@ methods(plot)
 
 All of these S3 class methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (`.`), then the name of the class that they are specifically written to be used with. 
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 R's dot-notation is nothing like Python's dot-notation! In R, functions do not *belong* to types/classes like they do in Python!
 ::: 
 
 Method dispatch works by looking at the `class` attribute of an S3 object argument. An object in R may or may not have a set of  [**attributes**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Attributes), which are a collection of name/value pairs that give a particular object extra functionality. Regular `vector`s in R don't have attributes (e.g. try running `attributes(1:3)`), but objects that are "embellished" versions of a `vector` might (e.g. run `attributes(factor(1:3))`).
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 `class()` will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with `is.object()` first. 
 :::
 
@@ -430,7 +430,7 @@ Much more information about S4 classes can be obtained by reading [Chapter 15 in
 One CRAN package that uses S4 is the [Matrix package.](
 https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf) S4 objects are also extremely popular in packages hosted on [Bioconductor](https://www.bioconductor.org/). 
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 Bioconductor is kind of like CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided [here](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
 ::: 
 

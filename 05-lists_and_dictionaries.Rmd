@@ -26,7 +26,7 @@ results$contrasts
 results['rank']
 ```
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 `results` is a `list` (because `is.list(results)` returns `TRUE`), but to be more specific, it is an S3 object of class `lm`. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren't confused if you type `class(results)` and see `lm` instead of `list`. Second, the fact that the authors  of `lm()` wrote code that returns `result` as a "fancy list" suggests that they are encouraging another way to access elements of the `results`: to use specialized functions! For example, you can use `residuals(results)`, `coefficients(results)`, and `fitted.values(results)`. These functions do not work for all lists in R, but when they do work (for `lm` and `glm` objects only), you can be sure you are writing the kind of code that is encouraged by the authors of `lm()`.
 :::
 

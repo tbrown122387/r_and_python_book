@@ -17,7 +17,7 @@ When discussing reading in data, this text mostly focuses on the first category.
 2. teaching the second category requires teaching SQL, and that would introduce conceptual overlap, and
 3. the third category is programmatically self-explanatory.
 
-::: {.rmd-details}
+::: {.rmd-details data-latex=""}
 The third reason does not imply data created by code is unimportant. For example, it is the most common approach to create data used in **simulation studies.** Authors writing statistical papers need to demonstrate that their techniques work on "nice" data: data simulated from a *known* data-generating process. In a simulation study, unlike in the "real-world," you have access to the parameters generating your data, and you can examine data that might otherwise be unobserved or hidden. Further, with data from the real-world, there is no guarantee your model correctly matches the true model. 
 
 Can your code/technique/algorithm, at the very least, obtain parameter estimates that are "in-line" with the parameters your code is using to simulate data? Are forecasts or predictions obtained by your method accurate? These kinds of questions can often only be answered by simulating fake data. Programmatically, simulating data like this largely involves calling functions that we have seen before (e.g. `rnorm()` in R or `np.random.choice()` in Python). This may or may not involve setting a pseudorandom number seed, first, for reproducibility. 
@@ -282,7 +282,7 @@ d_is_back = pd.read_pickle("data/oring.pickle")
 d_is_back.head(2)
 ```
 
-::: {.rmd-caution}
+::: {.rmd-caution data-latex=""}
 Unfortunately, `oring.pickle` is much larger (1,676 bytes) than the original text file `o-ring-erosion-only.data` (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like `d_is_back.to_pickle("data/oring.zip")` it will become smaller. 
 ::: 
 
