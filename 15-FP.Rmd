@@ -206,8 +206,6 @@ On the other hand, take a look at the documentation of `merge()`. It only takes 
 
 This is the difference between `Reduce()` and `do.call()`. `do.call()` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce()` calls a binary function many times on pairs of arguments. `Reduce()`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
 
-TODO diagram
-
 Here is an initial example that makes use of four data sets `d1.csv`, `d2.csv`, `d3.csv`, and `d4.csv`. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste `read.csv` calls, but that would violate the DRY principle. Instead, let's use `lapply()` an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
 
 ```{r, collapse = TRUE}
@@ -283,7 +281,7 @@ list(map(f, x, y))[:3]
 
 [`filter()`](https://docs.python.org/3/library/functions.html#filter) helps remove unwanted elements from a container. It returns an iterable of type `filter`, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
-This code also provides our first example of a [**lambda function**](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions). Lambda functions are simply another way to define functions. Notice that in this example, we didn't have to name our function. In other words, it was **anonymous**. We can also save a few lines of code. 
+This code also provides our first example of a [**lambda function**](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions) [@Lutz13]. Lambda functions are simply another way to define functions. Notice that in this example, we didn't have to name our function. In other words, it was **anonymous**. We can also save a few lines of code. 
 
 
 ```{python, collapse = TRUE}
@@ -555,7 +553,7 @@ vec_spline(my_inputs)[:4]
 # alternatively output = list(map(spline, my_inputs)) from last time
 ```
 
-The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use **[function decorators](https://www.python.org/dev/peps/pep-0318/).** You can *decorate* a function by using the `@` operator. 
+The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use **[function decorators](https://www.python.org/dev/peps/pep-0318/).** You can *decorate* a function by using the `@` operator [@Lutz13]. 
 
 If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place. 
 

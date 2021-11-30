@@ -6,8 +6,6 @@
 
 The difference is that we're creating our own *types* now. In the last chapter we learned about built-in types: floating point numbers, lists, arrays, functions, etc. Now we will discuss broadly how one can create his own types in both R and Python. These user-defined types can be used as cookie cutters. Once we have the cookie cutter, we can make as many cookies as we want!
 
-TODO: image of cookie cutter
-
 We will not go into this too deeply, but it is important to know how how code works so that we can use it more effectively. For instance, in Python, we frequently write code like `my_data_frame.doSomething()`. The material in this chapter will go a long way to describe how we can make our own types with custom behavior. 
 
 ------------------------
@@ -766,12 +764,11 @@ Which of the following classes in R requires you to `library()` in something? Se
 
 9.
 
-TODO cite
 Suppose you have the following data set: $X_1, \ldots, X_n$. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by $\mu$ and $\sigma^2$, respectively. Consider testing the hypothesis that $\mu = 0$ at a significance level of $\alpha$. To carry out this test, you calculate 
 $$
 t = \frac{\bar{X}}{S/\sqrt{n}}
 $$
-and you reject the null if $|t| > t_{n-1,\alpha/2}$. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
+and you reject the null if $|t| > t_{n-1,\alpha/2}$ [@student1908probable]. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
 
   - Write a function called `doTTest()` that performs the above hypothesis test. It should accept two parameters: `dataVec` (a `vector` of data) and `significanceLevel` (which is $\alpha$). Have the second parameter default to `.05`.
   - Have it return an S3 object created from a `list`. The `class` of this `list` should be `"TwoSidedTTest"`. The elements in the `list` should be named `decision` and `testStat`. The `decision` object should be either `"reject"` or `"fail to reject"`. The test stat should be equal to the calculation you made above for $t$.
@@ -779,10 +776,10 @@ and you reject the null if $|t| > t_{n-1,\alpha/2}$. Here $S^2 = \sum_i(X_i - \b
 
 10.
 
-Suppose you have a target density $p(x)$ that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some $c > 0$, $p(x) = f(x) / c$, and you are only able to evaluate $f(\cdot)$. Your goal is that you would like to be able to approximate the expected value of $p(x)$ (i.e. $\int x p(x) dx$) using some proposal distribution $q(x)$. $q(x)$ is flexible in that you can sample from it, and you can evaluate it. We will use **importance sampling** to achieve this.^[Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.]
+Suppose you have a target density $p(x)$ that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some $c > 0$, $p(x) = f(x) / c$, and you are only able to evaluate $f(\cdot)$. Your goal is that you would like to be able to approximate the expected value of $p(x)$ (i.e. $\int x p(x) dx$) using some proposal distribution $q(x)$. $q(x)$ is flexible in that you can sample from it, and you can evaluate it. We will use **importance sampling** [@impsamping1] [@impsamping2] to achieve this.^[Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.]
 
 ******
-**Algorithm 1**:  Importance Sampling TODO cite
+**Algorithm 1**:  Importance Sampling 
 
 ******
 1. Sample $X^1, \ldots, X^n$ from $q(x)$,

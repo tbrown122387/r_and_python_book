@@ -644,7 +644,6 @@ div.csl-indent {
 <p>Take a look at the documentation to <code>rbind()</code>. Its first argument is <code>...</code>, which is the <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot">dot-dot-dot</a> symbol. This means <code>rbind()</code> can take a varying number of <code>data.frame</code>s to stack on top of each other. In other words, <code>rbind()</code> is <strong>variadic</strong>.</p>
 <p>On the other hand, take a look at the documentation of <code>merge()</code>. It only takes two <code>data.frame</code>s at a time<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>. If we want to combine many data sets, <code>merge()</code> needs a helper function.</p>
 <p>This is the difference between <code>Reduce()</code> and <code>do.call()</code>. <code>do.call()</code> calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, <code>Reduce()</code> calls a binary function many times on pairs of arguments. <code>Reduce()</code>’s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.</p>
-<p>TODO diagram</p>
 <p>Here is an initial example that makes use of four data sets <code>d1.csv</code>, <code>d2.csv</code>, <code>d3.csv</code>, and <code>d4.csv</code>. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste <code>read.csv</code> calls, but that would violate the DRY principle. Instead, let’s use <code>lapply()</code> an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.</p>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="an-introduction-to-functional-programming.html#cb273-1" aria-hidden="true" tabindex="-1"></a>numDataSets <span class="ot">&lt;-</span> <span class="dv">4</span></span>
 <span id="cb273-2"><a href="an-introduction-to-functional-programming.html#cb273-2" aria-hidden="true" tabindex="-1"></a>dataSets <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;d&quot;</span>,<span class="dv">1</span><span class="sc">:</span>numDataSets)</span>
@@ -703,7 +702,7 @@ div.csl-indent {
 <div id="filter" class="section level4" number="15.2.1.2">
 <h4><span class="header-section-number">15.2.1.2</span> <code>filter()</code></h4>
 <p><a href="https://docs.python.org/3/library/functions.html#filter"><code>filter()</code></a> helps remove unwanted elements from a container. It returns an iterable of type <code>filter</code>, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.</p>
-<p>This code also provides our first example of a <a href="https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions"><strong>lambda function</strong></a>. Lambda functions are simply another way to define functions. Notice that in this example, we didn’t have to name our function. In other words, it was <strong>anonymous</strong>. We can also save a few lines of code.</p>
+<p>This code also provides our first example of a <a href="https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions"><strong>lambda function</strong></a> <span class="citation">(<a href="#ref-Lutz13" role="doc-biblioref">Lutz 2013</a>)</span>. Lambda functions are simply another way to define functions. Notice that in this example, we didn’t have to name our function. In other words, it was <strong>anonymous</strong>. We can also save a few lines of code.</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb278-1"><a href="an-introduction-to-functional-programming.html#cb278-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="fl">1.45</span>,<span class="fl">.01</span>)</span>
 <span id="cb278-2"><a href="an-introduction-to-functional-programming.html#cb278-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x : x<span class="op">**</span><span class="dv">2</span> <span class="op">&gt;</span> <span class="dv">2</span>, raw_data):</span>
 <span id="cb278-3"><a href="an-introduction-to-functional-programming.html#cb278-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
@@ -953,7 +952,7 @@ Figure 15.3: Monte Carlo: With and Without Common Random Numbers Part 2
 <span id="cb295-4"><a href="an-introduction-to-functional-programming.html#cb295-4" aria-hidden="true" tabindex="-1"></a>vec_spline(my_inputs)[:<span class="dv">4</span>]</span>
 <span id="cb295-5"><a href="an-introduction-to-functional-programming.html#cb295-5" aria-hidden="true" tabindex="-1"></a><span class="co"># alternatively output = list(map(spline, my_inputs)) from last time</span></span>
 <span id="cb295-6"><a href="an-introduction-to-functional-programming.html#cb295-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0., 0., 0., 0.])</span></span></code></pre></div>
-<p>The above code doesn’t just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use <strong><a href="https://www.python.org/dev/peps/pep-0318/">function decorators</a>.</strong> You can <em>decorate</em> a function by using the <code>@</code> operator.</p>
+<p>The above code doesn’t just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use <strong><a href="https://www.python.org/dev/peps/pep-0318/">function decorators</a>.</strong> You can <em>decorate</em> a function by using the <code>@</code> operator <span class="citation">(<a href="#ref-Lutz13" role="doc-biblioref">Lutz 2013</a>)</span>.</p>
 <p>If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place.</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb296-1"><a href="an-introduction-to-functional-programming.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of spline = np.vectorize(spline) </span></span>
 <span id="cb296-2"><a href="an-introduction-to-functional-programming.html#cb296-2" aria-hidden="true" tabindex="-1"></a><span class="at">@np.vectorize</span></span>
@@ -1103,7 +1102,16 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
 Jones, Karen Spärck. 1972. <span>“A Statistical Interpretation of Term Specificity and Its Application in Retrieval.”</span> <em>Journal of Documentation</em> 28: 11–21.
 </div>
 <div class="csl-entry">
+Kahn, H. 1950a. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems–i.”</span> <em>Nucleonics</em> 6 5.
+</div>
+<div class="csl-entry">
+Kahn, H. 1950b. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems. II.”</span> <em>Nucleonics (U.S.) Ceased Publication</em> Vol: 6, No. 6 (June). <a href="https://www.osti.gov/biblio/4399718">https://www.osti.gov/biblio/4399718</a>.
+</div>
+<div class="csl-entry">
 Kalman, R. E. 1960. <span>“<span class="nocase">A New Approach to Linear Filtering and Prediction Problems</span>.”</span> <em>Journal of Basic Engineering</em> 82 (1): 35–45. <a href="https://doi.org/10.1115/1.3662552">https://doi.org/10.1115/1.3662552</a>.
+</div>
+<div class="csl-entry">
+López, Félix. 2014. <em>Mastering Python Regular Expressions : Leverage Regular Expressions in Python Even for the Most Complex Features</em>. Birmingham, UK: Packt Pub.
 </div>
 <div class="csl-entry">
 Lutz, Mark. 2013. <em>Learning Python</em>. 5th ed. Beijing: O’Reilly. <a href="https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/">https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/</a>.
@@ -1115,10 +1123,16 @@ Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Softw
 Nadaraya, E. A. 1964. <span>“On Estimating Regression.”</span> <em>Theory of Probability &amp; Its Applications</em> 9 (1): 141–42. <a href="https://doi.org/10.1137/1109020">https://doi.org/10.1137/1109020</a>.
 </div>
 <div class="csl-entry">
+Palmer, Glenn, Roseanne W McManus, Vito D’Orazio, Michael R Kenwick, Mikaela Karstens, Chase Bloch, Nick Dietrich, Kayla Kahn, Kellan Ritter, and Michael J Soules. <span>“The Mid5 Dataset, 2011–2014: Procedures, Coding Rules, and Description.”</span> <em>Conflict Management and Peace Science</em> 0 (0): 0738894221995743. <a href="https://doi.org/10.1177/0738894221995743">https://doi.org/10.1177/0738894221995743</a>.
+</div>
+<div class="csl-entry">
 Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Methods (Springer Texts in Statistics)</em>. Berlin, Heidelberg: Springer-Verlag.
 </div>
 <div class="csl-entry">
 Socher, Richard, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andrew Ng, and Christopher Potts. 2013. <span>“<span>Parsing With Compositional Vector Grammars</span>.”</span> In <em><span>EMNLP</span></em>.
+</div>
+<div class="csl-entry">
+Student. 1908. <span>“The Probable Error of a Mean.”</span> <em>Biometrika</em>, 1–25.
 </div>
 <div class="csl-entry">
 <span>“<span>TensorFlow Datasets</span>, a Collection of Ready-to-Use Datasets.”</span> 2021. <a href="https://www.tensorflow.org/datasets">https://www.tensorflow.org/datasets</a>.
@@ -1190,6 +1204,9 @@ Abelson, Harold, and Gerald J. Sussman. 1996. <em>Structure and Interpretation o
 </div>
 <div id="ref-hunt2000pragmatic" class="csl-entry">
 Hunt, Andrew, and David Thomas. 2000. <em>The Pragmatic Programmer : From Journeyman to Master</em>. Boston [etc.]: Addison-Wesley. <a href="http://www.amazon.com/The-Pragmatic-Programmer-Journeyman-Master/dp/020161622X">http://www.amazon.com/The-Pragmatic-Programmer-Journeyman-Master/dp/020161622X</a>.
+</div>
+<div id="ref-Lutz13" class="csl-entry">
+Lutz, Mark. 2013. <em>Learning Python</em>. 5th ed. Beijing: O’Reilly. <a href="https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/">https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/</a>.
 </div>
 </div>
 <div class="footnotes">

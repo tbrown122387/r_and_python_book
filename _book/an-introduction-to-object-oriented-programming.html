@@ -435,7 +435,6 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 14</span> An Introduction to Object-Oriented Programming</h1>
 <p><strong>Object-Oriented Programming (OOP)</strong> is a way of thinking about how to organize programs. This way of thinking focuses on objects. In the next chapter, we focus on organizing programs by functions, but for now we stick to objects. We already know about objects from the last chapter, so what’s new here?</p>
 <p>The difference is that we’re creating our own <em>types</em> now. In the last chapter we learned about built-in types: floating point numbers, lists, arrays, functions, etc. Now we will discuss broadly how one can create his own types in both R and Python. These user-defined types can be used as cookie cutters. Once we have the cookie cutter, we can make as many cookies as we want!</p>
-<p>TODO: image of cookie cutter</p>
 <p>We will not go into this too deeply, but it is important to know how how code works so that we can use it more effectively. For instance, in Python, we frequently write code like <code>my_data_frame.doSomething()</code>. The material in this chapter will go a long way to describe how we can make our own types with custom behavior.</p>
 <hr />
 <p>Here are a few abstract concepts that will help thinking about OOP. They are not mutually exclusive, and they aren’t unique to OOP, but understanding these words will help you understand the purpose of OOP. Later on, when we start looking at code examples, I will alert you to when these concepts are coming into play.</p>
@@ -1076,12 +1075,11 @@ for <span class="math inline">\(t \ge 1\)</span>.</p>
 <ol start="9" style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>TODO cite
-Suppose you have the following data set: <span class="math inline">\(X_1, \ldots, X_n\)</span>. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, respectively. Consider testing the hypothesis that <span class="math inline">\(\mu = 0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. To carry out this test, you calculate
+<p>Suppose you have the following data set: <span class="math inline">\(X_1, \ldots, X_n\)</span>. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, respectively. Consider testing the hypothesis that <span class="math inline">\(\mu = 0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. To carry out this test, you calculate
 <span class="math display">\[
 t = \frac{\bar{X}}{S/\sqrt{n}}
 \]</span>
-and you reject the null if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}\)</span>. Here <span class="math inline">\(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\)</span> is the sample variance, and <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+and you reject the null if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}\)</span> <span class="citation">(<a href="#ref-student1908probable" role="doc-biblioref">Student 1908</a>)</span>. Here <span class="math inline">\(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\)</span> is the sample variance, and <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
 <ul>
 <li>Write a function called <code>doTTest()</code> that performs the above hypothesis test. It should accept two parameters: <code>dataVec</code> (a <code>vector</code> of data) and <code>significanceLevel</code> (which is <span class="math inline">\(\alpha\)</span>). Have the second parameter default to <code>.05</code>.</li>
 <li>Have it return an S3 object created from a <code>list</code>. The <code>class</code> of this <code>list</code> should be <code>"TwoSidedTTest"</code>. The elements in the <code>list</code> should be named <code>decision</code> and <code>testStat</code>. The <code>decision</code> object should be either <code>"reject"</code> or <code>"fail to reject"</code>. The test stat should be equal to the calculation you made above for <span class="math inline">\(t\)</span>.</li>
@@ -1090,9 +1088,9 @@ and you reject the null if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}
 <ol start="10" style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Suppose you have a target density <span class="math inline">\(p(x)\)</span> that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some <span class="math inline">\(c &gt; 0\)</span>, <span class="math inline">\(p(x) = f(x) / c\)</span>, and you are only able to evaluate <span class="math inline">\(f(\cdot)\)</span>. Your goal is that you would like to be able to approximate the expected value of <span class="math inline">\(p(x)\)</span> (i.e. <span class="math inline">\(\int x p(x) dx\)</span>) using some proposal distribution <span class="math inline">\(q(x)\)</span>. <span class="math inline">\(q(x)\)</span> is flexible in that you can sample from it, and you can evaluate it. We will use <strong>importance sampling</strong> to achieve this.<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a></p>
+<p>Suppose you have a target density <span class="math inline">\(p(x)\)</span> that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some <span class="math inline">\(c &gt; 0\)</span>, <span class="math inline">\(p(x) = f(x) / c\)</span>, and you are only able to evaluate <span class="math inline">\(f(\cdot)\)</span>. Your goal is that you would like to be able to approximate the expected value of <span class="math inline">\(p(x)\)</span> (i.e. <span class="math inline">\(\int x p(x) dx\)</span>) using some proposal distribution <span class="math inline">\(q(x)\)</span>. <span class="math inline">\(q(x)\)</span> is flexible in that you can sample from it, and you can evaluate it. We will use <strong>importance sampling</strong> <span class="citation">(<a href="#ref-impsamping1" role="doc-biblioref">H. Kahn 1950a</a>)</span> <span class="citation">(<a href="#ref-impsamping2" role="doc-biblioref">H. Kahn 1950b</a>)</span> to achieve this.<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a></p>
 <hr />
-<p><strong>Algorithm 1</strong>: Importance Sampling TODO cite</p>
+<p><strong>Algorithm 1</strong>: Importance Sampling</p>
 <hr />
 <ol style="list-style-type: decimal">
 <li>Sample <span class="math inline">\(X^1, \ldots, X^n\)</span> from <span class="math inline">\(q(x)\)</span>,</li>
@@ -1124,8 +1122,17 @@ w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
 <div id="ref-cpm" class="csl-entry">
 Brown, Taylor. 2021. <em>cPseudoMaRg: Constructs a Correlated Pseudo-Marginal Sampler</em>. <a href="https://CRAN.R-project.org/package=cPseudoMaRg">https://CRAN.R-project.org/package=cPseudoMaRg</a>.
 </div>
+<div id="ref-impsamping1" class="csl-entry">
+Kahn, H. 1950a. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems–i.”</span> <em>Nucleonics</em> 6 5.
+</div>
+<div id="ref-impsamping2" class="csl-entry">
+Kahn, H. 1950b. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems. II.”</span> <em>Nucleonics (U.S.) Ceased Publication</em> Vol: 6, No. 6 (June). <a href="https://www.osti.gov/biblio/4399718">https://www.osti.gov/biblio/4399718</a>.
+</div>
 <div id="ref-kalman_filt" class="csl-entry">
 Kalman, R. E. 1960. <span>“<span class="nocase">A New Approach to Linear Filtering and Prediction Problems</span>.”</span> <em>Journal of Basic Engineering</em> 82 (1): 35–45. <a href="https://doi.org/10.1115/1.3662552">https://doi.org/10.1115/1.3662552</a>.
+</div>
+<div id="ref-student1908probable" class="csl-entry">
+Student. 1908. <span>“The Probable Error of a Mean.”</span> <em>Biometrika</em>, 1–25.
 </div>
 <div id="ref-West1989BayesianFA" class="csl-entry">
 West, Michael A., and Jeff Harrison. 1989. <span>“Bayesian Forecasting and Dynamic Models.”</span> In.
