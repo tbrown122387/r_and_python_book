@@ -23,7 +23,8 @@ order(sillyData)
 ```{r}
 carData <- read.csv("data/cars.csv")
 noDollarSignMSRP <- gsub("$", "", carData$MSRP, fixed = TRUE)
-carData$cleanMSRP <- as.numeric(gsub(",", "", noDollarSignMSRP, fixed = TRUE))
+carData$cleanMSRP <- as.numeric(gsub(",", "", noDollarSignMSRP, 
+                                     fixed = TRUE))
 rowIndices <- order(carData$cleanMSRP, decreasing = TRUE)[1:5]
 carData[rowIndices,c("Make", "Model", "MSRP", "cleanMSRP")]
 ```
@@ -43,8 +44,10 @@ For Pandas' `DataFrame`s, most of the functions I find useful are methods attach
 ```{python, collapse = TRUE}
 import pandas as pd
 car_data = pd.read_csv("data/cars.csv")
-car_data['no_dlr_msrp'] = car_data['MSRP'].str.replace("$", "", regex = False)
-car_data['clean_MSRP'] = car_data['no_dlr_msrp'].str.replace(",","").astype(float)
+car_data['no_dlr_msrp'] = car_data['MSRP'].str.replace("$", "", 
+                                                       regex = False)
+no_commas = car_data['no_dlr_msrp'].str.replace(",","")                                                       
+car_data['clean_MSRP'] = no_commas.astype(float)
 car_data = car_data.sort_values(by='clean_MSRP', ascending = False)
 car_data[["Make", "Model", "MSRP", "clean_MSRP"]].head(5)
 ```
@@ -69,7 +72,7 @@ In R, this can be done with `rbind()` (short for "row bind")
 realEstate <- read.csv("data/albemarle_real_estate.csv")
 train <- realEstate[-1,]
 test <- realEstate[1,]
-head(rbind(test, train))
+str(rbind(test, train))
 sum(rbind(test, train) != realEstate)
 ```
 
@@ -89,8 +92,9 @@ import pandas as pd
 real_estate = pd.read_csv("data/albemarle_real_estate.csv")
 train = real_estate.iloc[1:,]
 test = real_estate.iloc[[0],] # need the extra brackets!
-pd.concat([test,train], axis=0).head() # also 
-(pd.concat([test,train], axis=0) != real_estate).sum().sum()
+stacked = pd.concat([test,train], axis=0)
+stacked.iloc[:3,:3]
+(stacked != real_estate).sum().sum()
 ```
 
 Take note of the extra square brackets when we create `test`. If you use `real_estate.iloc[0,]` instead, it will return a `Series` with all the elements coerced to the same type, and this won't `pd.concat()` properly with the rest of the data! 
@@ -149,12 +153,13 @@ merge(baby1, baby2,
 
 ```{python, collapse = TRUE}
 # in Python
-baby1.merge(baby2, 
-            left_on = "email_address", right_on = "email", 
-            how = "outer")
+le_merge = baby1.merge(baby2, 
+                       left_on = "email_address", right_on = "email", 
+                       how = "outer")
+le_merge.iloc[:5,3:]
 ```
 
-You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging). 
+You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where Pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging). 
 
 Finally, if both data sets have multiple values in the column you're joining on, the result can have more rows than either table. This is because *every possible match* shows up. 
 
@@ -179,7 +184,8 @@ Many types of data can be stored in either a **wide** or **long** format.
 The classical example is data from a *longitudinal study.* If an experimental unit (in the example below this is a person) is repeatedly measured over time, each row would correspond to an experimental unit *and* an observation time in a data set in a long form. 
 
 ```{r, collapse = TRUE}
-fakeLongData1 <- data.frame(person = c("Taylor","Taylor","Charlie","Charlie"), 
+peopleNames <- c("Taylor","Taylor","Charlie","Charlie")
+fakeLongData1 <- data.frame(person = peopleNames, 
                              timeObserved = c(1, 2, 1, 2),
                              nums = c(100,101,300,301))
 fakeLongData1
@@ -188,7 +194,7 @@ fakeLongData1
 A long format can also be used if you have multiple observations (at a single time point) on an experimental unit. Here is another example. 
 
 ```{r, collapse = TRUE}
-fakeLongData2 <- data.frame(person = c("Taylor", "Taylor", "Charlie","Charlie"), 
+fakeLongData2 <- data.frame(person = peopleNames, 
                              attributeName = c("attrA","attrB","attrA","attrB"),
                              nums = c(100,101,300,301))
 fakeLongData2
@@ -202,15 +208,17 @@ fakeWideData1 <- reshape(fakeLongData1,
                            direction = "wide", 
                            timevar = "timeObserved", 
                            idvar = "person", 
-                           varying = c("before","after")) # col names in new data set
+                           varying = c("before","after")) 
+# ^ varying= arg becomes col names in new data set
 fakeLongData1
 fakeWideData1
 ```
 
 ```{r, collapse = TRUE}
+# timevar= is a misnomer here
 fakeWideData2 <- reshape(fakeLongData2, 
                            direction = "wide", 
-                           timevar = "attributeName", # timevar is a misnomer here
+                           timevar = "attributeName", 
                            idvar = "person", 
                            varying = c("attribute A","attribute B")) 
 fakeLongData2
@@ -257,8 +265,10 @@ fake_wide_data1
 Here's one more example showing the same functionality--going from long to wide format.
 
 ```{python, collapse = TRUE}
-fake_long_data2 = pd.DataFrame({'person' : ["Taylor","Taylor","Charlie","Charlie"], 
-                               'attribute_name' : ['attrA', 'attrB', 'attrA', 'attrB'],
+people_names = ["Taylor","Taylor","Charlie","Charlie"]
+attribute_list = ['attrA', 'attrB', 'attrA', 'attrB']
+fake_long_data2 = pd.DataFrame({'person' : people_names, 
+                               'attribute_name' : attribute_list,
                                'nums' : [100,101,300,301]})
 fake_wide_data2 = fake_long_data2.pivot(index='person', 
                                         columns='attribute_name', 
@@ -277,7 +287,8 @@ The second example uses strings to specify value columns.
 
 ```{python, collapse = TRUE}
 fake_wide_data2
-fake_wide_data2.melt(id_vars = "person", value_vars = ['attrA','attrB'])
+fake_wide_data2.melt(id_vars = "person", 
+                     value_vars = ['attrA','attrB'])
 ```
 
 
@@ -380,10 +391,14 @@ Consider the following two data sets:
 ```{python, collapse = TRUE, eval=F}
 import numpy as np
 import pandas as pd
-dataset1 = pd.DataFrame({'dog':['Charlie','Gus', 'Stubby', 'Toni','Pearl'],
-                        'nickname':['Charles','Gus The Bus',np.nan,'Toni Bologna','Porl']})
-dataset2 = pd.DataFrame({'dog':['Charlie','Gus', 'Toni','Arya','Shelby'],
-                        'breed':['Black Lab','Beagle','Golden Retriever', 'Husky',np.nan]})
+dog_names1 = ['Charlie','Gus', 'Stubby', 'Toni','Pearl']
+dog_names2 = ['Charlie','Gus', 'Toni','Arya','Shelby']
+nicknames = ['Charles','Gus The Bus',np.nan,'Toni Bologna','Porl']
+breed_names = ['Black Lab','Beagle','Golden Retriever', 'Husky',np.nan]
+dataset1 = pd.DataFrame({'dog': dog_names1,
+                        'nickname': nicknames})
+dataset2 = pd.DataFrame({'dog':dog_names2,
+                        'breed':breed_names})
 ```
 
 

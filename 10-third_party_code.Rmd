@@ -50,9 +50,9 @@ Formally, each environment is pair of two things: a **frame** and an **enclosure
 
 Moreover, all of these environments are connected in a chain-like structure.  To see what environments are loaded on your machine, and what order they were loaded in, use the `search()` function. This displays the [**search path**](https://cran.r-project.org/doc/manuals/R-lang.html#Search-path), or the ordered sequence of all of your environments.
 
-```{r, collapse=TRUE}
-search()
-```
+<!-- # ```{r, collapse=TRUE} -->
+<!-- # search() -->
+<!-- # ``` -->
 
 Alternatively, if you're using RStudio, the search path, and the contents of each of its environments, are displayed in the "Environment" window. You can choose which environment you'd like to look at by selecting it from the drop-down menu. This allows you to see all of the variables in that particular environment. The **global environment** (i.e. `".GlobalEnv"`) is displayed by default, because that is where you store all the objects you are creating in the console.
 
@@ -73,9 +73,13 @@ All is not lost if there is a name conflict. The variables haven't disappeared. 
 
 ```{r, collapse = TRUE, eval = FALSE}
 library(Hmisc)
-format.pval # now refers to Hmisc's format.pval because it was loaded more recently
+# this now refers to Hmisc's format.pval 
+# because it was loaded more recently
+format.pval 
 Hmisc::format.pval # in this case is the same as above
-base::format.pval  # this is the only way you can get base's format.pval function now 
+# the below code is the only way 
+# you can get base's format.pval now
+base::format.pval  
 ```
 
 
@@ -128,7 +132,7 @@ In the example below, we import the entire `numpy` package in a way that lets us
 
 ```{python, collapse = TRUE}
 import numpy as np # import all of numpy
-np.random.normal(size=10)
+np.random.normal(size=4)
 ```
 
 This is one use of the dot operator (`.`). It is also used to access attributes and methods of objects (more information on that will come later in chapter \@ref(an-introduction-to-object-oriented-programming)). `normal` is *inside of* `random`, which it itself inside of `np`. 
@@ -138,7 +142,7 @@ As a second example, suppose we were interested in the [`stats` sub-module](http
 
 ```{python, collapse = TRUE}
 from scipy import stats
-stats.norm().rvs(size=10)
+stats.norm().rvs(size=4)
 ```
 
 So we don't have to type `scipy` every time we use something in `scipy.stats`.
@@ -147,7 +151,7 @@ Finally, we can import the function directly, and refer to it with only one lett
 
 ```{python, collapse = TRUE}
 from numpy.random import normal as n
-n(size=10)
+n(size=4)
 ```
 
 Keep in mind, you're always at risk of accidentally re-using names, even if you aren't `import`ing anything. For example, consider the following code. 

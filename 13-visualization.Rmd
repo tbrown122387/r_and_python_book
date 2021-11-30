@@ -13,7 +13,7 @@ Recall our Albemarle Real Estate data set.
 
 ```{r, collapse = TRUE}
 df <- read.csv("data/albemarle_real_estate.csv")
-head(df)
+str(df)
 ```
 
 If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices. 
@@ -99,7 +99,8 @@ ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
 If we want tighter control on the aesthetic mapping, we can use [**scales**](https://ggplot2-book.org/scales.html#scales). Syntactically, these are things we "add" (`+`) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix `scale_`. We can change attributes of the axes like this.
 
 ```{r, collapse = TRUE, fig.cap = "Changing Scales"}
-base_plot <- ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
+base_plot <- ggplot(mpg, 
+                    aes(x = displ, y = hwy, color = manufacturer)) +
              geom_point() + 
              ggtitle("my favorite scatterplot")
 base_plot + scale_x_log10() + scale_y_reverse()
@@ -139,13 +140,11 @@ Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It i
 You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
 :::
 
-```{python, collapse = TRUE, fig.cap = "Another Simple Histogram"}
+```{python, collapse = TRUE, fig.cap = "Another Simple Histogram", out.width='80%'}
 import matplotlib.pyplot as plt       # 1
 import numpy as np                    # 2
 fig, ax = plt.subplots()              # 3
 ax.hist(np.random.normal(size=1000))  # 4
-```
-```{python, collapse = TRUE, out.width='80%', echo= FALSE}
 plt.show()                            # 5
 ```
 
@@ -166,14 +165,15 @@ In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_a
 If you want to make figures that are more elaborate, just keep calling different methods of `ax`. If you want to fit more subplots to the same figure, add more `Axes` objects. Here is an example using some code from [one of the official Matplotlib tutorials](https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface).
 
 ```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib"}
-x = np.linspace(0, 2*np.pi, 100) # x values grid shared by both subplots
+# x values grid shared by both subplots
+x = np.linspace(0, 2*np.pi, 100) 
 
 # create two subplots...one row two columns
 fig, myAxes = plt.subplots(1, 2) # kind of like par(mfrow=c(1,2)) in R
 
 # first subplot
 myAxes[0].plot(x, x, label='linear')  # Plot some data on the axes.
-myAxes[0].plot(x, x**2, label='quadratic')  # Plot more data on the axes...
+myAxes[0].plot(x, x**2, label='quadratic')  # Plot more data 
 myAxes[0].plot(x, x**3, label='cubic')  # ... and some more.
 myAxes[0].set_xlabel('x label')  # Add an x-label to the axes.
 myAxes[0].set_ylabel('y label')  # Add a y-label to the axes.

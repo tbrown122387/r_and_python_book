@@ -131,7 +131,8 @@ In Pandas, just like in R, you need to be very careful about what the `categorie
 With Pandas' `Series` it's more difficult to specify a nondefault `dtype`. One option is to change them after the object has been created. 
 
 ```{python, collapse = TRUE}
-szn_s = szn_s.cat.set_categories(["autumn", "summer","spring","winter"])
+szn_s = szn_s.cat.set_categories(
+  ["autumn", "summer","spring","winter"])
 szn_s.cat.categories
 szn_s = szn_s.cat.remove_categories(['spring','winter'])
 szn_s.cat.categories
@@ -145,7 +146,8 @@ Another option is to create the `dtype` before you create the `Series`, and pass
 cat_type = pd.CategoricalDtype(
                   categories=["autumn", "summer", "spring", "winter"],
                   ordered=True)
-responses = pd.Series(["autumn", "summer", "summer"], dtype = cat_type)
+responses = pd.Series(["autumn", "summer", "summer"], 
+                      dtype = cat_type)
 responses
 ```
 

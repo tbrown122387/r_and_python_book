@@ -83,7 +83,7 @@ Instead, prefer the use of `sapply()` in this situation. The "s" in `sapply()` s
 
 ```{r, collapse=TRUE}
 myMeans <- sapply(myDF, mean)
-head(myMeans)
+myMeans[1:5]
 ```
 
 Each call to `mean()` returns a `double` `vector` of length $1$. This is necessary if you want to collect all the results into a `vector`--remember, all elements of a `vector` have to have the same type. To get the same behavior, you might also consider using `vapply(myDF, mean, numeric(1))`.
@@ -132,7 +132,7 @@ firstB <- albRealEstate$YearBuilt == 2006
 secondB <- albRealEstate$Condition == "Average"
 thirdB <- albRealEstate$City == "CROZET"
 subDF <- albRealEstate[(firstB & secondB) | thirdB,]
-head(subDF)
+str(subDF)
 ```
 
 Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.
@@ -150,7 +150,7 @@ pred <- function(row){
 }
 whichRows <- apply(albRealEstate, 1, pred)
 subDF <- albRealEstate[whichRows,]
-head(subDF)
+str(subDF)
 ``` 
 
 ### `tapply()`
@@ -160,17 +160,18 @@ head(subDF)
 If I wanted the average home price for each city, I could use something like this.
 
 ```{r, collapse = TRUE}
-head(albRealEstate)
-unique(albRealEstate$City)
-tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)
+str(albRealEstate)
+length(unique(albRealEstate$City))
+tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)[1:4]
 ```
 
 You might be wondering why we put `albRealEstate$City` into a `list`. That seems kind of unnecessary. This is because `tapply()` can be used with multiple `factor`s--this will break down the `vector` input into a finer partition. The second argument must be one object, though, so all of these `factor`s must be collected into a `list`. The following code produces a "pivot table."
 
 ```{r, collapse = TRUE}
-tapply(albRealEstate$TotalValue, 
-       list(albRealEstate$City, albRealEstate$Condition), 
-       mean)
+pivTable <- tapply(albRealEstate$TotalValue, 
+                   list(albRealEstate$City, albRealEstate$Condition), 
+                   mean)
+pivTable[,1:5]
 ```
 
 
@@ -324,7 +325,8 @@ import pandas as pd
 # alb_real_est.apply(sum, axis=1) # can't add letters to numbers!
 def get_prop_score(row):
   return 2*row[0] + 3*row[1]
-alb_real_est['Score'] = alb_real_est[['FinSqFt','LotSize']].apply(get_prop_score, 1)
+two_col_df = alb_real_est[['FinSqFt','LotSize']]
+alb_real_est['Score'] = two_col_df.apply(get_prop_score, 1)
 alb_real_est[['FinSqFt','LotSize','Score']].head(2)
 ```
 
@@ -337,7 +339,7 @@ alb_real_est[['FinSqFt','LotSize']].apply([sum, len])
 If you do not want to waste two lines defining a function with `def`, you can use an anonymous lambda function. Be careful, though--if your function is complex enough, then your lines will get quite wide. For instance, this example is pushing it.
 
 ```{python, collapse = TRUE}
-alb_real_est[['FinSqFt','LotSize']].apply(lambda row : sum(row*[2,3]), 1)[:3]
+two_col_df.apply(lambda row : sum(row*[2,3]), 1)[:3]
 ```
 
 
@@ -358,8 +360,9 @@ type(alb_real_est.groupby(['City'])['TotalValue'])
 Here is an example that models some pretty typical functionality. It shows two ways to get the average home price by city. The first line groups the rows by which `City` they are in, extracts the `TotalValue` column in each sub-`DataFrame`, and then `.apply()`s the `np.average()` function on the sole column found in each sub-`DataFrame`. The second `.apply()`s a lambda function to each sub-`DataFrame` directly. More details on this "split-apply-combine" strategy can be found in the [Pandas documentation.](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html)
 
 ```{python, collapse = TRUE}
-alb_real_est.groupby(['City'])['TotalValue'].apply(np.average)
-alb_real_est.groupby(['City']).apply(lambda df : np.average(df['TotalValue']))
+grouped = alb_real_est.groupby(['City'])
+grouped['TotalValue'].apply(np.average)
+grouped.apply(lambda df : np.average(df['TotalValue']))
 ```
 
 
@@ -459,7 +462,7 @@ monteCarloSinCRNv1 <- function(params){
 
 Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look "smoother." In other words, we increase our sampling accuracy without spending more computational time.
 
-```{r, collapse=TRUE}
+```{r, collapse=TRUE, out.width='60%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers"}
 mcApproxCRNv1 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv1), 
                         ncol = length(muGrid))
 par(mfrow=c(1,2))
@@ -503,7 +506,7 @@ The inner function did in fact capture `commonZs`, but it captured from the encl
 
 Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function.
 
-```{r, collapse=TRUE, echo=FALSE}
+```{r, collapse=TRUE, echo=FALSE, out.width='60%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers Part 2"}
 mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), 
                         ncol = length(muGrid))
 par(mfrow=c(1,2))

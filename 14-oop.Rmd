@@ -86,7 +86,7 @@ class RunningMean:
     self.n = 0
   def update(self, new_x):
     self.n += 1
-    self.current_xbar = (self.current_xbar*(self.n - 1) + new_x) / self.n
+    self.current_xbar = (self.current_xbar*(self.n-1)+new_x) / self.n
   def get_current_xbar(self):
     if self.n == 0:
       return None
@@ -174,8 +174,9 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 
 ```{python, collapse = TRUE}
 import numpy as np
-class RunningCI(RunningMean): # <- notice what's inside the parnentheses!
-  """Updates a running average and gives you a known-variance confidence interval"""
+class RunningCI(RunningMean): # <- notice what's inside the parentheses!
+  """Updates a running average and 
+  gives you a known-variance confidence interval"""
   def __init__(self, known_var):
     super().__init__()
     self.known_var = known_var
@@ -184,7 +185,9 @@ class RunningCI(RunningMean): # <- notice what's inside the parnentheses!
       return None
     else:
       half_width = 1.96 * np.sqrt(self.known_var / self.n)  
-      return np.array([self.current_xbar - half_width, self.current_xbar + half_width])
+      left_num = self.current_xbar - half_width
+      right_num = self.current_xbar + half_width
+      return np.array([left_num, right_num])
 ```
 
 The parentheses in the first line of the class definition signal that this new class definition is inheriting from `RunningMean`. Inside the definition of this new class, when I refer to `self.current_xbar` Python knows what I'm referring to because it is defined in the base class. Last, I am using `super()` to access the base class's methods, such as `__init__`.
@@ -257,7 +260,8 @@ Here is an example implementation of a confidence interval using composition. No
 
 ```{python, collapse = TRUE}
 class RunningCI2:
-  """Updates a running average and gives you a known-variance confidence interval"""
+  """Updates a running average and 
+  gives you a known-variance confidence interval"""
   def __init__(self, known_var):
     self.mean = RunningMean()
     self.known_var = known_var
@@ -268,7 +272,9 @@ class RunningCI2:
       return None
     else:
       half_width = 1.96 * np.sqrt(self.known_var / self.n)  
-      return np.array([self.mean.get_current_xbar() - half_width, self.mean.get_current_xbar() + half_width])
+      left = self.mean.get_current_xbar() - half_width
+      right = self.mean.get_current_xbar() + half_width
+      return np.array([left, right])
 ```
 
 
@@ -330,7 +336,7 @@ plot
 `UseMethod()` performs method dispatch. Which methods can be dispatched to? To see that, use the `methods()` function.
 
 ```{r}
-methods(plot)
+length(methods(plot))
 ```
 
 All of these S3 class methods share the same naming convention. Their name has the generic function's name as a prefix, then a dot (`.`), then the name of the class that they are specifically written to be used with. 
@@ -498,7 +504,8 @@ setMethod("update",
             oldAve <- oldMean@currentXbar
             newAve <- (oldAve*oldN + newNum)/(oldN + 1)
             newN <- oldN + 1L
-            return(new("RunningCI", n = newN, currentXbar = newAve, knownVar = oldMean@knownVar))
+            return(new("RunningCI", n = newN, currentXbar = newAve, 
+                       knownVar = oldMean@knownVar))
           }
 )
 ```
@@ -520,7 +527,7 @@ myCI <- update(myCI, 1)
 myCI
 ```
 
-This looks more *functional* (more information on functional programming is available in chapter \@ref(functional-programming)) than the Python example because the `update()` function does not change an object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (`<-`) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.
+This looks more *functional* (more information on functional programming is available in chapter \@ref(an-introduction-to-functional-programming)) than the Python example because the `update()` function does not change an object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (`<-`) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.
 
 The big takeaway here is that S3 and S4 don't feel like Python's encapsulated OOP. If we wanted to write stateful programs, we might consider using Reference Classes, or R6 classes. 
 
@@ -545,7 +552,8 @@ RunningMeanRC <- setRefClass("RunningMeanRC",
                              methods = list(
                                update = function(new_x){
                                  n <<- n + 1L
-                                 current_xbar <<- (current_xbar*(n - 1) + new_x) / n
+                                 new_sum <- current_xbar*(n - 1) + new_x
+                                 current_xbar <<- new_sum/n
                                 }))
 ```
 
@@ -653,7 +661,10 @@ The coefficients $\beta_0$ and $\beta_1$ are unknown, and so must be estimated w
 
 The formulas for the estimated slope (i.e. $\hat{\beta}_1$) and the estimated intercept (i.e. $\hat{\beta}_0$) are as follows:
 $$
-\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} \\
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} 
+$$
+
+$$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}.
 $$
 
@@ -703,7 +714,10 @@ Imagine our data are arriving sequentially. The Kalman Filter [@kalman_filt] cit
 Let's call the mean of $\beta_{t-1}$ (given all the information up to time $t-1$) $m_{t-1}$, and the variance of $\beta_{t-1}$ (given all the information up to time $t-1$) $P_{t-1}$. Then the Kalman recursions for this particular model are
 
 $$
-M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) \\
+M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) 
+$$
+
+$$
 P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
 $$
 for $t \ge 1$.

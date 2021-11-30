@@ -91,29 +91,24 @@ d <- read.fwf("data/o-ring-erosion-only.data",
 str(d)
 ```
 
-If you need to read in some text data that does not possess a tabular structure, then you may need `readLines()`. This function will read in all of the text, separate each line into an element of a `character` `vector`, and will not make any attempt to parse lines into columns. Further processing can be accomplished using the techniques from chapter \@(working-with-text-data).
+If you need to read in some text data that does not possess a tabular structure, then you may need `readLines()`. This function will read in all of the text, separate each line into an element of a `character` `vector`, and will not make any attempt to parse lines into columns. Further processing can be accomplished using the techniques from chapter \@ref(working-with-text-data).
 
 ```{r, collapse=TRUE}
 html_data <- readLines("data/Google.html", warn = FALSE)
-head(html_data, 2)
+head(html_data, 1)
 ```
 
-Some of you may have had difficulty reading in the above data. This can happen if your machine's default character encoding is different than mine. For instance, if your character encoding is ["GBK"](https://en.wikipedia.org/wiki/GBK_(character_encoding)), then the following warning message might appear. This message means that your machine didn't recognize some of the characters in the data set. 
+Some of you may have had difficulty reading in the above data. This can happen if your machine's default character encoding is different than mine. For instance, if your character encoding is ["GBK"](https://en.wikipedia.org/wiki/GBK_(character_encoding)), then you might get a warning message like "invalid input found on input connection." This message means that your machine didn't recognize some of the characters in the data set. 
 
 ```{r, echo=FALSE}
 options(encoding = "GBK") # change my encoding to GBK 
-```
-
-
-```{r, collapse=TRUE, error=TRUE}
-tmp <- read.table("data/Google.html", sep = "~")
 ```
 
 These errors are easy to fix, though, so don't worry. Just specify an encoding argument in your function that reads in data. 
 
 ```{r, collapse=TRUE, error=TRUE}
 tmp <- read.table("data/Google.html", sep = "~", 
-                  fileEncoding = "UTF-8") # this makes errors disappear
+                  fileEncoding = "UTF-8") # makes errors disappear
 ```
 
 
@@ -156,7 +151,7 @@ Reading in fixed width files can be done in a way that is nearly identical to th
 
 ```{python, collapse = TRUE}
 d = pd.read_fwf("data/o-ring-erosion-only.data", 
-                widths = [1,2,3,4,3], header=None) # or try [2,2,4,4,1]
+                widths = [1,2,3,4,3], header=None) # try [2,2,4,4,1]
 d.info()
 ```
 
@@ -165,14 +160,14 @@ If you had chosen `widths=[2,2,4,4,1]`, instead, then the trailing whitespace wi
 ```{python, collapse = TRUE}
 d = pd.read_fwf("data/o-ring-erosion-only.data", 
                 widths = [2,2,4,4,1], header=None)
-list(d.dtypes)
+list(d.dtypes)[:4]
 d = d.astype({2:'string', 3:'string'}) 
-list(d.dtypes)
+list(d.dtypes)[:4]
 ```
 
-Just like in R, you may run into an encoding issue with a file. For instance, the following will not work because the file contains Chinese characters.
+Just like in R, you may run into an encoding issue with a file. For instance, the following will not work because the file contains Chinese characters. If you mostly work with UTF-8 files, you will receive a `UnicodeDecodeError` if you try to run the following code.
 
-```{python, collapse = TRUE, error = TRUE}
+```{python, collapse = TRUE, error = TRUE, eval = FALSE}
 pd.read_csv("data/message.txt")
 ```
 
@@ -187,7 +182,7 @@ You may also read in unstructured, nontabular data with Python. Use the built-in
 ```{python, collapse=TRUE}
 f = open("data/Google.html", "r")
 d = f.readlines()
-d[:2]
+d[:1]
 print(type(d), type(d[0]))
 ```
 
@@ -257,8 +252,10 @@ You can write out tabular data with a variety of [`DataFrame` methods that are n
 
 ```{python, collapse = TRUE}
 import pandas as pd
-d = pd.read_csv("data/o-ring-erosion-only.data", header=None, sep = "\s+")
-d.to_csv("data/oring_out2.csv", header=True, index=False, sep = ",")
+d = pd.read_csv("data/o-ring-erosion-only.data", 
+                header=None, sep = "\s+")
+d.to_csv("data/oring_out2.csv", 
+         header=True, index=False, sep = ",")
 ```
 
 Here is how the first few rows of that file looks in a text editor.
