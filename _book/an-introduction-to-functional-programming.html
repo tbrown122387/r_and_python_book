@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 An Introduction to Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 15 An Introduction to Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 An Introduction to Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="an-introduction-to-object-oriented-programming.html"/>
 
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -853,7 +853,7 @@ where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \t
 <span id="cb289-11"><a href="an-introduction-to-functional-programming.html#cb289-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;actual expects&quot;</span>)</span>
 <span id="cb289-12"><a href="an-introduction-to-functional-programming.html#cb289-12" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, </span>
 <span id="cb289-13"><a href="an-introduction-to-functional-programming.html#cb289-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-287"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-287-1.png" alt="Monte Carlo Approximations versus Exact Evaluations" width="60%" />
 <p class="caption">
 Figure 15.1: Monte Carlo Approximations versus Exact Evaluations
@@ -888,7 +888,7 @@ This leads to the Monte Carlo estimate
 <span id="cb291-5"><a href="an-introduction-to-functional-programming.html#cb291-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span>
 <span id="cb291-6"><a href="an-introduction-to-functional-programming.html#cb291-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApproxCRNv1, </span>
 <span id="cb291-7"><a href="an-introduction-to-functional-programming.html#cb291-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc with crn&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-290"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-290"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-290-1.png" alt="Monte Carlo: With and Without Common Random Numbers" width="60%" />
 <p class="caption">
 Figure 15.2: Monte Carlo: With and Without Common Random Numbers
@@ -918,7 +918,7 @@ Figure 15.2: Monte Carlo: With and Without Common Random Numbers
 </ul>
 <p>The inner function did in fact capture <code>commonZs</code>, but it captured from the enclosing scope, not the global scope. Capturing isn’t always a terrible idea. It would be difficult to modify these variables, so we don’t need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice–now the end-users of functions created by this factory don’t need to worry about plugging in extra parameters.</p>
 <p>Let’s use <span class="math inline">\(1000\)</span> samples again and make sure this function works by comparing its output to the known true function.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-293"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-293"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-293-1.png" alt="Monte Carlo: With and Without Common Random Numbers Part 2" width="60%" />
 <p class="caption">
 Figure 15.3: Monte Carlo: With and Without Common Random Numbers Part 2
@@ -1106,6 +1106,9 @@ Jones, Karen Spärck. 1972. <span>“A Statistical Interpretation of Term Specif
 Kalman, R. E. 1960. <span>“<span class="nocase">A New Approach to Linear Filtering and Prediction Problems</span>.”</span> <em>Journal of Basic Engineering</em> 82 (1): 35–45. <a href="https://doi.org/10.1115/1.3662552">https://doi.org/10.1115/1.3662552</a>.
 </div>
 <div class="csl-entry">
+Lutz, Mark. 2013. <em>Learning Python</em>. 5th ed. Beijing: O’Reilly. <a href="https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/">https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/</a>.
+</div>
+<div class="csl-entry">
 Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Software Design</em>. 1st ed. USA: No Starch Press.
 </div>
 <div class="csl-entry">
@@ -1209,7 +1212,6 @@ Hunt, Andrew, and David Thomas. 2000. <em>The Pragmatic Programmer : From Journe
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1249,6 +1251,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

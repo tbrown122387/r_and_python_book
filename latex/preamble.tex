@@ -6,6 +6,12 @@
 \usepackage{framed,color}
 \definecolor{shadecolor}{RGB}{248,248,248}
 
+% stuff for rmd-details and rmd-caution boxes defined below
+\usepackage{xcolor}
+\usepackage{fontawesome}
+\usepackage{blindtext}
+
+
 \renewcommand{\textfraction}{0.05}
 \renewcommand{\topfraction}{0.8}
 \renewcommand{\bottomfraction}{0.8}
@@ -51,9 +57,29 @@
 \makeatother
 
 
-% details block styling
-\newenvironment{rmd-details}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
-\newenvironment{rmd-caution}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
+% new environments for rmd-details and rmd-caution boxes
+\newsavebox{\bulb}
+\savebox{\bulb}{\makebox[2\columnsep]{\huge \faLightbulbO}}
+\newsavebox{\rmdbox}
+\newenvironment{rmd-details}{\begin{lrbox}{\rmdbox}
+  \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\bulb-\columnsep}
+    \vspace*{\columnsep}}%
+{\vspace*{\columnsep}\endminipage\end{lrbox}%
+  {\par\color{green}\fboxsep=0pt
+    \fbox{\usebox\bulb\usebox\rmdbox\hspace{\columnsep}}\par}}
+    
+% todo here
+\newsavebox{\excl}
+\savebox{\excl}{\makebox[2\columnsep]{\huge \faExclamation}}
+%\newsavebox{\rmdbox2}
+\newenvironment{rmd-caution}{\begin{lrbox}{\rmdbox}
+  \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\excl-\columnsep}
+    \vspace*{\columnsep}}%
+{\vspace*{\columnsep}\endminipage\end{lrbox}%
+  {\par\color{yellow}\fboxsep=0pt
+    \fbox{\usebox\excl\usebox\rmdbox\hspace{\columnsep}}\par}}
+    
+%\newenvironment{rmd-caution}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
 
 
 \frontmatter
