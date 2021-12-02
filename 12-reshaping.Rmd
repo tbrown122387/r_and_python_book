@@ -68,11 +68,11 @@ Stacking data sets on top of each other is a common task. You might need to do i
 
 In R, this can be done with `rbind()` (short for "row bind")
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, R.options = list(width = 65)}
 realEstate <- read.csv("data/albemarle_real_estate.csv")
 train <- realEstate[-1,]
 test <- realEstate[1,]
-str(rbind(test, train))
+str(rbind(test, train), strict.width = "cut")
 sum(rbind(test, train) != realEstate)
 ```
 
@@ -194,8 +194,9 @@ fakeLongData1
 A long format can also be used if you have multiple observations (at a single time point) on an experimental unit. Here is another example. 
 
 ```{r, collapse = TRUE}
+myAttrs <- c("attrA","attrB","attrA","attrB")
 fakeLongData2 <- data.frame(person = peopleNames, 
-                             attributeName = c("attrA","attrB","attrA","attrB"),
+                             attributeName = myAttrs,
                              nums = c(100,101,300,301))
 fakeLongData2
 ```

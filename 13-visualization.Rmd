@@ -11,16 +11,17 @@ Base plotting will usually cover most of your needs, so that is what we spend th
 
 Recall our Albemarle Real Estate data set. 
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE, R.options = list(width = 65)}
 df <- read.csv("data/albemarle_real_estate.csv")
-str(df)
+str(df, strict.width = "cut")
 ```
 
 If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices. 
 
 ```{r, collapse=TRUE, fig.cap="A Simple Histogram"}
 hist(log(df$TotalValue), 
-     xlab = "natural logarithm of home price", main = "Super-Duper Plot!")
+     xlab = "natural logarithm of home price", 
+     main = "Super-Duper Plot!")
 ```
 
 I specified the `xlab=` and `main=` arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (`?hist`).

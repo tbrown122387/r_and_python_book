@@ -126,13 +126,13 @@ results[1:4]
 
 Another example where it can be useful to apply a function to rows is  **predicate functions.** A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a `data.frame`. Without a predicate function, filtering rows might look something like this.
 
-```{r, collapse = TRUE}
+```{r, collapse = TRUE,  R.options = list(width = 65)}
 albRealEstate <- read.csv("data/albemarle_real_estate.csv")
 firstB <- albRealEstate$YearBuilt == 2006 
 secondB <- albRealEstate$Condition == "Average"
 thirdB <- albRealEstate$City == "CROZET"
 subDF <- albRealEstate[(firstB & secondB) | thirdB,]
-str(subDF)
+str(subDF, strict.width = "cut")
 ```
 
 Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.
