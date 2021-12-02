@@ -412,7 +412,7 @@ monteCarloSin <- function(params){
 
 One-off approximations aren't as interesting as visualizing many expectations for many parameter inputs. Below we plot the expectations for many different parameter vectors/configurations/settings. 
 
-```{r, collapse = TRUE, out.width='60%', fig.align='center', fig.cap = "Monte Carlo Approximations versus Exact Evaluations"}
+```{r, collapse = TRUE, out.width='80%', fig.align='center', fig.cap = "Monte Carlo Approximations versus Exact Evaluations"}
 muGrid <- seq(-10,10, length.out = 100)
 sigmaGrid <- seq(.001, 5, length.out = 100)
 muSigmaGrid <- expand.grid(muGrid, sigmaGrid)
@@ -460,7 +460,7 @@ monteCarloSinCRNv1 <- function(params){
 
 Let's compare using common random numbers to going without. As you can see, common random numbers make the plot look "smoother." In other words, we increase our sampling accuracy without spending more computational time.
 
-```{r, collapse=TRUE, out.width='60%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers"}
+```{r, collapse=TRUE, out.width='80%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers"}
 mcApproxCRNv1 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv1), 
                         ncol = length(muGrid))
 par(mfrow=c(1,2))
@@ -468,9 +468,6 @@ contour(muGrid, sigmaGrid, mcApprox,
         xlab = "mu", ylab = "sigma", main = "mc without crn")
 contour(muGrid, sigmaGrid, mcApproxCRNv1, 
         xlab = "mu", ylab = "sigma", main = "mc with crn")
-```
-
-```{r, echo=FALSE}
 par(mfrow=c(1,1))
 ```
 
@@ -504,7 +501,7 @@ The inner function did in fact capture `commonZs`, but it captured from the encl
 
 Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function.
 
-```{r, collapse=TRUE, echo=FALSE, out.width='60%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers Part 2"}
+```{r, collapse=TRUE, echo=FALSE, out.width='80%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers Part 2"}
 mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), 
                         ncol = length(muGrid))
 par(mfrow=c(1,2))

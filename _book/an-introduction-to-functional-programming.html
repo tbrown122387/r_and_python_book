@@ -471,7 +471,7 @@ div.csl-indent {
 <p>All of these sound like a good things to have in our code, so let’s get started with some examples!</p>
 <div id="functions-as-function-inputs-in-r" class="section level2" number="15.1">
 <h2><span class="header-section-number">15.1</span> Functions as Function Inputs in R</h2>
-<p>Many of the most commonly-used functionals in R have names that end in “apply”. The ones I discuss are <code>sapply()</code>, <code>vapply()</code>, <code>lapply()</code>, <code>apply()</code>, <code>tapply()</code> and <code>mapply()</code>. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.</p>
+<p>Many of the most commonly-used functionals in R have names that end in “apply.” The ones I discuss are <code>sapply()</code>, <code>vapply()</code>, <code>lapply()</code>, <code>apply()</code>, <code>tapply()</code> and <code>mapply()</code>. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.</p>
 <div id="sapply-and-vapply" class="section level3" number="15.1.1">
 <h3><span class="header-section-number">15.1.1</span> <code>sapply()</code> and <code>vapply()</code></h3>
 <p>Suppose we have a <code>data.frame</code> that has 10 rows and 100 columns. What if we want to take the mean of each column?</p>
@@ -502,7 +502,7 @@ div.csl-indent {
 </div>
 <div id="lapply" class="section level3" number="15.1.2">
 <h3><span class="header-section-number">15.1.2</span> <code>lapply()</code></h3>
-<p>For functions that do not return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply()</code>. The “l” in <code>lapply()</code> stands for “list”. <code>lapply()</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
+<p>For functions that do not return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply()</code>. The “l” in <code>lapply()</code> stands for “list.” <code>lapply()</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="an-introduction-to-functional-programming.html#cb263-1" aria-hidden="true" tabindex="-1"></a>regress <span class="ot">&lt;-</span> <span class="cf">function</span>(y){ <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>) }</span>
 <span id="cb263-2"><a href="an-introduction-to-functional-programming.html#cb263-2" aria-hidden="true" tabindex="-1"></a>myRegs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(myDF, regress)</span>
 <span id="cb263-3"><a href="an-introduction-to-functional-programming.html#cb263-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(myRegs)</span>
@@ -538,19 +538,19 @@ div.csl-indent {
 <span id="cb265-3"><a href="an-introduction-to-functional-programming.html#cb265-3" aria-hidden="true" tabindex="-1"></a>secondB <span class="ot">&lt;-</span> albRealEstate<span class="sc">$</span>Condition <span class="sc">==</span> <span class="st">&quot;Average&quot;</span></span>
 <span id="cb265-4"><a href="an-introduction-to-functional-programming.html#cb265-4" aria-hidden="true" tabindex="-1"></a>thirdB <span class="ot">&lt;-</span> albRealEstate<span class="sc">$</span>City <span class="sc">==</span> <span class="st">&quot;CROZET&quot;</span></span>
 <span id="cb265-5"><a href="an-introduction-to-functional-programming.html#cb265-5" aria-hidden="true" tabindex="-1"></a>subDF <span class="ot">&lt;-</span> albRealEstate[(firstB <span class="sc">&amp;</span> secondB) <span class="sc">|</span> thirdB,]</span>
-<span id="cb265-6"><a href="an-introduction-to-functional-programming.html#cb265-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(subDF)</span>
+<span id="cb265-6"><a href="an-introduction-to-functional-programming.html#cb265-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(subDF, <span class="at">strict.width =</span> <span class="st">&quot;cut&quot;</span>)</span>
 <span id="cb265-7"><a href="an-introduction-to-functional-programming.html#cb265-7" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    2973 obs. of  12 variables:</span></span>
-<span id="cb265-8"><a href="an-introduction-to-functional-programming.html#cb265-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ YearBuilt    : int  2006 2003 1998 1886 1910 1975 1940 1958 1978 1989 ...</span></span>
+<span id="cb265-8"><a href="an-introduction-to-functional-programming.html#cb265-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ YearBuilt    : int  2006 2003 1998 1886 1910 1975 1940 1958 ..</span></span>
 <span id="cb265-9"><a href="an-introduction-to-functional-programming.html#cb265-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ YearRemodeled: int  0 0 0 0 0 1982 1987 0 0 0 ...</span></span>
 <span id="cb265-10"><a href="an-introduction-to-functional-programming.html#cb265-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Condition    : chr  &quot;Average&quot; &quot;Average&quot; &quot;Good&quot; &quot;Average&quot; ...</span></span>
 <span id="cb265-11"><a href="an-introduction-to-functional-programming.html#cb265-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ NumStories   : num  1 1 1 1.86 1.53 1 1.52 1 1 1.35 ...</span></span>
-<span id="cb265-12"><a href="an-introduction-to-functional-programming.html#cb265-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ FinSqFt      : int  1922 1848 1244 1861 1108 1520 812 912 1500 3017 ...</span></span>
+<span id="cb265-12"><a href="an-introduction-to-functional-programming.html#cb265-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ FinSqFt      : int  1922 1848 1244 1861 1108 1520 812 912 15..</span></span>
 <span id="cb265-13"><a href="an-introduction-to-functional-programming.html#cb265-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Bedroom      : int  3 3 1 4 3 3 2 2 3 4 ...</span></span>
 <span id="cb265-14"><a href="an-introduction-to-functional-programming.html#cb265-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ FullBath     : int  3 2 1 1 1 1 0 1 3 3 ...</span></span>
 <span id="cb265-15"><a href="an-introduction-to-functional-programming.html#cb265-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb265-16"><a href="an-introduction-to-functional-programming.html#cb265-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ TotalRooms   : int  10 7 3 6 6 4 6 5 6 7 ...</span></span>
 <span id="cb265-17"><a href="an-introduction-to-functional-programming.html#cb265-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ LotSize      : num  5 61.19 50.65 3.88 8.84 ...</span></span>
-<span id="cb265-18"><a href="an-introduction-to-functional-programming.html#cb265-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ TotalValue   : int  409900 523100 620700 162500 167200 151900 48500 120700 358500 1036500 ...</span></span>
+<span id="cb265-18"><a href="an-introduction-to-functional-programming.html#cb265-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ TotalValue   : int  409900 523100 620700 162500 167200 15190..</span></span>
 <span id="cb265-19"><a href="an-introduction-to-functional-programming.html#cb265-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ City         : chr  &quot;CROZET&quot; &quot;CROZET&quot; &quot;CROZET&quot; &quot;CROZET&quot; ...</span></span></code></pre></div>
 <p>Complicated filtering criteria can become quite wide, so I prefer to break the above code into three steps.</p>
 <ul>
@@ -747,7 +747,7 @@ div.csl-indent {
 <span id="cb280-18"><a href="an-introduction-to-functional-programming.html#cb280-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
 <span id="cb280-19"><a href="an-introduction-to-functional-programming.html#cb280-19" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">1</span>)) <span class="co"># length of rows</span></span>
 <span id="cb280-20"><a href="an-introduction-to-functional-programming.html#cb280-20" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
-<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply()</code>ing a function to rows. Here is an example of computing each property’s “score”.</p>
+<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply()</code>ing a function to rows. Here is an example of computing each property’s “score.”</p>
 <div class="sourceCode" id="cb281"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb281-1"><a href="an-introduction-to-functional-programming.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb281-2"><a href="an-introduction-to-functional-programming.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alb_real_est.apply(sum, axis=1) # can&#39;t add letters to numbers!</span></span>
 <span id="cb281-3"><a href="an-introduction-to-functional-programming.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_prop_score(row):</span>
@@ -853,7 +853,7 @@ where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \t
 <span id="cb289-12"><a href="an-introduction-to-functional-programming.html#cb289-12" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, </span>
 <span id="cb289-13"><a href="an-introduction-to-functional-programming.html#cb289-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-287"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-287-1.png" alt="Monte Carlo Approximations versus Exact Evaluations" width="60%" />
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-287-1.png" alt="Monte Carlo Approximations versus Exact Evaluations" width="80%" />
 <p class="caption">
 Figure 15.1: Monte Carlo Approximations versus Exact Evaluations
 </p>
@@ -888,27 +888,28 @@ This leads to the Monte Carlo estimate
 <span id="cb291-6"><a href="an-introduction-to-functional-programming.html#cb291-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApproxCRNv1, </span>
 <span id="cb291-7"><a href="an-introduction-to-functional-programming.html#cb291-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc with crn&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-290"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-290-1.png" alt="Monte Carlo: With and Without Common Random Numbers" width="60%" />
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-290-1.png" alt="Monte Carlo: With and Without Common Random Numbers" width="80%" />
 <p class="caption">
 Figure 15.2: Monte Carlo: With and Without Common Random Numbers
 </p>
 </div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="an-introduction-to-functional-programming.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>There are some new downsides to this implementation to consider:</p>
 <ul>
 <li>we have another global variable–a bunch of samples called <code>commonZs</code> floating around, and</li>
 <li>the dependence on the global variable for sample size is even further obscured.</li>
 </ul>
 <p>We can fix these two problems very nicely by using a function factory.</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="an-introduction-to-functional-programming.html#cb292-1" aria-hidden="true" tabindex="-1"></a>makeMCFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>){</span>
-<span id="cb292-2"><a href="an-introduction-to-functional-programming.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb292-3"><a href="an-introduction-to-functional-programming.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(params){</span>
-<span id="cb292-4"><a href="an-introduction-to-functional-programming.html#cb292-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
-<span id="cb292-5"><a href="an-introduction-to-functional-programming.html#cb292-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">sin</span>(params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>]<span class="sc">*</span>commonZs))    </span>
-<span id="cb292-6"><a href="an-introduction-to-functional-programming.html#cb292-6" aria-hidden="true" tabindex="-1"></a>  }  </span>
-<span id="cb292-7"><a href="an-introduction-to-functional-programming.html#cb292-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb292-8"><a href="an-introduction-to-functional-programming.html#cb292-8" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv2 <span class="ot">&lt;-</span> <span class="fu">makeMCFunc</span>()</span>
-<span id="cb292-9"><a href="an-introduction-to-functional-programming.html#cb292-9" aria-hidden="true" tabindex="-1"></a><span class="co"># now call monteCarloSinCRNv2 to approx. expectations</span></span>
-<span id="cb292-10"><a href="an-introduction-to-functional-programming.html#cb292-10" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g. monteCarloSinCRNv2(c(10,1))</span></span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="an-introduction-to-functional-programming.html#cb293-1" aria-hidden="true" tabindex="-1"></a>makeMCFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>){</span>
+<span id="cb293-2"><a href="an-introduction-to-functional-programming.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb293-3"><a href="an-introduction-to-functional-programming.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(params){</span>
+<span id="cb293-4"><a href="an-introduction-to-functional-programming.html#cb293-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(params[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb293-5"><a href="an-introduction-to-functional-programming.html#cb293-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">sin</span>(params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>]<span class="sc">*</span>commonZs))    </span>
+<span id="cb293-6"><a href="an-introduction-to-functional-programming.html#cb293-6" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb293-7"><a href="an-introduction-to-functional-programming.html#cb293-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb293-8"><a href="an-introduction-to-functional-programming.html#cb293-8" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv2 <span class="ot">&lt;-</span> <span class="fu">makeMCFunc</span>()</span>
+<span id="cb293-9"><a href="an-introduction-to-functional-programming.html#cb293-9" aria-hidden="true" tabindex="-1"></a><span class="co"># now call monteCarloSinCRNv2 to approx. expectations</span></span>
+<span id="cb293-10"><a href="an-introduction-to-functional-programming.html#cb293-10" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g. monteCarloSinCRNv2(c(10,1))</span></span></code></pre></div>
 <p>This is much better because</p>
 <ul>
 <li>the desired sample size must be passed in as a function argument instead of being captured,</li>
@@ -917,8 +918,8 @@ Figure 15.2: Monte Carlo: With and Without Common Random Numbers
 </ul>
 <p>The inner function did in fact capture <code>commonZs</code>, but it captured from the enclosing scope, not the global scope. Capturing isn’t always a terrible idea. It would be difficult to modify these variables, so we don’t need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice–now the end-users of functions created by this factory don’t need to worry about plugging in extra parameters.</p>
 <p>Let’s use <span class="math inline">\(1000\)</span> samples again and make sure this function works by comparing its output to the known true function.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-293"></span>
-<img src="r_and_python_book_files/figure-html/unnamed-chunk-293-1.png" alt="Monte Carlo: With and Without Common Random Numbers Part 2" width="60%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-292"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-292-1.png" alt="Monte Carlo: With and Without Common Random Numbers Part 2" width="80%" />
 <p class="caption">
 Figure 15.3: Monte Carlo: With and Without Common Random Numbers Part 2
 </p>
@@ -927,75 +928,75 @@ Figure 15.3: Monte Carlo: With and Without Common Random Numbers Part 2
 <div id="functions-as-function-outputs-in-python" class="section level2" number="15.4">
 <h2><span class="header-section-number">15.4</span> Functions as Function Outputs in Python</h2>
 <p>We can write function factories in Python, too. Here is another implementation of the first example from the previous section. Again, just as it did in R, <code>str</code> passed in as <code>greeting_message</code> persists well after <code>func_factory()</code> is finished working.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb293-1"><a href="an-introduction-to-functional-programming.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func_factory(greeting_message):</span>
-<span id="cb293-2"><a href="an-introduction-to-functional-programming.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> func(name):</span>
-<span id="cb293-3"><a href="an-introduction-to-functional-programming.html#cb293-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(greeting_message <span class="op">+</span> <span class="st">&#39; &#39;</span> <span class="op">+</span> name)</span>
-<span id="cb293-4"><a href="an-introduction-to-functional-programming.html#cb293-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> func</span>
-<span id="cb293-5"><a href="an-introduction-to-functional-programming.html#cb293-5" aria-hidden="true" tabindex="-1"></a>greet_with_hello <span class="op">=</span> func_factory(<span class="st">&quot;Hello&quot;</span>)</span>
-<span id="cb293-6"><a href="an-introduction-to-functional-programming.html#cb293-6" aria-hidden="true" tabindex="-1"></a>greet_with_hello(<span class="st">&quot;Taylor&quot;</span>)</span>
-<span id="cb293-7"><a href="an-introduction-to-functional-programming.html#cb293-7" aria-hidden="true" tabindex="-1"></a><span class="co">## Hello Taylor</span></span>
-<span id="cb293-8"><a href="an-introduction-to-functional-programming.html#cb293-8" aria-hidden="true" tabindex="-1"></a>greet_with_hello(<span class="st">&quot;Charlie&quot;</span>)</span>
-<span id="cb293-9"><a href="an-introduction-to-functional-programming.html#cb293-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Hello Charlie</span></span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb294-1"><a href="an-introduction-to-functional-programming.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func_factory(greeting_message):</span>
+<span id="cb294-2"><a href="an-introduction-to-functional-programming.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> func(name):</span>
+<span id="cb294-3"><a href="an-introduction-to-functional-programming.html#cb294-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(greeting_message <span class="op">+</span> <span class="st">&#39; &#39;</span> <span class="op">+</span> name)</span>
+<span id="cb294-4"><a href="an-introduction-to-functional-programming.html#cb294-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> func</span>
+<span id="cb294-5"><a href="an-introduction-to-functional-programming.html#cb294-5" aria-hidden="true" tabindex="-1"></a>greet_with_hello <span class="op">=</span> func_factory(<span class="st">&quot;Hello&quot;</span>)</span>
+<span id="cb294-6"><a href="an-introduction-to-functional-programming.html#cb294-6" aria-hidden="true" tabindex="-1"></a>greet_with_hello(<span class="st">&quot;Taylor&quot;</span>)</span>
+<span id="cb294-7"><a href="an-introduction-to-functional-programming.html#cb294-7" aria-hidden="true" tabindex="-1"></a><span class="co">## Hello Taylor</span></span>
+<span id="cb294-8"><a href="an-introduction-to-functional-programming.html#cb294-8" aria-hidden="true" tabindex="-1"></a>greet_with_hello(<span class="st">&quot;Charlie&quot;</span>)</span>
+<span id="cb294-9"><a href="an-introduction-to-functional-programming.html#cb294-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Hello Charlie</span></span></code></pre></div>
 <p>Let’s consider another less trivial example. Recall the spline function from earlier in the chapter:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb294-1"><a href="an-introduction-to-functional-programming.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb294-2"><a href="an-introduction-to-functional-programming.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spline(x):</span>
-<span id="cb294-3"><a href="an-introduction-to-functional-programming.html#cb294-3" aria-hidden="true" tabindex="-1"></a>    knot <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb294-4"><a href="an-introduction-to-functional-programming.html#cb294-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> knot:</span>
-<span id="cb294-5"><a href="an-introduction-to-functional-programming.html#cb294-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x<span class="op">-</span>knot</span>
-<span id="cb294-6"><a href="an-introduction-to-functional-programming.html#cb294-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb294-7"><a href="an-introduction-to-functional-programming.html#cb294-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb295-1"><a href="an-introduction-to-functional-programming.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb295-2"><a href="an-introduction-to-functional-programming.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spline(x):</span>
+<span id="cb295-3"><a href="an-introduction-to-functional-programming.html#cb295-3" aria-hidden="true" tabindex="-1"></a>    knot <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb295-4"><a href="an-introduction-to-functional-programming.html#cb295-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> knot:</span>
+<span id="cb295-5"><a href="an-introduction-to-functional-programming.html#cb295-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x<span class="op">-</span>knot</span>
+<span id="cb295-6"><a href="an-introduction-to-functional-programming.html#cb295-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb295-7"><a href="an-introduction-to-functional-programming.html#cb295-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span></code></pre></div>
 <p>This function is limited in that it takes in only one element at a time. Unfortunately, we would not be able to provide an entire Numpy array as an argument (e.g. <code>spline(np.arange(3))</code>). Many functions do possess this behavior, and it is generally advantageous to take advantage of it. If you recall our discussion about universal functions in section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python">3.4</a>, you might have grown accustomed to taking advantage of writing vectorized code.</p>
 <p>Fortunately there’s a way to automatically vectorize functions like the one above: <a href="https://numpy.org/doc/stable/reference/generated/numpy.vectorize.html#numpy.vectorize"><code>np.vectorize()</code></a>. <code>np.vectorize()</code> takes in a unary function, and outputs a vectorized version of it that is able to take entire arrays as an input. Here’s an example. Compare this to us using <code>map()</code> before.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb295-1"><a href="an-introduction-to-functional-programming.html#cb295-1" aria-hidden="true" tabindex="-1"></a>my_inputs <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="dv">0</span>, stop <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi)</span>
-<span id="cb295-2"><a href="an-introduction-to-functional-programming.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="co"># make a vectorized function</span></span>
-<span id="cb295-3"><a href="an-introduction-to-functional-programming.html#cb295-3" aria-hidden="true" tabindex="-1"></a>vec_spline <span class="op">=</span> np.vectorize(spline) </span>
-<span id="cb295-4"><a href="an-introduction-to-functional-programming.html#cb295-4" aria-hidden="true" tabindex="-1"></a>vec_spline(my_inputs)[:<span class="dv">4</span>]</span>
-<span id="cb295-5"><a href="an-introduction-to-functional-programming.html#cb295-5" aria-hidden="true" tabindex="-1"></a><span class="co"># alternatively output = list(map(spline, my_inputs)) from last time</span></span>
-<span id="cb295-6"><a href="an-introduction-to-functional-programming.html#cb295-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0., 0., 0., 0.])</span></span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb296-1"><a href="an-introduction-to-functional-programming.html#cb296-1" aria-hidden="true" tabindex="-1"></a>my_inputs <span class="op">=</span> np.linspace(start <span class="op">=</span> <span class="dv">0</span>, stop <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi)</span>
+<span id="cb296-2"><a href="an-introduction-to-functional-programming.html#cb296-2" aria-hidden="true" tabindex="-1"></a><span class="co"># make a vectorized function</span></span>
+<span id="cb296-3"><a href="an-introduction-to-functional-programming.html#cb296-3" aria-hidden="true" tabindex="-1"></a>vec_spline <span class="op">=</span> np.vectorize(spline) </span>
+<span id="cb296-4"><a href="an-introduction-to-functional-programming.html#cb296-4" aria-hidden="true" tabindex="-1"></a>vec_spline(my_inputs)[:<span class="dv">4</span>]</span>
+<span id="cb296-5"><a href="an-introduction-to-functional-programming.html#cb296-5" aria-hidden="true" tabindex="-1"></a><span class="co"># alternatively output = list(map(spline, my_inputs)) from last time</span></span>
+<span id="cb296-6"><a href="an-introduction-to-functional-programming.html#cb296-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0., 0., 0., 0.])</span></span></code></pre></div>
 <p>The above code doesn’t just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use <strong><a href="https://www.python.org/dev/peps/pep-0318/">function decorators</a>.</strong> You can <em>decorate</em> a function by using the <code>@</code> operator <span class="citation">(<a href="#ref-Lutz13" role="doc-biblioref">Lutz 2013</a>)</span>.</p>
 <p>If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place.</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb296-1"><a href="an-introduction-to-functional-programming.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of spline = np.vectorize(spline) </span></span>
-<span id="cb296-2"><a href="an-introduction-to-functional-programming.html#cb296-2" aria-hidden="true" tabindex="-1"></a><span class="at">@np.vectorize</span></span>
-<span id="cb296-3"><a href="an-introduction-to-functional-programming.html#cb296-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spline(x):</span>
-<span id="cb296-4"><a href="an-introduction-to-functional-programming.html#cb296-4" aria-hidden="true" tabindex="-1"></a>    knot <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb296-5"><a href="an-introduction-to-functional-programming.html#cb296-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> knot:</span>
-<span id="cb296-6"><a href="an-introduction-to-functional-programming.html#cb296-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x<span class="op">-</span>knot</span>
-<span id="cb296-7"><a href="an-introduction-to-functional-programming.html#cb296-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb296-8"><a href="an-introduction-to-functional-programming.html#cb296-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
-<span id="cb296-9"><a href="an-introduction-to-functional-programming.html#cb296-9" aria-hidden="true" tabindex="-1"></a>spline(my_inputs)[:<span class="dv">4</span>]</span>
-<span id="cb296-10"><a href="an-introduction-to-functional-programming.html#cb296-10" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0., 0., 0., 0.])</span></span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb297-1"><a href="an-introduction-to-functional-programming.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of spline = np.vectorize(spline) </span></span>
+<span id="cb297-2"><a href="an-introduction-to-functional-programming.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="at">@np.vectorize</span></span>
+<span id="cb297-3"><a href="an-introduction-to-functional-programming.html#cb297-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spline(x):</span>
+<span id="cb297-4"><a href="an-introduction-to-functional-programming.html#cb297-4" aria-hidden="true" tabindex="-1"></a>    knot <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb297-5"><a href="an-introduction-to-functional-programming.html#cb297-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> knot:</span>
+<span id="cb297-6"><a href="an-introduction-to-functional-programming.html#cb297-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x<span class="op">-</span>knot</span>
+<span id="cb297-7"><a href="an-introduction-to-functional-programming.html#cb297-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb297-8"><a href="an-introduction-to-functional-programming.html#cb297-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
+<span id="cb297-9"><a href="an-introduction-to-functional-programming.html#cb297-9" aria-hidden="true" tabindex="-1"></a>spline(my_inputs)[:<span class="dv">4</span>]</span>
+<span id="cb297-10"><a href="an-introduction-to-functional-programming.html#cb297-10" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0., 0., 0., 0.])</span></span></code></pre></div>
 <div id="writing-our-own-decorators" class="section level3" number="15.4.1">
 <h3><span class="header-section-number">15.4.1</span> Writing Our Own Decorators</h3>
 <p>We can write our own function factory that can be used as decoration. The main restriction is that this function factory must take a function as an argument, too. This can sometimes be restrictive. You might have noticed that the definition of <code>func_factory()</code> from earlier in this section did not do that. If you don’t believe me, as an exercise, after you read this section, you might consider trying to rewrite the example from <a href="an-introduction-to-functional-programming.html#functions-as-function-outputs-in-r">15.3</a> that implements Monte Carlo sampling using common random numbers.</p>
 <p>Before we get too ahead of ourselves, let’s describe the basics. Here is our first decorator function <code>add_greeting()</code>.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb297-1"><a href="an-introduction-to-functional-programming.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(func):</span>
-<span id="cb297-2"><a href="an-introduction-to-functional-programming.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> wrapper(name):</span>
-<span id="cb297-3"><a href="an-introduction-to-functional-programming.html#cb297-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;Salutations, &#39;</span>)</span>
-<span id="cb297-4"><a href="an-introduction-to-functional-programming.html#cb297-4" aria-hidden="true" tabindex="-1"></a>    func(name)</span>
-<span id="cb297-5"><a href="an-introduction-to-functional-programming.html#cb297-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> wrapper</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb298-1"><a href="an-introduction-to-functional-programming.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(func):</span>
+<span id="cb298-2"><a href="an-introduction-to-functional-programming.html#cb298-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> wrapper(name):</span>
+<span id="cb298-3"><a href="an-introduction-to-functional-programming.html#cb298-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;Salutations, &#39;</span>)</span>
+<span id="cb298-4"><a href="an-introduction-to-functional-programming.html#cb298-4" aria-hidden="true" tabindex="-1"></a>    func(name)</span>
+<span id="cb298-5"><a href="an-introduction-to-functional-programming.html#cb298-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> wrapper</span></code></pre></div>
 <p>The decorator <code>add_greeting()</code> returns a function that is an embellished version of the function it is given. When we decorate a function with it, it looks like this.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb298-1"><a href="an-introduction-to-functional-programming.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="at">@add_greeting</span></span>
-<span id="cb298-2"><a href="an-introduction-to-functional-programming.html#cb298-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
-<span id="cb298-3"><a href="an-introduction-to-functional-programming.html#cb298-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb299-1"><a href="an-introduction-to-functional-programming.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="at">@add_greeting</span></span>
+<span id="cb299-2"><a href="an-introduction-to-functional-programming.html#cb299-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
+<span id="cb299-3"><a href="an-introduction-to-functional-programming.html#cb299-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span></code></pre></div>
 <p>You could get the same behavior by typing the following. They are equivalent!</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb299-1"><a href="an-introduction-to-functional-programming.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
-<span id="cb299-2"><a href="an-introduction-to-functional-programming.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span>
-<span id="cb299-3"><a href="an-introduction-to-functional-programming.html#cb299-3" aria-hidden="true" tabindex="-1"></a>print_name <span class="op">=</span> add_greeting(print_name)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb300-1"><a href="an-introduction-to-functional-programming.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
+<span id="cb300-2"><a href="an-introduction-to-functional-programming.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span>
+<span id="cb300-3"><a href="an-introduction-to-functional-programming.html#cb300-3" aria-hidden="true" tabindex="-1"></a>print_name <span class="op">=</span> add_greeting(print_name)</span></code></pre></div>
 <p>Things can get a little more complicated when your decorators take additional arguments.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb300-1"><a href="an-introduction-to-functional-programming.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="at">@add_greeting</span>(<span class="st">&quot;How you doin&#39;&quot;</span>)</span>
-<span id="cb300-2"><a href="an-introduction-to-functional-programming.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
-<span id="cb300-3"><a href="an-introduction-to-functional-programming.html#cb300-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span>
-<span id="cb300-4"><a href="an-introduction-to-functional-programming.html#cb300-4" aria-hidden="true" tabindex="-1"></a>print_name(<span class="st">&#39;Taylor&#39;</span>)</span>
-<span id="cb300-5"><a href="an-introduction-to-functional-programming.html#cb300-5" aria-hidden="true" tabindex="-1"></a><span class="co">## How you doin&#39;</span></span>
-<span id="cb300-6"><a href="an-introduction-to-functional-programming.html#cb300-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Taylor</span></span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb301-1"><a href="an-introduction-to-functional-programming.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="at">@add_greeting</span>(<span class="st">&quot;How you doin&#39;&quot;</span>)</span>
+<span id="cb301-2"><a href="an-introduction-to-functional-programming.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
+<span id="cb301-3"><a href="an-introduction-to-functional-programming.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span>
+<span id="cb301-4"><a href="an-introduction-to-functional-programming.html#cb301-4" aria-hidden="true" tabindex="-1"></a>print_name(<span class="st">&#39;Taylor&#39;</span>)</span>
+<span id="cb301-5"><a href="an-introduction-to-functional-programming.html#cb301-5" aria-hidden="true" tabindex="-1"></a><span class="co">## How you doin&#39;</span></span>
+<span id="cb301-6"><a href="an-introduction-to-functional-programming.html#cb301-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Taylor</span></span></code></pre></div>
 <p>So how do we write decorators that accomplish this? The important thing to remember is that <code>@add_greeting("How you doin'")</code> in the previous code block is equivalent to writing this after the function definition: <code>print_name = add_greeting("How you doin'")(print_name)</code>. This is a function returning a function returning a function! The definition of <code>add_greeting()</code> could look something like this.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb301-1"><a href="an-introduction-to-functional-programming.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(greet):</span>
-<span id="cb301-2"><a href="an-introduction-to-functional-programming.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> decorator(func):</span>
-<span id="cb301-3"><a href="an-introduction-to-functional-programming.html#cb301-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(name):</span>
-<span id="cb301-4"><a href="an-introduction-to-functional-programming.html#cb301-4" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(greet)</span>
-<span id="cb301-5"><a href="an-introduction-to-functional-programming.html#cb301-5" aria-hidden="true" tabindex="-1"></a>      func(name)</span>
-<span id="cb301-6"><a href="an-introduction-to-functional-programming.html#cb301-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span>
-<span id="cb301-7"><a href="an-introduction-to-functional-programming.html#cb301-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> decorator</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb302-1"><a href="an-introduction-to-functional-programming.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(greet):</span>
+<span id="cb302-2"><a href="an-introduction-to-functional-programming.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> decorator(func):</span>
+<span id="cb302-3"><a href="an-introduction-to-functional-programming.html#cb302-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(name):</span>
+<span id="cb302-4"><a href="an-introduction-to-functional-programming.html#cb302-4" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(greet)</span>
+<span id="cb302-5"><a href="an-introduction-to-functional-programming.html#cb302-5" aria-hidden="true" tabindex="-1"></a>      func(name)</span>
+<span id="cb302-6"><a href="an-introduction-to-functional-programming.html#cb302-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span>
+<span id="cb302-7"><a href="an-introduction-to-functional-programming.html#cb302-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> decorator</span></code></pre></div>
 <p>Now that you know how decorators work, you can feel comfortable using third-party ones. You might come across, for example, the <code>@jit</code> decorator from <a href="https://numba.pydata.org/">Numba</a>, which will translate your Python function into faster machine code, the <code>@lru_cache</code> decorator from the <a href="https://docs.python.org/3/library/functools.html"><code>functools</code> module</a>–this can make your code faster by saving some of its outputs–or decorators that perform application specific tasks like <a href="https://www.tensorflow.org/api_docs/python/tf/function"><code>@tf.function</code></a> from Tensorflow.</p>
 <!-- ### Exercises -->
 <!-- 1.  Let $X_t$ be the price of a stock at time $t$. A *call (or put) option* is a type of derivative contract you can buy or sell. It's called a derivative because its value derives from the value of a stock. A single call contract (or put) gives the owner the right to buy (or sell) stock ($100$ shares) at a certain price. This certain price written into an options contract ($s$) is called the *strike price*. The day the option expires    is called the *expiration date*. If a holder of the option uses his/her right to buy or sell the underlying stock, he/she is said to have *exercised* the option. -->
@@ -1102,10 +1103,10 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
 Jones, Karen Spärck. 1972. <span>“A Statistical Interpretation of Term Specificity and Its Application in Retrieval.”</span> <em>Journal of Documentation</em> 28: 11–21.
 </div>
 <div class="csl-entry">
-Kahn, H. 1950a. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems. II.”</span> <em>Nucleonics (U.S.) Ceased Publication</em> Vol: 6, No. 6 (June). <a href="https://www.osti.gov/biblio/4399718">https://www.osti.gov/biblio/4399718</a>.
+Kahn, H. 1950a. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems–i.”</span> <em>Nucleonics</em> 6 5.
 </div>
 <div class="csl-entry">
-Kahn, H. 1950b. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems–i.”</span> <em>Nucleonics</em> 6 5.
+Kahn, H. 1950b. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems. II.”</span> <em>Nucleonics (U.S.) Ceased Publication</em> Vol: 6, No. 6 (June). <a href="https://www.osti.gov/biblio/4399718">https://www.osti.gov/biblio/4399718</a>.
 </div>
 <div class="csl-entry">
 Kalman, R. E. 1960. <span>“<span class="nocase">A New Approach to Linear Filtering and Prediction Problems</span>.”</span> <em>Journal of Basic Engineering</em> 82 (1): 35–45. <a href="https://doi.org/10.1115/1.3662552">https://doi.org/10.1115/1.3662552</a>.

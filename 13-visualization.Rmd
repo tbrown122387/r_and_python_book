@@ -18,7 +18,7 @@ str(df, strict.width = "cut")
 
 If we wanted to get a general idea of how expensive homes were in Albemarle County, we could use a histogram. This helps us visualize a univariate numerical variable/column. Below I plot the (natural) logarithm of home prices. 
 
-```{r, collapse=TRUE, fig.cap="A Simple Histogram"}
+```{r, collapse=TRUE, fig.cap="A Simple Histogram", fig.align='center', out.width='80%'}
 hist(log(df$TotalValue), 
      xlab = "natural logarithm of home price", 
      main = "Super-Duper Plot!")
@@ -28,7 +28,7 @@ I specified the `xlab=` and `main=` arguments, but there are many more that coul
 
 `plot()` is useful for plotting *two* univariate numerical variables. This can be done in time series plots (variable versus time) and scatter plots (one variable versus another).
 
-```{r, collapse=T, fig.cap = "Some Scatterplots" }
+```{r, collapse=T, fig.cap = "Some Scatterplots", fig.align="center", out.width='80%'}
 par(mfrow=c(1,2))
 plot(df$TotalValue, df$LotSize, 
      xlab = "total value ($)", ylab = "lot size (sq. ft.)",
@@ -56,7 +56,7 @@ The core function in this library is the [`ggplot()` function](https://www.rdocu
 
 Consider this first example. 
 
-```{r, collapse = TRUE, out.width='80%', fig.cap = "A Blank Canvas"}
+```{r, collapse = TRUE, out.width='80%', fig.cap = "A Blank Canvas", fig.align='center'}
 library(ggplot2)
 ggplot(mpg, aes(x = displ, y = hwy))
 ```
@@ -73,7 +73,7 @@ To display geometric shapes (aka *geoms* in the parlance of `ggplot2`), we need 
 
 Consider the function [`geom_point()`](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point). It too returns an S3 instance that has specialized behavior. In the parlance of `ggplot2`, it adds a [scatterplot](https://ggplot2-book.org/getting-started.html#basic-use) layer to the figure.
 
-```{r, collapse = TRUE, fig.cap = "A Second Scatterplot"}
+```{r, collapse = TRUE, fig.cap = "A Second Scatterplot", fig.align='center', out.width='80%'}
 library(ggplot2)
 ggplot(mpg, aes(x = displ, y = hwy))  +
   geom_point()
@@ -91,7 +91,7 @@ ggplot(mpg, aes(x = displ, y = hwy))  +
 
 Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.
 
-```{r, collapse = TRUE, fig.cap = "Adding Some Color"}
+```{r, collapse = TRUE, fig.cap = "Adding Some Color", fig.align='center', out.width='80%'}
 ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
   geom_point() + 
   ggtitle("my favorite scatterplot")
@@ -99,7 +99,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
 
 If we want tighter control on the aesthetic mapping, we can use [**scales**](https://ggplot2-book.org/scales.html#scales). Syntactically, these are things we "add" (`+`) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix `scale_`. We can change attributes of the axes like this.
 
-```{r, collapse = TRUE, fig.cap = "Changing Scales"}
+```{r, collapse = TRUE, fig.cap = "Changing Scales", fig.align='center', out.width='80%'}
 base_plot <- ggplot(mpg, 
                     aes(x = displ, y = hwy, color = manufacturer)) +
              geom_point() + 
@@ -109,7 +109,7 @@ base_plot + scale_x_log10() + scale_y_reverse()
 
 We can also change plot colors with scale layers. Let's add an aesthetic called `fill=` so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called `score`. We also use a new geom layer from a function called `geom_tile()`.  
 
-```{r, collapse = TRUE, fig.cap = "Changing the Fill"}
+```{r, collapse = TRUE, fig.cap = "Changing the Fill", fig.align='center', out.width='80%'}
 mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
 ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
   geom_tile() 
@@ -117,7 +117,7 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one. 
 
-```{r, collapse = TRUE, fig.cap = "Changing the Fill Again"}
+```{r, collapse = TRUE, fig.cap = "Changing the Fill Again", fig.align='center', out.width='80%'}
 mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
 ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
   geom_tile() + 
@@ -141,7 +141,7 @@ Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It i
 You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
 :::
 
-```{python, collapse = TRUE, fig.cap = "Another Simple Histogram", out.width='80%'}
+```{python, collapse = TRUE, fig.cap = "Another Simple Histogram", out.width='80%', fig.align='center'}
 import matplotlib.pyplot as plt       # 1
 import numpy as np                    # 2
 fig, ax = plt.subplots()              # 3
@@ -165,7 +165,7 @@ In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_a
 
 If you want to make figures that are more elaborate, just keep calling different methods of `ax`. If you want to fit more subplots to the same figure, add more `Axes` objects. Here is an example using some code from [one of the official Matplotlib tutorials](https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface).
 
-```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib"}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib", fig.align='center'}
 # x values grid shared by both subplots
 x = np.linspace(0, 2*np.pi, 100) 
 
@@ -195,7 +195,7 @@ The [`.plot()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pl
 
 If you already have Pandas `import`ed, you can make good-looking plots in just one line of code. The default plot type for `.plot()` is a line plot, so there tends to be less typing if you're working with time series data. 
 
-```{python, collapse = TRUE, out.width='80%', fig.cap = "Adjusted Closing Prices for a Stock Price Index" }
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Adjusted Closing Prices for a Stock Price Index", fig.align='center'}
 import pandas as pd
 df = pd.read_csv("data/gspc.csv")
 df.head()
@@ -204,7 +204,7 @@ df['GSPC.Adjusted'].plot()
 
 Choosing among nondefault plot types can be done in a variety of ways. You can either use the `.plot` accessor data member of a `DataFrame`, or you can pass in different strings to `.plot()`'s `kind=` parameter. Third, some plot types (e.g. boxplots and histograms) have their own dedicated methods. 
 
-```{python, collapse = TRUE, out.width='80%', fig.cap = "Three Ways to Get the Same Histogram"}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Three Ways to Get the Same Histogram", fig.align='center'}
 df['returns'] = df['GSPC.Adjusted'].pct_change()
 df['returns'].plot(kind='hist')
 # same as df['returns'].plot.hist()
@@ -216,7 +216,7 @@ There are also [several freestanding plotting functions](https://pandas.pydata.o
 
 The following code is an example of creating a "lag plot," which is simply a scatterplot between a time series' lagged and nonlagged values. The primary benefit of this function over `.plot()` is that this function does not require you to construct an additional column of lagged values, and it comes up with good default axis labels. 
 
-```{python, collapse = TRUE, out.width='80%', fig.cap = "Lag Plot of Stock Index Returns"}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Lag Plot of Stock Index Returns", fig.align='center'}
 from pandas.plotting import lag_plot
 lag_plot(df['returns'])
 ```
