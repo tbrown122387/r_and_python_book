@@ -471,7 +471,7 @@ div.csl-indent {
 <p>All of these sound like a good things to have in our code, so let’s get started with some examples!</p>
 <div id="functions-as-function-inputs-in-r" class="section level2" number="15.1">
 <h2><span class="header-section-number">15.1</span> Functions as Function Inputs in R</h2>
-<p>Many of the most commonly-used functionals in R have names that end in “apply.” The ones I discuss are <code>sapply()</code>, <code>vapply()</code>, <code>lapply()</code>, <code>apply()</code>, <code>tapply()</code> and <code>mapply()</code>. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.</p>
+<p>Many of the most commonly-used functionals in R have names that end in “apply”. The ones I discuss are <code>sapply()</code>, <code>vapply()</code>, <code>lapply()</code>, <code>apply()</code>, <code>tapply()</code> and <code>mapply()</code>. Each of these takes a function as one of its arguments. Recall that this is made possible by the fact that R has first-class functions.</p>
 <div id="sapply-and-vapply" class="section level3" number="15.1.1">
 <h3><span class="header-section-number">15.1.1</span> <code>sapply()</code> and <code>vapply()</code></h3>
 <p>Suppose we have a <code>data.frame</code> that has 10 rows and 100 columns. What if we want to take the mean of each column?</p>
@@ -502,7 +502,7 @@ div.csl-indent {
 </div>
 <div id="lapply" class="section level3" number="15.1.2">
 <h3><span class="header-section-number">15.1.2</span> <code>lapply()</code></h3>
-<p>For functions that do not return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply()</code>. The “l” in <code>lapply()</code> stands for “list.” <code>lapply()</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
+<p>For functions that do not return amenable types that fit into a <code>vector</code>, <code>matrix</code> or <code>array</code>, they might need to be stored in <code>list</code>. In this situation, you would need <code>lapply()</code>. The “l” in <code>lapply()</code> stands for “list”. <code>lapply()</code> always returns a <code>list</code> of the same length as the <code>input</code>.</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="an-introduction-to-functional-programming.html#cb263-1" aria-hidden="true" tabindex="-1"></a>regress <span class="ot">&lt;-</span> <span class="cf">function</span>(y){ <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>) }</span>
 <span id="cb263-2"><a href="an-introduction-to-functional-programming.html#cb263-2" aria-hidden="true" tabindex="-1"></a>myRegs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(myDF, regress)</span>
 <span id="cb263-3"><a href="an-introduction-to-functional-programming.html#cb263-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(myRegs)</span>
@@ -747,7 +747,7 @@ div.csl-indent {
 <span id="cb280-18"><a href="an-introduction-to-functional-programming.html#cb280-18" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
 <span id="cb280-19"><a href="an-introduction-to-functional-programming.html#cb280-19" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(alb_real_est.<span class="bu">apply</span>(<span class="bu">len</span>, axis<span class="op">=</span><span class="dv">1</span>)) <span class="co"># length of rows</span></span>
 <span id="cb280-20"><a href="an-introduction-to-functional-programming.html#cb280-20" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
-<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply()</code>ing a function to rows. Here is an example of computing each property’s “score.”</p>
+<p>Another thing to keep in mind is that <code>DataFrame</code>s, unlike <code>ndarray</code>s, don’t have to have the same type for all elements. If you have mixed column types, then summing rows, for instance, might not make sense. This just requires subsetting columns before <code>.apply()</code>ing a function to rows. Here is an example of computing each property’s “score”.</p>
 <div class="sourceCode" id="cb281"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb281-1"><a href="an-introduction-to-functional-programming.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb281-2"><a href="an-introduction-to-functional-programming.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alb_real_est.apply(sum, axis=1) # can&#39;t add letters to numbers!</span></span>
 <span id="cb281-3"><a href="an-introduction-to-functional-programming.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_prop_score(row):</span>
@@ -988,7 +988,7 @@ Figure 15.3: Monte Carlo: With and Without Common Random Numbers Part 2
 <span id="cb300-4"><a href="an-introduction-to-functional-programming.html#cb300-4" aria-hidden="true" tabindex="-1"></a>print_name(<span class="st">&#39;Taylor&#39;</span>)</span>
 <span id="cb300-5"><a href="an-introduction-to-functional-programming.html#cb300-5" aria-hidden="true" tabindex="-1"></a><span class="co">## How you doin&#39;</span></span>
 <span id="cb300-6"><a href="an-introduction-to-functional-programming.html#cb300-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Taylor</span></span></code></pre></div>
-<p>So how do we write decorators that accomplish this? The important thing to remember is that the following is equivalent to this: <code>print_name = add_greeting("How you doin'")(print_name)</code>. This is a function returning a function returning a function! It could look something like this.</p>
+<p>So how do we write decorators that accomplish this? The important thing to remember is that <code>@add_greeting("How you doin'")</code> in the previous code block is equivalent to writing this after the function definition: <code>print_name = add_greeting("How you doin'")(print_name)</code>. This is a function returning a function returning a function! The definition of <code>add_greeting()</code> could look something like this.</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb301-1"><a href="an-introduction-to-functional-programming.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(greet):</span>
 <span id="cb301-2"><a href="an-introduction-to-functional-programming.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> decorator(func):</span>
 <span id="cb301-3"><a href="an-introduction-to-functional-programming.html#cb301-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(name):</span>
@@ -1102,10 +1102,10 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
 Jones, Karen Spärck. 1972. <span>“A Statistical Interpretation of Term Specificity and Its Application in Retrieval.”</span> <em>Journal of Documentation</em> 28: 11–21.
 </div>
 <div class="csl-entry">
-Kahn, H. 1950a. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems–i.”</span> <em>Nucleonics</em> 6 5.
+Kahn, H. 1950a. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems. II.”</span> <em>Nucleonics (U.S.) Ceased Publication</em> Vol: 6, No. 6 (June). <a href="https://www.osti.gov/biblio/4399718">https://www.osti.gov/biblio/4399718</a>.
 </div>
 <div class="csl-entry">
-Kahn, H. 1950b. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems. II.”</span> <em>Nucleonics (U.S.) Ceased Publication</em> Vol: 6, No. 6 (June). <a href="https://www.osti.gov/biblio/4399718">https://www.osti.gov/biblio/4399718</a>.
+Kahn, H. 1950b. <span>“Random Sampling (Monte Carlo) Techniques in Neutron Attenuation Problems–i.”</span> <em>Nucleonics</em> 6 5.
 </div>
 <div class="csl-entry">
 Kalman, R. E. 1960. <span>“<span class="nocase">A New Approach to Linear Filtering and Prediction Problems</span>.”</span> <em>Journal of Basic Engineering</em> 82 (1): 35–45. <a href="https://doi.org/10.1115/1.3662552">https://doi.org/10.1115/1.3662552</a>.

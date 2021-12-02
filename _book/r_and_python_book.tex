@@ -1378,7 +1378,7 @@ Regarding R, \texttt{character} \texttt{vector}s were first mentioned in section
 
 Suppose you're interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there's probably a function for it.
 
-Notice what all of these tasks have in common--they all require the ability to find patterns. When your patterns are easy to describe (e.g.~find all lowercase ``a''s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g.~find all valid email addresses). That is why this section is primarily concerned with discussing \textbf{regular expressions,} which are a tool that help you describe the patterns in text.
+Notice what all of these tasks have in common--they all require the ability to find patterns. When your patterns are easy to describe (e.g.~find all lowercase ``a''s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g.~find all valid email addresses). That is why this section is primarily concerned with discussing \textbf{regular expressions,} which are a tool that help you describe the patterns in text \citep{rfords} \citep{pythonregexprs}.
 
 \hypertarget{literal-characters-versus-metacharacters}{%
 \subsection{Literal Characters versus Metacharacters}\label{literal-characters-versus-metacharacters}}
@@ -1510,8 +1510,6 @@ There is another way to deal with this issue--\textbf{raw strings!} Raw strings 
 
 \hypertarget{more-examples-of-using-regular-expressions}{%
 \subsection{More Examples of Using Regular Expressions}\label{more-examples-of-using-regular-expressions}}
-
-\citep{rfords} pythonbookinoffice? \texttt{?regex} TODO citations
 
 Regular expressions that match many different types of characters are often very useful--these are called \textbf{character classes.} For example, \texttt{.} represents any character except a newline, \texttt{\textbackslash{}d} represents any digit, and \texttt{\textbackslash{}s} represents any whitespace character. You can sometimes capitalize the letters in the regular expression to get the opposite pattern.
 
@@ -2881,7 +2879,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140499259467104 140499259467136}
+\CommentTok{\#\# 140666937800032 140666937800064}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -4942,7 +4940,7 @@ This is what an \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.ht
 \end{Highlighting}
 \end{Shaded}
 
-\href{https://docs.python.org/3/tutorial/controlflow.html\#if-statements}{In Python}, you don't need curly braces, but the indentation needs to be just right, and you need a colon.
+\href{https://docs.python.org/3/tutorial/controlflow.html\#if-statements}{In Python}, you don't need curly braces, but the indentation needs to be just right, and you need a colon \citep{Lutz13}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5018,7 +5016,7 @@ The most common loop for us will be a \texttt{for} loop. A simple \href{https://
   Code inside the loop (inside the curly braces), is repeatedly executed, and it may or may not reference the dynamic variable \texttt{i}.
 \end{enumerate}
 
-\href{https://docs.python.org/3/tutorial/controlflow.html\#for-statements}{Here is an example of a for loop in Python}:
+\href{https://docs.python.org/3/tutorial/controlflow.html\#for-statements}{Here is an example of a for loop in Python} \citep{Lutz13}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5917,7 +5915,7 @@ If \(\mathbf{A}\) is \(m \times n\) and \(\mathbf{B}\) is \(p \times q\), then \
 \item
 \end{enumerate}
 
-This problem uses the Militarized Interstate Disputes (v5.0) TODO cite data set from \href{https://correlatesofwar.org/}{The Correlates of War Project}. There are four \texttt{.csv} files we use for this problem. \texttt{MIDA\ 5.0.csv} contains the essential attributes of each militarized interstate dispute from 1/1/1816 through 12/31/2014. \texttt{MIDB\ 5.0.csv} describes the participants in each of those disputes. \texttt{MIDI\ 5.0.csv} contains the essential elements of each militarized interstate incident, and \texttt{MIDIP\ 5.0.csv} describes the participants in each of those incidents.
+This problem uses the Militarized Interstate Disputes (v5.0) \citep{mid5} data set from \href{https://correlatesofwar.org/}{The Correlates of War Project}. There are four \texttt{.csv} files we use for this problem. \texttt{MIDA\ 5.0.csv} contains the essential attributes of each militarized interstate dispute from 1/1/1816 through 12/31/2014. \texttt{MIDB\ 5.0.csv} describes the participants in each of those disputes. \texttt{MIDI\ 5.0.csv} contains the essential elements of each militarized interstate incident, and \texttt{MIDIP\ 5.0.csv} describes the participants in each of those incidents.
 
 \begin{itemize}
 \tightlist
@@ -6418,8 +6416,6 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 
 The difference is that we're creating our own \emph{types} now. In the last chapter we learned about built-in types: floating point numbers, lists, arrays, functions, etc. Now we will discuss broadly how one can create his own types in both R and Python. These user-defined types can be used as cookie cutters. Once we have the cookie cutter, we can make as many cookies as we want!
 
-TODO: image of cookie cutter
-
 We will not go into this too deeply, but it is important to know how how code works so that we can use it more effectively. For instance, in Python, we frequently write code like \texttt{my\_data\_frame.doSomething()}. The material in this chapter will go a long way to describe how we can make our own types with custom behavior.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -6801,7 +6797,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x56240de95448>
+## <bytecode: 0x563a3f441190>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7422,12 +7418,11 @@ Which of the following classes in R requires you to \texttt{library()} in someth
 \item
 \end{enumerate}
 
-TODO cite
 Suppose you have the following data set: \(X_1, \ldots, X_n\). You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by \(\mu\) and \(\sigma^2\), respectively. Consider testing the hypothesis that \(\mu = 0\) at a significance level of \(\alpha\). To carry out this test, you calculate
 \[
 t = \frac{\bar{X}}{S/\sqrt{n}}
 \]
-and you reject the null if \(|t| > t_{n-1,\alpha/2}\). Here \(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\) is the sample variance, and \(t_{n-1,\alpha/2}\) is the \(1-\alpha/2\) quantile of a t-distribution with \(n-1\) degrees of freedom.
+and you reject the null if \(|t| > t_{n-1,\alpha/2}\) \citep{student1908probable}. Here \(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\) is the sample variance, and \(t_{n-1,\alpha/2}\) is the \(1-\alpha/2\) quantile of a t-distribution with \(n-1\) degrees of freedom.
 
 \begin{itemize}
 \tightlist
@@ -7446,11 +7441,11 @@ and you reject the null if \(|t| > t_{n-1,\alpha/2}\). Here \(S^2 = \sum_i(X_i -
 \item
 \end{enumerate}
 
-Suppose you have a target density \(p(x)\) that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some \(c > 0\), \(p(x) = f(x) / c\), and you are only able to evaluate \(f(\cdot)\). Your goal is that you would like to be able to approximate the expected value of \(p(x)\) (i.e.~\(\int x p(x) dx\)) using some proposal distribution \(q(x)\). \(q(x)\) is flexible in that you can sample from it, and you can evaluate it. We will use \textbf{importance sampling} to achieve this.\footnote{Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.}
+Suppose you have a target density \(p(x)\) that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some \(c > 0\), \(p(x) = f(x) / c\), and you are only able to evaluate \(f(\cdot)\). Your goal is that you would like to be able to approximate the expected value of \(p(x)\) (i.e.~\(\int x p(x) dx\)) using some proposal distribution \(q(x)\). \(q(x)\) is flexible in that you can sample from it, and you can evaluate it. We will use \textbf{importance sampling} \citep{impsamping1} \citep{impsamping2} to achieve this.\footnote{Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Algorithm 1}: Importance Sampling TODO cite
+\textbf{Algorithm 1}: Importance Sampling
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -7838,8 +7833,6 @@ On the other hand, take a look at the documentation of \texttt{merge()}. It only
 
 This is the difference between \texttt{Reduce()} and \texttt{do.call()}. \texttt{do.call()} calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, \texttt{Reduce()} calls a binary function many times on pairs of arguments. \texttt{Reduce()}'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on.
 
-TODO diagram
-
 Here is an initial example that makes use of four data sets \texttt{d1.csv}, \texttt{d2.csv}, \texttt{d3.csv}, and \texttt{d4.csv}. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste \texttt{read.csv} calls, but that would violate the DRY principle. Instead, let's use \texttt{lapply()} an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
 
 \begin{Shaded}
@@ -7935,7 +7928,7 @@ We can visualize the mathematical function by plotting its outputs against its i
 
 \href{https://docs.python.org/3/library/functions.html\#filter}{\texttt{filter()}} helps remove unwanted elements from a container. It returns an iterable of type \texttt{filter}, which we can iterate over or convert to a more familiar type of container. In this example, I iterate over it without converting it.
 
-This code also provides our first example of a \href{https://docs.python.org/3/tutorial/controlflow.html\#lambda-expressions}{\textbf{lambda function}}. Lambda functions are simply another way to define functions. Notice that in this example, we didn't have to name our function. In other words, it was \textbf{anonymous}. We can also save a few lines of code.
+This code also provides our first example of a \href{https://docs.python.org/3/tutorial/controlflow.html\#lambda-expressions}{\textbf{lambda function}} \citep{Lutz13}. Lambda functions are simply another way to define functions. Notice that in this example, we didn't have to name our function. In other words, it was \textbf{anonymous}. We can also save a few lines of code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8325,7 +8318,7 @@ Fortunately there's a way to automatically vectorize functions like the one abov
 \end{Highlighting}
 \end{Shaded}
 
-The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use \textbf{\href{https://www.python.org/dev/peps/pep-0318/}{function decorators}.} You can \emph{decorate} a function by using the \texttt{@} operator.
+The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use \textbf{\href{https://www.python.org/dev/peps/pep-0318/}{function decorators}.} You can \emph{decorate} a function by using the \texttt{@} operator \citep{Lutz13}.
 
 If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place.
 

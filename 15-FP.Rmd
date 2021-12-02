@@ -622,7 +622,7 @@ print_name('Taylor')
 ```
 
 
-So how do we write decorators that accomplish this? The important thing to remember is that the following is equivalent to this: `print_name = add_greeting("How you doin'")(print_name)`. This is a function returning a function returning a function! It could look something like this.
+So how do we write decorators that accomplish this? The important thing to remember is that `@add_greeting("How you doin'")` in the previous code block is equivalent to writing this after the function definition: `print_name = add_greeting("How you doin'")(print_name)`. This is a function returning a function returning a function! The definition of `add_greeting()` could look something like this.
 
 ```{python, collapse = TRUE}
 def add_greeting(greet):
