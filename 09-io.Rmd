@@ -138,13 +138,13 @@ By default, `pd.read_csv()` is expecting column labels, which is also a problem.
 
 ```{python, collapse = TRUE}
 pd.read_csv("data/o-ring-erosion-only.data", 
-            header=None, sep = " ").head(2) # 1 space: no
+              header=None, sep = " ").head(2) # 1 space: no
 pd.read_csv("data/o-ring-erosion-only.data", 
-            header=None, sep = "\t").head(2) # tabs: no
+              header=None, sep = "\t").head(2) # tabs: no
 pd.read_table("data/o-ring-erosion-only.data", 
               header=None).head(2) # default sep is tabs, so no
 pd.read_csv("data/o-ring-erosion-only.data", 
-            header=None, sep = "\s+").head(2) # 1 or more spaces: yes
+              header=None, sep = "\s+").head(2) # 1 or more spaces: yes
 ```
 
 Reading in fixed width files can be done in a way that is nearly identical to the way we did it in R. Here is an example. 
@@ -159,7 +159,7 @@ If you had chosen `widths=[2,2,4,4,1]`, instead, then the trailing whitespace wi
 
 ```{python, collapse = TRUE}
 d = pd.read_fwf("data/o-ring-erosion-only.data", 
-                widths = [2,2,4,4,1], header=None)
+                  widths = [2,2,4,4,1], header=None)
 list(d.dtypes)[:4]
 d = d.astype({2:'string', 3:'string'}) 
 list(d.dtypes)[:4]
@@ -253,9 +253,9 @@ You can write out tabular data with a variety of [`DataFrame` methods that are n
 ```{python, collapse = TRUE}
 import pandas as pd
 d = pd.read_csv("data/o-ring-erosion-only.data", 
-                header=None, sep = "\s+")
+                  header=None, sep = "\s+")
 d.to_csv("data/oring_out2.csv", 
-         header=True, index=False, sep = ",")
+          header=True, index=False, sep = ",")
 ```
 
 Here is how the first few rows of that file looks in a text editor.

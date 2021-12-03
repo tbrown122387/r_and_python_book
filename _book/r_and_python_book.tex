@@ -93,19 +93,6 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
-\makeatletter
-\def\fps@figure{htbp}
-\makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -119,9 +106,9 @@
 \definecolor{shadecolor}{RGB}{248,248,248}
 
 % stuff for rmd-details and rmd-caution boxes defined below
-\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins} 
 \usepackage{fontawesome}
-\usepackage{blindtext}
 
 
 \renewcommand{\textfraction}{0.05}
@@ -170,28 +157,46 @@
 
 
 % new environments for rmd-details and rmd-caution boxes
-\newsavebox{\bulb}
-\savebox{\bulb}{\makebox[2\columnsep]{\huge \faLightbulbO}}
-\newsavebox{\rmdbox}
-\newenvironment{rmd-details}{\begin{lrbox}{\rmdbox}
-  \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\bulb-\columnsep}
-    \vspace*{\columnsep}}%
-{\vspace*{\columnsep}\endminipage\end{lrbox}%
-  {\par\color{green}\fboxsep=0pt
-    \fbox{\usebox\bulb\usebox\rmdbox\hspace{\columnsep}}\par}}
+% \newsavebox{\bulb}
+% \savebox{\bulb}{\makebox[2\columnsep]{\huge \faLightbulbO}}
+% \newsavebox{\rmdbox}
+% \newenvironment{rmd-details}{\begin{lrbox}{\rmdbox}
+%   \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\bulb-\columnsep}
+%     \vspace*{\columnsep}}%
+% {\vspace*{\columnsep}\endminipage\end{lrbox}%
+%   {\par\color{green}\fboxsep=0pt
+%     \fbox{\usebox\bulb\usebox\rmdbox\hspace{\columnsep}}\par}}
+\newtcolorbox{rmd-details}{
+    enhanced,
+    sharp corners,
+    colframe=green,
+    colback=white,
+    left=1cm,
+    overlay={%
+        \node at ([xshift=18pt]frame.west) {\Huge\faLightbulbO};
+    },
+}
     
-% todo here
-\newsavebox{\excl}
-\savebox{\excl}{\makebox[2\columnsep]{\huge \faExclamation}}
-%\newsavebox{\rmdbox2}
-\newenvironment{rmd-caution}{\begin{lrbox}{\rmdbox}
-  \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\excl-\columnsep}
-    \vspace*{\columnsep}}%
-{\vspace*{\columnsep}\endminipage\end{lrbox}%
-  {\par\color{yellow}\fboxsep=0pt
-    \fbox{\usebox\excl\usebox\rmdbox\hspace{\columnsep}}\par}}
+% \newsavebox{\excl}
+% \savebox{\excl}{\makebox[2\columnsep]{\huge \faExclamation}}
+% %\newsavebox{\rmdbox2}
+% \newenvironment{rmd-caution}{\begin{lrbox}{\rmdbox}
+%   \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\excl-\columnsep}
+%     \vspace*{\columnsep}}%
+% {\vspace*{\columnsep}\endminipage\end{lrbox}%
+%   {\par\color{yellow}\fboxsep=0pt
+%     \fbox{\usebox\excl\usebox\rmdbox\hspace{\columnsep}}\par}}
     
-%\newenvironment{rmd-caution}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
+\newtcolorbox{rmd-caution}{
+    enhanced,
+    sharp corners,
+    colframe=yellow,
+    colback=white,
+    left=1cm,
+    overlay={%
+        \node at ([xshift=18pt]frame.west) {\Huge\faExclamation};
+    },
+}
 
 
 \frontmatter
@@ -397,7 +402,7 @@ After we have a saved script, we can run it by sending all the lines of code ove
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Anything coming after the pound/hash{-}tag symbol }
+\CommentTok{\# Anything coming after the pound/hash{-}tag symbol}
 \CommentTok{\# is a comment to the human programmer.}
 \CommentTok{\# These lines are ignored by R}
 \FunctionTok{setwd}\NormalTok{(}\StringTok{"/home/taylor/Desktop/"}\NormalTok{)}
@@ -1793,7 +1798,14 @@ Suppose further that you are interested in calculating the probability that one 
 
 If you wanted to visualize it, \(\mathbf{1}(x > 6)\) looks like this.
 
-\begin{center}\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-67-1} \end{center}
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-67-1} 
+
+}
+
+\caption{An Indicator Function}\label{fig:unnamed-chunk-67}
+\end{figure}
 
 So, the sum in this expression is just a count of the number of elements that are greater than \(6\).
 
@@ -1849,7 +1861,14 @@ X \sim \text{Bernoulli}(.5).
 
 Both \(f(y \mid X=0)\) and \(f(y \mid X=1)\) are bell-curved, and \(f(y)\) looks like this
 
-\begin{center}\includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-68-1} \end{center}
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-68-1} 
+
+}
+
+\caption{The Marginal Density of Y}\label{fig:unnamed-chunk-68}
+\end{figure}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -2879,7 +2898,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140666937800032 140666937800064}
+\CommentTok{\#\# 140214937359712 140214937359744}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -5169,7 +5188,7 @@ We can plot all three functions. The area under the \(p(x)\) and \(q(x)\) curves
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.4\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-186-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-186-1} 
 
 }
 
@@ -5182,14 +5201,10 @@ We can plot all three functions. The area under the \(p(x)\) and \(q(x)\) curves
   Write a function called \texttt{arSamp(n)} that samples from \(p(x)\) using accept-reject sampling. It should take a single argument that is equal to the number of samples desired. Below is one step of the accept-reject algorithm. You will need to do many iterations of this. The number of iterations will be random, because some of these proposals will not be accepted.
 \end{itemize}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 \textbf{Algorithm 1}: Accept-Reject Sampling (One Step)
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 \begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+\def\labelenumi{\roman{enumi}.}
 \tightlist
 \item
   Find \(M\) such that \(M > \frac{f(x)}{q(x)}\) for all possible \(x\) (the smaller the better).
@@ -5202,8 +5217,6 @@ We can plot all three functions. The area under the \(p(x)\) and \(q(x)\) curves
 \item
   Otherwise, return nothing.
 \end{enumerate}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5382,8 +5395,8 @@ In Python, Numpy has \href{https://numpy.org/doc/stable/reference/generated/nump
 \NormalTok{silly\_data }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(silly\_data)}
 \CommentTok{\#\# [{-}0.52817175 {-}1.07296862  0.86540763 {-}2.3015387   1.74481176]}
-\NormalTok{np.sort(silly\_data)}
-\CommentTok{\#\# array([{-}2.3015387 , {-}1.07296862, {-}0.52817175,  0.86540763,  1.74481176])}
+\BuiltInTok{print}\NormalTok{( np.sort(silly\_data) )}
+\CommentTok{\#\# [{-}2.3015387  {-}1.07296862 {-}0.52817175  0.86540763  1.74481176]}
 \NormalTok{np.argsort(silly\_data)}
 \CommentTok{\#\# array([3, 1, 0, 2, 4])}
 \end{Highlighting}
@@ -6092,9 +6105,12 @@ If we wanted to get a general idea of how expensive homes were in Albemarle Coun
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-217-1.pdf}
-\caption{\label{fig:unnamed-chunk-217}A Simple Histogram}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-217-1} 
+
+}
+
+\caption{A Simple Histogram}\label{fig:unnamed-chunk-217}
 \end{figure}
 
 I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many more that could be tweaked. Make sure to skim the options in the documentation (\texttt{?hist}).
@@ -6115,9 +6131,12 @@ I specified the \texttt{xlab=} and \texttt{main=} arguments, but there are many 
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-218-1.pdf}
-\caption{\label{fig:unnamed-chunk-218}Some Scatterplots}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-218-1} 
+
+}
+
+\caption{Some Scatterplots}\label{fig:unnamed-chunk-218}
 \end{figure}
 
 \begin{Shaded}
@@ -6141,7 +6160,7 @@ This new design is not to encourage you to think about S3 object-oriented system
 
 The core function in this library is the \href{https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/ggplot}{\texttt{ggplot()} function}. This function initializes figures; it is the function that will take in information about \emph{which} data set you want to plot, and \emph{how} you want to plot it. The raw data is provided in the first argument. The second argument, \texttt{mapping=}, is more confusing. The argument should be constructed with the \texttt{aes()} function. In the parlance of \texttt{ggplot2}, \texttt{aes()} constructs an \textbf{aesthetic mapping}. Think of the ``aesthetic mapping'' as stored information that can be used later on--it ``maps'' data to visual properties of a figure.
 
-Consider this first example.
+Consider this first example by typing the following into your own console.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6149,10 +6168,6 @@ Consider this first example.
 \FunctionTok{ggplot}\NormalTok{(mpg, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ displ, }\AttributeTok{y =}\NormalTok{ hwy))}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-219-1} \caption{A Blank Canvas}\label{fig:unnamed-chunk-219}
-\end{figure}
 
 You'll notice a few things about the code and the result produced:
 
@@ -6179,9 +6194,12 @@ Consider the function \href{https://www.rdocumentation.org/packages/ggplot2/vers
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-220-1.pdf}
-\caption{\label{fig:unnamed-chunk-220}A Second Scatterplot}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-220-1} 
+
+}
+
+\caption{A Second Scatterplot}\label{fig:unnamed-chunk-220}
 \end{figure}
 
 Notice that we did not need to provide any arguments to \texttt{geom\_point()}--the aesthetic mappings were used by the new layer.
@@ -6207,9 +6225,12 @@ Additionally, notice that the same layer will behave much differently if we chan
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-222-1.pdf}
-\caption{\label{fig:unnamed-chunk-222}Adding Some Color}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-222-1} 
+
+}
+
+\caption{Adding Some Color}\label{fig:unnamed-chunk-222}
 \end{figure}
 
 If we want tighter control on the aesthetic mapping, we can use \href{https://ggplot2-book.org/scales.html\#scales}{\textbf{scales}}. Syntactically, these are things we ``add'' (\texttt{+}) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix \texttt{scale\_}. We can change attributes of the axes like this.
@@ -6225,9 +6246,12 @@ If we want tighter control on the aesthetic mapping, we can use \href{https://gg
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-223-1.pdf}
-\caption{\label{fig:unnamed-chunk-223}Changing Scales}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-223-1} 
+
+}
+
+\caption{Changing Scales}\label{fig:unnamed-chunk-223}
 \end{figure}
 
 We can also change plot colors with scale layers. Let's add an aesthetic called \texttt{fill=} so we can use colors to denote the value of a numerical (not categorical) column. This data set doesn't have any more unused numerical columns, so let's create a new one called \texttt{score}. We also use a new geom layer from a function called \texttt{geom\_tile()}.
@@ -6241,9 +6265,12 @@ We can also change plot colors with scale layers. Let's add an aesthetic called 
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-224-1.pdf}
-\caption{\label{fig:unnamed-chunk-224}Changing the Fill}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-224-1} 
+
+}
+
+\caption{Changing the Fill}\label{fig:unnamed-chunk-224}
 \end{figure}
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one.
@@ -6258,9 +6285,12 @@ If we didn't like these colors, we could change them with a scale layer. Persona
 \end{Shaded}
 
 \begin{figure}
-\centering
-\includegraphics{r_and_python_book_files/figure-latex/unnamed-chunk-225-1.pdf}
-\caption{\label{fig:unnamed-chunk-225}Changing the Fill Again}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-225-1} 
+
+}
+
+\caption{Changing the Fill Again}\label{fig:unnamed-chunk-225}
 \end{figure}
 
 There are many to choose from, though. Try to run the following code on your own to see what it produces.
@@ -6290,16 +6320,18 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
 \CommentTok{\#\# /home/trb5me\_admin/.local/share/r{-}miniconda/envs/r{-}reticulate/bin/python:1: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (\textasciigrave{}matplotlib.pyplot.figure\textasciigrave{}) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam \textasciigrave{}figure.max\_open\_warning\textasciigrave{}).}
-\NormalTok{ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
-\CommentTok{\#\# (array([ 11.,  36., 103., 224., 287., 224.,  88.,  24.,   1.,   2.]), array([{-}3.05376438, {-}2.35252767, {-}1.65129096, {-}0.95005426, {-}0.24881755,}
-\CommentTok{\#\#         0.45241916,  1.15365587,  1.85489258,  2.55612929,  3.257366  ,}
-\CommentTok{\#\#         3.9586027 ]), \textless{}a list of 10 Patch objects\textgreater{})}
+\NormalTok{\_ }\OperatorTok{=}\NormalTok{ ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
 \NormalTok{plt.show()                            }\CommentTok{\# 5}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-227-1} \caption{Another Simple Histogram}\label{fig:unnamed-chunk-227}
+
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-227-1} 
+
+}
+
+\caption{Another Simple Histogram}\label{fig:unnamed-chunk-227}
 \end{figure}
 
 In the first line, we import the \texttt{pyplot} submodule of \texttt{matplotlib}. We rename it to \texttt{plt}, which is short, and will save us some typing. Calling it \texttt{plt} follows the most popular naming convention.
@@ -6318,7 +6350,7 @@ Third, we call the \texttt{subplots()} function, and use \emph{sequence unpackin
   One or more \href{https://matplotlib.org/stable/api/axes_api.html\#the-axes-class}{\texttt{Axes} objects} are contained in a \texttt{Figure} object. Each is ``\href{https://matplotlib.org/stable/tutorials/introductory/usage.html\#axes}{what you think of as `a plot'}.'' They hold onto two \texttt{Axis} objects (in the case of 2-dimensional plots) or three (in the case of 3-dimensional arguments). We are usually calling the methods of these objects to effect changes on a plot.
 \end{enumerate}
 
-In line four, we call the \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html\#matplotlib.axes.Axes.hist}{\texttt{hist()} method} of the \texttt{Axes} object called \texttt{ax}. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in \href{https://matplotlib.org/stable/api/axes_api.html\#plotting}{the documentation}.
+In line four, we call the \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html\#matplotlib.axes.Axes.hist}{\texttt{hist()} method} of the \texttt{Axes} object called \texttt{ax}. We assign the output of \texttt{.hist()} to a variable \texttt{\_}. This is done to suppress the printing of the method's output, and because this variable name is a Python convention that signals the object is temporary and will not be used later in the program. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in \href{https://matplotlib.org/stable/api/axes_api.html\#plotting}{the documentation}.
 
 If you want to make figures that are more elaborate, just keep calling different methods of \texttt{ax}. If you want to fit more subplots to the same figure, add more \texttt{Axes} objects. Here is an example using some code from \href{https://matplotlib.org/stable/tutorials/introductory/usage.html\#the-object-oriented-interface-and-the-pyplot-interface}{one of the official Matplotlib tutorials}.
 
@@ -6333,22 +6365,27 @@ If you want to make figures that are more elaborate, just keep calling different
 \CommentTok{\# first subplot}
 \CommentTok{\#\# /home/trb5me\_admin/.local/share/r{-}miniconda/envs/r{-}reticulate/bin/python:1: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (\textasciigrave{}matplotlib.pyplot.figure\textasciigrave{}) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam \textasciigrave{}figure.max\_open\_warning\textasciigrave{}).}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f8601974fd0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data }
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f8601981160\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f86019814a8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
+\CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
+\CommentTok{\#\# Text(0, 0.5, \textquotesingle{}y label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{"Simple Plot"}\NormalTok{)  }\CommentTok{\# Add a title to the axes.}
+\CommentTok{\#\# Text(0.5, 1.0, \textquotesingle{}Simple Plot\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f86019ac8d0\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f8601981be0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f8601987d30\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-228-3} \caption{Side-By-Side Line Plots in Matplotlib}\label{fig:unnamed-chunk-228}
-\end{figure}
 
 \hypertarget{plotting-with-pandas}{%
 \section{Plotting with Pandas}\label{plotting-with-pandas}}
@@ -6373,12 +6410,9 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \CommentTok{\#\# }
 \CommentTok{\#\# [5 rows x 7 columns]}
 \NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f86019b17f0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-229-5} \caption{Adjusted Closing Prices for a Stock Price Index}\label{fig:unnamed-chunk-229}
-\end{figure}
 
 Choosing among nondefault plot types can be done in a variety of ways. You can either use the \texttt{.plot} accessor data member of a \texttt{DataFrame}, or you can pass in different strings to \texttt{.plot()}'s \texttt{kind=} parameter. Third, some plot types (e.g.~boxplots and histograms) have their own dedicated methods.
 
@@ -6388,12 +6422,9 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f86019b17f0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-230-7} \caption{Three Ways to Get the Same Histogram}\label{fig:unnamed-chunk-230}
-\end{figure}
 
 There are also \href{https://pandas.pydata.org/docs/user_guide/visualization.html\#visualization-tools}{several freestanding plotting functions} (not methods) that take in \texttt{DataFrame}s and \texttt{Series} objects. Each of these functions is typically imported individually from the \texttt{pandas.plotting} submodule.
 
@@ -6403,12 +6434,9 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
 \NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f86019b17f0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-231-9} \caption{Lag Plot of Stock Index Returns}\label{fig:unnamed-chunk-231}
-\end{figure}
 
 \hypertarget{part-programming-styles}{%
 \part{Programming Styles}\label{part-programming-styles}}
@@ -6609,7 +6637,8 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 \begin{Shaded}
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
-\KeywordTok{class}\NormalTok{ RunningCI(RunningMean): }\CommentTok{\# \textless{}{-} notice what\textquotesingle{}s inside the parentheses!}
+
+\KeywordTok{class}\NormalTok{ RunningCI(RunningMean):}\CommentTok{\# \textless{}{-}notice what\textquotesingle{}s inside the parentheses}
   \CommentTok{"""Updates a running average and }
 \CommentTok{  gives you a known{-}variance confidence interval"""}
   \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, known\_var):}
@@ -6801,7 +6830,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x563a3f441190>
+## <bytecode: 0x5646cb1bc1f8>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -6848,7 +6877,7 @@ As an example, let's try to \texttt{plot()} some specific objects.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-244-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-244-1} 
 
 }
 
@@ -6872,7 +6901,7 @@ As another example, we can play around with objects created with the \texttt{ecd
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-245-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-245-1} 
 
 }
 
@@ -7447,26 +7476,11 @@ and you reject the null if \(|t| > t_{n-1,\alpha/2}\) \citep{student1908probable
 
 Suppose you have a target density \(p(x)\) that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some \(c > 0\), \(p(x) = f(x) / c\), and you are only able to evaluate \(f(\cdot)\). Your goal is that you would like to be able to approximate the expected value of \(p(x)\) (i.e.~\(\int x p(x) dx\)) using some proposal distribution \(q(x)\). \(q(x)\) is flexible in that you can sample from it, and you can evaluate it. We will use \textbf{importance sampling} \citep{impsamping1} \citep{impsamping2} to achieve this.\footnote{Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 \textbf{Algorithm 1}: Importance Sampling
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Sample \(X^1, \ldots, X^n\) from \(q(x)\),
-\item
-  For each sample \(x^i\), calculate an unnormalized weight \(\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}\),
-\item
-  Calculate the normalized weights \(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\).
-\item
-  Calculate the weighted average \(\sum_{i=1}^n w^i x^i\).
-\end{enumerate}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+i. Sample \(X^1, \ldots, X^n\) from \(q(x)\),
+ii. For each sample \(x^i\), calculate an unnormalized weight \(\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}\),
+iii. Calculate the normalized weights \(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\).
+iv. Calculate the weighted average \(\sum_{i=1}^n w^i x^i\).
 
 In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each \(\log \tilde{w}^i\), before you exponentiate them, subtract a number \(m\) from all the values. A good choice for \(m\) is \(\max_i (\log \tilde{w}^i)\). These new values will produce the same normalized weights because
 \[
@@ -7717,19 +7731,19 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \NormalTok{\}}
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
-\FunctionTok{str}\NormalTok{(subDF)}
+\FunctionTok{str}\NormalTok{(subDF, }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
 \DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    2973 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1998 1886 1910 1975 1940 1958 1978 1989 ...}
+\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1998 1886 1910 1975 1940 1958 ..}
 \DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 1982 1987 0 0 0 ...}
 \DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Good" "Average" ...}
 \DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1.86 1.53 1 1.52 1 1 1.35 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1244 1861 1108 1520 812 912 1500 3017 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1244 1861 1108 1520 812 912 15..}
 \DocumentationTok{\#\#  $ Bedroom      : int  3 3 1 4 3 3 2 2 3 4 ...}
 \DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 3 3 ...}
 \DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 0 ...}
 \DocumentationTok{\#\#  $ TotalRooms   : int  10 7 3 6 6 4 6 5 6 7 ...}
 \DocumentationTok{\#\#  $ LotSize      : num  5 61.19 50.65 3.88 8.84 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 620700 162500 167200 151900 48500 120700 358500 1036500 ...}
+\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 620700 162500 167200 15190..}
 \DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "CROZET" "CROZET" ...}
 \end{Highlighting}
 \end{Shaded}
@@ -7743,20 +7757,20 @@ If I wanted the average home price for each city, I could use something like thi
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{str}\NormalTok{(albRealEstate)}
+\FunctionTok{str}\NormalTok{(albRealEstate, }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
 \DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    27943 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1972 1998 1886 1910 1900 1975 1940 2008 ...}
+\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1972 1998 1886 1910 1900 1975 ..}
 \DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 0 0 1982 1987 0 ...}
 \DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Good" ...}
 \DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1 1.86 1.53 2 1 1.52 1.92 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1248 1244 1861 1108 728 1520 812 1998 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1248 1244 1861 1108 728 1520 8..}
 \DocumentationTok{\#\#  $ Bedroom      : int  3 3 2 1 4 3 2 3 2 3 ...}
 \DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 0 2 ...}
 \DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 1 ...}
 \DocumentationTok{\#\#  $ TotalRooms   : int  10 7 4 3 6 6 4 4 6 7 ...}
 \DocumentationTok{\#\#  $ LotSize      : num  5 61.19 1.76 50.65 3.88 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 180900 620700 162500 167200 1016500 151900 48500 355700 ...}
-\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "EARLYSVILLE" "CROZET" ...}
+\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 180900 620700 162500 16720..}
+\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "EARLYSVILLE" "CROZET"..}
 \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City))}
 \DocumentationTok{\#\# [1] 6}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
@@ -7911,7 +7925,14 @@ I discuss two functions from base Python that take functions as input. Neither r
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \ref{visualization}.
 
-\includegraphics[width=0.7\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-274-1}
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{pics/spline} 
+
+}
+
+\caption{Our Spline Function}\label{fig:unnamed-chunk-274}
+\end{figure}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
 
@@ -8158,7 +8179,7 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-287-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-287-1} 
 
 }
 
@@ -8215,12 +8236,18 @@ Let's compare using common random numbers to going without. As you can see, comm
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-290-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-290-1} 
 
 }
 
 \caption{Monte Carlo: With and Without Common Random Numbers}\label{fig:unnamed-chunk-290}
 \end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 There are some new downsides to this implementation to consider:
 
@@ -8263,16 +8290,20 @@ This is much better because
 
 The inner function did in fact capture \texttt{commonZs}, but it captured from the enclosing scope, not the global scope. Capturing isn't always a terrible idea. It would be difficult to modify these variables, so we don't need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice--now the end-users of functions created by this factory don't need to worry about plugging in extra parameters.
 
-Let's use \(1000\) samples again and make sure this function works by comparing its output to the known true function.
+Let's use \(1000\) samples again and make sure this function works by comparing its output to the known true function. Run the following code on your own machine.
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.6\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-293-1} 
-
-}
-
-\caption{Monte Carlo: With and Without Common Random Numbers Part 2}\label{fig:unnamed-chunk-293}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcApproxCRNv2 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{apply}\NormalTok{(muSigmaGrid, }\DecValTok{1}\NormalTok{, monteCarloSinCRNv2), }
+                        \AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(muGrid))}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApprox, }
+        \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc without crn"}\NormalTok{)}
+\FunctionTok{contour}\NormalTok{(muGrid, sigmaGrid, mcApproxCRNv2, }
+        \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"sigma"}\NormalTok{, }\AttributeTok{main =} \StringTok{"mc with crn"}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{functions-as-function-outputs-in-python}{%
 \section{Functions as Function Outputs in Python}\label{functions-as-function-outputs-in-python}}

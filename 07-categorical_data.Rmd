@@ -144,10 +144,11 @@ Another option is to create the `dtype` before you create the `Series`, and pass
 
 ```{python, collapse = TRUE}
 cat_type = pd.CategoricalDtype(
-                  categories=["autumn", "summer", "spring", "winter"],
-                  ordered=True)
-responses = pd.Series(["autumn", "summer", "summer"], 
-                      dtype = cat_type)
+  categories=["autumn", "summer", "spring", "winter"],
+  ordered=True)
+responses = pd.Series(
+  ["autumn", "summer", "summer"], 
+  dtype = cat_type)
 responses
 ```
 
@@ -159,8 +160,8 @@ import numpy as np
 stock_returns = np.random.normal(size=10) # not categorical 
 # array input means Categorical output
 type_of_day = pd.cut(stock_returns, 
-                     bins = [-np.inf, 0, np.inf], 
-                     labels = ['bad day', 'good day']) 
+                      bins = [-np.inf, 0, np.inf], 
+                      labels = ['bad day', 'good day']) 
 type(type_of_day)
 # Series in means Series out
 type_of_day2 = pd.cut(pd.Series(stock_returns), 
@@ -177,7 +178,7 @@ Finally, when reading in data from an external source, choose carefully whether 
 import numpy as np
 # make 5th col categorical
 my_data = pd.read_csv("data/iris.csv", header=None, 
-                      dtype = {4:"category"}) 
+                        dtype = {4:"category"}) 
 my_data.head(1)
 my_data.dtypes
 np.unique(my_data[4]).tolist()
@@ -250,7 +251,7 @@ import pandas as pd
 import numpy as np
 d = pd.DataFrame({'predicted label' : [1,2,2,1,2,2,1,2,3,2,2,3], 
                   'actual label': [1,2,3,1,2,3,1,2,3,1,2,3]}, 
-                 dtype='category')
+                  dtype='category')
 d.dtypes[0]
 d.dtypes[1]
 ```

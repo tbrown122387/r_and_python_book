@@ -467,8 +467,8 @@ div.csl-indent {
 <p>Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and <code>return</code> isn’t a function like it is in R, so there is no need to use parentheses after it. There is one syntactic addition, though–we need a colon (<code>:</code>) at the end of the first line of the definition.</p>
 <p>Here is an example of a toy function called <code>add_one()</code>.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="functions.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_one(my_input):  <span class="co"># define the function</span></span>
-<span id="cb90-2"><a href="functions.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  my_output <span class="op">=</span> my_input <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb90-3"><a href="functions.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> my_output</span>
+<span id="cb90-2"><a href="functions.html#cb90-2" aria-hidden="true" tabindex="-1"></a>    my_output <span class="op">=</span> my_input <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb90-3"><a href="functions.html#cb90-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_output</span>
 <span id="cb90-4"><a href="functions.html#cb90-4" aria-hidden="true" tabindex="-1"></a>add_one(<span class="dv">41</span>) <span class="co"># call/invoke/use the function </span></span>
 <span id="cb90-5"><a href="functions.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 42</span></span></code></pre></div>
 <p>Below the definition, the function is called with an input of <code>41</code>. When this happens, the following sequence of events occurs</p>
@@ -537,8 +537,8 @@ div.csl-indent {
 <!-- `__kwdefaults__` | A dict containing defaults for keyword-only parameters. -->
 <p>So, for instance, let’s try to find the <em>formal parameter list</em> of a user-defined function below. This is, again, the collection of inputs a function takes. Just like in R, this is not the <em>actual</em> arguments a user will plug in–that isn’t knowable at the time the function is created.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> Here we have another function called <code>add_number()</code> that takes a parameter <code>which_number</code> that is accompanied by a default argument of <code>1</code>.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="functions.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_number(my_input, which_number <span class="op">=</span> <span class="dv">1</span>): <span class="co"># define a function</span></span>
-<span id="cb93-2"><a href="functions.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  my_output <span class="op">=</span> my_input <span class="op">+</span> which_number</span>
-<span id="cb93-3"><a href="functions.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> my_output</span>
+<span id="cb93-2"><a href="functions.html#cb93-2" aria-hidden="true" tabindex="-1"></a>    my_output <span class="op">=</span> my_input <span class="op">+</span> which_number</span>
+<span id="cb93-3"><a href="functions.html#cb93-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_output</span>
 <span id="cb93-4"><a href="functions.html#cb93-4" aria-hidden="true" tabindex="-1"></a>add_number(<span class="dv">3</span>) <span class="co"># no second argument being provided by the user here</span></span>
 <span id="cb93-5"><a href="functions.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 4</span></span>
 <span id="cb93-6"><a href="functions.html#cb93-6" aria-hidden="true" tabindex="-1"></a>add_number.__code__.co_varnames <span class="co"># note this also contains *my_output*</span></span>
@@ -641,9 +641,9 @@ div.csl-indent {
 <p>“<em>Local</em>” refers to variables that are defined inside of the function’s block. The function below uses the local <code>a</code> over the global one.</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="functions.html#cb99-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb99-2"><a href="functions.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> silly_function():</span>
-<span id="cb99-3"><a href="functions.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> <span class="dv">22</span> <span class="co"># local a</span></span>
-<span id="cb99-4"><a href="functions.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;local variables are &quot;</span>, <span class="bu">locals</span>())</span>
-<span id="cb99-5"><a href="functions.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">+</span> <span class="dv">20</span></span>
+<span id="cb99-3"><a href="functions.html#cb99-3" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> <span class="dv">22</span> <span class="co"># local a</span></span>
+<span id="cb99-4"><a href="functions.html#cb99-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;local variables are &quot;</span>, <span class="bu">locals</span>())</span>
+<span id="cb99-5"><a href="functions.html#cb99-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> <span class="dv">20</span></span>
 <span id="cb99-6"><a href="functions.html#cb99-6" aria-hidden="true" tabindex="-1"></a>silly_function()</span>
 <span id="cb99-7"><a href="functions.html#cb99-7" aria-hidden="true" tabindex="-1"></a><span class="co">## local variables are  {&#39;a&#39;: 22}</span></span>
 <span id="cb99-8"><a href="functions.html#cb99-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 42</span></span>
@@ -666,24 +666,24 @@ div.csl-indent {
 <p>“<em>Global</em>” scope contains variables defined in the module-level namespace. If the code in the below example was the entirety of your script, then <code>a</code> would be a global variable.</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="functions.html#cb101-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">&quot;outside both&quot;</span></span>
 <span id="cb101-2"><a href="functions.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> outer_func():</span>
-<span id="cb101-3"><a href="functions.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> <span class="st">&quot;inside one&quot;</span></span>
-<span id="cb101-4"><a href="functions.html#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> inner_func():</span>
-<span id="cb101-5"><a href="functions.html#cb101-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(a) </span>
-<span id="cb101-6"><a href="functions.html#cb101-6" aria-hidden="true" tabindex="-1"></a>  inner_func()</span>
+<span id="cb101-3"><a href="functions.html#cb101-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="st">&quot;inside one&quot;</span></span>
+<span id="cb101-4"><a href="functions.html#cb101-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> inner_func():</span>
+<span id="cb101-5"><a href="functions.html#cb101-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(a) </span>
+<span id="cb101-6"><a href="functions.html#cb101-6" aria-hidden="true" tabindex="-1"></a>    inner_func()</span>
 <span id="cb101-7"><a href="functions.html#cb101-7" aria-hidden="true" tabindex="-1"></a>outer_func()</span>
 <span id="cb101-8"><a href="functions.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="co">## outside both</span></span></code></pre></div>
 <p>Just like in R, Python functions <strong>cannot</strong> necessarily find variables where the function was <em>called</em>. For example, here is some code that mimics the above R example. Both <code>a</code> and <code>b</code> are accessible from within <code>inner_func()</code>. That is due to LEGB.</p>
 <p>However, if we start using <code>outer_func()</code> inside another function, <em>calling</em> it in another function, when it was <em>defined</em> somewhere else, well then it doesn’t have access to variables in the call site. You might be surprised at how the following code functions. Does this print the right string: <code>"this is the a I want to use now!"</code> No!</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="functions.html#cb102-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">&quot;outside both&quot;</span></span>
 <span id="cb102-2"><a href="functions.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> outer_func():</span>
-<span id="cb102-3"><a href="functions.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> <span class="st">&quot;inside one&quot;</span></span>
-<span id="cb102-4"><a href="functions.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> inner_func():</span>
-<span id="cb102-5"><a href="functions.html#cb102-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(a) </span>
-<span id="cb102-6"><a href="functions.html#cb102-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(b)</span>
-<span id="cb102-7"><a href="functions.html#cb102-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> inner_func() </span>
+<span id="cb102-3"><a href="functions.html#cb102-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="st">&quot;inside one&quot;</span></span>
+<span id="cb102-4"><a href="functions.html#cb102-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> inner_func():</span>
+<span id="cb102-5"><a href="functions.html#cb102-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(a) </span>
+<span id="cb102-6"><a href="functions.html#cb102-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(b)</span>
+<span id="cb102-7"><a href="functions.html#cb102-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> inner_func() </span>
 <span id="cb102-8"><a href="functions.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> third_func():</span>
-<span id="cb102-9"><a href="functions.html#cb102-9" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> <span class="st">&quot;this is the a I want to use now!&quot;</span></span>
-<span id="cb102-10"><a href="functions.html#cb102-10" aria-hidden="true" tabindex="-1"></a>  outer_func()</span>
+<span id="cb102-9"><a href="functions.html#cb102-9" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> <span class="st">&quot;this is the a I want to use now!&quot;</span></span>
+<span id="cb102-10"><a href="functions.html#cb102-10" aria-hidden="true" tabindex="-1"></a>    outer_func()</span>
 <span id="cb102-11"><a href="functions.html#cb102-11" aria-hidden="true" tabindex="-1"></a>third_func() </span></code></pre></div>
 <pre><code>## outside both
 ## inside one</code></pre>
@@ -718,8 +718,8 @@ div.csl-indent {
 <p>We will go throw some examples first, and then explain why this works the way it does. Here is some code that is analogous to the example above.</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="functions.html#cb105-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb105-2"><a href="functions.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
-<span id="cb105-3"><a href="functions.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb105-4"><a href="functions.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
+<span id="cb105-3"><a href="functions.html#cb105-3" aria-hidden="true" tabindex="-1"></a>    arg <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb105-4"><a href="functions.html#cb105-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arg</span>
 <span id="cb105-5"><a href="functions.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
 <span id="cb105-6"><a href="functions.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span>
 <span id="cb105-7"><a href="functions.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
@@ -738,8 +738,8 @@ div.csl-indent {
 <p>Ready to be confused? Here is a tricky third example. What happens if we take in a list, but try to do something else with it.</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="functions.html#cb107-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">999</span>]</span>
 <span id="cb107-2"><a href="functions.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(arg):</span>
-<span id="cb107-3"><a href="functions.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="op">=</span> [<span class="dv">2</span>]</span>
-<span id="cb107-4"><a href="functions.html#cb107-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arg</span>
+<span id="cb107-3"><a href="functions.html#cb107-3" aria-hidden="true" tabindex="-1"></a>    arg <span class="op">=</span> [<span class="dv">2</span>]</span>
+<span id="cb107-4"><a href="functions.html#cb107-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arg</span>
 <span id="cb107-5"><a href="functions.html#cb107-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb107-6"><a href="functions.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f(a))</span>
 <span id="cb107-7"><a href="functions.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
@@ -759,7 +759,7 @@ div.csl-indent {
 <span id="cb108-9"><a href="functions.html#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb108-10"><a href="functions.html#cb108-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
 <span id="cb108-11"><a href="functions.html#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg)) <span class="co"># different!`</span></span>
-<span id="cb108-12"><a href="functions.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 139684999988576 139684999988608</span></span>
+<span id="cb108-12"><a href="functions.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140214937359712 140214937359744</span></span>
 <span id="cb108-13"><a href="functions.html#cb108-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb108-14"><a href="functions.html#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
@@ -819,7 +819,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb112"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb112-1"><a href="functions.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
 <span id="cb112-2"><a href="functions.html#cb112-2" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb112-3"><a href="functions.html#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> everything_is_safe():</span>
-<span id="cb112-4"><a href="functions.html#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">not</span> missile_launch_codes_set</span>
+<span id="cb112-4"><a href="functions.html#cb112-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">not</span> missile_launch_codes_set</span>
 <span id="cb112-5"><a href="functions.html#cb112-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb112-6"><a href="functions.html#cb112-6" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb112-7"><a href="functions.html#cb112-7" aria-hidden="true" tabindex="-1"></a>everything_is_safe()</span>
@@ -827,7 +827,7 @@ div.csl-indent {
 <p>We can also define <code>my_func()</code>, which is analogous to <code>myFunc()</code>. Defining this function doesn’t throw an error either.</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb113-1"><a href="functions.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
 <span id="cb113-2"><a href="functions.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_func():</span>
-<span id="cb113-3"><a href="functions.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> varigble_name_with_typo</span></code></pre></div>
+<span id="cb113-3"><a href="functions.html#cb113-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> varigble_name_with_typo</span></code></pre></div>
 <p>So stay away from referring to variables outside the body of your function!</p>
 </div>
 <div id="modifying-captured-variables-in-r" class="section level3" number="6.8.3">
@@ -853,8 +853,8 @@ div.csl-indent {
 </div>
 <div class="sourceCode" id="cb115"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb115-1"><a href="functions.html#cb115-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb115-2"><a href="functions.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> increment_a():</span>
-<span id="cb115-3"><a href="functions.html#cb115-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">global</span> a</span>
-<span id="cb115-4"><a href="functions.html#cb115-4" aria-hidden="true" tabindex="-1"></a>  a <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb115-3"><a href="functions.html#cb115-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> a</span>
+<span id="cb115-4"><a href="functions.html#cb115-4" aria-hidden="true" tabindex="-1"></a>    a <span class="op">+=</span> <span class="dv">1</span></span>
 <span id="cb115-5"><a href="functions.html#cb115-5" aria-hidden="true" tabindex="-1"></a>[increment_a() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>)]</span>
 <span id="cb115-6"><a href="functions.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [None, None, None, None, None, None, None, None, None, None]</span></span>
 <span id="cb115-7"><a href="functions.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>

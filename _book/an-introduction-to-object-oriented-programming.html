@@ -549,20 +549,21 @@ We might consider taking advantage of a recursive formula for the sample means.<
 The width of the interval shrinks as we get more data (as <span class="math inline">\(n \to \infty\)</span>). We can write another class that, not only calculates the center of this interval, <span class="math inline">\(\bar{x}\)</span>, but also returns the interval endpoints.</p>
 <p>If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of <code>RunningMean</code>. Instead, we’ll use the idea of <a href="https://docs.python.org/3/tutorial/classes.html#inheritance"><em>inheritance</em></a>.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb234-1"><a href="an-introduction-to-object-oriented-programming.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean): <span class="co"># &lt;- notice what&#39;s inside the parentheses!</span></span>
-<span id="cb234-3"><a href="an-introduction-to-object-oriented-programming.html#cb234-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and </span></span>
-<span id="cb234-4"><a href="an-introduction-to-object-oriented-programming.html#cb234-4" aria-hidden="true" tabindex="-1"></a><span class="co">  gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
-<span id="cb234-5"><a href="an-introduction-to-object-oriented-programming.html#cb234-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
-<span id="cb234-6"><a href="an-introduction-to-object-oriented-programming.html#cb234-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb234-7"><a href="an-introduction-to-object-oriented-programming.html#cb234-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
-<span id="cb234-8"><a href="an-introduction-to-object-oriented-programming.html#cb234-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
-<span id="cb234-9"><a href="an-introduction-to-object-oriented-programming.html#cb234-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb234-10"><a href="an-introduction-to-object-oriented-programming.html#cb234-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb234-11"><a href="an-introduction-to-object-oriented-programming.html#cb234-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb234-12"><a href="an-introduction-to-object-oriented-programming.html#cb234-12" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
-<span id="cb234-13"><a href="an-introduction-to-object-oriented-programming.html#cb234-13" aria-hidden="true" tabindex="-1"></a>      left_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">-</span> half_width</span>
-<span id="cb234-14"><a href="an-introduction-to-object-oriented-programming.html#cb234-14" aria-hidden="true" tabindex="-1"></a>      right_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">+</span> half_width</span>
-<span id="cb234-15"><a href="an-introduction-to-object-oriented-programming.html#cb234-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([left_num, right_num])</span></code></pre></div>
+<span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb234-3"><a href="an-introduction-to-object-oriented-programming.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean):<span class="co"># &lt;-notice what&#39;s inside the parentheses</span></span>
+<span id="cb234-4"><a href="an-introduction-to-object-oriented-programming.html#cb234-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and </span></span>
+<span id="cb234-5"><a href="an-introduction-to-object-oriented-programming.html#cb234-5" aria-hidden="true" tabindex="-1"></a><span class="co">  gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
+<span id="cb234-6"><a href="an-introduction-to-object-oriented-programming.html#cb234-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
+<span id="cb234-7"><a href="an-introduction-to-object-oriented-programming.html#cb234-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb234-8"><a href="an-introduction-to-object-oriented-programming.html#cb234-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
+<span id="cb234-9"><a href="an-introduction-to-object-oriented-programming.html#cb234-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
+<span id="cb234-10"><a href="an-introduction-to-object-oriented-programming.html#cb234-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb234-11"><a href="an-introduction-to-object-oriented-programming.html#cb234-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb234-12"><a href="an-introduction-to-object-oriented-programming.html#cb234-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb234-13"><a href="an-introduction-to-object-oriented-programming.html#cb234-13" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
+<span id="cb234-14"><a href="an-introduction-to-object-oriented-programming.html#cb234-14" aria-hidden="true" tabindex="-1"></a>      left_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">-</span> half_width</span>
+<span id="cb234-15"><a href="an-introduction-to-object-oriented-programming.html#cb234-15" aria-hidden="true" tabindex="-1"></a>      right_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">+</span> half_width</span>
+<span id="cb234-16"><a href="an-introduction-to-object-oriented-programming.html#cb234-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([left_num, right_num])</span></code></pre></div>
 <p>The parentheses in the first line of the class definition signal that this new class definition is inheriting from <code>RunningMean</code>. Inside the definition of this new class, when I refer to <code>self.current_xbar</code> Python knows what I’m referring to because it is defined in the base class. Last, I am using <code>super()</code> to access the base class’s methods, such as <code>__init__</code>.</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb235-1"><a href="an-introduction-to-object-oriented-programming.html#cb235-1" aria-hidden="true" tabindex="-1"></a>my_ci <span class="op">=</span> RunningCI(<span class="dv">1</span>) <span class="co"># create running average object</span></span>
 <span id="cb235-2"><a href="an-introduction-to-object-oriented-programming.html#cb235-2" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_xbar() <span class="co"># no data yet!</span></span>
@@ -664,7 +665,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="an-introduction-to-object-oriented-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x55fe26f76e08&gt;
+## &lt;bytecode: 0x5646cb1bc1f8&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod()</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods()</code> function.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">methods</span>(plot))</span></code></pre></div>
@@ -1089,16 +1090,11 @@ and you reject the null if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}
 <li></li>
 </ol>
 <p>Suppose you have a target density <span class="math inline">\(p(x)\)</span> that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some <span class="math inline">\(c &gt; 0\)</span>, <span class="math inline">\(p(x) = f(x) / c\)</span>, and you are only able to evaluate <span class="math inline">\(f(\cdot)\)</span>. Your goal is that you would like to be able to approximate the expected value of <span class="math inline">\(p(x)\)</span> (i.e. <span class="math inline">\(\int x p(x) dx\)</span>) using some proposal distribution <span class="math inline">\(q(x)\)</span>. <span class="math inline">\(q(x)\)</span> is flexible in that you can sample from it, and you can evaluate it. We will use <strong>importance sampling</strong> <span class="citation">(<a href="#ref-impsamping1" role="doc-biblioref">H. Kahn 1950a</a>)</span> <span class="citation">(<a href="#ref-impsamping2" role="doc-biblioref">H. Kahn 1950b</a>)</span> to achieve this.<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a></p>
-<hr />
-<p><strong>Algorithm 1</strong>: Importance Sampling</p>
-<hr />
-<ol style="list-style-type: decimal">
-<li>Sample <span class="math inline">\(X^1, \ldots, X^n\)</span> from <span class="math inline">\(q(x)\)</span>,</li>
-<li>For each sample <span class="math inline">\(x^i\)</span>, calculate an unnormalized weight <span class="math inline">\(\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}\)</span>,</li>
-<li>Calculate the normalized weights <span class="math inline">\(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\)</span>.</li>
-<li>Calculate the weighted average <span class="math inline">\(\sum_{i=1}^n w^i x^i\)</span>.</li>
-</ol>
-<hr />
+<p><strong>Algorithm 1</strong>: Importance Sampling
+i. Sample <span class="math inline">\(X^1, \ldots, X^n\)</span> from <span class="math inline">\(q(x)\)</span>,
+ii. For each sample <span class="math inline">\(x^i\)</span>, calculate an unnormalized weight <span class="math inline">\(\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}\)</span>,
+iii. Calculate the normalized weights <span class="math inline">\(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\)</span>.
+iv. Calculate the weighted average <span class="math inline">\(\sum_{i=1}^n w^i x^i\)</span>.</p>
 <p>In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each <span class="math inline">\(\log \tilde{w}^i\)</span>, before you exponentiate them, subtract a number <span class="math inline">\(m\)</span> from all the values. A good choice for <span class="math inline">\(m\)</span> is <span class="math inline">\(\max_i (\log \tilde{w}^i)\)</span>. These new values will produce the same normalized weights because
 <span class="math display">\[
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].

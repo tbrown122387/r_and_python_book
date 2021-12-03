@@ -54,9 +54,9 @@ This new design is not to encourage you to think about S3 object-oriented system
 
 The core function in this library is the [`ggplot()` function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/ggplot). This function initializes figures; it is the function that will take in information about *which* data set you want to plot, and *how* you want to plot it. The raw data is provided in the first argument. The second argument, `mapping=`, is more confusing. The argument should be constructed with the `aes()` function. In the parlance of `ggplot2`, `aes()` constructs an **aesthetic mapping**. Think of the "aesthetic mapping" as stored information that can be used later on--it "maps" data to visual properties of a figure.
 
-Consider this first example. 
+Consider this first example by typing the following into your own console. 
 
-```{r, collapse = TRUE, out.width='80%', fig.cap = "A Blank Canvas", fig.align='center'}
+```{r, collapse = TRUE, eval = FALSE}
 library(ggplot2)
 ggplot(mpg, aes(x = displ, y = hwy))
 ```
@@ -73,7 +73,7 @@ To display geometric shapes (aka *geoms* in the parlance of `ggplot2`), we need 
 
 Consider the function [`geom_point()`](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.5/topics/geom_point). It too returns an S3 instance that has specialized behavior. In the parlance of `ggplot2`, it adds a [scatterplot](https://ggplot2-book.org/getting-started.html#basic-use) layer to the figure.
 
-```{r, collapse = TRUE, fig.cap = "A Second Scatterplot", fig.align='center', out.width='80%'}
+```{r, collapse = TRUE, fig.cap = "A Second Scatterplot", fig.align='center', out.width='80%', collapse = TRUE}
 library(ggplot2)
 ggplot(mpg, aes(x = displ, y = hwy))  +
   geom_point()
@@ -91,7 +91,7 @@ ggplot(mpg, aes(x = displ, y = hwy))  +
 
 Additionally, notice that the same layer will behave much differently if we change the aesthetic mapping.
 
-```{r, collapse = TRUE, fig.cap = "Adding Some Color", fig.align='center', out.width='80%'}
+```{r, collapse = TRUE, fig.cap = "Adding Some Color", fig.align='center', out.width='80%', collapse = TRUE}
 ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
   geom_point() + 
   ggtitle("my favorite scatterplot")
@@ -99,7 +99,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = manufacturer))  +
 
 If we want tighter control on the aesthetic mapping, we can use [**scales**](https://ggplot2-book.org/scales.html#scales). Syntactically, these are things we "add" (`+`) to the figure, just like layers. However, these scales are constructed with a different set of functions, many of which start with the prefix `scale_`. We can change attributes of the axes like this.
 
-```{r, collapse = TRUE, fig.cap = "Changing Scales", fig.align='center', out.width='80%'}
+```{r, collapse = TRUE, fig.cap = "Changing Scales", fig.align='center', out.width='80%', collapse = TRUE}
 base_plot <- ggplot(mpg, 
                     aes(x = displ, y = hwy, color = manufacturer)) +
              geom_point() + 
@@ -117,7 +117,7 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
 
 If we didn't like these colors, we could change them with a scale layer. Personally, I like this one. 
 
-```{r, collapse = TRUE, fig.cap = "Changing the Fill Again", fig.align='center', out.width='80%'}
+```{r, collapse = TRUE, fig.cap = "Changing the Fill Again", fig.align='center', out.width='80%', collapse = TRUE}
 mpg$score <- 1/(mpg$displ^2 + mpg$hwy^2) 
 ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
   geom_tile() + 
@@ -141,11 +141,11 @@ Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It i
 You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
 :::
 
-```{python, collapse = TRUE, fig.cap = "Another Simple Histogram", out.width='80%', fig.align='center'}
+```{python, collapse = TRUE, fig.cap = "Another Simple Histogram", out.width='80%', fig.align='center', collapse = TRUE}
 import matplotlib.pyplot as plt       # 1
 import numpy as np                    # 2
 fig, ax = plt.subplots()              # 3
-ax.hist(np.random.normal(size=1000))  # 4
+_ = ax.hist(np.random.normal(size=1000))  # 4
 plt.show()                            # 5
 ```
 
@@ -161,11 +161,11 @@ Third, we call the `subplots()` function, and use *sequence unpacking* to unpack
 
 2. One or more [`Axes` objects](https://matplotlib.org/stable/api/axes_api.html#the-axes-class) are contained in a `Figure` object. Each is "[what you think of as 'a plot'](https://matplotlib.org/stable/tutorials/introductory/usage.html#axes)." They hold onto two `Axis` objects (in the case of 2-dimensional plots) or three (in the case of 3-dimensional arguments). We are usually calling the methods of these objects to effect changes on a plot. 
 
-In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist) of the `Axes` object called `ax`. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in [the documentation](https://matplotlib.org/stable/api/axes_api.html#plotting).
+In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist) of the `Axes` object called `ax`. We assign the output of `.hist()` to a variable `_`. This is done to suppress the printing of the method's output, and because this variable name is a Python convention that signals the object is temporary and will not be used later in the program. There are many more plots available than plain histograms. Each one has its own method, and you can peruse the options in [the documentation](https://matplotlib.org/stable/api/axes_api.html#plotting).
 
 If you want to make figures that are more elaborate, just keep calling different methods of `ax`. If you want to fit more subplots to the same figure, add more `Axes` objects. Here is an example using some code from [one of the official Matplotlib tutorials](https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface).
 
-```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib", fig.align='center'}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib", fig.align='center', collapse = TRUE}
 # x values grid shared by both subplots
 x = np.linspace(0, 2*np.pi, 100) 
 

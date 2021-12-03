@@ -7,9 +7,9 @@
 \definecolor{shadecolor}{RGB}{248,248,248}
 
 % stuff for rmd-details and rmd-caution boxes defined below
-\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins} 
 \usepackage{fontawesome}
-\usepackage{blindtext}
 
 
 \renewcommand{\textfraction}{0.05}
@@ -58,28 +58,46 @@
 
 
 % new environments for rmd-details and rmd-caution boxes
-\newsavebox{\bulb}
-\savebox{\bulb}{\makebox[2\columnsep]{\huge \faLightbulbO}}
-\newsavebox{\rmdbox}
-\newenvironment{rmd-details}{\begin{lrbox}{\rmdbox}
-  \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\bulb-\columnsep}
-    \vspace*{\columnsep}}%
-{\vspace*{\columnsep}\endminipage\end{lrbox}%
-  {\par\color{green}\fboxsep=0pt
-    \fbox{\usebox\bulb\usebox\rmdbox\hspace{\columnsep}}\par}}
+% \newsavebox{\bulb}
+% \savebox{\bulb}{\makebox[2\columnsep]{\huge \faLightbulbO}}
+% \newsavebox{\rmdbox}
+% \newenvironment{rmd-details}{\begin{lrbox}{\rmdbox}
+%   \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\bulb-\columnsep}
+%     \vspace*{\columnsep}}%
+% {\vspace*{\columnsep}\endminipage\end{lrbox}%
+%   {\par\color{green}\fboxsep=0pt
+%     \fbox{\usebox\bulb\usebox\rmdbox\hspace{\columnsep}}\par}}
+\newtcolorbox{rmd-details}{
+    enhanced,
+    sharp corners,
+    colframe=green,
+    colback=white,
+    left=1cm,
+    overlay={%
+        \node at ([xshift=18pt]frame.west) {\Huge\faLightbulbO};
+    },
+}
     
-% todo here
-\newsavebox{\excl}
-\savebox{\excl}{\makebox[2\columnsep]{\huge \faExclamation}}
-%\newsavebox{\rmdbox2}
-\newenvironment{rmd-caution}{\begin{lrbox}{\rmdbox}
-  \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\excl-\columnsep}
-    \vspace*{\columnsep}}%
-{\vspace*{\columnsep}\endminipage\end{lrbox}%
-  {\par\color{yellow}\fboxsep=0pt
-    \fbox{\usebox\excl\usebox\rmdbox\hspace{\columnsep}}\par}}
+% \newsavebox{\excl}
+% \savebox{\excl}{\makebox[2\columnsep]{\huge \faExclamation}}
+% %\newsavebox{\rmdbox2}
+% \newenvironment{rmd-caution}{\begin{lrbox}{\rmdbox}
+%   \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\excl-\columnsep}
+%     \vspace*{\columnsep}}%
+% {\vspace*{\columnsep}\endminipage\end{lrbox}%
+%   {\par\color{yellow}\fboxsep=0pt
+%     \fbox{\usebox\excl\usebox\rmdbox\hspace{\columnsep}}\par}}
     
-%\newenvironment{rmd-caution}[0]{\par\leftskip=2em\rightskip=2em}{\par\medskip}
+\newtcolorbox{rmd-caution}{
+    enhanced,
+    sharp corners,
+    colframe=yellow,
+    colback=white,
+    left=1cm,
+    overlay={%
+        \node at ([xshift=18pt]frame.west) {\Huge\faExclamation};
+    },
+}
 
 
 \frontmatter

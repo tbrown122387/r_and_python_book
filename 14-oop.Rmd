@@ -172,7 +172,8 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 
 ```{python, collapse = TRUE}
 import numpy as np
-class RunningCI(RunningMean): # <- notice what's inside the parentheses!
+
+class RunningCI(RunningMean):# <-notice what's inside the parentheses
   """Updates a running average and 
   gives you a known-variance confidence interval"""
   def __init__(self, known_var):
@@ -778,16 +779,11 @@ and you reject the null if $|t| > t_{n-1,\alpha/2}$ [@student1908probable]. Here
 
 Suppose you have a target density $p(x)$ that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some $c > 0$, $p(x) = f(x) / c$, and you are only able to evaluate $f(\cdot)$. Your goal is that you would like to be able to approximate the expected value of $p(x)$ (i.e. $\int x p(x) dx$) using some proposal distribution $q(x)$. $q(x)$ is flexible in that you can sample from it, and you can evaluate it. We will use **importance sampling** [@impsamping1] [@impsamping2] to achieve this.^[Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.]
 
-******
 **Algorithm 1**:  Importance Sampling 
-
-******
-1. Sample $X^1, \ldots, X^n$ from $q(x)$,
-2. For each sample $x^i$, calculate an unnormalized weight $\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}$,
-3. Calculate the normalized weights $w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j$.
-4. Calculate the weighted average $\sum_{i=1}^n w^i x^i$.
-
-******
+  i. Sample $X^1, \ldots, X^n$ from $q(x)$,
+  ii. For each sample $x^i$, calculate an unnormalized weight $\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}$,
+  iii. Calculate the normalized weights $w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j$.
+  iv. Calculate the weighted average $\sum_{i=1}^n w^i x^i$.
 
 In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each $\log \tilde{w}^i$, before you exponentiate them, subtract a number $m$ from all the values. A good choice for $m$ is $\max_i (\log \tilde{w}^i)$. These new values will produce the same normalized weights because
 $$

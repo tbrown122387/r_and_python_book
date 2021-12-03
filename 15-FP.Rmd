@@ -141,7 +141,7 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 - Step 2: construct a `logical` `vector` by `apply()`ing the predicate over rows;
 - Step 3: plug the `logical` `vector` into the `[` operator to remove the rows.
    
-```{r, collapse = TRUE}
+```{r, collapse = TRUE,  R.options = list(width = 65)}
 pred <- function(row){
   yrBuiltCorrect <- row['YearBuilt'] == 2006
   aveCond <- row['Condition'] == "Average"
@@ -150,8 +150,9 @@ pred <- function(row){
 }
 whichRows <- apply(albRealEstate, 1, pred)
 subDF <- albRealEstate[whichRows,]
-str(subDF)
+str(subDF, strict.width = "cut")
 ``` 
+
 
 ### `tapply()`
 
@@ -159,8 +160,8 @@ str(subDF)
 
 If I wanted the average home price for each city, I could use something like this.
 
-```{r, collapse = TRUE}
-str(albRealEstate)
+```{r, collapse = TRUE,  R.options = list(width = 65)}
+str(albRealEstate, strict.width = "cut")
 length(unique(albRealEstate$City))
 tapply(albRealEstate$TotalValue, list(albRealEstate$City), mean)[1:4]
 ```
@@ -259,9 +260,8 @@ output = list(map(spline, my_inputs))
 
 We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection \@ref(visualization). 
 
-```{python, collapse = TRUE, out.width = '70%', echo=F}
-import matplotlib.pyplot as plt
-plt.plot(my_inputs, output)
+```{r, out.width='80%', fig.align='center', fig.cap = "Our Spline Function", echo = F}
+knitr::include_graphics("pics/spline.png")
 ```
 
 `map()` can also be used like `mapply()`. In other words, you can apply it to two containers,
@@ -499,9 +499,9 @@ This is much better because
 
 The inner function did in fact capture `commonZs`, but it captured from the enclosing scope, not the global scope. Capturing isn't always a terrible idea. It would be difficult to modify these variables, so we don't need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice--now the end-users of functions created by this factory don't need to worry about plugging in extra parameters. 
 
-Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function.
+Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function. Run the following code on your own machine. 
 
-```{r, collapse=TRUE, echo=FALSE, out.width='80%', fig.align='center', fig.cap = "Monte Carlo: With and Without Common Random Numbers Part 2"}
+```{r, collapse=TRUE, eval=FALSE}
 mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), 
                         ncol = length(muGrid))
 par(mfrow=c(1,2))

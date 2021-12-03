@@ -47,8 +47,8 @@ Here is an example of a toy function called `add_one()`.
 
 ```{python, collapse = TRUE}
 def add_one(my_input):  # define the function
-  my_output = my_input + 1
-  return my_output
+    my_output = my_input + 1
+    return my_output
 add_one(41) # call/invoke/use the function 
 ```
 
@@ -130,8 +130,8 @@ So, for instance, let's try to find the  *formal parameter list* of a user-defin
 
 ```{python, collapse = TRUE}
 def add_number(my_input, which_number = 1): # define a function
-  my_output = my_input + which_number
-  return my_output
+    my_output = my_input + which_number
+    return my_output
 add_number(3) # no second argument being provided by the user here
 add_number.__code__.co_varnames # note this also contains *my_output*
 add_number.__defaults__
@@ -256,9 +256,9 @@ A Python function will search for a variable in these namespaces in this order.^
 ```{python, collapse = TRUE}
 a = 3
 def silly_function():
-  a = 22 # local a
-  print("local variables are ", locals())
-  return a + 20
+    a = 22 # local a
+    print("local variables are ", locals())
+    return a + 20
 silly_function()
 silly_function.__code__.co_nlocals # number of local variables
 silly_function.__code__.co_varnames # names of local variables
@@ -283,10 +283,10 @@ my_new_func.__code__.co_freevars
 ```{python, collapse = TRUE}
 a = "outside both"
 def outer_func():
-  b = "inside one"
-  def inner_func():
-    print(a) 
-  inner_func()
+    b = "inside one"
+    def inner_func():
+        print(a) 
+    inner_func()
 outer_func()
 ```
 
@@ -299,14 +299,14 @@ However, if we start using `outer_func()` inside another function, *calling* it 
 ```{python}
 a = "outside both"
 def outer_func():
-  b = "inside one"
-  def inner_func():
-    print(a) 
-    print(b)
-  return inner_func() 
+    b = "inside one"
+    def inner_func():
+        print(a) 
+        print(b)
+    return inner_func() 
 def third_func():
-  a = "this is the a I want to use now!"
-  outer_func()
+    a = "this is the a I want to use now!"
+    outer_func()
 third_func() 
 ```
 
@@ -351,8 +351,8 @@ We will go throw some examples first, and then explain why this works the way it
 ```{python, collapse=TRUE}
 a = 1
 def f(arg):
-  arg = 2
-  return arg
+    arg = 2
+    return arg
 print(f(a))
 print(a)
 ```
@@ -376,8 +376,8 @@ Ready to be confused? Here is a tricky third example. What happens if we take in
 ```{python, collapse=TRUE}
 a = [999]
 def f(arg):
-  arg = [2]
-  return arg
+    arg = [2]
+    return arg
 
 print(f(a))
 print(a) # didn't change this time :(
@@ -481,7 +481,7 @@ It is the same exact situation in Python. Consider `everything_is_safe()`, a fun
 # python
 missile_launch_codes_set = True
 def everything_is_safe():
-  return not missile_launch_codes_set
+    return not missile_launch_codes_set
 
 missile_launch_codes_set = False
 everything_is_safe()
@@ -492,7 +492,7 @@ We can also define `my_func()`, which is analogous to `myFunc()`. Defining this 
 ```{python, collapse = TRUE}
 # python
 def my_func():
-  return varigble_name_with_typo
+    return varigble_name_with_typo
 ```
 
 So stay away from referring to variables outside the body of your function! 
@@ -528,8 +528,8 @@ The upside to the `global` keyword is that it makes hunting for **side effects**
 ```{python, collapse = TRUE}
 a = 1
 def increment_a():
-  global a
-  a += 1
+    global a
+    a += 1
 [increment_a() for _ in range(10)]
 print(a)
 ```
