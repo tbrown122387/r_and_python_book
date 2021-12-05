@@ -44,17 +44,17 @@ To be more clear, classes may have the following two things in their definition.
 ### A First Example
 
 Here's a simple example. Say we are interested in calculating, from numerical data $x_1, \ldots, x_n$, a sample mean:
-$$
+\begin{equation} 
 \bar{x}_n = \frac{\sum_{i=1}^n x_i}{n}.
-$$
+\end{equation}
 
 In Python, we can usually calculate this one number very easily using `np.average`. However, this function requires that we pass into it all of the data at once. What if we don't have all the data at any given time? In other words, suppose that the data arrive intermittently 
 .
 We might consider taking advantage of a recursive formula for the sample means.
 
-$$
+\begin{equation} 
 \bar{x}_n =  \frac{(n-1) \bar{x}_{n-1} + x_n}{n}
-$$
+\end{equation}
 
 How would we program this in Python? A first option: we might create a variable `my_running_ave`, and after every data point arrives, we could 
 
@@ -78,18 +78,18 @@ Using our code would look like this:
 
 ```{python, collapse = TRUE, echo =FALSE}
 class RunningMean:
-  """Updates a running average"""
-  def __init__(self):
-    self.current_xbar = 0.0
-    self.n = 0
-  def update(self, new_x):
-    self.n += 1
-    self.current_xbar = (self.current_xbar*(self.n-1)+new_x) / self.n
-  def get_current_xbar(self):
-    if self.n == 0:
-      return None
-    else:
-      return self.current_xbar
+    """Updates a running average"""
+    def __init__(self):
+        self.current_xbar = 0.0
+        self.n = 0
+    def update(self, new_x):
+        self.n += 1
+        self.current_xbar = (self.current_xbar*(self.n-1)+new_x) / self.n
+    def get_current_xbar(self):
+        if self.n == 0:
+            return None
+        else:
+            return self.current_xbar
 ```
 
 ```{python, collapse = TRUE}
@@ -118,18 +118,18 @@ Classes (obviously) need to be defined before they are used, so here is the defi
 
 ```{python, collapse = TRUE}
 class RunningMean:
-  """Updates a running average"""
-  def __init__(self):
-    self.current_xbar = 0.0
-    self.n = 0
-  def update(self, new_x):
-    self.n += 1
-    self.current_xbar = (self.current_xbar*(self.n - 1) + new_x) / self.n
-  def get_current_xbar(self):
-    if self.n == 0:
-      return None
-    else:
-      return self.current_xbar
+    """Updates a running average"""
+    def __init__(self):
+        self.current_xbar = 0.0
+        self.n = 0
+    def update(self, new_x):
+        self.n += 1
+        self.current_xbar = (self.current_xbar*(self.n - 1) + new_x) / self.n
+    def get_current_xbar(self):
+        if self.n == 0:
+            return None
+        else:
+            return self.current_xbar
 ```
 
 ::: {.rmd-details data-latex=""}
@@ -163,9 +163,9 @@ How can we use inheritance in statistical programming? A primary benefit of inhe
 Let's make some assumptions about a *parametric model* that is generating our data. Suppose I assume that the data points $x_1, \ldots, x_n$ are a "random sample"^[Otherwise known as an independent and identically distributed sample] from a normal distribution with mean $\mu$ and variance $\sigma^2=1$. $\mu$ is assumed to be unknown (this is, after all, and interval for $\mu$), and $\sigma^2$ is assumed to be known, for simplicity. 
 
 A $95\%$ confidence interval for the true unknown population mean $\mu$ is 
-$$
+\begin{equation} 
 \left[\bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right].
-$$
+\end{equation}
 The width of the interval shrinks as we get more data (as $n \to \infty$). We can write another class that, not only calculates the center of this interval, $\bar{x}$, but also returns the interval endpoints. 
 
 If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of `RunningMean`. Instead, we'll use the idea of [*inheritance*](https://docs.python.org/3/tutorial/classes.html#inheritance). 
@@ -174,19 +174,21 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 import numpy as np
 
 class RunningCI(RunningMean):# <-notice what's inside the parentheses
-  """Updates a running average and 
-  gives you a known-variance confidence interval"""
-  def __init__(self, known_var):
-    super().__init__()
-    self.known_var = known_var
-  def get_current_interval(self):
-    if self.n == 0:
-      return None
-    else:
-      half_width = 1.96 * np.sqrt(self.known_var / self.n)  
-      left_num = self.current_xbar - half_width
-      right_num = self.current_xbar + half_width
-      return np.array([left_num, right_num])
+    """Updates a running average and 
+    gives you a known-variance confidence interval"""
+    
+    def __init__(self, known_var):
+        super().__init__()
+        self.known_var = known_var
+        
+    def get_current_interval(self):
+        if self.n == 0:
+            return None
+        else:
+            half_width = 1.96 * np.sqrt(self.known_var / self.n)  
+            left_num = self.current_xbar - half_width
+            right_num = self.current_xbar + half_width
+            return np.array([left_num, right_num])
 ```
 
 The parentheses in the first line of the class definition signal that this new class definition is inheriting from `RunningMean`. Inside the definition of this new class, when I refer to `self.current_xbar` Python knows what I'm referring to because it is defined in the base class. Last, I am using `super()` to access the base class's methods, such as `__init__`.
@@ -206,27 +208,27 @@ Why is this useful? Consider this example.
 
 ```{python, collapse = TRUE, eval = FALSE}
 for datum in time_series:
-  for thing in obj_list:
-    thing.update(xt)
+    for thing in obj_list:
+        thing.update(xt)
 ```
 
 Inside the inner `for` loop, there is no need for include conditional logic that tests for what kind of type each `thing` is. We can iterate through time more succinctly.
 
 ```{python, collapse = TRUE, eval = FALSE}
 for datum in time_series:
-  for thing in obj_list:
-    if isinstance(thing, class1):
-      thing.updatec1(xt)
-    if isinstance(thing, class2):
-      thing.updatec2(xt)
-    if isinstance(thing, class3):
-      thing.updatec3(xt)
-    if isinstance(thing, class4):
-      thing.updatec4(xt)
-    if isinstance(thing, class5):
-      thing.updatec5(xt)
-    if isinstance(thing, class6):
-      thing.updatec6(xt)
+    for thing in obj_list:
+        if isinstance(thing, class1):
+            thing.updatec1(xt)
+        if isinstance(thing, class2):
+            thing.updatec2(xt)
+        if isinstance(thing, class3):
+            thing.updatec3(xt)
+        if isinstance(thing, class4):
+            thing.updatec4(xt)
+        if isinstance(thing, class5):
+            thing.updatec5(xt)
+        if isinstance(thing, class6):
+            thing.updatec6(xt)
 ```
 
 If, in the future, you add a new class called `class7`, then you need to change this inner `for` loop, as well as provide new code for the class. 
@@ -259,21 +261,24 @@ Here is an example implementation of a confidence interval using composition. No
 
 ```{python, collapse = TRUE}
 class RunningCI2:
-  """Updates a running average and 
-  gives you a known-variance confidence interval"""
-  def __init__(self, known_var):
-    self.mean = RunningMean()
-    self.known_var = known_var
-  def update(self, new_x):    
-    self.mean.update(new_x)
-  def get_current_interval(self):
-    if self.n == 0:
-      return None
-    else:
-      half_width = 1.96 * np.sqrt(self.known_var / self.n)  
-      left = self.mean.get_current_xbar() - half_width
-      right = self.mean.get_current_xbar() + half_width
-      return np.array([left, right])
+    """Updates a running average and 
+    gives you a known-variance confidence interval"""
+    
+    def __init__(self, known_var):
+        self.mean = RunningMean()
+        self.known_var = known_var
+        
+    def update(self, new_x):    
+        self.mean.update(new_x)
+        
+    def get_current_interval(self):
+        if self.n == 0:
+            return None
+        else:
+            half_width = 1.96 * np.sqrt(self.known_var / self.n)  
+            left = self.mean.get_current_xbar() - half_width
+            right = self.mean.get_current_xbar() + half_width
+            return np.array([left, right])
 ```
 
 
@@ -653,19 +658,19 @@ my_r6_ave$n
 If you are interested in estimating a linear regression model, there is a [`LinearRegression` class](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) that you might consider using in the `sklearn.linear_model` submodule. In this lab, we will create something similar, but a little more simplified. 
 
 A simple linear regression model will take in $n$ independent variables $x_1, \ldots, x_n$, and $n$ dependent variables $y_1, \ldots, y_n$, and try to describe their relationship with a function:
-$$
+\begin{equation} 
 y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
-$$
+\end{equation}
 The coefficients $\beta_0$ and $\beta_1$ are unknown, and so must be estimated with the data. Estimating the variance of the noise terms $\epsilon_i$ may also be of interest, but we do not concern ourselves with that here. 
 
 The formulas for the estimated slope (i.e. $\hat{\beta}_1$) and the estimated intercept (i.e. $\hat{\beta}_0$) are as follows:
-$$
+\begin{equation} 
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} 
-$$
+\end{equation}
 
-$$
+\begin{equation} 
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}.
-$$
+\end{equation}
 
 
 
@@ -701,24 +706,24 @@ Reconsider the above question that asked you to write a class called `LinearRegr
 3.
 
 Consider the following time series model [@West1989BayesianFA]
-$$
+\begin{equation} 
 y_t = \beta_t + \epsilon_t \\
 \beta_t = \beta_{t-1} + w_t \\
 \beta_1 = w_1
-$$
+\end{equation}
 Here $y_t$ is observed time series data, each $\epsilon_t$ is measurement noise with variance $V$ and each $w_t$ is also noise but with variance $W$. Think of $\beta_t$ as a time-varying regression coefficient. 
 
 Imagine our data are arriving sequentially. The Kalman Filter [@kalman_filt] cite provides an "optimal" estimate of each $\beta_t$ given all of the information we have up to time $t$. What's better is that the algorithm is recursive. Future estimates of $\beta_t$ will be easy to calculate given our estimates of $\beta_{t-1}$.
 
 Let's call the mean of $\beta_{t-1}$ (given all the information up to time $t-1$) $m_{t-1}$, and the variance of $\beta_{t-1}$ (given all the information up to time $t-1$) $P_{t-1}$. Then the Kalman recursions for this particular model are
 
-$$
+\begin{equation} 
 M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) 
-$$
+\end{equation}
 
-$$
+\begin{equation} 
 P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
-$$
+\end{equation}
 for $t \ge 1$.
 
   - Write a class called `TVIKalman` (TVI stands for time-varying intercept). 
@@ -766,9 +771,9 @@ Which of the following classes in R requires you to `library()` in something? Se
 9.
 
 Suppose you have the following data set: $X_1, \ldots, X_n$. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by $\mu$ and $\sigma^2$, respectively. Consider testing the hypothesis that $\mu = 0$ at a significance level of $\alpha$. To carry out this test, you calculate 
-$$
+\begin{equation} 
 t = \frac{\bar{X}}{S/\sqrt{n}}
-$$
+\end{equation}
 and you reject the null if $|t| > t_{n-1,\alpha/2}$ [@student1908probable]. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
 
   - Write a function called `doTTest()` that performs the above hypothesis test. It should accept two parameters: `dataVec` (a `vector` of data) and `significanceLevel` (which is $\alpha$). Have the second parameter default to `.05`.
@@ -786,9 +791,9 @@ Suppose you have a target density $p(x)$ that you are only able to evaluate up t
   iv. Calculate the weighted average $\sum_{i=1}^n w^i x^i$.
 
 In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each $\log \tilde{w}^i$, before you exponentiate them, subtract a number $m$ from all the values. A good choice for $m$ is $\max_i (\log \tilde{w}^i)$. These new values will produce the same normalized weights because
-$$
+\begin{equation} 
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
-$$
+\end{equation}
 
   - Create an R6 class called `ImpSamp` that performs importance sampling.
   - It should store function data values `qSamp`, `logQEval`, and `logFEval`.

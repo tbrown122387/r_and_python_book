@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 An Introduction to Object-Oriented Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="visualization.html"/>
 <link rel="next" href="an-introduction-to-functional-programming.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -462,15 +462,15 @@ div.csl-indent {
 <div id="a-first-example" class="section level3" number="14.1.2">
 <h3><span class="header-section-number">14.1.2</span> A First Example</h3>
 <p>Here’s a simple example. Say we are interested in calculating, from numerical data <span class="math inline">\(x_1, \ldots, x_n\)</span>, a sample mean:
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \bar{x}_n = \frac{\sum_{i=1}^n x_i}{n}.
-\]</span></p>
+\end{equation}\]</span></p>
 <p>In Python, we can usually calculate this one number very easily using <code>np.average</code>. However, this function requires that we pass into it all of the data at once. What if we don’t have all the data at any given time? In other words, suppose that the data arrive intermittently
 .
 We might consider taking advantage of a recursive formula for the sample means.</p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{equation} 
 \bar{x}_n =  \frac{(n-1) \bar{x}_{n-1} + x_n}{n}
-\]</span></p>
+\end{equation}\]</span></p>
 <p>How would we program this in Python? A first option: we might create a variable <code>my_running_ave</code>, and after every data point arrives, we could</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb231-1"><a href="an-introduction-to-object-oriented-programming.html#cb231-1" aria-hidden="true" tabindex="-1"></a>my_running_ave <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb231-2"><a href="an-introduction-to-object-oriented-programming.html#cb231-2" aria-hidden="true" tabindex="-1"></a>my_running_ave</span>
@@ -508,18 +508,18 @@ We might consider taking advantage of a recursive formula for the sample means.<
 </div>
 <p>Classes (obviously) need to be defined before they are used, so here is the definition of our class.</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb233-1"><a href="an-introduction-to-object-oriented-programming.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningMean:</span>
-<span id="cb233-2"><a href="an-introduction-to-object-oriented-programming.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average&quot;&quot;&quot;</span></span>
-<span id="cb233-3"><a href="an-introduction-to-object-oriented-programming.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb233-4"><a href="an-introduction-to-object-oriented-programming.html#cb233-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.current_xbar <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb233-5"><a href="an-introduction-to-object-oriented-programming.html#cb233-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.n <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb233-6"><a href="an-introduction-to-object-oriented-programming.html#cb233-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> update(<span class="va">self</span>, new_x):</span>
-<span id="cb233-7"><a href="an-introduction-to-object-oriented-programming.html#cb233-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.n <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb233-8"><a href="an-introduction-to-object-oriented-programming.html#cb233-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.current_xbar <span class="op">=</span> (<span class="va">self</span>.current_xbar<span class="op">*</span>(<span class="va">self</span>.n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> new_x) <span class="op">/</span> <span class="va">self</span>.n</span>
-<span id="cb233-9"><a href="an-introduction-to-object-oriented-programming.html#cb233-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_xbar(<span class="va">self</span>):</span>
-<span id="cb233-10"><a href="an-introduction-to-object-oriented-programming.html#cb233-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb233-11"><a href="an-introduction-to-object-oriented-programming.html#cb233-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb233-12"><a href="an-introduction-to-object-oriented-programming.html#cb233-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb233-13"><a href="an-introduction-to-object-oriented-programming.html#cb233-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.current_xbar</span></code></pre></div>
+<span id="cb233-2"><a href="an-introduction-to-object-oriented-programming.html#cb233-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Updates a running average&quot;&quot;&quot;</span></span>
+<span id="cb233-3"><a href="an-introduction-to-object-oriented-programming.html#cb233-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb233-4"><a href="an-introduction-to-object-oriented-programming.html#cb233-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.current_xbar <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb233-5"><a href="an-introduction-to-object-oriented-programming.html#cb233-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb233-6"><a href="an-introduction-to-object-oriented-programming.html#cb233-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, new_x):</span>
+<span id="cb233-7"><a href="an-introduction-to-object-oriented-programming.html#cb233-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb233-8"><a href="an-introduction-to-object-oriented-programming.html#cb233-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.current_xbar <span class="op">=</span> (<span class="va">self</span>.current_xbar<span class="op">*</span>(<span class="va">self</span>.n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> new_x) <span class="op">/</span> <span class="va">self</span>.n</span>
+<span id="cb233-9"><a href="an-introduction-to-object-oriented-programming.html#cb233-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_current_xbar(<span class="va">self</span>):</span>
+<span id="cb233-10"><a href="an-introduction-to-object-oriented-programming.html#cb233-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb233-11"><a href="an-introduction-to-object-oriented-programming.html#cb233-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb233-12"><a href="an-introduction-to-object-oriented-programming.html#cb233-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb233-13"><a href="an-introduction-to-object-oriented-programming.html#cb233-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.current_xbar</span></code></pre></div>
 <div class="rmd-details">
 <p>Methods that look like <code>__init__</code>, or that possess names that begin and end with two underscores, are called <strong>dunder (double underscore) methods</strong>, <strong>special methods</strong> or <strong>magic methods</strong>. There are many that you can take advantage of! For more information see <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">this</a>.</p>
 </div>
@@ -543,27 +543,29 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <p>How can we use inheritance in statistical programming? A primary benefit of inheritance is code re-use, so one example of inheritance is writing a generic algorithm as a base class, and a specific algorithm as a class that inherits from the base class. For example, we could re-use the code in the <code>RunningMean</code> class in a variety of other classes.</p>
 <p>Let’s make some assumptions about a <em>parametric model</em> that is generating our data. Suppose I assume that the data points <span class="math inline">\(x_1, \ldots, x_n\)</span> are a “random sample”<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> from a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>. <span class="math inline">\(\mu\)</span> is assumed to be unknown (this is, after all, and interval for <span class="math inline">\(\mu\)</span>), and <span class="math inline">\(\sigma^2\)</span> is assumed to be known, for simplicity.</p>
 <p>A <span class="math inline">\(95\%\)</span> confidence interval for the true unknown population mean <span class="math inline">\(\mu\)</span> is
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \left[\bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right].
-\]</span>
+\end{equation}\]</span>
 The width of the interval shrinks as we get more data (as <span class="math inline">\(n \to \infty\)</span>). We can write another class that, not only calculates the center of this interval, <span class="math inline">\(\bar{x}\)</span>, but also returns the interval endpoints.</p>
 <p>If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of <code>RunningMean</code>. Instead, we’ll use the idea of <a href="https://docs.python.org/3/tutorial/classes.html#inheritance"><em>inheritance</em></a>.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb234-1"><a href="an-introduction-to-object-oriented-programming.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb234-3"><a href="an-introduction-to-object-oriented-programming.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI(RunningMean):<span class="co"># &lt;-notice what&#39;s inside the parentheses</span></span>
-<span id="cb234-4"><a href="an-introduction-to-object-oriented-programming.html#cb234-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and </span></span>
-<span id="cb234-5"><a href="an-introduction-to-object-oriented-programming.html#cb234-5" aria-hidden="true" tabindex="-1"></a><span class="co">  gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
-<span id="cb234-6"><a href="an-introduction-to-object-oriented-programming.html#cb234-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
-<span id="cb234-7"><a href="an-introduction-to-object-oriented-programming.html#cb234-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb234-8"><a href="an-introduction-to-object-oriented-programming.html#cb234-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
-<span id="cb234-9"><a href="an-introduction-to-object-oriented-programming.html#cb234-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
-<span id="cb234-10"><a href="an-introduction-to-object-oriented-programming.html#cb234-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb234-11"><a href="an-introduction-to-object-oriented-programming.html#cb234-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb234-12"><a href="an-introduction-to-object-oriented-programming.html#cb234-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb234-13"><a href="an-introduction-to-object-oriented-programming.html#cb234-13" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
-<span id="cb234-14"><a href="an-introduction-to-object-oriented-programming.html#cb234-14" aria-hidden="true" tabindex="-1"></a>      left_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">-</span> half_width</span>
-<span id="cb234-15"><a href="an-introduction-to-object-oriented-programming.html#cb234-15" aria-hidden="true" tabindex="-1"></a>      right_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">+</span> half_width</span>
-<span id="cb234-16"><a href="an-introduction-to-object-oriented-programming.html#cb234-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([left_num, right_num])</span></code></pre></div>
+<span id="cb234-4"><a href="an-introduction-to-object-oriented-programming.html#cb234-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Updates a running average and </span></span>
+<span id="cb234-5"><a href="an-introduction-to-object-oriented-programming.html#cb234-5" aria-hidden="true" tabindex="-1"></a><span class="co">    gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
+<span id="cb234-6"><a href="an-introduction-to-object-oriented-programming.html#cb234-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb234-7"><a href="an-introduction-to-object-oriented-programming.html#cb234-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
+<span id="cb234-8"><a href="an-introduction-to-object-oriented-programming.html#cb234-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb234-9"><a href="an-introduction-to-object-oriented-programming.html#cb234-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
+<span id="cb234-10"><a href="an-introduction-to-object-oriented-programming.html#cb234-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb234-11"><a href="an-introduction-to-object-oriented-programming.html#cb234-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
+<span id="cb234-12"><a href="an-introduction-to-object-oriented-programming.html#cb234-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb234-13"><a href="an-introduction-to-object-oriented-programming.html#cb234-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb234-14"><a href="an-introduction-to-object-oriented-programming.html#cb234-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb234-15"><a href="an-introduction-to-object-oriented-programming.html#cb234-15" aria-hidden="true" tabindex="-1"></a>            half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
+<span id="cb234-16"><a href="an-introduction-to-object-oriented-programming.html#cb234-16" aria-hidden="true" tabindex="-1"></a>            left_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">-</span> half_width</span>
+<span id="cb234-17"><a href="an-introduction-to-object-oriented-programming.html#cb234-17" aria-hidden="true" tabindex="-1"></a>            right_num <span class="op">=</span> <span class="va">self</span>.current_xbar <span class="op">+</span> half_width</span>
+<span id="cb234-18"><a href="an-introduction-to-object-oriented-programming.html#cb234-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.array([left_num, right_num])</span></code></pre></div>
 <p>The parentheses in the first line of the class definition signal that this new class definition is inheriting from <code>RunningMean</code>. Inside the definition of this new class, when I refer to <code>self.current_xbar</code> Python knows what I’m referring to because it is defined in the base class. Last, I am using <code>super()</code> to access the base class’s methods, such as <code>__init__</code>.</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb235-1"><a href="an-introduction-to-object-oriented-programming.html#cb235-1" aria-hidden="true" tabindex="-1"></a>my_ci <span class="op">=</span> RunningCI(<span class="dv">1</span>) <span class="co"># create running average object</span></span>
 <span id="cb235-2"><a href="an-introduction-to-object-oriented-programming.html#cb235-2" aria-hidden="true" tabindex="-1"></a>my_ci.get_current_xbar() <span class="co"># no data yet!</span></span>
@@ -576,23 +578,23 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <p>This example also demonstrates <strong>polymorphism.</strong> Polymorphism comes from the Greek for “many forms.” “Forms” means “type” or “class” in this case. If the same code (usually a function or method) works on objects of different types, that’s polymorphic. Here, the <code>update</code> method worked on an object of class <code>RunningCI</code>, as well as an object of <code>RunningMean</code>.</p>
 <p>Why is this useful? Consider this example.</p>
 <div class="sourceCode" id="cb236"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb236-1"><a href="an-introduction-to-object-oriented-programming.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datum <span class="kw">in</span> time_series:</span>
-<span id="cb236-2"><a href="an-introduction-to-object-oriented-programming.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
-<span id="cb236-3"><a href="an-introduction-to-object-oriented-programming.html#cb236-3" aria-hidden="true" tabindex="-1"></a>    thing.update(xt)</span></code></pre></div>
+<span id="cb236-2"><a href="an-introduction-to-object-oriented-programming.html#cb236-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
+<span id="cb236-3"><a href="an-introduction-to-object-oriented-programming.html#cb236-3" aria-hidden="true" tabindex="-1"></a>        thing.update(xt)</span></code></pre></div>
 <p>Inside the inner <code>for</code> loop, there is no need for include conditional logic that tests for what kind of type each <code>thing</code> is. We can iterate through time more succinctly.</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb237-1"><a href="an-introduction-to-object-oriented-programming.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datum <span class="kw">in</span> time_series:</span>
-<span id="cb237-2"><a href="an-introduction-to-object-oriented-programming.html#cb237-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
-<span id="cb237-3"><a href="an-introduction-to-object-oriented-programming.html#cb237-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class1):</span>
-<span id="cb237-4"><a href="an-introduction-to-object-oriented-programming.html#cb237-4" aria-hidden="true" tabindex="-1"></a>      thing.updatec1(xt)</span>
-<span id="cb237-5"><a href="an-introduction-to-object-oriented-programming.html#cb237-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class2):</span>
-<span id="cb237-6"><a href="an-introduction-to-object-oriented-programming.html#cb237-6" aria-hidden="true" tabindex="-1"></a>      thing.updatec2(xt)</span>
-<span id="cb237-7"><a href="an-introduction-to-object-oriented-programming.html#cb237-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class3):</span>
-<span id="cb237-8"><a href="an-introduction-to-object-oriented-programming.html#cb237-8" aria-hidden="true" tabindex="-1"></a>      thing.updatec3(xt)</span>
-<span id="cb237-9"><a href="an-introduction-to-object-oriented-programming.html#cb237-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class4):</span>
-<span id="cb237-10"><a href="an-introduction-to-object-oriented-programming.html#cb237-10" aria-hidden="true" tabindex="-1"></a>      thing.updatec4(xt)</span>
-<span id="cb237-11"><a href="an-introduction-to-object-oriented-programming.html#cb237-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class5):</span>
-<span id="cb237-12"><a href="an-introduction-to-object-oriented-programming.html#cb237-12" aria-hidden="true" tabindex="-1"></a>      thing.updatec5(xt)</span>
-<span id="cb237-13"><a href="an-introduction-to-object-oriented-programming.html#cb237-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class6):</span>
-<span id="cb237-14"><a href="an-introduction-to-object-oriented-programming.html#cb237-14" aria-hidden="true" tabindex="-1"></a>      thing.updatec6(xt)</span></code></pre></div>
+<span id="cb237-2"><a href="an-introduction-to-object-oriented-programming.html#cb237-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> thing <span class="kw">in</span> obj_list:</span>
+<span id="cb237-3"><a href="an-introduction-to-object-oriented-programming.html#cb237-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class1):</span>
+<span id="cb237-4"><a href="an-introduction-to-object-oriented-programming.html#cb237-4" aria-hidden="true" tabindex="-1"></a>            thing.updatec1(xt)</span>
+<span id="cb237-5"><a href="an-introduction-to-object-oriented-programming.html#cb237-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class2):</span>
+<span id="cb237-6"><a href="an-introduction-to-object-oriented-programming.html#cb237-6" aria-hidden="true" tabindex="-1"></a>            thing.updatec2(xt)</span>
+<span id="cb237-7"><a href="an-introduction-to-object-oriented-programming.html#cb237-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class3):</span>
+<span id="cb237-8"><a href="an-introduction-to-object-oriented-programming.html#cb237-8" aria-hidden="true" tabindex="-1"></a>            thing.updatec3(xt)</span>
+<span id="cb237-9"><a href="an-introduction-to-object-oriented-programming.html#cb237-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class4):</span>
+<span id="cb237-10"><a href="an-introduction-to-object-oriented-programming.html#cb237-10" aria-hidden="true" tabindex="-1"></a>            thing.updatec4(xt)</span>
+<span id="cb237-11"><a href="an-introduction-to-object-oriented-programming.html#cb237-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class5):</span>
+<span id="cb237-12"><a href="an-introduction-to-object-oriented-programming.html#cb237-12" aria-hidden="true" tabindex="-1"></a>            thing.updatec5(xt)</span>
+<span id="cb237-13"><a href="an-introduction-to-object-oriented-programming.html#cb237-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(thing, class6):</span>
+<span id="cb237-14"><a href="an-introduction-to-object-oriented-programming.html#cb237-14" aria-hidden="true" tabindex="-1"></a>            thing.updatec6(xt)</span></code></pre></div>
 <p>If, in the future, you add a new class called <code>class7</code>, then you need to change this inner <code>for</code> loop, as well as provide new code for the class.</p>
 </div>
 <div id="adding-in-composition" class="section level3" number="14.1.4">
@@ -614,21 +616,24 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <hr />
 <p>Here is an example implementation of a confidence interval using composition. Notice that this class “owns” a <code>RunningMean</code> instance called <code>self.mean</code>. This is contrast with <em>inheriting</em> from the <code>RunningMean</code> class.</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb238-1"><a href="an-introduction-to-object-oriented-programming.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RunningCI2:</span>
-<span id="cb238-2"><a href="an-introduction-to-object-oriented-programming.html#cb238-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot;Updates a running average and </span></span>
-<span id="cb238-3"><a href="an-introduction-to-object-oriented-programming.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="co">  gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
-<span id="cb238-4"><a href="an-introduction-to-object-oriented-programming.html#cb238-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
-<span id="cb238-5"><a href="an-introduction-to-object-oriented-programming.html#cb238-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.mean <span class="op">=</span> RunningMean()</span>
-<span id="cb238-6"><a href="an-introduction-to-object-oriented-programming.html#cb238-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
-<span id="cb238-7"><a href="an-introduction-to-object-oriented-programming.html#cb238-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> update(<span class="va">self</span>, new_x):    </span>
-<span id="cb238-8"><a href="an-introduction-to-object-oriented-programming.html#cb238-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.mean.update(new_x)</span>
-<span id="cb238-9"><a href="an-introduction-to-object-oriented-programming.html#cb238-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
-<span id="cb238-10"><a href="an-introduction-to-object-oriented-programming.html#cb238-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb238-11"><a href="an-introduction-to-object-oriented-programming.html#cb238-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb238-12"><a href="an-introduction-to-object-oriented-programming.html#cb238-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb238-13"><a href="an-introduction-to-object-oriented-programming.html#cb238-13" aria-hidden="true" tabindex="-1"></a>      half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
-<span id="cb238-14"><a href="an-introduction-to-object-oriented-programming.html#cb238-14" aria-hidden="true" tabindex="-1"></a>      left <span class="op">=</span> <span class="va">self</span>.mean.get_current_xbar() <span class="op">-</span> half_width</span>
-<span id="cb238-15"><a href="an-introduction-to-object-oriented-programming.html#cb238-15" aria-hidden="true" tabindex="-1"></a>      right <span class="op">=</span> <span class="va">self</span>.mean.get_current_xbar() <span class="op">+</span> half_width</span>
-<span id="cb238-16"><a href="an-introduction-to-object-oriented-programming.html#cb238-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> np.array([left, right])</span></code></pre></div>
+<span id="cb238-2"><a href="an-introduction-to-object-oriented-programming.html#cb238-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Updates a running average and </span></span>
+<span id="cb238-3"><a href="an-introduction-to-object-oriented-programming.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="co">    gives you a known-variance confidence interval&quot;&quot;&quot;</span></span>
+<span id="cb238-4"><a href="an-introduction-to-object-oriented-programming.html#cb238-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb238-5"><a href="an-introduction-to-object-oriented-programming.html#cb238-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, known_var):</span>
+<span id="cb238-6"><a href="an-introduction-to-object-oriented-programming.html#cb238-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mean <span class="op">=</span> RunningMean()</span>
+<span id="cb238-7"><a href="an-introduction-to-object-oriented-programming.html#cb238-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.known_var <span class="op">=</span> known_var</span>
+<span id="cb238-8"><a href="an-introduction-to-object-oriented-programming.html#cb238-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb238-9"><a href="an-introduction-to-object-oriented-programming.html#cb238-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, new_x):    </span>
+<span id="cb238-10"><a href="an-introduction-to-object-oriented-programming.html#cb238-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mean.update(new_x)</span>
+<span id="cb238-11"><a href="an-introduction-to-object-oriented-programming.html#cb238-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb238-12"><a href="an-introduction-to-object-oriented-programming.html#cb238-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_current_interval(<span class="va">self</span>):</span>
+<span id="cb238-13"><a href="an-introduction-to-object-oriented-programming.html#cb238-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb238-14"><a href="an-introduction-to-object-oriented-programming.html#cb238-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb238-15"><a href="an-introduction-to-object-oriented-programming.html#cb238-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb238-16"><a href="an-introduction-to-object-oriented-programming.html#cb238-16" aria-hidden="true" tabindex="-1"></a>            half_width <span class="op">=</span> <span class="fl">1.96</span> <span class="op">*</span> np.sqrt(<span class="va">self</span>.known_var <span class="op">/</span> <span class="va">self</span>.n)  </span>
+<span id="cb238-17"><a href="an-introduction-to-object-oriented-programming.html#cb238-17" aria-hidden="true" tabindex="-1"></a>            left <span class="op">=</span> <span class="va">self</span>.mean.get_current_xbar() <span class="op">-</span> half_width</span>
+<span id="cb238-18"><a href="an-introduction-to-object-oriented-programming.html#cb238-18" aria-hidden="true" tabindex="-1"></a>            right <span class="op">=</span> <span class="va">self</span>.mean.get_current_xbar() <span class="op">+</span> half_width</span>
+<span id="cb238-19"><a href="an-introduction-to-object-oriented-programming.html#cb238-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.array([left, right])</span></code></pre></div>
 </div>
 </div>
 <div id="oop-in-r" class="section level2" number="14.2">
@@ -665,7 +670,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="an-introduction-to-object-oriented-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x5646cb1bc1f8&gt;
+## &lt;bytecode: 0x562d10b03ce8&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod()</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods()</code> function.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">methods</span>(plot))</span></code></pre></div>
@@ -686,7 +691,7 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <span id="cb246-4"><a href="an-introduction-to-object-oriented-programming.html#cb246-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aDF)</span>
 <span id="cb246-5"><a href="an-introduction-to-object-oriented-programming.html#cb246-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
 <span id="cb246-6"><a href="an-introduction-to-object-oriented-programming.html#cb246-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aDF)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-244"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-244-1.png" alt="A Scatterplot Matrix" width="80%" />
 <p class="caption">
 Figure 14.1: A Scatterplot Matrix
@@ -700,7 +705,7 @@ Figure 14.1: A Scatterplot Matrix
 <span id="cb247-4"><a href="an-introduction-to-object-oriented-programming.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myECDF)</span>
 <span id="cb247-5"><a href="an-introduction-to-object-oriented-programming.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ecdf&quot;     &quot;stepfun&quot;  &quot;function&quot;</span></span>
 <span id="cb247-6"><a href="an-introduction-to-object-oriented-programming.html#cb247-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(myECDF)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-245"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-245"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-245-1.png" alt="Plotting an Empirical Cumulative Distribution Function" width="80%" />
 <p class="caption">
 Figure 14.2: Plotting an Empirical Cumulative Distribution Function
@@ -977,17 +982,17 @@ Figure 14.2: Plotting an Empirical Cumulative Distribution Function
 </ol>
 <p>If you are interested in estimating a linear regression model, there is a <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html"><code>LinearRegression</code> class</a> that you might consider using in the <code>sklearn.linear_model</code> submodule. In this lab, we will create something similar, but a little more simplified.</p>
 <p>A simple linear regression model will take in <span class="math inline">\(n\)</span> independent variables <span class="math inline">\(x_1, \ldots, x_n\)</span>, and <span class="math inline">\(n\)</span> dependent variables <span class="math inline">\(y_1, \ldots, y_n\)</span>, and try to describe their relationship with a function:
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
-\]</span>
+\end{equation}\]</span>
 The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are unknown, and so must be estimated with the data. Estimating the variance of the noise terms <span class="math inline">\(\epsilon_i\)</span> may also be of interest, but we do not concern ourselves with that here.</p>
 <p>The formulas for the estimated slope (i.e. <span class="math inline">\(\hat{\beta}_1\)</span>) and the estimated intercept (i.e. <span class="math inline">\(\hat{\beta}_0\)</span>) are as follows:
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} 
-\]</span></p>
-<p><span class="math display">\[
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation} 
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}.
-\]</span></p>
+\end{equation}\]</span></p>
 <p>Create a class that performs simple linear regression.</p>
 <ul>
 <li>Name it <code>SimpleLinReg</code>.</li>
@@ -1016,20 +1021,20 @@ The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="m
 <li></li>
 </ol>
 <p>Consider the following time series model <span class="citation">(<a href="#ref-West1989BayesianFA" role="doc-biblioref">West and Harrison 1989</a>)</span>
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 y_t = \beta_t + \epsilon_t \\
 \beta_t = \beta_{t-1} + w_t \\
 \beta_1 = w_1
-\]</span>
+\end{equation}\]</span>
 Here <span class="math inline">\(y_t\)</span> is observed time series data, each <span class="math inline">\(\epsilon_t\)</span> is measurement noise with variance <span class="math inline">\(V\)</span> and each <span class="math inline">\(w_t\)</span> is also noise but with variance <span class="math inline">\(W\)</span>. Think of <span class="math inline">\(\beta_t\)</span> as a time-varying regression coefficient.</p>
 <p>Imagine our data are arriving sequentially. The Kalman Filter <span class="citation">(<a href="#ref-kalman_filt" role="doc-biblioref">Kalman 1960</a>)</span> cite provides an “optimal” estimate of each <span class="math inline">\(\beta_t\)</span> given all of the information we have up to time <span class="math inline">\(t\)</span>. What’s better is that the algorithm is recursive. Future estimates of <span class="math inline">\(\beta_t\)</span> will be easy to calculate given our estimates of <span class="math inline">\(\beta_{t-1}\)</span>.</p>
 <p>Let’s call the mean of <span class="math inline">\(\beta_{t-1}\)</span> (given all the information up to time <span class="math inline">\(t-1\)</span>) <span class="math inline">\(m_{t-1}\)</span>, and the variance of <span class="math inline">\(\beta_{t-1}\)</span> (given all the information up to time <span class="math inline">\(t-1\)</span>) <span class="math inline">\(P_{t-1}\)</span>. Then the Kalman recursions for this particular model are</p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{equation} 
 M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) 
-\]</span></p>
-<p><span class="math display">\[
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation} 
 P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
-\]</span>
+\end{equation}\]</span>
 for <span class="math inline">\(t \ge 1\)</span>.</p>
 <ul>
 <li>Write a class called <code>TVIKalman</code> (TVI stands for time-varying intercept).</li>
@@ -1077,9 +1082,9 @@ for <span class="math inline">\(t \ge 1\)</span>.</p>
 <li></li>
 </ol>
 <p>Suppose you have the following data set: <span class="math inline">\(X_1, \ldots, X_n\)</span>. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, respectively. Consider testing the hypothesis that <span class="math inline">\(\mu = 0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. To carry out this test, you calculate
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 t = \frac{\bar{X}}{S/\sqrt{n}}
-\]</span>
+\end{equation}\]</span>
 and you reject the null if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}\)</span> <span class="citation">(<a href="#ref-student1908probable" role="doc-biblioref">Student 1908</a>)</span>. Here <span class="math inline">\(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\)</span> is the sample variance, and <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
 <ul>
 <li>Write a function called <code>doTTest()</code> that performs the above hypothesis test. It should accept two parameters: <code>dataVec</code> (a <code>vector</code> of data) and <code>significanceLevel</code> (which is <span class="math inline">\(\alpha\)</span>). Have the second parameter default to <code>.05</code>.</li>
@@ -1096,9 +1101,9 @@ ii. For each sample <span class="math inline">\(x^i\)</span>, calculate an unnor
 iii. Calculate the normalized weights <span class="math inline">\(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\)</span>.
 iv. Calculate the weighted average <span class="math inline">\(\sum_{i=1}^n w^i x^i\)</span>.</p>
 <p>In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each <span class="math inline">\(\log \tilde{w}^i\)</span>, before you exponentiate them, subtract a number <span class="math inline">\(m\)</span> from all the values. A good choice for <span class="math inline">\(m\)</span> is <span class="math inline">\(\max_i (\log \tilde{w}^i)\)</span>. These new values will produce the same normalized weights because
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
-\]</span></p>
+\end{equation}\]</span></p>
 <ul>
 <li>Create an R6 class called <code>ImpSamp</code> that performs importance sampling.</li>
 <li>It should store function data values <code>qSamp</code>, <code>logQEval</code>, and <code>logFEval</code>.</li>
@@ -1156,6 +1161,7 @@ Wickham, H. 2014. <em>Advanced r</em>. Chapman &amp; Hall/CRC the r Series. Tayl
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1195,10 +1201,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

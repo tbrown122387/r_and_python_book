@@ -305,10 +305,10 @@ None == None
 # create a function that doesn't return anything
 # more information on this later
 def do_nothing_func():
-  pass
+    pass
 thing = do_nothing_func()
 if thing is None:
-  print("thing is None!")
+    print("thing is None!")
 type(None)
 ```
 
@@ -556,28 +556,33 @@ prices <- c(100.10, 95.98, 100.01, 99.87)
 ```
   
   a. Convert this vector into a vector of *log returns*. Call the variable `logReturns`. If $p_t$ is the price at time $t$, the log return ending at time $t$ is 
-$$ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}$$
+\begin{equation} 
+r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
+\end{equation}
 
-  b. Do the same for *arithmetic returns*. These are regular percent changes if you scale by $100$. Call the variable `arithReturns`. The mathematical formula you need is $$ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 $$
+  b. Do the same for *arithmetic returns*. These are regular percent changes if you scale by $100$. Call the variable `arithReturns`. The mathematical formula you need is 
+\begin{equation} 
+a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 
+\end{equation}
 
 
 3. Consider another **mixture density** $f(y) = \int f(y \mid x) f(x) dx$ where  
 
-$$
+\begin{equation} 
 Y \mid X = x \sim \text{Normal}(0, x^2)
-$$
+\end{equation}
 and
 
-$$
+\begin{equation} 
 X \sim \text{half-Cauchy}(0, 1).
-$$
+\end{equation}
 This distribution is a special case of a prior distribution that is used in Bayesian statistics [@horseshoe]. 
 
 Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median: 
 
-$$
+\begin{equation} 
 \mathbb{P}[|Y| > 1] = \int_{y : |y| > 1} f(y)dy = \int_{y : |y| > 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
-$$
+\end{equation}
 
 
   a. Simulate $X_1, \ldots, X_{5000}$ from a $\text{half-Cauchy}(0, 1)$ and call these samples `xSamps`. Hint: you can simulate from a $t$ distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.
@@ -620,19 +625,19 @@ $$
   c. extract time strings of those elements into a `Series` called `time_strings`
 
 3. We will make use of the *Monte Carlo* [@monte-carlo-stat-methods] method below. It is a technique to approximate expectations and probabilities. If $n$ is a large number, and $X_1, \ldots, X_n$ is a random sample drawn from the distribution of interest, then 
-$$
+\begin{equation} 
 \mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6).
-$$
+\end{equation}
 If you haven't seen an **indicator function** before, it is defined as 
 
-$$
+\begin{equation} 
 \mathbf{1}(X_i > 6)
 =
 \begin{cases}
 1 & X_i > 6 \\
 0 & X_i \le 6
 \end{cases}.
-$$
+\end{equation}
 
 If you wanted to visualize it, $\mathbf{1}(x > 6)$ looks like this. 
 
@@ -658,21 +663,21 @@ So, the sum in this expression is just a count of the number of elements that ar
 
 4. Alternatively, we can approximate expectations. If $\mathbb{E}[f(X)]$ exists, $n$ is a large number, and $W_1, \ldots, W_n$ is a random sample drawn from the distribution of interest, then
 
-$$
+\begin{equation} 
 \mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
-$$
+\end{equation}
 
 Here's a new distribution. It is a **mixture distribution**, specifically a **finite mixture of normal distributions**: $f(y) =  f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)$ where  
 
-$$
+\begin{equation} 
 Y \mid X=0 \sim \text{Normal}(0, 2) \\
 Y \mid X=1 \sim \text{Normal}(10, 2)
-$$
+\end{equation}
 and
 
-$$
+\begin{equation} 
 X \sim \text{Bernoulli}(.5).
-$$
+\end{equation}
 
 Both $f(y \mid X=0)$ and $f(y \mid X=1)$ are bell-curved, and $f(y)$ looks like this
 

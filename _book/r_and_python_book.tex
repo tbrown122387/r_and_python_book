@@ -1302,10 +1302,10 @@ In Python, we have the following.
 \CommentTok{\# more information on this later}
 \CommentTok{\#\# True}
 \KeywordTok{def}\NormalTok{ do\_nothing\_func():}
-  \ControlFlowTok{pass}
+    \ControlFlowTok{pass}
 \NormalTok{thing }\OperatorTok{=}\NormalTok{ do\_nothing\_func()}
 \ControlFlowTok{if}\NormalTok{ thing }\KeywordTok{is} \VariableTok{None}\NormalTok{:}
-  \BuiltInTok{print}\NormalTok{(}\StringTok{"thing is None!"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"thing is None!"}\NormalTok{)}
 \CommentTok{\#\# thing is None!}
 \BuiltInTok{type}\NormalTok{(}\VariableTok{None}\NormalTok{)}
 \CommentTok{\#\# \textless{}class \textquotesingle{}NoneType\textquotesingle{}\textgreater{}}
@@ -1681,9 +1681,14 @@ We also mention \emph{anchoring.} If you only want to find a pattern at the begi
 \def\labelenumi{\alph{enumi}.}
 \item
   Convert this vector into a vector of \emph{log returns}. Call the variable \texttt{logReturns}. If \(p_t\) is the price at time \(t\), the log return ending at time \(t\) is
-  \[ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}\]
+  \begin{equation} 
+  r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
+  \end{equation}
 \item
-  Do the same for \emph{arithmetic returns}. These are regular percent changes if you scale by \(100\). Call the variable \texttt{arithReturns}. The mathematical formula you need is \[ a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 \]
+  Do the same for \emph{arithmetic returns}. These are regular percent changes if you scale by \(100\). Call the variable \texttt{arithReturns}. The mathematical formula you need is
+  \begin{equation} 
+  a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 
+  \end{equation}
 \end{enumerate}
 
 \begin{enumerate}
@@ -1694,21 +1699,21 @@ We also mention \emph{anchoring.} If you only want to find a pattern at the begi
   Consider another \textbf{mixture density} \(f(y) = \int f(y \mid x) f(x) dx\) where
 \end{enumerate}
 
-\[
+\begin{equation} 
 Y \mid X = x \sim \text{Normal}(0, x^2)
-\]
+\end{equation}
 and
 
-\[
+\begin{equation} 
 X \sim \text{half-Cauchy}(0, 1).
-\]
+\end{equation}
 This distribution is a special case of a prior distribution that is used in Bayesian statistics \citep{horseshoe}.
 
 Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:
 
-\[
+\begin{equation} 
 \mathbb{P}[|Y| > 1] = \int_{y : |y| > 1} f(y)dy = \int_{y : |y| > 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
-\]
+\end{equation}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -1781,20 +1786,20 @@ Suppose further that you are interested in calculating the probability that one 
 \tightlist
 \item
   We will make use of the \emph{Monte Carlo} \citep{monte-carlo-stat-methods} method below. It is a technique to approximate expectations and probabilities. If \(n\) is a large number, and \(X_1, \ldots, X_n\) is a random sample drawn from the distribution of interest, then
-  \[
+  \begin{equation} 
   \mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6).
-  \]
+  \end{equation}
   If you haven't seen an \textbf{indicator function} before, it is defined as
 \end{enumerate}
 
-\[
+\begin{equation} 
 \mathbf{1}(X_i > 6)
 =
 \begin{cases}
 1 & X_i > 6 \\
 0 & X_i \le 6
 \end{cases}.
-\]
+\end{equation}
 
 If you wanted to visualize it, \(\mathbf{1}(x > 6)\) looks like this.
 
@@ -1843,21 +1848,21 @@ So, the sum in this expression is just a count of the number of elements that ar
   Alternatively, we can approximate expectations. If \(\mathbb{E}[f(X)]\) exists, \(n\) is a large number, and \(W_1, \ldots, W_n\) is a random sample drawn from the distribution of interest, then
 \end{enumerate}
 
-\[
+\begin{equation} 
 \mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
-\]
+\end{equation}
 
 Here's a new distribution. It is a \textbf{mixture distribution}, specifically a \textbf{finite mixture of normal distributions}: \(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\) where
 
-\[
+\begin{equation} 
 Y \mid X=0 \sim \text{Normal}(0, 2) \\
 Y \mid X=1 \sim \text{Normal}(10, 2)
-\]
+\end{equation}
 and
 
-\[
+\begin{equation} 
 X \sim \text{Bernoulli}(.5).
-\]
+\end{equation}
 
 Both \(f(y \mid X=0)\) and \(f(y \mid X=1)\) are bell-curved, and \(f(y)\) looks like this
 
@@ -2121,9 +2126,9 @@ For the following problems, make sure to only use the transpose function \texttt
 \end{enumerate}
 
 A formula for the sample covariance is
-\[
+\begin{equation} 
 \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
-\]
+\end{equation}
 \textbf{You can check your work with \texttt{cov()}, but don't use it in your submitted code.}
 
 \begin{enumerate}
@@ -2135,14 +2140,14 @@ A formula for the sample covariance is
   Create a \texttt{matrix} called \texttt{X} that has one thousand rows, four columns, has every element set to either \(0\) or \(1\), has its first column set to all \(1\)s, has the second column set to \(1\) in the second \(250\) elements and \(0\) elsewhere, has the third column set to \(1\) in the third \(250\) spots and \(0\) elsewhere, and has the fourth column set to \(1\) in the last \(250\) spots and \(0\) elsewhere. In other words, it looks something like
 \end{enumerate}
 
-\[
+\begin{equation} 
   \begin{bmatrix}
   \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
   \mathbf{1}_{250}  & \mathbf{1}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
   \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{1}_{250} & \mathbf{0}_{250} \\
   \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{1}_{250} \\
   \end{bmatrix}
-  \]
+\end{equation}
 where \(\mathbf{1}_{250}\) and \(\mathbf{0}_{250}\) are length \(250\) column vectors with all of their elements set to \(1\) or \(0\), respectively.
 
 \begin{enumerate}
@@ -2165,9 +2170,9 @@ where \(\mathbf{1}_{250}\) and \(\mathbf{0}_{250}\) are length \(250\) column ve
   Let \(\mathbf{X}\) be an \(n \times 1\) random vector. It has a multivariate normal distribution with mean vector \(\mathbf{m}\) and positive definite covariance matrix \(\mathbf{C}\) if its probability density function can be written as
 \end{enumerate}
 
-\[
+\begin{equation} 
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
-\]
+\end{equation}
 
 Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider:
 
@@ -2178,7 +2183,7 @@ Evaluating this density should be done with care. There is no one function that 
   recall from the last lab that exponentiating numbers close to \(-\infty\) risks numerical underflow. It's better to prefer evaluating log densities. There are also \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html}{special functions that evaluate log determinants} that are less likely to underflow/overflow, too!
 \end{itemize}
 
-Complete the following problems. \textbf{Do not use pre-made functions like \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html}{\texttt{scipy.stats.norm}} and \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html}{\texttt{scipy.stats.multivariate\_normal}} in your submission, but you may use them to check your work. Use only ``standard'' functions and Numpy n-dimensional arrays.} Use the following definitions for \(\mathbf{x}\) and \(\mathbf{m}\):
+Complete the following problems. \textbf{Do not use pre-made functions such as \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html}{\texttt{scipy.stats.norm}} and \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html}{\texttt{scipy.stats.multivariate\_normal}} in your submission, but you may use them to check your work. Use only ``standard'' functions and Numpy n-dimensional arrays.} Use the following definitions for \(\mathbf{x}\) and \(\mathbf{m}\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2372,7 +2377,7 @@ Personally, I don't use dictionaries as much as lists. If I have a dictionary, I
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Consider the data sets \texttt{adult.data}, \texttt{car.data}, \texttt{hungarian.data}, \texttt{iris.data}, \texttt{long-beach-va.data} and \texttt{switzerland.data} \citep{misc_heart_disease_45}, \citep{misc_iris_53}. \citep{misc_adult_2} and \citep{misc_car_evaluation_19}. Read all of these in and store them all as a \texttt{list} of \texttt{data.frame}s. Call the list \texttt{listDfs}.
+  Consider the data sets \texttt{"adult.data"}, \texttt{"car.data"}, \texttt{"hungarian.data"}, \texttt{"iris.data"}, \texttt{"long-beach-va.data"} and \texttt{"switzerland.data"} \citep{misc_heart_disease_45}, \citep{misc_iris_53}. \citep{misc_adult_2} and \citep{misc_car_evaluation_19}. Read all of these in and store them all as a \texttt{list} of \texttt{data.frame}s. Call the list \texttt{listDfs}.
 \end{enumerate}
 
 \hypertarget{python-questions-3}{%
@@ -2451,8 +2456,8 @@ Here is an example of a toy function called \texttt{add\_one()}.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ add\_one(my\_input):  }\CommentTok{\# define the function}
-\NormalTok{  my\_output }\OperatorTok{=}\NormalTok{ my\_input }\OperatorTok{+} \DecValTok{1}
-  \ControlFlowTok{return}\NormalTok{ my\_output}
+\NormalTok{    my\_output }\OperatorTok{=}\NormalTok{ my\_input }\OperatorTok{+} \DecValTok{1}
+    \ControlFlowTok{return}\NormalTok{ my\_output}
 \NormalTok{add\_one(}\DecValTok{41}\NormalTok{) }\CommentTok{\# call/invoke/use the function }
 \CommentTok{\#\# 42}
 \end{Highlighting}
@@ -2546,8 +2551,8 @@ So, for instance, let's try to find the \emph{formal parameter list} of a user-d
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ add\_number(my\_input, which\_number }\OperatorTok{=} \DecValTok{1}\NormalTok{): }\CommentTok{\# define a function}
-\NormalTok{  my\_output }\OperatorTok{=}\NormalTok{ my\_input }\OperatorTok{+}\NormalTok{ which\_number}
-  \ControlFlowTok{return}\NormalTok{ my\_output}
+\NormalTok{    my\_output }\OperatorTok{=}\NormalTok{ my\_input }\OperatorTok{+}\NormalTok{ which\_number}
+    \ControlFlowTok{return}\NormalTok{ my\_output}
 \NormalTok{add\_number(}\DecValTok{3}\NormalTok{) }\CommentTok{\# no second argument being provided by the user here}
 \CommentTok{\#\# 4}
 \NormalTok{add\_number.\_\_code\_\_.co\_varnames }\CommentTok{\# note this also contains *my\_output*}
@@ -2714,9 +2719,9 @@ A Python function will search for a variable in these namespaces in this order.\
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=} \DecValTok{3}
 \KeywordTok{def}\NormalTok{ silly\_function():}
-\NormalTok{  a }\OperatorTok{=} \DecValTok{22} \CommentTok{\# local a}
-  \BuiltInTok{print}\NormalTok{(}\StringTok{"local variables are "}\NormalTok{, }\BuiltInTok{locals}\NormalTok{())}
-  \ControlFlowTok{return}\NormalTok{ a }\OperatorTok{+} \DecValTok{20}
+\NormalTok{    a }\OperatorTok{=} \DecValTok{22} \CommentTok{\# local a}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"local variables are "}\NormalTok{, }\BuiltInTok{locals}\NormalTok{())}
+    \ControlFlowTok{return}\NormalTok{ a }\OperatorTok{+} \DecValTok{20}
 \NormalTok{silly\_function()}
 \CommentTok{\#\# local variables are  \{\textquotesingle{}a\textquotesingle{}: 22\}}
 \CommentTok{\#\# 42}
@@ -2733,10 +2738,10 @@ A Python function will search for a variable in these namespaces in this order.\
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=} \StringTok{"outside both"}
 \KeywordTok{def}\NormalTok{ outer\_func():}
-\NormalTok{  a }\OperatorTok{=} \StringTok{"inside one"}
-  \KeywordTok{def}\NormalTok{ inner\_func():}
-    \BuiltInTok{print}\NormalTok{(a)}
-  \ControlFlowTok{return}\NormalTok{ inner\_func}
+\NormalTok{    a }\OperatorTok{=} \StringTok{"inside one"}
+    \KeywordTok{def}\NormalTok{ inner\_func():}
+        \BuiltInTok{print}\NormalTok{(a)}
+    \ControlFlowTok{return}\NormalTok{ inner\_func}
 \NormalTok{my\_new\_func }\OperatorTok{=}\NormalTok{ outer\_func()}
 \NormalTok{my\_new\_func()}
 \CommentTok{\#\# inside one}
@@ -2751,10 +2756,10 @@ A Python function will search for a variable in these namespaces in this order.\
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=} \StringTok{"outside both"}
 \KeywordTok{def}\NormalTok{ outer\_func():}
-\NormalTok{  b }\OperatorTok{=} \StringTok{"inside one"}
-  \KeywordTok{def}\NormalTok{ inner\_func():}
-    \BuiltInTok{print}\NormalTok{(a) }
-\NormalTok{  inner\_func()}
+\NormalTok{    b }\OperatorTok{=} \StringTok{"inside one"}
+    \KeywordTok{def}\NormalTok{ inner\_func():}
+        \BuiltInTok{print}\NormalTok{(a) }
+\NormalTok{    inner\_func()}
 \NormalTok{outer\_func()}
 \CommentTok{\#\# outside both}
 \end{Highlighting}
@@ -2768,14 +2773,14 @@ However, if we start using \texttt{outer\_func()} inside another function, \emph
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=} \StringTok{"outside both"}
 \KeywordTok{def}\NormalTok{ outer\_func():}
-\NormalTok{  b }\OperatorTok{=} \StringTok{"inside one"}
-  \KeywordTok{def}\NormalTok{ inner\_func():}
-    \BuiltInTok{print}\NormalTok{(a) }
-    \BuiltInTok{print}\NormalTok{(b)}
-  \ControlFlowTok{return}\NormalTok{ inner\_func() }
+\NormalTok{    b }\OperatorTok{=} \StringTok{"inside one"}
+    \KeywordTok{def}\NormalTok{ inner\_func():}
+        \BuiltInTok{print}\NormalTok{(a) }
+        \BuiltInTok{print}\NormalTok{(b)}
+    \ControlFlowTok{return}\NormalTok{ inner\_func() }
 \KeywordTok{def}\NormalTok{ third\_func():}
-\NormalTok{  a }\OperatorTok{=} \StringTok{"this is the a I want to use now!"}
-\NormalTok{  outer\_func()}
+\NormalTok{    a }\OperatorTok{=} \StringTok{"this is the a I want to use now!"}
+\NormalTok{    outer\_func()}
 \NormalTok{third\_func() }
 \end{Highlighting}
 \end{Shaded}
@@ -2836,8 +2841,8 @@ We will go throw some examples first, and then explain why this works the way it
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=} \DecValTok{1}
 \KeywordTok{def}\NormalTok{ f(arg):}
-\NormalTok{  arg }\OperatorTok{=} \DecValTok{2}
-  \ControlFlowTok{return}\NormalTok{ arg}
+\NormalTok{    arg }\OperatorTok{=} \DecValTok{2}
+    \ControlFlowTok{return}\NormalTok{ arg}
 \BuiltInTok{print}\NormalTok{(f(a))}
 \CommentTok{\#\# 2}
 \BuiltInTok{print}\NormalTok{(a)}
@@ -2851,8 +2856,8 @@ In this case, \texttt{a} is not modified. That is because \texttt{a} is an \text
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=}\NormalTok{ [}\DecValTok{999}\NormalTok{]}
 \KeywordTok{def}\NormalTok{ f(arg):}
-\NormalTok{  arg[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{2}
-  \ControlFlowTok{return}\NormalTok{ arg}
+\NormalTok{    arg[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{2}
+    \ControlFlowTok{return}\NormalTok{ arg}
 
 \BuiltInTok{print}\NormalTok{(f(a))}
 \CommentTok{\#\# [2]}
@@ -2869,8 +2874,8 @@ Ready to be confused? Here is a tricky third example. What happens if we take in
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=}\NormalTok{ [}\DecValTok{999}\NormalTok{]}
 \KeywordTok{def}\NormalTok{ f(arg):}
-\NormalTok{  arg }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{]}
-  \ControlFlowTok{return}\NormalTok{ arg}
+\NormalTok{    arg }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{]}
+    \ControlFlowTok{return}\NormalTok{ arg}
 
 \BuiltInTok{print}\NormalTok{(f(a))}
 \CommentTok{\#\# [2]}
@@ -2890,15 +2895,15 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \CommentTok{\# old code: }
 \CommentTok{\# a = 1}
 \CommentTok{\# def f(arg):}
-\CommentTok{\#   arg = 2}
-\CommentTok{\#   return arg}
+\CommentTok{\#     arg = 2}
+\CommentTok{\#     return arg}
 \NormalTok{a }\OperatorTok{=} \DecValTok{1}    \CommentTok{\# still done in global scope}
 \NormalTok{arg }\OperatorTok{=}\NormalTok{ a  }\CommentTok{\# arg is a name that is bound to the object a refers to}
 \NormalTok{arg }\OperatorTok{=} \DecValTok{2}  \CommentTok{\# arg is a name that is bound to the object 2}
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 140214937359712 140214937359744}
+\CommentTok{\#\# 139995012535648 139995012535680}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -2920,8 +2925,8 @@ If we go back to the first function example, it's basically the same idea. The o
 \NormalTok{a }\OperatorTok{=}\NormalTok{ [}\DecValTok{999}\NormalTok{]}
 \CommentTok{\# old code:}
 \CommentTok{\# def f(arg):}
-\CommentTok{\#   arg[0] = 2}
-\CommentTok{\#   return arg}
+\CommentTok{\#     arg[0] = 2}
+\CommentTok{\#     return arg}
 \NormalTok{arg }\OperatorTok{=}\NormalTok{ a}
 \NormalTok{arg[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{2}
 \BuiltInTok{print}\NormalTok{(arg)}
@@ -2998,7 +3003,7 @@ It is the same exact situation in Python. Consider \texttt{everything\_is\_safe(
 \CommentTok{\# python}
 \NormalTok{missile\_launch\_codes\_set }\OperatorTok{=} \VariableTok{True}
 \KeywordTok{def}\NormalTok{ everything\_is\_safe():}
-  \ControlFlowTok{return} \KeywordTok{not}\NormalTok{ missile\_launch\_codes\_set}
+    \ControlFlowTok{return} \KeywordTok{not}\NormalTok{ missile\_launch\_codes\_set}
 
 \NormalTok{missile\_launch\_codes\_set }\OperatorTok{=} \VariableTok{False}
 \NormalTok{everything\_is\_safe()}
@@ -3012,7 +3017,7 @@ We can also define \texttt{my\_func()}, which is analogous to \texttt{myFunc()}.
 \begin{Highlighting}[]
 \CommentTok{\# python}
 \KeywordTok{def}\NormalTok{ my\_func():}
-  \ControlFlowTok{return}\NormalTok{ varigble\_name\_with\_typo}
+    \ControlFlowTok{return}\NormalTok{ varigble\_name\_with\_typo}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3055,8 +3060,8 @@ The upside to the \texttt{global} keyword is that it makes hunting for \textbf{s
 \begin{Highlighting}[]
 \NormalTok{a }\OperatorTok{=} \DecValTok{1}
 \KeywordTok{def}\NormalTok{ increment\_a():}
-  \KeywordTok{global}\NormalTok{ a}
-\NormalTok{  a }\OperatorTok{+=} \DecValTok{1}
+    \KeywordTok{global}\NormalTok{ a}
+\NormalTok{    a }\OperatorTok{+=} \DecValTok{1}
 \NormalTok{[increment\_a() }\ControlFlowTok{for}\NormalTok{ \_ }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)]}
 \CommentTok{\#\# [None, None, None, None, None, None, None, None, None, None]}
 \BuiltInTok{print}\NormalTok{(a)}
@@ -3077,24 +3082,24 @@ The upside to the \texttt{global} keyword is that it makes hunting for \textbf{s
 \end{enumerate}
 
 Suppose you have a matrix \(\mathbf{X} \in \mathbb{R}^{n \times p}\) and a column vector \(\mathbf{y} \in \mathbb{R}^{n}\). To estimate the linear regression model
-\[
+\begin{equation} 
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \epsilon,
-\]
+\end{equation}
 where \(\boldsymbol{\beta} \in \mathbb{R}^p\) is a column vector of errors, you can use calculus instead of numerical optimization. The formula for the least squares estimate of \(\boldsymbol{\beta}\) is
-\[
+\begin{equation} 
 \hat{\boldsymbol{\beta}} = (\mathbf{X}^\intercal \mathbf{X})^{-1} \mathbf{X}^\intercal \mathbf{y}.
-\]
+\end{equation}
 
 Once this \(p\)-dimensional vector is found, you can also obtain the \emph{predicted (or fitted) values}
 
-\[
+\begin{equation} 
 \hat{\mathbf{y}} := \mathbf{X}\hat{\boldsymbol{\beta}},
-\]
+\end{equation}
 and the \emph{residuals (or errors)}
 
-\[
+\begin{equation} 
 \mathbf{y} - \hat{\mathbf{y}}
-\]
+\end{equation}
 
 Write a function called \texttt{getLinModEstimates()} that takes in two arguments in the following order:
 a. the \texttt{vector} of response data \(\mathbf{y}\)
@@ -3168,9 +3173,9 @@ Suppose you have a function \(f(x)\) that takes a scalar-valued input and return
 
 The algorithm repeatedly applies the following recursion:
 
-\[
+\begin{equation} 
 x_{n+1} = x_{n} - \frac{f'(x_n)}{f''(x_{n})}.
-\]
+\end{equation}
 Under appropriate regularity conditions for \(f\), after many iterations of the above recursion, when \(\tilde{n}\) is very large, \(x_{\tilde{n}}\) will be nearly the same as \(x_{\tilde{n}-1}\), and \(x_{\tilde{n}}\) is pretty close to \(\text{argmin}_x f(x)\). In other words, \(x_{\tilde{n}}\) is the minimizer of \(f\), and a root of \(f'\).
 
 \begin{itemize}
@@ -3208,9 +3213,9 @@ Under appropriate regularity conditions for \(f\), after many iterations of the 
 
 Write a function called \texttt{smw\_inverse(A,U,C,V)} that returns the inverse of a matrix using the \textbf{Sherman-Morrison-Woodbury formula} \citep{woodbury}. Have it take the arguments \(A\), \(U\), \(C\), and \(V\) in that order and as Numpy \texttt{ndarray}s. Assume that \texttt{A} is a diagonal matrix.
 
-\[
+\begin{equation} 
 (A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}V A^{-1}
-\]
+\end{equation}
 Despite being difficult to remember, this formula can be quite handy for speeding up matrix inversions when \(A\) and \(C\) are easier to invert (e.g.~if \(A\) is diagonal and \(C\) is a scalar). The formula often shows up a lot in applications where you multiply matrices together (there are many such examples).
 
 To check your work, pick certain inputs, and make sure your formula corresponds with the naive, left-hand-side approach.
@@ -3422,10 +3427,11 @@ Another option is to create the \texttt{dtype} before you create the \texttt{Ser
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{cat\_type }\OperatorTok{=}\NormalTok{ pd.CategoricalDtype(}
-\NormalTok{                  categories}\OperatorTok{=}\NormalTok{[}\StringTok{"autumn"}\NormalTok{, }\StringTok{"summer"}\NormalTok{, }\StringTok{"spring"}\NormalTok{, }\StringTok{"winter"}\NormalTok{],}
-\NormalTok{                  ordered}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
-\NormalTok{responses }\OperatorTok{=}\NormalTok{ pd.Series([}\StringTok{"autumn"}\NormalTok{, }\StringTok{"summer"}\NormalTok{, }\StringTok{"summer"}\NormalTok{], }
-\NormalTok{                      dtype }\OperatorTok{=}\NormalTok{ cat\_type)}
+\NormalTok{  categories}\OperatorTok{=}\NormalTok{[}\StringTok{"autumn"}\NormalTok{, }\StringTok{"summer"}\NormalTok{, }\StringTok{"spring"}\NormalTok{, }\StringTok{"winter"}\NormalTok{],}
+\NormalTok{  ordered}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\NormalTok{responses }\OperatorTok{=}\NormalTok{ pd.Series(}
+\NormalTok{  [}\StringTok{"autumn"}\NormalTok{, }\StringTok{"summer"}\NormalTok{, }\StringTok{"summer"}\NormalTok{], }
+\NormalTok{  dtype }\OperatorTok{=}\NormalTok{ cat\_type)}
 \NormalTok{responses}
 \CommentTok{\#\# 0    autumn}
 \CommentTok{\#\# 1    summer}
@@ -3443,8 +3449,8 @@ Just like in R, you can convert numerical data into categorical. The function ev
 \NormalTok{stock\_returns }\OperatorTok{=}\NormalTok{ np.random.normal(size}\OperatorTok{=}\DecValTok{10}\NormalTok{) }\CommentTok{\# not categorical }
 \CommentTok{\# array input means Categorical output}
 \NormalTok{type\_of\_day }\OperatorTok{=}\NormalTok{ pd.cut(stock\_returns, }
-\NormalTok{                     bins }\OperatorTok{=}\NormalTok{ [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], }
-\NormalTok{                     labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
+\NormalTok{                      bins }\OperatorTok{=}\NormalTok{ [}\OperatorTok{{-}}\NormalTok{np.inf, }\DecValTok{0}\NormalTok{, np.inf], }
+\NormalTok{                      labels }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}bad day\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}good day\textquotesingle{}}\NormalTok{]) }
 \BuiltInTok{type}\NormalTok{(type\_of\_day)}
 \CommentTok{\# Series in means Series out}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.arrays.categorical.Categorical\textquotesingle{}\textgreater{}}
@@ -3463,7 +3469,7 @@ Finally, when reading in data from an external source, choose carefully whether 
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \CommentTok{\# make 5th col categorical}
 \NormalTok{my\_data }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"data/iris.csv"}\NormalTok{, header}\OperatorTok{=}\VariableTok{None}\NormalTok{, }
-\NormalTok{                      dtype }\OperatorTok{=}\NormalTok{ \{}\DecValTok{4}\NormalTok{:}\StringTok{"category"}\NormalTok{\}) }
+\NormalTok{                        dtype }\OperatorTok{=}\NormalTok{ \{}\DecValTok{4}\NormalTok{:}\StringTok{"category"}\NormalTok{\}) }
 \NormalTok{my\_data.head(}\DecValTok{1}\NormalTok{)}
 \CommentTok{\#\#      0    1    2    3            4}
 \CommentTok{\#\# 0  5.1  3.5  1.4  0.2  Iris{-}setosa}
@@ -3588,7 +3594,7 @@ Suppose you are creating a \emph{classifier} whose job it is to predict labels. 
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{d }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}\StringTok{\textquotesingle{}predicted label\textquotesingle{}}\NormalTok{ : [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{], }
                   \StringTok{\textquotesingle{}actual label\textquotesingle{}}\NormalTok{: [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]\}, }
-\NormalTok{                 dtype}\OperatorTok{=}\StringTok{\textquotesingle{}category\textquotesingle{}}\NormalTok{)}
+\NormalTok{                  dtype}\OperatorTok{=}\StringTok{\textquotesingle{}category\textquotesingle{}}\NormalTok{)}
 \NormalTok{d.dtypes[}\DecValTok{0}\NormalTok{]}
 \CommentTok{\#\# CategoricalDtype(categories=[1, 2, 3], ordered=False)}
 \NormalTok{d.dtypes[}\DecValTok{1}\NormalTok{]}
@@ -3821,7 +3827,7 @@ Square brackets are a little different in Python than they are in R. Just like i
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{iris\_data.columns }\OperatorTok{=}\NormalTok{ [}\StringTok{"sepal.length"}\NormalTok{, }\StringTok{"sepal.width"}\NormalTok{, }\StringTok{"petal.length"}\NormalTok{, }
-                     \StringTok{"petal.width"}\NormalTok{, }\StringTok{"species"}\NormalTok{]}
+                      \StringTok{"petal.width"}\NormalTok{, }\StringTok{"species"}\NormalTok{]}
 \NormalTok{first\_col }\OperatorTok{=}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}sepal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{first\_col.head()}
 \CommentTok{\#\# 0    5.1}
@@ -3969,7 +3975,7 @@ Above we were assigning Numpy arrays to columns of a \texttt{DataFrame}. Be care
 \item
 \end{enumerate}
 
-Consider the data set \texttt{original\_rt\_snippets.txt} \citep{SocherEtAl2013:RNTN}. We will calculate the \emph{term frequency-inverse document frequency statistics} \citep{Jones72astatistical} on this data set, which is a common data transformation technique used in text mining and natural language processing. You may use the \texttt{stringr} library for this question, if you wish.
+Consider the data set \texttt{"original\_rt\_snippets.txt"} \citep{SocherEtAl2013:RNTN}. We will calculate the \emph{term frequency-inverse document frequency statistics} \citep{Jones72astatistical} on this data set, which is a common data transformation technique used in text mining and natural language processing. You may use the \texttt{stringr} library for this question, if you wish.
 
 \begin{itemize}
 \tightlist
@@ -4026,7 +4032,7 @@ This question investigates the \href{https://www.zillow.com/research/data/}{\emp
 \begin{itemize}
 \tightlist
 \item
-  read in \texttt{Zip\_zhvi\_uc\_sfr\_tier\_0.33\_0.67\_sm\_sa\_month.csv}. Call the \texttt{data.frame} \texttt{homeData}. Remember to be careful with file paths. Also, when looking at the data set with a text editor, be sure that ``word wrap'' is not turned on.
+  read in \texttt{"Zip\_zhvi\_uc\_sfr\_tier\_0.33\_0.67\_sm\_sa\_month.csv"}. Call the \texttt{data.frame} \texttt{homeData}. Remember to be careful with file paths. Also, when looking at the data set with a text editor, be sure that ``word wrap'' is not turned on.
 \item
   Extract the rows of \texttt{homeData} that correspond with Charlottesville, VA, and assign them as a \texttt{data.frame} to the variable \texttt{cvilleData}
 \item
@@ -4053,7 +4059,7 @@ This question deals with looking at historical prices of the S\&P500 Index. This
 \begin{itemize}
 \tightlist
 \item
-  Read in the data \texttt{gspc.csv} as a \texttt{data.frame} and call the variable \texttt{gspc}.
+  Read in the data file \texttt{"gspc.csv"} as a \texttt{data.frame} and call the variable \texttt{gspc}.
 \item
   Use \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html}{\texttt{.set\_index()}} to change the index of \texttt{gspc} to its \texttt{"Index"} column. Store the new \texttt{DataFrame} as \texttt{gspc\_good\_idx}.
 \item
@@ -4113,8 +4119,12 @@ Many of you will need to install \texttt{tensorflow} and \texttt{tensorflow\_dat
   \item
     Assume the Earth's radius \(r = 6378.137\) kilometers.
   \item
-    The formula for distance between \((\lambda_1, \phi_1)\) (signed longitude in radians, signed latitude in radians) and \((\lambda_2, \phi_2)\) is \[2 \hspace{1mm} r \hspace{1mm} \text{arcsin}\left( \sqrt{ \sin^2\left( \frac{\phi_2 - \phi_1}{2}\right)  + \cos(\phi_1)\cos(\phi_2) \sin^2\left( \frac{\lambda_2 - \lambda_1}{2} \right)  } \right)\]
+    The formula for distance between \((\lambda_1, \phi_1)\) (signed longitude in radians, signed latitude in radians) and \((\lambda_2, \phi_2)\) is
   \end{itemize}
+
+  \begin{equation}
+  2 \hspace{1mm} r \hspace{1mm} \text{arcsin}\left( \sqrt{ \sin^2\left( \frac{\phi_2 - \phi_1}{2}\right)  + \cos(\phi_1)\cos(\phi_2) \sin^2\left( \frac{\lambda_2 - \lambda_1}{2} \right)  } \right)
+  \end{equation}
 \item
   What is the average radon measurement between all measurements taken at the place that is closest to where we are now? Assign your answer as a \texttt{float} to \texttt{close\_ave}
 \end{itemize}
@@ -4133,7 +4143,7 @@ So far, this text has been favoring the creation of small pieces of data \emph{w
 \begin{itemize}
 \tightlist
 \item
-  data read in from a plain text file (e.g.~\texttt{my\_data.csv} or \texttt{log\_file.txt} ),
+  data read in from a plain text file (e.g.~\texttt{"my\_data.csv"} or \texttt{"log\_file.txt"} ),
 \item
   data read in from a database (e.g.~MySQL, PostgreSQL, etc.), or
 \item
@@ -4318,12 +4328,12 @@ By default, \texttt{pd.read\_csv()} is expecting column labels, which is also a 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
-\NormalTok{            header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{" "}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 1 space: no}
+\NormalTok{              header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{" "}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 1 space: no}
 \CommentTok{\#\#    0  1   2   3     4   5    6}
 \CommentTok{\#\# 0  6  0  66 NaN  50.0 NaN  1.0}
 \CommentTok{\#\# 1  6  1  70 NaN  50.0 NaN  2.0}
 \NormalTok{pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
-\NormalTok{            header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# tabs: no}
+\NormalTok{              header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# tabs: no}
 \CommentTok{\#\#                0}
 \CommentTok{\#\# 0  6 0 66  50  1}
 \CommentTok{\#\# 1  6 1 70  50  2}
@@ -4333,7 +4343,7 @@ By default, \texttt{pd.read\_csv()} is expecting column labels, which is also a 
 \CommentTok{\#\# 0  6 0 66  50  1}
 \CommentTok{\#\# 1  6 1 70  50  2}
 \NormalTok{pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
-\NormalTok{            header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"\textbackslash{}s+"}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 1 or more spaces: yes}
+\NormalTok{              header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"\textbackslash{}s+"}\NormalTok{).head(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 1 or more spaces: yes}
 \CommentTok{\#\#    0  1   2   3  4}
 \CommentTok{\#\# 0  6  0  66  50  1}
 \CommentTok{\#\# 1  6  1  70  50  2}
@@ -4367,7 +4377,7 @@ If you had chosen \texttt{widths={[}2,2,4,4,1{]}}, instead, then the trailing wh
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_fwf(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
-\NormalTok{                widths }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{], header}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\NormalTok{                  widths }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{], header}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
 \BuiltInTok{list}\NormalTok{(d.dtypes)[:}\DecValTok{4}\NormalTok{]}
 \CommentTok{\#\# [dtype(\textquotesingle{}int64\textquotesingle{}), dtype(\textquotesingle{}int64\textquotesingle{}), dtype(\textquotesingle{}O\textquotesingle{}), dtype(\textquotesingle{}O\textquotesingle{})]}
 \NormalTok{d }\OperatorTok{=}\NormalTok{ d.astype(\{}\DecValTok{2}\NormalTok{:}\StringTok{\textquotesingle{}string\textquotesingle{}}\NormalTok{, }\DecValTok{3}\NormalTok{:}\StringTok{\textquotesingle{}string\textquotesingle{}}\NormalTok{\}) }
@@ -4420,7 +4430,7 @@ In R, there are many options for storing data. I will mention two: writing data 
 
 If you want to write out tabular data to a text file, use \texttt{write.table()} or \texttt{write.csv()}. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a \texttt{matrix} or \texttt{data.frame}), and the second argument is the file path on your hard drive.
 
-Here is an example of writing out \texttt{d} to a file called \texttt{oring\_out.csv}. I choose to include column names, but not row names. I also use commas to separate columns.
+Here is an example of writing out \texttt{d} to a file called \texttt{"oring\_out.csv"}. I choose to include column names, but not row names. I also use commas to separate columns.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4453,7 +4463,7 @@ For instance, let's save the object \texttt{d} in a file called \texttt{oring.rd
 \end{Highlighting}
 \end{Shaded}
 
-After it is saved with \texttt{saveRDS()}, we are free to delete the variable with \texttt{rm()}, because it can be read back in later on. To do this, call \texttt{readRDS()}. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, \texttt{.rds} files are typically smaller--\texttt{oring.rds} is only 248 bytes, while \texttt{oring\_out.csv} is 332 bytes.
+After it is saved with \texttt{saveRDS()}, we are free to delete the variable with \texttt{rm()}, because it can be read back in later on. To do this, call \texttt{readRDS()}. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, \texttt{.rds} files are typically smaller--\texttt{oring.rds} is only 248 bytes, while \texttt{"oring\_out.csv"} is 332 bytes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4493,9 +4503,9 @@ You can write out tabular data with a variety of \href{https://pandas.pydata.org
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
 \NormalTok{d }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"data/o{-}ring{-}erosion{-}only.data"}\NormalTok{, }
-\NormalTok{                header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"\textbackslash{}s+"}\NormalTok{)}
+\NormalTok{                  header}\OperatorTok{=}\VariableTok{None}\NormalTok{, sep }\OperatorTok{=} \StringTok{"\textbackslash{}s+"}\NormalTok{)}
 \NormalTok{d.to\_csv(}\StringTok{"data/oring\_out2.csv"}\NormalTok{, }
-\NormalTok{         header}\OperatorTok{=}\VariableTok{True}\NormalTok{, index}\OperatorTok{=}\VariableTok{False}\NormalTok{, sep }\OperatorTok{=} \StringTok{","}\NormalTok{)}
+\NormalTok{          header}\OperatorTok{=}\VariableTok{True}\NormalTok{, index}\OperatorTok{=}\VariableTok{False}\NormalTok{, sep }\OperatorTok{=} \StringTok{","}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4529,7 +4539,7 @@ Here is an example of writing out \texttt{d} and then reading the pickled object
 \end{Shaded}
 
 \begin{rmd-caution}
-Unfortunately, \texttt{oring.pickle} is much larger (1,676 bytes) than the original text file \texttt{o-ring-erosion-only.data} (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like \texttt{d\_is\_back.to\_pickle("data/oring.zip")} it will become smaller.
+Unfortunately, \texttt{"oring.pickle"} is much larger (1,676 bytes) than the original text file \texttt{"o-ring-erosion-only.data"} (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like \texttt{d\_is\_back.to\_pickle("data/oring.zip")} it will become smaller.
 
 \end{rmd-caution}
 
@@ -4549,7 +4559,7 @@ Speaking of third-party code, there are many that provide alternative serializat
 \item
 \end{enumerate}
 
-Consider again the data set called \texttt{gspc.csv}, which contains daily open, high, low and close values for the S\&P500 Index.
+Consider again the data set called \texttt{"gspc.csv"}, which contains daily open, high, low and close values for the S\&P500 Index.
 
 \begin{itemize}
 \tightlist
@@ -4593,16 +4603,16 @@ We will use the \texttt{"Google.html"} data set mentioned in the chapter.
 \item
 \end{enumerate}
 
-Consider the data set called \texttt{gspc.csv}, which contains daily open, high, low and close values for the S\&P500 Index.
+Consider the data set called \texttt{"gspc.csv"}, which contains daily open, high, low and close values for the S\&P500 Index.
 
 \begin{itemize}
 \tightlist
 \item
   Read in this data set as a \texttt{DataFrame}, and call it \texttt{my\_data}. Do not include the code that achieves this in your assignment submission.
 \item
-  Write out this object as \texttt{my\_data.pickle}. After you are finished, remove \texttt{my\_data} from memory. Do not include the code that achieves this in your assignment submission.
+  Write out this object as \texttt{"my\_data.pickle"}. After you are finished, remove \texttt{my\_data} from memory. Do not include the code that achieves this in your assignment submission.
 \item
-  Read in \texttt{my\_data.pickle}, and store the variable as \texttt{financial\_data}. \emph{Do} include the code that achieves this in your project submission. Make sure this code assumes that \texttt{my\_data.pickle} is in the same folder as the code file \texttt{io\_lab.py}.
+  Read in \texttt{"my\_data.pickle"}, and store the variable as \texttt{financial\_data}. \emph{Do} include the code that achieves this in your project submission. Make sure this code assumes that \texttt{"my\_data.pickle"} is in the same folder as the code file \texttt{io\_lab.py}.
 \end{itemize}
 
 \hypertarget{using-third-party-code}{%
@@ -4965,7 +4975,7 @@ This is what an \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.ht
 \begin{Highlighting}[]
 \NormalTok{my\_name }\OperatorTok{=} \StringTok{"Taylor"}
 \ControlFlowTok{if}\NormalTok{ my\_name }\OperatorTok{==} \StringTok{"Taylor"}\NormalTok{:}
-    \BuiltInTok{print}\NormalTok{(}\StringTok{"hi Taylor"}\NormalTok{)}
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"hi Taylor"}\NormalTok{)}
 \CommentTok{\#\# hi Taylor}
 \end{Highlighting}
 \end{Shaded}
@@ -5160,9 +5170,9 @@ R can come close to replicating the above behavior with vectorization, but the c
 \end{enumerate}
 
 Suppose you have a \texttt{vector} of \texttt{numeric} data: \(x_1, \ldots, x_n\). Write a function called \texttt{cappedMoveAve(dataVector)} that takes in a \texttt{vector} and returns a 3-period ``capped'' moving average. Make sure to use a \texttt{for} loop. The formula you should use is
-\[
+\begin{equation} 
 y_t = \min\left(10, \frac{1}{3}\sum_{i=0}^2x_{t-i} \right).
-\]
+\end{equation}
 The function should return \(y_1, \ldots, y_n\) as a \texttt{vector}. Let \(y_1 = y_2 = 0\).
 
 \begin{enumerate}
@@ -5173,13 +5183,13 @@ The function should return \(y_1, \ldots, y_n\) as a \texttt{vector}. Let \(y_1 
 \end{enumerate}
 
 Say we have a target\footnote{This is the density of a \(\text{Beta}(3,2)\) random variable, if you're curious.} distribution that we want to sample from:
-\[
+\begin{equation} 
 p(x) = 
 \begin{cases}
 \frac{x^2(1-x)}{\int_0^1 y^2(1-y) dy} & 0 < x < 1 \\
 0 & \text{otherwise}
 \end{cases}.
-\]
+\end{equation}
 The denominator, \(\int_0^1 y^2(1-y) dy\), is the target's normalizing constant. You might know how to solve this integral (it's equal to \(1/12\)), but let's pretend for the sake of our example that it's too difficult for us. We want to sample from \(p(x)\) while only being able to evaluate (not sample) from its unnormalized version \(f(x) := x^2(1-x)\). This is a situation that arises often--wanting to sample from some complicated distribution whose density you can only evaluate up to a constant of proportionality.
 
 Next, let's choose a uniform distribution for our \emph{proposal distribution}: \(q(x) = 1\) if \(0 < x < 1\). This means we will sample from this distribution, because it's easier. We just need to ``adjust'' our samples somehow, because it's not the same as our target.
@@ -5237,7 +5247,10 @@ Write a function called \texttt{multiplyTwoMats(A,B)} that performs matrix multi
 Suppose you are trying to predict a value of \(Y\) given some information about a corresponding independent variable \(x\). Suppose further that you have a historical data set of observations \((x_1, y_1), \ldots, (x_n,y_n)\). One approach for coming up with predictions is to use \textbf{Nadaraya--Watson Kernel Regression} \citep{Nadaraya} \citep{Watson}. The prediction this approach provides is simply a weighted average of all of the historically-observed data points \(y_1, \ldots, y_n\). The weight for a given \(y_i\) will be larger if \(x_i\) is ``close'' to the value \(x\) that you are obtaining predictions for. On the other hand, if \(x_j\) is far away from \(x\), then the weight for \(y_j\) will be relatively small, and so this data point won't influence the prediction much.
 
 Write a function called \texttt{kernReg(xPred,xData,yData,kernFunc)} that computes the Nadaraya--Watson estimate of the prediction of \(Y\) given \(X=x\). Do not use a \texttt{for} loop in your function definition. The formula is
-\[\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,\] where \(x\) is the point you're trying to get a prediction for.
+\begin{equation} 
+\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,
+\end{equation}
+where \(x\) is the point you're trying to get a prediction for.
 
 \begin{itemize}
 \tightlist
@@ -5328,9 +5341,9 @@ This question will demonstrate how to implement \textbf{The Bootstrap} \citep{bo
 \end{enumerate}
 
 Write a function called \texttt{ar\_samp(n)} that samples from \(p(x)\) using accept-reject sampling. Use any proposal distribution that you'd like. It should take a single argument that is equal to the number of samples desired. Sample from the following target:
-\[
-  p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 < x < 1.
-  \]
+\begin{equation} 
+p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 < x < 1.
+\end{equation}
 
 \hypertarget{reshaping-and-combining-data-sets}{%
 \chapter{Reshaping and Combining Data Sets}\label{reshaping-and-combining-data-sets}}
@@ -5896,18 +5909,21 @@ Recall the \texttt{car.data} data set \citep{misc_car_evaluation_19}.
 
 If you are dealing with random matrices, you might need to \textbf{vectorize} a matrix object. This is not the same as ``vectorization'' in programming. Instead, it means you write the matrix as a big column vector by stacking the columns on top of each other. Specifically, if you have a \(n \times p\) real-valued matrix \(\mathbf{X}\), then
 
-\[
+\begin{equation} 
 \text{vec}(\mathbf{X}) =\begin{bmatrix} \mathbf{X}_1 \\ \vdots \\ \mathbf{X}_p \end{bmatrix} 
-\]
+\end{equation}
+
 where \(\mathbf{X}_i\) is the \(i\)th column as an \(n \times 1\) column vector. There is another operator that we will use, the \textbf{Kronecker product:}
-\[
+
+\begin{equation} 
 \mathbf{A} \otimes \mathbf{B} = 
 \begin{bmatrix}
 a_{11} \mathbf{B} & \cdots & a_{1n} \mathbf{B} \\
 \vdots & \ddots & \vdots \\
 a_{m1} \mathbf{B} & \cdots & a_{mn} \mathbf{B} \\
 \end{bmatrix}.
-\]
+\end{equation}
+
 If \(\mathbf{A}\) is \(m \times n\) and \(\mathbf{B}\) is \(p \times q\), then \(\mathbf{A} \otimes \mathbf{B}\) is \(pm \times qn\).
 
 \begin{itemize}
@@ -5962,7 +5978,7 @@ This problem uses the Militarized Interstate Disputes (v5.0) \citep{mid5} data s
 \item
 \end{enumerate}
 
-Once again, recall the \texttt{car.data} data set \citep{misc_car_evaluation_19}.
+Once again, recall the \texttt{"car.data"} data set \citep{misc_car_evaluation_19}.
 
 \begin{itemize}
 \tightlist
@@ -6319,7 +6335,6 @@ You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-orien
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt       }\CommentTok{\# 1}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np                    }\CommentTok{\# 2}
 \NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()              }\CommentTok{\# 3}
-\CommentTok{\#\# /home/trb5me\_admin/.local/share/r{-}miniconda/envs/r{-}reticulate/bin/python:1: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (\textasciigrave{}matplotlib.pyplot.figure\textasciigrave{}) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam \textasciigrave{}figure.max\_open\_warning\textasciigrave{}).}
 \NormalTok{\_ }\OperatorTok{=}\NormalTok{ ax.hist(np.random.normal(size}\OperatorTok{=}\DecValTok{1000}\NormalTok{))  }\CommentTok{\# 4}
 \NormalTok{plt.show()                            }\CommentTok{\# 5}
 \end{Highlighting}
@@ -6363,13 +6378,12 @@ If you want to make figures that are more elaborate, just keep calling different
 \NormalTok{fig, myAxes }\OperatorTok{=}\NormalTok{ plt.subplots(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\CommentTok{\# kind of like par(mfrow=c(1,2)) in R}
 
 \CommentTok{\# first subplot}
-\CommentTok{\#\# /home/trb5me\_admin/.local/share/r{-}miniconda/envs/r{-}reticulate/bin/python:1: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (\textasciigrave{}matplotlib.pyplot.figure\textasciigrave{}) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam \textasciigrave{}figure.max\_open\_warning\textasciigrave{}).}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f8601974fd0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f52d68916d8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data }
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f8601981160\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f52d649cc18\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f86019814a8\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f52d6891b00\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
 \CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
@@ -6379,11 +6393,11 @@ If you want to make figures that are more elaborate, just keep calling different
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f86019ac8d0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f52d607cda0\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f8601981be0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f52d681e320\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f8601987d30\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f52d681ef60\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6410,7 +6424,7 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \CommentTok{\#\# }
 \CommentTok{\#\# [5 rows x 7 columns]}
 \NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f86019b17f0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f52d6863470\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6422,7 +6436,7 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f86019b17f0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f52d6863470\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6434,7 +6448,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
 \NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f86019b17f0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f52d6863470\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6494,17 +6508,17 @@ To be more clear, classes may have the following two things in their definition.
 \subsection{A First Example}\label{a-first-example}}
 
 Here's a simple example. Say we are interested in calculating, from numerical data \(x_1, \ldots, x_n\), a sample mean:
-\[
+\begin{equation} 
 \bar{x}_n = \frac{\sum_{i=1}^n x_i}{n}.
-\]
+\end{equation}
 
 In Python, we can usually calculate this one number very easily using \texttt{np.average}. However, this function requires that we pass into it all of the data at once. What if we don't have all the data at any given time? In other words, suppose that the data arrive intermittently
 .
 We might consider taking advantage of a recursive formula for the sample means.
 
-\[
+\begin{equation} 
 \bar{x}_n =  \frac{(n-1) \bar{x}_{n-1} + x_n}{n}
-\]
+\end{equation}
 
 How would we program this in Python? A first option: we might create a variable \texttt{my\_running\_ave}, and after every data point arrives, we could
 
@@ -6571,18 +6585,18 @@ Classes (obviously) need to be defined before they are used, so here is the defi
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{class}\NormalTok{ RunningMean:}
-  \CommentTok{"""Updates a running average"""}
-  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
-    \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{=} \FloatTok{0.0}
-    \VariableTok{self}\NormalTok{.n }\OperatorTok{=} \DecValTok{0}
-  \KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, new\_x):}
-    \VariableTok{self}\NormalTok{.n }\OperatorTok{+=} \DecValTok{1}
-    \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{=}\NormalTok{ (}\VariableTok{self}\NormalTok{.current\_xbar}\OperatorTok{*}\NormalTok{(}\VariableTok{self}\NormalTok{.n }\OperatorTok{{-}} \DecValTok{1}\NormalTok{) }\OperatorTok{+}\NormalTok{ new\_x) }\OperatorTok{/} \VariableTok{self}\NormalTok{.n}
-  \KeywordTok{def}\NormalTok{ get\_current\_xbar(}\VariableTok{self}\NormalTok{):}
-    \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
-      \ControlFlowTok{return} \VariableTok{None}
-    \ControlFlowTok{else}\NormalTok{:}
-      \ControlFlowTok{return} \VariableTok{self}\NormalTok{.current\_xbar}
+    \CommentTok{"""Updates a running average"""}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{=} \FloatTok{0.0}
+        \VariableTok{self}\NormalTok{.n }\OperatorTok{=} \DecValTok{0}
+    \KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, new\_x):}
+        \VariableTok{self}\NormalTok{.n }\OperatorTok{+=} \DecValTok{1}
+        \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{=}\NormalTok{ (}\VariableTok{self}\NormalTok{.current\_xbar}\OperatorTok{*}\NormalTok{(}\VariableTok{self}\NormalTok{.n }\OperatorTok{{-}} \DecValTok{1}\NormalTok{) }\OperatorTok{+}\NormalTok{ new\_x) }\OperatorTok{/} \VariableTok{self}\NormalTok{.n}
+    \KeywordTok{def}\NormalTok{ get\_current\_xbar(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{None}
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{self}\NormalTok{.current\_xbar}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6627,9 +6641,9 @@ How can we use inheritance in statistical programming? A primary benefit of inhe
 Let's make some assumptions about a \emph{parametric model} that is generating our data. Suppose I assume that the data points \(x_1, \ldots, x_n\) are a ``random sample''\footnote{Otherwise known as an independent and identically distributed sample} from a normal distribution with mean \(\mu\) and variance \(\sigma^2=1\). \(\mu\) is assumed to be unknown (this is, after all, and interval for \(\mu\)), and \(\sigma^2\) is assumed to be known, for simplicity.
 
 A \(95\%\) confidence interval for the true unknown population mean \(\mu\) is
-\[
+\begin{equation} 
 \left[\bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right].
-\]
+\end{equation}
 The width of the interval shrinks as we get more data (as \(n \to \infty\)). We can write another class that, not only calculates the center of this interval, \(\bar{x}\), but also returns the interval endpoints.
 
 If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of \texttt{RunningMean}. Instead, we'll use the idea of \href{https://docs.python.org/3/tutorial/classes.html\#inheritance}{\emph{inheritance}}.
@@ -6639,19 +6653,21 @@ If we wrote another class from scratch, then we would need to rewrite a lot of t
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 
 \KeywordTok{class}\NormalTok{ RunningCI(RunningMean):}\CommentTok{\# \textless{}{-}notice what\textquotesingle{}s inside the parentheses}
-  \CommentTok{"""Updates a running average and }
-\CommentTok{  gives you a known{-}variance confidence interval"""}
-  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, known\_var):}
-    \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{()}
-    \VariableTok{self}\NormalTok{.known\_var }\OperatorTok{=}\NormalTok{ known\_var}
-  \KeywordTok{def}\NormalTok{ get\_current\_interval(}\VariableTok{self}\NormalTok{):}
-    \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
-      \ControlFlowTok{return} \VariableTok{None}
-    \ControlFlowTok{else}\NormalTok{:}
-\NormalTok{      half\_width }\OperatorTok{=} \FloatTok{1.96} \OperatorTok{*}\NormalTok{ np.sqrt(}\VariableTok{self}\NormalTok{.known\_var }\OperatorTok{/} \VariableTok{self}\NormalTok{.n)  }
-\NormalTok{      left\_num }\OperatorTok{=} \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{{-}}\NormalTok{ half\_width}
-\NormalTok{      right\_num }\OperatorTok{=} \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{+}\NormalTok{ half\_width}
-      \ControlFlowTok{return}\NormalTok{ np.array([left\_num, right\_num])}
+    \CommentTok{"""Updates a running average and }
+\CommentTok{    gives you a known{-}variance confidence interval"""}
+    
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, known\_var):}
+        \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{()}
+        \VariableTok{self}\NormalTok{.known\_var }\OperatorTok{=}\NormalTok{ known\_var}
+        
+    \KeywordTok{def}\NormalTok{ get\_current\_interval(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{None}
+        \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{            half\_width }\OperatorTok{=} \FloatTok{1.96} \OperatorTok{*}\NormalTok{ np.sqrt(}\VariableTok{self}\NormalTok{.known\_var }\OperatorTok{/} \VariableTok{self}\NormalTok{.n)  }
+\NormalTok{            left\_num }\OperatorTok{=} \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{{-}}\NormalTok{ half\_width}
+\NormalTok{            right\_num }\OperatorTok{=} \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{+}\NormalTok{ half\_width}
+            \ControlFlowTok{return}\NormalTok{ np.array([left\_num, right\_num])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6677,8 +6693,8 @@ Why is this useful? Consider this example.
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{ datum }\KeywordTok{in}\NormalTok{ time\_series:}
-  \ControlFlowTok{for}\NormalTok{ thing }\KeywordTok{in}\NormalTok{ obj\_list:}
-\NormalTok{    thing.update(xt)}
+    \ControlFlowTok{for}\NormalTok{ thing }\KeywordTok{in}\NormalTok{ obj\_list:}
+\NormalTok{        thing.update(xt)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6687,19 +6703,19 @@ Inside the inner \texttt{for} loop, there is no need for include conditional log
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{ datum }\KeywordTok{in}\NormalTok{ time\_series:}
-  \ControlFlowTok{for}\NormalTok{ thing }\KeywordTok{in}\NormalTok{ obj\_list:}
-    \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class1):}
-\NormalTok{      thing.updatec1(xt)}
-    \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class2):}
-\NormalTok{      thing.updatec2(xt)}
-    \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class3):}
-\NormalTok{      thing.updatec3(xt)}
-    \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class4):}
-\NormalTok{      thing.updatec4(xt)}
-    \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class5):}
-\NormalTok{      thing.updatec5(xt)}
-    \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class6):}
-\NormalTok{      thing.updatec6(xt)}
+    \ControlFlowTok{for}\NormalTok{ thing }\KeywordTok{in}\NormalTok{ obj\_list:}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class1):}
+\NormalTok{            thing.updatec1(xt)}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class2):}
+\NormalTok{            thing.updatec2(xt)}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class3):}
+\NormalTok{            thing.updatec3(xt)}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class4):}
+\NormalTok{            thing.updatec4(xt)}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class5):}
+\NormalTok{            thing.updatec5(xt)}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(thing, class6):}
+\NormalTok{            thing.updatec6(xt)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6741,21 +6757,24 @@ Here is an example implementation of a confidence interval using composition. No
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{class}\NormalTok{ RunningCI2:}
-  \CommentTok{"""Updates a running average and }
-\CommentTok{  gives you a known{-}variance confidence interval"""}
-  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, known\_var):}
-    \VariableTok{self}\NormalTok{.mean }\OperatorTok{=}\NormalTok{ RunningMean()}
-    \VariableTok{self}\NormalTok{.known\_var }\OperatorTok{=}\NormalTok{ known\_var}
-  \KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, new\_x):    }
-    \VariableTok{self}\NormalTok{.mean.update(new\_x)}
-  \KeywordTok{def}\NormalTok{ get\_current\_interval(}\VariableTok{self}\NormalTok{):}
-    \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
-      \ControlFlowTok{return} \VariableTok{None}
-    \ControlFlowTok{else}\NormalTok{:}
-\NormalTok{      half\_width }\OperatorTok{=} \FloatTok{1.96} \OperatorTok{*}\NormalTok{ np.sqrt(}\VariableTok{self}\NormalTok{.known\_var }\OperatorTok{/} \VariableTok{self}\NormalTok{.n)  }
-\NormalTok{      left }\OperatorTok{=} \VariableTok{self}\NormalTok{.mean.get\_current\_xbar() }\OperatorTok{{-}}\NormalTok{ half\_width}
-\NormalTok{      right }\OperatorTok{=} \VariableTok{self}\NormalTok{.mean.get\_current\_xbar() }\OperatorTok{+}\NormalTok{ half\_width}
-      \ControlFlowTok{return}\NormalTok{ np.array([left, right])}
+    \CommentTok{"""Updates a running average and }
+\CommentTok{    gives you a known{-}variance confidence interval"""}
+    
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, known\_var):}
+        \VariableTok{self}\NormalTok{.mean }\OperatorTok{=}\NormalTok{ RunningMean()}
+        \VariableTok{self}\NormalTok{.known\_var }\OperatorTok{=}\NormalTok{ known\_var}
+        
+    \KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, new\_x):    }
+        \VariableTok{self}\NormalTok{.mean.update(new\_x)}
+        
+    \KeywordTok{def}\NormalTok{ get\_current\_interval(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{None}
+        \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{            half\_width }\OperatorTok{=} \FloatTok{1.96} \OperatorTok{*}\NormalTok{ np.sqrt(}\VariableTok{self}\NormalTok{.known\_var }\OperatorTok{/} \VariableTok{self}\NormalTok{.n)  }
+\NormalTok{            left }\OperatorTok{=} \VariableTok{self}\NormalTok{.mean.get\_current\_xbar() }\OperatorTok{{-}}\NormalTok{ half\_width}
+\NormalTok{            right }\OperatorTok{=} \VariableTok{self}\NormalTok{.mean.get\_current\_xbar() }\OperatorTok{+}\NormalTok{ half\_width}
+            \ControlFlowTok{return}\NormalTok{ np.array([left, right])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6830,7 +6849,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x5646cb1bc1f8>
+## <bytecode: 0x562d10b03ce8>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7266,19 +7285,19 @@ You'll notice the reappearance of the \texttt{self} keyword. R6 classes have a \
 If you are interested in estimating a linear regression model, there is a \href{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{\texttt{LinearRegression} class} that you might consider using in the \texttt{sklearn.linear\_model} submodule. In this lab, we will create something similar, but a little more simplified.
 
 A simple linear regression model will take in \(n\) independent variables \(x_1, \ldots, x_n\), and \(n\) dependent variables \(y_1, \ldots, y_n\), and try to describe their relationship with a function:
-\[
+\begin{equation} 
 y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
-\]
+\end{equation}
 The coefficients \(\beta_0\) and \(\beta_1\) are unknown, and so must be estimated with the data. Estimating the variance of the noise terms \(\epsilon_i\) may also be of interest, but we do not concern ourselves with that here.
 
 The formulas for the estimated slope (i.e.~\(\hat{\beta}_1\)) and the estimated intercept (i.e.~\(\hat{\beta}_0\)) are as follows:
-\[
+\begin{equation} 
 \hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y)}}{\sum_{j=1}^n (x_j - \bar{x})^2} 
-\]
+\end{equation}
 
-\[
+\begin{equation} 
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}.
-\]
+\end{equation}
 
 Create a class that performs simple linear regression.
 
@@ -7336,24 +7355,24 @@ Reconsider the above question that asked you to write a class called \texttt{Lin
 \end{enumerate}
 
 Consider the following time series model \citep{West1989BayesianFA}
-\[
+\begin{equation} 
 y_t = \beta_t + \epsilon_t \\
 \beta_t = \beta_{t-1} + w_t \\
 \beta_1 = w_1
-\]
+\end{equation}
 Here \(y_t\) is observed time series data, each \(\epsilon_t\) is measurement noise with variance \(V\) and each \(w_t\) is also noise but with variance \(W\). Think of \(\beta_t\) as a time-varying regression coefficient.
 
 Imagine our data are arriving sequentially. The Kalman Filter \citep{kalman_filt} cite provides an ``optimal'' estimate of each \(\beta_t\) given all of the information we have up to time \(t\). What's better is that the algorithm is recursive. Future estimates of \(\beta_t\) will be easy to calculate given our estimates of \(\beta_{t-1}\).
 
 Let's call the mean of \(\beta_{t-1}\) (given all the information up to time \(t-1\)) \(m_{t-1}\), and the variance of \(\beta_{t-1}\) (given all the information up to time \(t-1\)) \(P_{t-1}\). Then the Kalman recursions for this particular model are
 
-\[
+\begin{equation} 
 M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) 
-\]
+\end{equation}
 
-\[
+\begin{equation} 
 P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
-\]
+\end{equation}
 for \(t \ge 1\).
 
 \begin{itemize}
@@ -7452,9 +7471,9 @@ Which of the following classes in R requires you to \texttt{library()} in someth
 \end{enumerate}
 
 Suppose you have the following data set: \(X_1, \ldots, X_n\). You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by \(\mu\) and \(\sigma^2\), respectively. Consider testing the hypothesis that \(\mu = 0\) at a significance level of \(\alpha\). To carry out this test, you calculate
-\[
+\begin{equation} 
 t = \frac{\bar{X}}{S/\sqrt{n}}
-\]
+\end{equation}
 and you reject the null if \(|t| > t_{n-1,\alpha/2}\) \citep{student1908probable}. Here \(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\) is the sample variance, and \(t_{n-1,\alpha/2}\) is the \(1-\alpha/2\) quantile of a t-distribution with \(n-1\) degrees of freedom.
 
 \begin{itemize}
@@ -7483,9 +7502,9 @@ iii. Calculate the normalized weights \(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w
 iv. Calculate the weighted average \(\sum_{i=1}^n w^i x^i\).
 
 In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each \(\log \tilde{w}^i\), before you exponentiate them, subtract a number \(m\) from all the values. A good choice for \(m\) is \(\max_i (\log \tilde{w}^i)\). These new values will produce the same normalized weights because
-\[
+\begin{equation} 
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
-\]
+\end{equation}
 
 \begin{itemize}
 \tightlist
@@ -8022,7 +8041,7 @@ Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarra
 \ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
 \CommentTok{\# alb\_real\_est.apply(sum, axis=1) \# can\textquotesingle{}t add letters to numbers!}
 \KeywordTok{def}\NormalTok{ get\_prop\_score(row):}
-  \ControlFlowTok{return} \DecValTok{2}\OperatorTok{*}\NormalTok{row[}\DecValTok{0}\NormalTok{] }\OperatorTok{+} \DecValTok{3}\OperatorTok{*}\NormalTok{row[}\DecValTok{1}\NormalTok{]}
+    \ControlFlowTok{return} \DecValTok{2}\OperatorTok{*}\NormalTok{row[}\DecValTok{0}\NormalTok{] }\OperatorTok{+} \DecValTok{3}\OperatorTok{*}\NormalTok{row[}\DecValTok{1}\NormalTok{]}
 \NormalTok{two\_col\_df }\OperatorTok{=}\NormalTok{ alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]]}
 \NormalTok{alb\_real\_est[}\StringTok{\textquotesingle{}Score\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ two\_col\_df.}\BuiltInTok{apply}\NormalTok{(get\_prop\_score, }\DecValTok{1}\NormalTok{)}
 \NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Score\textquotesingle{}}\NormalTok{]].head(}\DecValTok{2}\NormalTok{)}
@@ -8131,13 +8150,13 @@ Notice that \textbf{the \texttt{greetingMessage=} argument that is passed in, \t
 Let's now consider a more complicated and realistic example. Let's implement a variance reduction technique called \textbf{common random numbers}.
 
 Suppose \(X \sim \text{Normal}(\mu, \sigma^2)\), and we are interested in approximating an expectation of a function of this random variable. Suppose that we don't know that
-\[
+\begin{equation} 
 \mathbb{E}[\sin(X)] = \sin(\mu) \exp\left(-\frac{\sigma^2}{2}\right)
-\]
+\end{equation}
 for any particular choice of \(\mu\) and \(\sigma^2\), and instead, we choose to use the Monte Carlo method:
-\[
+\begin{equation} 
 \hat{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(X^i)
-\]
+\end{equation}
 where \(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)\) is a large collection of draws from the appropriate normal distribution, probably coming from a call to \texttt{rnorm()}. In more realistic situations, the theoretical expectation might not be tractable, either because the random variable has a complicated distribution, or maybe because the functional is very complicated. In these cases, a tool like Monte Carlo might be the only available approach.
 
 Here are two functions that calculate the above quantities for \(n=1000\). \texttt{actualExpectSin()} is a function that computes the theoretical expectation for any particular parameter pair. \texttt{monteCarloSin()} is a function that implements the Monte Carlo approximate expectation.
@@ -8199,13 +8218,13 @@ There are three problems with this implementation:
 \end{itemize}
 
 If we wanted to use common random numbers, we could generate \(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\), and use the fact that
-\[
+\begin{equation} 
 X^i = \mu + \sigma Z^i
-\]
+\end{equation}
 This leads to the Monte Carlo estimate
-\[
+\begin{equation} 
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
-\]
+\end{equation}
 
 Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call \texttt{monteCarloSinCRNv1(c(10,1))}, you get the same answer.
 
@@ -8313,9 +8332,9 @@ We can write function factories in Python, too. Here is another implementation o
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ func\_factory(greeting\_message):}
-  \KeywordTok{def}\NormalTok{ func(name):}
-    \BuiltInTok{print}\NormalTok{(greeting\_message }\OperatorTok{+} \StringTok{\textquotesingle{} \textquotesingle{}} \OperatorTok{+}\NormalTok{ name)}
-  \ControlFlowTok{return}\NormalTok{ func}
+    \KeywordTok{def}\NormalTok{ func(name):}
+        \BuiltInTok{print}\NormalTok{(greeting\_message }\OperatorTok{+} \StringTok{\textquotesingle{} \textquotesingle{}} \OperatorTok{+}\NormalTok{ name)}
+    \ControlFlowTok{return}\NormalTok{ func}
 \NormalTok{greet\_with\_hello }\OperatorTok{=}\NormalTok{ func\_factory(}\StringTok{"Hello"}\NormalTok{)}
 \NormalTok{greet\_with\_hello(}\StringTok{"Taylor"}\NormalTok{)}
 \CommentTok{\#\# Hello Taylor}
@@ -8382,10 +8401,10 @@ Before we get too ahead of ourselves, let's describe the basics. Here is our fir
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ add\_greeting(func):}
-  \KeywordTok{def}\NormalTok{ wrapper(name):}
-    \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}Salutations, \textquotesingle{}}\NormalTok{)}
-\NormalTok{    func(name)}
-  \ControlFlowTok{return}\NormalTok{ wrapper}
+    \KeywordTok{def}\NormalTok{ wrapper(name):}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}Salutations, \textquotesingle{}}\NormalTok{)}
+\NormalTok{        func(name)}
+    \ControlFlowTok{return}\NormalTok{ wrapper}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8395,7 +8414,7 @@ The decorator \texttt{add\_greeting()} returns a function that is an embellished
 \begin{Highlighting}[]
 \AttributeTok{@add\_greeting}
 \KeywordTok{def}\NormalTok{ print\_name(first\_name):}
-  \BuiltInTok{print}\NormalTok{(first\_name)}
+    \BuiltInTok{print}\NormalTok{(first\_name)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8404,7 +8423,7 @@ You could get the same behavior by typing the following. They are equivalent!
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ print\_name(first\_name):}
-  \BuiltInTok{print}\NormalTok{(first\_name)}
+    \BuiltInTok{print}\NormalTok{(first\_name)}
 \NormalTok{print\_name }\OperatorTok{=}\NormalTok{ add\_greeting(print\_name)}
 \end{Highlighting}
 \end{Shaded}
@@ -8415,7 +8434,7 @@ Things can get a little more complicated when your decorators take additional ar
 \begin{Highlighting}[]
 \AttributeTok{@add\_greeting}\NormalTok{(}\StringTok{"How you doin\textquotesingle{}"}\NormalTok{)}
 \KeywordTok{def}\NormalTok{ print\_name(first\_name):}
-  \BuiltInTok{print}\NormalTok{(first\_name)}
+    \BuiltInTok{print}\NormalTok{(first\_name)}
 \NormalTok{print\_name(}\StringTok{\textquotesingle{}Taylor\textquotesingle{}}\NormalTok{)}
 \CommentTok{\#\# How you doin\textquotesingle{}}
 \CommentTok{\#\# Taylor}
@@ -8427,12 +8446,12 @@ So how do we write decorators that accomplish this? The important thing to remem
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ add\_greeting(greet):}
-  \KeywordTok{def}\NormalTok{ decorator(func):}
-    \KeywordTok{def}\NormalTok{ wrapper(name):}
-      \BuiltInTok{print}\NormalTok{(greet)}
-\NormalTok{      func(name)}
-    \ControlFlowTok{return}\NormalTok{ wrapper}
-  \ControlFlowTok{return}\NormalTok{ decorator}
+    \KeywordTok{def}\NormalTok{ decorator(func):}
+        \KeywordTok{def}\NormalTok{ wrapper(name):}
+            \BuiltInTok{print}\NormalTok{(greet)}
+\NormalTok{            func(name)}
+        \ControlFlowTok{return}\NormalTok{ wrapper}
+    \ControlFlowTok{return}\NormalTok{ decorator}
 \end{Highlighting}
 \end{Shaded}
 

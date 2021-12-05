@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="control-flow.html"/>
 <link rel="next" href="visualization.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -802,19 +802,19 @@ div.csl-indent {
 <li></li>
 </ol>
 <p>If you are dealing with random matrices, you might need to <strong>vectorize</strong> a matrix object. This is not the same as “vectorization” in programming. Instead, it means you write the matrix as a big column vector by stacking the columns on top of each other. Specifically, if you have a <span class="math inline">\(n \times p\)</span> real-valued matrix <span class="math inline">\(\mathbf{X}\)</span>, then</p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{equation} 
 \text{vec}(\mathbf{X}) =\begin{bmatrix} \mathbf{X}_1 \\ \vdots \\ \mathbf{X}_p \end{bmatrix} 
-\]</span>
-where <span class="math inline">\(\mathbf{X}_i\)</span> is the <span class="math inline">\(i\)</span>th column as an <span class="math inline">\(n \times 1\)</span> column vector. There is another operator that we will use, the <strong>Kronecker product:</strong>
-<span class="math display">\[
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{X}_i\)</span> is the <span class="math inline">\(i\)</span>th column as an <span class="math inline">\(n \times 1\)</span> column vector. There is another operator that we will use, the <strong>Kronecker product:</strong></p>
+<p><span class="math display">\[\begin{equation} 
 \mathbf{A} \otimes \mathbf{B} = 
 \begin{bmatrix}
 a_{11} \mathbf{B} &amp; \cdots &amp; a_{1n} \mathbf{B} \\
 \vdots &amp; \ddots &amp; \vdots \\
 a_{m1} \mathbf{B} &amp; \cdots &amp; a_{mn} \mathbf{B} \\
 \end{bmatrix}.
-\]</span>
-If <span class="math inline">\(\mathbf{A}\)</span> is <span class="math inline">\(m \times n\)</span> and <span class="math inline">\(\mathbf{B}\)</span> is <span class="math inline">\(p \times q\)</span>, then <span class="math inline">\(\mathbf{A} \otimes \mathbf{B}\)</span> is <span class="math inline">\(pm \times qn\)</span>.</p>
+\end{equation}\]</span></p>
+<p>If <span class="math inline">\(\mathbf{A}\)</span> is <span class="math inline">\(m \times n\)</span> and <span class="math inline">\(\mathbf{B}\)</span> is <span class="math inline">\(p \times q\)</span>, then <span class="math inline">\(\mathbf{A} \otimes \mathbf{B}\)</span> is <span class="math inline">\(pm \times qn\)</span>.</p>
 <ul>
 <li>Write a function called <code>vec(myMatrix)</code>. Its input should be one <code>matrix</code> object. It’s output should be a <code>vector</code>. Hint: <code>matrix</code> objects are stored in column-major order.</li>
 <li>Write a function called <code>unVec(myVector, nRows)</code> that takes in the vectorized matrix as a <code>vector</code>, splits that into elements with <code>nRows</code> elements, and then places them together shoulder-to-shoulder as a <code>matrix</code>.</li>
@@ -842,7 +842,7 @@ If <span class="math inline">\(\mathbf{A}\)</span> is <span class="math inline">
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Once again, recall the <code>car.data</code> data set <span class="citation">(<a href="#ref-misc_car_evaluation_19" role="doc-biblioref"><span>“<span>Car Evaluation</span>”</span> 1997</a>)</span>.</p>
+<p>Once again, recall the <code>"car.data"</code> data set <span class="citation">(<a href="#ref-misc_car_evaluation_19" role="doc-biblioref"><span>“<span>Car Evaluation</span>”</span> 1997</a>)</span>.</p>
 <ul>
 <li>Read in the data set as <code>car_data</code>.</li>
 <li>Order the data by the third and then the fourth column. Do not change the data in place. Instead store it under the name <code>ord_car_data1</code></li>
@@ -918,6 +918,7 @@ Palmer, Glenn, Roseanne W McManus, Vito D’Orazio, Michael R Kenwick, Mikaela K
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -957,10 +958,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

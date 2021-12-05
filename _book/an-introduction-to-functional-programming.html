@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 An Introduction to Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 15 An Introduction to Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 An Introduction to Functional Programming | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="an-introduction-to-object-oriented-programming.html"/>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -689,7 +689,7 @@ div.csl-indent {
 <span id="cb276-8"><a href="an-introduction-to-functional-programming.html#cb276-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
 <span id="cb276-9"><a href="an-introduction-to-functional-programming.html#cb276-9" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(spline, my_inputs))</span></code></pre></div>
 <p>We can visualize the mathematical function by plotting its outputs against its inputs. More information on visualization was given in subsection <a href="visualization.html#visualization">13</a>.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-274"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
 <img src="pics/spline.png" alt="Our Spline Function" width="80%" />
 <p class="caption">
 Figure 15.1: Our Spline Function
@@ -756,7 +756,7 @@ Figure 15.1: Our Spline Function
 <div class="sourceCode" id="cb281"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb281-1"><a href="an-introduction-to-functional-programming.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb281-2"><a href="an-introduction-to-functional-programming.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alb_real_est.apply(sum, axis=1) # can&#39;t add letters to numbers!</span></span>
 <span id="cb281-3"><a href="an-introduction-to-functional-programming.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_prop_score(row):</span>
-<span id="cb281-4"><a href="an-introduction-to-functional-programming.html#cb281-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>row[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>row[<span class="dv">1</span>]</span>
+<span id="cb281-4"><a href="an-introduction-to-functional-programming.html#cb281-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>row[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>row[<span class="dv">1</span>]</span>
 <span id="cb281-5"><a href="an-introduction-to-functional-programming.html#cb281-5" aria-hidden="true" tabindex="-1"></a>two_col_df <span class="op">=</span> alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>]]</span>
 <span id="cb281-6"><a href="an-introduction-to-functional-programming.html#cb281-6" aria-hidden="true" tabindex="-1"></a>alb_real_est[<span class="st">&#39;Score&#39;</span>] <span class="op">=</span> two_col_df.<span class="bu">apply</span>(get_prop_score, <span class="dv">1</span>)</span>
 <span id="cb281-7"><a href="an-introduction-to-functional-programming.html#cb281-7" aria-hidden="true" tabindex="-1"></a>alb_real_est[[<span class="st">&#39;FinSqFt&#39;</span>,<span class="st">&#39;LotSize&#39;</span>,<span class="st">&#39;Score&#39;</span>]].head(<span class="dv">2</span>)</span>
@@ -824,13 +824,13 @@ Figure 15.1: Our Spline Function
 <p>Notice that <strong>the <code>greetingMessage=</code> argument that is passed in, <code>"Hello"</code>, isn’t temporary anymore.</strong> It lives on so it can be used by all the functions created by <code>funcFactory()</code>. This is the most surprising aspect of writing function factories.</p>
 <p>Let’s now consider a more complicated and realistic example. Let’s implement a variance reduction technique called <strong>common random numbers</strong>.</p>
 <p>Suppose <span class="math inline">\(X \sim \text{Normal}(\mu, \sigma^2)\)</span>, and we are interested in approximating an expectation of a function of this random variable. Suppose that we don’t know that
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \mathbb{E}[\sin(X)] = \sin(\mu) \exp\left(-\frac{\sigma^2}{2}\right)
-\]</span>
+\end{equation}\]</span>
 for any particular choice of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, and instead, we choose to use the Monte Carlo method:
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \hat{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(X^i)
-\]</span>
+\end{equation}\]</span>
 where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)\)</span> is a large collection of draws from the appropriate normal distribution, probably coming from a call to <code>rnorm()</code>. In more realistic situations, the theoretical expectation might not be tractable, either because the random variable has a complicated distribution, or maybe because the functional is very complicated. In these cases, a tool like Monte Carlo might be the only available approach.</p>
 <p>Here are two functions that calculate the above quantities for <span class="math inline">\(n=1000\)</span>. <code>actualExpectSin()</code> is a function that computes the theoretical expectation for any particular parameter pair. <code>monteCarloSin()</code> is a function that implements the Monte Carlo approximate expectation.</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="an-introduction-to-functional-programming.html#cb288-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># don&#39;t hardcode variables that aren&#39;t passed as arguments!</span></span>
@@ -857,7 +857,7 @@ where <span class="math inline">\(X^1, \ldots, X^n \overset{\text{iid}}{\sim} \t
 <span id="cb289-11"><a href="an-introduction-to-functional-programming.html#cb289-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;actual expects&quot;</span>)</span>
 <span id="cb289-12"><a href="an-introduction-to-functional-programming.html#cb289-12" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApprox, </span>
 <span id="cb289-13"><a href="an-introduction-to-functional-programming.html#cb289-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-287"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-287-1.png" alt="Monte Carlo Approximations versus Exact Evaluations" width="80%" />
 <p class="caption">
 Figure 15.2: Monte Carlo Approximations versus Exact Evaluations
@@ -870,13 +870,13 @@ Figure 15.2: Monte Carlo Approximations versus Exact Evaluations
 <li>every time we re-run this code the plot on the right looks different.</li>
 </ul>
 <p>If we wanted to use common random numbers, we could generate <span class="math inline">\(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\)</span>, and use the fact that
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 X^i = \mu + \sigma Z^i
-\]</span>
+\end{equation}\]</span>
 This leads to the Monte Carlo estimate
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
-\]</span></p>
+\end{equation}\]</span></p>
 <p>Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call <code>monteCarloSinCRNv1(c(10,1))</code>, you get the same answer.</p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="an-introduction-to-functional-programming.html#cb290-1" aria-hidden="true" tabindex="-1"></a>commonZs <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n)</span>
 <span id="cb290-2"><a href="an-introduction-to-functional-programming.html#cb290-2" aria-hidden="true" tabindex="-1"></a>monteCarloSinCRNv1 <span class="ot">&lt;-</span> <span class="cf">function</span>(params){</span>
@@ -892,7 +892,7 @@ This leads to the Monte Carlo estimate
 <span id="cb291-5"><a href="an-introduction-to-functional-programming.html#cb291-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc without crn&quot;</span>)</span>
 <span id="cb291-6"><a href="an-introduction-to-functional-programming.html#cb291-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(muGrid, sigmaGrid, mcApproxCRNv1, </span>
 <span id="cb291-7"><a href="an-introduction-to-functional-programming.html#cb291-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;sigma&quot;</span>, <span class="at">main =</span> <span class="st">&quot;mc with crn&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-290"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-290"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-290-1.png" alt="Monte Carlo: With and Without Common Random Numbers" width="80%" />
 <p class="caption">
 Figure 15.3: Monte Carlo: With and Without Common Random Numbers
@@ -936,9 +936,9 @@ Figure 15.3: Monte Carlo: With and Without Common Random Numbers
 <h2><span class="header-section-number">15.4</span> Functions as Function Outputs in Python</h2>
 <p>We can write function factories in Python, too. Here is another implementation of the first example from the previous section. Again, just as it did in R, <code>str</code> passed in as <code>greeting_message</code> persists well after <code>func_factory()</code> is finished working.</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb295-1"><a href="an-introduction-to-functional-programming.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func_factory(greeting_message):</span>
-<span id="cb295-2"><a href="an-introduction-to-functional-programming.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> func(name):</span>
-<span id="cb295-3"><a href="an-introduction-to-functional-programming.html#cb295-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(greeting_message <span class="op">+</span> <span class="st">&#39; &#39;</span> <span class="op">+</span> name)</span>
-<span id="cb295-4"><a href="an-introduction-to-functional-programming.html#cb295-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> func</span>
+<span id="cb295-2"><a href="an-introduction-to-functional-programming.html#cb295-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> func(name):</span>
+<span id="cb295-3"><a href="an-introduction-to-functional-programming.html#cb295-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(greeting_message <span class="op">+</span> <span class="st">&#39; &#39;</span> <span class="op">+</span> name)</span>
+<span id="cb295-4"><a href="an-introduction-to-functional-programming.html#cb295-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> func</span>
 <span id="cb295-5"><a href="an-introduction-to-functional-programming.html#cb295-5" aria-hidden="true" tabindex="-1"></a>greet_with_hello <span class="op">=</span> func_factory(<span class="st">&quot;Hello&quot;</span>)</span>
 <span id="cb295-6"><a href="an-introduction-to-functional-programming.html#cb295-6" aria-hidden="true" tabindex="-1"></a>greet_with_hello(<span class="st">&quot;Taylor&quot;</span>)</span>
 <span id="cb295-7"><a href="an-introduction-to-functional-programming.html#cb295-7" aria-hidden="true" tabindex="-1"></a><span class="co">## Hello Taylor</span></span>
@@ -977,33 +977,33 @@ Figure 15.3: Monte Carlo: With and Without Common Random Numbers
 <p>We can write our own function factory that can be used as decoration. The main restriction is that this function factory must take a function as an argument, too. This can sometimes be restrictive. You might have noticed that the definition of <code>func_factory()</code> from earlier in this section did not do that. If you don’t believe me, as an exercise, after you read this section, you might consider trying to rewrite the example from <a href="an-introduction-to-functional-programming.html#functions-as-function-outputs-in-r">15.3</a> that implements Monte Carlo sampling using common random numbers.</p>
 <p>Before we get too ahead of ourselves, let’s describe the basics. Here is our first decorator function <code>add_greeting()</code>.</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb299-1"><a href="an-introduction-to-functional-programming.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(func):</span>
-<span id="cb299-2"><a href="an-introduction-to-functional-programming.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> wrapper(name):</span>
-<span id="cb299-3"><a href="an-introduction-to-functional-programming.html#cb299-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;Salutations, &#39;</span>)</span>
-<span id="cb299-4"><a href="an-introduction-to-functional-programming.html#cb299-4" aria-hidden="true" tabindex="-1"></a>    func(name)</span>
-<span id="cb299-5"><a href="an-introduction-to-functional-programming.html#cb299-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> wrapper</span></code></pre></div>
+<span id="cb299-2"><a href="an-introduction-to-functional-programming.html#cb299-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(name):</span>
+<span id="cb299-3"><a href="an-introduction-to-functional-programming.html#cb299-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;Salutations, &#39;</span>)</span>
+<span id="cb299-4"><a href="an-introduction-to-functional-programming.html#cb299-4" aria-hidden="true" tabindex="-1"></a>        func(name)</span>
+<span id="cb299-5"><a href="an-introduction-to-functional-programming.html#cb299-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span></code></pre></div>
 <p>The decorator <code>add_greeting()</code> returns a function that is an embellished version of the function it is given. When we decorate a function with it, it looks like this.</p>
 <div class="sourceCode" id="cb300"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb300-1"><a href="an-introduction-to-functional-programming.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="at">@add_greeting</span></span>
 <span id="cb300-2"><a href="an-introduction-to-functional-programming.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
-<span id="cb300-3"><a href="an-introduction-to-functional-programming.html#cb300-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span></code></pre></div>
+<span id="cb300-3"><a href="an-introduction-to-functional-programming.html#cb300-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(first_name)</span></code></pre></div>
 <p>You could get the same behavior by typing the following. They are equivalent!</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb301-1"><a href="an-introduction-to-functional-programming.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
-<span id="cb301-2"><a href="an-introduction-to-functional-programming.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span>
+<span id="cb301-2"><a href="an-introduction-to-functional-programming.html#cb301-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(first_name)</span>
 <span id="cb301-3"><a href="an-introduction-to-functional-programming.html#cb301-3" aria-hidden="true" tabindex="-1"></a>print_name <span class="op">=</span> add_greeting(print_name)</span></code></pre></div>
 <p>Things can get a little more complicated when your decorators take additional arguments.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb302-1"><a href="an-introduction-to-functional-programming.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="at">@add_greeting</span>(<span class="st">&quot;How you doin&#39;&quot;</span>)</span>
 <span id="cb302-2"><a href="an-introduction-to-functional-programming.html#cb302-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_name(first_name):</span>
-<span id="cb302-3"><a href="an-introduction-to-functional-programming.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(first_name)</span>
+<span id="cb302-3"><a href="an-introduction-to-functional-programming.html#cb302-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(first_name)</span>
 <span id="cb302-4"><a href="an-introduction-to-functional-programming.html#cb302-4" aria-hidden="true" tabindex="-1"></a>print_name(<span class="st">&#39;Taylor&#39;</span>)</span>
 <span id="cb302-5"><a href="an-introduction-to-functional-programming.html#cb302-5" aria-hidden="true" tabindex="-1"></a><span class="co">## How you doin&#39;</span></span>
 <span id="cb302-6"><a href="an-introduction-to-functional-programming.html#cb302-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Taylor</span></span></code></pre></div>
 <p>So how do we write decorators that accomplish this? The important thing to remember is that <code>@add_greeting("How you doin'")</code> in the previous code block is equivalent to writing this after the function definition: <code>print_name = add_greeting("How you doin'")(print_name)</code>. This is a function returning a function returning a function! The definition of <code>add_greeting()</code> could look something like this.</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb303-1"><a href="an-introduction-to-functional-programming.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_greeting(greet):</span>
-<span id="cb303-2"><a href="an-introduction-to-functional-programming.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> decorator(func):</span>
-<span id="cb303-3"><a href="an-introduction-to-functional-programming.html#cb303-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(name):</span>
-<span id="cb303-4"><a href="an-introduction-to-functional-programming.html#cb303-4" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(greet)</span>
-<span id="cb303-5"><a href="an-introduction-to-functional-programming.html#cb303-5" aria-hidden="true" tabindex="-1"></a>      func(name)</span>
-<span id="cb303-6"><a href="an-introduction-to-functional-programming.html#cb303-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span>
-<span id="cb303-7"><a href="an-introduction-to-functional-programming.html#cb303-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> decorator</span></code></pre></div>
+<span id="cb303-2"><a href="an-introduction-to-functional-programming.html#cb303-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> decorator(func):</span>
+<span id="cb303-3"><a href="an-introduction-to-functional-programming.html#cb303-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> wrapper(name):</span>
+<span id="cb303-4"><a href="an-introduction-to-functional-programming.html#cb303-4" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(greet)</span>
+<span id="cb303-5"><a href="an-introduction-to-functional-programming.html#cb303-5" aria-hidden="true" tabindex="-1"></a>            func(name)</span>
+<span id="cb303-6"><a href="an-introduction-to-functional-programming.html#cb303-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> wrapper</span>
+<span id="cb303-7"><a href="an-introduction-to-functional-programming.html#cb303-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> decorator</span></code></pre></div>
 <p>Now that you know how decorators work, you can feel comfortable using third-party ones. You might come across, for example, the <code>@jit</code> decorator from <a href="https://numba.pydata.org/">Numba</a>, which will translate your Python function into faster machine code, the <code>@lru_cache</code> decorator from the <a href="https://docs.python.org/3/library/functools.html"><code>functools</code> module</a>–this can make your code faster by saving some of its outputs–or decorators that perform application specific tasks like <a href="https://www.tensorflow.org/api_docs/python/tf/function"><code>@tf.function</code></a> from Tensorflow.</p>
 <!-- ### Exercises -->
 <!-- 1.  Let $X_t$ be the price of a stock at time $t$. A *call (or put) option* is a type of derivative contract you can buy or sell. It's called a derivative because its value derives from the value of a stock. A single call contract (or put) gives the owner the right to buy (or sell) stock ($100$ shares) at a certain price. This certain price written into an options contract ($s$) is called the *strike price*. The day the option expires    is called the *expiration date*. If a holder of the option uses his/her right to buy or sell the underlying stock, he/she is said to have *exercised* the option. -->
@@ -1237,6 +1237,7 @@ Lutz, Mark. 2013. <em>Learning Python</em>. 5th ed. Beijing: O’Reilly. <a href
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1276,10 +1277,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -559,25 +559,25 @@ div.csl-indent {
 <li></li>
 </ol>
 <p>Suppose you have a <code>vector</code> of <code>numeric</code> data: <span class="math inline">\(x_1, \ldots, x_n\)</span>. Write a function called <code>cappedMoveAve(dataVector)</code> that takes in a <code>vector</code> and returns a 3-period “capped” moving average. Make sure to use a <code>for</code> loop. The formula you should use is
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 y_t = \min\left(10, \frac{1}{3}\sum_{i=0}^2x_{t-i} \right).
-\]</span>
+\end{equation}\]</span>
 The function should return <span class="math inline">\(y_1, \ldots, y_n\)</span> as a <code>vector</code>. Let <span class="math inline">\(y_1 = y_2 = 0\)</span>.</p>
 <ol start="2" style="list-style-type: decimal">
 <li></li>
 </ol>
 <p>Say we have a target<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> distribution that we want to sample from:
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 p(x) = 
 \begin{cases}
 \frac{x^2(1-x)}{\int_0^1 y^2(1-y) dy} &amp; 0 &lt; x &lt; 1 \\
 0 &amp; \text{otherwise}
 \end{cases}.
-\]</span>
+\end{equation}\]</span>
 The denominator, <span class="math inline">\(\int_0^1 y^2(1-y) dy\)</span>, is the target’s normalizing constant. You might know how to solve this integral (it’s equal to <span class="math inline">\(1/12\)</span>), but let’s pretend for the sake of our example that it’s too difficult for us. We want to sample from <span class="math inline">\(p(x)\)</span> while only being able to evaluate (not sample) from its unnormalized version <span class="math inline">\(f(x) := x^2(1-x)\)</span>. This is a situation that arises often–wanting to sample from some complicated distribution whose density you can only evaluate up to a constant of proportionality.</p>
 <p>Next, let’s choose a uniform distribution for our <em>proposal distribution</em>: <span class="math inline">\(q(x) = 1\)</span> if <span class="math inline">\(0 &lt; x &lt; 1\)</span>. This means we will sample from this distribution, because it’s easier. We just need to “adjust” our samples somehow, because it’s not the same as our target.</p>
 <p>We can plot all three functions. The area under the <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(q(x)\)</span> curves is <span class="math inline">\(1\)</span>, because they are true probability density functions. <span class="math inline">\(f(x)\)</span>, however, is not.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-186"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-186"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-186-1.png" alt="Visualizing Our Three Functions" width="80%" />
 <p class="caption">
 Figure 11.1: Visualizing Our Three Functions
@@ -603,7 +603,10 @@ Figure 11.1: Visualizing Our Three Functions
 </ol>
 <p>Suppose you are trying to predict a value of <span class="math inline">\(Y\)</span> given some information about a corresponding independent variable <span class="math inline">\(x\)</span>. Suppose further that you have a historical data set of observations <span class="math inline">\((x_1, y_1), \ldots, (x_n,y_n)\)</span>. One approach for coming up with predictions is to use <strong>Nadaraya–Watson Kernel Regression</strong> <span class="citation">(<a href="#ref-Nadaraya" role="doc-biblioref">Nadaraya 1964</a>)</span> <span class="citation">(<a href="#ref-Watson" role="doc-biblioref">Watson 1964</a>)</span>. The prediction this approach provides is simply a weighted average of all of the historically-observed data points <span class="math inline">\(y_1, \ldots, y_n\)</span>. The weight for a given <span class="math inline">\(y_i\)</span> will be larger if <span class="math inline">\(x_i\)</span> is “close” to the value <span class="math inline">\(x\)</span> that you are obtaining predictions for. On the other hand, if <span class="math inline">\(x_j\)</span> is far away from <span class="math inline">\(x\)</span>, then the weight for <span class="math inline">\(y_j\)</span> will be relatively small, and so this data point won’t influence the prediction much.</p>
 <p>Write a function called <code>kernReg(xPred,xData,yData,kernFunc)</code> that computes the Nadaraya–Watson estimate of the prediction of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span>. Do not use a <code>for</code> loop in your function definition. The formula is
-<span class="math display">\[\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,\]</span> where <span class="math inline">\(x\)</span> is the point you’re trying to get a prediction for.</p>
+<span class="math display">\[\begin{equation} 
+\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,
+\end{equation}\]</span>
+where <span class="math inline">\(x\)</span> is the point you’re trying to get a prediction for.</p>
 <ul>
 <li>Your function should return one floating point number.</li>
 <li>The input <code>xPred</code> will be a floating point number.</li>
@@ -649,9 +652,9 @@ Figure 11.1: Visualizing Our Three Functions
 <li></li>
 </ol>
 <p>Write a function called <code>ar_samp(n)</code> that samples from <span class="math inline">\(p(x)\)</span> using accept-reject sampling. Use any proposal distribution that you’d like. It should take a single argument that is equal to the number of samples desired. Sample from the following target:
-<span class="math display">\[
-  p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 &lt; x &lt; 1.
-  \]</span></p>
+<span class="math display">\[\begin{equation} 
+p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 &lt; x &lt; 1.
+\end{equation}\]</span></p>
 
 </div>
 </div>
@@ -687,6 +690,7 @@ Watson, Geoffrey S. 1964. <span>“Smooth Regression Analysis.”</span> <em>San
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -726,10 +730,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

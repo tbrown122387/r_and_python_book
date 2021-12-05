@@ -7,7 +7,7 @@
 
 So far, this text has been favoring the creation of small pieces of data *within our scripts.* The avoidance of reading in data from an external file has been avoided primarily for pedagogical purposes. In general, one might have 
 
-- data read in from a plain text file (e.g. `my_data.csv` or `log_file.txt` ),
+- data read in from a plain text file (e.g. `"my_data.csv"` or `"log_file.txt"` ),
 - data read in from a database (e.g. MySQL, PostgreSQL, etc.), or
 - data created in a script (either deterministically or randomly).
 
@@ -197,7 +197,7 @@ In R, there are many options for storing data. I will mention two: writing data 
 
 If you want to write out tabular data to a text file, use `write.table()` or `write.csv()`. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a `matrix` or `data.frame`), and the second argument is the file path on your hard drive. 
 
-Here is an example of writing out `d` to a file called `oring_out.csv`. I choose to include column names, but not row names. I also use commas to separate columns.
+Here is an example of writing out `d` to a file called `"oring_out.csv"`. I choose to include column names, but not row names. I also use commas to separate columns.
 
 ```{r, collapse = TRUE}
 write.table(d, file = "data/oring_out.csv", 
@@ -222,7 +222,7 @@ rm(d)
 exists("d")
 ```
 
-After it is saved with `saveRDS()`, we are free to delete the variable with `rm()`, because it can be read back in later on. To do this, call `readRDS()`. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, `.rds` files are typically smaller--`oring.rds` is only 248 bytes, while `oring_out.csv` is 332 bytes.
+After it is saved with `saveRDS()`, we are free to delete the variable with `rm()`, because it can be read back in later on. To do this, call `readRDS()`. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, `.rds` files are typically smaller--`oring.rds` is only 248 bytes, while `"oring_out.csv"` is 332 bytes.
 
 
 ```{r, collapse = TRUE}
@@ -280,7 +280,7 @@ d_is_back.head(2)
 ```
 
 ::: {.rmd-caution data-latex=""}
-Unfortunately, `oring.pickle` is much larger (1,676 bytes) than the original text file `o-ring-erosion-only.data` (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like `d_is_back.to_pickle("data/oring.zip")` it will become smaller. 
+Unfortunately, `"oring.pickle"` is much larger (1,676 bytes) than the original text file `"o-ring-erosion-only.data"` (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like `d_is_back.to_pickle("data/oring.zip")` it will become smaller. 
 ::: 
 
 In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library. 
@@ -294,7 +294,7 @@ Speaking of third-party code, there are many that provide alternative serializat
 
 1. 
 
-Consider again the data set called `gspc.csv`, which contains daily open, high, low and close values for the S\&P500 Index. 
+Consider again the data set called `"gspc.csv"`, which contains daily open, high, low and close values for the S\&P500 Index. 
 
 
   - Read in this data set as a `data.frame`, and call it `myData`. Do not include the code that achieves this in your assignment submission.
@@ -316,9 +316,9 @@ We will use the `"Google.html"` data set mentioned in the chapter.
   
 2. 
 
-Consider the data set called `gspc.csv`, which contains daily open, high, low and close values for the S\&P500 Index. 
+Consider the data set called `"gspc.csv"`, which contains daily open, high, low and close values for the S\&P500 Index. 
 
 
   - Read in this data set as a `DataFrame`, and call it `my_data`. Do not include the code that achieves this in your assignment submission.
-  - Write out this object as `my_data.pickle`. After you are finished, remove `my_data` from memory. Do not include the code that achieves this in your assignment submission.
-  - Read in `my_data.pickle`, and store the variable as `financial_data`. *Do* include the code that achieves this in your project submission. Make sure this code assumes that `my_data.pickle` is in the same folder as the code file `io_lab.py`. 
+  - Write out this object as `"my_data.pickle"`. After you are finished, remove `my_data` from memory. Do not include the code that achieves this in your assignment submission.
+  - Read in `"my_data.pickle"`, and store the variable as `financial_data`. *Do* include the code that achieves this in your project submission. Make sure this code assumes that `"my_data.pickle"` is in the same folder as the code file `io_lab.py`. 

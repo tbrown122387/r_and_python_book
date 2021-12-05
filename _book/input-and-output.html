@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -437,7 +437,7 @@ div.csl-indent {
 <h2><span class="header-section-number">9.1</span> General Input Considerations</h2>
 <p>So far, this text has been favoring the creation of small pieces of data <em>within our scripts.</em> The avoidance of reading in data from an external file has been avoided primarily for pedagogical purposes. In general, one might have</p>
 <ul>
-<li>data read in from a plain text file (e.g. <code>my_data.csv</code> or <code>log_file.txt</code> ),</li>
+<li>data read in from a plain text file (e.g. <code>"my_data.csv"</code> or <code>"log_file.txt"</code> ),</li>
 <li>data read in from a database (e.g. MySQL, PostgreSQL, etc.), or</li>
 <li>data created in a script (either deterministically or randomly).</li>
 </ul>
@@ -602,7 +602,7 @@ div.csl-indent {
 <div id="writing-out-tabular-plain-text-data-in-r" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> Writing Out Tabular Plain Text Data in R</h3>
 <p>If you want to write out tabular data to a text file, use <code>write.table()</code> or <code>write.csv()</code>. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a <code>matrix</code> or <code>data.frame</code>), and the second argument is the file path on your hard drive.</p>
-<p>Here is an example of writing out <code>d</code> to a file called <code>oring_out.csv</code>. I choose to include column names, but not row names. I also use commas to separate columns.</p>
+<p>Here is an example of writing out <code>d</code> to a file called <code>"oring_out.csv"</code>. I choose to include column names, but not row names. I also use commas to separate columns.</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="input-and-output.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring_out.csv&quot;</span>, </span>
 <span id="cb157-2"><a href="input-and-output.html#cb157-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span></code></pre></div>
 <p>The above will not print anything to the R console, but we can use a text editor to take a look at the raw text file on our hard drive. Here are the first three rows.</p>
@@ -618,7 +618,7 @@ div.csl-indent {
 <span id="cb159-2"><a href="input-and-output.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d)</span>
 <span id="cb159-3"><a href="input-and-output.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exists</span>(<span class="st">&quot;d&quot;</span>)</span>
 <span id="cb159-4"><a href="input-and-output.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
-<p>After it is saved with <code>saveRDS()</code>, we are free to delete the variable with <code>rm()</code>, because it can be read back in later on. To do this, call <code>readRDS()</code>. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, <code>.rds</code> files are typically smaller–<code>oring.rds</code> is only 248 bytes, while <code>oring_out.csv</code> is 332 bytes.</p>
+<p>After it is saved with <code>saveRDS()</code>, we are free to delete the variable with <code>rm()</code>, because it can be read back in later on. To do this, call <code>readRDS()</code>. This is file has a special format that is recognized by R, so you will not need to worry about any of the usual struggles that occur when reading in data from a plain text file. Additionally, <code>.rds</code> files are typically smaller–<code>oring.rds</code> is only 248 bytes, while <code>"oring_out.csv"</code> is 332 bytes.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="input-and-output.html#cb160-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/oring.rds&quot;</span>)</span>
 <span id="cb160-2"><a href="input-and-output.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d2, <span class="dv">3</span>)</span>
 <span id="cb160-3"><a href="input-and-output.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   V1 V2 V3 V4 V5</span></span>
@@ -664,7 +664,7 @@ div.csl-indent {
 <span id="cb164-6"><a href="input-and-output.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  6  0  66  50  1</span></span>
 <span id="cb164-7"><a href="input-and-output.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  6  1  70  50  2</span></span></code></pre></div>
 <div class="rmd-caution">
-<p>Unfortunately, <code>oring.pickle</code> is much larger (1,676 bytes) than the original text file <code>o-ring-erosion-only.data</code> (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like <code>d_is_back.to_pickle("data/oring.zip")</code> it will become smaller.</p>
+<p>Unfortunately, <code>"oring.pickle"</code> is much larger (1,676 bytes) than the original text file <code>"o-ring-erosion-only.data"</code> (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like <code>d_is_back.to_pickle("data/oring.zip")</code> it will become smaller.</p>
 </div>
 <p>In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library.</p>
 <p>Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research.</p>
@@ -677,7 +677,7 @@ div.csl-indent {
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Consider again the data set called <code>gspc.csv</code>, which contains daily open, high, low and close values for the S&amp;P500 Index.</p>
+<p>Consider again the data set called <code>"gspc.csv"</code>, which contains daily open, high, low and close values for the S&amp;P500 Index.</p>
 <ul>
 <li>Read in this data set as a <code>data.frame</code>, and call it <code>myData</code>. Do not include the code that achieves this in your assignment submission.</li>
 <li>Write out this object as <code>myData.rds</code>. After you are finished, remove <code>myData</code> from memory. Do not include the code that achieves this in your assignment submission.</li>
@@ -700,11 +700,11 @@ div.csl-indent {
 <ol start="2" style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Consider the data set called <code>gspc.csv</code>, which contains daily open, high, low and close values for the S&amp;P500 Index.</p>
+<p>Consider the data set called <code>"gspc.csv"</code>, which contains daily open, high, low and close values for the S&amp;P500 Index.</p>
 <ul>
 <li>Read in this data set as a <code>DataFrame</code>, and call it <code>my_data</code>. Do not include the code that achieves this in your assignment submission.</li>
-<li>Write out this object as <code>my_data.pickle</code>. After you are finished, remove <code>my_data</code> from memory. Do not include the code that achieves this in your assignment submission.</li>
-<li>Read in <code>my_data.pickle</code>, and store the variable as <code>financial_data</code>. <em>Do</em> include the code that achieves this in your project submission. Make sure this code assumes that <code>my_data.pickle</code> is in the same folder as the code file <code>io_lab.py</code>.</li>
+<li>Write out this object as <code>"my_data.pickle"</code>. After you are finished, remove <code>my_data</code> from memory. Do not include the code that achieves this in your assignment submission.</li>
+<li>Read in <code>"my_data.pickle"</code>, and store the variable as <code>financial_data</code>. <em>Do</em> include the code that achieves this in your project submission. Make sure this code assumes that <code>"my_data.pickle"</code> is in the same folder as the code file <code>io_lab.py</code>.</li>
 </ul>
 
 </div>
@@ -734,6 +734,7 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -773,10 +774,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

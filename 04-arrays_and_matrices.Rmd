@@ -134,9 +134,9 @@ For the following problems, make sure to only use the transpose function `t()`, 
   b. Calculate the $4 \times 4$ sample covariance of the following data. Call the variable `mySampCov`, and make sure it is also a `matrix` object. 
   
   A formula for the sample covariance is 
-$$
+\begin{equation} 
 \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
-$$
+\end{equation}
 **You can check your work with `cov()`, but don't use it in your submitted code.**
 
 
@@ -144,15 +144,15 @@ $$
 
 3. Create a `matrix` called `X` that has one thousand rows, four columns, has every element set to either $0$ or $1$, has its first column set to all $1$s, has the second column set to $1$ in the second $250$ elements and $0$ elsewhere, has the third column set to $1$ in the third $250$ spots and $0$ elsewhere, and has the fourth column set to $1$ in the last $250$ spots and $0$ elsewhere. In other words, it looks something like
   
-  $$
+\begin{equation} 
   \begin{bmatrix}
   \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
   \mathbf{1}_{250}  & \mathbf{1}_{250} & \mathbf{0}_{250} & \mathbf{0}_{250} \\
   \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{1}_{250} & \mathbf{0}_{250} \\
   \mathbf{1}_{250}  & \mathbf{0}_{250} & \mathbf{0}_{250} & \mathbf{1}_{250} \\
   \end{bmatrix}
-  $$
-  where $\mathbf{1}_{250}$ and $\mathbf{0}_{250}$ are length $250$ column vectors with all of their elements set to $1$ or $0$, respectively.
+\end{equation}
+where $\mathbf{1}_{250}$ and $\mathbf{0}_{250}$ are length $250$ column vectors with all of their elements set to $1$ or $0$, respectively.
 
   a. Compute the **projection (or hat) matrix** $\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal$. Make it a `matrix` and call it `H`. 
   
@@ -166,9 +166,9 @@ $$
 
 1. Let $\mathbf{X}$ be an $n \times 1$ random vector. It has a multivariate normal distribution with mean vector $\mathbf{m}$ and positive definite covariance matrix $\mathbf{C}$ if its probability density function can be written as 
 
-$$
+\begin{equation} 
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
-$$
+\end{equation}
 
 
 Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider: 
@@ -177,7 +177,7 @@ Evaluating this density should be done with care. There is no one function that 
   
   + recall from the last lab that exponentiating numbers close to $-\infty$ risks numerical underflow. It's better to prefer evaluating log densities. There are also [special functions that evaluate log determinants](https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html) that are less likely to underflow/overflow, too!  
   
-Complete the following problems. **Do not use pre-made functions like [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) and [`scipy.stats.multivariate_normal`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html) in your submission, but you may use them to check your work. Use only "standard" functions and Numpy n-dimensional arrays.** Use the following definitions for $\mathbf{x}$ and $\mathbf{m}$:
+Complete the following problems. **Do not use pre-made functions such as [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) and [`scipy.stats.multivariate_normal`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html) in your submission, but you may use them to check your work. Use only "standard" functions and Numpy n-dimensional arrays.** Use the following definitions for $\mathbf{x}$ and $\mathbf{m}$:
 
 ```{python}
 import numpy as np

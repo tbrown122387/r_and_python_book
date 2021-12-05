@@ -324,18 +324,21 @@ day2Data <- data.frame(idNum = 11:20,
 
 If you are dealing with random matrices, you might need to  **vectorize** a matrix object. This is not the same as "vectorization" in programming. Instead, it means you write the matrix as a big column vector by stacking the columns on top of each other. Specifically, if you have a $n \times p$ real-valued matrix $\mathbf{X}$, then
 
-$$
+\begin{equation} 
 \text{vec}(\mathbf{X}) =\begin{bmatrix} \mathbf{X}_1 \\ \vdots \\ \mathbf{X}_p \end{bmatrix} 
-$$
+\end{equation}
+
 where $\mathbf{X}_i$ is the $i$th column as an $n \times 1$ column vector. There is another operator that we will use, the **Kronecker product:** 
-$$
+
+\begin{equation} 
 \mathbf{A} \otimes \mathbf{B} = 
 \begin{bmatrix}
 a_{11} \mathbf{B} & \cdots & a_{1n} \mathbf{B} \\
 \vdots & \ddots & \vdots \\
 a_{m1} \mathbf{B} & \cdots & a_{mn} \mathbf{B} \\
 \end{bmatrix}.
-$$
+\end{equation} 
+
 If $\mathbf{A}$ is $m \times n$ and $\mathbf{B}$ is $p \times q$, then $\mathbf{A} \otimes \mathbf{B}$ is $pm \times qn$.
 
   - Write a function called `vec(myMatrix)`. Its input should be one `matrix` object. It's output should be a `vector`. Hint: `matrix` objects are stored in column-major order.
@@ -363,7 +366,7 @@ This problem uses the Militarized Interstate Disputes (v5.0) [@mid5] data set fr
 
 1. 
 
-Once again, recall the `car.data` data set [@misc_car_evaluation_19]. 
+Once again, recall the `"car.data"` data set [@misc_car_evaluation_19]. 
 
   - Read in the data set as `car_data`. 
   - Order the data by the third and then the fourth column. Do not change the data in place. Instead store it under the name `ord_car_data1`

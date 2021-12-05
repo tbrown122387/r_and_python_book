@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Visualization | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="reshaping-and-combining-data-sets.html"/>
 <link rel="next" href="an-introduction-to-object-oriented-programming.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -458,7 +458,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="visualization.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(df<span class="sc">$</span>TotalValue), </span>
 <span id="cb215-2"><a href="visualization.html#cb215-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;natural logarithm of home price&quot;</span>, </span>
 <span id="cb215-3"><a href="visualization.html#cb215-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Super-Duper Plot!&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-217"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-217"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-217-1.png" alt="A Simple Histogram" width="80%" />
 <p class="caption">
 Figure 13.1: A Simple Histogram
@@ -474,7 +474,7 @@ Figure 13.1: A Simple Histogram
 <span id="cb216-6"><a href="visualization.html#cb216-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;log. total value&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log. lot size&quot;</span>, </span>
 <span id="cb216-7"><a href="visualization.html#cb216-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
 <span id="cb216-8"><a href="visualization.html#cb216-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">log</span>(<span class="fu">mean</span>(df<span class="sc">$</span>LotSize)), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-218"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-218"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-218-1.png" alt="Some Scatterplots" width="80%" />
 <p class="caption">
 Figure 13.2: Some Scatterplots
@@ -504,7 +504,7 @@ Figure 13.2: Some Scatterplots
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="visualization.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb219-2"><a href="visualization.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))  <span class="sc">+</span></span>
 <span id="cb219-3"><a href="visualization.html#cb219-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-220"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-220"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-220-1.png" alt="A Second Scatterplot" width="80%" />
 <p class="caption">
 Figure 13.3: A Second Scatterplot
@@ -519,7 +519,7 @@ Figure 13.3: A Second Scatterplot
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="visualization.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> manufacturer))  <span class="sc">+</span></span>
 <span id="cb221-2"><a href="visualization.html#cb221-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb221-3"><a href="visualization.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-222"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-222-1.png" alt="Adding Some Color" width="80%" />
 <p class="caption">
 Figure 13.4: Adding Some Color
@@ -531,7 +531,7 @@ Figure 13.4: Adding Some Color
 <span id="cb222-3"><a href="visualization.html#cb222-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb222-4"><a href="visualization.html#cb222-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggtitle</span>(<span class="st">&quot;my favorite scatterplot&quot;</span>)</span>
 <span id="cb222-5"><a href="visualization.html#cb222-5" aria-hidden="true" tabindex="-1"></a>base_plot <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-223"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-223-1.png" alt="Changing Scales" width="80%" />
 <p class="caption">
 Figure 13.5: Changing Scales
@@ -541,7 +541,7 @@ Figure 13.5: Changing Scales
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="visualization.html#cb223-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(mpg<span class="sc">$</span>displ<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> mpg<span class="sc">$</span>hwy<span class="sc">^</span><span class="dv">2</span>) </span>
 <span id="cb223-2"><a href="visualization.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb223-3"><a href="visualization.html#cb223-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() </span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-224"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-224-1.png" alt="Changing the Fill" width="80%" />
 <p class="caption">
 Figure 13.6: Changing the Fill
@@ -552,7 +552,7 @@ Figure 13.6: Changing the Fill
 <span id="cb224-2"><a href="visualization.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">fill =</span> score ))  <span class="sc">+</span></span>
 <span id="cb224-3"><a href="visualization.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
 <span id="cb224-4"><a href="visualization.html#cb224-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_b</span>()</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-225"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-225"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-225-1.png" alt="Changing the Fill Again" width="80%" />
 <p class="caption">
 Figure 13.7: Changing the Fill Again
@@ -573,10 +573,9 @@ Figure 13.7: Changing the Fill Again
 <div class="sourceCode" id="cb226"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb226-1"><a href="visualization.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt       <span class="co"># 1</span></span>
 <span id="cb226-2"><a href="visualization.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np                    <span class="co"># 2</span></span>
 <span id="cb226-3"><a href="visualization.html#cb226-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()              <span class="co"># 3</span></span>
-<span id="cb226-4"><a href="visualization.html#cb226-4" aria-hidden="true" tabindex="-1"></a><span class="co">## /home/trb5me_admin/.local/share/r-miniconda/envs/r-reticulate/bin/python:1: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).</span></span>
-<span id="cb226-5"><a href="visualization.html#cb226-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> ax.hist(np.random.normal(size<span class="op">=</span><span class="dv">1000</span>))  <span class="co"># 4</span></span>
-<span id="cb226-6"><a href="visualization.html#cb226-6" aria-hidden="true" tabindex="-1"></a>plt.show()                            <span class="co"># 5</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-227"></span>
+<span id="cb226-4"><a href="visualization.html#cb226-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> ax.hist(np.random.normal(size<span class="op">=</span><span class="dv">1000</span>))  <span class="co"># 4</span></span>
+<span id="cb226-5"><a href="visualization.html#cb226-5" aria-hidden="true" tabindex="-1"></a>plt.show()                            <span class="co"># 5</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-227"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-227-1.png" alt="Another Simple Histogram" width="80%" />
 <p class="caption">
 Figure 13.8: Another Simple Histogram
@@ -600,11 +599,11 @@ Figure 13.8: Another Simple Histogram
 <span id="cb227-6"><a href="visualization.html#cb227-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb227-7"><a href="visualization.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
 <span id="cb227-8"><a href="visualization.html#cb227-8" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
-<span id="cb227-9"><a href="visualization.html#cb227-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f860103ce48&gt;]</span></span>
+<span id="cb227-9"><a href="visualization.html#cb227-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f52d67544e0&gt;]</span></span>
 <span id="cb227-10"><a href="visualization.html#cb227-10" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data </span></span>
-<span id="cb227-11"><a href="visualization.html#cb227-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f860103cf60&gt;]</span></span>
+<span id="cb227-11"><a href="visualization.html#cb227-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f52d67545f8&gt;]</span></span>
 <span id="cb227-12"><a href="visualization.html#cb227-12" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
-<span id="cb227-13"><a href="visualization.html#cb227-13" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f86010302e8&gt;]</span></span>
+<span id="cb227-13"><a href="visualization.html#cb227-13" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f52d6754940&gt;]</span></span>
 <span id="cb227-14"><a href="visualization.html#cb227-14" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
 <span id="cb227-15"><a href="visualization.html#cb227-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
 <span id="cb227-16"><a href="visualization.html#cb227-16" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
@@ -614,11 +613,11 @@ Figure 13.8: Another Simple Histogram
 <span id="cb227-20"><a href="visualization.html#cb227-20" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
 <span id="cb227-21"><a href="visualization.html#cb227-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb227-22"><a href="visualization.html#cb227-22" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
-<span id="cb227-23"><a href="visualization.html#cb227-23" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f86018d7550&gt;</span></span>
+<span id="cb227-23"><a href="visualization.html#cb227-23" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f52d63e3ba8&gt;</span></span>
 <span id="cb227-24"><a href="visualization.html#cb227-24" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
-<span id="cb227-25"><a href="visualization.html#cb227-25" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f8601030ac8&gt;]</span></span>
+<span id="cb227-25"><a href="visualization.html#cb227-25" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f52d66de160&gt;]</span></span>
 <span id="cb227-26"><a href="visualization.html#cb227-26" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span>
-<span id="cb227-27"><a href="visualization.html#cb227-27" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f8601027470&gt;</span></span></code></pre></div>
+<span id="cb227-27"><a href="visualization.html#cb227-27" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f52d66de6a0&gt;</span></span></code></pre></div>
 </div>
 <div id="plotting-with-pandas" class="section level2" number="13.4">
 <h2><span class="header-section-number">13.4</span> Plotting with Pandas</h2>
@@ -637,18 +636,18 @@ Figure 13.8: Another Simple Histogram
 <span id="cb228-10"><a href="visualization.html#cb228-10" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
 <span id="cb228-11"><a href="visualization.html#cb228-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [5 rows x 7 columns]</span></span>
 <span id="cb228-12"><a href="visualization.html#cb228-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;GSPC.Adjusted&#39;</span>].plot()</span>
-<span id="cb228-13"><a href="visualization.html#cb228-13" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f86018d2be0&gt;</span></span></code></pre></div>
+<span id="cb228-13"><a href="visualization.html#cb228-13" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f52d6722278&gt;</span></span></code></pre></div>
 <p>Choosing among nondefault plot types can be done in a variety of ways. You can either use the <code>.plot</code> accessor data member of a <code>DataFrame</code>, or you can pass in different strings to <code>.plot()</code>’s <code>kind=</code> parameter. Third, some plot types (e.g. boxplots and histograms) have their own dedicated methods.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb229-1"><a href="visualization.html#cb229-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;returns&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;GSPC.Adjusted&#39;</span>].pct_change()</span>
 <span id="cb229-2"><a href="visualization.html#cb229-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;returns&#39;</span>].plot(kind<span class="op">=</span><span class="st">&#39;hist&#39;</span>)</span>
 <span id="cb229-3"><a href="visualization.html#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].plot.hist()</span></span>
 <span id="cb229-4"><a href="visualization.html#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].hist()</span></span>
-<span id="cb229-5"><a href="visualization.html#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f86018d2be0&gt;</span></span></code></pre></div>
+<span id="cb229-5"><a href="visualization.html#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f52d6722278&gt;</span></span></code></pre></div>
 <p>There are also <a href="https://pandas.pydata.org/docs/user_guide/visualization.html#visualization-tools">several freestanding plotting functions</a> (not methods) that take in <code>DataFrame</code>s and <code>Series</code> objects. Each of these functions is typically imported individually from the <code>pandas.plotting</code> submodule.</p>
 <p>The following code is an example of creating a “lag plot,” which is simply a scatterplot between a time series’ lagged and nonlagged values. The primary benefit of this function over <code>.plot()</code> is that this function does not require you to construct an additional column of lagged values, and it comes up with good default axis labels.</p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="visualization.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.plotting <span class="im">import</span> lag_plot</span>
 <span id="cb230-2"><a href="visualization.html#cb230-2" aria-hidden="true" tabindex="-1"></a>lag_plot(df[<span class="st">&#39;returns&#39;</span>])</span>
-<span id="cb230-3"><a href="visualization.html#cb230-3" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f86018d2be0&gt;</span></span></code></pre></div>
+<span id="cb230-3"><a href="visualization.html#cb230-3" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f52d6722278&gt;</span></span></code></pre></div>
 
 </div>
 </div>
@@ -687,6 +686,7 @@ Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)<
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -726,10 +726,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

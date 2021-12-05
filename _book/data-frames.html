@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data Frames | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="categorical-data.html"/>
 <link rel="next" href="input-and-output.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -671,7 +671,7 @@ div.csl-indent {
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Consider the data set <code>original_rt_snippets.txt</code> <span class="citation">(<a href="#ref-SocherEtAl2013:RNTN" role="doc-biblioref">Socher et al. 2013</a>)</span>. We will calculate the <em>term frequency-inverse document frequency statistics</em> <span class="citation">(<a href="#ref-Jones72astatistical" role="doc-biblioref">Jones 1972</a>)</span> on this data set, which is a common data transformation technique used in text mining and natural language processing. You may use the <code>stringr</code> library for this question, if you wish.</p>
+<p>Consider the data set <code>"original_rt_snippets.txt"</code> <span class="citation">(<a href="#ref-SocherEtAl2013:RNTN" role="doc-biblioref">Socher et al. 2013</a>)</span>. We will calculate the <em>term frequency-inverse document frequency statistics</em> <span class="citation">(<a href="#ref-Jones72astatistical" role="doc-biblioref">Jones 1972</a>)</span> on this data set, which is a common data transformation technique used in text mining and natural language processing. You may use the <code>stringr</code> library for this question, if you wish.</p>
 <ul>
 <li>read in this data set as a <code>vector</code> and call it <code>corpus</code>.</li>
 <li>create a <code>vector</code> called <code>dictionary</code> that contains the following phrases: “charming,”“fantasy,” “hate,” and “boring.”</li>
@@ -698,7 +698,7 @@ div.csl-indent {
 </ol>
 <p>This question investigates the <a href="https://www.zillow.com/research/data/"><em>Zillow Home Value Index (ZHVI)</em></a> for single family homes.</p>
 <ul>
-<li>read in <code>Zip_zhvi_uc_sfr_tier_0.33_0.67_sm_sa_month.csv</code>. Call the <code>data.frame</code> <code>homeData</code>. Remember to be careful with file paths. Also, when looking at the data set with a text editor, be sure that “word wrap” is not turned on.</li>
+<li>read in <code>"Zip_zhvi_uc_sfr_tier_0.33_0.67_sm_sa_month.csv"</code>. Call the <code>data.frame</code> <code>homeData</code>. Remember to be careful with file paths. Also, when looking at the data set with a text editor, be sure that “word wrap” is not turned on.</li>
 <li>Extract the rows of <code>homeData</code> that correspond with Charlottesville, VA, and assign them as a <code>data.frame</code> to the variable <code>cvilleData</code></li>
 <li>Assign all the unique zip codes to a <code>character vector</code> called <code>cvilleZips</code>.</li>
 <li>Extract the columns of <code>cvilleData</code> that correspond with home prices, and transpose them so that each row of the result corresponds with a different month. Call this new <code>data.frame</code> <code>timeSeriesData</code>. Also, make sure that the column names of this new <code>data.frame</code> are set equal to the appropriate zip codes.</li>
@@ -713,7 +713,7 @@ div.csl-indent {
 </ol>
 <p>This question deals with looking at historical prices of the S&amp;P500 Index. This data was downloaded from <a href="https://finance.yahoo.com">https://finance.yahoo.com</a> <span class="citation">(<a href="#ref-gspc_data" role="doc-biblioref"><span>“GSPC DATA”</span> 2021</a>)</span>. It contains prices starting from “2007-01-03” and going until “2021-10-01.”</p>
 <ul>
-<li>Read in the data <code>gspc.csv</code> as a <code>data.frame</code> and call the variable <code>gspc</code>.</li>
+<li>Read in the data file <code>"gspc.csv"</code> as a <code>data.frame</code> and call the variable <code>gspc</code>.</li>
 <li>Use <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html"><code>.set_index()</code></a> to change the index of <code>gspc</code> to its <code>"Index"</code> column. Store the new <code>DataFrame</code> as <code>gspc_good_idx</code>.</li>
 <li>Add a column to <code>gspc_good_idx</code> called <code>log_returns</code>. Calculate them from the column <code>GSPC.Adjusted</code>. Make sure to scale them by <span class="math inline">\(100\)</span> and put an <code>np.nan</code> in the first element where you don’t have a return.</li>
 <li>Extract all the returns that are available for the year 2021, and store them as a <code>Series</code> called <code>this_year_returns</code>.</li>
@@ -744,8 +744,11 @@ div.csl-indent {
 <ul>
 <li>Assume the University of Virginia is at 38.0336<span class="math inline">\(^\circ\)</span> N, 78.5080<span class="math inline">\(^\circ\)</span>W</li>
 <li>Assume the Earth’s radius <span class="math inline">\(r = 6378.137\)</span> kilometers.</li>
-<li>The formula for distance between <span class="math inline">\((\lambda_1, \phi_1)\)</span> (signed longitude in radians, signed latitude in radians) and <span class="math inline">\((\lambda_2, \phi_2)\)</span> is <span class="math display">\[2 \hspace{1mm} r \hspace{1mm} \text{arcsin}\left( \sqrt{ \sin^2\left( \frac{\phi_2 - \phi_1}{2}\right)  + \cos(\phi_1)\cos(\phi_2) \sin^2\left( \frac{\lambda_2 - \lambda_1}{2} \right)  } \right)\]</span></li>
-</ul></li>
+<li>The formula for distance between <span class="math inline">\((\lambda_1, \phi_1)\)</span> (signed longitude in radians, signed latitude in radians) and <span class="math inline">\((\lambda_2, \phi_2)\)</span> is</li>
+</ul>
+<span class="math display">\[\begin{equation}
+2 \hspace{1mm} r \hspace{1mm} \text{arcsin}\left( \sqrt{ \sin^2\left( \frac{\phi_2 - \phi_1}{2}\right)  + \cos(\phi_1)\cos(\phi_2) \sin^2\left( \frac{\lambda_2 - \lambda_1}{2} \right)  } \right)
+\end{equation}\]</span></li>
 <li>What is the average radon measurement between all measurements taken at the place that is closest to where we are now? Assign your answer as a <code>float</code> to <code>close_ave</code></li>
 </ul>
 
@@ -786,6 +789,7 @@ Socher, Richard, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, And
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -825,10 +829,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -322,7 +322,7 @@ Another thing to keep in mind is that `DataFrame`s, unlike `ndarray`s, don't hav
 import pandas as pd
 # alb_real_est.apply(sum, axis=1) # can't add letters to numbers!
 def get_prop_score(row):
-  return 2*row[0] + 3*row[1]
+    return 2*row[0] + 3*row[1]
 two_col_df = alb_real_est[['FinSqFt','LotSize']]
 alb_real_est['Score'] = two_col_df.apply(get_prop_score, 1)
 alb_real_est[['FinSqFt','LotSize','Score']].head(2)
@@ -386,13 +386,13 @@ Notice that **the `greetingMessage=` argument that is passed in, `"Hello"`, isn'
 Let's now consider a more complicated and realistic example. Let's implement a variance reduction technique called **common random numbers**. 
 
 Suppose $X \sim \text{Normal}(\mu, \sigma^2)$, and we are interested in approximating an expectation of a function of this random variable. Suppose that we don't know that
-$$
+\begin{equation} 
 \mathbb{E}[\sin(X)] = \sin(\mu) \exp\left(-\frac{\sigma^2}{2}\right)
-$$
+\end{equation}
 for any particular choice of $\mu$ and $\sigma^2$, and instead, we choose to use the Monte Carlo method:
-$$
+\begin{equation} 
 \hat{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(X^i)
-$$
+\end{equation}
 where $X^1, \ldots, X^n \overset{\text{iid}}{\sim} \text{Normal}(\mu, \sigma^2)$ is a large collection of draws from the appropriate normal distribution, probably coming from a call to `rnorm()`. In more realistic situations, the theoretical expectation might not be tractable, either because the random variable has a complicated distribution, or maybe because the functional is very complicated. In these cases, a tool like Monte Carlo might be the only available approach.
 
 Here are two functions that calculate the above quantities for $n=1000$. `actualExpectSin()` is a function that computes the theoretical expectation for any particular parameter pair. `monteCarloSin()` is a function that implements the Monte Carlo approximate expectation. 
@@ -440,13 +440,13 @@ There are three problems with this implementation:
   - every time we re-run this code the plot on the right looks different.
 
 If we wanted to use common random numbers, we could generate $Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)$, and use the fact that
-$$
+\begin{equation} 
 X^i = \mu + \sigma Z^i
-$$
+\end{equation}
 This leads to the Monte Carlo estimate
-$$
+\begin{equation} 
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
-$$
+\end{equation}
 
 Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call `monteCarloSinCRNv1(c(10,1))`, you get the same answer. 
 ```{r, collapse = TRUE}
@@ -518,9 +518,9 @@ We can write function factories in Python, too. Here is another implementation o
 
 ```{python, collapse = TRUE}
 def func_factory(greeting_message):
-  def func(name):
-    print(greeting_message + ' ' + name)
-  return func
+    def func(name):
+        print(greeting_message + ' ' + name)
+    return func
 greet_with_hello = func_factory("Hello")
 greet_with_hello("Taylor")
 greet_with_hello("Charlie")
@@ -576,10 +576,10 @@ Before we get too ahead of ourselves, let's describe the basics. Here is our fir
 
 ```{python, collapse = TRUE}
 def add_greeting(func):
-  def wrapper(name):
-    print('Salutations, ')
-    func(name)
-  return wrapper
+    def wrapper(name):
+        print('Salutations, ')
+        func(name)
+    return wrapper
 ```
 
 The decorator `add_greeting()` returns a function that is an embellished version of the function it is given. When we decorate a function with it, it looks like this. 
@@ -587,14 +587,14 @@ The decorator `add_greeting()` returns a function that is an embellished version
 ```{python, collapse = TRUE}
 @add_greeting
 def print_name(first_name):
-  print(first_name)
+    print(first_name)
 ```
 
 You could get the same behavior by typing the following. They are equivalent!
 
 ```{python, collapse = TRUE}
 def print_name(first_name):
-  print(first_name)
+    print(first_name)
 print_name = add_greeting(print_name)
 ```
 
@@ -602,19 +602,19 @@ Things can get a little more complicated when your decorators take additional ar
 
 ```{python, collapse = TRUE, echo = F}
 def add_greeting(greet):
-  def decorator(func):
-    def wrapper(name):
-      print(greet)
-      func(name)
-    return wrapper
-  return decorator
+    def decorator(func):
+        def wrapper(name):
+            print(greet)
+            func(name)
+        return wrapper
+    return decorator
 ```
 
 
 ```{python, collapse = TRUE}
 @add_greeting("How you doin'")
 def print_name(first_name):
-  print(first_name)
+    print(first_name)
 print_name('Taylor')
 ```
 
@@ -623,12 +623,12 @@ So how do we write decorators that accomplish this? The important thing to remem
 
 ```{python, collapse = TRUE}
 def add_greeting(greet):
-  def decorator(func):
-    def wrapper(name):
-      print(greet)
-      func(name)
-    return wrapper
-  return decorator
+    def decorator(func):
+        def wrapper(name):
+            print(greet)
+            func(name)
+        return wrapper
+    return decorator
 ```
 
 

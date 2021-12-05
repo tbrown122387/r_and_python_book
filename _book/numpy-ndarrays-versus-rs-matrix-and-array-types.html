@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
 <link rel="next" href="rs-lists-versus-pythons-lists-and-dicts.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -603,22 +603,22 @@ div.csl-indent {
 <li><p>Calculate the <span class="math inline">\(4 \times 4\)</span> sample covariance of the following data. Call the variable <code>mySampCov</code>, and make sure it is also a <code>matrix</code> object.</p></li>
 </ol>
 <p>A formula for the sample covariance is
-<span class="math display">\[
+<span class="math display">\[\begin{equation} 
 \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
-\]</span>
+\end{equation}\]</span>
 <strong>You can check your work with <code>cov()</code>, but don’t use it in your submitted code.</strong></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Create a <code>matrix</code> called <code>P</code> that has one hundred rows, one hundred columns, all of its elements positive, <span class="math inline">\(1/10\)</span> on every diagonal element, and all rows summing to one. This matrix is called <strong>stochastic</strong> and it describes how a Markov chain moves randomly through time.</p></li>
 <li><p>Create a <code>matrix</code> called <code>X</code> that has one thousand rows, four columns, has every element set to either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, has its first column set to all <span class="math inline">\(1\)</span>s, has the second column set to <span class="math inline">\(1\)</span> in the second <span class="math inline">\(250\)</span> elements and <span class="math inline">\(0\)</span> elsewhere, has the third column set to <span class="math inline">\(1\)</span> in the third <span class="math inline">\(250\)</span> spots and <span class="math inline">\(0\)</span> elsewhere, and has the fourth column set to <span class="math inline">\(1\)</span> in the last <span class="math inline">\(250\)</span> spots and <span class="math inline">\(0\)</span> elsewhere. In other words, it looks something like</p></li>
 </ol>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{equation} 
   \begin{bmatrix}
   \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} \\
   \mathbf{1}_{250}  &amp; \mathbf{1}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} \\
   \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{1}_{250} &amp; \mathbf{0}_{250} \\
   \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{1}_{250} \\
   \end{bmatrix}
-  \]</span>
+\end{equation}\]</span>
 where <span class="math inline">\(\mathbf{1}_{250}\)</span> and <span class="math inline">\(\mathbf{0}_{250}\)</span> are length <span class="math inline">\(250\)</span> column vectors with all of their elements set to <span class="math inline">\(1\)</span> or <span class="math inline">\(0\)</span>, respectively.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Compute the <strong>projection (or hat) matrix</strong> <span class="math inline">\(\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal\)</span>. Make it a <code>matrix</code> and call it <code>H</code>.</p></li>
@@ -631,15 +631,15 @@ where <span class="math inline">\(\mathbf{1}_{250}\)</span> and <span class="mat
 <ol style="list-style-type: decimal">
 <li>Let <span class="math inline">\(\mathbf{X}\)</span> be an <span class="math inline">\(n \times 1\)</span> random vector. It has a multivariate normal distribution with mean vector <span class="math inline">\(\mathbf{m}\)</span> and positive definite covariance matrix <span class="math inline">\(\mathbf{C}\)</span> if its probability density function can be written as</li>
 </ol>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{equation} 
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
-\]</span></p>
+\end{equation}\]</span></p>
 <p>Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider:</p>
 <ul>
 <li><p>inverting very large matrices with either <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html"><code>np.linalg.solve</code></a> or <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html"><code>np.linalg.inv</code></a> becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it’s a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?</p></li>
 <li><p>recall from the last lab that exponentiating numbers close to <span class="math inline">\(-\infty\)</span> risks numerical underflow. It’s better to prefer evaluating log densities. There are also <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html">special functions that evaluate log determinants</a> that are less likely to underflow/overflow, too!</p></li>
 </ul>
-<p>Complete the following problems. <strong>Do not use pre-made functions like <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html"><code>scipy.stats.norm</code></a> and <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html"><code>scipy.stats.multivariate_normal</code></a> in your submission, but you may use them to check your work. Use only “standard” functions and Numpy n-dimensional arrays.</strong> Use the following definitions for <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{m}\)</span>:</p>
+<p>Complete the following problems. <strong>Do not use pre-made functions such as <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html"><code>scipy.stats.norm</code></a> and <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html"><code>scipy.stats.multivariate_normal</code></a> in your submission, but you may use them to check your work. Use only “standard” functions and Numpy n-dimensional arrays.</strong> Use the following definitions for <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{m}\)</span>:</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb79-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb79-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">1.1</span>, <span class="fl">.9</span>, <span class="fl">1.0</span>]).reshape((<span class="dv">3</span>,<span class="dv">1</span>))</span>
 <span id="cb79-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb79-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> np.ones(<span class="dv">3</span>).reshape((<span class="dv">3</span>,<span class="dv">1</span>))</span></code></pre></div>
@@ -693,6 +693,7 @@ Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Softw
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -732,10 +733,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

@@ -161,21 +161,21 @@ R can come close to replicating the above behavior with vectorization, but the c
 1. 
 
 Suppose you have a `vector` of `numeric` data: $x_1, \ldots, x_n$. Write a function called `cappedMoveAve(dataVector)` that takes in a `vector` and returns a 3-period "capped" moving average. Make sure to use a `for` loop. The formula you should use is 
-$$
+\begin{equation} 
 y_t = \min\left(10, \frac{1}{3}\sum_{i=0}^2x_{t-i} \right).
-$$
+\end{equation}
 The function should return $y_1, \ldots, y_n$ as a `vector`. Let $y_1 = y_2 = 0$.
 
 2.
 
 Say we have a target^[This is the density of a $\text{Beta}(3,2)$ random variable, if you're curious.] distribution that we want to sample from:
-$$
+\begin{equation} 
 p(x) = 
 \begin{cases}
 \frac{x^2(1-x)}{\int_0^1 y^2(1-y) dy} & 0 < x < 1 \\
 0 & \text{otherwise}
 \end{cases}.
-$$
+\end{equation}
 The denominator, $\int_0^1 y^2(1-y) dy$, is the target's normalizing constant. You might know how to solve this integral (it's equal to $1/12$), but let's pretend for the sake of our example that it's too difficult for us. We want to sample from $p(x)$ while only being able to evaluate (not sample) from its unnormalized version $f(x) := x^2(1-x)$. This is a situation that arises often--wanting to sample from some complicated distribution whose density you can only evaluate up to a constant of proportionality.
 
 Next, let's choose a uniform distribution for our *proposal distribution*: $q(x) = 1$ if $0 < x < 1$. This means we will sample from this distribution, because it's easier. We just need to "adjust" our samples somehow, because it's not the same as our target. 
@@ -213,7 +213,10 @@ Write a function called `multiplyTwoMats(A,B)` that performs matrix multiplicati
 Suppose you are trying to predict a value of $Y$ given some information about a corresponding independent variable $x$. Suppose further that you have a historical data set of observations $(x_1, y_1), \ldots, (x_n,y_n)$. One approach for coming up with predictions is to use **Nadaraya–Watson Kernel Regression** [@Nadaraya] [@Watson]. The prediction this approach provides is simply a weighted average of all of the historically-observed data points $y_1, \ldots, y_n$. The weight for a given $y_i$ will be larger if $x_i$ is "close" to the value $x$ that you are obtaining predictions for. On the other hand, if $x_j$ is far away from $x$, then the weight for $y_j$ will be relatively small, and so this data point won't influence the prediction much. 
 
 Write a function called `kernReg(xPred,xData,yData,kernFunc)` that computes the Nadaraya–Watson estimate of the prediction of $Y$ given $X=x$. Do not use a `for` loop in your function definition. The formula is
-  $$\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,$$ where $x$ is the point you're trying to get a prediction for. 
+\begin{equation} 
+\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j) } y_i,
+\end{equation} 
+where $x$ is the point you're trying to get a prediction for. 
 
   * Your function should return one floating point number. 
   * The input `xPred` will be a floating point number.
@@ -266,7 +269,7 @@ This question will demonstrate how to implement **The Bootstrap** [@bootstrap], 
 3.
 
 Write a function called `ar_samp(n)` that samples from $p(x)$ using accept-reject sampling. Use any proposal distribution that you'd like. It should take a single argument that is equal to the number of samples desired. Sample from the following target:
-  $$
-  p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 < x < 1.
-  $$
+\begin{equation} 
+p(x) \propto f(x) := \exp[\cos(2\pi x)] x^2(1-x), \hspace{5mm} 0 < x < 1.
+\end{equation}
   

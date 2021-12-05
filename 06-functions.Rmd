@@ -269,10 +269,10 @@ silly_function.__code__.co_varnames # names of local variables
 ```{python, collapse = TRUE}
 a = "outside both"
 def outer_func():
-  a = "inside one"
-  def inner_func():
-    print(a)
-  return inner_func
+    a = "inside one"
+    def inner_func():
+        print(a)
+    return inner_func
 my_new_func = outer_func()
 my_new_func()
 my_new_func.__code__.co_freevars
@@ -362,8 +362,8 @@ In this case, `a` is not modified. That is because `a` is an `int`. `int`s are *
 ```{python, collapse=TRUE}
 a = [999]
 def f(arg):
-  arg[0] = 2
-  return arg
+    arg[0] = 2
+    return arg
 
 print(f(a))
 print(a) # not [999] anymore!
@@ -393,8 +393,8 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 # old code: 
 # a = 1
 # def f(arg):
-#   arg = 2
-#   return arg
+#     arg = 2
+#     return arg
 a = 1    # still done in global scope
 arg = a  # arg is a name that is bound to the object a refers to
 arg = 2  # arg is a name that is bound to the object 2
@@ -417,8 +417,8 @@ If we go back to the first function example, it's basically the same idea. The o
 a = [999]
 # old code:
 # def f(arg):
-#   arg[0] = 2
-#   return arg
+#     arg[0] = 2
+#     return arg
 arg = a
 arg[0] = 2
 print(arg)
@@ -542,24 +542,24 @@ print(a)
 1. 
 
 Suppose you have a matrix $\mathbf{X} \in \mathbb{R}^{n \times p}$ and a column vector $\mathbf{y} \in \mathbb{R}^{n}$. To estimate the linear regression model 
-$$
+\begin{equation} 
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \epsilon,
-$$
+\end{equation}
 where $\boldsymbol{\beta} \in \mathbb{R}^p$ is a column vector of errors, you can use calculus instead of numerical optimization. The formula for the least squares estimate of $\boldsymbol{\beta}$ is 
-$$
+\begin{equation} 
 \hat{\boldsymbol{\beta}} = (\mathbf{X}^\intercal \mathbf{X})^{-1} \mathbf{X}^\intercal \mathbf{y}.
-$$
+\end{equation}
 
 Once this $p$-dimensional vector is found, you can also obtain the *predicted (or fitted) values*
 
-$$
+\begin{equation} 
 \hat{\mathbf{y}} := \mathbf{X}\hat{\boldsymbol{\beta}},
-$$
+\end{equation}
 and the *residuals (or errors)*
 
-$$
+\begin{equation} 
 \mathbf{y} - \hat{\mathbf{y}}
-$$
+\end{equation}
 
 Write a function called `getLinModEstimates()` that takes in two arguments in the following order:
   a. the `vector` of response data $\mathbf{y}$
@@ -609,9 +609,9 @@ Suppose you have a function $f(x)$ that takes a scalar-valued input and returns 
 
 The algorithm repeatedly applies the following recursion:
 
-$$
+\begin{equation} 
 x_{n+1} = x_{n} - \frac{f'(x_n)}{f''(x_{n})}.
-$$
+\end{equation}
 Under appropriate regularity conditions for $f$, after many iterations of the above recursion, when $\tilde{n}$ is very large, $x_{\tilde{n}}$ will be nearly the same as $x_{\tilde{n}-1}$, and $x_{\tilde{n}}$ is pretty close to  $\text{argmin}_x f(x)$. In other words, $x_{\tilde{n}}$ is the minimizer of $f$, and a root of $f'$.
 
 
@@ -630,9 +630,9 @@ Under appropriate regularity conditions for $f$, after many iterations of the ab
 
 Write a function called `smw_inverse(A,U,C,V)` that returns the inverse of a matrix using the **Sherman-Morrison-Woodbury formula** [@woodbury]. Have it take the arguments $A$, $U$, $C$, and $V$ in that order and as Numpy `ndarray`s. Assume that `A` is a diagonal matrix.
 
-$$
+\begin{equation} 
 (A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}V A^{-1}
-$$
+\end{equation}
 Despite being difficult to remember, this formula can be quite handy for speeding up matrix inversions when $A$ and $C$ are easier to invert (e.g. if $A$ is diagonal and $C$ is a scalar). The formula often shows up a lot in applications where you multiply matrices together (there are many such examples).
 
 To check your work, pick certain inputs, and make sure your formula corresponds with the naive, left-hand-side approach. 
