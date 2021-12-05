@@ -542,11 +542,11 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <h3><span class="header-section-number">14.1.3</span> Adding Inheritance</h3>
 <p>How can we use inheritance in statistical programming? A primary benefit of inheritance is code re-use, so one example of inheritance is writing a generic algorithm as a base class, and a specific algorithm as a class that inherits from the base class. For example, we could re-use the code in the <code>RunningMean</code> class in a variety of other classes.</p>
 <p>Let’s make some assumptions about a <em>parametric model</em> that is generating our data. Suppose I assume that the data points <span class="math inline">\(x_1, \ldots, x_n\)</span> are a “random sample”<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> from a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>. <span class="math inline">\(\mu\)</span> is assumed to be unknown (this is, after all, and interval for <span class="math inline">\(\mu\)</span>), and <span class="math inline">\(\sigma^2\)</span> is assumed to be known, for simplicity.</p>
-<p>A <span class="math inline">\(95\%\)</span> confidence interval for the true unknown population mean <span class="math inline">\(\mu\)</span> is
-<span class="math display">\[\begin{equation} 
-\left[\bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right].
-\end{equation}\]</span>
-The width of the interval shrinks as we get more data (as <span class="math inline">\(n \to \infty\)</span>). We can write another class that, not only calculates the center of this interval, <span class="math inline">\(\bar{x}\)</span>, but also returns the interval endpoints.</p>
+<p>A <span class="math inline">\(95\%\)</span> confidence interval for the true unknown population mean <span class="math inline">\(\mu\)</span> is</p>
+<p><span class="math display">\[\begin{equation} 
+\left( \bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right).
+\end{equation}\]</span></p>
+<p>The width of the interval shrinks as we get more data (as <span class="math inline">\(n \to \infty\)</span>). We can write another class that, not only calculates the center of this interval, <span class="math inline">\(\bar{x}\)</span>, but also returns the interval endpoints.</p>
 <p>If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of <code>RunningMean</code>. Instead, we’ll use the idea of <a href="https://docs.python.org/3/tutorial/classes.html#inheritance"><em>inheritance</em></a>.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb234-1"><a href="an-introduction-to-object-oriented-programming.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb234-2"><a href="an-introduction-to-object-oriented-programming.html#cb234-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -670,11 +670,11 @@ The width of the interval shrinks as we get more data (as <span class="math inli
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="an-introduction-to-object-oriented-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x562d10b03ce8&gt;
+## &lt;bytecode: 0x55b5cb29b2c0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod()</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods()</code> function.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">methods</span>(plot))</span></code></pre></div>
-<pre><code>## [1] 39</code></pre>
+<pre><code>## [1] 45</code></pre>
 <p>All of these S3 class methods share the same naming convention. Their name has the generic function’s name as a prefix, then a dot (<code>.</code>), then the name of the class that they are specifically written to be used with.</p>
 <div class="rmd-caution">
 <p>R’s dot-notation is nothing like Python’s dot-notation! In R, functions do not <em>belong</em> to types/classes like they do in Python!</p>
@@ -1100,8 +1100,8 @@ i. Sample <span class="math inline">\(X^1, \ldots, X^n\)</span> from <span class
 ii. For each sample <span class="math inline">\(x^i\)</span>, calculate an unnormalized weight <span class="math inline">\(\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}\)</span>,
 iii. Calculate the normalized weights <span class="math inline">\(w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j\)</span>.
 iv. Calculate the weighted average <span class="math inline">\(\sum_{i=1}^n w^i x^i\)</span>.</p>
-<p>In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each <span class="math inline">\(\log \tilde{w}^i\)</span>, before you exponentiate them, subtract a number <span class="math inline">\(m\)</span> from all the values. A good choice for <span class="math inline">\(m\)</span> is <span class="math inline">\(\max_i (\log \tilde{w}^i)\)</span>. These new values will produce the same normalized weights because
-<span class="math display">\[\begin{equation} 
+<p>In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each <span class="math inline">\(\log \tilde{w}^i\)</span>, before you exponentiate them, subtract a number <span class="math inline">\(m\)</span> from all the values. A good choice for <span class="math inline">\(m\)</span> is <span class="math inline">\(\max_i (\log \tilde{w}^i)\)</span>. These new values will produce the same normalized weights because</p>
+<p><span class="math display">\[\begin{equation} 
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
 \end{equation}\]</span></p>
 <ul>

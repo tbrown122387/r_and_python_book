@@ -869,12 +869,12 @@ Figure 15.2: Monte Carlo Approximations versus Exact Evaluations
 <li>the only way to increase the accuracy of the plot in the right panel is to increase <code>n</code>, and</li>
 <li>every time we re-run this code the plot on the right looks different.</li>
 </ul>
-<p>If we wanted to use common random numbers, we could generate <span class="math inline">\(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\)</span>, and use the fact that
-<span class="math display">\[\begin{equation} 
+<p>If we wanted to use common random numbers, we could generate <span class="math inline">\(Z^1, \ldots, Z^n \overset{\text{iid}}{\sim} \text{Normal}(0, 1)\)</span>, and use the fact that</p>
+<p><span class="math display">\[\begin{equation} 
 X^i = \mu + \sigma Z^i
-\end{equation}\]</span>
-This leads to the Monte Carlo estimate
-<span class="math display">\[\begin{equation} 
+\end{equation}\]</span></p>
+<p>This leads to the Monte Carlo estimate</p>
+<p><span class="math display">\[\begin{equation} 
 \tilde{\mathbb{E}}[\sin(X)] = \frac{1}{n}\sum_{i=1}^n\sin(\mu + \sigma Z^i)
 \end{equation}\]</span></p>
 <p>Here is one function that naively implements Monte Carlo with common random numbers. We generate the collection of standard normal random variables once, globally. Each time you call <code>monteCarloSinCRNv1(c(10,1))</code>, you get the same answer.</p>

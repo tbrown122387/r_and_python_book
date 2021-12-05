@@ -84,7 +84,9 @@ class RunningMean:
         self.n = 0
     def update(self, new_x):
         self.n += 1
-        self.current_xbar = (self.current_xbar*(self.n-1)+new_x) / self.n
+        self.current_xbar *= (self.n-1)
+        self.current_xbar += new_x
+        self.current_xbar /= self.n
     def get_current_xbar(self):
         if self.n == 0:
             return None
@@ -163,9 +165,11 @@ How can we use inheritance in statistical programming? A primary benefit of inhe
 Let's make some assumptions about a *parametric model* that is generating our data. Suppose I assume that the data points $x_1, \ldots, x_n$ are a "random sample"^[Otherwise known as an independent and identically distributed sample] from a normal distribution with mean $\mu$ and variance $\sigma^2=1$. $\mu$ is assumed to be unknown (this is, after all, and interval for $\mu$), and $\sigma^2$ is assumed to be known, for simplicity. 
 
 A $95\%$ confidence interval for the true unknown population mean $\mu$ is 
+
 \begin{equation} 
-\left[\bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right].
+\left( \bar{x} - 1.96 \sqrt{\frac{\sigma^2}{n}}, \bar{x} + 1.96 \sqrt{\frac{\sigma^2}{n}} \right).
 \end{equation}
+
 The width of the interval shrinks as we get more data (as $n \to \infty$). We can write another class that, not only calculates the center of this interval, $\bar{x}$, but also returns the interval endpoints. 
 
 If we wrote another class from scratch, then we would need to rewrite a lot of the code that we already have in the definition of `RunningMean`. Instead, we'll use the idea of [*inheritance*](https://docs.python.org/3/tutorial/classes.html#inheritance). 
@@ -791,6 +795,7 @@ Suppose you have a target density $p(x)$ that you are only able to evaluate up t
   iv. Calculate the weighted average $\sum_{i=1}^n w^i x^i$.
 
 In practice it is beneficial to use log-densities, because it will avoid underflow issues. After you evaluate each $\log \tilde{w}^i$, before you exponentiate them, subtract a number $m$ from all the values. A good choice for $m$ is $\max_i (\log \tilde{w}^i)$. These new values will produce the same normalized weights because
+
 \begin{equation} 
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
 \end{equation}
