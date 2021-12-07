@@ -670,11 +670,11 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="an-introduction-to-object-oriented-programming.html#cb242-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x55b5cb29b2c0&gt;
+## &lt;bytecode: 0x55b59b889a38&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod()</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods()</code> function.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="an-introduction-to-object-oriented-programming.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">methods</span>(plot))</span></code></pre></div>
-<pre><code>## [1] 45</code></pre>
+<pre><code>## [1] 39</code></pre>
 <p>All of these S3 class methods share the same naming convention. Their name has the generic function’s name as a prefix, then a dot (<code>.</code>), then the name of the class that they are specifically written to be used with.</p>
 <div class="rmd-caution">
 <p>R’s dot-notation is nothing like Python’s dot-notation! In R, functions do not <em>belong</em> to types/classes like they do in Python!</p>
@@ -1027,7 +1027,7 @@ y_t = \beta_t + \epsilon_t \\
 \beta_1 = w_1
 \end{equation}\]</span>
 Here <span class="math inline">\(y_t\)</span> is observed time series data, each <span class="math inline">\(\epsilon_t\)</span> is measurement noise with variance <span class="math inline">\(V\)</span> and each <span class="math inline">\(w_t\)</span> is also noise but with variance <span class="math inline">\(W\)</span>. Think of <span class="math inline">\(\beta_t\)</span> as a time-varying regression coefficient.</p>
-<p>Imagine our data are arriving sequentially. The Kalman Filter <span class="citation">(<a href="#ref-kalman_filt" role="doc-biblioref">Kalman 1960</a>)</span> cite provides an “optimal” estimate of each <span class="math inline">\(\beta_t\)</span> given all of the information we have up to time <span class="math inline">\(t\)</span>. What’s better is that the algorithm is recursive. Future estimates of <span class="math inline">\(\beta_t\)</span> will be easy to calculate given our estimates of <span class="math inline">\(\beta_{t-1}\)</span>.</p>
+<p>Imagine our data are arriving sequentially. The <strong>Kalman Filter</strong> <span class="citation">(<a href="#ref-kalman_filt" role="doc-biblioref">Kalman 1960</a>)</span> cite provides an “optimal” estimate of each <span class="math inline">\(\beta_t\)</span> given all of the information we have up to time <span class="math inline">\(t\)</span>. What’s better is that the algorithm is recursive. Future estimates of <span class="math inline">\(\beta_t\)</span> will be easy to calculate given our estimates of <span class="math inline">\(\beta_{t-1}\)</span>.</p>
 <p>Let’s call the mean of <span class="math inline">\(\beta_{t-1}\)</span> (given all the information up to time <span class="math inline">\(t-1\)</span>) <span class="math inline">\(m_{t-1}\)</span>, and the variance of <span class="math inline">\(\beta_{t-1}\)</span> (given all the information up to time <span class="math inline">\(t-1\)</span>) <span class="math inline">\(P_{t-1}\)</span>. Then the Kalman recursions for this particular model are</p>
 <p><span class="math display">\[\begin{equation} 
 M_t = M_{t-1} + \left(\frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(y_t - M_{t-1}) 
@@ -1081,11 +1081,11 @@ for <span class="math inline">\(t \ge 1\)</span>.</p>
 <ol start="9" style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Suppose you have the following data set: <span class="math inline">\(X_1, \ldots, X_n\)</span>. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, respectively. Consider testing the hypothesis that <span class="math inline">\(\mu = 0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. To carry out this test, you calculate
+<p>Suppose you have the following data set: <span class="math inline">\(X_1, \ldots, X_n\)</span>. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, respectively. Consider testing the null hypothesis that <span class="math inline">\(\mu = 0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. To carry out this test, you calculate
 <span class="math display">\[\begin{equation} 
 t = \frac{\bar{X}}{S/\sqrt{n}}
 \end{equation}\]</span>
-and you reject the null if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}\)</span> <span class="citation">(<a href="#ref-student1908probable" role="doc-biblioref">Student 1908</a>)</span>. Here <span class="math inline">\(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\)</span> is the sample variance, and <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+and you reject the null hypothesis if <span class="math inline">\(|t| &gt; t_{n-1,\alpha/2}\)</span>. This is <strong>Student’s T-Test</strong> <span class="citation">(<a href="#ref-student1908probable" role="doc-biblioref">Student 1908</a>)</span>. Here <span class="math inline">\(S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)\)</span> is the sample variance, and <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
 <ul>
 <li>Write a function called <code>doTTest()</code> that performs the above hypothesis test. It should accept two parameters: <code>dataVec</code> (a <code>vector</code> of data) and <code>significanceLevel</code> (which is <span class="math inline">\(\alpha\)</span>). Have the second parameter default to <code>.05</code>.</li>
 <li>Have it return an S3 object created from a <code>list</code>. The <code>class</code> of this <code>list</code> should be <code>"TwoSidedTTest"</code>. The elements in the <code>list</code> should be named <code>decision</code> and <code>testStat</code>. The <code>decision</code> object should be either <code>"reject"</code> or <code>"fail to reject"</code>. The test stat should be equal to the calculation you made above for <span class="math inline">\(t\)</span>.</li>

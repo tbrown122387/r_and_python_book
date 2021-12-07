@@ -258,9 +258,6 @@ Regarding the example above, you might argue that a confidence interval isn't a 
 Sometimes it is very difficult to choose between using composition or using inheritance. However, this choice should be made very carefully. If you make the wrong one, and realize too late, *refactoring* your code might be very time consuming! 
 :::
 
-----------------------------------
-
-
 Here is an example implementation of a confidence interval using composition. Notice that this class "owns" a `RunningMean` instance called `self.mean`. This is contrast with *inheriting* from the `RunningMean` class. 
 
 ```{python, collapse = TRUE}
@@ -717,7 +714,7 @@ y_t = \beta_t + \epsilon_t \\
 \end{equation}
 Here $y_t$ is observed time series data, each $\epsilon_t$ is measurement noise with variance $V$ and each $w_t$ is also noise but with variance $W$. Think of $\beta_t$ as a time-varying regression coefficient. 
 
-Imagine our data are arriving sequentially. The Kalman Filter [@kalman_filt] cite provides an "optimal" estimate of each $\beta_t$ given all of the information we have up to time $t$. What's better is that the algorithm is recursive. Future estimates of $\beta_t$ will be easy to calculate given our estimates of $\beta_{t-1}$.
+Imagine our data are arriving sequentially. The **Kalman Filter** [@kalman_filt] cite provides an "optimal" estimate of each $\beta_t$ given all of the information we have up to time $t$. What's better is that the algorithm is recursive. Future estimates of $\beta_t$ will be easy to calculate given our estimates of $\beta_{t-1}$.
 
 Let's call the mean of $\beta_{t-1}$ (given all the information up to time $t-1$) $m_{t-1}$, and the variance of $\beta_{t-1}$ (given all the information up to time $t-1$) $P_{t-1}$. Then the Kalman recursions for this particular model are
 
@@ -774,11 +771,11 @@ Which of the following classes in R requires you to `library()` in something? Se
 
 9.
 
-Suppose you have the following data set: $X_1, \ldots, X_n$. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by $\mu$ and $\sigma^2$, respectively. Consider testing the hypothesis that $\mu = 0$ at a significance level of $\alpha$. To carry out this test, you calculate 
+Suppose you have the following data set: $X_1, \ldots, X_n$. You assume it is a random sample from a Normal distribution with unknown mean and variance parameters, denoted by $\mu$ and $\sigma^2$, respectively. Consider testing the null hypothesis that $\mu = 0$ at a significance level of $\alpha$. To carry out this test, you calculate 
 \begin{equation} 
 t = \frac{\bar{X}}{S/\sqrt{n}}
 \end{equation}
-and you reject the null if $|t| > t_{n-1,\alpha/2}$ [@student1908probable]. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
+and you reject the null hypothesis if $|t| > t_{n-1,\alpha/2}$. This is **Student's T-Test** [@student1908probable]. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
 
   - Write a function called `doTTest()` that performs the above hypothesis test. It should accept two parameters: `dataVec` (a `vector` of data) and `significanceLevel` (which is $\alpha$). Have the second parameter default to `.05`.
   - Have it return an S3 object created from a `list`. The `class` of this `list` should be `"TwoSidedTTest"`. The elements in the `list` should be named `decision` and `testStat`. The `decision` object should be either `"reject"` or `"fail to reject"`. The test stat should be equal to the calculation you made above for $t$.

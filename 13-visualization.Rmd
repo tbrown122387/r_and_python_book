@@ -9,7 +9,7 @@ R comes with some built-in plotting functions such as `plot()`, `hist()` and `bo
 
 Base plotting will usually cover most of your needs, so that is what we spend the most time learning about. However, there are a large number of third-party libraries for plotting that you might consider looking into if you want to use a certain aesthetic, or if you want plotting functionality that is specialized for certain cases (e.g. geospatial plots).
 
-Recall our Albemarle Real Estate data set. 
+Recall our Albemarle Real Estate data set [@albemarle_county_gis_web]. 
 
 ```{r, collapse = TRUE, R.options = list(width = 65)}
 df <- read.csv("data/albemarle_real_estate.csv")
@@ -165,7 +165,7 @@ In line four, we call the [`hist()` method](https://matplotlib.org/stable/api/_a
 
 If you want to make figures that are more elaborate, just keep calling different methods of `ax`. If you want to fit more subplots to the same figure, add more `Axes` objects. Here is an example using some code from [one of the official Matplotlib tutorials](https://matplotlib.org/stable/tutorials/introductory/usage.html#the-object-oriented-interface-and-the-pyplot-interface).
 
-```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib", fig.align='center', collapse = TRUE}
+```{python, collapse = TRUE, out.width='80%', fig.cap = "Side-By-Side Line Plots in Matplotlib", fig.align='center'}
 # x values grid shared by both subplots
 x = np.linspace(0, 2*np.pi, 100) 
 
@@ -184,6 +184,7 @@ myAxes[0].legend()  # Add a legend.
 # second subplot
 myAxes[1].plot(x,np.sin(x), label='sine wave')
 myAxes[1].legend()
+plt.show()
 ```
 
 

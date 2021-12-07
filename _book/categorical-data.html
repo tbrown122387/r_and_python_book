@@ -495,7 +495,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="categorical-data.html#cb118-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">6</span>) <span class="co"># not categorical here</span></span>
 <span id="cb118-2"><a href="categorical-data.html#cb118-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb118-3"><a href="categorical-data.html#cb118-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb118-4"><a href="categorical-data.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] (-Inf,0] (0, Inf] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0]</span></span>
+<span id="cb118-4"><a href="categorical-data.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] (0, Inf] (0, Inf] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf]</span></span>
 <span id="cb118-5"><a href="categorical-data.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb118-6"><a href="categorical-data.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb118-7"><a href="categorical-data.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -580,7 +580,7 @@ div.csl-indent {
 <span id="cb124-12"><a href="categorical-data.html#cb124-12" aria-hidden="true" tabindex="-1"></a>                      labels <span class="op">=</span> [<span class="st">&#39;bad day&#39;</span>, <span class="st">&#39;good day&#39;</span>]) </span>
 <span id="cb124-13"><a href="categorical-data.html#cb124-13" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(type_of_day2)</span>
 <span id="cb124-14"><a href="categorical-data.html#cb124-14" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;pandas.core.series.Series&#39;&gt;</span></span></code></pre></div>
-<p>Finally, when reading in data from an external source, choose carefully whether you want character data to be stored as a string type, or as a categorical type. Here we use <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><code>pd.read_csv()</code></a> to read in Fisher’s Iris data set <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>. More information on Pandas’ <code>DataFrames</code> can be found in the next chapter.</p>
+<p>Finally, when reading in data from an external source, choose carefully whether you want character data to be stored as a string type, or as a categorical type. Here we use <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><code>pd.read_csv()</code></a> to read in Fisher’s Iris data set <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span> hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. More information on Pandas’ <code>DataFrames</code> can be found in the next chapter.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="categorical-data.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb125-2"><a href="categorical-data.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="co"># make 5th col categorical</span></span>
 <span id="cb125-3"><a href="categorical-data.html#cb125-3" aria-hidden="true" tabindex="-1"></a>my_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/iris.csv&quot;</span>, header<span class="op">=</span><span class="va">None</span>, </span>
@@ -605,7 +605,7 @@ div.csl-indent {
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Read in this chess data set <span class="citation">(<a href="#ref-misc_chess" role="doc-biblioref"><span>“<span class="nocase">Chess (King-Rook vs. King-Pawn)</span>”</span> 1989</a>)</span> with the following code. You will probably have to change your working directory, but if you do, make sure to comment out that code before you submit your script to me.</p>
+<p>Read in this chess data set <span class="citation">(<a href="#ref-misc_chess" role="doc-biblioref"><span>“<span class="nocase">Chess (King-Rook vs. King-Pawn)</span>”</span> 1989</a>)</span>, hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>, with the following code. You will probably have to change your working directory, but if you do, make sure to comment out that code before you submit your script to me.</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="categorical-data.html#cb126-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;kr-vs-kp.data&quot;</span>, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb126-2"><a href="categorical-data.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span></code></pre></div>
 <ul>
@@ -671,6 +671,9 @@ div.csl-indent {
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-misc_chess" class="csl-entry">
 <span>“<span class="nocase">Chess (King-Rook vs. King-Pawn)</span>.”</span> 1989. UCI Machine Learning Repository.
+</div>
+<div id="ref-uci_data" class="csl-entry">
+Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
 </div>
 <div id="ref-misc_iris_53" class="csl-entry">
 Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> UCI Machine Learning Repository.
