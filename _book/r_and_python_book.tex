@@ -335,7 +335,7 @@ It is recommended that you install \emph{Anaconda}, which is a package manager, 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-Now that you have both R and Python installed, we can get started by taking a tour of our two different \textbf{integrated development environments environments} (IDEs)\index{integrated development environments environment (IDE)} RStudio and Spyder.
+Now that you have both R and Python installed, we can get started by taking a tour of our two different \textbf{integrated development environments environments} (IDEs)\index{integrated development environments environment (IDE)} RStudio\index{RStudio} and Spyder\index{Spyder}.
 
 In addition, I will also discuss a few topics superficially, so that we can get our feet wet:
 
@@ -2904,7 +2904,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 139828223583584 139828223583616}
+\CommentTok{\#\# 139921572562272 139921572562304}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -5457,7 +5457,7 @@ Stacking data sets on top of each other is a common task. You might need to do i
   you're creating a matrix in a step-by-step way.
 \end{enumerate}
 
-In R, this can be done with \texttt{rbind()} (short for ``row bind'')
+In R, this can be done with \texttt{rbind()} (short for ``row bind''). Consider the following example that makes use of GIS data queried from \citep{albemarle_county_gis_web}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5465,21 +5465,21 @@ In R, this can be done with \texttt{rbind()} (short for ``row bind'')
 \NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
 \NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ realEstate[}\DecValTok{1}\NormalTok{,]}
 \FunctionTok{str}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train), }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
-\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    27943 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1972 1998 1886 1910 1900 1975 ..}
-\DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 0 0 1982 1987 0 ...}
-\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Good" ...}
-\DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1 1.86 1.53 2 1 1.52 1.92 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1248 1244 1861 1108 728 1520 8..}
-\DocumentationTok{\#\#  $ Bedroom      : int  3 3 2 1 4 3 2 3 2 3 ...}
-\DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 0 2 ...}
-\DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 1 ...}
-\DocumentationTok{\#\#  $ TotalRooms   : int  10 7 4 3 6 6 4 4 6 7 ...}
-\DocumentationTok{\#\#  $ LotSize      : num  5 61.19 1.76 50.65 3.88 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 180900 620700 162500 16720..}
-\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "EARLYSVILLE" "CROZET"..}
+\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    30381 obs. of  12 variables:}
+\DocumentationTok{\#\#  $ YearBuilt    : int  1769 1818 2004 2006 2004 1995 1900 1960 ..}
+\DocumentationTok{\#\#  $ YearRemodeled: int  1988 1991 NA NA NA NA NA NA NA NA ...}
+\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Average" ..}
+\DocumentationTok{\#\#  $ NumStories   : num  1.7 2 1 1 1.5 2.3 2 1 1 1 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  5216 5160 1512 2019 1950 2579 1530 800 9..}
+\DocumentationTok{\#\#  $ Bedroom      : int  4 6 3 3 3 3 4 2 2 2 ...}
+\DocumentationTok{\#\#  $ FullBath     : int  3 4 2 3 3 2 1 1 1 1 ...}
+\DocumentationTok{\#\#  $ HalfBath     : int  0 1 1 0 0 1 0 0 0 0 ...}
+\DocumentationTok{\#\#  $ TotalRooms   : int  8 11 9 10 8 8 6 4 4 4 ...}
+\DocumentationTok{\#\#  $ LotSize      : num  5.1 453.9 42.6 5 5.5 ...}
+\DocumentationTok{\#\#  $ TotalValue   : num  1096600 2978600 677800 453200 389200 ...}
+\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "CROZET" "CROZET" ...}
 \FunctionTok{sum}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(test, train) }\SpecialCharTok{!=}\NormalTok{ realEstate)}
-\DocumentationTok{\#\# [1] 0}
+\DocumentationTok{\#\# [1] NA}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5508,11 +5508,11 @@ In Python, you can stack data frames with \href{https://www.google.com/search?cl
 \NormalTok{stacked }\OperatorTok{=}\NormalTok{ pd.concat([test,train], axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
 \NormalTok{stacked.iloc[:}\DecValTok{3}\NormalTok{,:}\DecValTok{3}\NormalTok{]}
 \CommentTok{\#\#    YearBuilt  YearRemodeled Condition}
-\CommentTok{\#\# 0       2006              0   Average}
-\CommentTok{\#\# 1       2003              0   Average}
-\CommentTok{\#\# 2       1972              0   Average}
+\CommentTok{\#\# 0       1769         1988.0   Average}
+\CommentTok{\#\# 1       1818         1991.0   Average}
+\CommentTok{\#\# 2       2004            NaN   Average}
 \NormalTok{(stacked }\OperatorTok{!=}\NormalTok{ real\_estate).}\BuiltInTok{sum}\NormalTok{().}\BuiltInTok{sum}\NormalTok{()}
-\CommentTok{\#\# 0}
+\CommentTok{\#\# 28251}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6089,25 +6089,25 @@ R comes with some built-in plotting functions such as \texttt{plot()}, \texttt{h
 
 Base plotting will usually cover most of your needs, so that is what we spend the most time learning about. However, there are a large number of third-party libraries for plotting that you might consider looking into if you want to use a certain aesthetic, or if you want plotting functionality that is specialized for certain cases (e.g.~geospatial plots).
 
-Recall our Albemarle Real Estate data set.
+Recall our Albemarle Real Estate data set \citep{albemarle_county_gis_web}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \FunctionTok{str}\NormalTok{(df, }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
-\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    27943 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1972 1998 1886 1910 1900 1975 ..}
-\DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 0 0 1982 1987 0 ...}
-\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Good" ...}
-\DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1 1.86 1.53 2 1 1.52 1.92 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1248 1244 1861 1108 728 1520 8..}
-\DocumentationTok{\#\#  $ Bedroom      : int  3 3 2 1 4 3 2 3 2 3 ...}
-\DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 0 2 ...}
-\DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 1 ...}
-\DocumentationTok{\#\#  $ TotalRooms   : int  10 7 4 3 6 6 4 4 6 7 ...}
-\DocumentationTok{\#\#  $ LotSize      : num  5 61.19 1.76 50.65 3.88 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 180900 620700 162500 16720..}
-\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "EARLYSVILLE" "CROZET"..}
+\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    30381 obs. of  12 variables:}
+\DocumentationTok{\#\#  $ YearBuilt    : int  1769 1818 2004 2006 2004 1995 1900 1960 ..}
+\DocumentationTok{\#\#  $ YearRemodeled: int  1988 1991 NA NA NA NA NA NA NA NA ...}
+\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Average" ..}
+\DocumentationTok{\#\#  $ NumStories   : num  1.7 2 1 1 1.5 2.3 2 1 1 1 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  5216 5160 1512 2019 1950 2579 1530 800 9..}
+\DocumentationTok{\#\#  $ Bedroom      : int  4 6 3 3 3 3 4 2 2 2 ...}
+\DocumentationTok{\#\#  $ FullBath     : int  3 4 2 3 3 2 1 1 1 1 ...}
+\DocumentationTok{\#\#  $ HalfBath     : int  0 1 1 0 0 1 0 0 0 0 ...}
+\DocumentationTok{\#\#  $ TotalRooms   : int  8 11 9 10 8 8 6 4 4 4 ...}
+\DocumentationTok{\#\#  $ LotSize      : num  5.1 453.9 42.6 5 5.5 ...}
+\DocumentationTok{\#\#  $ TotalValue   : num  1096600 2978600 677800 453200 389200 ...}
+\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "CROZET" "CROZET" ...}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6380,11 +6380,11 @@ If you want to make figures that are more elaborate, just keep calling different
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2c4850e0b8\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c3819c50\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data }
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2c4850e1d0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c3819d68\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2c4850e518\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c30670f0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
 \CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
@@ -6394,11 +6394,11 @@ If you want to make figures that are more elaborate, just keep calling different
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f2c4851e940\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f41c3800358\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2c4850ecf8\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c30678d0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f2c486c7e10\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f41c30a0780\textgreater{}}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -6435,7 +6435,7 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \CommentTok{\#\# }
 \CommentTok{\#\# [5 rows x 7 columns]}
 \NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f2c485c7278\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f41c3940cf8\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6447,7 +6447,7 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f2c485c7278\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f41c3940cf8\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6459,7 +6459,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
 \NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f2c485c7278\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f41c3940cf8\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6860,7 +6860,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x55b59b889a38>
+## <bytecode: 0x559121dbbdc0>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7714,7 +7714,7 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \end{Highlighting}
 \end{Shaded}
 
-Another example where it can be useful to apply a function to rows is \textbf{predicate functions.} A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a \texttt{data.frame}. Without a predicate function, filtering rows might look something like this.
+Another example where it can be useful to apply a function to rows is \textbf{predicate functions.} A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a \texttt{data.frame}. Without a predicate function, filtering rows might look something like this on our real estate data from \citep{albemarle_county_gis_web}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7724,18 +7724,18 @@ Another example where it can be useful to apply a function to rows is \textbf{pr
 \NormalTok{thirdB }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate}\SpecialCharTok{$}\NormalTok{City }\SpecialCharTok{==} \StringTok{"CROZET"}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[(firstB }\SpecialCharTok{\&}\NormalTok{ secondB) }\SpecialCharTok{|}\NormalTok{ thirdB,]}
 \FunctionTok{str}\NormalTok{(subDF, }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
-\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    2973 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1998 1886 1910 1975 1940 1958 ..}
-\DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 1982 1987 0 0 0 ...}
-\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Good" "Average" ...}
-\DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1.86 1.53 1 1.52 1 1 1.35 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1244 1861 1108 1520 812 912 15..}
-\DocumentationTok{\#\#  $ Bedroom      : int  3 3 1 4 3 3 2 2 3 4 ...}
-\DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 3 3 ...}
-\DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 0 ...}
-\DocumentationTok{\#\#  $ TotalRooms   : int  10 7 3 6 6 4 6 5 6 7 ...}
-\DocumentationTok{\#\#  $ LotSize      : num  5 61.19 50.65 3.88 8.84 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 620700 162500 167200 15190..}
+\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    3865 obs. of  12 variables:}
+\DocumentationTok{\#\#  $ YearBuilt    : int  1769 1818 2004 2006 2004 1995 1900 1960 ..}
+\DocumentationTok{\#\#  $ YearRemodeled: int  1988 1991 NA NA NA NA NA NA NA NA ...}
+\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Average" ..}
+\DocumentationTok{\#\#  $ NumStories   : num  1.7 2 1 1 1.5 2.3 2 1 1 1 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  5216 5160 1512 2019 1950 2579 1530 800 9..}
+\DocumentationTok{\#\#  $ Bedroom      : int  4 6 3 3 3 3 4 2 2 2 ...}
+\DocumentationTok{\#\#  $ FullBath     : int  3 4 2 3 3 2 1 1 1 1 ...}
+\DocumentationTok{\#\#  $ HalfBath     : int  0 1 1 0 0 1 0 0 0 0 ...}
+\DocumentationTok{\#\#  $ TotalRooms   : int  8 11 9 10 8 8 6 4 4 4 ...}
+\DocumentationTok{\#\#  $ LotSize      : num  5.1 453.9 42.6 5 5.5 ...}
+\DocumentationTok{\#\#  $ TotalValue   : num  1096600 2978600 677800 453200 389200 ...}
 \DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "CROZET" "CROZET" ...}
 \end{Highlighting}
 \end{Shaded}
@@ -7763,18 +7763,18 @@ Complicated filtering criteria can become quite wide, so I prefer to break the a
 \NormalTok{whichRows }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(albRealEstate, }\DecValTok{1}\NormalTok{, pred)}
 \NormalTok{subDF }\OtherTok{\textless{}{-}}\NormalTok{ albRealEstate[whichRows,]}
 \FunctionTok{str}\NormalTok{(subDF, }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
-\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    2973 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1998 1886 1910 1975 1940 1958 ..}
-\DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 1982 1987 0 0 0 ...}
-\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Good" "Average" ...}
-\DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1.86 1.53 1 1.52 1 1 1.35 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1244 1861 1108 1520 812 912 15..}
-\DocumentationTok{\#\#  $ Bedroom      : int  3 3 1 4 3 3 2 2 3 4 ...}
-\DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 3 3 ...}
-\DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 0 ...}
-\DocumentationTok{\#\#  $ TotalRooms   : int  10 7 3 6 6 4 6 5 6 7 ...}
-\DocumentationTok{\#\#  $ LotSize      : num  5 61.19 50.65 3.88 8.84 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 620700 162500 167200 15190..}
+\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    3865 obs. of  12 variables:}
+\DocumentationTok{\#\#  $ YearBuilt    : int  1769 1818 2004 2006 2004 1995 1900 1960 ..}
+\DocumentationTok{\#\#  $ YearRemodeled: int  1988 1991 NA NA NA NA NA NA NA NA ...}
+\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Average" ..}
+\DocumentationTok{\#\#  $ NumStories   : num  1.7 2 1 1 1.5 2.3 2 1 1 1 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  5216 5160 1512 2019 1950 2579 1530 800 9..}
+\DocumentationTok{\#\#  $ Bedroom      : int  4 6 3 3 3 3 4 2 2 2 ...}
+\DocumentationTok{\#\#  $ FullBath     : int  3 4 2 3 3 2 1 1 1 1 ...}
+\DocumentationTok{\#\#  $ HalfBath     : int  0 1 1 0 0 1 0 0 0 0 ...}
+\DocumentationTok{\#\#  $ TotalRooms   : int  8 11 9 10 8 8 6 4 4 4 ...}
+\DocumentationTok{\#\#  $ LotSize      : num  5.1 453.9 42.6 5 5.5 ...}
+\DocumentationTok{\#\#  $ TotalValue   : num  1096600 2978600 677800 453200 389200 ...}
 \DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "CROZET" "CROZET" ...}
 \end{Highlighting}
 \end{Shaded}
@@ -7789,24 +7789,24 @@ If I wanted the average home price for each city, I could use something like thi
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{str}\NormalTok{(albRealEstate, }\AttributeTok{strict.width =} \StringTok{"cut"}\NormalTok{)}
-\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    27943 obs. of  12 variables:}
-\DocumentationTok{\#\#  $ YearBuilt    : int  2006 2003 1972 1998 1886 1910 1900 1975 ..}
-\DocumentationTok{\#\#  $ YearRemodeled: int  0 0 0 0 0 0 0 1982 1987 0 ...}
-\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Good" ...}
-\DocumentationTok{\#\#  $ NumStories   : num  1 1 1 1 1.86 1.53 2 1 1.52 1.92 ...}
-\DocumentationTok{\#\#  $ FinSqFt      : int  1922 1848 1248 1244 1861 1108 728 1520 8..}
-\DocumentationTok{\#\#  $ Bedroom      : int  3 3 2 1 4 3 2 3 2 3 ...}
-\DocumentationTok{\#\#  $ FullBath     : int  3 2 1 1 1 1 0 1 0 2 ...}
-\DocumentationTok{\#\#  $ HalfBath     : int  0 0 0 0 0 0 0 0 0 1 ...}
-\DocumentationTok{\#\#  $ TotalRooms   : int  10 7 4 3 6 6 4 4 6 7 ...}
-\DocumentationTok{\#\#  $ LotSize      : num  5 61.19 1.76 50.65 3.88 ...}
-\DocumentationTok{\#\#  $ TotalValue   : int  409900 523100 180900 620700 162500 16720..}
-\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "EARLYSVILLE" "CROZET"..}
+\DocumentationTok{\#\# \textquotesingle{}data.frame\textquotesingle{}:    30381 obs. of  12 variables:}
+\DocumentationTok{\#\#  $ YearBuilt    : int  1769 1818 2004 2006 2004 1995 1900 1960 ..}
+\DocumentationTok{\#\#  $ YearRemodeled: int  1988 1991 NA NA NA NA NA NA NA NA ...}
+\DocumentationTok{\#\#  $ Condition    : chr  "Average" "Average" "Average" "Average" ..}
+\DocumentationTok{\#\#  $ NumStories   : num  1.7 2 1 1 1.5 2.3 2 1 1 1 ...}
+\DocumentationTok{\#\#  $ FinSqFt      : int  5216 5160 1512 2019 1950 2579 1530 800 9..}
+\DocumentationTok{\#\#  $ Bedroom      : int  4 6 3 3 3 3 4 2 2 2 ...}
+\DocumentationTok{\#\#  $ FullBath     : int  3 4 2 3 3 2 1 1 1 1 ...}
+\DocumentationTok{\#\#  $ HalfBath     : int  0 1 1 0 0 1 0 0 0 0 ...}
+\DocumentationTok{\#\#  $ TotalRooms   : int  8 11 9 10 8 8 6 4 4 4 ...}
+\DocumentationTok{\#\#  $ LotSize      : num  5.1 453.9 42.6 5 5.5 ...}
+\DocumentationTok{\#\#  $ TotalValue   : num  1096600 2978600 677800 453200 389200 ...}
+\DocumentationTok{\#\#  $ City         : chr  "CROZET" "CROZET" "CROZET" "CROZET" ...}
 \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City))}
 \DocumentationTok{\#\# [1] 6}
 \FunctionTok{tapply}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{TotalValue, }\FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City), mean)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
 \DocumentationTok{\#\# CHARLOTTESVILLE          CROZET     EARLYSVILLE         KESWICK }
-\DocumentationTok{\#\#        381933.0        380425.7        439141.0        540532.6}
+\DocumentationTok{\#\#        429926.5        436090.5        482711.4        565985.1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7818,13 +7818,13 @@ You might be wondering why we put \texttt{albRealEstate\$City} into a \texttt{li
                    \FunctionTok{list}\NormalTok{(albRealEstate}\SpecialCharTok{$}\NormalTok{City, albRealEstate}\SpecialCharTok{$}\NormalTok{Condition), }
 \NormalTok{                   mean)}
 \NormalTok{pivTable[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
-\DocumentationTok{\#\#                  Average Excellent     Fair     Good      Poor}
-\DocumentationTok{\#\# CHARLOTTESVILLE 337913.4  491702.4 229336.2 444325.5 202420.00}
-\DocumentationTok{\#\# CROZET          342133.4  552081.6 198009.5 390657.7 203806.25}
-\DocumentationTok{\#\# EARLYSVILLE     365990.6  652387.4 230646.2 470554.7 372442.86}
-\DocumentationTok{\#\# KESWICK         392998.6  871719.8 172790.9 672510.7 100337.50}
-\DocumentationTok{\#\# NORTH GARDEN    241187.7  966528.6 131997.0 440503.1 151187.50}
-\DocumentationTok{\#\# SCOTTSVILLE     214046.9  502273.8 157438.0 374600.4  95377.78}
+\DocumentationTok{\#\#                  Average Excellent     Fair     Good     Poor}
+\DocumentationTok{\#\# CHARLOTTESVILLE 416769.9  625887.9 306380.7 529573.4 304922.4}
+\DocumentationTok{\#\# CROZET          447585.8  401553.5 241568.8 466798.5 224516.2}
+\DocumentationTok{\#\# EARLYSVILLE     491269.6  492848.4 286980.0 522938.5 250773.3}
+\DocumentationTok{\#\# KESWICK         565994.3  664443.5 274270.4 676312.6 172425.0}
+\DocumentationTok{\#\# NORTH GARDEN    413788.8  529108.3 164646.2 591502.8 161460.0}
+\DocumentationTok{\#\# SCOTTSVILLE     286787.4  534500.0 196003.4 415207.5 183942.3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8026,20 +8026,20 @@ Pandas' \texttt{DataFrame}s have an \href{https://pandas.pydata.org/pandas-docs/
 \ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
 \NormalTok{alb\_real\_est }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"data/albemarle\_real\_estate.csv"}\NormalTok{)}
 \NormalTok{alb\_real\_est.shape}
-\CommentTok{\#\# (27943, 12)}
+\CommentTok{\#\# (30381, 12)}
 \NormalTok{alb\_real\_est.}\BuiltInTok{apply}\NormalTok{(}\BuiltInTok{len}\NormalTok{, axis}\OperatorTok{=}\DecValTok{0}\NormalTok{) }\CommentTok{\# length of columns}
-\CommentTok{\#\# YearBuilt        27943}
-\CommentTok{\#\# YearRemodeled    27943}
-\CommentTok{\#\# Condition        27943}
-\CommentTok{\#\# NumStories       27943}
-\CommentTok{\#\# FinSqFt          27943}
-\CommentTok{\#\# Bedroom          27943}
-\CommentTok{\#\# FullBath         27943}
-\CommentTok{\#\# HalfBath         27943}
-\CommentTok{\#\# TotalRooms       27943}
-\CommentTok{\#\# LotSize          27943}
-\CommentTok{\#\# TotalValue       27943}
-\CommentTok{\#\# City             27943}
+\CommentTok{\#\# YearBuilt        30381}
+\CommentTok{\#\# YearRemodeled    30381}
+\CommentTok{\#\# Condition        30381}
+\CommentTok{\#\# NumStories       30381}
+\CommentTok{\#\# FinSqFt          30381}
+\CommentTok{\#\# Bedroom          30381}
+\CommentTok{\#\# FullBath         30381}
+\CommentTok{\#\# HalfBath         30381}
+\CommentTok{\#\# TotalRooms       30381}
+\CommentTok{\#\# LotSize          30381}
+\CommentTok{\#\# TotalValue       30381}
+\CommentTok{\#\# City             30381}
 \CommentTok{\#\# dtype: int64}
 \BuiltInTok{type}\NormalTok{(alb\_real\_est.}\BuiltInTok{apply}\NormalTok{(}\BuiltInTok{len}\NormalTok{, axis}\OperatorTok{=}\DecValTok{1}\NormalTok{)) }\CommentTok{\# length of rows}
 \CommentTok{\#\# \textless{}class \textquotesingle{}pandas.core.series.Series\textquotesingle{}\textgreater{}}
@@ -8057,9 +8057,9 @@ Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarra
 \NormalTok{two\_col\_df }\OperatorTok{=}\NormalTok{ alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]]}
 \NormalTok{alb\_real\_est[}\StringTok{\textquotesingle{}Score\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ two\_col\_df.}\BuiltInTok{apply}\NormalTok{(get\_prop\_score, }\DecValTok{1}\NormalTok{)}
 \NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Score\textquotesingle{}}\NormalTok{]].head(}\DecValTok{2}\NormalTok{)}
-\CommentTok{\#\#    FinSqFt  LotSize     Score}
-\CommentTok{\#\# 0     1922    5.000  3859.000}
-\CommentTok{\#\# 1     1848   61.189  3879.567}
+\CommentTok{\#\#    FinSqFt  LotSize      Score}
+\CommentTok{\#\# 0     5216    5.102  10447.306}
+\CommentTok{\#\# 1     5160  453.893  11681.679}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8068,9 +8068,9 @@ Another thing to keep in mind is that \texttt{DataFrame}s, unlike \texttt{ndarra
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]].}\BuiltInTok{apply}\NormalTok{([}\BuiltInTok{sum}\NormalTok{, }\BuiltInTok{len}\NormalTok{])}
-\CommentTok{\#\#       FinSqFt     LotSize}
-\CommentTok{\#\# sum  55559801  97856.8384}
-\CommentTok{\#\# len     27943  27943.0000}
+\CommentTok{\#\#       FinSqFt      LotSize}
+\CommentTok{\#\# sum  61730306  105063.1892}
+\CommentTok{\#\# len     30381   30381.0000}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8079,9 +8079,9 @@ If you do not want to waste two lines defining a function with \texttt{def}, you
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{two\_col\_df.}\BuiltInTok{apply}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ row : }\BuiltInTok{sum}\NormalTok{(row}\OperatorTok{*}\NormalTok{[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]), }\DecValTok{1}\NormalTok{)[:}\DecValTok{3}\NormalTok{]}
-\CommentTok{\#\# 0    3859.000}
-\CommentTok{\#\# 1    3879.567}
-\CommentTok{\#\# 2    2501.280}
+\CommentTok{\#\# 0    10447.306}
+\CommentTok{\#\# 1    11681.679}
+\CommentTok{\#\# 2     3151.770}
 \CommentTok{\#\# dtype: float64}
 \end{Highlighting}
 \end{Shaded}
@@ -8092,9 +8092,9 @@ The previous example \texttt{.apply()}s a \emph{binary} function to each row. Th
 \begin{Highlighting}[]
 \NormalTok{alb\_real\_est[[}\StringTok{\textquotesingle{}FinSqFt\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}LotSize\textquotesingle{}}\NormalTok{]].applymap(}\KeywordTok{lambda}\NormalTok{ e : e }\OperatorTok{+} \DecValTok{1}\NormalTok{).head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#    FinSqFt  LotSize}
-\CommentTok{\#\# 0     1923    6.000}
-\CommentTok{\#\# 1     1849   62.189}
-\CommentTok{\#\# 2     1249    2.760}
+\CommentTok{\#\# 0     5217    6.102}
+\CommentTok{\#\# 1     5161  454.893}
+\CommentTok{\#\# 2     1513   43.590}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8116,21 +8116,21 @@ Here is an example that models some pretty typical functionality. It shows two w
 \NormalTok{grouped }\OperatorTok{=}\NormalTok{ alb\_real\_est.groupby([}\StringTok{\textquotesingle{}City\textquotesingle{}}\NormalTok{])}
 \NormalTok{grouped[}\StringTok{\textquotesingle{}TotalValue\textquotesingle{}}\NormalTok{].}\BuiltInTok{apply}\NormalTok{(np.average)}
 \CommentTok{\#\# City}
-\CommentTok{\#\# CHARLOTTESVILLE    381932.962760}
-\CommentTok{\#\# CROZET             380425.678927}
-\CommentTok{\#\# EARLYSVILLE        439140.987124}
-\CommentTok{\#\# KESWICK            540532.605905}
-\CommentTok{\#\# NORTH GARDEN       366597.750865}
-\CommentTok{\#\# SCOTTSVILLE        268407.384615}
+\CommentTok{\#\# CHARLOTTESVILLE    429926.502708}
+\CommentTok{\#\# CROZET             436090.502541}
+\CommentTok{\#\# EARLYSVILLE        482711.437566}
+\CommentTok{\#\# KESWICK            565985.092025}
+\CommentTok{\#\# NORTH GARDEN       399430.221519}
+\CommentTok{\#\# SCOTTSVILLE        293666.758242}
 \CommentTok{\#\# Name: TotalValue, dtype: float64}
 \NormalTok{grouped.}\BuiltInTok{apply}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ df : np.average(df[}\StringTok{\textquotesingle{}TotalValue\textquotesingle{}}\NormalTok{]))}
 \CommentTok{\#\# City}
-\CommentTok{\#\# CHARLOTTESVILLE    381932.962760}
-\CommentTok{\#\# CROZET             380425.678927}
-\CommentTok{\#\# EARLYSVILLE        439140.987124}
-\CommentTok{\#\# KESWICK            540532.605905}
-\CommentTok{\#\# NORTH GARDEN       366597.750865}
-\CommentTok{\#\# SCOTTSVILLE        268407.384615}
+\CommentTok{\#\# CHARLOTTESVILLE    429926.502708}
+\CommentTok{\#\# CROZET             436090.502541}
+\CommentTok{\#\# EARLYSVILLE        482711.437566}
+\CommentTok{\#\# KESWICK            565985.092025}
+\CommentTok{\#\# NORTH GARDEN       399430.221519}
+\CommentTok{\#\# SCOTTSVILLE        293666.758242}
 \CommentTok{\#\# dtype: float64}
 \end{Highlighting}
 \end{Shaded}
