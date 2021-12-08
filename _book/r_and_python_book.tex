@@ -2904,7 +2904,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 139921572562272 139921572562304}
+\CommentTok{\#\# 139622944327008 139622944327040}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -5457,7 +5457,7 @@ Stacking data sets on top of each other is a common task. You might need to do i
   you're creating a matrix in a step-by-step way.
 \end{enumerate}
 
-In R, this can be done with \texttt{rbind()} (short for ``row bind''). Consider the following example that makes use of GIS data queried from \citep{albemarle_county_gis_web}.
+In R, this can be done with \texttt{rbind()} (short for ``row bind''). Consider the following example that makes use of GIS data queried from \citep{albemarle_county_gis_web} and cleaned with code from \citep{clay_ford}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5497,7 +5497,7 @@ The above example was with \texttt{data.frame}s. This example of \texttt{rbind()
 \end{Highlighting}
 \end{Shaded}
 
-In Python, you can stack data frames with \href{https://www.google.com/search?client=safari\&rls=en\&q=pandas+concat\&ie=UTF-8\&oe=UTF-8}{\texttt{pd.concat()}}. It has a lot of options, so feel free to peruse those. You can also replace the call to \texttt{pd.concat()} below with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html}{\texttt{test.append(train)}}.
+In Python, you can stack data frames with \href{https://www.google.com/search?client=safari\&rls=en\&q=pandas+concat\&ie=UTF-8\&oe=UTF-8}{\texttt{pd.concat()}}. It has a lot of options, so feel free to peruse them. You can also replace the call to \texttt{pd.concat()} below with \href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html}{\texttt{test.append(train)}}. Consider the example below that uses the Albemarle County real estate data \citep{albemarle_county_gis_web} \citep{clay_ford}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6089,7 +6089,7 @@ R comes with some built-in plotting functions such as \texttt{plot()}, \texttt{h
 
 Base plotting will usually cover most of your needs, so that is what we spend the most time learning about. However, there are a large number of third-party libraries for plotting that you might consider looking into if you want to use a certain aesthetic, or if you want plotting functionality that is specialized for certain cases (e.g.~geospatial plots).
 
-Recall our Albemarle Real Estate data set \citep{albemarle_county_gis_web}.
+Recall our Albemarle Real Estate data set \citep{albemarle_county_gis_web} \citep{clay_ford}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6380,11 +6380,11 @@ If you want to make figures that are more elaborate, just keep calling different
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c3819c50\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7cca7390\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data }
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c3819d68\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7cca74a8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c30670f0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7cca77f0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
 \CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
@@ -6394,11 +6394,11 @@ If you want to make figures that are more elaborate, just keep calling different
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f41c3800358\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7efc7cccea58\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f41c30678d0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7ccb5048\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f41c30a0780\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7efc7cc3f160\textgreater{}}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -6435,7 +6435,7 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \CommentTok{\#\# }
 \CommentTok{\#\# [5 rows x 7 columns]}
 \NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f41c3940cf8\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7efc7cc5a8d0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6447,7 +6447,7 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f41c3940cf8\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7efc7cc5a8d0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6459,7 +6459,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
 \NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f41c3940cf8\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7efc7cc5a8d0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6860,7 +6860,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x559121dbbdc0>
+## <bytecode: 0x556ed372a520>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -7714,7 +7714,7 @@ I use \texttt{sapply()} and \texttt{lapply()} the most, personally. The next mos
 \end{Highlighting}
 \end{Shaded}
 
-Another example where it can be useful to apply a function to rows is \textbf{predicate functions.} A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a \texttt{data.frame}. Without a predicate function, filtering rows might look something like this on our real estate data from \citep{albemarle_county_gis_web}.
+Another example where it can be useful to apply a function to rows is \textbf{predicate functions.} A predicate function is just a fancy name for a function that returns a Boolean. I use them to filter out rows of a \texttt{data.frame}. Without a predicate function, filtering rows might look something like this on our real estate data \citep{albemarle_county_gis_web} \citep{clay_ford}.
 
 \begin{Shaded}
 \begin{Highlighting}[]

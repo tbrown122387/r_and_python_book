@@ -438,7 +438,7 @@ div.csl-indent {
 <h2><span class="header-section-number">13.1</span> Base R Plotting</h2>
 <p>R comes with some built-in plotting functions such as <code>plot()</code>, <code>hist()</code> and <code>boxplot()</code>. Many of these reside in <code>package:graphics</code>, which comes pre-loaded into the search path. <code>plot()</code> on the other hand, is higher up the search path in <code>package:base</code>–it is a generic method whose methods can reside in many places (e.g. in <code>package:graphics</code> or some place else).</p>
 <p>Base plotting will usually cover most of your needs, so that is what we spend the most time learning about. However, there are a large number of third-party libraries for plotting that you might consider looking into if you want to use a certain aesthetic, or if you want plotting functionality that is specialized for certain cases (e.g. geospatial plots).</p>
-<p>Recall our Albemarle Real Estate data set <span class="citation">(<a href="#ref-albemarle_county_gis_web" role="doc-biblioref">Albemarle County Geographic Data Services Office 2021</a>)</span>.</p>
+<p>Recall our Albemarle Real Estate data set <span class="citation">(<a href="#ref-albemarle_county_gis_web" role="doc-biblioref">Albemarle County Geographic Data Services Office 2021</a>)</span> <span class="citation">(<a href="#ref-clay_ford" role="doc-biblioref">Ford 2016</a>)</span>.</p>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="visualization.html#cb214-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/albemarle_real_estate.csv&quot;</span>)</span>
 <span id="cb214-2"><a href="visualization.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df, <span class="at">strict.width =</span> <span class="st">&quot;cut&quot;</span>)</span>
 <span id="cb214-3"><a href="visualization.html#cb214-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    30381 obs. of  12 variables:</span></span>
@@ -599,11 +599,11 @@ Figure 13.8: Another Simple Histogram
 <span id="cb227-6"><a href="visualization.html#cb227-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb227-7"><a href="visualization.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
 <span id="cb227-8"><a href="visualization.html#cb227-8" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x, label<span class="op">=</span><span class="st">&#39;linear&#39;</span>)  <span class="co"># Plot some data on the axes.</span></span>
-<span id="cb227-9"><a href="visualization.html#cb227-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f41c375ddd8&gt;]</span></span>
+<span id="cb227-9"><a href="visualization.html#cb227-9" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7efc7cf02e10&gt;]</span></span>
 <span id="cb227-10"><a href="visualization.html#cb227-10" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">&#39;quadratic&#39;</span>)  <span class="co"># Plot more data </span></span>
-<span id="cb227-11"><a href="visualization.html#cb227-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f41c375def0&gt;]</span></span>
+<span id="cb227-11"><a href="visualization.html#cb227-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7efc7cf02f28&gt;]</span></span>
 <span id="cb227-12"><a href="visualization.html#cb227-12" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].plot(x, x<span class="op">**</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">&#39;cubic&#39;</span>)  <span class="co"># ... and some more.</span></span>
-<span id="cb227-13"><a href="visualization.html#cb227-13" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f41c3754278&gt;]</span></span>
+<span id="cb227-13"><a href="visualization.html#cb227-13" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7efc7cf122b0&gt;]</span></span>
 <span id="cb227-14"><a href="visualization.html#cb227-14" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_xlabel(<span class="st">&#39;x label&#39;</span>)  <span class="co"># Add an x-label to the axes.</span></span>
 <span id="cb227-15"><a href="visualization.html#cb227-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Text(0.5, 0, &#39;x label&#39;)</span></span>
 <span id="cb227-16"><a href="visualization.html#cb227-16" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].set_ylabel(<span class="st">&#39;y label&#39;</span>)  <span class="co"># Add a y-label to the axes.</span></span>
@@ -613,11 +613,11 @@ Figure 13.8: Another Simple Histogram
 <span id="cb227-20"><a href="visualization.html#cb227-20" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">0</span>].legend()  <span class="co"># Add a legend.</span></span>
 <span id="cb227-21"><a href="visualization.html#cb227-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb227-22"><a href="visualization.html#cb227-22" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
-<span id="cb227-23"><a href="visualization.html#cb227-23" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f41c35634e0&gt;</span></span>
+<span id="cb227-23"><a href="visualization.html#cb227-23" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7efc7cf48438&gt;</span></span>
 <span id="cb227-24"><a href="visualization.html#cb227-24" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].plot(x,np.sin(x), label<span class="op">=</span><span class="st">&#39;sine wave&#39;</span>)</span>
-<span id="cb227-25"><a href="visualization.html#cb227-25" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7f41c3754a58&gt;]</span></span>
+<span id="cb227-25"><a href="visualization.html#cb227-25" aria-hidden="true" tabindex="-1"></a><span class="co">## [&lt;matplotlib.lines.Line2D object at 0x7efc7cf44978&gt;]</span></span>
 <span id="cb227-26"><a href="visualization.html#cb227-26" aria-hidden="true" tabindex="-1"></a>myAxes[<span class="dv">1</span>].legend()</span>
-<span id="cb227-27"><a href="visualization.html#cb227-27" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7f41c359f4e0&gt;</span></span>
+<span id="cb227-27"><a href="visualization.html#cb227-27" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.legend.Legend object at 0x7efc7cf20a20&gt;</span></span>
 <span id="cb227-28"><a href="visualization.html#cb227-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-228"></span>
 <img src="r_and_python_book_files/figure-html/unnamed-chunk-228-3.png" alt="Side-By-Side Line Plots in Matplotlib" width="80%" />
@@ -643,18 +643,18 @@ Figure 13.9: Side-By-Side Line Plots in Matplotlib
 <span id="cb228-10"><a href="visualization.html#cb228-10" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
 <span id="cb228-11"><a href="visualization.html#cb228-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [5 rows x 7 columns]</span></span>
 <span id="cb228-12"><a href="visualization.html#cb228-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;GSPC.Adjusted&#39;</span>].plot()</span>
-<span id="cb228-13"><a href="visualization.html#cb228-13" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f41c2f7e940&gt;</span></span></code></pre></div>
+<span id="cb228-13"><a href="visualization.html#cb228-13" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7efc7ce93e80&gt;</span></span></code></pre></div>
 <p>Choosing among nondefault plot types can be done in a variety of ways. You can either use the <code>.plot</code> accessor data member of a <code>DataFrame</code>, or you can pass in different strings to <code>.plot()</code>’s <code>kind=</code> parameter. Third, some plot types (e.g. boxplots and histograms) have their own dedicated methods.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb229-1"><a href="visualization.html#cb229-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;returns&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;GSPC.Adjusted&#39;</span>].pct_change()</span>
 <span id="cb229-2"><a href="visualization.html#cb229-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;returns&#39;</span>].plot(kind<span class="op">=</span><span class="st">&#39;hist&#39;</span>)</span>
 <span id="cb229-3"><a href="visualization.html#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].plot.hist()</span></span>
 <span id="cb229-4"><a href="visualization.html#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same as df[&#39;returns&#39;].hist()</span></span>
-<span id="cb229-5"><a href="visualization.html#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f41c2f7e940&gt;</span></span></code></pre></div>
+<span id="cb229-5"><a href="visualization.html#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7efc7ce93e80&gt;</span></span></code></pre></div>
 <p>There are also <a href="https://pandas.pydata.org/docs/user_guide/visualization.html#visualization-tools">several freestanding plotting functions</a> (not methods) that take in <code>DataFrame</code>s and <code>Series</code> objects. Each of these functions is typically imported individually from the <code>pandas.plotting</code> submodule.</p>
 <p>The following code is an example of creating a “lag plot,” which is simply a scatterplot between a time series’ lagged and nonlagged values. The primary benefit of this function over <code>.plot()</code> is that this function does not require you to construct an additional column of lagged values, and it comes up with good default axis labels.</p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="visualization.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.plotting <span class="im">import</span> lag_plot</span>
 <span id="cb230-2"><a href="visualization.html#cb230-2" aria-hidden="true" tabindex="-1"></a>lag_plot(df[<span class="st">&#39;returns&#39;</span>])</span>
-<span id="cb230-3"><a href="visualization.html#cb230-3" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7f41c2f7e940&gt;</span></span></code></pre></div>
+<span id="cb230-3"><a href="visualization.html#cb230-3" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;matplotlib.axes._subplots.AxesSubplot object at 0x7efc7ce93e80&gt;</span></span></code></pre></div>
 
 </div>
 </div>
@@ -665,6 +665,9 @@ Figure 13.9: Side-By-Side Line Plots in Matplotlib
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-albemarle_county_gis_web" class="csl-entry">
 Albemarle County Geographic Data Services Office. 2021. <span>“<span>Albemarle County GIS Web</span>.”</span> <a href="https://www.albemarle.org/government/community-development/gis-mapping/gis-data">https://www.albemarle.org/government/community-development/gis-mapping/gis-data</a>.
+</div>
+<div id="ref-clay_ford" class="csl-entry">
+Ford, Clay. 2016. <span>“Ggplot: Files for UVA StatLab Workshop, Fall 2016.”</span> <em>GitHub Repository</em>. <a href="https://github.com/clayford/ggplot2">https://github.com/clayford/ggplot2</a>; GitHub.
 </div>
 <div id="ref-Hunter:2007" class="csl-entry">
 Hunter, J. D. 2007. <span>“Matplotlib: A 2d Graphics Environment.”</span> <em>Computing in Science &amp; Engineering</em> 9 (3): 90–95. <a href="https://doi.org/10.1109/MCSE.2007.55">https://doi.org/10.1109/MCSE.2007.55</a>.
