@@ -46,7 +46,7 @@ I use a couple other functions in the above code. `abline()` is used to superimp
 
 ## Plotting with `ggplot2`
 
-[`ggplot2`](https://ggplot2.tidyverse.org/index.html) is a popular third-party visualization package for R. There are also libraries in Python (e.g. [`plotnine`](https://plotnine.readthedocs.io/en/stable/#)) that have a similar look and feel. This subsection provides a short tutorial on how to use `ggplot2` in R, and it is primarily based off of the material provided in [@ggplot2]. 
+[`ggplot2`](https://ggplot2.tidyverse.org/index.html) is a popular third-party visualization package for R.\index{ggplot2} There are also libraries in Python (e.g. [`plotnine`](https://plotnine.readthedocs.io/en/stable/#)) that have a similar look and feel. This subsection provides a short tutorial on how to use `ggplot2` in R, and it is primarily based off of the material provided in [@ggplot2]. Other excellent descriptions of `ggplot2` are [@r_in_action] and [@r_graphics_cookbook].
 
 `ggplot2` code looks a lot different than the code in the above section^[Personally, I find its syntax more confusing, and so I tend to prefer base graphics. However, it is very popular, and so I do believe that it is important to mention it here in this text.]. There, we would write a series of function calls, and each would change some state in the current figure. Here, we call different `ggplot2` functions that create S3 objects with special behavior (more information about S3 objects in subsection \@ref(using-s3-objects)), and then we "add" (i.e. we use the `+` operator) them together. 
 
@@ -135,7 +135,9 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = score ))  +
 
 ## Plotting with Matplotlib
 
-Matplotlib [@Hunter:2007] is a third-party visualization library in Python. It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of [tutorials](https://matplotlib.org/stable/tutorials/index.html) on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, [@py_ds_handbook] is also a terrific resource. It has an entire chapter dedicated to visualization with Matplotlib. 
+Matplotlib [@Hunter:2007] is a third-party visualization library in Python.\index{Matplotlib} It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. 
+
+This short introduction borrows heavily from the myriad of [tutorials](https://matplotlib.org/stable/tutorials/index.html) on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, [@py_ds_handbook] and [@pandas_guy] are also terrific resources. 
 
 ::: {.rmd-details data-latex=""}
 You can use either "pyplot-style" (e.g. `plt.plot()`) or "object-oriented-style" to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
@@ -155,7 +157,7 @@ Second, we import Numpy in the same way we always have. Matplotlib is written to
 
 Third, we call the `subplots()` function, and use *sequence unpacking* to unpack the returned container into individual objects without storing the overall container. "Subplots" sounds like it will make many different plots all on one figure, but if you look at the [documentation](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib-pyplot-subplots) the number of rows and columns defaults to one and one, respectively. 
 
-`plt.subplots()` returns a [`tuple`](https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple)^[We didn't talk about `tuple`s in chapter 2, but you can think of them as being similar to `list`s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g. `('a')` ) instead of square brackets, and they are immutable instead of mutable.] of two things: a `Figure` object, and one or more `Axes` object(s). These two classes will require some explanation. 
+`plt.subplots()` returns a [`tuple`](https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple)^[We didn't talk about `tuple`s in chapter 2, but you can think of them as being similar to `list`s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g. `('a')` ) instead of square brackets, and they are immutable instead of mutable.]\index{tuples in Python} of two things: a `Figure` object, and one or more `Axes` object(s). These two classes will require some explanation. 
 
 1. A [`Figure` object](https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure) is the overall visualization object you're making. It holds onto all of the plot elements. If you want to save all of your progress (e.g. with `fig.savefig('my_picture.png')`), you're saving the overall `Figure` object. 
 

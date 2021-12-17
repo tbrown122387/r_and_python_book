@@ -158,15 +158,6 @@
 
 
 % new environments for rmd-details and rmd-caution boxes
-% \newsavebox{\bulb}
-% \savebox{\bulb}{\makebox[2\columnsep]{\huge \faLightbulbO}}
-% \newsavebox{\rmdbox}
-% \newenvironment{rmd-details}{\begin{lrbox}{\rmdbox}
-%   \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\bulb-\columnsep}
-%     \vspace*{\columnsep}}%
-% {\vspace*{\columnsep}\endminipage\end{lrbox}%
-%   {\par\color{green}\fboxsep=0pt
-%     \fbox{\usebox\bulb\usebox\rmdbox\hspace{\columnsep}}\par}}
 \newtcolorbox{rmd-details}{
     enhanced,
     sharp corners,
@@ -177,17 +168,6 @@
         \node at ([xshift=18pt]frame.west) {\Huge\faLightbulbO};
     },
 }
-    
-% \newsavebox{\excl}
-% \savebox{\excl}{\makebox[2\columnsep]{\huge \faExclamation}}
-% %\newsavebox{\rmdbox2}
-% \newenvironment{rmd-caution}{\begin{lrbox}{\rmdbox}
-%   \minipage[c]{\dimexpr \textwidth-2\fboxrule-\wd\excl-\columnsep}
-%     \vspace*{\columnsep}}%
-% {\vspace*{\columnsep}\endminipage\end{lrbox}%
-%   {\par\color{yellow}\fboxsep=0pt
-%     \fbox{\usebox\excl\usebox\rmdbox\hspace{\columnsep}}\par}}
-    
 \newtcolorbox{rmd-caution}{
     enhanced,
     sharp corners,
@@ -335,7 +315,7 @@ It is recommended that you install \emph{Anaconda}, which is a package manager, 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-Now that you have both R and Python installed, we can get started by taking a tour of our two different \textbf{integrated development environments environments} (IDEs)\index{integrated development environments environment (IDE)} RStudio\index{RStudio} and Spyder\index{Spyder}.
+Now that you have both R and Python installed, we can get started by taking a tour of our two different \textbf{integrated development environments environments} (IDEs)\index{integrated development environment (IDE)} RStudio\index{integrated development environment (IDE)!RStudio} and Spyder\index{integrated development environment (IDE)!Spyder}.
 
 In addition, I will also discuss a few topics superficially, so that we can get our feet wet:
 
@@ -365,7 +345,7 @@ Go ahead and open up RStudio. It should look something like this
 
 I changed my ``Editor Theme'' from the default to ``Cobalt'' because it's easier on my eyes. If you are opening RStudio for the first time, you probably see a lot more white. You can play around with the theme, if you wish, after going to \texttt{Tools\ -\textgreater{}\ Global\ Options\ -\textgreater{}\ Appearance}.
 
-The \textbf{console}, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the \texttt{print()} function.
+The \textbf{console}\index{console!console in RStudio}, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the \texttt{print()} function.
 
 \begin{rmd-details}
 In R, functions are ``first-class objects,'' which means can refer to the name of a function without asking it to do anything. However, when we \emph{do} want to use it, we put parentheses after the name. This is called \textbf{calling} the function or \textbf{invoking} the function. If a function call takes any \textbf{arguments} (aka inputs), then the programmer supplies them between the two parentheses. A function may \textbf{return} values to be subsequently used, or it may just produce a ``side-effect'' such as printing some text, displaying a chart, or read/writing information to an external data source.
@@ -379,7 +359,7 @@ In R, functions are ``first-class objects,'' which means can refer to the name o
 \end{Highlighting}
 \end{Shaded}
 
-During the semester, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a \textbf{script}. Click \texttt{File\ -\textgreater{}\ New\ File\ -\textgreater{}\ R\ Script} to create a new script. It should appear at the top left of the RStudio window (see Figure \ref{fig:rstudio} ) . After that, copy and paste the following code into your script window.
+During the semester, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a \textbf{script}\index{script}. Click \texttt{File\ -\textgreater{}\ New\ File\ -\textgreater{}\ R\ Script} to create a new script. It should appear at the top left of the RStudio window (see Figure \ref{fig:rstudio} ) . After that, copy and paste the following code into your script window\index{script!scripts in R}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -395,7 +375,7 @@ During the semester, we will write more complicated code. Complicated code is us
 
 This script will run five print statements, and then create a variable called \texttt{myName}. The print statements are of no use to the computer and will not affect how the program runs. They just display messages to the human running the code.
 
-The variable created on the last line is more important because it is used by the computer, and so it can affect how the program runs. The operator \texttt{\textless{}-} is the \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html}{\textbf{assignment operator}}. It takes the character constant \texttt{"Taylor"}, which is on the right, and stores it under the name \texttt{myName}. If we added lines to this program, we could refer to the variable \texttt{myName} in subsequent calculations.
+The variable created on the last line is more important because it is used by the computer, and so it can affect how the program runs. The operator \texttt{\textless{}-} is the \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html}{\textbf{assignment operator}}\index{assigntment operator!assignment operator in R}. It takes the character constant \texttt{"Taylor"}, which is on the right, and stores it under the name \texttt{myName}. If we added lines to this program, we could refer to the variable \texttt{myName} in subsequent calculations.
 
 Save this file wherever you want on your hard drive. Call it \texttt{awesomeScript.R}. Personally, I saved it to my desktop.
 
@@ -411,7 +391,7 @@ After we have a saved script, we can run it by sending all the lines of code ove
 \end{Highlighting}
 \end{Shaded}
 
-The first line changes the \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/getwd.html}{\textbf{working directory}} to \texttt{Desktop/}. You, dear reader, should change this line by replacing \texttt{Desktop/} to whichever folder you chose to save \texttt{awesomeScript.R} in. If you would like to find out what your working directory is currently set to, you can use \texttt{getwd()}.
+The first line changes the \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/getwd.html}{working directory}\index{working directory!working directory in R} to \texttt{Desktop/}. The \textbf{working directory} is the first place your program looks for files\index{working directory}. You, dear reader, should change this line by replacing \texttt{Desktop/} to whichever folder you chose to save \texttt{awesomeScript.R} in. If you would like to find out what your working directory is currently set to, you can use \texttt{getwd()}.
 
 \begin{rmd-details}
 Every computer has a different folder/directory structure--that is why it is highly recommended you refer to file locations as seldom as possible in your scripts. This makes your code more \emph{portable.} When you send your file to someone else (e.g.~your instructor or your boss), she will have to remove or change every mention of any directory. This is because those directories (probably) won't exist on her machine.
@@ -450,7 +430,7 @@ Recall that we will exclusively assume the use of \emph{Spyder} in this textbook
 \caption{Spyder}\label{fig:spyder}
 \end{figure}
 
-It looks a lot like RStudio, right? The script window is still on the left hand side, but it takes up the whole height of the window this time. However, you will notice that the console window has moved. It's over on the bottom right now.
+It looks a lot like RStudio, right? The script window \index{script!script in Python} is still on the left hand side, but it takes up the whole height of the window this time. However, you will notice that the console window\index{console!console in Spyder} has moved. It's over on the bottom right now.
 
 Again, you might notice a lot more white when you open this for the first time. Just like last time, I changed my color scheme. You can change yours by going to \texttt{Tools\ -\textgreater{}\ Preferences} and then exploring the options available under the \texttt{Appearances} tab.
 
@@ -482,7 +462,7 @@ Let's try writing our first Python script. R scripts end in \texttt{.r} or \text
 \end{Highlighting}
 \end{Shaded}
 
-Notice that the assignment operator is different in Python. It's an \texttt{=}\footnote{You can use this symbol in R, too, but it is less common.}.
+Notice that the assignment operator is different in Python\index{assigntment operator!assignment operator in Python}. It's an \texttt{=}\footnote{You can use this symbol in R, too, but it is less common.}.
 
 Just like RStudio, Spyder has a button that runs the entire script from start to finish. It's the green triangle button (see Figure \ref{fig:spyder} ).
 
@@ -496,7 +476,7 @@ You can also write code to run \texttt{awesomeScript.py}. There are a few ways t
 \end{Highlighting}
 \end{Shaded}
 
-This is also pretty similar to the R code from before. \texttt{os.chdir()} sets our working directory to the \texttt{Desktop}. Then \texttt{runfile()} runs all of the lines in our program, sequentially, from start to finish\footnote{Python, like R, allows you to run scripts from the command line, but this will not be discussed in this text.}.
+This is also pretty similar to the R code from before. \texttt{os.chdir()} sets our working directory\index{working directory!working directory in Python} to the \texttt{Desktop}. Then \texttt{runfile()} runs all of the lines in our program, sequentially, from start to finish\footnote{Python, like R, allows you to run scripts from the command line, but this will not be discussed in this text.}.
 
 The first line is new, though. We did not mention anything like this in R, yet. We will talk more about \texttt{import}ing modules in section \ref{loading-packages-in-python}. Suffice it to say that we imported the \texttt{os} module to make the \texttt{chdir()} function available to us.
 
@@ -527,7 +507,7 @@ The directory repeatedly mentioned in the code above was \texttt{/home/taylor/De
 
 On Windows, things are a bit different. For one, a full path starts with a drive (e.g.~\texttt{C:}). Second, there are backslashes (not forward slashes) to separate directory names (e.g \texttt{C:\textbackslash{}Users\textbackslash{}taylor\textbackslash{}Desktop}).
 
-Unfortunately, backslashes are a special character in both R and Python (read section \ref{an-introduction-to-regular-expressions} to find out more about this). Whenever you type a \texttt{\textbackslash{}}, it will change the meaning of whatever comes after it. In other words, \texttt{\textbackslash{}} is known as an \textbf{escape character}.
+Unfortunately, backslashes are a special character in both R and Python (read section \ref{an-introduction-to-regular-expressions} to find out more about this). Whenever you type a \texttt{\textbackslash{}}, it will change the meaning of whatever comes after it. In other words, \texttt{\textbackslash{}} is known as an \textbf{escape character}.\index{escape character}
 
 \begin{rmd-details}
 In both R and Python, the backslash character is used to start an ``escape'' sequence. You can see some examples in R by clicking \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html}{here}, and some examples in Python by clicking \href{https://docs.python.org/3/reference/lexical_analysis.html}{here}. In Python it may also be used to \href{https://docs.python.org/3/reference/lexical_analysis.html\#explicit-line-joining}{allow long lines of code to take up more than one line in a text file.}
@@ -536,7 +516,7 @@ In both R and Python, the backslash character is used to start an ``escape'' seq
 
 The recommended way of handling this is to just use forward slashes instead. For example, if you are running Windows, \texttt{C:/Users/taylor/Desktop/myScript.R} will work in R, and \texttt{C:/Users/taylor/Desktop/myScript.py} will work in Python.
 
-You may also use ``raw string constants'' (e.g.~\texttt{r\textquotesingle{}C:\textbackslash{}Users\textbackslash{}taylor\textbackslash{}my\_file.txt\textquotesingle{}} ). ``Raw'' means that \texttt{\textbackslash{}} will be treated as a literal character instead of an escape character. Alternatively, you can ``escape'' the backslashes by replacing each single backslash with a double backslash. Please read section \ref{an-introduction-to-regular-expressions} for more details about these choices.
+You may also use ``raw string constants'' (e.g.~\texttt{r\textquotesingle{}C:\textbackslash{}Users\textbackslash{}taylor\textbackslash{}my\_file.txt\textquotesingle{}} ). ``Raw'' means that \texttt{\textbackslash{}} will be treated as a literal character instead of an escape character\index{escape character}. Alternatively, you can ``escape'' the backslashes by replacing each single backslash with a double backslash. Please read section \ref{an-introduction-to-regular-expressions} for more details about these choices.
 
 \hypertarget{basic-types}{%
 \chapter{Basic Types}\label{basic-types}}
@@ -561,7 +541,7 @@ In Python, the simplest types we frequently use are \texttt{str} (short for stri
 \end{Highlighting}
 \end{Shaded}
 
-Strings are useful for processing text data such as names of people/places/things and messages such as texts, tweets and emails. If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section \ref{control-flow}.
+Strings are useful for processing text data such as names of people/places/things and messages such as texts, tweets and emails \citep{python_cookbook}. If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you'll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section \ref{control-flow}.
 
 In the next section we will discuss the Numpy library. This library has a \href{https://numpy.org/doc/stable/user/basics.types.html}{broader collection} of basic types that allows for finer control over any script you write.
 
@@ -668,7 +648,7 @@ Explicit conversion can be achieved with functions such as \texttt{as.integer}, 
 
 The basic types of R are a little different than the basic types of Python. On the one hand, Python has basic types for individual elements, and it uses separate types as containers for storing many elements. On the other, R uses the same type to store a single element as it does to store many elements. Strictly speaking, R does not have a scalar type.
 
-Technically, all of the examples we just did in R are using length one \textbf{vectors}--\texttt{logical} \texttt{integer} \texttt{double}, \texttt{character}, \texttt{complex}, and \texttt{raw} are the possible \textbf{modes} of a vector. \texttt{vector}s will be discussed further section \ref{r-vectors-versus-numpy-arrays-and-pandas-series}.
+Technically, all of the examples we just did in R are using length one \textbf{vectors}--\texttt{logical} \texttt{integer} \texttt{double}, \texttt{character}, \texttt{complex}, and \texttt{raw} are the possible \textbf{modes} of a vector\index{vectors in R}. \texttt{vector}s will be discussed further section \ref{r-vectors-versus-numpy-arrays-and-pandas-series}.
 
 Think about which option you prefer. What are the benefits of using separate types for scalars and collections? What are the benefits of using the same type?
 
@@ -748,7 +728,7 @@ Think about which option you prefer. What are the benefits of using separate typ
     the amount of time it takes for a car to race around a track
   \end{itemize}
 \item
-  Floating points are weird. What gets printed is not the same as what is stored! In Python, you need to edit a class's \texttt{\_\_str\_\_} method if you want to control how many digits get printed, but we won't do that. Instead, we'll use \href{https://docs.python.org/3/library/stdtypes.html\#str.format}{\texttt{str.format()}} to return a string directly (instead of copy/paste-ing it).
+  Floating points are weird. What gets printed is not the same as what is stored! In Python, you need to edit a class's \texttt{\_\_str\_\_} method if you want to control how many digits get printed for a user-defined type/class, but we won't do that. Instead, we'll use \href{https://docs.python.org/3/library/stdtypes.html\#str.format}{\texttt{str.format()}} to return a string directly (instead of copy/paste-ing it).
 
   \begin{itemize}
   \tightlist
@@ -785,7 +765,7 @@ This section is for describing the data types that let us store collections of e
 \hypertarget{overview-of-r}{%
 \section{Overview of R}\label{overview-of-r}}
 
-In the previous section, I mentioned that R does not have scalar types--it just has \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Vector-objects}{\textbf{vectors}}. So, whether you want to store one number (or \texttt{logical}, or \texttt{character}, or \ldots), or many numbers, you will need a \texttt{vector}.
+In the previous section, I mentioned that R does not have scalar types--it just has \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Vector-objects}{\textbf{vectors}}. So, whether you want to store one number (or \texttt{logical}, or \texttt{character}, or \ldots), or many numbers, you will need a \texttt{vector}.\index{vectors in R}
 
 \begin{rmd-caution}
 For many, the word ``vector'' evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g.~inner products, transposes, etc.). You can perform these operations on \texttt{vector}s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with \texttt{vector}s in R have little to do with linear algebra!
@@ -825,7 +805,7 @@ Sometimes you will be interested in setting the seed on your own because it is a
 \hypertarget{overview-of-python}{%
 \section{Overview of Python}\label{overview-of-python}}
 
-If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy \texttt{array}. Numpy is a highly-regarded third party library \citep{harris2020array} for Python. Its \texttt{array} objects store elements of the same type, just as R's \texttt{vector}s do.
+If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy \texttt{array}. Numpy is a highly-regarded third party library \citep{harris2020array} for Python. Its \texttt{array} objects store elements of the same type, just as R's \texttt{vector}s do.\index{Numpy array (Python)}
 
 There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/user/basics.creation.html}{source}). Here are some examples that complement the examples from above.
 
@@ -858,7 +838,7 @@ Another option for storing a homogeneous collection of elements in Python is a \
 \hypertarget{vectorization-in-r}{%
 \section{Vectorization in R}\label{vectorization-in-r}}
 
-An operation in R is \textbf{vectorized} if it applies to all of the elements of a \texttt{vector} at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster.
+An operation in R is \textbf{vectorized}\index{vectorization} if it applies to all of the elements of a \texttt{vector} at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster.
 
 Arithmetic (e.g.~\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\^{}}, \texttt{\%\%}, \texttt{\%/\%}, etc.) and logical (e.g.~\texttt{!}, \texttt{\textbar{}}, \texttt{\&}, \texttt{\textgreater{}}, \texttt{\textgreater{}=}, \texttt{\textless{}}, \texttt{\textless{}=}, \texttt{==}, etc.) operators are commonly applied to one or two vectors. Arithmetic is usually performed \emph{element-by-element}. Numeric vectors are converted to logical vectors if they need to be. Be careful of operator precedence if you seek to minimize your use of parentheses.
 
@@ -875,7 +855,7 @@ Note that there are an extraordinary amount of named functions (e.g.~\texttt{sum
 \end{Highlighting}
 \end{Shaded}
 
-In the last example, there is \textbf{recycling} happening. \texttt{(2*pi/3)} is taking three length-one vectors and producing another length-one vector. The resulting length-one vector is multiplied by a length four vector \texttt{1:4}. The single element in the length one vector gets \emph{recycled} so that its value is multiplied by every element of \texttt{1:4}.
+In the last example, there is \textbf{recycling}\index{recycling!|see{broadcasting}} happening. \texttt{(2*pi/3)} is taking three length-one vectors and producing another length-one vector. The resulting length-one vector is multiplied by a length four vector \texttt{1:4}. The single element in the length one vector gets \emph{recycled} so that its value is multiplied by every element of \texttt{1:4}.
 This makes sense most of the time, but sometimes recycling can be tricky. Notice that the following code does not produce an error--just a warning: \texttt{longer\ object\ length\ is\ not\ a\ multiple\ of\ shorter\ object\ length}. Try running it on your machine to confirm this.
 
 \begin{Shaded}
@@ -887,7 +867,7 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 \hypertarget{vectorization-in-python}{%
 \section{Vectorization in Python}\label{vectorization-in-python}}
 
-The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with \href{https://numpy.org/doc/stable/reference/ufuncs.html}{\textbf{universal functions}}, or ``ufuncs'' for short. Some ufuncs can be invoked using the same syntax as in R (e.g.~\texttt{+}). You can also refer to function by its name (e.g.~\texttt{np.sum()} instead of \texttt{+}). Mixing and matching is allowed, too.
+The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with \href{https://numpy.org/doc/stable/reference/ufuncs.html}{\textbf{universal functions}}, or ``ufuncs'' for short\index{vectorization!universal functions|see{ufuncs}}. Some ufuncs can be invoked using the same syntax as in R (e.g.~\texttt{+}). You can also refer to function by its name (e.g.~\texttt{np.sum()} instead of \texttt{+}). Mixing and matching is allowed, too.
 
 Ufuncs are called \emph{unary} if they take in one array, and \emph{binary} if they take in two. At the moment, there are \href{https://numpy.org/doc/stable/reference/ufuncs.html\#available-ufuncs}{fewer than \(100\) available}, all performing either mathematical operations, boolean-emitting comparisons, or bit-twiddling operations. For an exhaustive list of Numpy's universal functions, \href{https://numpy.org/doc/stable/reference/ufuncs.html\#available-ufuncs}{click here.} Here are some code examples.
 
@@ -903,7 +883,7 @@ Ufuncs are called \emph{unary} if they take in one array, and \emph{binary} if t
 \end{Highlighting}
 \end{Shaded}
 
-Instead of calling it ``recycling'', Numpy calls reusing elements of a shorter array in a binary operation \href{https://numpy.org/devdocs/user/theory.broadcasting.html}{\textbf{broadcasting}}. It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: \texttt{ValueError:\ operands\ could\ not\ be\ broadcast\ together\ with\ shapes\ (2,)\ (3,)}.
+Instead of calling it ``recycling'', Numpy calls reusing elements of a shorter array in a binary operation \href{https://numpy.org/devdocs/user/theory.broadcasting.html}{\textbf{broadcasting}}\index{broadcasting|see{recycling}}. It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: \texttt{ValueError:\ operands\ could\ not\ be\ broadcast\ together\ with\ shapes\ (2,)\ (3,)}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1426,7 +1406,7 @@ There are a few functions in R that perform find-and-replace, but in this case, 
 \end{Highlighting}
 \end{Shaded}
 
-On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters.
+On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters.\index{escape character}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1462,7 +1442,7 @@ On the other hand, here are a few examples that remove dollar signs. We generall
 \hypertarget{the-trouble-with-backslashes-escape-sequences}{%
 \subsection{The Trouble With Backslashes: Escape Sequences}\label{the-trouble-with-backslashes-escape-sequences}}
 
-You might have noticed above and gotten confused--sometimes in Python and in R, we need \emph{two} backslashes instead of \emph{one}. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as \textbf{escape sequences}. We need to be able to do this even if we aren't using regular expressions.
+You might have noticed above and gotten confused--sometimes in Python and in R, we need \emph{two} backslashes instead of \emph{one}. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as \textbf{escape sequences}\index{escape sequence}. We need to be able to do this even if we aren't using regular expressions.
 
 For instance, consider the way we type the ``newline'' character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. \texttt{\textbackslash{}} is one character, and \texttt{n} is another, but together they are one!
 
@@ -1482,7 +1462,7 @@ For instance, consider the way we type the ``newline'' character. Even though it
 
 \texttt{str}s in Python and \texttt{character} \texttt{vectors} in R will look for these combinations by default. When we specify regular expressions with strings, the backslashes will be used first for this purpose. Their regular expression purpose is a second priority.
 
-The reason we used \texttt{\textbackslash{}\textbackslash{}\$} in the above example is to escape the second backslash. \texttt{\textbackslash{}\$} is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won't complain that it didn't. On the other hand, R will throw an error that it can't recognize it.
+The reason we used \texttt{\textbackslash{}\textbackslash{}\$} in the above example is to escape\index{escape character} the second backslash. \texttt{\textbackslash{}\$} is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won't complain that it didn't. On the other hand, R will throw an error that it can't recognize it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1898,7 +1878,7 @@ Sometimes you want a collection of elements that are \emph{all the same type}, b
 \hypertarget{numpy-ndarrays-in-python}{%
 \section{\texorpdfstring{Numpy \texttt{ndarray}s In Python}{Numpy ndarrays In Python}}\label{numpy-ndarrays-in-python}}
 
-In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy \texttt{array}s we discussed earlier are a special case of \href{https://numpy.org/doc/stable/reference/arrays.ndarray.html}{Numpy's N-dimensional arrays}. Each array will come with an enormous amount of \href{https://numpy.org/doc/stable/reference/arrays.ndarray.html\#array-methods}{methods} and \href{https://numpy.org/doc/stable/reference/arrays.ndarray.html\#array-attributes}{attributes} (more on object-oriented program in chapter \ref{an-introduction-to-object-oriented-programming}) attached to it. A few are demonstrated below.
+In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy \texttt{array}s we discussed earlier are a special case of \href{https://numpy.org/doc/stable/reference/arrays.ndarray.html}{Numpy's N-dimensional arrays}\index{Numpy array (Python)}. Each array will come with an enormous amount of \href{https://numpy.org/doc/stable/reference/arrays.ndarray.html\#array-methods}{methods} and \href{https://numpy.org/doc/stable/reference/arrays.ndarray.html\#array-attributes}{attributes} (more on object-oriented program in chapter \ref{an-introduction-to-object-oriented-programming}) attached to it. A few are demonstrated below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1941,10 +1921,17 @@ Matrix and elementwise multiplication is often useful, too.
 \end{Highlighting}
 \end{Shaded}
 
+I should mention that there is also a \texttt{matrix} type in Numpy; however, this is not described in this text because it is preferable to work with Numpy \texttt{array}s \citep{ml_with_python_cookbook}.
+
+\begin{rmd-details}
+In both R and Python, there are \texttt{matrix} types and \texttt{array} types. In R, it is more common to work with \texttt{matrix}s than \texttt{array}s, and the opposite is true in Python!
+
+\end{rmd-details}
+
 \hypertarget{the-matrix-and-array-classes-in-r}{%
 \section{\texorpdfstring{The \texttt{matrix} and \texttt{array} classes in R}{The matrix and array classes in R}}\label{the-matrix-and-array-classes-in-r}}
 
-In Python, adding a dimension to your ``container'' is simple. You keep using Numpy arrays, and you just change the \texttt{.shape} attribute (perhaps with a call to \texttt{.reshape()} or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the \texttt{matrix} class. Containers with 3 or more dimensions are of the \texttt{array} class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of \citep{matloff_r_book}.
+In Python, adding a dimension to your ``container'' is simple. You keep using Numpy arrays, and you just change the \texttt{.shape} attribute (perhaps with a call to \texttt{.reshape()} or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the \texttt{matrix} class\index{matrix in R}. Containers with 3 or more dimensions are of the \texttt{array} class\footnote{Technically, the distinction between all of these containers is more subtle. An \texttt{array} in R can have one, two or more dimensions, and it is just a vector which is stored with additional dimension attributes. Moreover, a 2-dimensional array is the same as a \texttt{matrix}.}.\index{array in R} In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of \citep{matloff_r_book}.
 
 \begin{rmd-caution}
 Just like \texttt{vector}s, \texttt{matrix} objects do not necessarily have to be used to perform matrix arithmetic. Yes, they require all the elements are of the same type, but it doesn't really make sense to ``multiply'' \texttt{matrix} objects that hold onto \texttt{character}s.
@@ -2255,7 +2242,7 @@ When you need to store elements in a container, but you can't guarantee that the
 
 If you want to extract an element, you need to decide between using single square brackets or double square brackets. The former returns a \texttt{list}, while the second returns the type of the individual element.
 
-You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below. The \texttt{lm()} function estimates a linear regression model. It returns a \texttt{list} with plenty of components.
+You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below that makes use of spme data about cars \citep{sas_cars}. The \texttt{lm()} function estimates a linear regression model. It returns a \texttt{list} with plenty of components.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2322,6 +2309,8 @@ Creating lists can be done as above, with the square bracket operators. They can
 \CommentTok{\#\# [0, 1, 4]}
 \end{Highlighting}
 \end{Shaded}
+
+The code above makes reference to a type that is not extensively discussed in this text: \href{https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple\#tuple}{\texttt{tuple}s}.\index{tuples in Python}
 
 \hypertarget{dictionaries-in-python}{%
 \section{Dictionaries In Python}\label{dictionaries-in-python}}
@@ -2411,7 +2400,7 @@ Writing our own functions is also useful for ``packaging up'' computations. The 
 \hypertarget{defining-r-functions}{%
 \section{Defining R Functions}\label{defining-r-functions}}
 
-To create a function in R, we need another function called \texttt{function()}. We give the output of \texttt{function()} a name in the same way we give names to any other variable in R, by using the assignment operator \texttt{\textless{}-}. Here's an example of a toy function called \texttt{addOne()}. Here \texttt{myInput} is a placeholder that refers to whatever the user of the function ends up plugging in.
+To create a function in R, we need another function called \texttt{function()}. We give the output of \texttt{function()} a name in the same way we give names to any other variable in R, by using the assignment operator \texttt{\textless{}-} \index{assigntment operator!assignment operator in R}. Here's an example of a toy function called \texttt{addOne()}. Here \texttt{myInput} is a placeholder that refers to whatever the user of the function ends up plugging in.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2904,7 +2893,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 139622944327008 139622944327040}
+\CommentTok{\#\# 140571870479712 140571870479744}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -3043,7 +3032,7 @@ Now what if we want to be extra bad, and in addition to \emph{accessing} global 
 \end{Highlighting}
 \end{Shaded}
 
-In the program above, \texttt{makeATwo()} copies \texttt{a} into \texttt{arg}. It then assigns \texttt{2} to that copy. \textbf{Then it takes that \texttt{2} and writes it to the global \texttt{a} variable in the parent environment.} It does this using R's super assignment operator \texttt{\textless{}\textless{}-}. Regardless of the inputs passed in to this function, it will always assign exactly \texttt{2} to \texttt{a}, no matter what.
+In the program above, \texttt{makeATwo()} copies \texttt{a} into \texttt{arg}. It then assigns \texttt{2} to that copy. \textbf{Then it takes that \texttt{2} and writes it to the global \texttt{a} variable in the parent environment.} It does this using R's super assignment operator \texttt{\textless{}\textless{}-}\index{assigntment operator!super assignment operator in R}. Regardless of the inputs passed in to this function, it will always assign exactly \texttt{2} to \texttt{a}, no matter what.
 
 This is problematic because you are pre-occupying your mind with one function: \texttt{makeATwo()}. Whenever you write code that depends on \texttt{a} (or on things that depend on \texttt{a}, or on things that depended on things that depend on \texttt{a}, or \ldots), you'll have to repeatedly interrupt your train of thought to \emph{try} and remember if what you're doing is going to be okay with the current and future \texttt{makeATwo()} call sites.
 
@@ -3614,7 +3603,7 @@ Suppose you are creating a \emph{classifier} whose job it is to predict labels. 
 \hypertarget{data-frames}{%
 \chapter{Data Frames}\label{data-frames}}
 
-The rectangular array (e.g.~an Excel spreadsheet ) of information is what many think of when they hear the word ``data.'' Each column contains elements of a shared data type, and these data types can vary from column to column.
+The rectangular array (e.g.~an Excel spreadsheet ) of information is what many think of when they hear the word ``data.'' Each column contains elements of a shared data type, and these data types can vary from column to column.\index{data frame}
 
 There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python programs because many functions that read in data from an external source return objects of this type (e.g.~\texttt{read.csv()} in R and \texttt{pd.read\_csv()} in Python).
 
@@ -3663,7 +3652,7 @@ Let's consider as an example Fisher's ``Iris'' data set \citep{misc_iris_53} hos
 \end{Highlighting}
 \end{Shaded}
 
-There are some exceptions, but most data sets can be stored as a \texttt{data.frame}. These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g.~person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations.
+There are some exceptions, but most data sets can be stored as a \texttt{data.frame}.\index{data frame!data frames in R} These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g.~person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations.
 
 \begin{rmd-caution}
 
@@ -3774,7 +3763,7 @@ Code that modifies data usually looks quite similar to code extracting data. You
 \hypertarget{data-frames-in-python}{%
 \section{Data Frames in Python}\label{data-frames-in-python}}
 
-The Pandas library in Python has data frames that are modeled after R's.
+The Pandas library in Python has data frames that are modeled after R's \citep{pandas_guy}.\index{data frame!data frames in Python}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4624,7 +4613,7 @@ Before using third-party code, it must first be installed. After it is installed
 \hypertarget{installing-packages-in-r}{%
 \section{Installing Packages In R}\label{installing-packages-in-r}}
 
-In R, there are thousands of user-created \textbf{packages.} You can download most of these from the \href{https://cran.r-project.org/}{\emph{Comprehensive R Archive Network}}. You can also download packages from other publishing platforms like \href{https://www.bioconductor.org/}{Bioconductor}, or \href{https://github.com/}{Github}. Installing from CRAN is more commonplace, and extremely easy to do. Just use the \texttt{install.packages()} function. This can be run inside your R console, so there is no need to type things into the command line.
+In R, there are thousands of free, user-created \textbf{packages} \citep{r_for_everyone}. You can download most of these from the \href{https://cran.r-project.org/}{\emph{Comprehensive R Archive Network}}. You can also download packages from other publishing platforms like \href{https://www.bioconductor.org/}{Bioconductor}, or \href{https://github.com/}{Github}. Installing from CRAN is more commonplace, and extremely easy to do. Just use the \texttt{install.packages()} function. This can be run inside your R console, so there is no need to type things into the command line.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4964,7 +4953,7 @@ This is what an \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.ht
 \begin{Highlighting}[]
 \NormalTok{myName }\OtherTok{\textless{}{-}} \StringTok{"Taylor"}
 \ControlFlowTok{if}\NormalTok{(myName }\SpecialCharTok{!=} \StringTok{"Clare"}\NormalTok{)\{}
-    \FunctionTok{print}\NormalTok{(}\StringTok{"you are not Clare"}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\StringTok{"you are not Clare"}\NormalTok{)}
 \NormalTok{\}}
 \DocumentationTok{\#\# [1] "you are not Clare"}
 \end{Highlighting}
@@ -4976,7 +4965,7 @@ This is what an \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.ht
 \begin{Highlighting}[]
 \NormalTok{my\_name }\OperatorTok{=} \StringTok{"Taylor"}
 \ControlFlowTok{if}\NormalTok{ my\_name }\OperatorTok{==} \StringTok{"Taylor"}\NormalTok{:}
-  \BuiltInTok{print}\NormalTok{(}\StringTok{"hi Taylor"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"hi Taylor"}\NormalTok{)}
 \CommentTok{\#\# hi Taylor}
 \end{Highlighting}
 \end{Shaded}
@@ -4992,9 +4981,9 @@ If no \texttt{if} block or \texttt{else\ if}/\texttt{elif} block executes, an \t
 \ControlFlowTok{if}\NormalTok{(food }\SpecialCharTok{==} \StringTok{"apple"}\NormalTok{)\{}
     \FunctionTok{print}\NormalTok{(}\StringTok{"an apple a day keeps the doctor away"}\NormalTok{)}
 \NormalTok{\}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(food }\SpecialCharTok{==} \StringTok{"muffin"}\NormalTok{)\{}
-    \FunctionTok{print}\NormalTok{(}\StringTok{"muffins have a lot of sugar in them"}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\StringTok{"muffins have a lot of sugar in them"}\NormalTok{)}
 \NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}
-    \FunctionTok{print}\NormalTok{(}\StringTok{"neither an apple nor a muffin"}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\StringTok{"neither an apple nor a muffin"}\NormalTok{)}
 \NormalTok{\}}
 \DocumentationTok{\#\# [1] "muffins have a lot of sugar in them"}
 \end{Highlighting}
@@ -5028,7 +5017,7 @@ The most common loop for us will be a \texttt{for} loop. A simple \href{https://
 \NormalTok{myLength }\OtherTok{\textless{}{-}} \DecValTok{9}
 \NormalTok{r }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =}\NormalTok{ myLength)}
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(myLength))\{}
-\NormalTok{    r[i] }\OtherTok{\textless{}{-}}\NormalTok{ i}
+\NormalTok{  r[i] }\OtherTok{\textless{}{-}}\NormalTok{ i}
 \NormalTok{\}}
 \NormalTok{r}
 \DocumentationTok{\#\# [1] 1 2 3 4 5 6 7 8 9}
@@ -5080,10 +5069,10 @@ Loops are for repeatedly executing code. \texttt{for} loops are great when you k
 \CommentTok{\# in R}
 \NormalTok{keepGoing }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
 \ControlFlowTok{while}\NormalTok{(keepGoing)\{}
-\NormalTok{    oneOrZero }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, .}\DecValTok{5}\NormalTok{)}
-    \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"oneOrZero:"}\NormalTok{, oneOrZero))}
-    \ControlFlowTok{if}\NormalTok{(oneOrZero }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
-\NormalTok{        keepGoing }\OtherTok{\textless{}{-}} \ConstantTok{FALSE}
+\NormalTok{  oneOrZero }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, .}\DecValTok{5}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"oneOrZero:"}\NormalTok{, oneOrZero))}
+  \ControlFlowTok{if}\NormalTok{(oneOrZero }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
+\NormalTok{    keepGoing }\OtherTok{\textless{}{-}} \ConstantTok{FALSE}
 \NormalTok{\}}
 \DocumentationTok{\#\# [1] "oneOrZero: 0"}
 \DocumentationTok{\#\# [1] "oneOrZero: 0"}
@@ -5379,7 +5368,7 @@ In R, it all starts with \texttt{vector}s. There are two common functions you sh
 \end{Highlighting}
 \end{Shaded}
 
-\texttt{order()} is useful if you're sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the \texttt{MSRP} (a \texttt{character} vector) a little first. We use the function \texttt{gsub()} to find patterns in the text, and replace them with the empty string.
+\texttt{order()} is useful if you're sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars in an example data set \citep{sas_cars}. Notice that we need to clean up the \texttt{MSRP} (a \texttt{character} vector) a little first. We use the function \texttt{gsub()} to find patterns in the text, and replace them with the empty string.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6169,7 +6158,7 @@ I use a couple other functions in the above code. \texttt{abline()} is used to s
 \hypertarget{plotting-with-ggplot2}{%
 \section{\texorpdfstring{Plotting with \texttt{ggplot2}}{Plotting with ggplot2}}\label{plotting-with-ggplot2}}
 
-\href{https://ggplot2.tidyverse.org/index.html}{\texttt{ggplot2}} is a popular third-party visualization package for R. There are also libraries in Python (e.g.~\href{https://plotnine.readthedocs.io/en/stable/\#}{\texttt{plotnine}}) that have a similar look and feel. This subsection provides a short tutorial on how to use \texttt{ggplot2} in R, and it is primarily based off of the material provided in \citep{ggplot2}.
+\href{https://ggplot2.tidyverse.org/index.html}{\texttt{ggplot2}} is a popular third-party visualization package for R.\index{ggplot2} There are also libraries in Python (e.g.~\href{https://plotnine.readthedocs.io/en/stable/\#}{\texttt{plotnine}}) that have a similar look and feel. This subsection provides a short tutorial on how to use \texttt{ggplot2} in R, and it is primarily based off of the material provided in \citep{ggplot2}. Other excellent descriptions of \texttt{ggplot2} are \citep{r_in_action} and \citep{r_graphics_cookbook}.
 
 \texttt{ggplot2} code looks a lot different than the code in the above section\footnote{Personally, I find its syntax more confusing, and so I tend to prefer base graphics. However, it is very popular, and so I do believe that it is important to mention it here in this text.}. There, we would write a series of function calls, and each would change some state in the current figure. Here, we call different \texttt{ggplot2} functions that create S3 objects with special behavior (more information about S3 objects in subsection \ref{using-s3-objects}), and then we ``add'' (i.e.~we use the \texttt{+} operator) them together.
 
@@ -6324,7 +6313,9 @@ There are many to choose from, though. Try to run the following code on your own
 \hypertarget{plotting-with-matplotlib}{%
 \section{Plotting with Matplotlib}\label{plotting-with-matplotlib}}
 
-Matplotlib \citep{Hunter:2007} is a third-party visualization library in Python. It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda. This short introduction borrows heavily from the myriad of \href{https://matplotlib.org/stable/tutorials/index.html}{tutorials} on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, \citep{py_ds_handbook} is also a terrific resource. It has an entire chapter dedicated to visualization with Matplotlib.
+Matplotlib \citep{Hunter:2007} is a third-party visualization library in Python.\index{Matplotlib} It is the oldest and most heavily-used, so it is the best way to start making graphics in Python, in my humble opinion. It also comes installed with Anaconda.
+
+This short introduction borrows heavily from the myriad of \href{https://matplotlib.org/stable/tutorials/index.html}{tutorials} on Matplotlib's website. I will start off making a simple plot, and commenting on each line of code. If you're interested in learning more, \citep{py_ds_handbook} and \citep{pandas_guy} are also terrific resources.
 
 \begin{rmd-details}
 You can use either ``pyplot-style'' (e.g.~\texttt{plt.plot()}) or ``object-oriented-style'' to make figures in Matplotlib. Even though using the first type is faster to make simple plots, I will only describe the second one. It is the recommended approach because it is more extensible. However, the first one resembles the syntax of MATLAB. If you're familiar with MATLAB, you might consider learning a little about the first style, as well.
@@ -6356,7 +6347,7 @@ Second, we import Numpy in the same way we always have. Matplotlib is written to
 
 Third, we call the \texttt{subplots()} function, and use \emph{sequence unpacking} to unpack the returned container into individual objects without storing the overall container. ``Subplots'' sounds like it will make many different plots all on one figure, but if you look at the \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html\#matplotlib-pyplot-subplots}{documentation} the number of rows and columns defaults to one and one, respectively.
 
-\texttt{plt.subplots()} returns a \href{https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple\#tuple}{\texttt{tuple}}\footnote{We didn't talk about \texttt{tuple}s in chapter 2, but you can think of them as being similar to \texttt{list}s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g.~\texttt{(\textquotesingle{}a\textquotesingle{})} ) instead of square brackets, and they are immutable instead of mutable.} of two things: a \texttt{Figure} object, and one or more \texttt{Axes} object(s). These two classes will require some explanation.
+\texttt{plt.subplots()} returns a \href{https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple\#tuple}{\texttt{tuple}}\footnote{We didn't talk about \texttt{tuple}s in chapter 2, but you can think of them as being similar to \texttt{list}s. They are containers that can hold elements of different types. There are a few key differences, though: they are made with parentheses (e.g.~\texttt{(\textquotesingle{}a\textquotesingle{})} ) instead of square brackets, and they are immutable instead of mutable.}\index{tuples in Python} of two things: a \texttt{Figure} object, and one or more \texttt{Axes} object(s). These two classes will require some explanation.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6380,11 +6371,11 @@ If you want to make figures that are more elaborate, just keep calling different
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7cca7390\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fd963280320\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data }
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7cca74a8\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fd963280438\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7cca77f0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fd963280780\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
 \CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
@@ -6394,11 +6385,11 @@ If you want to make figures that are more elaborate, just keep calling different
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7efc7cccea58\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7fd96324fba8\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7efc7ccb5048\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7fd963280eb8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7efc7cc3f160\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7fd9631cbfd0\textgreater{}}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -6435,7 +6426,7 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \CommentTok{\#\# }
 \CommentTok{\#\# [5 rows x 7 columns]}
 \NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7efc7cc5a8d0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7fd9631540f0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6447,7 +6438,7 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7efc7cc5a8d0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7fd9631540f0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6459,7 +6450,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
 \NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7efc7cc5a8d0\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7fd9631540f0\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6469,7 +6460,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \hypertarget{an-introduction-to-object-oriented-programming}{%
 \chapter{An Introduction to Object-Oriented Programming}\label{an-introduction-to-object-oriented-programming}}
 
-\textbf{Object-Oriented Programming (OOP)} is a way of thinking about how to organize programs. This way of thinking focuses on objects. In the next chapter, we focus on organizing programs by functions, but for now we stick to objects. We already know about objects from the last chapter, so what's new here?
+\textbf{Object-Oriented Programming (OOP)}\index{object-oriented programming} is a way of thinking about how to organize programs. This way of thinking focuses on objects. In the next chapter, we focus on organizing programs by functions, but for now we stick to objects. We already know about objects from the last chapter, so what's new here?
 
 The difference is that we're creating our own \emph{types} now. In the last chapter we learned about built-in types: floating point numbers, lists, arrays, functions, etc. Now we will discuss broadly how one can create his own types in both R and Python. These user-defined types can be used as cookie cutters. Once we have the cookie cutter, we can make as many cookies as we want!
 
@@ -6481,19 +6472,19 @@ Here are a few abstract concepts that will help thinking about OOP. They are not
 
 \begin{itemize}
 \item
-  \textbf{Composition} refers to the idea when one type of object \emph{contains} an object of another type. For example, a linear model object could hold onto estimated regression coefficients, residuals, etc.
+  \textbf{Composition}\index{object-oriented programming!composition} refers to the idea when one type of object \emph{contains} an object of another type. For example, a linear model object could hold onto estimated regression coefficients, residuals, etc.
 \item
-  \textbf{Inheritance} takes place when an object can be considered to be of another type(s). For example, an analysis of variance linear regression model might be a special case of a general linear model.
+  \textbf{Inheritance}\index{object-oriented programming!inheritance} takes place when an object can be considered to be of another type(s). For example, an analysis of variance linear regression model might be a special case of a general linear model.
 \item
-  \textbf{Polymorphism} is the idea that the programmer can use the same code on objects of different types. For example, built-in functions in both R and Python can work on arguments of a wide variety of different types.
+  \textbf{Polymorphism}\index{object-oriented programming!polymorphism} is the idea that the programmer can use the same code on objects of different types. For example, built-in functions in both R and Python can work on arguments of a wide variety of different types.
 \item
-  \textbf{Encapsulation} is another word for complexity hiding. Do you have to understand every line of code in a package you're using? No, because a lot of details are purposefully hidden from you.
+  \textbf{Encapsulation}\index{object-oriented programming!encapsulation} is another word for complexity hiding. Do you have to understand every line of code in a package you're using? No, because a lot of details are purposefully hidden from you.
 \item
-  \textbf{Modularity} is an idea related to encapsulation--it means splitting something into independent pieces. How you split code into different files, different functions, different classes--all of that has to do with modularity. It promotes encapsulation, and it allows you to think about only a few lines of code at a time.
+  \textbf{Modularity}\index{object-oriented programming!modularity} is an idea related to encapsulation--it means splitting something into independent pieces. How you split code into different files, different functions, different classes--all of that has to do with modularity. It promotes encapsulation, and it allows you to think about only a few lines of code at a time.
 \item
-  The \textbf{interface}, between you and the code you're using, describes \emph{what} can happen, but not \emph{how} it happens. In other words, it describes some functionality so that you can decide whether you want to use it, but there are not enough details for you to make it work yourself. For example, all you have to do to be able to estimate a complicated statistical model is to look up some documentation.\footnote{Just because you can do this, doesn't mean you \emph{should}, though!} In other words, you only need to be familiar with the interface, not the implementation.
+  The \textbf{interface}\index{object-oriented programming!interface}, between you and the code you're using, describes \emph{what} can happen, but not \emph{how} it happens. In other words, it describes some functionality so that you can decide whether you want to use it, but there are not enough details for you to make it work yourself. For example, all you have to do to be able to estimate a complicated statistical model is to look up some documentation.\footnote{Just because you can do this, doesn't mean you \emph{should}, though!} In other words, you only need to be familiar with the interface, not the implementation.
 \item
-  The \textbf{implementation} of some code you're using describes \emph{how} it works in detail. If you are a package author, you can change your code's implementation ``behind the scenes'' and ideally, your end-users would never notice.
+  The \textbf{implementation}\index{object-oriented programming!implementation} of some code you're using describes \emph{how} it works in detail. If you are a package author, you can change your code's implementation ``behind the scenes'' and ideally, your end-users would never notice.
 \end{itemize}
 
 \hypertarget{oop-in-python}{%
@@ -6502,17 +6493,17 @@ Here are a few abstract concepts that will help thinking about OOP. They are not
 \hypertarget{overview}{%
 \subsection{Overview}\label{overview}}
 
-In Python, \href{https://docs.python.org/3/tutorial/classes.html}{classes} are user-defined types. When you define your own class, you describe what kind of information it holds onto, and how it behaves.
+In Python, \href{https://docs.python.org/3/tutorial/classes.html}{classes} are user-defined types\index{object-oriented programming!classes in Python}. When you define your own class, you describe what kind of information it holds onto, and how it behaves.
 
-To define your own type, use the \href{https://docs.python.org/3/tutorial/classes.html\#class-definition-syntax}{\texttt{class} keyword}. Objects created with a user-defined class are sometimes called \textbf{instances}. They behave according to the rules written in the class definition--they always have data and/or functions bundled together in the same way, but these instances do not all have the same data.
+To define your own type, use the \href{https://docs.python.org/3/tutorial/classes.html\#class-definition-syntax}{\texttt{class} keyword}\index{object-oriented programming!class keyword in Python}. Objects created with a user-defined class are sometimes called \textbf{instances}\index{object-oriented programming!instance}. They behave according to the rules written in the class definition--they always have data and/or functions bundled together in the same way, but these instances do not all have the same data.
 
 To be more clear, classes may have the following two things in their definition.
 
 \begin{itemize}
 \item
-  \textbf{Attributes (aka data members)} are pieces of data ``owned'' by an instance created by the class.
+  \textbf{Attributes (aka data members)}\index{object-oriented programming!attributes in Python|see{data member}} are pieces of data ``owned'' by an instance created by the class.
 \item
-  \textbf{(Instance) methods} are functions ``owned'' by an instance created by the class. They can use and/or modify data belonging to the class.
+  \textbf{(Instance) methods}\index{object-oriented programming!methods in Python} are functions ``owned'' by an instance created by the class. They can use and/or modify data belonging to the class.
 \end{itemize}
 
 \hypertarget{a-first-example}{%
@@ -6602,7 +6593,9 @@ Classes (obviously) need to be defined before they are used, so here is the defi
         \VariableTok{self}\NormalTok{.n }\OperatorTok{=} \DecValTok{0}
     \KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, new\_x):}
         \VariableTok{self}\NormalTok{.n }\OperatorTok{+=} \DecValTok{1}
-        \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{=}\NormalTok{ (}\VariableTok{self}\NormalTok{.current\_xbar}\OperatorTok{*}\NormalTok{(}\VariableTok{self}\NormalTok{.n }\OperatorTok{{-}} \DecValTok{1}\NormalTok{) }\OperatorTok{+}\NormalTok{ new\_x) }\OperatorTok{/} \VariableTok{self}\NormalTok{.n}
+        \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{*=}\NormalTok{ (}\VariableTok{self}\NormalTok{.n}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}
+        \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{+=}\NormalTok{ new\_x}
+        \VariableTok{self}\NormalTok{.current\_xbar }\OperatorTok{/=} \VariableTok{self}\NormalTok{.n}
     \KeywordTok{def}\NormalTok{ get\_current\_xbar(}\VariableTok{self}\NormalTok{):}
         \ControlFlowTok{if} \VariableTok{self}\NormalTok{.n }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
             \ControlFlowTok{return} \VariableTok{None}
@@ -6813,7 +6806,7 @@ It's best to learn about them chronologically, in my opinion. S3 classes came fi
 \hypertarget{s3-objects-the-big-picture}{%
 \subsection{S3 objects: The Big Picture}\label{s3-objects-the-big-picture}}
 
-With S3 (and S4) objects, calling a method \texttt{print()} will not look like this.
+With S3 (and S4) objects, calling a method\index{object-oriented programming!methods in R} \texttt{print()} will not look like this.\index{object-oriented programming!S3 classes in R}
 
 \begin{verbatim}
 my_obj.print()
@@ -6825,7 +6818,7 @@ Instead, it will look like this:
 print(my_obj)
 \end{verbatim}
 
-The primary goal of S3 is \emph{polymorphism}. We want functions like \texttt{print()}, \texttt{summary()} and \texttt{plot()} to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right? So we can write code like the following, we only have to remember fewer functions as an end-user, and the ``right'' thing will always happen. If you're writing a package, it's also nice for your users that they're able to use the regular functions that they're familiar with. For instance, I allow users of my package \href{https://cran.r-project.org/web/packages/cPseudoMaRg/index.html}{\texttt{cPseudoMaRg}} \citep{cpm} to call \texttt{print()} on objects of type \texttt{cpmResults}. In section \ref{plotting-with-ggplot2}, \texttt{ggplot2} instances, which are much more complicated than plain \texttt{numeric} \texttt{vector}s, are \texttt{+}ed together.
+The primary goal of S3 is \emph{polymorphism} \citep{grolemund2014hands}. We want functions like \texttt{print()}, \texttt{summary()} and \texttt{plot()} to behave differently when objects of a different type are passed in to them. Printing a linear model should look a lot different than printing a data frame, right? So we can write code like the following, we only have to remember fewer functions as an end-user, and the ``right'' thing will always happen. If you're writing a package, it's also nice for your users that they're able to use the regular functions that they're familiar with. For instance, I allow users of my package \href{https://cran.r-project.org/web/packages/cPseudoMaRg/index.html}{\texttt{cPseudoMaRg}} \citep{cpm} to call \texttt{print()} on objects of type \texttt{cpmResults}. In section \ref{plotting-with-ggplot2}, \texttt{ggplot2} instances, which are much more complicated than plain \texttt{numeric} \texttt{vector}s, are \texttt{+}ed together.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6845,9 +6838,9 @@ Last, recall that this discussion only applies to S3 objects. Not all objects ar
 
 Using S3 objects is so easy that you probably don't even know that you're actually using them. You can just try to call functions on objects, look at the output, and if you're happy with it, you're good. However, if you've ever asked yourself: ``why does \texttt{print()} (or another function) do different things all the time?'' then this section will be useful to you.
 
-\texttt{print()} is a \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Method-dispatching}{\textbf{generic function}} which is a function that looks at the type of its first argument, and then calls another, more specialized function depending on what type that argument is. Not all functions in R are generic, but some are. In addition to \texttt{print()}, \texttt{summary()} and \texttt{plot()} are the most ubiquitous generic functions. Generic functions are an \emph{interface}, because the user does not need to concern himself with the details going on behind the scenes.
+\texttt{print()} is a \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Method-dispatching}{\textbf{generic function}} which is a function that looks at the type of its first argument, and then calls another, more specialized function depending on what type that argument is\index{object-oriented programming!generic functions in R}. Not all functions in R are generic, but some are. In addition to \texttt{print()}, \texttt{summary()} and \texttt{plot()} are the most ubiquitous generic functions. Generic functions are an \emph{interface}, because the user does not need to concern himself with the details going on behind the scenes.
 
-In R, a \textbf{method} is a specialized function that gets chosen by the generic function for a particular type of input. The method is the \emph{implementation}. When the generic function chooses a particular method, this is called \textbf{method dispatch}.
+In R, a \textbf{method}\index{object-oriented programming!methods in R} is a specialized function that gets chosen by the generic function for a particular type of input. The method is the \emph{implementation}. When the generic function chooses a particular method, this is called \textbf{method dispatch}.\index{object-oriented programming!method dispatch in R}
 
 If you look at the definition of a generic function, let's take \texttt{plot()} for instance, it has a single line that calls \texttt{UseMethod()}.
 
@@ -6860,7 +6853,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x556ed372a520>
+## <bytecode: 0x55f96d83fdf8>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -6883,7 +6876,7 @@ R's dot-notation is nothing like Python's dot-notation! In R, functions do not \
 
 \end{rmd-caution}
 
-Method dispatch works by looking at the \texttt{class} attribute of an S3 object argument. An object in R may or may not have a set of \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Attributes}{\textbf{attributes}}, which are a collection of name/value pairs that give a particular object extra functionality. Regular \texttt{vector}s in R don't have attributes (e.g.~try running \texttt{attributes(1:3)}), but objects that are ``embellished'' versions of a \texttt{vector} might (e.g.~run \texttt{attributes(factor(1:3))}).
+Method dispatch works by looking at the \texttt{class} attribute of an S3 object argument. An object in R may or may not have a set of \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html\#Attributes}{\textbf{attributes}}\index{object-oriented programming!attributes in R}, which are a collection of name/value pairs that give a particular object extra functionality. Regular \texttt{vector}s in R don't have attributes (e.g.~try running \texttt{attributes(1:3)}), but objects that are ``embellished'' versions of a \texttt{vector} might (e.g.~run \texttt{attributes(factor(1:3))}). Attributes in R are similar to attributes in Python, but they are usually only used as ``tags'' to elicit some sort of behavior when the object is passed into a function.
 
 \begin{rmd-caution}
 \texttt{class()} will return misleading results if it's called on an object that isn't an S3 object. Make sure to check with \texttt{is.object()} first.
@@ -7005,7 +6998,7 @@ S4 was developed after S3. If you look at your search path (type \texttt{search(
   S4 classes can have default data members via \texttt{prototype}s.
 \end{itemize}
 
-Much more information about S4 classes can be obtained by reading \href{https://adv-r.hadley.nz/s4.html}{Chapter 15 in Hadley Wickham's book.}
+Much more information about S4 classes can be obtained by reading \href{https://adv-r.hadley.nz/s4.html}{Chapter 15 in Hadley Wickham's book.}\index{object-oriented programming!S4 classes in R}
 
 \hypertarget{using-s4-objects}{%
 \subsection{Using S4 objects}\label{using-s4-objects}}
@@ -7080,13 +7073,16 @@ Next we want to define an \texttt{update()} generic function that will work on o
 
 Recall that in the Python example, each class had its own update method. Here, we still have a specialized method for each class, but S4 methods don't have to be defined inside the class definition, as we can see below.
 
+\begin{verbatim}
+## Creating a new generic function for 'update' in the global environment
+## [1] "update"
+\end{verbatim}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{setGeneric}\NormalTok{(}\StringTok{"update"}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(oldMean, newNum) \{}
   \FunctionTok{standardGeneric}\NormalTok{(}\StringTok{"update"}\NormalTok{)}
 \NormalTok{\})}
-\DocumentationTok{\#\# Creating a new generic function for \textquotesingle{}update\textquotesingle{} in the global environment}
-\DocumentationTok{\#\# [1] "update"}
 \FunctionTok{setMethod}\NormalTok{(}\StringTok{"update"}\NormalTok{,}
           \FunctionTok{c}\NormalTok{(}\AttributeTok{oldMean =} \StringTok{"RunningMean"}\NormalTok{, }\AttributeTok{newNum =} \StringTok{"numeric"}\NormalTok{),}
           \ControlFlowTok{function}\NormalTok{(oldMean, newNum) \{}
@@ -7159,7 +7155,7 @@ Here's a demonstration of using these two classes that mirrors the example in su
 \end{Highlighting}
 \end{Shaded}
 
-This looks more \emph{functional} (more information on functional programming is available in chapter \ref{an-introduction-to-functional-programming}) than the Python example because the \texttt{update()} function does not change an object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (\texttt{\textless{}-}) signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.
+This looks more \emph{functional} (more information on functional programming is available in chapter \ref{an-introduction-to-functional-programming}) than the Python example because the \texttt{update()} function does not change an object with a side-effect. Instead, it takes the old object, changes it, returns the new object, and uses assignment to overwrite the object. The benefit of this approach is that the assignment operator (\texttt{\textless{}-}) \index{assigntment operator!assignment operator in R} signals to us that something is changing. However, there is more data copying involved, so the program is presumably slower than it needs to be.
 
 The big takeaway here is that S3 and S4 don't feel like Python's encapsulated OOP. If we wanted to write stateful programs, we might consider using Reference Classes, or R6 classes.
 
@@ -7174,7 +7170,7 @@ The big takeaway here is that S3 and S4 don't feel like Python's encapsulated OO
 \item
   their method definitions are \emph{encapsulated} inside class definitions like in Python, and
 \item
-  the objects they construct are \emph{mutable}.
+  the objects they construct are \emph{mutable}.\index{object-oriented programming!Reference Classes in R}
 \end{enumerate}
 
 So it will feel much more like Python's class system. Some might say using reference classes that will lead to code that is not very R-ish, but it can be useful for certain types of programs (e.g.~long-running code, code that that performs many/high-dimensional/complicated simulations, or code that circumvents storing large data set in your computer's memory all at once).
@@ -7237,7 +7233,7 @@ You'll notice the reappearance of the \texttt{self} keyword. R6 classes have a \
 \item
   they have \href{https://r6.r-lib.org/articles/Performance.html}{better performance than reference classes}, and
 \item
-  they don't make use of the \texttt{\textless{}\textless{}-} operator.
+  they don't make use of the \texttt{\textless{}\textless{}-} operator.\index{object-oriented programming!R6 classes in R}
 \end{enumerate}
 
 \begin{Shaded}
@@ -7962,7 +7958,7 @@ We can visualize the mathematical function by plotting its outputs against its i
 
 }
 
-\caption{Our Spline Function}\label{fig:unnamed-chunk-274}
+\caption{Our Spline Function}\label{fig:unnamed-chunk-275}
 \end{figure}
 
 \texttt{map()} can also be used like \texttt{mapply()}. In other words, you can apply it to two containers,
@@ -8210,11 +8206,11 @@ One-off approximations aren't as interesting as visualizing many expectations fo
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-287-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-288-1} 
 
 }
 
-\caption{Monte Carlo Approximations versus Exact Evaluations}\label{fig:unnamed-chunk-287}
+\caption{Monte Carlo Approximations versus Exact Evaluations}\label{fig:unnamed-chunk-288}
 \end{figure}
 
 There are three problems with this implementation:
@@ -8270,11 +8266,11 @@ Let's compare using common random numbers to going without. As you can see, comm
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-290-1} 
+{\centering \includegraphics[width=0.8\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-291-1} 
 
 }
 
-\caption{Monte Carlo: With and Without Common Random Numbers}\label{fig:unnamed-chunk-290}
+\caption{Monte Carlo: With and Without Common Random Numbers}\label{fig:unnamed-chunk-291}
 \end{figure}
 
 \begin{Shaded}
@@ -8471,6 +8467,167 @@ So how do we write decorators that accomplish this? The important thing to remem
 \end{Shaded}
 
 Now that you know how decorators work, you can feel comfortable using third-party ones. You might come across, for example, the \texttt{@jit} decorator from \href{https://numba.pydata.org/}{Numba}, which will translate your Python function into faster machine code, the \texttt{@lru\_cache} decorator from the \href{https://docs.python.org/3/library/functools.html}{\texttt{functools} module}--this can make your code faster by saving some of its outputs--or decorators that perform application specific tasks like \href{https://www.tensorflow.org/api_docs/python/tf/function}{\texttt{@tf.function}} from Tensorflow.
+
+\hypertarget{exercises-12}{%
+\section{Exercises}\label{exercises-12}}
+
+\hypertarget{python-questions-11}{%
+\subsection{Python Questions}\label{python-questions-11}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \begin{itemize}
+  \tightlist
+  \item
+    Write a function decorator called \texttt{@log\_dens\_eval(left\_bound,\ right\_bound)}.
+  \item
+    When it decorates a function, say \texttt{func(x)}, it will not change that function's input or output, but it will verify that the input to the function (in this case \texttt{x}) is between \texttt{left\_bound} and \texttt{right\_bound}. If it is not, it will return negative infinity.
+  \end{itemize}
+\item
+\end{enumerate}
+
+The Split-Apply-Combine strategy might be useful in writing code for a tree-based model \citep{trees}. We won't discuss how these models are estimated, but we will write a function that generates another function that is able to generate predictions by stratifying the input/predictor/feature space.
+
+\begin{itemize}
+\tightlist
+\item
+  Import the data \texttt{"winequality-red.csv"}, call it \texttt{wine}, and remove all columns except for \texttt{fixed\ acidity}, \texttt{volatile\ acidity}, and \texttt{quality}.
+\item
+  Write a function called \texttt{generate\_pred\_func(fixed\_cutoff,\ vol\_cutoff,\ dataset)}.
+\item
+  The \texttt{dataset} argument should be a Pandas \texttt{DataFrame} that has three columns called \texttt{fixed\ acidity}, \texttt{volatile\ acidity}, and \texttt{quality}.
+\item
+  The \texttt{fixed\_cutoff} argument should be a floating point number that separates \texttt{fixed\ acidity} into two regions.
+\item
+  The \texttt{vol\_cutoff} argument should be a floating point number that separates \texttt{volatile\ acidity} into two regions.
+\item
+  The function should return a function, say \texttt{func(fixed\_acidity,\ volatile\_acidity)}. The two arguments are floating points. This function should return the most frequent \texttt{quality} observation out of all points whose inputs lie in in the corresponding region in the feature space.
+\end{itemize}
+
+After you finish the problem, you should have a definition of a \texttt{generate\_pred\_func()} that could be used as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict }\OperatorTok{=}\NormalTok{ generate\_pred\_func(fixed\_cutoff}\OperatorTok{=}\DecValTok{8}\NormalTok{, vol\_cutoff}\OperatorTok{=}\FloatTok{.5}\NormalTok{, dataset}\OperatorTok{=}\NormalTok{wine)}
+\NormalTok{predict(}\DecValTok{10}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+\end{enumerate}
+
+Let's predict what type of activity some is doing based on measurements taken from their cell phone. We will begin implementing a \textbf{K-Nearest Neighbors (KNN) classifier} \citep{knn1} \citep{knn2}.
+
+Consider the data files \texttt{"X\_train.txt"} and \texttt{"y\_train.txt"} from \citep{Anguita2013APD}, which is available from the UCI Machine Learning Repository \citep{uci_data}. The first data set consists of recorded movements from a cell phone, and the second data set consists of activity labels of people. Labels \(1\) through \(6\) correspond to walking, walking upstairs, walking downstairs, sitting, standing and laying, respectively.
+
+\begin{itemize}
+\tightlist
+\item
+  Read in \texttt{"X\_train.txt"} as a \texttt{DataFrame} called \texttt{x\_train}.
+\item
+  Read in \texttt{"y\_train.txt"} as a \texttt{DataFrame} called \texttt{y\_train}
+\item
+  Define a function called \texttt{standardize(arr)} that takes in an array-like and returns a standardized version of the array-like. Do this by subtracting from each element the overall mean and dividing each element by the standard deviation (use the length as a denominator, not length minus \(1\)).
+\item
+  Apply \texttt{standardize()} to each column and transform \texttt{x\_train} by replacing all of its column by their standardized versions. Make sure to overwrite \texttt{x\_train}. Do this in one line of code.
+\item
+  Write a function called \texttt{euclid\_dist(arr1,\ arr2)} that calculates Euclidean distance between two points/array-likes.
+\item
+  What is the most common label among the 5 rows that are closest to the first row? Assign your answer to \texttt{my\_predict}. Assume that the two data sets you imported have the same order. Don't include the first row in these \(5\) \emph{nearest neighbors}. Take care not to modify \texttt{x\_train} or \texttt{y\_train}.
+\end{itemize}
+
+\hypertarget{r-questions-11}{%
+\subsection{R Questions}\label{r-questions-11}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+The density of a particular bivariate Gaussian distribution is
+
+\[
+f(x,y) = \frac{1}{2 \pi}  \exp\left[ -\frac{x ^2 + y^2}{2}     \right] \tag{1}.
+\]
+The random elements \(X\) and \(Y\), in this particular case, are independent, each have unit variance, and zero mean. In this case, the marginal for \(X\) is a mean \(0\), unit variance normal distribution:
+
+\[
+g(x) = \frac{1}{\sqrt{2\pi}} \exp\left[ -\frac{x ^2 }{2}     \right] \tag{2}.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  Write a function called \texttt{fTwoArgs(x,y)} that takes two arguments, and returns the value of the above density in equation (1) at those two points.
+\item
+  Write a function called \texttt{fOneArg(vec)} that takes one argument: a length two \texttt{vector}. It should return a density in equation (1) evaluated at that point.
+\item
+  Write a function called \texttt{gOneArg(x)} that evaluates the density in (2).
+\item
+  Generate two sequences called \texttt{xPoints} and \texttt{yPoints}. Have them contain the twenty equally-spaced numbers going from \(-3\) to \(3\), inclusive.
+\item
+  Use \texttt{expand.grid()} to create a \texttt{data.frame} called \texttt{myGrid}. It should have two columns, and it should contain in its rows every possible pair of two points from the above sequences. The ``x'' coordinates should be in the first column.
+\item
+  Use \texttt{mapply()} to evaluate the bivariate density on every grid point. Store your results in a \texttt{vector} \texttt{mEvals}.
+\item
+  Use \texttt{apply()} to evaluate the bivariate density on every grid point. Store your results in a \texttt{vector} \texttt{aEvals}.
+\item
+  Use \texttt{sapply()} to evaluate the univariate density on every element of \texttt{xPoints}. Store your results in a \texttt{vector} \texttt{sEvals}.
+\item
+  Use \texttt{vapply} to evaluate the univariate density on every element of \texttt{xPoints}. Store your results in \texttt{vector} \texttt{vEvals}.
+\item
+  Use \texttt{lapply} to evaluate the univariate density on every element of \texttt{xPoints}. Store your results in a \texttt{list} \texttt{lEvals}.
+\item
+  Generate two plots of the bivariate density. For one, use \texttt{persp()}. For the other, use \texttt{contour()}.
+\item
+  Generate a third plot of the univariate density.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+Write a function that reads in all of the data sets contained in any given folder.
+
+\begin{itemize}
+\tightlist
+\item
+  The function should be called \texttt{readAllData(path,\ extensions)}.
+\item
+  The first argument, \texttt{path}, should be a string representing which folder you would like to search for files.
+\item
+  The second argument, \texttt{extensions}, should be a \texttt{character} \texttt{vector} of all the file extensions you are interested in reading in (e.g.~\texttt{c(\textquotesingle{}.txt\textquotesingle{},\textquotesingle{}.csv\textquotesingle{})}). Be careful about using regular expressions!
+\item
+  The function should return a \texttt{list} of \texttt{data.frame}s.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+\end{enumerate}
+
+Consider the Militarized Interstate Disputes (v5.0) \citep{mid5} data sets again: \texttt{"MIDA\ 5.0.csv"}, \texttt{"MIDB\ 5.0.csv"}, \texttt{"MIDI\ 5.0.csv"}, and \texttt{"MIDIP\ 5.0.csv"}.
+
+\begin{itemize}
+\tightlist
+\item
+  Read these data sets in as a \texttt{list} of \texttt{data.frame}s. Call it \texttt{dfList}.
+\item
+  Use \texttt{lapply()} and \texttt{do.call()} to calculate the biggest column average for all of these data sets. Store this average as \texttt{biggestAve}. Store the name of the column that had this biggest average as \texttt{whichBiggestAve}. Don't worry about storing which data set this column mean was found in.
+\item
+  Use \texttt{Reduce()} and \texttt{lapply()} to, once again, calculate the biggest column average. Store this number as \texttt{biggestAve2}
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 

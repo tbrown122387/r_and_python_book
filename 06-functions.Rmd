@@ -12,7 +12,7 @@ Writing our own functions is also useful for "packaging up" computations. The ut
 
 ## Defining R Functions
 
-To create a function in R, we need another function called `function()`. We give the output of `function()` a name in the same way we give names to any other variable in R, by using the assignment operator `<-`. Here's an example of a toy function called `addOne()`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
+To create a function in R, we need another function called `function()`. We give the output of `function()` a name in the same way we give names to any other variable in R, by using the assignment operator `<-` \index{assigntment operator!assignment operator in R}. Here's an example of a toy function called `addOne()`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
 
 ```{r, collapse = TRUE}
 addOne <- function(myInput){  # define the function
@@ -512,7 +512,7 @@ print(makeATwo(a))
 print(a)
 ```
 
-In the program above, `makeATwo()` copies `a` into `arg`. It then assigns `2` to that copy. **Then it takes that `2` and writes it to the global `a` variable in the parent environment.** It does this using R's super assignment operator `<<-`. Regardless of the inputs passed in to this function, it will always assign exactly `2` to `a`, no matter what. 
+In the program above, `makeATwo()` copies `a` into `arg`. It then assigns `2` to that copy. **Then it takes that `2` and writes it to the global `a` variable in the parent environment.** It does this using R's super assignment operator `<<-`\index{assigntment operator!super assignment operator in R}. Regardless of the inputs passed in to this function, it will always assign exactly `2` to `a`, no matter what. 
 
 This is problematic because you are pre-occupying your mind with one function: `makeATwo()`. Whenever you write code that depends on `a` (or on things that depend on `a`, or on things that depended on things that depend on `a`, or ...), you'll have to repeatedly interrupt your train of thought to *try* and remember if what you're doing is going to be okay with the current and future `makeATwo()` call sites. 
 

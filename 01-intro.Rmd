@@ -10,7 +10,7 @@ use_condaenv("base")
 
 # Introduction {#intro}
 
-Now that you have both R and Python installed, we can get started by taking a tour of our two different **integrated development environments environments** (IDEs)\index{integrated development environments environment (IDE)} RStudio\index{RStudio} and Spyder\index{Spyder}. 
+Now that you have both R and Python installed, we can get started by taking a tour of our two different **integrated development environments environments** (IDEs)\index{integrated development environment (IDE)} RStudio\index{integrated development environment (IDE)!RStudio} and Spyder\index{integrated development environment (IDE)!Spyder}. 
 
 In addition, I will also discuss a few topics superficially, so that we can get our feet wet:
 
@@ -29,7 +29,7 @@ knitr::include_graphics("pics/rstudio.png")
 
 I changed my "Editor Theme" from the default to "Cobalt" because it's easier on my eyes. If you are opening RStudio for the first time, you probably see a lot more white. You can play around with the theme, if you wish, after going to `Tools -> Global Options -> Appearance`.
 
-The **console**, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the `print()` function.
+The **console**\index{console!console in RStudio}, which is located by default on the lower left panel, is the place that all of your code gets run. For short one-liners, you can type code directly into the console. Try typing the following code in there. Here we are making use of the `print()` function.
 
 ::: {.rmd-details data-latex=""}
 In R, functions are "first-class objects," which means can refer to the name of a function without asking it to do anything. However, when we *do* want to use it, we put parentheses after the name. This is called **calling** the function or **invoking** the function. If a function call takes any **arguments** (aka inputs), then the programmer supplies them between the two parentheses. A function may **return** values to be subsequently used, or it may just produce a "side-effect" such as printing some text, displaying a chart, or read/writing information to an external data source.
@@ -39,7 +39,7 @@ In R, functions are "first-class objects," which means can refer to the name of 
 print('hello R world')
 ```
 
-During the semester, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a **script**. Click `File -> New File -> R Script` to create a new script. It should appear at the top left of the RStudio window (see Figure \@ref(fig:rstudio) ) . After that, copy and paste the following code into your script window.
+During the semester, we will write more complicated code. Complicated code is usually written incrementally and stored in a text file called a **script**\index{script}. Click `File -> New File -> R Script` to create a new script. It should appear at the top left of the RStudio window (see Figure \@ref(fig:rstudio) ) . After that, copy and paste the following code into your script window\index{script!scripts in R}.
 
 ```{r, eval=FALSE}
 print('hello world')
@@ -53,7 +53,7 @@ print(myName)
 
 This script will run five print statements, and then create a variable called `myName`. The print statements are of no use to the computer and will not affect how the program runs. They just display messages to the human running the code.
 
-The variable created on the last line is more important because it is used by the computer, and so it can affect how the program runs. The operator `<-` is the [**assignment operator**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html). It takes the character constant `"Taylor"`, which is on the right, and stores it under the name `myName`. If we added lines to this program, we could refer to the variable `myName` in subsequent calculations.
+The variable created on the last line is more important because it is used by the computer, and so it can affect how the program runs. The operator `<-` is the [**assignment operator**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html)\index{assigntment operator!assignment operator in R}. It takes the character constant `"Taylor"`, which is on the right, and stores it under the name `myName`. If we added lines to this program, we could refer to the variable `myName` in subsequent calculations.
 
 Save this file wherever you want on your hard drive. Call it `awesomeScript.R`. Personally, I saved it to my desktop.
 
@@ -67,7 +67,7 @@ setwd("/home/taylor/Desktop/")
 source("awesomeScript.R")
 ```
 
-The first line changes the [**working directory**](https://stat.ethz.ch/R-manual/R-devel/library/base/html/getwd.html) to `Desktop/`. You, dear reader, should change this line by replacing `Desktop/` to whichever folder you chose to save `awesomeScript.R` in. If you would like to find out what your working directory is currently set to, you can use `getwd()`.
+The first line changes the [working directory](https://stat.ethz.ch/R-manual/R-devel/library/base/html/getwd.html)\index{working directory!working directory in R} to `Desktop/`. The **working directory** is the first place your program looks for files\index{working directory}. You, dear reader, should change this line by replacing `Desktop/` to whichever folder you chose to save `awesomeScript.R` in. If you would like to find out what your working directory is currently set to, you can use `getwd()`.
 
 ::: {.rmd-details data-latex=""}
 Every computer has a different folder/directory structure--that is why it is highly recommended you refer to file locations as seldom as possible in your scripts. This makes your code more *portable.* When you send your file to someone else (e.g. your instructor or your boss), she will have to remove or change every mention of any directory. This is because those directories (probably) won't exist on her machine.
@@ -99,7 +99,7 @@ Recall that we will exclusively assume the use of *Spyder* in this textbook. Ope
 knitr::include_graphics("pics/spyder_screenshot.png")
 ```
 
-It looks a lot like RStudio, right? The script window is still on the left hand side, but it takes up the whole height of the window this time. However, you will notice that the console window has moved. It's over on the bottom right now.
+It looks a lot like RStudio, right? The script window \index{script!script in Python} is still on the left hand side, but it takes up the whole height of the window this time. However, you will notice that the console window\index{console!console in Spyder} has moved. It's over on the bottom right now.
 
 Again, you might notice a lot more white when you open this for the first time. Just like last time, I changed my color scheme. You can change yours by going to `Tools -> Preferences` and then exploring the options available under the `Appearances` tab.
 
@@ -126,7 +126,7 @@ my_name = "Taylor"
 print(my_name)
 ```
 
-Notice that the assignment operator is different in Python. It's an `=`^[You can use this symbol in R, too, but it is less common.].
+Notice that the assignment operator is different in Python\index{assigntment operator!assignment operator in Python}. It's an `=`^[You can use this symbol in R, too, but it is less common.].
 
 Just like RStudio, Spyder has a button that runs the entire script from start to finish. It's the green triangle button (see Figure \@ref(fig:spyder) ).
 
@@ -138,7 +138,7 @@ os.chdir('/home/taylor/Desktop')
 runfile("awesomeScript.py")
 ```
 
-This is also pretty similar to the R code from before. `os.chdir()` sets our working directory to the `Desktop`. Then `runfile()` runs all of the lines in our program, sequentially, from start to finish^[Python, like R, allows you to run scripts from the command line, but this will not be discussed in this text.].
+This is also pretty similar to the R code from before. `os.chdir()` sets our working directory\index{working directory!working directory in Python} to the `Desktop`. Then `runfile()` runs all of the lines in our program, sequentially, from start to finish^[Python, like R, allows you to run scripts from the command line, but this will not be discussed in this text.].
 
 The first line is new, though. We did not mention anything like this in R, yet. We will talk more about `import`ing modules in section \@ref(loading-packages-in-python). Suffice it to say that we imported the `os` module to make the `chdir()` function available to us.
 
@@ -168,7 +168,7 @@ The directory repeatedly mentioned in the code above was `/home/taylor/Desktop`.
 
 On Windows, things are a bit different. For one, a full path starts with a drive (e.g. `C:`). Second, there are backslashes (not forward slashes) to separate directory names (e.g `C:\Users\taylor\Desktop`).
 
-Unfortunately, backslashes are a special character in both R and Python (read section \@ref(an-introduction-to-regular-expressions) to find out more about this). Whenever you type a `\`, it will change the meaning of whatever comes after it. In other words, `\` is known as an **escape character**.
+Unfortunately, backslashes are a special character in both R and Python (read section \@ref(an-introduction-to-regular-expressions) to find out more about this). Whenever you type a `\`, it will change the meaning of whatever comes after it. In other words, `\` is known as an **escape character**.\index{escape character}
 
 ::: {.rmd-details data-latex=""}
 In both R and Python, the backslash character is used to start an "escape" sequence. You can see some examples in R by clicking [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html), and some examples in Python by clicking [here](https://docs.python.org/3/reference/lexical_analysis.html). In Python it may also be used to [allow long lines of code to take up more than one line in a text file.](https://docs.python.org/3/reference/lexical_analysis.html#explicit-line-joining)
@@ -176,7 +176,7 @@ In both R and Python, the backslash character is used to start an "escape" seque
 
 The recommended way of handling this is to just use forward slashes instead. For example, if you are running Windows, `C:/Users/taylor/Desktop/myScript.R` will work in R, and `C:/Users/taylor/Desktop/myScript.py` will work in Python.
 
-You may also use "raw string constants" (e.g. `r'C:\Users\taylor\my_file.txt'` ). "Raw" means that `\` will be treated as a literal character instead of an escape character. Alternatively, you can "escape" the backslashes by replacing each single backslash with a double backslash. Please read section \@ref(an-introduction-to-regular-expressions) for more details about these choices.
+You may also use "raw string constants" (e.g. `r'C:\Users\taylor\my_file.txt'` ). "Raw" means that `\` will be treated as a literal character instead of an escape character\index{escape character}. Alternatively, you can "escape" the backslashes by replacing each single backslash with a double backslash. Please read section \@ref(an-introduction-to-regular-expressions) for more details about these choices.
 
 
 

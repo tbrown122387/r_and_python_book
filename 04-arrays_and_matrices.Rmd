@@ -4,7 +4,7 @@ Sometimes you want a collection of elements that are *all the same type*, but yo
 
 ## Numpy `ndarray`s In Python
 
-In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html). Each array will come with an enormous amount of [methods](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods) and [attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes) (more on object-oriented program in chapter \@ref(an-introduction-to-object-oriented-programming)) attached to it. A few are demonstrated below. 
+In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy `array`s we discussed earlier are a special case of [Numpy's N-dimensional arrays](https://numpy.org/doc/stable/reference/arrays.ndarray.html)\index{Numpy array (Python)}. Each array will come with an enormous amount of [methods](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods) and [attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes) (more on object-oriented program in chapter \@ref(an-introduction-to-object-oriented-programming)) attached to it. A few are demonstrated below. 
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -27,11 +27,16 @@ np.dot(b,a) # matrix mult.
 b @ a # infix matrix mult. from PEP 465
 a * np.arange(4) # elementwise mult.
 ```
+I should mention that there is also a `matrix` type in Numpy; however, this is not described in this text because it is preferable to work with Numpy `array`s [@ml_with_python_cookbook]. 
+
+::: {.rmd-details data-latex=""}
+In both R and Python, there are `matrix` types and `array` types. In R, it is more common to work with `matrix`s than `array`s, and the opposite is true in Python!
+::: 
 
 
 ## The `matrix` and `array` classes in R
 
-In Python, adding a dimension to your "container" is simple. You keep using Numpy arrays, and you just change the `.shape` attribute (perhaps with a call to `.reshape()` or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the `matrix` class. Containers with 3 or more dimensions are of the `array` class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of [@matloff_r_book]. 
+In Python, adding a dimension to your "container" is simple. You keep using Numpy arrays, and you just change the `.shape` attribute (perhaps with a call to `.reshape()` or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the `matrix` class\index{matrix in R}. Containers with 3 or more dimensions are of the `array` class^[Technically, the distinction between all of these containers is more subtle. An `array` in R can have one, two or more dimensions, and it is just a vector which is stored with additional dimension attributes. Moreover, a 2-dimensional array is the same as a `matrix`.].\index{array in R} In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of [@matloff_r_book]. 
 
 
 ::: {.rmd-caution data-latex=""}

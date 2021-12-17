@@ -5,7 +5,7 @@ This section is for describing the data types that let us store collections of e
 ## Overview of R
 
 In the previous section, I mentioned that R does not have scalar types--it just has [**vectors**](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects
-). So, whether you want to store one number (or `logical`, or `character`, or ...), or many numbers, you will need a `vector`. 
+). So, whether you want to store one number (or `logical`, or `character`, or ...), or many numbers, you will need a `vector`.\index{vectors in R} 
 
 
 ::: {.rmd-caution data-latex=""}
@@ -37,7 +37,7 @@ Sometimes you will be interested in setting the seed on your own because it is a
 
 ## Overview of Python
 
-If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy `array`. Numpy is a highly-regarded third party library [@harris2020array] for Python. Its `array` objects store elements of the same type, just as R's `vector`s do.
+If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy `array`. Numpy is a highly-regarded third party library [@harris2020array] for Python. Its `array` objects store elements of the same type, just as R's `vector`s do.\index{Numpy array (Python)}
 
 There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the examples from above.
 
@@ -61,7 +61,7 @@ print(second['c'])
 
 ## Vectorization in R
 
-An operation in R is **vectorized** if it applies to all of the elements of a `vector` at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster. 
+An operation in R is **vectorized**\index{vectorization} if it applies to all of the elements of a `vector` at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster. 
 
 Arithmetic (e.g. `+`, `-`, `*`, `/`, `^`, `%%`, `%/%`, etc.) and logical (e.g. `!`, `|`, `&`, `>`, `>=`, `<`, `<=`, `==`, etc.) operators are commonly applied to one or two vectors. Arithmetic is usually performed *element-by-element*. Numeric vectors are converted to logical vectors if they need to be. Be careful of operator precedence if you seek to minimize your use of parentheses. 
 
@@ -73,7 +73,7 @@ Note that there are an extraordinary amount of named functions (e.g. `sum()`, `l
 sin( (2*pi/3)*(1:4)) 
 ```
 
-In the last example, there is **recycling** happening. `(2*pi/3)` is taking three length-one vectors and producing another length-one vector. The resulting length-one vector is multiplied by a length four vector `1:4`. The single element in the length one vector gets *recycled* so that its value is multiplied by every element of `1:4`. 
+In the last example, there is **recycling**\index{recycling!|see{broadcasting}} happening. `(2*pi/3)` is taking three length-one vectors and producing another length-one vector. The resulting length-one vector is multiplied by a length four vector `1:4`. The single element in the length one vector gets *recycled* so that its value is multiplied by every element of `1:4`. 
 This makes sense most of the time, but sometimes recycling can be tricky. Notice that the following code does not produce an error--just a warning: `longer object length is not a multiple of shorter object length`. Try running it on your machine to confirm this. 
 
 ```{r, collapse = TRUE, eval = FALSE}
@@ -82,7 +82,7 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 
 ## Vectorization in Python
 
-The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or "ufuncs" for short. Some ufuncs can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by its name (e.g. `np.sum()` instead of `+`). Mixing and matching is allowed, too.
+The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or "ufuncs" for short\index{vectorization!universal functions|see{ufuncs}}. Some ufuncs can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by its name (e.g. `np.sum()` instead of `+`). Mixing and matching is allowed, too.
 
 Ufuncs are called *unary* if they take in one array, and *binary* if they take in two. At the moment, there are [fewer than $100$ available](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs), all performing either mathematical operations, boolean-emitting comparisons, or bit-twiddling operations. For an exhaustive list of Numpy's universal functions, [click here.](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs) Here are some code examples.
 
@@ -93,7 +93,7 @@ np.zeros(5) > np.arange(-3,2)
 np.exp( -.5 * np.linspace(-3, 3, 10)**2) / np.sqrt( 2 * np.pi)
 ```
 
-Instead of calling it "recycling", Numpy calls reusing elements of a shorter array in a binary operation [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html). It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: `ValueError: operands could not be broadcast together with shapes (2,) (3,) `.
+Instead of calling it "recycling", Numpy calls reusing elements of a shorter array in a binary operation [**broadcasting**](https://numpy.org/devdocs/user/theory.broadcasting.html)\index{broadcasting|see{recycling}}. It's the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: `ValueError: operands could not be broadcast together with shapes (2,) (3,) `.
 
 ```{python, collapse=TRUE, error = TRUE, eval = FALSE}
 np.arange(1,3)*np.arange(1,4)
@@ -396,7 +396,7 @@ s = pd.Series(["I don't need a regex for this!"])
 s.str.replace(pat="e",repl="E")
 ```
 
-On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters. 
+On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters.\index{escape character} 
 
   1. We can *escape* the dollar sign. That means you need to put a backslash (i.e. `\`) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character. 
   2. Alternatively, we can tell the function to ignore regular expressions. `gsub()` can take `fixed=TRUE`, and `.str.replace()` can take `regex=False`. 
@@ -417,7 +417,7 @@ stringr::str_remove_all(c("$100, $200"), pattern = "\\$")
   
 ### The Trouble With Backslashes: Escape Sequences
 
-You might have noticed above and gotten confused--sometimes in Python and in R, we need *two* backslashes instead of *one*. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as **escape sequences**. We need to be able to do this even if we aren't using regular expressions. 
+You might have noticed above and gotten confused--sometimes in Python and in R, we need *two* backslashes instead of *one*. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as **escape sequences**\index{escape sequence}. We need to be able to do this even if we aren't using regular expressions.
 
 For instance, consider the way we type the "newline" character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. `\` is one character, and `n` is another, but together they are one!
 
@@ -431,7 +431,7 @@ len('\n') #in Python
 
 `str`s in Python and `character` `vectors` in R will look for these combinations by default. When we specify regular expressions with strings, the backslashes will be used first for this purpose. Their regular expression purpose is a second priority. 
 
-The reason we used `\\$` in the above example is to escape the second backslash. `\$` is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won't complain that it didn't. On the other hand, R will throw an error that it can't recognize it. 
+The reason we used `\\$` in the above example is to escape\index{escape character} the second backslash. `\$` is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won't complain that it didn't. On the other hand, R will throw an error that it can't recognize it. 
 
 ```{python, collapse = TRUE}
 len('\$') # in Python, not special

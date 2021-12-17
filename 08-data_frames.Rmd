@@ -1,6 +1,6 @@
 # Data Frames
 
-The rectangular array (e.g. an Excel spreadsheet ) of information is what many think of when they hear the word "data." Each column contains elements of a shared data type, and these data types can vary from column to column. 
+The rectangular array (e.g. an Excel spreadsheet ) of information is what many think of when they hear the word "data." Each column contains elements of a shared data type, and these data types can vary from column to column.\index{data frame} 
 
 There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python programs because many functions that read in data from an external source return objects of this type (e.g. `read.csv()` in R and `pd.read_csv()` in Python). 
 
@@ -30,7 +30,7 @@ nrow(irisData)
 ncol(irisData)
 ```
 
-There are some exceptions, but most data sets can be stored as a `data.frame`. These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g. person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations. 
+There are some exceptions, but most data sets can be stored as a `data.frame`.\index{data frame!data frames in R} These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g. person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations. 
 
 ::: {.rmd-caution data-latex=""}
 Do not rely on the default arguments of `read.csv()` or `read.table()`! After you read in a data frame, always check to make sure that 
@@ -104,7 +104,7 @@ head(irisData, 3)
 ## Data Frames in Python
 
 
-The Pandas library in Python has data frames that are modeled after R's. 
+The Pandas library in Python has data frames that are modeled after R's [@pandas_guy].\index{data frame!data frames in Python} 
 
 ```{python, collapse=TRUE}
 import pandas as pd
@@ -119,8 +119,6 @@ list(iris_data.dtypes)[3:]
 
 The structure is very similar to that of R's data frame. It's two dimensional, and you can [access columns and rows by name or number.](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) Each column is a `Series` object, and each column can have a different `dtype`, which is analogous to R's situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy `ndarray`s and `DataFrame`s (c.f. R's `matrix` versus R's `data.frame`). 
 
-
-
 ::: {.rmd-caution data-latex=""}
 Again, do not rely on the default arguments of `pd.read_csv()`! After you read in a data set, always check that
 
@@ -131,7 +129,6 @@ Again, do not rely on the default arguments of `pd.read_csv()`! After you read i
 5. character columns are read in correctly (c.f. `dtype=`), and
 6. special characters signifying missing data were correctly identified (c.f. `na.values=`).
 :::
-
 
 Square brackets are a little different in Python than they are in R. Just like in R, you can access columns by name with square brackets, and you can also access rows. Unlike R, though, you don't have to specify both rows and columns every time you use the square brackets.
 
