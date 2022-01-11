@@ -502,16 +502,16 @@ This is much better because
 
 The inner function did in fact capture `commonZs`, but it captured from the enclosing scope, not the global scope. Capturing isn't always a terrible idea. It would be difficult to modify these variables, so we don't need to worry about function behavior changing in unpredictable ways. Actually capturing a variable instead of passing it in is an intelligent design choice--now the end-users of functions created by this factory don't need to worry about plugging in extra parameters. 
 
-Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function. Run the following code on your own machine. 
+Let's use $1000$ samples again and make sure this function works by comparing its output to the known true function. Run the following code on your own machine. Note the new Greek letters in the axis labels.
 
 ```{r, collapse=TRUE, eval=FALSE}
 mcApproxCRNv2 <- matrix(apply(muSigmaGrid, 1, monteCarloSinCRNv2), 
                         ncol = length(muGrid))
 par(mfrow=c(1,2))
 contour(muGrid, sigmaGrid, mcApprox, 
-        xlab = "mu", ylab = "sigma", main = "mc without crn")
+        xlab = expression(mu), ylab = expression(sigma))
 contour(muGrid, sigmaGrid, mcApproxCRNv2, 
-        xlab = "mu", ylab = "sigma", main = "mc with crn")
+        xlab = expression(mu), ylab = expression(sigma))
 par(mfrow=c(1,1))
 ```
 
