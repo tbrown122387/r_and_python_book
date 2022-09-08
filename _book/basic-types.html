@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Basic Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="intro.html"/>
 <link rel="next" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,21 +435,21 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="basic-types" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Basic Types</h1>
+<div id="basic-types" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Basic Types<a href="basic-types.html#basic-types" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In every programming language, data is stored in different ways. Writing a program that manipulates data requires understanding all of the choices. That is why we must be concerned with the different <strong>types</strong> of data in our R and Python programs. Different types are suitable for different purposes.</p>
 <p>There are similarities between Python’s and R’s type systems. However, there are may differences as well. Be prepared for these differences. There are many more of them in this chapter than there were in the previous chapter!</p>
 <p>If you’re ever unsure what type a variable has, use <code>type()</code> (in Python) or <code>typeof()</code> (in R) to query it.</p>
 <p>Storing an individual piece of information is simple in both languages. However, while Python has scalar types, R does not draw as strong of a distinction between scalar and compound types.</p>
-<div id="basic-types-in-python" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Basic Types In Python</h2>
+<div id="basic-types-in-python" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Basic Types In Python<a href="basic-types.html#basic-types-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In Python, the simplest types we frequently use are <code>str</code> (short for string), <code>int</code> (short for integer), <code>float</code> (short for floating point) and <code>bool</code> (short for Boolean). This list is not exhaustive, but these are a good collection to start thinking about. For a complete list of built-in types in Python, click <a href="https://docs.python.org/3/library/stdtypes.html">here</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="basic-types.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="st">&#39;a&#39;</span>), <span class="bu">type</span>(<span class="dv">1</span>), <span class="bu">type</span>(<span class="fl">1.3</span>))</span>
 <span id="cb9-2"><a href="basic-types.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;str&#39;&gt; &lt;class &#39;int&#39;&gt; &lt;class &#39;float&#39;&gt;</span></span></code></pre></div>
-<p>Strings are useful for processing text data such as names of people/places/things and messages such as texts, tweets and emails. If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you’ll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section <a href="control-flow.html#control-flow">11</a>.</p>
+<p>Strings are useful for processing text data such as names of people/places/things and messages such as texts, tweets and emails <span class="citation">(<a href="#ref-python_cookbook" role="doc-biblioref">Beazley and Kenneth) Jones 2014</a>)</span>. If you are dealing with numbers, you need floating points if you have a number that might have a fractional part after its decimal; otherwise you’ll need an integer. Booleans are useful for situations where you need to record whether something is true or false. They are also important to understand for control-flow in section <a href="control-flow.html#control-flow">11</a>.</p>
 <p>In the next section we will discuss the Numpy library. This library has a <a href="https://numpy.org/doc/stable/user/basics.types.html">broader collection</a> of basic types that allows for finer control over any script you write.</p>
-<div id="type-conversions-in-python" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Type Conversions in Python</h3>
+<div id="type-conversions-in-python" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Type Conversions in Python<a href="basic-types.html#type-conversions-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will often have to convert between types in a Python program. This is called <strong>type conversion</strong>, and it can be either implicitly or explicitly done.</p>
 <p>For example, <code>int</code>s are often implicitly converted to <code>float</code>s, so that arithmetic operations work.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="basic-types.html#cb10-1" aria-hidden="true" tabindex="-1"></a>my_int <span class="op">=</span> <span class="dv">1</span></span>
@@ -469,8 +473,8 @@ div.csl-indent {
 <span id="cb12-5"><a href="basic-types.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">## my_year is 2021 and its type is &lt;class &#39;int&#39;&gt;</span></span></code></pre></div>
 </div>
 </div>
-<div id="basic-types-in-r" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Basic Types In R</h2>
+<div id="basic-types-in-r" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Basic Types In R<a href="basic-types.html#basic-types-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In R, the names of basic types are only slightly different. They are <code>logical</code> (instead of <code>bool</code>), <code>integer</code> (instead of <code>int</code>), <code>double</code> or <code>numeric</code> (instead of <code>float</code>)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>, <code>character</code> (instead of <code>str</code>), <code>complex</code> (for calculations involving imaginary numbers), and <code>raw</code> (useful for working with bytes).</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="basic-types.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat() is kind of like print()</span></span>
 <span id="cb13-2"><a href="basic-types.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">typeof</span>(<span class="st">&#39;a&#39;</span>), <span class="fu">typeof</span>(<span class="dv">1</span>), <span class="fu">typeof</span>(<span class="fl">1.3</span>))</span>
@@ -479,8 +483,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="basic-types.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat() is kind of like print()</span></span>
 <span id="cb14-2"><a href="basic-types.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">typeof</span>(<span class="st">&#39;a&#39;</span>), <span class="fu">typeof</span>(1L), <span class="fu">typeof</span>(<span class="fl">1.3</span>))</span>
 <span id="cb14-3"><a href="basic-types.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## character integer double</span></span></code></pre></div>
-<div id="type-conversions-in-r" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Type Conversions in R</h3>
+<div id="type-conversions-in-r" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Type Conversions in R<a href="basic-types.html#type-conversions-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can explicitly and implicitly convert types in R just as you did in Python. Implicit conversion looks like this.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="basic-types.html#cb15-1" aria-hidden="true" tabindex="-1"></a>myInt <span class="ot">=</span> <span class="dv">1</span></span>
 <span id="cb15-2"><a href="basic-types.html#cb15-2" aria-hidden="true" tabindex="-1"></a>myDouble <span class="ot">=</span> <span class="fl">3.2</span></span>
@@ -499,17 +503,17 @@ div.csl-indent {
 <span id="cb16-3"><a href="basic-types.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(<span class="fu">as.logical</span>(<span class="dv">1</span>)))</span>
 <span id="cb16-4"><a href="basic-types.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;logical&quot;</span></span></code></pre></div>
 </div>
-<div id="rs-simplification" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> R’s Simplification</h3>
+<div id="rs-simplification" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> R’s Simplification<a href="basic-types.html#rs-simplification" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The basic types of R are a little different than the basic types of Python. On the one hand, Python has basic types for individual elements, and it uses separate types as containers for storing many elements. On the other, R uses the same type to store a single element as it does to store many elements. Strictly speaking, R does not have a scalar type.</p>
 <p>Technically, all of the examples we just did in R are using length one <strong>vectors</strong>–<code>logical</code> <code>integer</code> <code>double</code>, <code>character</code>, <code>complex</code>, and <code>raw</code> are the possible <strong>modes</strong> of a vector. <code>vector</code>s will be discussed further section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-vectors-versus-numpy-arrays-and-pandas-series">3</a>.</p>
 <p>Think about which option you prefer. What are the benefits of using separate types for scalars and collections? What are the benefits of using the same type?</p>
 </div>
 </div>
-<div id="exercises" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Exercises</h2>
-<div id="r-questions" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> R Questions</h3>
+<div id="exercises" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Exercises<a href="basic-types.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> R Questions<a href="basic-types.html#r-questions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p>Which R base type is ideal for each piece of data? Assign your answers to a <code>character</code> <code>vector</code> of length four called <code>questionOne</code>.</p>
 <ul>
@@ -536,8 +540,8 @@ div.csl-indent {
 </ul></li>
 </ol>
 </div>
-<div id="python-questions" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Python Questions</h3>
+<div id="python-questions" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Python Questions<a href="basic-types.html#python-questions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p>Which Python type is ideal for each piece of data? Assign your answers to a <code>list</code> of <code>str</code>ings called <code>question_one</code>.</p>
 <ul>
@@ -546,7 +550,7 @@ div.csl-indent {
 <li>the number of seeds found in a plant</li>
 <li>the amount of time it takes for a car to race around a track</li>
 </ul></li>
-<li><p>Floating points are weird. What gets printed is not the same as what is stored! In Python, you need to edit a class’s <code>__str__</code> method if you want to control how many digits get printed, but we won’t do that. Instead, we’ll use <a href="https://docs.python.org/3/library/stdtypes.html#str.format"><code>str.format()</code></a> to return a string directly (instead of copy/paste-ing it).</p>
+<li><p>Floating points are weird. What gets printed is not the same as what is stored! In Python, you need to edit a class’s <code>__str__</code> method if you want to control how many digits get printed for a user-defined type/class, but we won’t do that. Instead, we’ll use <a href="https://docs.python.org/3/library/stdtypes.html#str.format"><code>str.format()</code></a> to return a string directly (instead of copy/paste-ing it).</p>
 <ul>
 <li>Assign <code>a</code> to <code>2/3</code></li>
 <li><code>print</code> <code>a</code>, and copy/paste what you see into the variable <code>a_print</code></li>
@@ -563,6 +567,12 @@ div.csl-indent {
 </ol>
 
 </div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-python_cookbook" class="csl-entry">
+Beazley, David M., and Brian K. (Brian Kenneth) Jones. 2014. <em><span>Python</span> Cookbook: Recipes for Mastering <span>Python 3</span></em>. Third. pub-ora-media:adr: pub-ora-media.
 </div>
 </div>
 <div class="footnotes">
@@ -637,7 +647,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

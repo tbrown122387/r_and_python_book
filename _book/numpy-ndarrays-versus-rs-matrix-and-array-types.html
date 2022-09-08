@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Numpy ndarrays Versus R’s matrix and array Types | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="r-vectors-versus-numpy-arrays-and-pandas-series.html"/>
 <link rel="next" href="rs-lists-versus-pythons-lists-and-dicts.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,11 +435,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="numpy-ndarrays-versus-rs-matrix-and-array-types" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types</h1>
+<div id="numpy-ndarrays-versus-rs-matrix-and-array-types" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#numpy-ndarrays-versus-rs-matrix-and-array-types" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Sometimes you want a collection of elements that are <em>all the same type</em>, but you want to store them in a two- or three-dimensional structure. For instance, say you need to use matrix multiplication for some linear regression software you’re writing, or that you need to use tensors for a computer vision project you’re working on.</p>
-<div id="numpy-ndarrays-in-python" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Numpy <code>ndarray</code>s In Python</h2>
+<div id="numpy-ndarrays-in-python" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Numpy <code>ndarray</code>s In Python<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#numpy-ndarrays-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In Python, you could still use arrays for these kinds of tasks. You will be pleased to learn that the Numpy <code>array</code>s we discussed earlier are a special case of <a href="https://numpy.org/doc/stable/reference/arrays.ndarray.html">Numpy’s N-dimensional arrays</a>. Each array will come with an enormous amount of <a href="https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-methods">methods</a> and <a href="https://numpy.org/doc/stable/reference/arrays.ndarray.html#array-attributes">attributes</a> (more on object-oriented program in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">14</a>) attached to it. A few are demonstrated below.</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb71-2"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb71-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>]], np.<span class="bu">float</span>)</span>
@@ -467,10 +471,14 @@ div.csl-indent {
 <span id="cb72-11"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="co">##        [1., 2., 3., 4.]])</span></span>
 <span id="cb72-12"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb72-12" aria-hidden="true" tabindex="-1"></a>a <span class="op">*</span> np.arange(<span class="dv">4</span>) <span class="co"># elementwise mult.</span></span>
 <span id="cb72-13"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb72-13" aria-hidden="true" tabindex="-1"></a><span class="co">## array([[ 0.,  2.,  6., 12.]])</span></span></code></pre></div>
+<p>I should mention that there is also a <code>matrix</code> type in Numpy; however, this is not described in this text because it is preferable to work with Numpy <code>array</code>s <span class="citation">(<a href="#ref-ml_with_python_cookbook" role="doc-biblioref">Albon 2018</a>)</span>.</p>
+<div class="rmd-details">
+<p>In both R and Python, there are <code>matrix</code> types and <code>array</code> types. In R, it is more common to work with <code>matrix</code>s than <code>array</code>s, and the opposite is true in Python!</p>
 </div>
-<div id="the-matrix-and-array-classes-in-r" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> The <code>matrix</code> and <code>array</code> classes in R</h2>
-<p>In Python, adding a dimension to your “container” is simple. You keep using Numpy arrays, and you just change the <code>.shape</code> attribute (perhaps with a call to <code>.reshape()</code> or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the <code>matrix</code> class. Containers with 3 or more dimensions are of the <code>array</code> class. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of <span class="citation">(<a href="#ref-matloff_r_book" role="doc-biblioref">Matloff 2011</a>)</span>.</p>
+</div>
+<div id="the-matrix-and-array-classes-in-r" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> The <code>matrix</code> and <code>array</code> classes in R<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#the-matrix-and-array-classes-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Python, adding a dimension to your “container” is simple. You keep using Numpy arrays, and you just change the <code>.shape</code> attribute (perhaps with a call to <code>.reshape()</code> or something similar). In R, there is a stronger distinction between 1-,2-, and 3-dimensional containers. Each has its own class. 2-dimensional containers that store objects of the same type are of the <code>matrix</code> class. Containers with 3 or more dimensions are of the <code>array</code> class<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. In this section, I will provide a quick introduction to using these two classes. For more information, see chapter 3 of <span class="citation">(<a href="#ref-matloff_r_book" role="doc-biblioref">Matloff 2011</a>)</span>.</p>
 <div class="rmd-caution">
 <p>Just like <code>vector</code>s, <code>matrix</code> objects do not necessarily have to be used to perform matrix arithmetic. Yes, they require all the elements are of the same type, but it doesn’t really make sense to “multiply” <code>matrix</code> objects that hold onto <code>character</code>s.</p>
 </div>
@@ -569,10 +577,10 @@ div.csl-indent {
 <span id="cb77-25"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb77-25" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 0 1 0 0 1</span></span></code></pre></div>
 <p>There are other functions that operate on one or more <code>matrix</code> objects in more interesting ways, but much of this will be covered in future sections. For instance, we will describe how <code>apply()</code> works with <code>matrix</code>s in section <a href="an-introduction-to-functional-programming.html#an-introduction-to-functional-programming">15</a>, and we will discuss combining <code>matrix</code> objects in different ways in section <a href="reshaping-and-combining-data-sets.html#reshaping-and-combining-data-sets">12</a>.</p>
 </div>
-<div id="exercises-2" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Exercises</h2>
-<div id="r-questions-2" class="section level3" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> R Questions</h3>
+<div id="exercises-2" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Exercises<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-2" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> R Questions<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#r-questions-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Consider the following data set. Let <span class="math inline">\(N = 20\)</span> be the number of rows. For <span class="math inline">\(i=1,\ldots,N\)</span>, define <span class="math inline">\(\mathbf{x}_i \in \mathbb{R}^4\)</span> as the data in row <span class="math inline">\(i\)</span>.</li>
 </ol>
@@ -626,18 +634,18 @@ where <span class="math inline">\(\mathbf{1}_{250}\)</span> and <span class="mat
 <li><p>In R, generate one hundred <span class="math inline">\(10 \times 10\)</span> <strong>exchangeable</strong> covariance matrices, each with <span class="math inline">\(2\)</span> as the variance, and have the possible covariances take values in the collection <span class="math inline">\(0,0.0009090909, ..., 0.0890909091, .09.\)</span> Store these <span class="math inline">\(100\)</span> covariance matrices in a three-dimensional array. The first index should be each matrix’s row index, the second should be the column index of each matrix, and the third index should be the “layer” or “slice” indicating which of the <span class="math inline">\(100\)</span> matrices you have. Name this array <code>myCovMats2</code></p></li>
 </ol>
 </div>
-<div id="python-questions-2" class="section level3" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Python Questions</h3>
+<div id="python-questions-2" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Python Questions<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#python-questions-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Let <span class="math inline">\(\mathbf{X}\)</span> be an <span class="math inline">\(n \times 1\)</span> random vector. It has a multivariate normal distribution with mean vector <span class="math inline">\(\mathbf{m}\)</span> and positive definite covariance matrix <span class="math inline">\(\mathbf{C}\)</span> if its probability density function can be written as</li>
 </ol>
 <p><span class="math display">\[\begin{equation} 
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
 \end{equation}\]</span></p>
-<p>Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider:</p>
+<p>Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider.</p>
 <ul>
-<li><p>inverting very large matrices with either <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html"><code>np.linalg.solve</code></a> or <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html"><code>np.linalg.inv</code></a> becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it’s a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?</p></li>
-<li><p>recall from the last lab that exponentiating numbers close to <span class="math inline">\(-\infty\)</span> risks numerical underflow. It’s better to prefer evaluating log densities. There are also <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html">special functions that evaluate log determinants</a> that are less likely to underflow/overflow, too!</p></li>
+<li><p>Inverting very large matrices with either <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html"><code>np.linalg.solve</code></a> or <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html"><code>np.linalg.inv</code></a> becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it’s a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?</p></li>
+<li><p>Recall from the last lab that exponentiating numbers close to <span class="math inline">\(-\infty\)</span> risks numerical underflow. It’s better to prefer evaluating log densities (base <span class="math inline">\(e\)</span>, the natural logarithm). There are also <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html">special functions that evaluate log determinants</a> that are less likely to underflow/overflow, too!</p></li>
 </ul>
 <p>Complete the following problems. <strong>Do not use pre-made functions such as <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html"><code>scipy.stats.norm</code></a> and <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html"><code>scipy.stats.multivariate_normal</code></a> in your submission, but you may use them to check your work. Use only “standard” functions and Numpy n-dimensional arrays.</strong> Use the following definitions for <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{m}\)</span>:</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -656,8 +664,8 @@ f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C}
 <span id="cb80-3"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#cb80-3" aria-hidden="true" tabindex="-1"></a>d.head()</span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
 <li><p>Create the <strong>design matrix</strong> (denoted mathematically by <span class="math inline">\(\mathbf{X}\)</span>) by removing the <code>"quality"</code> column, and subtracting the column mean from each element. Call the variable <code>X</code>, and make sure that it is a Numpy <code>ndarray</code>, not a Pandas <code>DataFrame</code>.</p></li>
-<li><p>Compute the <strong>spectral decomposition</strong> of <span class="math inline">\(\mathbf{X}^\intercal \mathbf{X}\)</span>. In other words, find “special” matrices<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> <span class="math inline">\(\mathbf{V}\)</span> and <span class="math inline">\(\boldsymbol{\Lambda}\)</span> such that <span class="math inline">\(\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal\)</span>. Note that the <em>eigenvectors</em> are stored as columns in a matrix <span class="math inline">\(\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 &amp; \cdots &amp; \mathbf{V}_{11}\end{bmatrix}\)</span>, and the scalar <em>eigenvalues</em> are stored as diagonal elements <span class="math inline">\(\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})\)</span>. Store the eigenvectors in an <code>ndarray</code> called <code>eig_vecs</code>, and store the eigenvalues in a Numpy <code>array</code> called <code>eig_vals</code>. Hint: use <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html"><code>np.linalg.eig()</code></a>. Also, if you’re rusty with your linear algebra, don’t worry too much about refreshing your memory about what eigenvectors and eigenvalues are.</p></li>
-<li><p>Compute the <strong>singular value decomposition</strong> of <span class="math inline">\(\mathbf{X}\)</span>. In other words, find “special”<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> matrices <span class="math inline">\(\mathbf{U}\)</span>, <span class="math inline">\(\mathbf{\Sigma}\)</span>, and <span class="math inline">\(\mathbf{V}\)</span> such that <span class="math inline">\(\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal\)</span>. Use <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"><code>np.linalg.svd</code></a>, and don’t worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two <span class="math inline">\(\mathbf{V}\)</span> matrices should be the same, and the elements of <span class="math inline">\(\boldsymbol{\Sigma}\)</span> should be the square roots of the elements of <span class="math inline">\(\boldsymbol{\Lambda}\)</span>. Store the eigenvectors as columns in an <code>ndarray</code> called <code>eig_vecs_v2</code>, and store the singular values (diagonal elements of <span class="math inline">\(\boldsymbol{\Sigma}\)</span>) in a Numpy <code>array</code> called <code>sing_vals</code>.</p></li>
+<li><p>Compute the <strong>spectral decomposition</strong> of <span class="math inline">\(\mathbf{X}^\intercal \mathbf{X}\)</span>. In other words, find “special” matrices<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> <span class="math inline">\(\mathbf{V}\)</span> and <span class="math inline">\(\boldsymbol{\Lambda}\)</span> such that <span class="math inline">\(\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal\)</span>. Note that the <em>eigenvectors</em> are stored as columns in a matrix <span class="math inline">\(\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 &amp; \cdots &amp; \mathbf{V}_{11}\end{bmatrix}\)</span>, and the scalar <em>eigenvalues</em> are stored as diagonal elements <span class="math inline">\(\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})\)</span>. Store the eigenvectors in an <code>ndarray</code> called <code>eig_vecs</code>, and store the eigenvalues in a Numpy <code>array</code> called <code>eig_vals</code>. Hint: use <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html"><code>np.linalg.eig()</code></a>. Also, if you’re rusty with your linear algebra, don’t worry too much about refreshing your memory about what eigenvectors and eigenvalues are.</p></li>
+<li><p>Compute the <strong>singular value decomposition</strong> of <span class="math inline">\(\mathbf{X}\)</span>. In other words, find “special”<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> matrices <span class="math inline">\(\mathbf{U}\)</span>, <span class="math inline">\(\mathbf{\Sigma}\)</span>, and <span class="math inline">\(\mathbf{V}\)</span> such that <span class="math inline">\(\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal\)</span>. Use <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"><code>np.linalg.svd</code></a>, and don’t worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two <span class="math inline">\(\mathbf{V}\)</span> matrices should be the same, and the elements of <span class="math inline">\(\boldsymbol{\Sigma}\)</span> should be the square roots of the elements of <span class="math inline">\(\boldsymbol{\Lambda}\)</span>. Store the eigenvectors as columns in an <code>ndarray</code> called <code>eig_vecs_v2</code>, and store the singular values (diagonal elements of <span class="math inline">\(\boldsymbol{\Sigma}\)</span>) in a Numpy <code>array</code> called <code>sing_vals</code>.</p></li>
 <li><p>Compute the <strong>first principal component</strong> vector, and call it <code>first_pc_v1</code>. The mathematical formula is <span class="math inline">\(\mathbf{X} \mathbf{U}_1\)</span> where <span class="math inline">\(\mathbf{U}_1\)</span> is the eigenvector associated with the largest eigenvalue <span class="math inline">\(\lambda_1\)</span>. This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors.</p></li>
 </ol>
 
@@ -666,6 +674,9 @@ f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C}
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ml_with_python_cookbook" class="csl-entry">
+Albon, Chris. 2018. <em>Machine Learning with Python Cookbook: Practical Solutions from Preprocessing to Deep Learning</em>. 1st ed. O’Reilly Media, Inc.
+</div>
 <div id="ref-wine_data" class="csl-entry">
 Cortez, Paulo, António Cerdeira, Fernando Almeida, Telmo Matos, and José Reis. 2009. <span>“Modeling Wine Preferences by Data Mining from Physicochemical Properties.”</span> <em>Decis. Support Syst.</em> 47 (4): 547–53. <a href="http://dblp.uni-trier.de/db/journals/dss/dss47.html#CortezCAMR09">http://dblp.uni-trier.de/db/journals/dss/dss47.html#CortezCAMR09</a>.
 </div>
@@ -679,8 +690,9 @@ Matloff, Norman. 2011. <em>The Art of r Programming: A Tour of Statistical Softw
 <div class="footnotes">
 <hr />
 <ol start="7">
-<li id="fn7"><p>Do not worry too much about the properties of these matrices for this problem<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p>Again, do not worry too much about the properties of these matrices for this problem.<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Technically, the distinction between all of these containers is more subtle. An <code>array</code> in R can have one, two or more dimensions, and it is just a vector which is stored with additional dimension attributes. Moreover, a 2-dimensional array is the same as a <code>matrix</code>.<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Do not worry too much about the properties of these matrices for this problem<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Again, do not worry too much about the properties of these matrices for this problem.<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -749,7 +761,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

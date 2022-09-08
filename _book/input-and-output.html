@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Input and Output | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-frames.html"/>
 <link rel="next" href="using-third-party-code.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,10 +435,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="input-and-output" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Input and Output</h1>
-<div id="general-input-considerations" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> General Input Considerations</h2>
+<div id="input-and-output" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Input and Output<a href="input-and-output.html#input-and-output" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="general-input-considerations" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> General Input Considerations<a href="input-and-output.html#general-input-considerations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So far, this text has been favoring the creation of small pieces of data <em>within our scripts.</em> The avoidance of reading in data from an external file has been avoided primarily for pedagogical purposes. In general, one might have</p>
 <ul>
 <li>data read in from a plain text file (e.g. <code>"my_data.csv"</code> or <code>"log_file.txt"</code> ),</li>
@@ -467,11 +471,11 @@ div.csl-indent {
 <li><p>Data sets are often quite large, so manually checking each element is often impossible. In this situation you will have to resign yourself to checking the top and bottom of a data set, or maybe anticipate a specific place where problems are likely to appear.</p></li>
 </ul>
 </div>
-<div id="reading-in-text-files-with-r" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Reading in Text Files with R</h2>
+<div id="reading-in-text-files-with-r" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Reading in Text Files with R<a href="input-and-output.html#reading-in-text-files-with-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You’ve seen examples of <code>read.csv()</code> used earlier in the book, so it should not surprise you that this is one of the most common ways to read in data in R. Another important function is <code>read.table()</code>.</p>
 <p>If you look at the source code for <code>read.csv()</code> (type the name of the function without parentheses into the console and press the <code>&lt;Enter&gt;</code> key), you will see it calls <code>read.table()</code>. The primary difference between these functions is default arguments. <strong>Mind the default arguments.</strong> Do not be completely averse to writing a long-line of code to read in a data set correctly. Or do, and choose the function with the best default arguments.</p>
-<p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first few rows of the raw text file<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> looks like this.</p>
+<p>Consider the <a href="https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring">“Challenger USA Space Shuttle O-Ring Data Set”</a> from <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. The first few rows of the raw text file<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> looks like this.</p>
 <pre><code>6 0 66  50  1
 6 1 70  50  2
 6 0 69  50  3</code></pre>
@@ -503,7 +507,7 @@ div.csl-indent {
 <span id="cb146-6"><a href="input-and-output.html#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V3: int  66 70 69 68 67 72 73 70 57 63 ...</span></span>
 <span id="cb146-7"><a href="input-and-output.html#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V4: int  50 50 50 50 50 50 100 100 200 200 ...</span></span>
 <span id="cb146-8"><a href="input-and-output.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ V5: int  1 2 3 4 5 6 7 8 9 10 ...</span></span></code></pre></div>
-<p>This data set has columns whose widths are “fixed,” too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters.</p>
+<p>This data set has columns whose widths are “fixed”, too. It is in “fixed width format” because any given column has all its elements take up a constant amount of characters. The third column has integers with two or three digits, but no matter what, each row has the same number of characters.</p>
 <p>You may choose to exploit this and use a specialized function that reads in data in a fixed width format (e.g. <code>read.fwf()</code>). The frustrating thing about this approach, though, is that you have to specify what those widths are. This can be quite tedious, particularly if your data set has many columns and/or many rows. The upside though, is that the files can be a little bit smaller, because the data provider does not have to waste characters on separators.</p>
 <p>In the example below, we specify widths that include blank spaces to the left of the digits. On the other hand, if we specified <code>widths=c(2,2,4,4,1)</code>, which includes spaces to the <em>right</em> of digits, then columns would have been recognized as <code>character</code>s.</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="input-and-output.html#cb147-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.fwf</span>(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
@@ -524,8 +528,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="input-and-output.html#cb149-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/Google.html&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;~&quot;</span>, </span>
 <span id="cb149-2"><a href="input-and-output.html#cb149-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>) <span class="co"># makes errors disappear</span></span></code></pre></div>
 </div>
-<div id="reading-in-text-files-with-pandas" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Reading in Text Files with Pandas</h2>
+<div id="reading-in-text-files-with-pandas" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Reading in Text Files with Pandas<a href="input-and-output.html#reading-in-text-files-with-pandas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A <a href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html">wide variety of different file formats can be read in with Pandas.</a> I will only mention a few functions here.</p>
 <p>Recall R has <code>read.table()</code> and <code>read.csv()</code>, and that they are very similar. In Pandas, <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><code>pd.read_csv()</code></a> and <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_table.html"><code>pd.read_table()</code></a> have a lot in common, too. Their primary difference is the default column separator, as well.</p>
 <p>Recall the O-Ring data from above. The columns are <em>not</em> separated by commas, so if we treat it as a comma-separated file, the resulting Pandas <code>DataFrame</code> is going to be missing all but one of its columns.</p>
@@ -582,7 +586,7 @@ div.csl-indent {
 <span id="cb153-7"><a href="input-and-output.html#cb153-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [dtype(&#39;int64&#39;), dtype(&#39;int64&#39;), StringDtype, StringDtype]</span></span></code></pre></div>
 <p>Just like in R, you may run into an encoding issue with a file. For instance, the following will not work because the file contains Chinese characters. If you mostly work with UTF-8 files, you will receive a <code>UnicodeDecodeError</code> if you try to run the following code.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="input-and-output.html#cb154-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/message.txt&quot;</span>)</span></code></pre></div>
-<p>However, the error messages disappear when you specify <code>encoding="gbk"</code>.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
+<p>However, the error messages disappear when you specify <code>encoding="gbk"</code>.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="input-and-output.html#cb155-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">&quot;data/message.txt&quot;</span>, encoding <span class="op">=</span> <span class="st">&quot;gbk&quot;</span>)</span>
 <span id="cb155-2"><a href="input-and-output.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Empty DataFrame</span></span>
 <span id="cb155-3"><a href="input-and-output.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="co">## Columns: [恭喜发财]</span></span>
@@ -595,12 +599,12 @@ div.csl-indent {
 <span id="cb156-5"><a href="input-and-output.html#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(d), <span class="bu">type</span>(d[<span class="dv">0</span>]))</span>
 <span id="cb156-6"><a href="input-and-output.html#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;list&#39;&gt; &lt;class &#39;str&#39;&gt;</span></span></code></pre></div>
 </div>
-<div id="saving-data-in-r" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Saving Data in R</h2>
+<div id="saving-data-in-r" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Saving Data in R<a href="input-and-output.html#saving-data-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Storing data is important for saving your progress. For example, sometimes running a script that performs data cleaning can take a very long time. Saving your progress might free you from the responsibility of running that script many times.</p>
 <p>In R, there are many options for storing data. I will mention two: writing data out to a plain text file, and saving a serialized object.</p>
-<div id="writing-out-tabular-plain-text-data-in-r" class="section level3" number="9.4.1">
-<h3><span class="header-section-number">9.4.1</span> Writing Out Tabular Plain Text Data in R</h3>
+<div id="writing-out-tabular-plain-text-data-in-r" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Writing Out Tabular Plain Text Data in R<a href="input-and-output.html#writing-out-tabular-plain-text-data-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you want to write out tabular data to a text file, use <code>write.table()</code> or <code>write.csv()</code>. There are two arguments that you must specify, at a minimum: the first argument is your R object (typically a <code>matrix</code> or <code>data.frame</code>), and the second argument is the file path on your hard drive.</p>
 <p>Here is an example of writing out <code>d</code> to a file called <code>"oring_out.csv"</code>. I choose to include column names, but not row names. I also use commas to separate columns.</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="input-and-output.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring_out.csv&quot;</span>, </span>
@@ -610,8 +614,8 @@ div.csl-indent {
 6;0;66;50;1
 6;1;70;50;2</code></pre>
 </div>
-<div id="serialization-in-r" class="section level3" number="9.4.2">
-<h3><span class="header-section-number">9.4.2</span> Serialization in R</h3>
+<div id="serialization-in-r" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Serialization in R<a href="input-and-output.html#serialization-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Alternatively you may choose to store your data in a <strong>serialized</strong> form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that’s usually more memory efficient.</p>
 <p>For instance, let’s save the object <code>d</code> in a file called <code>oring.rds</code>.</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="input-and-output.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(d, <span class="at">file =</span> <span class="st">&quot;data/oring.rds&quot;</span>)</span>
@@ -636,10 +640,10 @@ div.csl-indent {
 <span id="cb161-8"><a href="input-and-output.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;a&quot; &quot;b&quot;</span></span></code></pre></div>
 </div>
 </div>
-<div id="saving-data-in-python" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Saving Data in Python</h2>
-<div id="writing-out-tabular-plain-text-data-in-python" class="section level3" number="9.5.1">
-<h3><span class="header-section-number">9.5.1</span> Writing Out Tabular Plain Text Data in Python</h3>
+<div id="saving-data-in-python" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Saving Data in Python<a href="input-and-output.html#saving-data-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="writing-out-tabular-plain-text-data-in-python" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Writing Out Tabular Plain Text Data in Python<a href="input-and-output.html#writing-out-tabular-plain-text-data-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can write out tabular data with a variety of <a href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html#input-output"><code>DataFrame</code> methods that are named <code>to_*()</code>.</a>. <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv"><code>pd.DataFrame.to_csv()</code></a> has a lot of common with <code>write.csv()</code> in R. Below we write out <code>d</code> to a file called <code>oring_out2.csv</code>.</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb162-1"><a href="input-and-output.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb162-2"><a href="input-and-output.html#cb162-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/o-ring-erosion-only.data&quot;</span>, </span>
@@ -651,8 +655,8 @@ div.csl-indent {
 6,0,66,50,1
 6,1,70,50,2</code></pre>
 </div>
-<div id="serialization-in-python" class="section level3" number="9.5.2">
-<h3><span class="header-section-number">9.5.2</span> Serialization in Python</h3>
+<div id="serialization-in-python" class="section level3 hasAnchor" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> Serialization in Python<a href="input-and-output.html#serialization-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Serialization functionality is readily available in Python, just like it is in R. In Python, the <a href="https://docs.python.org/3/library/pickle.html"><code>pickle</code></a> and <code>cPickle</code> libraries are probably the most commonly used. Serializing objects with these libraries is known as <em>pickling</em> an object.</p>
 <p>Pandas has a <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_pickle.html"><code>.to_pickle()</code></a> wrapper method attached to every <code>DataFrame</code>. Once the pickled object is saved, the file can be read back into Python with <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_pickle.html#pandas.read_pickle"><code>pd.read_pickle()</code></a>. These functions are extremely convenient, because they call all the required <code>pickle</code> code and hide a decent amount of complexity.</p>
 <p>Here is an example of writing out <code>d</code> and then reading the pickled object back in. In Python 3, the file suffix for pickled objects is usually <code>.pickle</code>, but there are many other choices.</p>
@@ -667,13 +671,13 @@ div.csl-indent {
 <p>Unfortunately, <code>"oring.pickle"</code> is much larger (1,676 bytes) than the original text file <code>"o-ring-erosion-only.data"</code> (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like <code>d_is_back.to_pickle("data/oring.zip")</code> it will become smaller.</p>
 </div>
 <p>In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library.</p>
-<p>Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research.</p>
+<p>Speaking of third-party code, there are many that provide alternative serialization solutions in both R and Python. I do not discuss any in this text. However, I will mention that some of them may provide combinations of the following: an increase in read and write speed, a decrease in required memory, improved security<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>, improved human readability and interoperability between multiple programming languages. If any of these sound potentially beneficial, I encourage you to conduct further research.</p>
 </div>
 </div>
-<div id="exercises-7" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Exercises</h2>
-<div id="r-questions-7" class="section level3" number="9.6.1">
-<h3><span class="header-section-number">9.6.1</span> R Questions</h3>
+<div id="exercises-7" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Exercises<a href="input-and-output.html#exercises-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-7" class="section level3 hasAnchor" number="9.6.1">
+<h3><span class="header-section-number">9.6.1</span> R Questions<a href="input-and-output.html#r-questions-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -684,8 +688,8 @@ div.csl-indent {
 <li>Read in <code>myData.rds</code>, and store the variable as <code>financialData</code>. <em>Do</em> include the code that achieves this in your project submission. Make sure this code assumes that <code>myData.rds</code> is in the same folder as the code file <code>io_lab.R</code>.</li>
 </ul>
 </div>
-<div id="python-questions-7" class="section level3" number="9.6.2">
-<h3><span class="header-section-number">9.6.2</span> Python Questions</h3>
+<div id="python-questions-7" class="section level3 hasAnchor" number="9.6.2">
+<h3><span class="header-section-number">9.6.2</span> Python Questions<a href="input-and-output.html#python-questions-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -718,10 +722,10 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
 </div>
 <div class="footnotes">
 <hr />
-<ol start="13">
-<li id="fn13"><p>Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.<a href="input-and-output.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p>A list of more options of encodings that are built into Python,are available <a href="https://docs.python.org/3/library/codecs.html#standard-encodings">here.</a><a href="input-and-output.html#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p>The <a href="https://docs.python.org/2/library/pickle.html">documentation for <code>pickle</code></a> mentions that the library is “not secure against erroneous or maliciously constructed data” and recommends that you “[n]ever unpickle data received from an untrusted or unauthenticated source.”<a href="input-and-output.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<ol start="14">
+<li id="fn14"><p>Open raw text files with text editor programs, not with programs that perform any kind of processing. For instance, if you open it with Microsoft Excel, the appearance of the data will change, and important information helping you to read your data into R or Python will not be available to you.<a href="input-and-output.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>A list of more options of encodings that are built into Python,are available <a href="https://docs.python.org/3/library/codecs.html#standard-encodings">here.</a><a href="input-and-output.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>The <a href="https://docs.python.org/2/library/pickle.html">documentation for <code>pickle</code></a> mentions that the library is “not secure against erroneous or maliciously constructed data” and recommends that you “[n]ever unpickle data received from an untrusted or unauthenticated source.”<a href="input-and-output.html#fnref16" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -790,7 +794,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

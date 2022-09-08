@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="basic-types.html"/>
 <link rel="next" href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,11 +435,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-vectors-versus-numpy-arrays-and-pandas-series" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code></h1>
+<div id="r-vectors-versus-numpy-arrays-and-pandas-series" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-vectors-versus-numpy-arrays-and-pandas-series" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This section is for describing the data types that let us store collections of elements that all <strong>share the same type</strong>. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these collection objects in a program, we will be interested in learning how to extract and modify different elements in the collection, as well as how to use the entire collection in an efficient calculation.</p>
-<div id="overview-of-r" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Overview of R</h2>
+<div id="overview-of-r" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Overview of R<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the previous section, I mentioned that R does not have scalar types–it just has <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects"><strong>vectors</strong></a>. So, whether you want to store one number (or <code>logical</code>, or <code>character</code>, or …), or many numbers, you will need a <code>vector</code>.</p>
 <div class="rmd-caution">
 <p>For many, the word “vector” evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on <code>vector</code>s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with <code>vector</code>s in R have little to do with linear algebra!</p>
@@ -452,16 +456,16 @@ div.csl-indent {
 <span id="cb17-9"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;5/2/2021&quot; &quot;5/3/2021&quot; &quot;5/4/2021&quot;</span></span>
 <span id="cb17-10"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># generate Gaussian random variables</span></span>
 <span id="cb17-11"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)                             </span>
-<span id="cb17-12"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.10944921 -0.06550611  0.86990865  0.50915350  0.31773992</span></span></code></pre></div>
-<p><code>c()</code> is short for “combine.” <code>seq()</code> and <code>rep()</code> are short for “sequence” and “replicate,” respectively. <code>rnorm()</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
+<span id="cb17-12"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.22583130  0.90274951 -0.30196188 -0.43374482 -0.06312807</span></span></code></pre></div>
+<p><code>c()</code> is short for “combine”. <code>seq()</code> and <code>rep()</code> are short for “sequence” and “replicate”, respectively. <code>rnorm()</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
 <div class="rmd-details">
 <p>I should mention that functions such as <code>rnorm()</code> don’t create truly random numbers, just <em>pseudorandom</em> ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic.</p>
 <p>First, a <em>seed</em>, or starting number is chosen. Then, the <em>pseudorandom number generator (PRNG)</em> maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic.</p>
 <p>Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don’t set the seed, and I don’t think about the distinction between random and pseudorandom numbers.</p>
 </div>
 </div>
-<div id="overview-of-python" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Overview of Python</h2>
+<div id="overview-of-python" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Overview of Python<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy <code>array</code>. Numpy is a highly-regarded third party library <span class="citation">(<a href="#ref-harris2020array" role="doc-biblioref">Harris et al. 2020</a>)</span> for Python. Its <code>array</code> objects store elements of the same type, just as R’s <code>vector</code>s do.</p>
 <p>There are five ways to create numpy arrays (<a href="https://numpy.org/doc/stable/user/basics.creation.html">source</a>). Here are some examples that complement the examples from above.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np   </span>
@@ -470,7 +474,7 @@ div.csl-indent {
 <span id="cb18-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-4" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
 <span id="cb18-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  3,  5,  7,  9, 11])</span></span>
 <span id="cb18-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-6" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb18-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.42422539, -0.38555493, -1.40978521])</span></span></code></pre></div>
+<span id="cb18-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.37280542, -0.95581616,  1.47296841])</span></span></code></pre></div>
 <p>Another option for storing a homogeneous collection of elements in Python is a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series"><code>Series</code> object</a> from the Pandas library. The benefit of these is that they play nicely with Pandas’ data frames (more information about Pandas’ data frames can be found in <a href="data-frames.html#data-frames-in-python">8.2</a>), and that they have more flexibility with accessing elements by name ( see <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array">here</a> for more information ).</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb19-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-2" aria-hidden="true" tabindex="-1"></a>first <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
@@ -480,8 +484,8 @@ div.csl-indent {
 <span id="cb19-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(second[<span class="st">&#39;c&#39;</span>])</span>
 <span id="cb19-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 6</span></span></code></pre></div>
 </div>
-<div id="vectorization-in-r" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Vectorization in R</h2>
+<div id="vectorization-in-r" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Vectorization in R<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An operation in R is <strong>vectorized</strong> if it applies to all of the elements of a <code>vector</code> at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster.</p>
 <p>Arithmetic (e.g. <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>, <code>%%</code>, <code>%/%</code>, etc.) and logical (e.g. <code>!</code>, <code>|</code>, <code>&amp;</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, etc.) operators are commonly applied to one or two vectors. Arithmetic is usually performed <em>element-by-element</em>. Numeric vectors are converted to logical vectors if they need to be. Be careful of operator precedence if you seek to minimize your use of parentheses.</p>
 <p>Note that there are an extraordinary amount of named functions (e.g. <code>sum()</code>, <code>length()</code>, <code>cumsum()</code>, etc.) that operate on entire <code>vector</code>s, as well. Here are some examples.</p>
@@ -495,8 +499,8 @@ div.csl-indent {
 This makes sense most of the time, but sometimes recycling can be tricky. Notice that the following code does not produce an error–just a warning: <code>longer object length is not a multiple of shorter object length</code>. Try running it on your machine to confirm this.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
 </div>
-<div id="vectorization-in-python" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Vectorization in Python</h2>
+<div id="vectorization-in-python" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Vectorization in Python<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Python’s Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with <a href="https://numpy.org/doc/stable/reference/ufuncs.html"><strong>universal functions</strong></a>, or “ufuncs” for short. Some ufuncs can be invoked using the same syntax as in R (e.g. <code>+</code>). You can also refer to function by its name (e.g. <code>np.sum()</code> instead of <code>+</code>). Mixing and matching is allowed, too.</p>
 <p>Ufuncs are called <em>unary</em> if they take in one array, and <em>binary</em> if they take in two. At the moment, there are <a href="https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs">fewer than <span class="math inline">\(100\)</span> available</a>, all performing either mathematical operations, boolean-emitting comparisons, or bit-twiddling operations. For an exhaustive list of Numpy’s universal functions, <a href="https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs">click here.</a> Here are some code examples.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb22-1" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)<span class="op">*</span>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)</span>
@@ -506,7 +510,7 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb22-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb22-5" aria-hidden="true" tabindex="-1"></a>np.exp( <span class="op">-</span><span class="fl">.5</span> <span class="op">*</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">10</span>)<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> np.sqrt( <span class="dv">2</span> <span class="op">*</span> np.pi)</span>
 <span id="cb22-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.00443185, 0.02622189, 0.09947714, 0.24197072, 0.37738323,</span></span>
 <span id="cb22-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">##        0.37738323, 0.24197072, 0.09947714, 0.02622189, 0.00443185])</span></span></code></pre></div>
-<p>Instead of calling it “recycling,” Numpy calls reusing elements of a shorter array in a binary operation <a href="https://numpy.org/devdocs/user/theory.broadcasting.html"><strong>broadcasting</strong></a>. It’s the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: <code>ValueError: operands could not be broadcast together with shapes (2,) (3,)</code>.</p>
+<p>Instead of calling it “recycling”, Numpy calls reusing elements of a shorter array in a binary operation <a href="https://numpy.org/devdocs/user/theory.broadcasting.html"><strong>broadcasting</strong></a>. It’s the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: <code>ValueError: operands could not be broadcast together with shapes (2,) (3,)</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb23-1" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">3</span>)<span class="op">*</span>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)</span></code></pre></div>
 <p>If you are working with string arrays, Numpy has a <a href="https://numpy.org/doc/stable/reference/routines.char.html#module-numpy.char"><code>np.char</code> module with many useful functions</a>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb24-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>])</span>
@@ -570,8 +574,8 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 ## dtype: object</code></pre>
 <p>String operations can be a big game changer, and we discuss text processing strategies in more detail in section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#an-introduction-to-regular-expressions">3.9</a>.</p>
 </div>
-<div id="indexing-vectors-in-r" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Indexing Vectors in R</h2>
+<div id="indexing-vectors-in-r" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Indexing Vectors in R<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-vectors-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is very common to want to extract or modify a subset of elements in a vector. There are a few ways to do this. All of the ways I discuss will involve the square bracket operator (i.e. <code>[]</code>). Feel free to retrieve the documentation by typing <code>?'['</code>.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb34-1" aria-hidden="true" tabindex="-1"></a>allElements <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
 <span id="cb34-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb34-2" aria-hidden="true" tabindex="-1"></a>allElements[<span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">2</span>)] <span class="co"># extract evens</span></span>
@@ -586,8 +590,8 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb35-3"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">## favorite </span></span>
 <span id="cb35-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        1</span></span></code></pre></div>
 </div>
-<div id="indexing-numpy-arrays" class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Indexing Numpy arrays</h2>
+<div id="indexing-numpy-arrays" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Indexing Numpy arrays<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-numpy-arrays" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://numpy.org/doc/stable/user/basics.indexing.html">Indexing Numpy arrays</a> is very similar to indexing vectors in R. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though.</p>
 <p>For one, indexing is 0-based in Python. The <code>0</code>th element is the first element of an array. Another key difference is that the <code>-</code> isn’t used to remove elements like it is in R, but rather to count backwards. Third, using one or two <code>:</code> inside square brackets is more flexible in Python. This is syntactic sugar for using the <code>slice()</code> function, which is similar to R’s <code>seq()</code> function.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb36-1" aria-hidden="true" tabindex="-1"></a>one_through_ten <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
@@ -603,8 +607,8 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb36-11"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb36-11" aria-hidden="true" tabindex="-1"></a>one_through_ten[one_through_ten <span class="op">&gt;</span> <span class="dv">3</span>] <span class="co"># bigger than three</span></span>
 <span id="cb36-12"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 4,  5,  6,  7,  8, 99, 10])</span></span></code></pre></div>
 </div>
-<div id="indexing-pandas-series" class="section level2" number="3.7">
-<h2><span class="header-section-number">3.7</span> Indexing Pandas’ Series</h2>
+<div id="indexing-pandas-series" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Indexing Pandas’ Series<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#indexing-pandas-series" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>At a minimum, there is little that is new that you <em>need</em> to learn to go from Numpy arrays to Pandas’ Series objects. They still have the <code>[]</code> operator, and <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.html">many methods are shared across these two types</a>. The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb37-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb37-2" aria-hidden="true" tabindex="-1"></a>one_through_ten <span class="op">=</span> pd.Series(np.arange(<span class="dv">1</span>, <span class="dv">11</span>))</span>
@@ -663,10 +667,10 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb38-3"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb38-3" aria-hidden="true" tabindex="-1"></a>one_through_ten.loc[<span class="dv">2</span>]</span>
 <span id="cb38-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 3</span></span></code></pre></div>
 </div>
-<div id="some-gotchas" class="section level2" number="3.8">
-<h2><span class="header-section-number">3.8</span> Some Gotchas</h2>
-<div id="shallow-versus-deep-copies" class="section level3" number="3.8.1">
-<h3><span class="header-section-number">3.8.1</span> Shallow versus Deep Copies</h3>
+<div id="some-gotchas" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Some Gotchas<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#some-gotchas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="shallow-versus-deep-copies" class="section level3 hasAnchor" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> Shallow versus Deep Copies<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#shallow-versus-deep-copies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In R, assignment usually produces a <strong>deep copy.</strong> In the code below, we create <code>b</code> from <code>a</code>. If we modify <code>b</code>, these changes don’t affect <code>a</code>. This takes up more memory, but our program is easier to follow as we don’t have to keep track of connections between objects.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
 <span id="cb39-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb39-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
@@ -751,8 +755,8 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb43-19"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="co">## 2      3</span></span>
 <span id="cb43-20"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span></code></pre></div>
 </div>
-<div id="how-r-and-python-handle-missing-values" class="section level3" number="3.8.2">
-<h3><span class="header-section-number">3.8.2</span> How R and Python Handle Missing Values</h3>
+<div id="how-r-and-python-handle-missing-values" class="section level3 hasAnchor" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> How R and Python Handle Missing Values<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#how-r-and-python-handle-missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>R has <code>NULL</code>, <code>NaN</code>, and <code>NA</code>. Python has <code>None</code> and <code>np.nan</code>. If your eyes are glazing over already and you’re thinking “they all look like the same”–they are not.</p>
 <p>R’s <code>NULL</code> and Python’s <code>None</code> are similar. Both represent “nothingness.” This is <em>not</em> the same as <code>0</code>, or an empty string, or <code>FALSE</code>/<code>False</code>. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to “return” (more information on functions can be found in section <a href="functions.html#functions">6</a>) anything meaningful.</p>
 <p>In R, for example, if a function fails to return anything, then it actually returns a <code>NULL</code>. <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#NULL-object">A <code>NULL</code> object has its own type.</a></p>
@@ -821,20 +825,20 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 </div>
 </div>
 </div>
-<div id="an-introduction-to-regular-expressions" class="section level2" number="3.9">
-<h2><span class="header-section-number">3.9</span> An Introduction to Regular Expressions</h2>
+<div id="an-introduction-to-regular-expressions" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> An Introduction to Regular Expressions<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#an-introduction-to-regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We have already talked a little about how to work with text data in this book. Regarding Python, section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#vectorization-in-python">3.4</a> mentioned that Pandas <code>Series</code> objects have a <a href="https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods"><code>.str</code> accessor attribute</a> that has plenty of special methods that will work on string data. The same tools can be used whether or not these <code>Series</code> objects are contained in a Pandas <code>DataFrame</code>.</p>
 <p>Regarding R, <code>character</code> <code>vector</code>s were first mentioned in section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-r">3.1</a>. There are many functions that operate on these, too, regardless of whether they are held in a <code>data.frame</code>. The functions might be a little harder to find because they aren’t methods, so pressing <code>&lt;Tab&gt;</code> and using your GUI’s autocomplete feature doesn’t reveal them as easily.</p>
 <p>Suppose you’re interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there’s probably a function for it.</p>
 <p>Notice what all of these tasks have in common–they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase “a”s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this section is primarily concerned with discussing <strong>regular expressions,</strong> which are a tool that help you describe the patterns in text <span class="citation">(<a href="#ref-rfords" role="doc-biblioref">Hadley Wickham and Grolemund 2017</a>)</span> <span class="citation">(<a href="#ref-pythonregexprs" role="doc-biblioref">López 2014</a>)</span>.</p>
-<div id="literal-characters-versus-metacharacters" class="section level3" number="3.9.1">
-<h3><span class="header-section-number">3.9.1</span> Literal Characters versus Metacharacters</h3>
+<div id="literal-characters-versus-metacharacters" class="section level3 hasAnchor" number="3.9.1">
+<h3><span class="header-section-number">3.9.1</span> Literal Characters versus Metacharacters<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#literal-characters-versus-metacharacters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Every character in a regular expression is interpreted in one of two ways. Either it is interpreted as a</p>
 <ol style="list-style-type: decimal">
 <li>literal character, or as a</li>
 <li>metacharacter.</li>
 </ol>
-<p>If it is a literal character, then the character is the <em>literal</em> pattern. For example, in the regular expression “e,” the character “e” has a literal interpretation. If you seek to capitalize all instances of “e” in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you’re good. The pattern is trivial to specify.</p>
+<p>If it is a literal character, then the character is the <em>literal</em> pattern. For example, in the regular expression “e”, the character “e” has a literal interpretation. If you seek to capitalize all instances of “e” in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you’re good. The pattern is trivial to specify.</p>
 <p>On the other hand, if I asked you to remove <code>$</code>s from price or salary data, you might have a little more difficulty. This is because <code>$</code> is a <em>metacharacter</em> in regular expressions, and so it has a special meaning.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> In the examples below, if <code>$</code> is interpreted as a regular expression, the pattern will not be found at all, despite the prevalence of <em>literal</em> dollar signs.</p>
 <p>There are a few functions in R that perform find-and-replace, but in this case, I use <code>gsub()</code>. In Pandas, I can use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html"><code>.str.replace()</code></a>, to do this. Here are the examples that find patterns that are described by literal characters.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
@@ -865,8 +869,8 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb53-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb53-4" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(<span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$&quot;</span>)</span>
 <span id="cb53-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;100, 200&quot;</span></span></code></pre></div>
 </div>
-<div id="the-trouble-with-backslashes-escape-sequences" class="section level3" number="3.9.2">
-<h3><span class="header-section-number">3.9.2</span> The Trouble With Backslashes: Escape Sequences</h3>
+<div id="the-trouble-with-backslashes-escape-sequences" class="section level3 hasAnchor" number="3.9.2">
+<h3><span class="header-section-number">3.9.2</span> The Trouble With Backslashes: Escape Sequences<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#the-trouble-with-backslashes-escape-sequences" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You might have noticed above and gotten confused–sometimes in Python and in R, we need <em>two</em> backslashes instead of <em>one</em>. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as <strong>escape sequences</strong>. We need to be able to do this even if we aren’t using regular expressions.</p>
 <p>For instance, consider the way we type the “newline” character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. <code>\</code> is one character, and <code>n</code> is another, but together they are one!</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="co">#in R</span></span>
@@ -885,8 +889,8 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(r<span class="st">&#39;{\$}&#39;</span>) <span class="co"># in R</span></span>
 <span id="cb59-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 </div>
-<div id="more-examples-of-using-regular-expressions" class="section level3" number="3.9.3">
-<h3><span class="header-section-number">3.9.3</span> More Examples of Using Regular Expressions</h3>
+<div id="more-examples-of-using-regular-expressions" class="section level3 hasAnchor" number="3.9.3">
+<h3><span class="header-section-number">3.9.3</span> More Examples of Using Regular Expressions<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#more-examples-of-using-regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Regular expressions that match many different types of characters are often very useful–these are called <strong>character classes.</strong> For example, <code>.</code> represents any character except a newline, <code>\d</code> represents any digit, and <code>\s</code> represents any whitespace character. You can sometimes capitalize the letters in the regular expression to get the opposite pattern.</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anonymize phone numbers in R</span></span>
 <span id="cb60-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> r<span class="st">&quot;{\d}&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;X&quot;</span>, <span class="at">x =</span> <span class="st">&quot;(202)555-0191&quot;</span>)</span>
@@ -959,7 +963,7 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb67-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    False</span></span>
 <span id="cb67-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 3     True</span></span>
 <span id="cb67-8"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: bool</span></span></code></pre></div>
-<p>However, this does not successfully remove <code>"hellooo"</code> because it will match on the <em>last</em> two “o”s of the word. To prevent this, we can prepend a <code>(?&lt;!o)</code>, which disallows a leading “o,” as well. In R, we also have to specify <code>perl=TRUE</code> to use Perl-compatible regular expressions.</p>
+<p>However, this does not successfully remove <code>"hellooo"</code> because it will match on the <em>last</em> two “o”s of the word. To prevent this, we can prepend a <code>(?&lt;!o)</code>, which disallows a leading “o”, as well. In R, we also have to specify <code>perl=TRUE</code> to use Perl-compatible regular expressions.</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exactly two &quot;o&quot;s in R</span></span>
 <span id="cb68-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="at">pattern =</span> <span class="st">&quot;(?&lt;!o)oo(?!o)&quot;</span>, </span>
 <span id="cb68-3"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb68-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;look&quot;</span>,<span class="st">&quot;book&quot;</span>,<span class="st">&quot;box&quot;</span>, <span class="st">&quot;hellooo&quot;</span>), <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
@@ -973,10 +977,10 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <span id="cb69-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1            NaN</span></span></code></pre></div>
 </div>
 </div>
-<div id="exercises-1" class="section level2" number="3.10">
-<h2><span class="header-section-number">3.10</span> Exercises</h2>
-<div id="r-questions-1" class="section level3" number="3.10.1">
-<h3><span class="header-section-number">3.10.1</span> R Questions</h3>
+<div id="exercises-1" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> Exercises<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-1" class="section level3 hasAnchor" number="3.10.1">
+<h3><span class="header-section-number">3.10.1</span> R Questions<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#r-questions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p>Let’s flip some coins! Generate a thousand flips of a fair coin. Use <code>rbinom</code>, and let heads be coded as <code>1</code> and tails coded as <code>0</code>.</p>
 <ul>
@@ -985,11 +989,38 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 <li>Create a variable called <code>numHeads</code> by tallying up the number of heads.</li>
 <li>Calculate the percent of time that the number changes in <code>flips</code>. Assign your number to <code>acceptanceRate</code>. Try to write only one line of code to do this.</li>
 </ul></li>
+<li><p>Compute the elements of the tenth order Taylor approximation to <span class="math inline">\(\exp(3)\)</span> and store them in <code>taylorElems</code>. Do not sum them. Use only one expression, and do not use any loop. The approximation is,<br />
+<span class="math display">\[
+1 + 3 + 3^2/2! + 3^3/3! + \cdots 3^{10}/10!
+\]</span>
+You want to store each of those eleven numbers separately in a <code>numeric</code> <code>vector</code>.</p></li>
+<li><p>Do the following</p>
+<ul>
+<li>Create a vector called <code>nums</code> that contains all consecutive integers from <span class="math inline">\(-100\)</span> to <span class="math inline">\(100\)</span>.</li>
+<li>Create a <code>logical</code> <code>vector</code> that has the same length as the above, and contains <code>TRUE</code> whenever an element of the above is even, and <code>FALSE</code> otherwise. Call it <code>myLogicals</code></li>
+<li>Assign the total number of <code>TRUE</code>s to <code>totalEven</code></li>
+<li>Create a <code>vector</code> called <code>evens</code> of all even numbers from the above <code>vector</code></li>
+<li>Create a <code>vector</code> called <code>reverse</code> that holds the reversed elements of <code>nums</code></li>
+</ul></li>
+<li><p>Let’s say we wanted to calculate the following sum <span class="math inline">\(\sum_{i=1}^N x_i\)</span>. If <span class="math inline">\(N\)</span> is large, or most of the <span class="math inline">\(x_i\)</span>s are large, then we might bump up against the largest allowable number. This is the problem of <em>overflow</em>. The biggest integer and biggest floating point can be recovered by typing <code>.Machine$integer.max</code> and <code>.Machine$double.xmax</code>, respectively.</p>
+<ul>
+<li>Assign <code>sumThese</code> to <code>exp(rep(1000,10))</code>. Are they finite? Can you sum them? If everything is all good, assign <code>TRUE</code> to <code>allGood</code>.</li>
+<li>Theoretically, is the logarithm of the sum less than <code>.Machine$double.xmax</code>? Assign <code>TRUE</code> or <code>FALSE</code> to <code>noOverflowIssue</code></li>
+<li>assign the <em>naive</em> log-sum of these to <code>naiveLogSum</code>. Is the naive log sum finite?</li>
+<li>Compute <code>betterSum</code>, one that doesn’t overflow, using the <em>log-sum-exp</em> trick.</li>
+</ul>
+<p><span class="math display">\[
+ \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
+ \]</span>
+<span class="math inline">\(m\)</span> is usually chosen to be <span class="math inline">\(\max_i \log x_i\)</span>. This is the same formula as above, which is nice. You can use the same code to combat both overflow and underflow.</p>
+<ul>
+<li>If you’re writing code, and you have a bunch of very large numbers, is it better to store those numbers, or store the logarithm of those numbers? Assign your answer to <code>whichBetter</code>. Use either the phrase <code>"logs"</code> or <code>"nologs"</code></li>
+</ul></li>
 <li><p>Say you have a <code>vector</code> of prices of some financial asset:</p></li>
 </ol>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb70-1" aria-hidden="true" tabindex="-1"></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">100.10</span>, <span class="fl">95.98</span>, <span class="fl">100.01</span>, <span class="fl">99.87</span>)</span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
-<li><p>Convert this vector into a vector of <em>log returns</em>. Call the variable <code>logReturns</code>. If <span class="math inline">\(p_t\)</span> is the price at time <span class="math inline">\(t\)</span>, the log return ending at time <span class="math inline">\(t\)</span> is
+<li><p>Use the natural logarithm and convert this vector into a vector of <em>log returns</em>. Call the variable <code>logReturns</code>. If <span class="math inline">\(p_t\)</span> is the price at time <span class="math inline">\(t\)</span>, the log return ending at time <span class="math inline">\(t\)</span> is
 <span class="math display">\[\begin{equation} 
 r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
 \end{equation}\]</span></p></li>
@@ -998,8 +1029,8 @@ r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
 a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 
 \end{equation}\]</span></p></li>
 </ol>
-<ol start="3" style="list-style-type: decimal">
-<li>Consider another <strong>mixture density</strong> <span class="math inline">\(f(y) = \int f(y \mid x) f(x) dx\)</span> where</li>
+<ol start="6" style="list-style-type: decimal">
+<li>Consider the <strong>mixture density</strong> <span class="math inline">\(f(y) = \int f(y \mid x) f(x) dx\)</span> where</li>
 </ol>
 <p><span class="math display">\[\begin{equation} 
 Y \mid X = x \sim \text{Normal}(0, x^2)
@@ -1008,20 +1039,21 @@ and</p>
 <p><span class="math display">\[\begin{equation} 
 X \sim \text{half-Cauchy}(0, 1).
 \end{equation}\]</span>
-This distribution is a special case of a prior distribution that is used in Bayesian statistics <span class="citation">(<a href="#ref-horseshoe" role="doc-biblioref">Carvalho, Polson, and Scott 2009</a>)</span>.</p>
+This distribution is a special case of a prior distribution that is used in Bayesian statistics <span class="citation">(<a href="#ref-horseshoe" role="doc-biblioref">Carvalho, Polson, and Scott 2009</a>)</span>. Note that the second parameter of the Normal distribution is its variance, not its standard deviation.</p>
 <p>Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:</p>
 <p><span class="math display">\[\begin{equation} 
 \mathbb{P}[|Y| &gt; 1] = \int_{y : |y| &gt; 1} f(y)dy = \int_{y : |y| &gt; 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
 \end{equation}\]</span></p>
+<p>The following steps will demonstrate how you can use the <strong>Monte-Carlo</strong> <span class="citation">(<a href="#ref-monte-carlo-stat-methods" role="doc-biblioref">Robert and Casella 2005</a>)</span> method to approximate this probability.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Simulate <span class="math inline">\(X_1, \ldots, X_{5000}\)</span> from a <span class="math inline">\(\text{half-Cauchy}(0, 1)\)</span> and call these samples <code>xSamps</code>. Hint: you can simulate from a <span class="math inline">\(t\)</span> distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.</p></li>
 <li><p>Simulate <span class="math inline">\(Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}\)</span> and call the samples <code>ySamps</code>.</p></li>
 <li><p>Calculate the approximate probability using <code>ySamps</code> and call it <code>approxProbDev1</code>.</p></li>
-<li><p>Why is simply “ignoring” <code>xSamps</code>, the samples you condition on, “equivalent” to “integrating out <span class="math inline">\(x\)</span>?” Store a string response as a length <span class="math inline">\(1\)</span> character vector called <code>integratingOutResp</code>.</p></li>
+<li><p>Why is simply “ignoring” <code>xSamps</code> (i.e. not using it in the averaging part of the computation), the samples you condition on, “equivalent” to “integrating out <span class="math inline">\(x\)</span>”? Store a string response as a length <span class="math inline">\(1\)</span> character vector called <code>integratingOutResp</code>.</p></li>
 <li><p>Calculate another <strong>Rao-Blackwellized</strong> Monte Carlo estimate of <span class="math inline">\(\mathbb{P}[|Y| &gt; 1]\)</span> from <code>xSamps</code>. Call it <code>approxProbDev2</code>. Hint: <span class="math inline">\(\mathbb{P}[|Y| &gt; 1] = \mathbb{E}[\mathbb{P}(|Y| &gt; 1 \mid X) ]\)</span>. Calculate <span class="math inline">\(\mathbb{P}(|Y| &gt; 1 \mid X=x)\)</span> with pencil and paper, notice it is a function in <span class="math inline">\(x\)</span>, apply that function to each of <code>xSamps</code>, and average all of it together.</p></li>
 <li><p>Are you able to calculate an exact solution to <span class="math inline">\(\mathbb{P}[|Y| &gt; 1]\)</span>?</p></li>
 </ol>
-<ol start="4" style="list-style-type: decimal">
+<ol start="7" style="list-style-type: decimal">
 <li>Store the ordered uppercase letters of the alphabet in a length <span class="math inline">\(26\)</span> <code>character</code> <code>vector</code> called <code>myUpcaseLetters</code>. Do not hardcode this. Use a function, along with the variable <code>letters</code>.</li>
 </ol>
 <ol style="list-style-type: lower-alpha">
@@ -1029,8 +1061,8 @@ This distribution is a special case of a prior distribution that is used in Baye
 <li><p>Create a length <span class="math inline">\(26\)</span> logical vector that is <code>TRUE</code> whenever an element of <code>letters</code> is a consonant, and <code>FALSE</code> everywhere else. Call it <code>consonant</code>.</p></li>
 </ol>
 </div>
-<div id="python-questions-1" class="section level3" number="3.10.2">
-<h3><span class="header-section-number">3.10.2</span> Python Questions</h3>
+<div id="python-questions-1" class="section level3 hasAnchor" number="3.10.2">
+<h3><span class="header-section-number">3.10.2</span> Python Questions<a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#python-questions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p>Let’s flip some coins (again)! Generate a thousand flips of a fair coin. Use <code>np.random.binomial</code>, and let heads be coded as <code>1</code> and tails coded as <code>0</code>.</p>
 <ul>
@@ -1039,6 +1071,29 @@ This distribution is a special case of a prior distribution that is used in Baye
 <li>Create a variable called <code>num_heads</code> by tallying up the number of heads.</li>
 <li>Calculate the percent of time that the number changes in <code>flips</code>. Assign your number to <code>acceptance_rate</code>. Try to write only one line of code to do this.</li>
 </ul></li>
+<li><p>Create a Numpy <code>array</code> containing the numbers <span class="math inline">\(1/2, 1/4, 1/8, \ldots, 1/1024\)</span> Make sure to call it <code>my_array</code>.</p></li>
+<li><p>Do the following</p>
+<ul>
+<li>Create a <code>np.array</code> called <code>nums</code> that contains one hundred equally-spaced numbers starting from <span class="math inline">\(-100\)</span> and going to <span class="math inline">\(100\)</span> (inclusive).</li>
+<li>Create a <code>bool</code> <code>np.array</code> that has the same length as the above, and contains <code>TRUE</code> whenever an element of the above is less than ten units away from <span class="math inline">\(0\)</span>, and <code>FALSE</code> otherwise. Call it <code>my_logicals</code></li>
+<li>Assign the total number of <code>True</code>s to <code>total_close</code></li>
+<li>Create a <code>np.array</code> called <code>evens</code> of all even numbers from the above <code>np.array</code> (even numbers are necessarily integers)</li>
+<li>Create a <code>np.array</code> called <code>reverse</code> that holds the reversed elements of <code>nums</code></li>
+</ul></li>
+<li><p>Let’s say we wanted to calculate the following sum <span class="math inline">\(\sum_{i=1}^N x_i\)</span>. We run into problems when this sum is close to <span class="math inline">\(0\)</span>, too. This is the problem of <em>underflow</em>. The smallest positive floating point can be recovered by typing <code>np.nextafter(np.float64(0),np.float64(1))</code>.</p>
+<ul>
+<li>Assign <code>sum_these</code> to the length ten array <span class="math inline">\((e^{-1000}, \ldots, e^{-1000})\)</span>. Use <code>np.exp(np.repeat(-1000,10))</code>. Are the elements nonzero? Can you sum them? Is the sum correct? If everything is all good, assign <code>True</code> to <code>all_good</code>.</li>
+<li>Theoretically, for which range of positive numbers is the logarithm of the sum always farther from <span class="math inline">\(0\)</span> than the (regular) sum? Assign the lower bound to <code>lower_bound</code>, and the upper bound to <code>upper_bound</code>. Hint: <code>lower_bound</code> is <span class="math inline">\(0\)</span> because we’re only looking at positive numbers.</li>
+<li>assign the <em>naive</em> log-sum of <code>sum_these</code> to <code>naive_log_sum</code>. Is the naive log sum finite?</li>
+<li>Compute <code>better_sum</code>, one that doesn’t underflow, using the <em>log-sum-exp</em> trick. This one should be bounded away from <span class="math inline">\(-\infty\)</span>.</li>
+</ul>
+<p><span class="math display">\[
+ \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
+ \]</span>
+<span class="math inline">\(m\)</span> is usually chosen to be <span class="math inline">\(\max_i \log x_i\)</span></p>
+<ul>
+<li>If you’re writing code, and you have a bunch of very small positive numbers (e.g. probabilities, densities, etc.), is it better to store those small numbers, or store the logarithm of those numbers? Assign your answer to <code>which_better</code>. Use either the phrase <code>"logs"</code> or <code>"nologs"</code></li>
+</ul></li>
 <li><p>Use <code>pd.read_csv</code> to correctly read in <code>"2013-10_Citi_Bike_trip_data_20K.csv"</code> as a data frame called <code>my_df</code>. Make sure to read <code>autograding_tips.html</code>.</p></li>
 </ol>
 <ol style="list-style-type: lower-alpha">
@@ -1046,8 +1101,8 @@ This distribution is a special case of a prior distribution that is used in Baye
 <li><p>extract date strings of those elements into a <code>Series</code> called <code>date_strings</code></p></li>
 <li><p>extract time strings of those elements into a <code>Series</code> called <code>time_strings</code></p></li>
 </ol>
-<ol start="3" style="list-style-type: decimal">
-<li>We will make use of the <strong>Monte Carlo</strong> <span class="citation">(<a href="#ref-monte-carlo-stat-methods" role="doc-biblioref">Robert and Casella 2005</a>)</span> method below. It is a technique to approximate expectations and probabilities. If <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(X_1, \ldots, X_n\)</span> is a random sample drawn from the distribution of interest, then
+<ol start="6" style="list-style-type: decimal">
+<li>We will make use of the <strong>Monte Carlo</strong> method below. It is a technique to approximate expectations and probabilities. If <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(X_1, \ldots, X_n\)</span> is a random sample drawn from the distribution of interest, then
 <span class="math display">\[\begin{equation} 
 \mathbb{P}(X &gt; 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i &gt; 6).
 \end{equation}\]</span>
@@ -1080,11 +1135,11 @@ Figure 3.1: An Indicator Function
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Calculate a Monte Carlo estimate of <span class="math inline">\(\mathbb{P}(X &gt; 6)\)</span> from these new <code>norm_samps</code>. Call it <code>approx_exceedance_prob2</code>.</li>
 </ol>
-<ol start="4" style="list-style-type: decimal">
-<li>Alternatively, we can approximate expectations. If <span class="math inline">\(\mathbb{E}[f(X)]\)</span> exists, <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(W_1, \ldots, W_n\)</span> is a random sample drawn from the distribution of interest, then</li>
+<ol start="7" style="list-style-type: decimal">
+<li>Alternatively, we can approximate expectations. If <span class="math inline">\(\mathbb{E}[g(X)]\)</span> exists, <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(W_1, \ldots, W_n\)</span> is a random sample drawn from the distribution of interest, then</li>
 </ol>
 <p><span class="math display">\[\begin{equation} 
-\mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
+\mathbb{E}[g(W)] \approx \frac{1}{n}\sum_{i=1}^n g(W_i).
 \end{equation}\]</span></p>
 <p>Here’s a new distribution. It is a <strong>mixture distribution</strong>, specifically a <strong>finite mixture of normal distributions</strong>: <span class="math inline">\(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\)</span> where</p>
 <p><span class="math display">\[\begin{equation} 
@@ -1103,7 +1158,7 @@ Figure 3.2: The Marginal Density of Y
 </p>
 </div>
 <ol style="list-style-type: lower-alpha">
-<li><p>Evaluate exactly <span class="math inline">\(\mathbb{E}[Y]\)</span>. Assign it to the variable <code>exact_mean</code> in Python.</p></li>
+<li><p>Evaluate exactly <span class="math inline">\(\mathbb{E}[Y] = \mathbb{E}[ \mathbb{E}(Y \mid X) ]\)</span>. Assign it to the variable <code>exact_mean</code> in Python.</p></li>
 <li><p>Simulate <span class="math inline">\(1e3\)</span> times from the Bernoulli distribution. Call the samples <code>bernoulli_flips</code></p></li>
 <li><p>Simulate <span class="math inline">\(Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}\)</span> and call the samples <code>cond_norm_samps</code>.</p></li>
 <li><p>Calculate a Monte Carlo estimate of <span class="math inline">\(\mathbb{E}[Y]\)</span> from <code>cond_norm_samps</code>. Call it <code>approx_ave_1</code>. Why is simply “ignoring” <code>bernoulli_flips</code>, the samples you condition on, “equivalent” to “integrating them out?”</p></li>
@@ -1203,7 +1258,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

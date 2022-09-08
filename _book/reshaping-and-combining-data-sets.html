@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Reshaping and Combining Data Sets | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="control-flow.html"/>
 <link rel="next" href="visualization.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,10 +435,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reshaping-and-combining-data-sets" class="section level1" number="12">
-<h1><span class="header-section-number">Chapter 12</span> Reshaping and Combining Data Sets</h1>
-<div id="ordering-and-sorting-data" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> Ordering and Sorting Data</h2>
+<div id="reshaping-and-combining-data-sets" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Reshaping and Combining Data Sets<a href="reshaping-and-combining-data-sets.html#reshaping-and-combining-data-sets" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="ordering-and-sorting-data" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Ordering and Sorting Data<a href="reshaping-and-combining-data-sets.html#ordering-and-sorting-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sorting a data set, in ascending order, say, is a common task. You might need to do it because</p>
 <ol style="list-style-type: decimal">
 <li>ordering and ranking is commonly done in <em>nonparametric statistics</em>,</li>
@@ -449,7 +453,7 @@ div.csl-indent {
 <span id="cb187-5"><a href="reshaping-and-combining-data-sets.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.3450719  0.3704896  0.3903776  0.5796584  1.4929115</span></span>
 <span id="cb187-6"><a href="reshaping-and-combining-data-sets.html#cb187-6" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(sillyData)</span>
 <span id="cb187-7"><a href="reshaping-and-combining-data-sets.html#cb187-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5 4 1 2 3</span></span></code></pre></div>
-<p><code>order()</code> is useful if you’re sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars. Notice that we need to clean up the <code>MSRP</code> (a <code>character</code> vector) a little first. We use the function <code>gsub()</code> to find patterns in the text, and replace them with the empty string.</p>
+<p><code>order()</code> is useful if you’re sorting a data frame by a particularly column. Below, we inspect the top 5 most expensive cars in an example data set <span class="citation">(<a href="#ref-sas_cars" role="doc-biblioref"><span>“SAS<sup></sup> Viya<sup></sup> Example Data Sets”</span> 2021</a>)</span>. Notice that we need to clean up the <code>MSRP</code> (a <code>character</code> vector) a little first. We use the function <code>gsub()</code> to find patterns in the text, and replace them with the empty string.</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="reshaping-and-combining-data-sets.html#cb188-1" aria-hidden="true" tabindex="-1"></a>carData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
 <span id="cb188-2"><a href="reshaping-and-combining-data-sets.html#cb188-2" aria-hidden="true" tabindex="-1"></a>noDollarSignMSRP <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;$&quot;</span>, <span class="st">&quot;&quot;</span>, carData<span class="sc">$</span>MSRP, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb188-3"><a href="reshaping-and-combining-data-sets.html#cb188-3" aria-hidden="true" tabindex="-1"></a>carData<span class="sc">$</span>cleanMSRP <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">&quot;,&quot;</span>, <span class="st">&quot;&quot;</span>, noDollarSignMSRP, </span>
@@ -489,8 +493,8 @@ div.csl-indent {
 <p>Pandas’ <code>DataFrame</code>s and <code>Series</code> have a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html"><code>.replace()</code></a> method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the <code>.str</code> attribute of the <code>Series</code> column before we used it. After the string was processed, we converted it to a <code>Series</code> of <code>float</code>s with the <code>astype()</code> method.</p>
 <p>Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e. raw subsetting by row indexes), but there is a built-in method called <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sort_values.html"><code>sort_values()</code></a> that will do it for us.</p>
 </div>
-<div id="stacking-data-sets-and-placing-them-shoulder-to-shoulder" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Stacking Data Sets and Placing Them Shoulder to Shoulder</h2>
+<div id="stacking-data-sets-and-placing-them-shoulder-to-shoulder" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Stacking Data Sets and Placing Them Shoulder to Shoulder<a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Stacking data sets on top of each other is a common task. You might need to do it if</p>
 <ol style="list-style-type: decimal">
 <li>you need to add a new row (or many rows) to a data frame,</li>
@@ -540,8 +544,8 @@ div.csl-indent {
 <span id="cb194-12"><a href="reshaping-and-combining-data-sets.html#cb194-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 28251</span></span></code></pre></div>
 <p>Take note of the extra square brackets when we create <code>test</code>. If you use <code>real_estate.iloc[0,]</code> instead, it will return a <code>Series</code> with all the elements coerced to the same type, and this won’t <code>pd.concat()</code> properly with the rest of the data!</p>
 </div>
-<div id="merging-or-joining-data-sets" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> Merging or Joining Data Sets</h2>
+<div id="merging-or-joining-data-sets" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> Merging or Joining Data Sets<a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you have two different data sets that provide different information about the same things, you put them together using a <strong><code>merge</code></strong> (aka <strong><code>join</code></strong>) statement. The resulting data set is wider, and it may end up with either more or fewer rows. In R, you can use the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge"><code>merge()</code> function</a>. In Python, you can use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas-dataframe-merge"><code>.merge()</code> method</a>.</p>
 <p>Suppose you have to sets of supposedly anonymized data about individual accounts on some online platforms.</p>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="reshaping-and-combining-data-sets.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
@@ -569,12 +573,10 @@ div.csl-indent {
 <p>In Python, <code>merge()</code> is a method attached to each <code>DataFrame</code> instance.</p>
 <div class="sourceCode" id="cb197"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb197-1"><a href="reshaping-and-combining-data-sets.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
 <span id="cb197-2"><a href="reshaping-and-combining-data-sets.html#cb197-2" aria-hidden="true" tabindex="-1"></a>baby1.merge(baby2, left_on <span class="op">=</span> <span class="st">&quot;email_address&quot;</span>, right_on <span class="op">=</span> <span class="st">&quot;email&quot;</span>)</span>
-<span id="cb197-3"><a href="reshaping-and-combining-data-sets.html#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="co">##    idnum_x  height(inches)  ...       phone                  email</span></span>
-<span id="cb197-4"><a href="reshaping-and-combining-data-sets.html#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0        3              66  ...  5051234568  anotherfake@gmail.com</span></span>
-<span id="cb197-5"><a href="reshaping-and-combining-data-sets.html#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1        4              62  ...  5051234567      notreal@gmail.com</span></span>
-<span id="cb197-6"><a href="reshaping-and-combining-data-sets.html#cb197-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2       23              62  ...  5051234567      notreal@gmail.com</span></span>
-<span id="cb197-7"><a href="reshaping-and-combining-data-sets.html#cb197-7" aria-hidden="true" tabindex="-1"></a><span class="co">## </span></span>
-<span id="cb197-8"><a href="reshaping-and-combining-data-sets.html#cb197-8" aria-hidden="true" tabindex="-1"></a><span class="co">## [3 rows x 6 columns]</span></span></code></pre></div>
+<span id="cb197-3"><a href="reshaping-and-combining-data-sets.html#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="co">##    idnum_x  height(inches)          email_address  idnum_y       phone                  email</span></span>
+<span id="cb197-4"><a href="reshaping-and-combining-data-sets.html#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0        3              66  anotherfake@gmail.com  7198273  5051234568  anotherfake@gmail.com</span></span>
+<span id="cb197-5"><a href="reshaping-and-combining-data-sets.html#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1        4              62      notreal@gmail.com  3901283  5051234567      notreal@gmail.com</span></span>
+<span id="cb197-6"><a href="reshaping-and-combining-data-sets.html#cb197-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2       23              62      notreal@gmail.com  3901283  5051234567      notreal@gmail.com</span></span></code></pre></div>
 <p>The email addresses <code>anotherfake@gmail.com</code> and <code>notreal@gmail.com</code> exist in both data sets, so each of these email addresses will end up in the result data frame. The rows in the result data set are wider and have more attributes for each individual.</p>
 <p>Notice the duplicate email address, too. In this case, either the user signed up for two accounts using the same email, or one person signed up for an account with another person’s email address. In the case of duplicates, both rows will match with the same rows in the other data frame.</p>
 <p>Also, in this case, all email addresses that weren’t found in both data sets were thrown away. This does not necessarily need to be the intended behavior. For instance, if we wanted to make sure no rows were thrown away, that would be possible. In this case, though, for email addresses that weren’t found in both data sets, some information will be missing. Recall that Python and R handle missing data differently (see <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#how-r-and-python-handle-missing-values">3.8.2</a>).</p>
@@ -618,10 +620,10 @@ div.csl-indent {
 <span id="cb201-7"><a href="reshaping-and-combining-data-sets.html#cb201-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 2        a              2              1</span></span>
 <span id="cb201-8"><a href="reshaping-and-combining-data-sets.html#cb201-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 3        a              2              2</span></span></code></pre></div>
 </div>
-<div id="long-versus-wide-data" class="section level2" number="12.4">
-<h2><span class="header-section-number">12.4</span> Long Versus Wide Data</h2>
-<div id="long-versus-wide-in-r" class="section level3" number="12.4.1">
-<h3><span class="header-section-number">12.4.1</span> Long Versus Wide in R</h3>
+<div id="long-versus-wide-data" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Long Versus Wide Data<a href="reshaping-and-combining-data-sets.html#long-versus-wide-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="long-versus-wide-in-r" class="section level3 hasAnchor" number="12.4.1">
+<h3><span class="header-section-number">12.4.1</span> Long Versus Wide in R<a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Many types of data can be stored in either a <strong>wide</strong> or <strong>long</strong> format.</p>
 <p>The classical example is data from a <em>longitudinal study.</em> If an experimental unit (in the example below this is a person) is repeatedly measured over time, each row would correspond to an experimental unit <em>and</em> an observation time in a data set in a long form.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="reshaping-and-combining-data-sets.html#cb202-1" aria-hidden="true" tabindex="-1"></a>peopleNames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Taylor&quot;</span>,<span class="st">&quot;Taylor&quot;</span>,<span class="st">&quot;Charlie&quot;</span>,<span class="st">&quot;Charlie&quot;</span>)</span>
@@ -712,8 +714,8 @@ div.csl-indent {
 <span id="cb206-31"><a href="reshaping-and-combining-data-sets.html#cb206-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Charlie         attrA  300</span></span>
 <span id="cb206-32"><a href="reshaping-and-combining-data-sets.html#cb206-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Charlie         attrB  301</span></span></code></pre></div>
 </div>
-<div id="long-versus-wide-in-python" class="section level3" number="12.4.2">
-<h3><span class="header-section-number">12.4.2</span> Long Versus Wide in Python</h3>
+<div id="long-versus-wide-in-python" class="section level3 hasAnchor" number="12.4.2">
+<h3><span class="header-section-number">12.4.2</span> Long Versus Wide in Python<a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>With Pandas, we can take make long data wide with <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html#"><code>pd.DataFrame.pivot()</code></a>, and we can go in the other direction with <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.melt.html?highlight=melt"><code>pd.DataFrame.melt()</code></a>.</p>
 <p>When going from long to wide, make sure to use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html#"><code>pd.DataFrame.reset_index()</code></a> method afterwards to reshape the data and remove the index. Here is an example similar to the one above.</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb207-1"><a href="reshaping-and-combining-data-sets.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -773,10 +775,10 @@ div.csl-indent {
 <span id="cb210-11"><a href="reshaping-and-combining-data-sets.html#cb210-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 3   Taylor          attrB    101</span></span></code></pre></div>
 </div>
 </div>
-<div id="exercises-10" class="section level2" number="12.5">
-<h2><span class="header-section-number">12.5</span> Exercises</h2>
-<div id="r-questions-9" class="section level3" number="12.5.1">
-<h3><span class="header-section-number">12.5.1</span> R Questions</h3>
+<div id="exercises-10" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Exercises<a href="reshaping-and-combining-data-sets.html#exercises-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-9" class="section level3 hasAnchor" number="12.5.1">
+<h3><span class="header-section-number">12.5.1</span> R Questions<a href="reshaping-and-combining-data-sets.html#r-questions-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -837,8 +839,8 @@ a_{m1} \mathbf{B} &amp; \cdots &amp; a_{mn} \mathbf{B} \\
 <li>Bonus Question: identify all column pairs that contain duplicate information in <code>midData</code>, remove all but one of the columns, and change the column name back to its original name.</li>
 </ul>
 </div>
-<div id="python-questions-9" class="section level3" number="12.5.2">
-<h3><span class="header-section-number">12.5.2</span> Python Questions</h3>
+<div id="python-questions-9" class="section level3 hasAnchor" number="12.5.2">
+<h3><span class="header-section-number">12.5.2</span> Python Questions<a href="reshaping-and-combining-data-sets.html#python-questions-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -911,10 +913,13 @@ Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning R
 Fisher, Test, R. A. &amp; Creator. 1988. <span>“<span>Iris</span>.”</span> UCI Machine Learning Repository.
 </div>
 <div id="ref-clay_ford" class="csl-entry">
-Ford, Clay. 2016. <span>“Ggplot: Files for UVA StatLab Workshop, Fall 2016.”</span> <em>GitHub Repository</em>. <a href="https://github.com/clayford/ggplot2">https://github.com/clayford/ggplot2</a>; GitHub.
+Ford, Clay. 2016. <span>“<span class="nocase">ggplot: Files for UVA StatLab workshop, Fall 2016</span>.”</span> <em>GitHub Repository</em>. <a href="https://github.com/clayford/ggplot2">https://github.com/clayford/ggplot2</a>; GitHub.
 </div>
 <div id="ref-mid5" class="csl-entry">
 Palmer, Glenn, Roseanne W McManus, Vito D’Orazio, Michael R Kenwick, Mikaela Karstens, Chase Bloch, Nick Dietrich, Kayla Kahn, Kellan Ritter, and Michael J Soules. <span>“The Mid5 Dataset, 2011–2014: Procedures, Coding Rules, and Description.”</span> <em>Conflict Management and Peace Science</em> 0 (0): 0738894221995743. <a href="https://doi.org/10.1177/0738894221995743">https://doi.org/10.1177/0738894221995743</a>.
+</div>
+<div id="ref-sas_cars" class="csl-entry">
+<span>“SAS<sup></sup> Viya<sup></sup> Example Data Sets.”</span> 2021. <a href="https://support.sas.com/documentation/onlinedoc/viya/examples.htm">https://support.sas.com/documentation/onlinedoc/viya/examples.htm</a>.
 </div>
 </div>
             </section>
@@ -983,7 +988,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Functions | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="rs-lists-versus-pythons-lists-and-dicts.html"/>
 <link rel="next" href="categorical-data.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,8 +435,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="functions" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Functions</h1>
+<div id="functions" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Functions<a href="functions.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This text has already covered how to <em>use</em> functions that come to us pre-made. At least we have discussed how to use them in a one-off way–just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python.</p>
 <p>In this section we take a look at how to <em>define</em> our own functions. This will not only help us to understand pre-made functions, but it will also be useful if we need some extra functionality that isn’t already provided to us.</p>
 <p>Writing our own functions is also useful for “packaging up” computations. The utility of this will become apparent very soon. Consider the task of estimating a regression model. If you have a function that performs all of the required calculations, then</p>
@@ -440,9 +444,9 @@ div.csl-indent {
 <li>you can estimate models without having to think about lower-level details or write any code yourself, and</li>
 <li>you can re-use this function every time you fit any model on any data set for any project.</li>
 </ul>
-<div id="defining-r-functions" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Defining R Functions</h2>
-<p>To create a function in R, we need another function called <code>function()</code>. We give the output of <code>function()</code> a name in the same way we give names to any other variable in R, by using the assignment operator <code>&lt;-</code>. Here’s an example of a toy function called <code>addOne()</code>. Here <code>myInput</code> is a placeholder that refers to whatever the user of the function ends up plugging in.</p>
+<div id="defining-r-functions" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Defining R Functions<a href="functions.html#defining-r-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To create a function in R, we need another function called <code>function()</code>. We give the output of <code>function()</code> a name in the same way we give names to any other variable in R, by using the assignment operator <code>&lt;-</code> . Here’s an example of a toy function called <code>addOne()</code>. Here <code>myInput</code> is a placeholder that refers to whatever the user of the function ends up plugging in.</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="functions.html#cb89-1" aria-hidden="true" tabindex="-1"></a>addOne <span class="ot">&lt;-</span> <span class="cf">function</span>(myInput){  <span class="co"># define the function</span></span>
 <span id="cb89-2"><a href="functions.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  myOutput <span class="ot">&lt;-</span> myInput <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb89-3"><a href="functions.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(myOutput)</span>
@@ -461,8 +465,8 @@ div.csl-indent {
 <p>If you are interested in writing a function, I recommend that you first write the logic outside of a function. This initial code will be easier to debug because your temporary variables will not be destroyed after the final result has been obtained. Once you are happy with the working code, you can copy and paste the logic into a function definition, and replace permanent variables with function inputs like <code>myInput</code> above.</p>
 </div>
 </div>
-<div id="defining-python-functions" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Defining Python Functions</h2>
+<div id="defining-python-functions" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Defining Python Functions<a href="functions.html#defining-python-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To create a function in Python, we use the <code>def</code> statement (instead of the <code>function()</code> function in R). The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in R.</p>
 <p>Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and <code>return</code> isn’t a function like it is in R, so there is no need to use parentheses after it. There is one syntactic addition, though–we need a colon (<code>:</code>) at the end of the first line of the definition.</p>
 <p>Here is an example of a toy function called <code>add_one()</code>.</p>
@@ -480,8 +484,8 @@ div.csl-indent {
 </ul>
 <p>We get the desired answer, and all the unnecessary intermediate variables are cleaned up and thrown away after they are no longer needed.</p>
 </div>
-<div id="more-details-on-rs-user-defined-functions" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> More Details On R’s User-Defined Functions</h2>
+<div id="more-details-on-rs-user-defined-functions" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> More Details On R’s User-Defined Functions<a href="functions.html#more-details-on-rs-user-defined-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Technically, in R, functions are <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Function-objects">defined as three things bundled together</a>:</p>
 <ol style="list-style-type: decimal">
 <li>a <strong>formal argument list</strong> (also known as <em>formals</em>),</li>
@@ -512,13 +516,13 @@ div.csl-indent {
 <span id="cb92-7"><a href="functions.html#cb92-7" aria-hidden="true" tabindex="-1"></a><span class="do">##     myOutput &lt;- myInput + whichNumber</span></span>
 <span id="cb92-8"><a href="functions.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     return(myOutput)</span></span>
 <span id="cb92-9"><a href="functions.html#cb92-9" aria-hidden="true" tabindex="-1"></a><span class="do">## }</span></span></code></pre></div>
-<p>Every function you create also has a <em>parent environment</em><a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. You can get/set this using the <code>environment()</code> function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was <em>created</em>, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called <em>scoping</em>. When you create functions in R, you are primarily using <strong>lexical scoping</strong>. This is discussed in more detail in section <a href="functions.html#function-scope-in-r">6.5</a>.</p>
+<p>Every function you create also has a <em>parent environment</em><a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. You can get/set this using the <code>environment()</code> function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was <em>created</em>, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called <em>scoping</em>. When you create functions in R, you are primarily using <strong>lexical scoping</strong>. This is discussed in more detail in section <a href="functions.html#function-scope-in-r">6.5</a>.</p>
 <div class="rmd-details">
 <p>There is a lot more information about environments that isn’t provided in this text. For instance, a user-defined function also has <a href="http://adv-r.had.co.nz/Environments.html#function-envs">binding, execution, and calling environments associated with it</a>, and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.</p>
 </div>
 </div>
-<div id="more-details-on-pythons-user-defined-functions" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> More details on Python’s user-defined functions</h2>
+<div id="more-details-on-pythons-user-defined-functions" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> More details on Python’s user-defined functions<a href="functions.html#more-details-on-pythons-user-defined-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Roughly, Python functions have the same things R functions have. They have a <strong>formal parameter list</strong>, a body, and there are <a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces">namespaces</a> created that help organize which variables the function can access, as well as which pieces of code can call this new function. A namespace is just a “mapping from names to objects.”</p>
 <p>These three concepts are analogous to those in R. The names are just a bit different sometimes, and it isn’t organized in the same way. To access these bits of information, you need to access the <em>special attributes</em> of a function. User-defined functions in Python have a lot of pieces of information attached to them. If you’d like to see all of them, you can visit <a href="https://docs.python.org/3/reference/datamodel.html#objects-values-and-types">this page of documentation</a>.</p>
 <!-- Below is a table, taken straight from [the documentation](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types), of all each user-defined function's .  -->
@@ -535,7 +539,7 @@ div.csl-indent {
 <!-- `__closure__` | `None` or a tuple of cells that contain bindings for the function’s free variables. See below for information on the `cell_contents` attribute. -->
 <!-- `__annotations__` | A dict containing annotations of parameters. The keys of the dict are the parameter names, and 'return' for the return annotation, if provided. -->
 <!-- `__kwdefaults__` | A dict containing defaults for keyword-only parameters. -->
-<p>So, for instance, let’s try to find the <em>formal parameter list</em> of a user-defined function below. This is, again, the collection of inputs a function takes. Just like in R, this is not the <em>actual</em> arguments a user will plug in–that isn’t knowable at the time the function is created.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> Here we have another function called <code>add_number()</code> that takes a parameter <code>which_number</code> that is accompanied by a default argument of <code>1</code>.</p>
+<p>So, for instance, let’s try to find the <em>formal parameter list</em> of a user-defined function below. This is, again, the collection of inputs a function takes. Just like in R, this is not the <em>actual</em> arguments a user will plug in–that isn’t knowable at the time the function is created.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> Here we have another function called <code>add_number()</code> that takes a parameter <code>which_number</code> that is accompanied by a default argument of <code>1</code>.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="functions.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_number(my_input, which_number <span class="op">=</span> <span class="dv">1</span>): <span class="co"># define a function</span></span>
 <span id="cb93-2"><a href="functions.html#cb93-2" aria-hidden="true" tabindex="-1"></a>    my_output <span class="op">=</span> my_input <span class="op">+</span> which_number</span>
 <span id="cb93-3"><a href="functions.html#cb93-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_output</span>
@@ -550,8 +554,8 @@ div.csl-indent {
 <p>Don’t worry if the notation <code>add_number.__code__</code> looks strange. The dot (<code>.</code>) operator will become more clear in the future chapter on <em>object-oriented programming</em>. For now, just think of <code>__code__</code> as being an object <em>belonging to</em> <code>add_number</code>. Objects that belong to other objects are called <strong>attributes</strong> in Python. The dot operator helps us access attributes <em>inside</em> other objects. It also helps us access objects belonging to modules that we <code>import</code> into our scripts.</p>
 </div>
 </div>
-<div id="function-scope-in-r" class="section level2" number="6.5">
-<h2><span class="header-section-number">6.5</span> Function Scope in R</h2>
+<div id="function-scope-in-r" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Function Scope in R<a href="functions.html#function-scope-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R uses <strong>lexical scoping</strong>. This means, in R,</p>
 <ol style="list-style-type: decimal">
 <li>functions can use <em>local</em> variables that are defined inside themselves,<br />
@@ -621,8 +625,8 @@ div.csl-indent {
 <p>Sometimes people will refer to R’s functions as <strong>closures</strong> to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with.</p>
 </div>
 </div>
-<div id="function-scope-in-python" class="section level2" number="6.6">
-<h2><span class="header-section-number">6.6</span> Function Scope in Python</h2>
+<div id="function-scope-in-python" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Function Scope in Python<a href="functions.html#function-scope-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Python uses <strong>lexical scoping</strong> just like R. This means, in Python,</p>
 <ol style="list-style-type: decimal">
 <li>functions can use <em>local</em> variables that are defined inside themselves,<br />
@@ -637,7 +641,7 @@ div.csl-indent {
 <li>G: Global, and</li>
 <li>B: Built-in.</li>
 </ul>
-<p>A Python function will search for a variable in these namespaces in this order.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
+<p>A Python function will search for a variable in these namespaces in this order.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
 <p>“<em>Local</em>” refers to variables that are defined inside of the function’s block. The function below uses the local <code>a</code> over the global one.</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="functions.html#cb99-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb99-2"><a href="functions.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> silly_function():</span>
@@ -689,12 +693,12 @@ div.csl-indent {
 ## inside one</code></pre>
 <p>If you feel like you understand lexical scoping, great! You should be ready to take on chapter <a href="an-introduction-to-functional-programming.html#an-introduction-to-functional-programming">15</a>, then. If not, keep playing around with examples. Without understanding the scoping rules R and Python share, writing your own functions will persistently feel more difficult than it really is.</p>
 </div>
-<div id="modifying-a-functions-arguments" class="section level2" number="6.7">
-<h2><span class="header-section-number">6.7</span> Modifying a Function’s Arguments</h2>
+<div id="modifying-a-functions-arguments" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Modifying a Function’s Arguments<a href="functions.html#modifying-a-functions-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Can/should we modify a function’s argument? The flexibility to do this sounds empowering; however, not doing it is recommended because it makes programs easier to reason about.</p>
-<div id="passing-by-value-in-r" class="section level3" number="6.7.1">
-<h3><span class="header-section-number">6.7.1</span> Passing By Value In R</h3>
-<p>In R, it is <em>difficult</em> for a function to modify one of its argument.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> Consider the following code.</p>
+<div id="passing-by-value-in-r" class="section level3 hasAnchor" number="6.7.1">
+<h3><span class="header-section-number">6.7.1</span> Passing By Value In R<a href="functions.html#passing-by-value-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In R, it is <em>difficult</em> for a function to modify one of its argument.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> Consider the following code.</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="functions.html#cb104-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb104-2"><a href="functions.html#cb104-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(arg){</span>
 <span id="cb104-3"><a href="functions.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  arg <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># modifying a temporary variable, not a</span></span>
@@ -708,8 +712,8 @@ div.csl-indent {
 <p><code>arg</code> could have been called <code>a</code>, and the same behavior will take place. However, giving these two things different names is helpful to remind you and others that R copies its arguments.</p>
 <p>It is still possible to modify <code>a</code>, but I don’t recommend doing this either. I will discuss this more in subsection <a href="functions.html#modifying-a-functions-arguments">6.7</a>.</p>
 </div>
-<div id="passing-by-assignment-in-python" class="section level3" number="6.7.2">
-<h3><span class="header-section-number">6.7.2</span> Passing By Assignment In Python</h3>
+<div id="passing-by-assignment-in-python" class="section level3 hasAnchor" number="6.7.2">
+<h3><span class="header-section-number">6.7.2</span> Passing By Assignment In Python<a href="functions.html#passing-by-assignment-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The story is more complicated in Python. Python functions have <strong>pass-by-assignment</strong> semantics. This is something that is very unique to Python. What this means is that your ability to modify the arguments of a function depends on</p>
 <ul>
 <li>what the type of the argument is, and</li>
@@ -759,7 +763,7 @@ div.csl-indent {
 <span id="cb108-9"><a href="functions.html#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb108-10"><a href="functions.html#cb108-10" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
 <span id="cb108-11"><a href="functions.html#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(a), <span class="bu">id</span>(arg)) <span class="co"># different!`</span></span>
-<span id="cb108-12"><a href="functions.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 139622944327008 139622944327040</span></span>
+<span id="cb108-12"><a href="functions.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 140112800343392 140112800343424</span></span>
 <span id="cb108-13"><a href="functions.html#cb108-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb108-14"><a href="functions.html#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
 <div class="rmd-details">
@@ -781,15 +785,15 @@ div.csl-indent {
 <span id="cb109-11"><a href="functions.html#cb109-11" aria-hidden="true" tabindex="-1"></a><span class="co">## [2]</span></span>
 <span id="cb109-12"><a href="functions.html#cb109-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arg <span class="kw">is</span> a)</span>
 <span id="cb109-13"><a href="functions.html#cb109-13" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
-<p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place,” and all variables can access the mutated object.</p>
+<p>In this example, when we run <code>arg = a</code>, the name <code>arg</code> is bound to the same object that is bound to <code>a</code>. This much is the same. The only difference here, though, is that because lists are mutable, changing the first element of <code>arg</code> is done “in place”, and all variables can access the mutated object.</p>
 <p>Why did the third example produce unexpected results? The difference is in the line <code>arg = [2]</code>. This rebinds the name <code>arg</code> to a different variable. <code>list</code>s are still mutable, but this has nothing to do with re-binding–re-binding a name works no matter what type of object you’re binding it to. In this case we are re-binding <code>arg</code> to a completely different list.</p>
 </div>
 </div>
-<div id="accessing-and-modifying-captured-variables" class="section level2" number="6.8">
-<h2><span class="header-section-number">6.8</span> Accessing and Modifying Captured Variables</h2>
+<div id="accessing-and-modifying-captured-variables" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Accessing and Modifying Captured Variables<a href="functions.html#accessing-and-modifying-captured-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the last section, we were talking about variables that were passed in as function arguments. Here we are talking about variables that are <strong>captured</strong>. They are not passed in as variables, but they are still used inside a function. In general, even though it is possible to access and modify non-local captured variables in both languages, it is not a good idea.</p>
-<div id="accessing-captured-variables-in-r" class="section level3" number="6.8.1">
-<h3><span class="header-section-number">6.8.1</span> Accessing Captured Variables in R</h3>
+<div id="accessing-captured-variables-in-r" class="section level3 hasAnchor" number="6.8.1">
+<h3><span class="header-section-number">6.8.1</span> Accessing Captured Variables in R<a href="functions.html#accessing-captured-variables-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As Hadley Wickham writes in <a href="https://adv-r.hadley.nz/functions.html#dynamic-lookup">his book</a>, “[l]exical scoping determines where, but not when to look for values.” R has <strong>dynamic lookup</strong>, meaning code inside a function will only try to access a referred-to variable when the function is <em>running</em>, not when it is defined.</p>
 <p>Consider the R code below. The <code>dataReadyForModeling()</code> function is created in the global environment, and the global environment contains a Boolean variable called <code>dataAreClean</code>.</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="functions.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
@@ -813,8 +817,8 @@ div.csl-indent {
 <span id="cb111-3"><a href="functions.html#cb111-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(varigbleNameWithTypo) <span class="co">#varigble?</span></span>
 <span id="cb111-4"><a href="functions.html#cb111-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="accessing-captured-variables-in-python" class="section level3" number="6.8.2">
-<h3><span class="header-section-number">6.8.2</span> Accessing Captured Variables in Python</h3>
+<div id="accessing-captured-variables-in-python" class="section level3 hasAnchor" number="6.8.2">
+<h3><span class="header-section-number">6.8.2</span> Accessing Captured Variables in Python<a href="functions.html#accessing-captured-variables-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It is the same exact situation in Python. Consider <code>everything_is_safe()</code>, a function that is analogous to <code>dataReadyForModeling()</code>.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb112-1"><a href="functions.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
 <span id="cb112-2"><a href="functions.html#cb112-2" aria-hidden="true" tabindex="-1"></a>missile_launch_codes_set <span class="op">=</span> <span class="va">True</span></span>
@@ -830,8 +834,8 @@ div.csl-indent {
 <span id="cb113-3"><a href="functions.html#cb113-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> varigble_name_with_typo</span></code></pre></div>
 <p>So stay away from referring to variables outside the body of your function!</p>
 </div>
-<div id="modifying-captured-variables-in-r" class="section level3" number="6.8.3">
-<h3><span class="header-section-number">6.8.3</span> Modifying Captured Variables In R</h3>
+<div id="modifying-captured-variables-in-r" class="section level3 hasAnchor" number="6.8.3">
+<h3><span class="header-section-number">6.8.3</span> Modifying Captured Variables In R<a href="functions.html#modifying-captured-variables-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now what if we want to be extra bad, and in addition to <em>accessing</em> global variables, we <em>modify</em> them, too?</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="functions.html#cb114-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb114-2"><a href="functions.html#cb114-2" aria-hidden="true" tabindex="-1"></a>makeATwo <span class="ot">&lt;-</span> <span class="cf">function</span>(arg){</span>
@@ -845,8 +849,8 @@ div.csl-indent {
 <p>In the program above, <code>makeATwo()</code> copies <code>a</code> into <code>arg</code>. It then assigns <code>2</code> to that copy. <strong>Then it takes that <code>2</code> and writes it to the global <code>a</code> variable in the parent environment.</strong> It does this using R’s super assignment operator <code>&lt;&lt;-</code>. Regardless of the inputs passed in to this function, it will always assign exactly <code>2</code> to <code>a</code>, no matter what.</p>
 <p>This is problematic because you are pre-occupying your mind with one function: <code>makeATwo()</code>. Whenever you write code that depends on <code>a</code> (or on things that depend on <code>a</code>, or on things that depended on things that depend on <code>a</code>, or …), you’ll have to repeatedly interrupt your train of thought to <em>try</em> and remember if what you’re doing is going to be okay with the current and future <code>makeATwo()</code> call sites.</p>
 </div>
-<div id="modifying-captured-variables-in-python" class="section level3" number="6.8.4">
-<h3><span class="header-section-number">6.8.4</span> Modifying Captured Variables In Python</h3>
+<div id="modifying-captured-variables-in-python" class="section level3 hasAnchor" number="6.8.4">
+<h3><span class="header-section-number">6.8.4</span> Modifying Captured Variables In Python<a href="functions.html#modifying-captured-variables-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There is something in Python that is similar to R’s super assignment operator (<code>&lt;&lt;-</code>). It is the <code>global</code> keyword. This keyword will let you modify global variables from inside a function.</p>
 <div class="rmd-details">
 <p>The upside to the <code>global</code> keyword is that it makes hunting for <strong>side effects</strong> relatively easy (A function’s side effects are changes it makes to non-local variables). Yes, this keyword should be used sparingly, even more sparingly than merely referring to global variables, but if you are ever debugging, and you want to hunt down places where variables are surprisingly being changed, you can hit <code>Ctrl-F</code> and search for the phrase “global.”</p>
@@ -861,10 +865,10 @@ div.csl-indent {
 <span id="cb115-8"><a href="functions.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 11</span></span></code></pre></div>
 </div>
 </div>
-<div id="exercises-4" class="section level2" number="6.9">
-<h2><span class="header-section-number">6.9</span> Exercises</h2>
-<div id="r-questions-4" class="section level3" number="6.9.1">
-<h3><span class="header-section-number">6.9.1</span> R Questions</h3>
+<div id="exercises-4" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Exercises<a href="functions.html#exercises-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-4" class="section level3 hasAnchor" number="6.9.1">
+<h3><span class="header-section-number">6.9.1</span> R Questions<a href="functions.html#r-questions-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -915,8 +919,8 @@ b. the <code>matrix</code> of predictors <span class="math inline">\(\mathbf{X}\
 d(\omega_j)= n^{-1/2} \sum_{t=1}^n x_t e^{-2 \pi i \omega_j t}
 \end{equation}\]</span></p>
 </div>
-<div id="python-questions-4" class="section level3" number="6.9.2">
-<h3><span class="header-section-number">6.9.2</span> Python Questions</h3>
+<div id="python-questions-4" class="section level3 hasAnchor" number="6.9.2">
+<h3><span class="header-section-number">6.9.2</span> Python Questions<a href="functions.html#python-questions-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -961,11 +965,11 @@ Guttman, Louis. 1946. <span>“<span class="nocase">Enlargement Methods for Comp
 </div>
 <div class="footnotes">
 <hr />
-<ol start="9">
-<li id="fn9"><p>Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don’t have a parent environment.<a href="functions.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>You might have noticed that Python uses two different words to prevent confusion. Unlike R, Python uses the word “parameter” (instead of “argument”) to refer to the inputs a function takes, and “arguments” to the specific values a user plugs in.<a href="functions.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>Functions aren’t the only thing that get their own namespace. <a href="https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes">Classes do, too</a>. More information on classes is provided in Chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">14</a><a href="functions.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>There are some exceptions to this, but it’s generally true.<a href="functions.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<ol start="10">
+<li id="fn10"><p>Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don’t have a parent environment.<a href="functions.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>You might have noticed that Python uses two different words to prevent confusion. Unlike R, Python uses the word “parameter” (instead of “argument”) to refer to the inputs a function takes, and “arguments” to the specific values a user plugs in.<a href="functions.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Functions aren’t the only thing that get their own namespace. <a href="https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes">Classes do, too</a>. More information on classes is provided in Chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">14</a><a href="functions.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>There are some exceptions to this, but it’s generally true.<a href="functions.html#fnref13" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1034,7 +1038,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

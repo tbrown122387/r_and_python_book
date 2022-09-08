@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 R’s lists Versus Python’s lists and dicts | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"/>
 <link rel="next" href="functions.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,11 +435,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rs-lists-versus-pythons-lists-and-dicts" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</h1>
+<div id="rs-lists-versus-pythons-lists-and-dicts" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s<a href="rs-lists-versus-pythons-lists-and-dicts.html#rs-lists-versus-pythons-lists-and-dicts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>When you need to store elements in a container, but you can’t guarantee that these elements all have the same type, or you can’t guarantee that they all have the same size, then you need a <code>list</code> in R. In Python, you might need a <code>list</code> or <code>dict</code> (short for dictionary) <span class="citation">(<a href="#ref-Lutz13" role="doc-biblioref">Lutz 2013</a>)</span>.</p>
-<div id="lists-in-r" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> <code>list</code>s In R</h2>
+<div id="lists-in-r" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> <code>list</code>s In R<a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>list</code>s are one of the most flexible data types in R. You can access individual elements in many different ways, each element can be of different size, and each element can be of a different type.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb81-1" aria-hidden="true" tabindex="-1"></a>myList <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="st">&quot;May 5th, 2021&quot;</span>, <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
 <span id="cb81-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb81-2" aria-hidden="true" tabindex="-1"></a>myList[<span class="dv">1</span>] <span class="co"># length-1 list; first element is length 3 vector</span></span>
@@ -444,7 +448,7 @@ div.csl-indent {
 <span id="cb81-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb81-5" aria-hidden="true" tabindex="-1"></a>myList[[<span class="dv">1</span>]] <span class="co"># length-3 vector</span></span>
 <span id="cb81-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3</span></span></code></pre></div>
 <p>If you want to extract an element, you need to decide between using single square brackets or double square brackets. The former returns a <code>list</code>, while the second returns the type of the individual element.</p>
-<p>You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below. The <code>lm()</code> function estimates a linear regression model. It returns a <code>list</code> with plenty of components.</p>
+<p>You can also name the elements of a list. This can lead to more readable code. To see why, examine the example below that makes use of spme data about cars <span class="citation">(<a href="#ref-sas_cars" role="doc-biblioref"><span>“SAS<sup></sup> Viya<sup></sup> Example Data Sets”</span> 2021</a>)</span>. The <code>lm()</code> function estimates a linear regression model. It returns a <code>list</code> with plenty of components.</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb82-1" aria-hidden="true" tabindex="-1"></a>dataSet <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/cars.csv&quot;</span>)</span>
 <span id="cb82-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb82-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Horsepower) <span class="sc">~</span> Type, <span class="at">data =</span> dataSet)</span>
 <span id="cb82-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(results)</span>
@@ -460,8 +464,8 @@ div.csl-indent {
 <p><code>results</code> is a <code>list</code> (because <code>is.list(results)</code> returns <code>TRUE</code>), but to be more specific, it is an S3 object of class <code>lm</code>. If you do not know what this means, do not worry! S3 classes are discussed more in a later chapter. Why is this important? For one, I mention it so that you aren’t confused if you type <code>class(results)</code> and see <code>lm</code> instead of <code>list</code>. Second, the fact that the authors of <code>lm()</code> wrote code that returns <code>result</code> as a “fancy list” suggests that they are encouraging another way to access elements of the <code>results</code>: to use specialized functions! For example, you can use <code>residuals(results)</code>, <code>coefficients(results)</code>, and <code>fitted.values(results)</code>. These functions do not work for all lists in R, but when they do work (for <code>lm</code> and <code>glm</code> objects only), you can be sure you are writing the kind of code that is encouraged by the authors of <code>lm()</code>.</p>
 </div>
 </div>
-<div id="lists-in-python" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> <code>list</code>s In Python</h2>
+<div id="lists-in-python" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> <code>list</code>s In Python<a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://docs.python.org/3/library/stdtypes.html#lists">Python <code>list</code>s</a> are very flexible, too. There are fewer choices for accessing and modifying elements of lists in Python–you’ll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R’s lists.</p>
 <p>Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python <a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">dictionaries</a> (see section <a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python">5.3</a>) or Pandas’ <code>Series</code> objects (see section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python">3.2</a>).</p>
 <p>From the example below, you can see that we’ve been introduced to lists already. We have been constructing Numpy arrays from them.</p>
@@ -484,9 +488,10 @@ div.csl-indent {
 <span id="cb85-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span></span>
 <span id="cb85-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb85-5" aria-hidden="true" tabindex="-1"></a>your_list</span>
 <span id="cb85-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [0, 1, 4]</span></span></code></pre></div>
+<p>The code above makes reference to a type that is not extensively discussed in this text: <a href="https://docs.python.org/3.3/library/stdtypes.html?highlight=tuple#tuple"><code>tuple</code>s</a>.</p>
 </div>
-<div id="dictionaries-in-python" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Dictionaries In Python</h2>
+<div id="dictionaries-in-python" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Dictionaries In Python<a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries"><strong>Dictionaries</strong></a> in Python provide a container of key-value pairs. The keys are <em>unique</em>, and they must be <em>immutable</em>. <code>string</code>s are the most common key type, but <code>int</code>s can be used as well.</p>
 <p>Here is an example of creating a <code>dict</code> with curly braces (i.e. <code>{}</code>). This <code>dict</code> stores the current price of a few popular cryptocurrencies. Accessing an individual element’s value using its key is done with the square bracket operator (i.e. <code>[]</code>), and deleting elements is done with the <code>del</code> keyword.</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb86-1" aria-hidden="true" tabindex="-1"></a>crypto_prices <span class="op">=</span> {<span class="st">&#39;BTC&#39;</span>: <span class="fl">38657.14</span>, <span class="st">&#39;ETH&#39;</span>: <span class="fl">2386.54</span>, <span class="st">&#39;DOGE&#39;</span>: <span class="fl">.308122</span>}</span>
@@ -511,16 +516,16 @@ div.csl-indent {
 <span id="cb88-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb88-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     2    b</span></span>
 <span id="cb88-8"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 2     3    c</span></span></code></pre></div>
 </div>
-<div id="exercises-3" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Exercises</h2>
-<div id="r-questions-3" class="section level3" number="5.4.1">
-<h3><span class="header-section-number">5.4.1</span> R Questions</h3>
+<div id="exercises-3" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Exercises<a href="rs-lists-versus-pythons-lists-and-dicts.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-3" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> R Questions<a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Consider the data sets <code>"adult.data"</code>, <code>"car.data"</code>, <code>"hungarian.data"</code>, <code>"iris.data"</code>, <code>"long-beach-va.data"</code> and <code>"switzerland.data"</code> <span class="citation">(<a href="#ref-misc_heart_disease_45" role="doc-biblioref">Janosi et al. 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_adult_2" role="doc-biblioref"><span>“<span>Adult</span>”</span> 1996</a>)</span> and <span class="citation">(<a href="#ref-misc_car_evaluation_19" role="doc-biblioref"><span>“<span>Car Evaluation</span>”</span> 1997</a>)</span> hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. Read all of these in and store them all as a <code>list</code> of <code>data.frame</code>s. Call the list <code>listDfs</code>.</li>
 </ol>
 </div>
-<div id="python-questions-3" class="section level3" number="5.4.2">
-<h3><span class="header-section-number">5.4.2</span> Python Questions</h3>
+<div id="python-questions-3" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Python Questions<a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Read in <code>car.data</code> with <code>pd.read_csv()</code>, and use a <code>DataFrame</code> method to convert that to a <code>dict</code>. Store your answer as <code>car_dict</code>.</li>
 </ol>
@@ -547,6 +552,9 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
 </div>
 <div id="ref-Lutz13" class="csl-entry">
 Lutz, Mark. 2013. <em>Learning Python</em>. 5th ed. Beijing: O’Reilly. <a href="https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/">https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/</a>.
+</div>
+<div id="ref-sas_cars" class="csl-entry">
+<span>“SAS<sup></sup> Viya<sup></sup> Example Data Sets.”</span> 2021. <a href="https://support.sas.com/documentation/onlinedoc/viya/examples.htm">https://support.sas.com/documentation/onlinedoc/viya/examples.htm</a>.
 </div>
 </div>
             </section>
@@ -615,7 +623,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

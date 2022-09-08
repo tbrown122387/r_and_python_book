@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Categorical Data | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="functions.html"/>
 <link rel="next" href="data-frames.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,12 +435,12 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="categorical-data" class="section level1" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Categorical Data</h1>
+<div id="categorical-data" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Categorical Data<a href="categorical-data.html#categorical-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>While statisticians may describe data as being either categorical or numerical, this classification is different than classifying data by its <em>type</em> in a program. So, strictly speaking, if you have categorical data, you are not obligated to use any particular type to represent it in your script.</p>
 <p>However, there are types that are specifically designed to be used with categorical data, and so they are especially advantageous to use if you end up with the opportunity. We describe a few of them here in this chapter.</p>
-<div id="factors-in-r" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> <code>factor</code>s in R</h2>
+<div id="factors-in-r" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> <code>factor</code>s in R<a href="categorical-data.html#factors-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Categorical data in R is often stored in a <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Factors"><code>factor</code></a> variable. <code>factor</code>s are more special than <code>vector</code>s of integers because</p>
 <ul>
 <li>they have a <code>levels</code> attribute, which is comprised of all the possible values that each response could be;</li>
@@ -460,7 +464,7 @@ div.csl-indent {
 <p>You should be careful if you are not specifying them directly. What happens when you use the default option and replace the second assignment in the above code with <code>responses &lt;- factor(c("autumn", "summer", "summer"))</code>? The documentation of <code>factor()</code> will tell you that, by default, <code>factor()</code> will just take the unique values found in the data. In this case, nobody prefers winter or spring, and so neither will show up in <code>levels(responses)</code>. This may or may not be what you want.</p>
 </div>
 <p><code>factor</code>s can be ordered or unordered. Ordered <code>factor</code>s are for <em>ordinal</em> data. Ordinal data is a particular type of categorical data that recognizes the categories have a natural order (e.g. low/ medium/high and not red/green/blue).</p>
-<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it,” “it’s okay” or “hate it.” The data might look something like this.</p>
+<p>As another example, say we asked ten people how much they liked statistical computing, and they could only respond “love it”, “it’s okay” or “hate it”. The data might look something like this.</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="categorical-data.html#cb117-1" aria-hidden="true" tabindex="-1"></a>ordFeelOptions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;hate it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>)</span>
 <span id="cb117-2"><a href="categorical-data.html#cb117-2" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
 <span id="cb117-3"><a href="categorical-data.html#cb117-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;love it&quot;</span>, <span class="st">&quot;it&#39;s okay&quot;</span>, <span class="st">&quot;love it&quot;</span>, </span>
@@ -495,7 +499,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="categorical-data.html#cb118-1" aria-hidden="true" tabindex="-1"></a>stockReturns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">6</span>) <span class="co"># not categorical here</span></span>
 <span id="cb118-2"><a href="categorical-data.html#cb118-2" aria-hidden="true" tabindex="-1"></a>typeOfDay <span class="ot">&lt;-</span> <span class="fu">cut</span>(stockReturns, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="cn">Inf</span>)) </span>
 <span id="cb118-3"><a href="categorical-data.html#cb118-3" aria-hidden="true" tabindex="-1"></a>typeOfDay</span>
-<span id="cb118-4"><a href="categorical-data.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] (-Inf,0] (0, Inf] (0, Inf] (0, Inf] (0, Inf] (0, Inf]</span></span>
+<span id="cb118-4"><a href="categorical-data.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] (-Inf,0] (-Inf,0] (-Inf,0] (0, Inf] (0, Inf] (-Inf,0]</span></span>
 <span id="cb118-5"><a href="categorical-data.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Levels: (-Inf,0] (0, Inf]</span></span>
 <span id="cb118-6"><a href="categorical-data.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(typeOfDay)</span>
 <span id="cb118-7"><a href="categorical-data.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(-Inf,0]&quot; &quot;(0, Inf]&quot;</span></span>
@@ -505,8 +509,8 @@ div.csl-indent {
 <span id="cb118-11"><a href="categorical-data.html#cb118-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
 <p>Finally, be mindful of how different functions read in external data sets. When reading in an external file, if a particular function comes across a column that has characters in it, it will need to decide whether to store that column as a character vector, or as a <code>factor</code>. For example, <code>read.csv()</code> and <code>read.table()</code> have a <code>stringsAsFactors=</code> argument that you should be mindful of.</p>
 </div>
-<div id="two-options-for-categorical-data-in-pandas" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Two Options for Categorical Data in Pandas</h2>
+<div id="two-options-for-categorical-data-in-pandas" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Two Options for Categorical Data in Pandas<a href="categorical-data.html#two-options-for-categorical-data-in-pandas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Pandas provides two options for storing categorical data. They are both very similar to R’s <code>factor</code>s. You may use either</p>
 <ol style="list-style-type: decimal">
 <li>a Pandas <code>Series</code> with a special <code>dtype</code>, or</li>
@@ -598,10 +602,10 @@ div.csl-indent {
 <span id="cb125-15"><a href="categorical-data.html#cb125-15" aria-hidden="true" tabindex="-1"></a>np.unique(my_data[<span class="dv">4</span>]).tolist()</span>
 <span id="cb125-16"><a href="categorical-data.html#cb125-16" aria-hidden="true" tabindex="-1"></a><span class="co">## [&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;]</span></span></code></pre></div>
 </div>
-<div id="exercises-5" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Exercises</h2>
-<div id="r-questions-5" class="section level3" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> R Questions</h3>
+<div id="exercises-5" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Exercises<a href="categorical-data.html#exercises-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-5" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> R Questions<a href="categorical-data.html#r-questions-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -623,8 +627,8 @@ div.csl-indent {
 <li>create a <code>factor</code> from <code>normSamps</code>. Map each element to <code>"within 1 sd"</code> or <code>"outside 1 sd"</code> depending on whether the element is within <span class="math inline">\(1\)</span> theoretical standard deviation of <span class="math inline">\(0\)</span> or not. Call the <code>factor</code> <code>withinOrNot</code>.</li>
 </ul>
 </div>
-<div id="python-questions-5" class="section level3" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> Python Questions</h3>
+<div id="python-questions-5" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Python Questions<a href="categorical-data.html#python-questions-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -745,7 +749,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
   <meta name="description" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control Flow | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
   
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="using-third-party-code.html"/>
 <link rel="next" href="reshaping-and-combining-data-sets.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -410,6 +409,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
 </ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -431,10 +435,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="control-flow" class="section level1" number="11">
-<h1><span class="header-section-number">Chapter 11</span> Control Flow</h1>
-<div id="conditional-logic" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Conditional Logic</h2>
+<div id="control-flow" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Control Flow<a href="control-flow.html#control-flow" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="conditional-logic" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Conditional Logic<a href="control-flow.html#conditional-logic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We discussed Boolean/logical objects in <a href="basic-types.html#basic-types">2</a>. We used these for</p>
 <ul>
 <li>counting the number of times a condition appeared, and</li>
@@ -444,13 +448,13 @@ div.csl-indent {
 <p>This is what an <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#if">if statement looks like In R</a>:</p>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="control-flow.html#cb175-1" aria-hidden="true" tabindex="-1"></a>myName <span class="ot">&lt;-</span> <span class="st">&quot;Taylor&quot;</span></span>
 <span id="cb175-2"><a href="control-flow.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(myName <span class="sc">!=</span> <span class="st">&quot;Clare&quot;</span>){</span>
-<span id="cb175-3"><a href="control-flow.html#cb175-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;you are not Clare&quot;</span>)</span>
+<span id="cb175-3"><a href="control-flow.html#cb175-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;you are not Clare&quot;</span>)</span>
 <span id="cb175-4"><a href="control-flow.html#cb175-4" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb175-5"><a href="control-flow.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;you are not Clare&quot;</span></span></code></pre></div>
 <p><a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">In Python</a>, you don’t need curly braces, but the indentation needs to be just right, and you need a colon <span class="citation">(<a href="#ref-Lutz13" role="doc-biblioref">Lutz 2013</a>)</span>.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb176-1"><a href="control-flow.html#cb176-1" aria-hidden="true" tabindex="-1"></a>my_name <span class="op">=</span> <span class="st">&quot;Taylor&quot;</span></span>
 <span id="cb176-2"><a href="control-flow.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> my_name <span class="op">==</span> <span class="st">&quot;Taylor&quot;</span>:</span>
-<span id="cb176-3"><a href="control-flow.html#cb176-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
+<span id="cb176-3"><a href="control-flow.html#cb176-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;hi Taylor&quot;</span>)</span>
 <span id="cb176-4"><a href="control-flow.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="co">## hi Taylor</span></span></code></pre></div>
 <p>There can be more than one test of truth. To test alternative conditions, you can add one or more <code>else if</code> (in R) or <code>elif</code> (in Python) blocks. The first block with a Boolean that is found to be true will execute, and none of the resulting conditions will be checked.</p>
 <p>If no <code>if</code> block or <code>else if</code>/<code>elif</code> block executes, an <code>else</code> block will always execute. That’s why <code>else</code> blocks don’t need to look at a Boolean. Whether they execute only depends on the Booleans in the previous blocks. If there is no <code>else</code> block, and none of the previous conditions are true, nothing will execute.</p>
@@ -459,9 +463,9 @@ div.csl-indent {
 <span id="cb177-3"><a href="control-flow.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;apple&quot;</span>){</span>
 <span id="cb177-4"><a href="control-flow.html#cb177-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;an apple a day keeps the doctor away&quot;</span>)</span>
 <span id="cb177-5"><a href="control-flow.html#cb177-5" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(food <span class="sc">==</span> <span class="st">&quot;muffin&quot;</span>){</span>
-<span id="cb177-6"><a href="control-flow.html#cb177-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
+<span id="cb177-6"><a href="control-flow.html#cb177-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;muffins have a lot of sugar in them&quot;</span>)</span>
 <span id="cb177-7"><a href="control-flow.html#cb177-7" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
-<span id="cb177-8"><a href="control-flow.html#cb177-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
+<span id="cb177-8"><a href="control-flow.html#cb177-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;neither an apple nor a muffin&quot;</span>)</span>
 <span id="cb177-9"><a href="control-flow.html#cb177-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb177-10"><a href="control-flow.html#cb177-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;muffins have a lot of sugar in them&quot;</span></span></code></pre></div>
 <div class="sourceCode" id="cb178"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb178-1"><a href="control-flow.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
@@ -475,15 +479,15 @@ div.csl-indent {
 <span id="cb178-9"><a href="control-flow.html#cb178-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;you&#39;re cheating by not using integers!&quot;</span>)</span>
 <span id="cb178-10"><a href="control-flow.html#cb178-10" aria-hidden="true" tabindex="-1"></a><span class="co">## you&#39;re cheating by not using integers!</span></span></code></pre></div>
 </div>
-<div id="loops" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Loops</h2>
+<div id="loops" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Loops<a href="control-flow.html#loops" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One line of code generally does one “thing,” unless you’re using loops. Code written inside a loop will execute many times.</p>
 <p>The most common loop for us will be a <code>for</code> loop. A simple <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#for"><code>for</code> loop in R</a> might look like this</p>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="control-flow.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co">#in R</span></span>
 <span id="cb179-2"><a href="control-flow.html#cb179-2" aria-hidden="true" tabindex="-1"></a>myLength <span class="ot">&lt;-</span> <span class="dv">9</span></span>
 <span id="cb179-3"><a href="control-flow.html#cb179-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> myLength)</span>
 <span id="cb179-4"><a href="control-flow.html#cb179-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(myLength)){</span>
-<span id="cb179-5"><a href="control-flow.html#cb179-5" aria-hidden="true" tabindex="-1"></a>    r[i] <span class="ot">&lt;-</span> i</span>
+<span id="cb179-5"><a href="control-flow.html#cb179-5" aria-hidden="true" tabindex="-1"></a>  r[i] <span class="ot">&lt;-</span> i</span>
 <span id="cb179-6"><a href="control-flow.html#cb179-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb179-7"><a href="control-flow.html#cb179-7" aria-hidden="true" tabindex="-1"></a>r</span>
 <span id="cb179-8"><a href="control-flow.html#cb179-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3 4 5 6 7 8 9</span></span></code></pre></div>
@@ -510,10 +514,10 @@ div.csl-indent {
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="control-flow.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
 <span id="cb181-2"><a href="control-flow.html#cb181-2" aria-hidden="true" tabindex="-1"></a>keepGoing <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
 <span id="cb181-3"><a href="control-flow.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(keepGoing){</span>
-<span id="cb181-4"><a href="control-flow.html#cb181-4" aria-hidden="true" tabindex="-1"></a>    oneOrZero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>)</span>
-<span id="cb181-5"><a href="control-flow.html#cb181-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;oneOrZero:&quot;</span>, oneOrZero))</span>
-<span id="cb181-6"><a href="control-flow.html#cb181-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(oneOrZero <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb181-7"><a href="control-flow.html#cb181-7" aria-hidden="true" tabindex="-1"></a>        keepGoing <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb181-4"><a href="control-flow.html#cb181-4" aria-hidden="true" tabindex="-1"></a>  oneOrZero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>)</span>
+<span id="cb181-5"><a href="control-flow.html#cb181-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;oneOrZero:&quot;</span>, oneOrZero))</span>
+<span id="cb181-6"><a href="control-flow.html#cb181-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(oneOrZero <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb181-7"><a href="control-flow.html#cb181-7" aria-hidden="true" tabindex="-1"></a>    keepGoing <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
 <span id="cb181-8"><a href="control-flow.html#cb181-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb181-9"><a href="control-flow.html#cb181-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
 <span id="cb181-10"><a href="control-flow.html#cb181-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;oneOrZero: 0&quot;</span></span>
@@ -551,10 +555,10 @@ div.csl-indent {
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="control-flow.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)[<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>)<span class="sc">%%</span><span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span>
 <span id="cb184-2"><a href="control-flow.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0  6 12 18 24</span></span></code></pre></div>
 </div>
-<div id="exercises-9" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Exercises</h2>
-<div id="r-questions-8" class="section level3" number="11.3.1">
-<h3><span class="header-section-number">11.3.1</span> R Questions</h3>
+<div id="exercises-9" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Exercises<a href="control-flow.html#exercises-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-8" class="section level3 hasAnchor" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> R Questions<a href="control-flow.html#r-questions-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -566,7 +570,7 @@ The function should return <span class="math inline">\(y_1, \ldots, y_n\)</span>
 <ol start="2" style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Say we have a target<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> distribution that we want to sample from:
+<p>Say we have a target<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> distribution that we want to sample from:
 <span class="math display">\[\begin{equation} 
 p(x) = 
 \begin{cases}
@@ -622,8 +626,8 @@ where <span class="math inline">\(x\)</span> is the point you’re trying to get
 <span id="cb185-5"><a href="control-flow.html#cb185-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xTest, yTest, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
 <span id="cb185-6"><a href="control-flow.html#cb185-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xTest, preds, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 </div>
-<div id="python-questions-8" class="section level3" number="11.3.2">
-<h3><span class="header-section-number">11.3.2</span> Python Questions</h3>
+<div id="python-questions-8" class="section level3 hasAnchor" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> Python Questions<a href="control-flow.html#python-questions-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li></li>
 </ol>
@@ -676,8 +680,8 @@ Watson, Geoffrey S. 1964. <span>“Smooth Regression Analysis.”</span> <em>San
 </div>
 <div class="footnotes">
 <hr />
-<ol start="19">
-<li id="fn19"><p>This is the density of a <span class="math inline">\(\text{Beta}(3,2)\)</span> random variable, if you’re curious.<a href="control-flow.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<ol start="20">
+<li id="fn20"><p>This is the density of a <span class="math inline">\(\text{Beta}(3,2)\)</span> random variable, if you’re curious.<a href="control-flow.html#fnref20" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -746,7 +750,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
