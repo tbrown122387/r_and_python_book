@@ -611,15 +611,15 @@ div.csl-indent {
 <li><p>Calculate the <span class="math inline">\(4 \times 4\)</span> sample covariance of the following data. Call the variable <code>mySampCov</code>, and make sure it is also a <code>matrix</code> object.</p></li>
 </ol>
 <p>A formula for the sample covariance is
-<span class="math display">\[\begin{equation} 
+<span class="math display">\[\begin{equation}
 \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
 \end{equation}\]</span>
 <strong>You can check your work with <code>cov()</code>, but don’t use it in your submitted code.</strong></p>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Create a <code>matrix</code> called <code>P</code> that has one hundred rows, one hundred columns, all of its elements positive, <span class="math inline">\(1/10\)</span> on every diagonal element, and all rows summing to one. This matrix is called <strong>stochastic</strong> and it describes how a Markov chain moves randomly through time.</p></li>
+<li><p>Create a <code>matrix</code> called <code>P</code> that has one hundred rows, one hundred columns, all of its elements nonnegative, <span class="math inline">\(1/10\)</span> on every diagonal element, and all rows summing to one. This matrix is called <strong>stochastic</strong> and it describes how a Markov chain moves randomly through time.</p></li>
 <li><p>Create a <code>matrix</code> called <code>X</code> that has one thousand rows, four columns, has every element set to either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, has its first column set to all <span class="math inline">\(1\)</span>s, has the second column set to <span class="math inline">\(1\)</span> in the second <span class="math inline">\(250\)</span> elements and <span class="math inline">\(0\)</span> elsewhere, has the third column set to <span class="math inline">\(1\)</span> in the third <span class="math inline">\(250\)</span> spots and <span class="math inline">\(0\)</span> elsewhere, and has the fourth column set to <span class="math inline">\(1\)</span> in the last <span class="math inline">\(250\)</span> spots and <span class="math inline">\(0\)</span> elsewhere. In other words, it looks something like</p></li>
 </ol>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
   \begin{bmatrix}
   \mathbf{1}_{250}  &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} \\
   \mathbf{1}_{250}  &amp; \mathbf{1}_{250} &amp; \mathbf{0}_{250} &amp; \mathbf{0}_{250} \\
@@ -639,7 +639,7 @@ where <span class="math inline">\(\mathbf{1}_{250}\)</span> and <span class="mat
 <ol style="list-style-type: decimal">
 <li>Let <span class="math inline">\(\mathbf{X}\)</span> be an <span class="math inline">\(n \times 1\)</span> random vector. It has a multivariate normal distribution with mean vector <span class="math inline">\(\mathbf{m}\)</span> and positive definite covariance matrix <span class="math inline">\(\mathbf{C}\)</span> if its probability density function can be written as</li>
 </ol>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
 \end{equation}\]</span></p>
 <p>Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider.</p>

@@ -456,7 +456,7 @@ div.csl-indent {
 <span id="cb17-9"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;5/2/2021&quot; &quot;5/3/2021&quot; &quot;5/4/2021&quot;</span></span>
 <span id="cb17-10"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># generate Gaussian random variables</span></span>
 <span id="cb17-11"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)                             </span>
-<span id="cb17-12"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.82640474 0.87407644 0.09430032 0.53950030 0.77925520</span></span></code></pre></div>
+<span id="cb17-12"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.10944921 -0.06550611  0.86990865  0.50915350  0.31773992</span></span></code></pre></div>
 <p><code>c()</code> is short for “combine”. <code>seq()</code> and <code>rep()</code> are short for “sequence” and “replicate”, respectively. <code>rnorm()</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
 <div class="rmd-details">
 <p>I should mention that functions such as <code>rnorm()</code> don’t create truly random numbers, just <em>pseudorandom</em> ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic.</p>
@@ -474,7 +474,7 @@ div.csl-indent {
 <span id="cb18-4"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-4" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
 <span id="cb18-5"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  3,  5,  7,  9, 11])</span></span>
 <span id="cb18-6"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-6" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb18-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.23347282,  0.37641656, -0.97274243])</span></span></code></pre></div>
+<span id="cb18-7"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.14993481, -1.77571929, -0.27170137])</span></span></code></pre></div>
 <p>Another option for storing a homogeneous collection of elements in Python is a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series"><code>Series</code> object</a> from the Pandas library. The benefit of these is that they play nicely with Pandas’ data frames (more information about Pandas’ data frames can be found in <a href="data-frames.html#data-frames-in-python">8.2</a>), and that they have more flexibility with accessing elements by name ( see <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array">here</a> for more information ).</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb19-2"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb19-2" aria-hidden="true" tabindex="-1"></a>first <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
@@ -1010,8 +1010,8 @@ You want to store each of those eleven numbers separately in a <code>numeric</co
 <li>Compute <code>betterSum</code>, one that doesn’t overflow, using the <em>log-sum-exp</em> trick.</li>
 </ul>
 <p><span class="math display">\[
- \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
- \]</span>
+\log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m =
+\]</span>
 <span class="math inline">\(m\)</span> is usually chosen to be <span class="math inline">\(\max_i \log x_i\)</span>. This is the same formula as above, which is nice. You can use the same code to combat both overflow and underflow.</p>
 <ul>
 <li>If you’re writing code, and you have a bunch of very large numbers, is it better to store those numbers, or store the logarithm of those numbers? Assign your answer to <code>whichBetter</code>. Use either the phrase <code>"logs"</code> or <code>"nologs"</code>.</li>
@@ -1021,27 +1021,27 @@ You want to store each of those eleven numbers separately in a <code>numeric</co
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#cb70-1" aria-hidden="true" tabindex="-1"></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">100.10</span>, <span class="fl">95.98</span>, <span class="fl">100.01</span>, <span class="fl">99.87</span>)</span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
 <li><p>Use the natural logarithm and convert this vector into a vector of <em>log returns</em>. Call the variable <code>logReturns</code>. If <span class="math inline">\(p_t\)</span> is the price at time <span class="math inline">\(t\)</span>, the log return ending at time <span class="math inline">\(t\)</span> is
-<span class="math display">\[\begin{equation} 
+<span class="math display">\[\begin{equation}
 r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
 \end{equation}\]</span></p></li>
 <li><p>Do the same for <em>arithmetic returns</em>. These are regular percent changes if you scale by <span class="math inline">\(100\)</span>. Call the variable <code>arithReturns</code>. The mathematical formula you need is
-<span class="math display">\[\begin{equation} 
-a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 
+<span class="math display">\[\begin{equation}
+a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100
 \end{equation}\]</span></p></li>
 </ol>
 <ol start="6" style="list-style-type: decimal">
 <li>Consider the <strong>mixture density</strong> <span class="math inline">\(f(y) = \int f(y \mid x) f(x) dx\)</span> where</li>
 </ol>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 Y \mid X = x \sim \text{Normal}(0, x^2)
 \end{equation}\]</span>
 and</p>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 X \sim \text{half-Cauchy}(0, 1).
 \end{equation}\]</span>
 This distribution is a special case of a prior distribution that is used in Bayesian statistics <span class="citation">(<a href="#ref-horseshoe" role="doc-biblioref">Carvalho, Polson, and Scott 2009</a>)</span>. Note that the second parameter of the Normal distribution is its variance, not its standard deviation.</p>
 <p>Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:</p>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 \mathbb{P}[|Y| &gt; 1] = \int_{y : |y| &gt; 1} f(y)dy = \int_{y : |y| &gt; 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
 \end{equation}\]</span></p>
 <p>The following steps will demonstrate how you can use the <strong>Monte-Carlo</strong> <span class="citation">(<a href="#ref-monte-carlo-stat-methods" role="doc-biblioref">Robert and Casella 2005</a>)</span> method to approximate this probability.</p>
@@ -1088,8 +1088,8 @@ This distribution is a special case of a prior distribution that is used in Baye
 <li>Compute <code>better_sum</code>, one that doesn’t underflow, using the <em>log-sum-exp</em> trick. This one should be bounded away from <span class="math inline">\(-\infty\)</span>.</li>
 </ul>
 <p><span class="math display">\[
- \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
- \]</span>
+\log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m =
+\]</span>
 <span class="math inline">\(m\)</span> is usually chosen to be <span class="math inline">\(\max_i \log x_i\)</span></p>
 <ul>
 <li>If you’re writing code, and you have a bunch of very small positive numbers (e.g. probabilities, densities, etc.), is it better to store those small numbers, or store the logarithm of those numbers? Assign your answer to <code>which_better</code>. Use either the phrase <code>"logs"</code> or <code>"nologs"</code>.</li>
@@ -1101,12 +1101,12 @@ This distribution is a special case of a prior distribution that is used in Baye
 <li><p>Extract time strings of those elements into a <code>Series</code> called <code>time_strings</code>.</p></li>
 </ul></li>
 <li><p>We will make use of the <strong>Monte Carlo</strong> method below. It is a technique to approximate expectations and probabilities. If <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(X_1, \ldots, X_n\)</span> is a random sample drawn from the distribution of interest, then
-<span class="math display">\[\begin{equation} 
+<span class="math display">\[\begin{equation}
 \mathbb{P}(X &gt; 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i &gt; 6).
 \end{equation}\]</span>
 If you haven’t seen an <strong>indicator function</strong> before, it is defined as</p></li>
 </ol>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 \mathbf{1}(X_i &gt; 6)
 =
 \begin{cases}
@@ -1134,16 +1134,16 @@ Figure 3.1: An Indicator Function
 <ol start="7" style="list-style-type: decimal">
 <li>Alternatively, we can approximate expectations using the same technique as above. If <span class="math inline">\(\mathbb{E}[g(X)]\)</span> exists, <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(W_1, \ldots, W_n\)</span> is a random sample drawn from the distribution of interest, then</li>
 </ol>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 \mathbb{E}[g(W)] \approx \frac{1}{n}\sum_{i=1}^n g(W_i).
 \end{equation}\]</span></p>
 <p>Here’s a new distribution. It is a <strong>mixture distribution</strong>, specifically a <strong>finite mixture of normal distributions</strong>: <span class="math inline">\(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\)</span> where</p>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 Y \mid X=0 \sim \text{Normal}(0, 2) \\
 Y \mid X=1 \sim \text{Normal}(10, 2)
 \end{equation}\]</span>
 and</p>
-<p><span class="math display">\[\begin{equation} 
+<p><span class="math display">\[\begin{equation}
 X \sim \text{Bernoulli}(.5).
 \end{equation}\]</span></p>
 <p>Both <span class="math inline">\(f(y \mid X=0)\)</span> and <span class="math inline">\(f(y \mid X=1)\)</span> are bell-curved, and <span class="math inline">\(f(y)\)</span> looks like this</p>

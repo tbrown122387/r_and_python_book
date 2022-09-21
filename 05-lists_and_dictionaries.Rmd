@@ -40,6 +40,7 @@ Unlike in R, however, you cannot name elements of lists. If you want a container
 From the example below, you can see that we've been introduced to lists already. We have been constructing Numpy arrays from them.
 
 ```{python, collapse = TRUE}
+import numpy as np
 another_list = [np.array([1,2,3]), "May 5th, 2021", True, [42,42]]
 another_list[2]
 another_list[2] = 100
@@ -104,7 +105,37 @@ df_from_dict
 ### R Questions
 
   1. Consider the data sets `"adult.data"`, `"car.data"`, `"hungarian.data"`, `"iris.data"`, `"long-beach-va.data"` and `"switzerland.data"` [@misc_heart_disease_45], [@misc_iris_53], [@misc_adult_2] and [@misc_car_evaluation_19] hosted by [@uci_data]. Read all of these in and store them all as a `list` of `data.frame`s. Call the list `listDfs`. 
+  
+  2. Here are two lists in R:
+
+```{R, collapse = TRUE}
+l1 <- list(first="a", second=1)
+l2 <- list(first=c(1,2,3), second = "statistics")
+```
+
+
+  a. Make a new `list` that is these two lists above "squished together." It has to be length $4$, and each element is one of the elements of `l1` and `l2`. Call this list `l3`. Make sure to delete all the "tags" or "names" of these four elements.
+
+  b. Extract the third element of `l3` as a length one `list` and assign it to the name `l4`.
+  
+  c. Extract the third element of `l3` as a `vector` and assign it to the name `v1`.
 
 ### Python Questions
 
   1. Read in `car.data` with `pd.read_csv()`, and use a `DataFrame` method to convert that to a `dict`. Store your answer as `car_dict`.
+  
+  
+  2. Here are two `dict`s in Python:
+
+```{python, collapse = TRUE}
+d1 = { "first" : "a", "second" : 1}
+d2 = { "first" : [1,2,3], "second" : "statistics"}
+```
+  
+  a. Make a new `list` that is these two `dict`s above "squished together" (why can't it be another `dict`?) It has to be length $4$, and each value is one of the values of $d1$ and $d2$. Call this list `my_list`.
+
+  b. Use a list comprehension to create a list called `special_list` of all numbers starting from zero, up to (and including) one million, but don't include numbers that are divisible by any prime number less than seven.
+  
+  c. Assign the average of all elements in the above list to the variable `special_ave`.
+    
+    

@@ -469,12 +469,13 @@ div.csl-indent {
 <p><a href="https://docs.python.org/3/library/stdtypes.html#lists">Python <code>list</code>s</a> are very flexible, too. There are fewer choices for accessing and modifying elements of lists in Python–you’ll most likely end up using the square bracket operator. Elements can be different sizes and types, just like they were with R’s lists.</p>
 <p>Unlike in R, however, you cannot name elements of lists. If you want a container that allows you to access elements by name, look into Python <a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">dictionaries</a> (see section <a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python">5.3</a>) or Pandas’ <code>Series</code> objects (see section <a href="r-vectors-versus-numpy-arrays-and-pandas-series.html#overview-of-python">3.2</a>).</p>
 <p>From the example below, you can see that we’ve been introduced to lists already. We have been constructing Numpy arrays from them.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-1" aria-hidden="true" tabindex="-1"></a>another_list <span class="op">=</span> [np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]), <span class="st">&quot;May 5th, 2021&quot;</span>, <span class="va">True</span>, [<span class="dv">42</span>,<span class="dv">42</span>]]</span>
-<span id="cb84-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-2" aria-hidden="true" tabindex="-1"></a>another_list[<span class="dv">2</span>]</span>
-<span id="cb84-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span>
-<span id="cb84-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-4" aria-hidden="true" tabindex="-1"></a>another_list[<span class="dv">2</span>] <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb84-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-5" aria-hidden="true" tabindex="-1"></a>another_list</span>
-<span id="cb84-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="co">## [array([1, 2, 3]), &#39;May 5th, 2021&#39;, 100, [42, 42]]</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb84-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-2" aria-hidden="true" tabindex="-1"></a>another_list <span class="op">=</span> [np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]), <span class="st">&quot;May 5th, 2021&quot;</span>, <span class="va">True</span>, [<span class="dv">42</span>,<span class="dv">42</span>]]</span>
+<span id="cb84-3"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-3" aria-hidden="true" tabindex="-1"></a>another_list[<span class="dv">2</span>]</span>
+<span id="cb84-4"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span>
+<span id="cb84-5"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-5" aria-hidden="true" tabindex="-1"></a>another_list[<span class="dv">2</span>] <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb84-6"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-6" aria-hidden="true" tabindex="-1"></a>another_list</span>
+<span id="cb84-7"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="co">## [array([1, 2, 3]), &#39;May 5th, 2021&#39;, 100, [42, 42]]</span></span></code></pre></div>
 <p>Python lists have <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">methods attached to them</a>, which can come in handy.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb85-1" aria-hidden="true" tabindex="-1"></a>another_list</span>
 <span id="cb85-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [array([1, 2, 3]), &#39;May 5th, 2021&#39;, 100, [42, 42]]</span></span>
@@ -521,13 +522,29 @@ div.csl-indent {
 <div id="r-questions-3" class="section level3 hasAnchor" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> R Questions<a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li>Consider the data sets <code>"adult.data"</code>, <code>"car.data"</code>, <code>"hungarian.data"</code>, <code>"iris.data"</code>, <code>"long-beach-va.data"</code> and <code>"switzerland.data"</code> <span class="citation">(<a href="#ref-misc_heart_disease_45" role="doc-biblioref">Janosi et al. 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_adult_2" role="doc-biblioref"><span>“<span>Adult</span>”</span> 1996</a>)</span> and <span class="citation">(<a href="#ref-misc_car_evaluation_19" role="doc-biblioref"><span>“<span>Car Evaluation</span>”</span> 1997</a>)</span> hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. Read all of these in and store them all as a <code>list</code> of <code>data.frame</code>s. Call the list <code>listDfs</code>.</li>
+<li><p>Consider the data sets <code>"adult.data"</code>, <code>"car.data"</code>, <code>"hungarian.data"</code>, <code>"iris.data"</code>, <code>"long-beach-va.data"</code> and <code>"switzerland.data"</code> <span class="citation">(<a href="#ref-misc_heart_disease_45" role="doc-biblioref">Janosi et al. 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span>, <span class="citation">(<a href="#ref-misc_adult_2" role="doc-biblioref"><span>“<span>Adult</span>”</span> 1996</a>)</span> and <span class="citation">(<a href="#ref-misc_car_evaluation_19" role="doc-biblioref"><span>“<span>Car Evaluation</span>”</span> 1997</a>)</span> hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. Read all of these in and store them all as a <code>list</code> of <code>data.frame</code>s. Call the list <code>listDfs</code>.</p></li>
+<li><p>Here are two lists in R:</p></li>
+</ol>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb90-1" aria-hidden="true" tabindex="-1"></a>l1 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">first=</span><span class="st">&quot;a&quot;</span>, <span class="at">second=</span><span class="dv">1</span>)</span>
+<span id="cb90-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb90-2" aria-hidden="true" tabindex="-1"></a>l2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">first=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">second =</span> <span class="st">&quot;statistics&quot;</span>)</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Make a new <code>list</code> that is these two lists above “squished together.” It has to be length <span class="math inline">\(4\)</span>, and each element is one of the elements of <code>l1</code> and <code>l2</code>. Call this list <code>l3</code>. Make sure to delete all the “tags” or “names” of these four elements.</p></li>
+<li><p>Extract the third element of <code>l3</code> as a length one <code>list</code> and assign it to the name <code>l4</code>.</p></li>
+<li><p>Extract the third element of <code>l3</code> as a <code>vector</code> and assign it to the name <code>v1</code>.</p></li>
 </ol>
 </div>
 <div id="python-questions-3" class="section level3 hasAnchor" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Python Questions<a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li>Read in <code>car.data</code> with <code>pd.read_csv()</code>, and use a <code>DataFrame</code> method to convert that to a <code>dict</code>. Store your answer as <code>car_dict</code>.</li>
+<li><p>Read in <code>car.data</code> with <code>pd.read_csv()</code>, and use a <code>DataFrame</code> method to convert that to a <code>dict</code>. Store your answer as <code>car_dict</code>.</p></li>
+<li><p>Here are two <code>dict</code>s in Python:</p></li>
+</ol>
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb91-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="op">=</span> { <span class="st">&quot;first&quot;</span> : <span class="st">&quot;a&quot;</span>, <span class="st">&quot;second&quot;</span> : <span class="dv">1</span>}</span>
+<span id="cb91-2"><a href="rs-lists-versus-pythons-lists-and-dicts.html#cb91-2" aria-hidden="true" tabindex="-1"></a>d2 <span class="op">=</span> { <span class="st">&quot;first&quot;</span> : [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>], <span class="st">&quot;second&quot;</span> : <span class="st">&quot;statistics&quot;</span>}</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Make a new <code>list</code> that is these two <code>dict</code>s above “squished together” (why can’t it be another <code>dict</code>?) It has to be length <span class="math inline">\(4\)</span>, and each value is one of the values of <span class="math inline">\(d1\)</span> and <span class="math inline">\(d2\)</span>. Call this list <code>my_list</code>.</p></li>
+<li><p>Use a list comprehension to create a list called <code>special_list</code> of all numbers starting from zero, up to (and including) one million, but don’t include numbers that are divisible by any prime number less than seven.</p></li>
+<li><p>Assign the average of all elements in the above list to the variable <code>special_ave</code>.</p></li>
 </ol>
 
 </div>
@@ -554,7 +571,7 @@ Janosi, Andras, William Steinbrunn, Matthias Pfisterer, and Robert Detrano. 1988
 Lutz, Mark. 2013. <em>Learning Python</em>. 5th ed. Beijing: O’Reilly. <a href="https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/">https://www.safaribooksonline.com/library/view/learning-python-5th/9781449355722/</a>.
 </div>
 <div id="ref-sas_cars" class="csl-entry">
-<span>“SAS<sup></sup> Viya<sup></sup> Example Data Sets.”</span> 2021. <a href="https://support.sas.com/documentation/onlinedoc/viya/examples.htm">https://support.sas.com/documentation/onlinedoc/viya/examples.htm</a>.
+<span>“SAS<sup></sup> Viya<sup></sup> Example Data Sets.”</span> 2021. <a href="https://support.sas.com/documentation/onlinedoc/viya/examples.htm" class="uri">https://support.sas.com/documentation/onlinedoc/viya/examples.htm</a>.
 </div>
 </div>
             </section>
