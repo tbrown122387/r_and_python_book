@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach</title>
+  <meta name="description" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="tbrown122387/r_and_python_book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 R vectors versus Numpy arrays and Pandas’ Series | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
+  
+  
+  
+
+<meta name="author" content="Taylor R. Brown" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="basic-types.html"/>
+<link rel="next" href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to R and Python For Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#teaching-a-course-with-this-textbook"><i class="fa fa-check"></i>Teaching a Course With This Textbook</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#licenses"><i class="fa fa-check"></i>License(s)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-the-required-software"><i class="fa fa-check"></i>Installing the Required Software</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#installing-python-by-installing-anaconda"><i class="fa fa-check"></i>Installing Python by Installing Anaconda</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Introducing the Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#hello-world-in-r"><i class="fa fa-check"></i><b>1.1</b> Hello World in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#hello-world-in-python"><i class="fa fa-check"></i><b>1.2</b> Hello World in Python</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting Help</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#reading-documentation"><i class="fa fa-check"></i><b>1.3.1</b> Reading Documentation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#understanding-file-paths"><i class="fa fa-check"></i><b>1.3.2</b> Understanding File Paths</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-types.html"><a href="basic-types.html"><i class="fa fa-check"></i><b>2</b> Basic Types</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-python"><i class="fa fa-check"></i><b>2.1</b> Basic Types In Python</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-python"><i class="fa fa-check"></i><b>2.1.1</b> Type Conversions in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="basic-types.html"><a href="basic-types.html#basic-types-in-r"><i class="fa fa-check"></i><b>2.2</b> Basic Types In R</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basic-types.html"><a href="basic-types.html#type-conversions-in-r"><i class="fa fa-check"></i><b>2.2.1</b> Type Conversions in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basic-types.html"><a href="basic-types.html#rs-simplification"><i class="fa fa-check"></i><b>2.2.2</b> R’s Simplification</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basic-types.html"><a href="basic-types.html#exercises"><i class="fa fa-check"></i><b>2.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-types.html"><a href="basic-types.html#r-questions"><i class="fa fa-check"></i><b>2.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-types.html"><a href="basic-types.html#python-questions"><i class="fa fa-check"></i><b>2.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html"><i class="fa fa-check"></i><b>3</b> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#overview-of-r"><i class="fa fa-check"></i><b>3.1</b> Overview of R</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#overview-of-python"><i class="fa fa-check"></i><b>3.2</b> Overview of Python</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#vectorization-in-r"><i class="fa fa-check"></i><b>3.3</b> Vectorization in R</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#vectorization-in-python"><i class="fa fa-check"></i><b>3.4</b> Vectorization in Python</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#indexing-vectors-in-r"><i class="fa fa-check"></i><b>3.5</b> Indexing Vectors in R</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#indexing-numpy-arrays"><i class="fa fa-check"></i><b>3.6</b> Indexing Numpy arrays</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#indexing-pandas-series"><i class="fa fa-check"></i><b>3.7</b> Indexing Pandas’ Series</a></li>
+<li class="chapter" data-level="3.8" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#some-gotchas"><i class="fa fa-check"></i><b>3.8</b> Some Gotchas</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#shallow-versus-deep-copies"><i class="fa fa-check"></i><b>3.8.1</b> Shallow versus Deep Copies</a></li>
+<li class="chapter" data-level="3.8.2" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#how-r-and-python-handle-missing-values"><i class="fa fa-check"></i><b>3.8.2</b> How R and Python Handle Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#an-introduction-to-regular-expressions"><i class="fa fa-check"></i><b>3.9</b> An Introduction to Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#literal-characters-versus-metacharacters"><i class="fa fa-check"></i><b>3.9.1</b> Literal Characters versus Metacharacters</a></li>
+<li class="chapter" data-level="3.9.2" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#the-trouble-with-backslashes-escape-sequences"><i class="fa fa-check"></i><b>3.9.2</b> The Trouble With Backslashes: Escape Sequences</a></li>
+<li class="chapter" data-level="3.9.3" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#more-examples-of-using-regular-expressions"><i class="fa fa-check"></i><b>3.9.3</b> More Examples of Using Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#exercises-1"><i class="fa fa-check"></i><b>3.10</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#r-questions-1"><i class="fa fa-check"></i><b>3.10.1</b> R Questions</a></li>
+<li class="chapter" data-level="3.10.2" data-path="vectors_arrays_series.html"><a href="vectors_arrays_series.html#python-questions-1"><i class="fa fa-check"></i><b>3.10.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><i class="fa fa-check"></i><b>4</b> Numpy <code>ndarray</code>s Versus R’s <code>matrix</code> and <code>array</code> Types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#numpy-ndarrays-in-python"><i class="fa fa-check"></i><b>4.1</b> Numpy <code>ndarray</code>s In Python</a></li>
+<li class="chapter" data-level="4.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#the-matrix-and-array-classes-in-r"><i class="fa fa-check"></i><b>4.2</b> The <code>matrix</code> and <code>array</code> classes in R</a></li>
+<li class="chapter" data-level="4.3" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#exercises-2"><i class="fa fa-check"></i><b>4.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#r-questions-2"><i class="fa fa-check"></i><b>4.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="numpy-ndarrays-versus-rs-matrix-and-array-types.html"><a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html#python-questions-2"><i class="fa fa-check"></i><b>4.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html"><i class="fa fa-check"></i><b>5</b> R’s <code>list</code>s Versus Python’s <code>list</code>s and <code>dict</code>s</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-r"><i class="fa fa-check"></i><b>5.1</b> <code>list</code>s In R</a></li>
+<li class="chapter" data-level="5.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#lists-in-python"><i class="fa fa-check"></i><b>5.2</b> <code>list</code>s In Python</a></li>
+<li class="chapter" data-level="5.3" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#dictionaries-in-python"><i class="fa fa-check"></i><b>5.3</b> Dictionaries In Python</a></li>
+<li class="chapter" data-level="5.4" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#r-questions-3"><i class="fa fa-check"></i><b>5.4.1</b> R Questions</a></li>
+<li class="chapter" data-level="5.4.2" data-path="rs-lists-versus-pythons-lists-and-dicts.html"><a href="rs-lists-versus-pythons-lists-and-dicts.html#python-questions-3"><i class="fa fa-check"></i><b>5.4.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="functions.html"><a href="functions.html#defining-r-functions"><i class="fa fa-check"></i><b>6.1</b> Defining R Functions</a></li>
+<li class="chapter" data-level="6.2" data-path="functions.html"><a href="functions.html#defining-python-functions"><i class="fa fa-check"></i><b>6.2</b> Defining Python Functions</a></li>
+<li class="chapter" data-level="6.3" data-path="functions.html"><a href="functions.html#more-details-on-rs-user-defined-functions"><i class="fa fa-check"></i><b>6.3</b> More Details On R’s User-Defined Functions</a></li>
+<li class="chapter" data-level="6.4" data-path="functions.html"><a href="functions.html#more-details-on-pythons-user-defined-functions"><i class="fa fa-check"></i><b>6.4</b> More details on Python’s user-defined functions</a></li>
+<li class="chapter" data-level="6.5" data-path="functions.html"><a href="functions.html#function-scope-in-r"><i class="fa fa-check"></i><b>6.5</b> Function Scope in R</a></li>
+<li class="chapter" data-level="6.6" data-path="functions.html"><a href="functions.html#function-scope-in-python"><i class="fa fa-check"></i><b>6.6</b> Function Scope in Python</a></li>
+<li class="chapter" data-level="6.7" data-path="functions.html"><a href="functions.html#modifying-a-functions-arguments"><i class="fa fa-check"></i><b>6.7</b> Modifying a Function’s Arguments</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="functions.html"><a href="functions.html#passing-by-value-in-r"><i class="fa fa-check"></i><b>6.7.1</b> Passing By Value In R</a></li>
+<li class="chapter" data-level="6.7.2" data-path="functions.html"><a href="functions.html#passing-by-assignment-in-python"><i class="fa fa-check"></i><b>6.7.2</b> Passing By Assignment In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="functions.html"><a href="functions.html#accessing-and-modifying-captured-variables"><i class="fa fa-check"></i><b>6.8</b> Accessing and Modifying Captured Variables</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.1</b> Accessing Captured Variables in R</a></li>
+<li class="chapter" data-level="6.8.2" data-path="functions.html"><a href="functions.html#accessing-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.2</b> Accessing Captured Variables in Python</a></li>
+<li class="chapter" data-level="6.8.3" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-r"><i class="fa fa-check"></i><b>6.8.3</b> Modifying Captured Variables In R</a></li>
+<li class="chapter" data-level="6.8.4" data-path="functions.html"><a href="functions.html#modifying-captured-variables-in-python"><i class="fa fa-check"></i><b>6.8.4</b> Modifying Captured Variables In Python</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="functions.html"><a href="functions.html#exercises-4"><i class="fa fa-check"></i><b>6.9</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="functions.html"><a href="functions.html#r-questions-4"><i class="fa fa-check"></i><b>6.9.1</b> R Questions</a></li>
+<li class="chapter" data-level="6.9.2" data-path="functions.html"><a href="functions.html#python-questions-4"><i class="fa fa-check"></i><b>6.9.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="categorical-data.html"><a href="categorical-data.html"><i class="fa fa-check"></i><b>7</b> Categorical Data</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="categorical-data.html"><a href="categorical-data.html#factors-in-r"><i class="fa fa-check"></i><b>7.1</b> <code>factor</code>s in R</a></li>
+<li class="chapter" data-level="7.2" data-path="categorical-data.html"><a href="categorical-data.html#two-options-for-categorical-data-in-pandas"><i class="fa fa-check"></i><b>7.2</b> Two Options for Categorical Data in Pandas</a></li>
+<li class="chapter" data-level="7.3" data-path="categorical-data.html"><a href="categorical-data.html#exercises-5"><i class="fa fa-check"></i><b>7.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="categorical-data.html"><a href="categorical-data.html#r-questions-5"><i class="fa fa-check"></i><b>7.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="categorical-data.html"><a href="categorical-data.html#python-questions-5"><i class="fa fa-check"></i><b>7.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>8</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-r"><i class="fa fa-check"></i><b>8.1</b> Data Frames in R</a></li>
+<li class="chapter" data-level="8.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-in-python"><i class="fa fa-check"></i><b>8.2</b> Data Frames in Python</a></li>
+<li class="chapter" data-level="8.3" data-path="data-frames.html"><a href="data-frames.html#exercises-6"><i class="fa fa-check"></i><b>8.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="data-frames.html"><a href="data-frames.html#r-questions-6"><i class="fa fa-check"></i><b>8.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-frames.html"><a href="data-frames.html#python-questions-6"><i class="fa fa-check"></i><b>8.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Common Tasks and Patterns</b></span></li>
+<li class="chapter" data-level="9" data-path="input-and-output.html"><a href="input-and-output.html"><i class="fa fa-check"></i><b>9</b> Input and Output</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="input-and-output.html"><a href="input-and-output.html#general-input-considerations"><i class="fa fa-check"></i><b>9.1</b> General Input Considerations</a></li>
+<li class="chapter" data-level="9.2" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-r"><i class="fa fa-check"></i><b>9.2</b> Reading in Text Files with R</a></li>
+<li class="chapter" data-level="9.3" data-path="input-and-output.html"><a href="input-and-output.html#reading-in-text-files-with-pandas"><i class="fa fa-check"></i><b>9.3</b> Reading in Text Files with Pandas</a></li>
+<li class="chapter" data-level="9.4" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-r"><i class="fa fa-check"></i><b>9.4</b> Saving Data in R</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-r"><i class="fa fa-check"></i><b>9.4.1</b> Writing Out Tabular Plain Text Data in R</a></li>
+<li class="chapter" data-level="9.4.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-r"><i class="fa fa-check"></i><b>9.4.2</b> Serialization in R</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="input-and-output.html"><a href="input-and-output.html#saving-data-in-python"><i class="fa fa-check"></i><b>9.5</b> Saving Data in Python</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="input-and-output.html"><a href="input-and-output.html#writing-out-tabular-plain-text-data-in-python"><i class="fa fa-check"></i><b>9.5.1</b> Writing Out Tabular Plain Text Data in Python</a></li>
+<li class="chapter" data-level="9.5.2" data-path="input-and-output.html"><a href="input-and-output.html#serialization-in-python"><i class="fa fa-check"></i><b>9.5.2</b> Serialization in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="input-and-output.html"><a href="input-and-output.html#exercises-7"><i class="fa fa-check"></i><b>9.6</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="input-and-output.html"><a href="input-and-output.html#r-questions-7"><i class="fa fa-check"></i><b>9.6.1</b> R Questions</a></li>
+<li class="chapter" data-level="9.6.2" data-path="input-and-output.html"><a href="input-and-output.html#python-questions-7"><i class="fa fa-check"></i><b>9.6.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="using-third-party-code.html"><a href="using-third-party-code.html"><i class="fa fa-check"></i><b>10</b> Using Third-Party Code</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-r"><i class="fa fa-check"></i><b>10.1</b> Installing Packages In R</a></li>
+<li class="chapter" data-level="10.2" data-path="using-third-party-code.html"><a href="using-third-party-code.html#installing-packages-in-python"><i class="fa fa-check"></i><b>10.2</b> Installing Packages In Python</a></li>
+<li class="chapter" data-level="10.3" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-r"><i class="fa fa-check"></i><b>10.3</b> Loading Packages In R</a></li>
+<li class="chapter" data-level="10.4" data-path="using-third-party-code.html"><a href="using-third-party-code.html#loading-packages-in-python"><i class="fa fa-check"></i><b>10.4</b> Loading Packages In Python</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="using-third-party-code.html"><a href="using-third-party-code.html#importing-examples"><i class="fa fa-check"></i><b>10.4.1</b> <code>import</code>ing Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="using-third-party-code.html"><a href="using-third-party-code.html#exercises-8"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>11</b> Control Flow</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="control-flow.html"><a href="control-flow.html#conditional-logic"><i class="fa fa-check"></i><b>11.1</b> Conditional Logic</a></li>
+<li class="chapter" data-level="11.2" data-path="control-flow.html"><a href="control-flow.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a></li>
+<li class="chapter" data-level="11.3" data-path="control-flow.html"><a href="control-flow.html#exercises-9"><i class="fa fa-check"></i><b>11.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="control-flow.html"><a href="control-flow.html#r-questions-8"><i class="fa fa-check"></i><b>11.3.1</b> R Questions</a></li>
+<li class="chapter" data-level="11.3.2" data-path="control-flow.html"><a href="control-flow.html#python-questions-8"><i class="fa fa-check"></i><b>11.3.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html"><i class="fa fa-check"></i><b>12</b> Reshaping and Combining Data Sets</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#ordering-and-sorting-data"><i class="fa fa-check"></i><b>12.1</b> Ordering and Sorting Data</a></li>
+<li class="chapter" data-level="12.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#stacking-data-sets-and-placing-them-shoulder-to-shoulder"><i class="fa fa-check"></i><b>12.2</b> Stacking Data Sets and Placing Them Shoulder to Shoulder</a></li>
+<li class="chapter" data-level="12.3" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets"><i class="fa fa-check"></i><b>12.3</b> Merging or Joining Data Sets</a></li>
+<li class="chapter" data-level="12.4" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-data"><i class="fa fa-check"></i><b>12.4</b> Long Versus Wide Data</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-r"><i class="fa fa-check"></i><b>12.4.1</b> Long Versus Wide in R</a></li>
+<li class="chapter" data-level="12.4.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#long-versus-wide-in-python"><i class="fa fa-check"></i><b>12.4.2</b> Long Versus Wide in Python</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#exercises-10"><i class="fa fa-check"></i><b>12.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#r-questions-9"><i class="fa fa-check"></i><b>12.5.1</b> R Questions</a></li>
+<li class="chapter" data-level="12.5.2" data-path="reshaping-and-combining-data-sets.html"><a href="reshaping-and-combining-data-sets.html#python-questions-9"><i class="fa fa-check"></i><b>12.5.2</b> Python Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>13</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="visualization.html"><a href="visualization.html#base-r-plotting"><i class="fa fa-check"></i><b>13.1</b> Base R Plotting</a></li>
+<li class="chapter" data-level="13.2" data-path="visualization.html"><a href="visualization.html#plotting-with-ggplot2"><i class="fa fa-check"></i><b>13.2</b> Plotting with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="13.3" data-path="visualization.html"><a href="visualization.html#plotting-with-matplotlib"><i class="fa fa-check"></i><b>13.3</b> Plotting with Matplotlib</a></li>
+<li class="chapter" data-level="13.4" data-path="visualization.html"><a href="visualization.html#plotting-with-pandas"><i class="fa fa-check"></i><b>13.4</b> Plotting with Pandas</a></li>
+</ul></li>
+<li class="part"><span><b>III Programming Styles</b></span></li>
+<li class="chapter" data-level="14" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html"><i class="fa fa-check"></i><b>14</b> An Introduction to Object-Oriented Programming</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-python"><i class="fa fa-check"></i><b>14.1</b> OOP In Python</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#overview"><i class="fa fa-check"></i><b>14.1.1</b> Overview</a></li>
+<li class="chapter" data-level="14.1.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#a-first-example"><i class="fa fa-check"></i><b>14.1.2</b> A First Example</a></li>
+<li class="chapter" data-level="14.1.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-inheritance"><i class="fa fa-check"></i><b>14.1.3</b> Adding Inheritance</a></li>
+<li class="chapter" data-level="14.1.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#adding-in-composition"><i class="fa fa-check"></i><b>14.1.4</b> Adding in Composition</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#oop-in-r"><i class="fa fa-check"></i><b>14.2</b> OOP In R</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s3-objects-the-big-picture"><i class="fa fa-check"></i><b>14.2.1</b> S3 objects: The Big Picture</a></li>
+<li class="chapter" data-level="14.2.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s3-objects"><i class="fa fa-check"></i><b>14.2.2</b> Using S3 objects</a></li>
+<li class="chapter" data-level="14.2.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s3-objects"><i class="fa fa-check"></i><b>14.2.3</b> Creating S3 objects</a></li>
+<li class="chapter" data-level="14.2.4" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#s4-objects-the-big-picture"><i class="fa fa-check"></i><b>14.2.4</b> S4 objects: The Big Picture</a></li>
+<li class="chapter" data-level="14.2.5" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#using-s4-objects"><i class="fa fa-check"></i><b>14.2.5</b> Using S4 objects</a></li>
+<li class="chapter" data-level="14.2.6" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-s4-objects"><i class="fa fa-check"></i><b>14.2.6</b> Creating S4 objects</a></li>
+<li class="chapter" data-level="14.2.7" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#reference-classes-the-big-picture"><i class="fa fa-check"></i><b>14.2.7</b> Reference Classes: The Big Picture</a></li>
+<li class="chapter" data-level="14.2.8" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-reference-classes"><i class="fa fa-check"></i><b>14.2.8</b> Creating Reference Classes</a></li>
+<li class="chapter" data-level="14.2.9" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#creating-r6-classes"><i class="fa fa-check"></i><b>14.2.9</b> Creating R6 Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#exercises-11"><i class="fa fa-check"></i><b>14.3</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#python-questions-10"><i class="fa fa-check"></i><b>14.3.1</b> Python Questions</a></li>
+<li class="chapter" data-level="14.3.2" data-path="an-introduction-to-object-oriented-programming.html"><a href="an-introduction-to-object-oriented-programming.html#r-questions-10"><i class="fa fa-check"></i><b>14.3.2</b> R Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html"><i class="fa fa-check"></i><b>15</b> An Introduction to Functional Programming</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functions-as-function-inputs-in-r"><i class="fa fa-check"></i><b>15.1</b> Functions as Function Inputs in R</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#sapply-and-vapply"><i class="fa fa-check"></i><b>15.1.1</b> <code>sapply()</code> and <code>vapply()</code></a></li>
+<li class="chapter" data-level="15.1.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#lapply"><i class="fa fa-check"></i><b>15.1.2</b> <code>lapply()</code></a></li>
+<li class="chapter" data-level="15.1.3" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#apply"><i class="fa fa-check"></i><b>15.1.3</b> <code>apply()</code></a></li>
+<li class="chapter" data-level="15.1.4" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#tapply"><i class="fa fa-check"></i><b>15.1.4</b> <code>tapply()</code></a></li>
+<li class="chapter" data-level="15.1.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#mapply"><i class="fa fa-check"></i><b>15.1.5</b> <code>mapply()</code></a></li>
+<li class="chapter" data-level="15.1.6" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#reduce-and-do.call"><i class="fa fa-check"></i><b>15.1.6</b> <code>Reduce()</code> and <code>do.call()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functions-as-function-inputs-in-python"><i class="fa fa-check"></i><b>15.2</b> Functions as Function Inputs in Python</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functions-as-function-inputs-in-base-python"><i class="fa fa-check"></i><b>15.2.1</b> Functions as Function Inputs in Base Python</a></li>
+<li class="chapter" data-level="15.2.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functions-as-function-inputs-in-numpy"><i class="fa fa-check"></i><b>15.2.2</b> Functions as Function Inputs in Numpy</a></li>
+<li class="chapter" data-level="15.2.3" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functional-methods-in-pandas"><i class="fa fa-check"></i><b>15.2.3</b> Functional Methods in Pandas</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functions-as-function-outputs-in-r"><i class="fa fa-check"></i><b>15.3</b> Functions as Function Outputs in R</a></li>
+<li class="chapter" data-level="15.4" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#functions-as-function-outputs-in-python"><i class="fa fa-check"></i><b>15.4</b> Functions as Function Outputs in Python</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#writing-our-own-decorators"><i class="fa fa-check"></i><b>15.4.1</b> Writing Our Own Decorators</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#exercises-12"><i class="fa fa-check"></i><b>15.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#python-questions-11"><i class="fa fa-check"></i><b>15.5.1</b> Python Questions</a></li>
+<li class="chapter" data-level="15.5.2" data-path="an-introduction-to-functional-programming.html"><a href="an-introduction-to-functional-programming.html#r-questions-11"><i class="fa fa-check"></i><b>15.5.2</b> R Questions</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to R and Python For Data Analysis: A Side By Side Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vectors_arrays_series" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> R <code>vector</code>s versus Numpy <code>array</code>s and Pandas’ <code>Series</code><a href="vectors_arrays_series.html#vectors_arrays_series" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This section is for describing the data types that let us store collections of elements that all <strong>share the same type</strong>. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these collection objects in a program, we will be interested in learning how to extract and modify different elements in the collection, as well as how to use the entire collection in an efficient calculation.</p>
+<div id="overview-of-r" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Overview of R<a href="vectors_arrays_series.html#overview-of-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the previous section, I mentioned that R does not have scalar types–it just has <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Vector-objects"><strong>vectors</strong></a>. So, whether you want to store one number (or <code>logical</code>, or <code>character</code>, or …), or many numbers, you will need a <code>vector</code>.</p>
+<div class="rmd-caution">
+<p>For many, the word “vector” evokes an impression that these objects are designed to be used for performing matrix arithmetic (e.g. inner products, transposes, etc.). You can perform these operations on <code>vector</code>s, but in my opinion, this preconception can be misleading, and I recommend avoiding it. Most of the things you can do with <code>vector</code>s in R have little to do with linear algebra!</p>
+</div>
+<p>How do we create one of these? There are many ways. One common way is to read in elements from an external data set. Another way is to generate <code>vector</code>s from code.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="vectors_arrays_series.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>         <span class="co"># consecutive integers</span></span>
+<span id="cb17-2"><a href="vectors_arrays_series.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1  2  3  4  5  6  7  8  9 10</span></span>
+<span id="cb17-3"><a href="vectors_arrays_series.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">2</span>)  <span class="co"># arbitrary sequences</span></span>
+<span id="cb17-4"><a href="vectors_arrays_series.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 3 5 7 9</span></span>
+<span id="cb17-5"><a href="vectors_arrays_series.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">5</span>)     <span class="co"># repeating numbers</span></span>
+<span id="cb17-6"><a href="vectors_arrays_series.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2 2 2 2 2</span></span>
+<span id="cb17-7"><a href="vectors_arrays_series.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># combine elements without relying on a pattern</span></span>
+<span id="cb17-8"><a href="vectors_arrays_series.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;5/2/2021&quot;</span>, <span class="st">&quot;5/3/2021&quot;</span>, <span class="st">&quot;5/4/2021&quot;</span>) </span>
+<span id="cb17-9"><a href="vectors_arrays_series.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;5/2/2021&quot; &quot;5/3/2021&quot; &quot;5/4/2021&quot;</span></span>
+<span id="cb17-10"><a href="vectors_arrays_series.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># generate Gaussian random variables</span></span>
+<span id="cb17-11"><a href="vectors_arrays_series.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)                             </span>
+<span id="cb17-12"><a href="vectors_arrays_series.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.6403955  0.2524081  1.3740108  2.2544786 -1.2988103</span></span></code></pre></div>
+<p><code>c()</code> is short for “combine”. <code>seq()</code> and <code>rep()</code> are short for “sequence” and “replicate”, respectively. <code>rnorm()</code> samples normal (or Gaussian) random variables. There is plenty more to learn about these functions, so I encourage you to take a look at their documentation.</p>
+<div class="rmd-details">
+<p>I should mention that functions such as <code>rnorm()</code> don’t create truly random numbers, just <em>pseudorandom</em> ones. Pseudorandom numbers are nearly indecipherable from truly random ones, but the way the computer generates them is actually deterministic.</p>
+<p>First, a <em>seed</em>, or starting number is chosen. Then, the <em>pseudorandom number generator (PRNG)</em> maps that number to another number. The sequence of all the numbers appears to be random, but is actually deterministic.</p>
+<p>Sometimes you will be interested in setting the seed on your own because it is a cheap way of sharing and communicating data with others. If two people use the same starting seed, and the same PRNG, then they should simulate the same data. This can be important if you want to help other people reproduce the results of code you share. Most of the time, though, I don’t set the seed, and I don’t think about the distinction between random and pseudorandom numbers.</p>
+</div>
+</div>
+<div id="overview-of-python" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Overview of Python<a href="vectors_arrays_series.html#overview-of-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy <code>array</code>. Numpy is a highly-regarded third party library <span class="citation">(<a href="#ref-harris2020array" role="doc-biblioref">Harris et al. 2020</a>)</span> for Python. Its <code>array</code> objects store elements of the same type, just as R’s <code>vector</code>s do.</p>
+<p>There are five ways to create numpy arrays (<a href="https://numpy.org/doc/stable/user/basics.creation.html">source</a>). Here are some examples that complement the examples from above.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="vectors_arrays_series.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np   </span>
+<span id="cb18-2"><a href="vectors_arrays_series.html#cb18-2" aria-hidden="true" tabindex="-1"></a>np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
+<span id="cb18-3"><a href="vectors_arrays_series.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1, 2, 3])</span></span>
+<span id="cb18-4"><a href="vectors_arrays_series.html#cb18-4" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
+<span id="cb18-5"><a href="vectors_arrays_series.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  3,  5,  7,  9, 11])</span></span>
+<span id="cb18-6"><a href="vectors_arrays_series.html#cb18-6" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb18-7"><a href="vectors_arrays_series.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.90217811,  1.35269809,  0.71926979])</span></span></code></pre></div>
+<p>Another option for storing a homogeneous collection of elements in Python is a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series"><code>Series</code> object</a> from the Pandas library. The benefit of these is that they play nicely with Pandas’ data frames (more information about Pandas’ data frames can be found in <a href="data-frames.html#data-frames-in-python">8.2</a>), and that they have more flexibility with accessing elements by name ( see <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array">here</a> for more information ).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="vectors_arrays_series.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="vectors_arrays_series.html#cb19-2" aria-hidden="true" tabindex="-1"></a>first <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
+<span id="cb19-3"><a href="vectors_arrays_series.html#cb19-3" aria-hidden="true" tabindex="-1"></a>second <span class="op">=</span> pd.Series([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>], index <span class="op">=</span> [<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>])</span>
+<span id="cb19-4"><a href="vectors_arrays_series.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(first[<span class="dv">0</span>])</span>
+<span id="cb19-5"><a href="vectors_arrays_series.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span>
+<span id="cb19-6"><a href="vectors_arrays_series.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(second[<span class="st">&#39;c&#39;</span>])</span>
+<span id="cb19-7"><a href="vectors_arrays_series.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 6</span></span></code></pre></div>
+</div>
+<div id="vectorization-in-r" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Vectorization in R<a href="vectors_arrays_series.html#vectorization-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An operation in R is <strong>vectorized</strong> if it applies to all of the elements of a <code>vector</code> at once. An operator that is not vectorized can only be applied to individual elements. In that case, the programmer would need to write more code to instruct the function to be applied to all of the elements of a vector. You should prefer writing vectorized code because it is usually easier to read. Moreover, many of these vectorized functions are written in compiled code, so they can often be much faster.</p>
+<p>Arithmetic (e.g. <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>, <code>%%</code>, <code>%/%</code>, etc.) and logical (e.g. <code>!</code>, <code>|</code>, <code>&amp;</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, etc.) operators are commonly applied to one or two vectors. Arithmetic is usually performed <em>element-by-element</em>. Numeric vectors are converted to logical vectors if they need to be. Be careful of operator precedence if you seek to minimize your use of parentheses.</p>
+<p>Note that there are an extraordinary amount of named functions (e.g. <code>sum()</code>, <code>length()</code>, <code>cumsum()</code>, etc.) that operate on entire <code>vector</code>s, as well. Here are some examples.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="vectors_arrays_series.html#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)        </span>
+<span id="cb20-2"><a href="vectors_arrays_series.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 4 9</span></span>
+<span id="cb20-3"><a href="vectors_arrays_series.html#cb20-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">==</span> <span class="fu">rev</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)    </span>
+<span id="cb20-4"><a href="vectors_arrays_series.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE  TRUE FALSE</span></span>
+<span id="cb20-5"><a href="vectors_arrays_series.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sin</span>( (<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)) </span>
+<span id="cb20-6"><a href="vectors_arrays_series.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  8.660254e-01 -8.660254e-01 -2.449294e-16  8.660254e-01</span></span></code></pre></div>
+<p>In the last example, there is <strong>recycling</strong> happening. <code>(2*pi/3)</code> is taking three length-one vectors and producing another length-one vector. The resulting length-one vector is multiplied by a length four vector <code>1:4</code>. The single element in the length one vector gets <em>recycled</em> so that its value is multiplied by every element of <code>1:4</code>.
+This makes sense most of the time, but sometimes recycling can be tricky. Notice that the following code does not produce an error–just a warning: <code>longer object length is not a multiple of shorter object length</code>. Try running it on your machine to confirm this.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="vectors_arrays_series.html#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
+</div>
+<div id="vectorization-in-python" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Vectorization in Python<a href="vectors_arrays_series.html#vectorization-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Python’s Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with <a href="https://numpy.org/doc/stable/reference/ufuncs.html"><strong>universal functions</strong></a>, or “ufuncs” for short. Some ufuncs can be invoked using the same syntax as in R (e.g. <code>+</code>). You can also refer to function by its name (e.g. <code>np.sum()</code> instead of <code>+</code>). Mixing and matching is allowed, too.</p>
+<p>Ufuncs are called <em>unary</em> if they take in one array, and <em>binary</em> if they take in two. At the moment, there are <a href="https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs">fewer than <span class="math inline">\(100\)</span> available</a>, all performing either mathematical operations, boolean-emitting comparisons, or bit-twiddling operations. For an exhaustive list of Numpy’s universal functions, <a href="https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs">click here.</a> Here are some code examples.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="vectors_arrays_series.html#cb22-1" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)<span class="op">*</span>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)</span>
+<span id="cb22-2"><a href="vectors_arrays_series.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1, 4, 9])</span></span>
+<span id="cb22-3"><a href="vectors_arrays_series.html#cb22-3" aria-hidden="true" tabindex="-1"></a>np.zeros(<span class="dv">5</span>) <span class="op">&gt;</span> np.arange(<span class="op">-</span><span class="dv">3</span>,<span class="dv">2</span>)</span>
+<span id="cb22-4"><a href="vectors_arrays_series.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ True,  True,  True, False, False])</span></span>
+<span id="cb22-5"><a href="vectors_arrays_series.html#cb22-5" aria-hidden="true" tabindex="-1"></a>np.exp( <span class="op">-</span><span class="fl">.5</span> <span class="op">*</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">10</span>)<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> np.sqrt( <span class="dv">2</span> <span class="op">*</span> np.pi)</span>
+<span id="cb22-6"><a href="vectors_arrays_series.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.00443185, 0.02622189, 0.09947714, 0.24197072, 0.37738323,</span></span>
+<span id="cb22-7"><a href="vectors_arrays_series.html#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">##        0.37738323, 0.24197072, 0.09947714, 0.02622189, 0.00443185])</span></span></code></pre></div>
+<p>Instead of calling it “recycling”, Numpy calls reusing elements of a shorter array in a binary operation <a href="https://numpy.org/devdocs/user/theory.broadcasting.html"><strong>broadcasting</strong></a>. It’s the same idea as in R, but in general, Python is stricter and disallows more scenarios. For example, try running the following code on your machine. You should receive an error: <code>ValueError: operands could not be broadcast together with shapes (2,) (3,)</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="vectors_arrays_series.html#cb23-1" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">1</span>,<span class="dv">3</span>)<span class="op">*</span>np.arange(<span class="dv">1</span>,<span class="dv">4</span>)</span></code></pre></div>
+<p>If you are working with string arrays, Numpy has a <a href="https://numpy.org/doc/stable/reference/routines.char.html#module-numpy.char"><code>np.char</code> module with many useful functions</a>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="vectors_arrays_series.html#cb24-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>])</span>
+<span id="cb24-2"><a href="vectors_arrays_series.html#cb24-2" aria-hidden="true" tabindex="-1"></a>np.char.upper(a)</span>
+<span id="cb24-3"><a href="vectors_arrays_series.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], dtype=&#39;&lt;U1&#39;)</span></span></code></pre></div>
+<p>Then there are the <code>Series</code> objects from Pandas. Ufuncs continue to work in the same way on <code>Series</code> objects, and they <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html">respect common index values</a>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="vectors_arrays_series.html#cb25-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> pd.Series(np.repeat(<span class="dv">100</span>,<span class="dv">3</span>))</span>
+<span id="cb25-2"><a href="vectors_arrays_series.html#cb25-2" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> pd.Series(np.repeat(<span class="dv">10</span>,<span class="dv">3</span>))</span>
+<span id="cb25-3"><a href="vectors_arrays_series.html#cb25-3" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">+</span> s2</span>
+<span id="cb25-4"><a href="vectors_arrays_series.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    110</span></span>
+<span id="cb25-5"><a href="vectors_arrays_series.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    110</span></span>
+<span id="cb25-6"><a href="vectors_arrays_series.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    110</span></span>
+<span id="cb25-7"><a href="vectors_arrays_series.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span></code></pre></div>
+<p>If you feel more comfortable, and you want to coerce these <code>Series</code> objects to Numpy arrays before working with them, you can do that. For example, the following works.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="vectors_arrays_series.html#cb26-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series(np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">5</span>))</span>
+<span id="cb26-2"><a href="vectors_arrays_series.html#cb26-2" aria-hidden="true" tabindex="-1"></a>np.exp(s.to_numpy())</span>
+<span id="cb26-3"><a href="vectors_arrays_series.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([0.36787944, 0.60653066, 1.        , 1.64872127, 2.71828183])</span></span></code></pre></div>
+<p>In addition, <code>Series</code> objects possess many extra <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series">attributes and methods</a>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="vectors_arrays_series.html#cb27-1" aria-hidden="true" tabindex="-1"></a>ints <span class="op">=</span> pd.Series(np.arange(<span class="dv">10</span>))</span>
+<span id="cb27-2"><a href="vectors_arrays_series.html#cb27-2" aria-hidden="true" tabindex="-1"></a>ints.<span class="bu">abs</span>()</span>
+<span id="cb27-3"><a href="vectors_arrays_series.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    0</span></span>
+<span id="cb27-4"><a href="vectors_arrays_series.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    1</span></span>
+<span id="cb27-5"><a href="vectors_arrays_series.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    2</span></span>
+<span id="cb27-6"><a href="vectors_arrays_series.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    3</span></span>
+<span id="cb27-7"><a href="vectors_arrays_series.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 4    4</span></span>
+<span id="cb27-8"><a href="vectors_arrays_series.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 5    5</span></span>
+<span id="cb27-9"><a href="vectors_arrays_series.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 6    6</span></span>
+<span id="cb27-10"><a href="vectors_arrays_series.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 7    7</span></span>
+<span id="cb27-11"><a href="vectors_arrays_series.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 8    8</span></span>
+<span id="cb27-12"><a href="vectors_arrays_series.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 9    9</span></span>
+<span id="cb27-13"><a href="vectors_arrays_series.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb27-14"><a href="vectors_arrays_series.html#cb27-14" aria-hidden="true" tabindex="-1"></a>ints.mean()</span>
+<span id="cb27-15"><a href="vectors_arrays_series.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 4.5</span></span>
+<span id="cb27-16"><a href="vectors_arrays_series.html#cb27-16" aria-hidden="true" tabindex="-1"></a>ints.floordiv(<span class="dv">2</span>)</span>
+<span id="cb27-17"><a href="vectors_arrays_series.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    0</span></span>
+<span id="cb27-18"><a href="vectors_arrays_series.html#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    0</span></span>
+<span id="cb27-19"><a href="vectors_arrays_series.html#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    1</span></span>
+<span id="cb27-20"><a href="vectors_arrays_series.html#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    1</span></span>
+<span id="cb27-21"><a href="vectors_arrays_series.html#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co">## 4    2</span></span>
+<span id="cb27-22"><a href="vectors_arrays_series.html#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co">## 5    2</span></span>
+<span id="cb27-23"><a href="vectors_arrays_series.html#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="co">## 6    3</span></span>
+<span id="cb27-24"><a href="vectors_arrays_series.html#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="co">## 7    3</span></span>
+<span id="cb27-25"><a href="vectors_arrays_series.html#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="co">## 8    4</span></span>
+<span id="cb27-26"><a href="vectors_arrays_series.html#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="co">## 9    4</span></span>
+<span id="cb27-27"><a href="vectors_arrays_series.html#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span></code></pre></div>
+<p><code>Series</code> objects that have <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#working-with-text-data">text data</a> are a little bit different. For one, you have to access the <code>.str</code> attribute of the <code>Series</code> before calling any <a href="https://jakevdp.github.io/PythonDataScienceHandbook/03.10-working-with-strings.html">vectorized methods</a>. Here are some examples.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="vectors_arrays_series.html#cb28-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>,<span class="st">&#39;33&#39;</span>])</span>
+<span id="cb28-2"><a href="vectors_arrays_series.html#cb28-2" aria-hidden="true" tabindex="-1"></a>s.dtype</span></code></pre></div>
+<pre><code>## dtype(&#39;O&#39;)</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="vectors_arrays_series.html#cb30-1" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.isdigit()</span></code></pre></div>
+<pre><code>## 0    False
+## 1    False
+## 2    False
+## 3     True
+## dtype: bool</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="vectors_arrays_series.html#cb32-1" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.replace(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;z&#39;</span>)</span></code></pre></div>
+<pre><code>## 0     z
+## 1     b
+## 2     c
+## 3    33
+## dtype: object</code></pre>
+<p>String operations can be a big game changer, and we discuss text processing strategies in more detail in section <a href="vectors_arrays_series.html#an-introduction-to-regular-expressions">3.9</a>.</p>
+</div>
+<div id="indexing-vectors-in-r" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Indexing Vectors in R<a href="vectors_arrays_series.html#indexing-vectors-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It is very common to want to extract or modify a subset of elements in a vector. There are a few ways to do this. All of the ways I discuss will involve the square bracket operator (i.e. <code>[]</code>). Feel free to retrieve the documentation by typing <code>?'['</code>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="vectors_arrays_series.html#cb34-1" aria-hidden="true" tabindex="-1"></a>allElements <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb34-2"><a href="vectors_arrays_series.html#cb34-2" aria-hidden="true" tabindex="-1"></a>allElements[<span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">2</span>)] <span class="co"># extract evens</span></span>
+<span id="cb34-3"><a href="vectors_arrays_series.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2 4 6</span></span>
+<span id="cb34-4"><a href="vectors_arrays_series.html#cb34-4" aria-hidden="true" tabindex="-1"></a>allElements[<span class="sc">-</span><span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">2</span>)] <span class="ot">&lt;-</span> <span class="dv">99</span> <span class="co"># replace all odds with 99</span></span>
+<span id="cb34-5"><a href="vectors_arrays_series.html#cb34-5" aria-hidden="true" tabindex="-1"></a>allElements[allElements <span class="sc">&gt;</span> <span class="dv">2</span>] <span class="co"># get nums bigger than 2</span></span>
+<span id="cb34-6"><a href="vectors_arrays_series.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 99 99  4 99  6</span></span></code></pre></div>
+<p>To access the first element, we use the index <code>1</code>. To access the second, we use <code>2</code>, and so on. Also, the <code>-</code> sign tells R to remove elements. Both of these functionalities are <em>very different</em> from Python, as we will see shortly.</p>
+<p>We can use names to access elements elements, too, but only if the elements are named.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="vectors_arrays_series.html#cb35-1" aria-hidden="true" tabindex="-1"></a>sillyVec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;favorite&quot;</span><span class="ot">=</span><span class="dv">1</span>, <span class="st">&quot;least favorite&quot;</span> <span class="ot">=</span> <span class="dv">2</span>)</span>
+<span id="cb35-2"><a href="vectors_arrays_series.html#cb35-2" aria-hidden="true" tabindex="-1"></a>sillyVec[<span class="st">&#39;favorite&#39;</span>]</span>
+<span id="cb35-3"><a href="vectors_arrays_series.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">## favorite </span></span>
+<span id="cb35-4"><a href="vectors_arrays_series.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        1</span></span></code></pre></div>
+</div>
+<div id="indexing-numpy-arrays" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Indexing Numpy arrays<a href="vectors_arrays_series.html#indexing-numpy-arrays" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://numpy.org/doc/stable/user/basics.indexing.html">Indexing Numpy arrays</a> is very similar to indexing vectors in R. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though.</p>
+<p>For one, indexing is 0-based in Python. The <code>0</code>th element is the first element of an array. Another key difference is that the <code>-</code> isn’t used to remove elements like it is in R, but rather to count backwards. Third, using one or two <code>:</code> inside square brackets is more flexible in Python. This is syntactic sugar for using the <code>slice()</code> function, which is similar to R’s <code>seq()</code> function.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="vectors_arrays_series.html#cb36-1" aria-hidden="true" tabindex="-1"></a>one_through_ten <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
+<span id="cb36-2"><a href="vectors_arrays_series.html#cb36-2" aria-hidden="true" tabindex="-1"></a>one_through_ten[np.array([<span class="dv">2</span>,<span class="dv">3</span>])]</span>
+<span id="cb36-3"><a href="vectors_arrays_series.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([3, 4])</span></span>
+<span id="cb36-4"><a href="vectors_arrays_series.html#cb36-4" aria-hidden="true" tabindex="-1"></a>one_through_ten[<span class="dv">1</span>:<span class="dv">10</span>:<span class="dv">2</span>] <span class="co"># evens</span></span>
+<span id="cb36-5"><a href="vectors_arrays_series.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 2,  4,  6,  8, 10])</span></span>
+<span id="cb36-6"><a href="vectors_arrays_series.html#cb36-6" aria-hidden="true" tabindex="-1"></a>one_through_ten[::<span class="op">-</span><span class="dv">1</span>] <span class="co"># reversed</span></span>
+<span id="cb36-7"><a href="vectors_arrays_series.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([10,  9,  8,  7,  6,  5,  4,  3,  2,  1])</span></span>
+<span id="cb36-8"><a href="vectors_arrays_series.html#cb36-8" aria-hidden="true" tabindex="-1"></a>one_through_ten[<span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> <span class="dv">99</span> <span class="co"># second to last</span></span>
+<span id="cb36-9"><a href="vectors_arrays_series.html#cb36-9" aria-hidden="true" tabindex="-1"></a>one_through_ten</span>
+<span id="cb36-10"><a href="vectors_arrays_series.html#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 1,  2,  3,  4,  5,  6,  7,  8, 99, 10])</span></span>
+<span id="cb36-11"><a href="vectors_arrays_series.html#cb36-11" aria-hidden="true" tabindex="-1"></a>one_through_ten[one_through_ten <span class="op">&gt;</span> <span class="dv">3</span>] <span class="co"># bigger than three</span></span>
+<span id="cb36-12"><a href="vectors_arrays_series.html#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 4,  5,  6,  7,  8, 99, 10])</span></span></code></pre></div>
+</div>
+<div id="indexing-pandas-series" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Indexing Pandas’ Series<a href="vectors_arrays_series.html#indexing-pandas-series" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>At a minimum, there is little that is new that you <em>need</em> to learn to go from Numpy arrays to Pandas’ Series objects. They still have the <code>[]</code> operator, and <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.html">many methods are shared across these two types</a>. The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="vectors_arrays_series.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb37-2"><a href="vectors_arrays_series.html#cb37-2" aria-hidden="true" tabindex="-1"></a>one_through_ten <span class="op">=</span> pd.Series(np.arange(<span class="dv">1</span>, <span class="dv">11</span>))</span>
+<span id="cb37-3"><a href="vectors_arrays_series.html#cb37-3" aria-hidden="true" tabindex="-1"></a>one_through_ten[np.array([<span class="dv">2</span>,<span class="dv">3</span>])]</span>
+<span id="cb37-4"><a href="vectors_arrays_series.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    3</span></span>
+<span id="cb37-5"><a href="vectors_arrays_series.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    4</span></span>
+<span id="cb37-6"><a href="vectors_arrays_series.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb37-7"><a href="vectors_arrays_series.html#cb37-7" aria-hidden="true" tabindex="-1"></a>one_through_ten[<span class="dv">1</span>:<span class="dv">10</span>:<span class="dv">2</span>] <span class="co"># evens</span></span>
+<span id="cb37-8"><a href="vectors_arrays_series.html#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     2</span></span>
+<span id="cb37-9"><a href="vectors_arrays_series.html#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 3     4</span></span>
+<span id="cb37-10"><a href="vectors_arrays_series.html#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 5     6</span></span>
+<span id="cb37-11"><a href="vectors_arrays_series.html#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 7     8</span></span>
+<span id="cb37-12"><a href="vectors_arrays_series.html#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 9    10</span></span>
+<span id="cb37-13"><a href="vectors_arrays_series.html#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb37-14"><a href="vectors_arrays_series.html#cb37-14" aria-hidden="true" tabindex="-1"></a>one_through_ten[::<span class="op">-</span><span class="dv">1</span>] <span class="co"># reversed</span></span>
+<span id="cb37-15"><a href="vectors_arrays_series.html#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 9    10</span></span>
+<span id="cb37-16"><a href="vectors_arrays_series.html#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 8     9</span></span>
+<span id="cb37-17"><a href="vectors_arrays_series.html#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="co">## 7     8</span></span>
+<span id="cb37-18"><a href="vectors_arrays_series.html#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co">## 6     7</span></span>
+<span id="cb37-19"><a href="vectors_arrays_series.html#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co">## 5     6</span></span>
+<span id="cb37-20"><a href="vectors_arrays_series.html#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co">## 4     5</span></span>
+<span id="cb37-21"><a href="vectors_arrays_series.html#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="co">## 3     4</span></span>
+<span id="cb37-22"><a href="vectors_arrays_series.html#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co">## 2     3</span></span>
+<span id="cb37-23"><a href="vectors_arrays_series.html#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     2</span></span>
+<span id="cb37-24"><a href="vectors_arrays_series.html#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     1</span></span>
+<span id="cb37-25"><a href="vectors_arrays_series.html#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb37-26"><a href="vectors_arrays_series.html#cb37-26" aria-hidden="true" tabindex="-1"></a>one_through_ten[<span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> <span class="dv">99</span> <span class="co"># second to last</span></span>
+<span id="cb37-27"><a href="vectors_arrays_series.html#cb37-27" aria-hidden="true" tabindex="-1"></a>one_through_ten</span>
+<span id="cb37-28"><a href="vectors_arrays_series.html#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="co">##  0     1</span></span>
+<span id="cb37-29"><a href="vectors_arrays_series.html#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="co">##  1     2</span></span>
+<span id="cb37-30"><a href="vectors_arrays_series.html#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="co">##  2     3</span></span>
+<span id="cb37-31"><a href="vectors_arrays_series.html#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="co">##  3     4</span></span>
+<span id="cb37-32"><a href="vectors_arrays_series.html#cb37-32" aria-hidden="true" tabindex="-1"></a><span class="co">##  4     5</span></span>
+<span id="cb37-33"><a href="vectors_arrays_series.html#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="co">##  5     6</span></span>
+<span id="cb37-34"><a href="vectors_arrays_series.html#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="co">##  6     7</span></span>
+<span id="cb37-35"><a href="vectors_arrays_series.html#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="co">##  7     8</span></span>
+<span id="cb37-36"><a href="vectors_arrays_series.html#cb37-36" aria-hidden="true" tabindex="-1"></a><span class="co">##  8     9</span></span>
+<span id="cb37-37"><a href="vectors_arrays_series.html#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="co">##  9    10</span></span>
+<span id="cb37-38"><a href="vectors_arrays_series.html#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="co">## -2    99</span></span>
+<span id="cb37-39"><a href="vectors_arrays_series.html#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb37-40"><a href="vectors_arrays_series.html#cb37-40" aria-hidden="true" tabindex="-1"></a>one_through_ten[one_through_ten <span class="op">&gt;</span> <span class="dv">3</span>] <span class="co"># bigger than three</span></span>
+<span id="cb37-41"><a href="vectors_arrays_series.html#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="co">##  3     4</span></span>
+<span id="cb37-42"><a href="vectors_arrays_series.html#cb37-42" aria-hidden="true" tabindex="-1"></a><span class="co">##  4     5</span></span>
+<span id="cb37-43"><a href="vectors_arrays_series.html#cb37-43" aria-hidden="true" tabindex="-1"></a><span class="co">##  5     6</span></span>
+<span id="cb37-44"><a href="vectors_arrays_series.html#cb37-44" aria-hidden="true" tabindex="-1"></a><span class="co">##  6     7</span></span>
+<span id="cb37-45"><a href="vectors_arrays_series.html#cb37-45" aria-hidden="true" tabindex="-1"></a><span class="co">##  7     8</span></span>
+<span id="cb37-46"><a href="vectors_arrays_series.html#cb37-46" aria-hidden="true" tabindex="-1"></a><span class="co">##  8     9</span></span>
+<span id="cb37-47"><a href="vectors_arrays_series.html#cb37-47" aria-hidden="true" tabindex="-1"></a><span class="co">##  9    10</span></span>
+<span id="cb37-48"><a href="vectors_arrays_series.html#cb37-48" aria-hidden="true" tabindex="-1"></a><span class="co">## -2    99</span></span>
+<span id="cb37-49"><a href="vectors_arrays_series.html#cb37-49" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb37-50"><a href="vectors_arrays_series.html#cb37-50" aria-hidden="true" tabindex="-1"></a>one_through_ten.<span class="bu">sum</span>()</span>
+<span id="cb37-51"><a href="vectors_arrays_series.html#cb37-51" aria-hidden="true" tabindex="-1"></a><span class="co">## 154</span></span></code></pre></div>
+<p>However, <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing">Pandas’ Series have <code>.loc</code> and <code>.iloc</code> methods</a>. We won’t talk much about these two methods now, but they will become very important when we start to discuss Pandas’ data frames in section <a href="data-frames.html#data-frames-in-python">8.2</a>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="vectors_arrays_series.html#cb38-1" aria-hidden="true" tabindex="-1"></a>one_through_ten.iloc[<span class="dv">2</span>]</span>
+<span id="cb38-2"><a href="vectors_arrays_series.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 3</span></span>
+<span id="cb38-3"><a href="vectors_arrays_series.html#cb38-3" aria-hidden="true" tabindex="-1"></a>one_through_ten.loc[<span class="dv">2</span>]</span>
+<span id="cb38-4"><a href="vectors_arrays_series.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 3</span></span></code></pre></div>
+</div>
+<div id="some-gotchas" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Some Gotchas<a href="vectors_arrays_series.html#some-gotchas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="shallow-versus-deep-copies" class="section level3 hasAnchor" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> Shallow versus Deep Copies<a href="vectors_arrays_series.html#shallow-versus-deep-copies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In R, assignment usually produces a <strong>deep copy.</strong> In the code below, we create <code>b</code> from <code>a</code>. If we modify <code>b</code>, these changes don’t affect <code>a</code>. This takes up more memory, but our program is easier to follow as we don’t have to keep track of connections between objects.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="vectors_arrays_series.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb39-2"><a href="vectors_arrays_series.html#cb39-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb39-3"><a href="vectors_arrays_series.html#cb39-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> a</span>
+<span id="cb39-4"><a href="vectors_arrays_series.html#cb39-4" aria-hidden="true" tabindex="-1"></a>b[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">999</span></span>
+<span id="cb39-5"><a href="vectors_arrays_series.html#cb39-5" aria-hidden="true" tabindex="-1"></a>a <span class="co"># still the same!</span></span>
+<span id="cb39-6"><a href="vectors_arrays_series.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2 3</span></span></code></pre></div>
+<p>With Numpy arrays in Python, <a href="https://numpy.org/devdocs/user/quickstart.html#copies-and-views">“shallow copies” can be created by simple assignment, or by explicitly constructing a <strong>view</strong></a>. In the code below, <code>a</code>, <code>b</code>, <code>c</code>, and <code>d</code> all share the same data. If you modify one, you change all the others. This can make the program more confusing, but on the other hand, it can also improve computational efficiency.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="vectors_arrays_series.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
+<span id="cb40-2"><a href="vectors_arrays_series.html#cb40-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
+<span id="cb40-3"><a href="vectors_arrays_series.html#cb40-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> a <span class="co"># b is an alias</span></span>
+<span id="cb40-4"><a href="vectors_arrays_series.html#cb40-4" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a.view() <span class="co"># c is a view</span></span>
+<span id="cb40-5"><a href="vectors_arrays_series.html#cb40-5" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> a[:]</span>
+<span id="cb40-6"><a href="vectors_arrays_series.html#cb40-6" aria-hidden="true" tabindex="-1"></a>b[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">999</span></span>
+<span id="cb40-7"><a href="vectors_arrays_series.html#cb40-7" aria-hidden="true" tabindex="-1"></a>a <span class="co"># two names for the same object in memory</span></span>
+<span id="cb40-8"><a href="vectors_arrays_series.html#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co">## array([999,   2,   3])</span></span>
+<span id="cb40-9"><a href="vectors_arrays_series.html#cb40-9" aria-hidden="true" tabindex="-1"></a>b</span>
+<span id="cb40-10"><a href="vectors_arrays_series.html#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co">## array([999,   2,   3])</span></span>
+<span id="cb40-11"><a href="vectors_arrays_series.html#cb40-11" aria-hidden="true" tabindex="-1"></a>c</span>
+<span id="cb40-12"><a href="vectors_arrays_series.html#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co">## array([999,   2,   3])</span></span>
+<span id="cb40-13"><a href="vectors_arrays_series.html#cb40-13" aria-hidden="true" tabindex="-1"></a>d</span>
+<span id="cb40-14"><a href="vectors_arrays_series.html#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co">## array([999,   2,   3])</span></span></code></pre></div>
+<p>It’s the same story with Pandas’ Series objects. You’re usually making a “shallow” copy.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="vectors_arrays_series.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
+<span id="cb41-2"><a href="vectors_arrays_series.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb41-3"><a href="vectors_arrays_series.html#cb41-3" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> pd.Series(np.array([<span class="fl">100.0</span>,<span class="fl">200.0</span>,<span class="fl">300.0</span>]))</span>
+<span id="cb41-4"><a href="vectors_arrays_series.html#cb41-4" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> s1</span>
+<span id="cb41-5"><a href="vectors_arrays_series.html#cb41-5" aria-hidden="true" tabindex="-1"></a>s3 <span class="op">=</span> s1.view()</span>
+<span id="cb41-6"><a href="vectors_arrays_series.html#cb41-6" aria-hidden="true" tabindex="-1"></a>s4 <span class="op">=</span> s1[:]</span>
+<span id="cb41-7"><a href="vectors_arrays_series.html#cb41-7" aria-hidden="true" tabindex="-1"></a>s1[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">999</span></span>
+<span id="cb41-8"><a href="vectors_arrays_series.html#cb41-8" aria-hidden="true" tabindex="-1"></a>s1</span>
+<span id="cb41-9"><a href="vectors_arrays_series.html#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    999.0</span></span>
+<span id="cb41-10"><a href="vectors_arrays_series.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    200.0</span></span>
+<span id="cb41-11"><a href="vectors_arrays_series.html#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    300.0</span></span>
+<span id="cb41-12"><a href="vectors_arrays_series.html#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span>
+<span id="cb41-13"><a href="vectors_arrays_series.html#cb41-13" aria-hidden="true" tabindex="-1"></a>s2</span>
+<span id="cb41-14"><a href="vectors_arrays_series.html#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    999.0</span></span>
+<span id="cb41-15"><a href="vectors_arrays_series.html#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    200.0</span></span>
+<span id="cb41-16"><a href="vectors_arrays_series.html#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    300.0</span></span>
+<span id="cb41-17"><a href="vectors_arrays_series.html#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span>
+<span id="cb41-18"><a href="vectors_arrays_series.html#cb41-18" aria-hidden="true" tabindex="-1"></a>s3</span>
+<span id="cb41-19"><a href="vectors_arrays_series.html#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    999.0</span></span>
+<span id="cb41-20"><a href="vectors_arrays_series.html#cb41-20" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    200.0</span></span>
+<span id="cb41-21"><a href="vectors_arrays_series.html#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    300.0</span></span>
+<span id="cb41-22"><a href="vectors_arrays_series.html#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span>
+<span id="cb41-23"><a href="vectors_arrays_series.html#cb41-23" aria-hidden="true" tabindex="-1"></a>s4</span>
+<span id="cb41-24"><a href="vectors_arrays_series.html#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    999.0</span></span>
+<span id="cb41-25"><a href="vectors_arrays_series.html#cb41-25" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    200.0</span></span>
+<span id="cb41-26"><a href="vectors_arrays_series.html#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    300.0</span></span>
+<span id="cb41-27"><a href="vectors_arrays_series.html#cb41-27" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: float64</span></span></code></pre></div>
+<p>If you want a “deep copy” in Python, you usually want a function or method called <code>copy()</code>. Use <code>np.copy</code> or <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.copy.html#numpy-ndarray-copy"><code>np.ndarray.copy</code></a> when you have a Numpy array.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="vectors_arrays_series.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
+<span id="cb42-2"><a href="vectors_arrays_series.html#cb42-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
+<span id="cb42-3"><a href="vectors_arrays_series.html#cb42-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.copy(a)</span>
+<span id="cb42-4"><a href="vectors_arrays_series.html#cb42-4" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a.copy()</span>
+<span id="cb42-5"><a href="vectors_arrays_series.html#cb42-5" aria-hidden="true" tabindex="-1"></a>b[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">999</span></span>
+<span id="cb42-6"><a href="vectors_arrays_series.html#cb42-6" aria-hidden="true" tabindex="-1"></a>a </span>
+<span id="cb42-7"><a href="vectors_arrays_series.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1, 2, 3])</span></span>
+<span id="cb42-8"><a href="vectors_arrays_series.html#cb42-8" aria-hidden="true" tabindex="-1"></a>b</span>
+<span id="cb42-9"><a href="vectors_arrays_series.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="co">## array([999,   2,   3])</span></span>
+<span id="cb42-10"><a href="vectors_arrays_series.html#cb42-10" aria-hidden="true" tabindex="-1"></a>c</span>
+<span id="cb42-11"><a href="vectors_arrays_series.html#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co">## array([1, 2, 3])</span></span></code></pre></div>
+<p>Use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html#pandas-series-copy"><code>pandas.Series.copy</code></a> with Pandas’ Series objects. Make sure not to set the <code>deep</code> argument to <code>False</code>. Otherwise you’ll get a shallow copy.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="vectors_arrays_series.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in python</span></span>
+<span id="cb43-2"><a href="vectors_arrays_series.html#cb43-2" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> pd.Series(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]))</span>
+<span id="cb43-3"><a href="vectors_arrays_series.html#cb43-3" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> s1.copy()</span>
+<span id="cb43-4"><a href="vectors_arrays_series.html#cb43-4" aria-hidden="true" tabindex="-1"></a>s3 <span class="op">=</span> s1.copy(deep<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb43-5"><a href="vectors_arrays_series.html#cb43-5" aria-hidden="true" tabindex="-1"></a>s1[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">999</span></span>
+<span id="cb43-6"><a href="vectors_arrays_series.html#cb43-6" aria-hidden="true" tabindex="-1"></a>s1</span>
+<span id="cb43-7"><a href="vectors_arrays_series.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    999</span></span>
+<span id="cb43-8"><a href="vectors_arrays_series.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 1      2</span></span>
+<span id="cb43-9"><a href="vectors_arrays_series.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 2      3</span></span>
+<span id="cb43-10"><a href="vectors_arrays_series.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb43-11"><a href="vectors_arrays_series.html#cb43-11" aria-hidden="true" tabindex="-1"></a>s2</span>
+<span id="cb43-12"><a href="vectors_arrays_series.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    1</span></span>
+<span id="cb43-13"><a href="vectors_arrays_series.html#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    2</span></span>
+<span id="cb43-14"><a href="vectors_arrays_series.html#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    3</span></span>
+<span id="cb43-15"><a href="vectors_arrays_series.html#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span>
+<span id="cb43-16"><a href="vectors_arrays_series.html#cb43-16" aria-hidden="true" tabindex="-1"></a>s3</span>
+<span id="cb43-17"><a href="vectors_arrays_series.html#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    999</span></span>
+<span id="cb43-18"><a href="vectors_arrays_series.html#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co">## 1      2</span></span>
+<span id="cb43-19"><a href="vectors_arrays_series.html#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="co">## 2      3</span></span>
+<span id="cb43-20"><a href="vectors_arrays_series.html#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: int64</span></span></code></pre></div>
+</div>
+<div id="how-r-and-python-handle-missing-values" class="section level3 hasAnchor" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> How R and Python Handle Missing Values<a href="vectors_arrays_series.html#how-r-and-python-handle-missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R has <code>NULL</code>, <code>NaN</code>, and <code>NA</code>. Python has <code>None</code> and <code>np.nan</code>. If your eyes are glazing over already and you’re thinking “they all look like the same”–they are not.</p>
+<p>R’s <code>NULL</code> and Python’s <code>None</code> are similar. Both represent “nothingness.” This is <em>not</em> the same as <code>0</code>, or an empty string, or <code>FALSE</code>/<code>False</code>. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to “return” (more information on functions can be found in section <a href="functions.html#functions">6</a>) anything meaningful.</p>
+<p>In R, for example, if a function fails to return anything, then it actually returns a <code>NULL</code>. <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#NULL-object">A <code>NULL</code> object has its own type.</a></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="vectors_arrays_series.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span> <span class="sc">==</span> <span class="cn">FALSE</span></span>
+<span id="cb44-2"><a href="vectors_arrays_series.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## logical(0)</span></span>
+<span id="cb44-3"><a href="vectors_arrays_series.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span> <span class="sc">==</span> <span class="cn">NULL</span></span>
+<span id="cb44-4"><a href="vectors_arrays_series.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## logical(0)</span></span>
+<span id="cb44-5"><a href="vectors_arrays_series.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create a function that doesn&#39;t return anything</span></span>
+<span id="cb44-6"><a href="vectors_arrays_series.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co"># more information on this later</span></span>
+<span id="cb44-7"><a href="vectors_arrays_series.html#cb44-7" aria-hidden="true" tabindex="-1"></a>doNothingFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(a){} </span>
+<span id="cb44-8"><a href="vectors_arrays_series.html#cb44-8" aria-hidden="true" tabindex="-1"></a>thing <span class="ot">&lt;-</span> <span class="fu">doNothingFunc</span>() <span class="co"># call our new function</span></span>
+<span id="cb44-9"><a href="vectors_arrays_series.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">is.null</span>(thing)</span>
+<span id="cb44-10"><a href="vectors_arrays_series.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb44-11"><a href="vectors_arrays_series.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb44-12"><a href="vectors_arrays_series.html#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;NULL&quot;</span></span></code></pre></div>
+<p>In Python, we have the following.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="vectors_arrays_series.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="va">None</span> <span class="op">==</span> <span class="va">False</span></span>
+<span id="cb45-2"><a href="vectors_arrays_series.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co">## False</span></span>
+<span id="cb45-3"><a href="vectors_arrays_series.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="va">None</span> <span class="op">==</span> <span class="va">None</span></span>
+<span id="cb45-4"><a href="vectors_arrays_series.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a function that doesn&#39;t return anything</span></span>
+<span id="cb45-5"><a href="vectors_arrays_series.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># more information on this later</span></span>
+<span id="cb45-6"><a href="vectors_arrays_series.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span>
+<span id="cb45-7"><a href="vectors_arrays_series.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> do_nothing_func():</span>
+<span id="cb45-8"><a href="vectors_arrays_series.html#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb45-9"><a href="vectors_arrays_series.html#cb45-9" aria-hidden="true" tabindex="-1"></a>thing <span class="op">=</span> do_nothing_func()</span>
+<span id="cb45-10"><a href="vectors_arrays_series.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> thing <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb45-11"><a href="vectors_arrays_series.html#cb45-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;thing is None!&quot;</span>)</span>
+<span id="cb45-12"><a href="vectors_arrays_series.html#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co">## thing is None!</span></span>
+<span id="cb45-13"><a href="vectors_arrays_series.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="va">None</span>)</span>
+<span id="cb45-14"><a href="vectors_arrays_series.html#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co">## &lt;class &#39;NoneType&#39;&gt;</span></span></code></pre></div>
+<p>“NaN” stands for “not a number.” <code>NaN</code> is an object of type <code>double</code> in R, and <code>np.nan</code> is of type <code>float</code> in Python. It can come in handy when you (deliberately or accidentally) perform undefined calculations such as <span class="math inline">\(0/0\)</span> or <span class="math inline">\(\infty / -\infty\)</span>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="vectors_arrays_series.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb46-2"><a href="vectors_arrays_series.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span><span class="sc">/</span><span class="dv">0</span></span>
+<span id="cb46-3"><a href="vectors_arrays_series.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] NaN</span></span>
+<span id="cb46-4"><a href="vectors_arrays_series.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="cn">Inf</span><span class="sc">/</span><span class="cn">Inf</span></span>
+<span id="cb46-5"><a href="vectors_arrays_series.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] NaN</span></span>
+<span id="cb46-6"><a href="vectors_arrays_series.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(<span class="dv">0</span><span class="sc">/</span><span class="dv">0</span>)</span>
+<span id="cb46-7"><a href="vectors_arrays_series.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="vectors_arrays_series.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb47-2"><a href="vectors_arrays_series.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 0/0 </span></span>
+<span id="cb47-3"><a href="vectors_arrays_series.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the above yields a ZeroDivisionError</span></span>
+<span id="cb47-4"><a href="vectors_arrays_series.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb47-5"><a href="vectors_arrays_series.html#cb47-5" aria-hidden="true" tabindex="-1"></a>np.inf<span class="op">/</span>np.inf</span>
+<span id="cb47-6"><a href="vectors_arrays_series.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co">## nan</span></span>
+<span id="cb47-7"><a href="vectors_arrays_series.html#cb47-7" aria-hidden="true" tabindex="-1"></a>np.isnan(np.nan)</span>
+<span id="cb47-8"><a href="vectors_arrays_series.html#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co">## True</span></span></code></pre></div>
+<p>“NA” is short for “not available.” Missing data is a fact of life in data science. Observations are often missing in data sets, introduced after joining/merging data sets together (more on this in section <a href="reshaping-and-combining-data-sets.html#merging-or-joining-data-sets">12.3</a>), or arise from calculations involving underflow and overflow. There are many techniques designed to estimate quantities in the presence of missing data. When you code them up, you’ll need to make sure you deal with <code>NA</code>s properly.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="vectors_arrays_series.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb48-2"><a href="vectors_arrays_series.html#cb48-2" aria-hidden="true" tabindex="-1"></a>babyData <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">9</span>,<span class="cn">NA</span>,<span class="dv">21</span>)</span>
+<span id="cb48-3"><a href="vectors_arrays_series.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="cn">NA</span> <span class="sc">==</span> <span class="cn">TRUE</span> </span>
+<span id="cb48-4"><a href="vectors_arrays_series.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] NA</span></span>
+<span id="cb48-5"><a href="vectors_arrays_series.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(babyData)</span>
+<span id="cb48-6"><a href="vectors_arrays_series.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE FALSE FALSE  TRUE FALSE</span></span>
+<span id="cb48-7"><a href="vectors_arrays_series.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="cn">NA</span>)</span>
+<span id="cb48-8"><a href="vectors_arrays_series.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;logical&quot;</span></span></code></pre></div>
+<p>Unfortunately, Python’s support of an <code>NA</code>-like object is more limited. There is no <code>NA</code> object in base Python. And often <code>NaN</code>s will appear in place of an <code>NA</code>. There are a few useful tools, though. The Numpy library offers <a href="https://numpy.org/devdocs/reference/maskedarray.html">“masked arrays”</a>, for instance.</p>
+<p>Also, as of version <code>1.0.0</code>, the <a href="https://pandas.pydata.org/docs/user_guide/index.html#user-guide">pandas library</a> has an experimental <code>pd.NA</code> object. However, they <a href="https://pandas.pydata.org/pandas-docs/dev/user_guide/missing_data.html#missing-data-na">warn</a> that “the behaviour of <code>pd.NA</code> can still change without warning.”</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="vectors_arrays_series.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb49-2"><a href="vectors_arrays_series.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy.ma <span class="im">as</span> ma</span>
+<span id="cb49-3"><a href="vectors_arrays_series.html#cb49-3" aria-hidden="true" tabindex="-1"></a>baby_data <span class="op">=</span> ma.array([<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">9</span>,<span class="op">-</span><span class="dv">9999</span>, <span class="dv">21</span>]) <span class="co"># -9999 &quot;stands for&quot; missing</span></span>
+<span id="cb49-4"><a href="vectors_arrays_series.html#cb49-4" aria-hidden="true" tabindex="-1"></a>baby_data[<span class="dv">3</span>] <span class="op">=</span> ma.masked</span>
+<span id="cb49-5"><a href="vectors_arrays_series.html#cb49-5" aria-hidden="true" tabindex="-1"></a>np.average(baby_data)</span>
+<span id="cb49-6"><a href="vectors_arrays_series.html#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 7.25</span></span></code></pre></div>
+<div class="rmd-caution">
+<p>Be careful of using extreme values to stand in for what should be an <code>NA</code>. Be aware that some data providers will follow this strategy. I recommend that you avoid it yourself. Failing to represent a missing value correctly would lead to extremely wrong calculations!</p>
+</div>
+</div>
+</div>
+<div id="an-introduction-to-regular-expressions" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> An Introduction to Regular Expressions<a href="vectors_arrays_series.html#an-introduction-to-regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have already talked a little about how to work with text data in this book. Regarding Python, section <a href="vectors_arrays_series.html#vectorization-in-python">3.4</a> mentioned that Pandas <code>Series</code> objects have a <a href="https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods"><code>.str</code> accessor attribute</a> that has plenty of special methods that will work on string data. The same tools can be used whether or not these <code>Series</code> objects are contained in a Pandas <code>DataFrame</code>.</p>
+<p>Regarding R, <code>character</code> <code>vector</code>s were first mentioned in section <a href="vectors_arrays_series.html#overview-of-r">3.1</a>. There are many functions that operate on these, too, regardless of whether they are held in a <code>data.frame</code>. The functions might be a little harder to find because they aren’t methods, so pressing <code>&lt;Tab&gt;</code> and using your GUI’s autocomplete feature doesn’t reveal them as easily.</p>
+<p>Suppose you’re interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there’s probably a function for it.</p>
+<p>Notice what all of these tasks have in common–they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase “a”s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this section is primarily concerned with discussing <strong>regular expressions,</strong> which are a tool that help you describe the patterns in text <span class="citation">(<a href="#ref-rfords" role="doc-biblioref">Hadley Wickham and Grolemund 2017</a>)</span> <span class="citation">(<a href="#ref-pythonregexprs" role="doc-biblioref">López 2014</a>)</span>.</p>
+<div id="literal-characters-versus-metacharacters" class="section level3 hasAnchor" number="3.9.1">
+<h3><span class="header-section-number">3.9.1</span> Literal Characters versus Metacharacters<a href="vectors_arrays_series.html#literal-characters-versus-metacharacters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Every character in a regular expression is interpreted in one of two ways. Either it is interpreted as a</p>
+<ol style="list-style-type: decimal">
+<li>literal character, or as a</li>
+<li>metacharacter.</li>
+</ol>
+<p>If it is a literal character, then the character is the <em>literal</em> pattern. For example, in the regular expression “e”, the character “e” has a literal interpretation. If you seek to capitalize all instances of “e” in the following phrase, you can do it pretty easily. As long as you know which function performs find-and-replace, you’re good. The pattern is trivial to specify.</p>
+<p>On the other hand, if I asked you to remove <code>$</code>s from price or salary data, you might have a little more difficulty. This is because <code>$</code> is a <em>metacharacter</em> in regular expressions, and so it has a special meaning.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> In the examples below, if <code>$</code> is interpreted as a regular expression, the pattern will not be found at all, despite the prevalence of <em>literal</em> dollar signs.</p>
+<p>There are a few functions in R that perform find-and-replace, but in this case, I use <code>gsub()</code>. In Pandas, I can use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html"><code>.str.replace()</code></a>, to do this. Here are the examples that find patterns that are described by literal characters.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="vectors_arrays_series.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb50-2"><a href="vectors_arrays_series.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;e&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;E&quot;</span>, </span>
+<span id="cb50-3"><a href="vectors_arrays_series.html#cb50-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="st">&quot;I don&#39;t need a regex for this!&quot;</span>)</span>
+<span id="cb50-4"><a href="vectors_arrays_series.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;I don&#39;t nEEd a rEgEx for this!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="vectors_arrays_series.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb51-2"><a href="vectors_arrays_series.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb51-3"><a href="vectors_arrays_series.html#cb51-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">&quot;I don&#39;t need a regex for this!&quot;</span>])</span>
+<span id="cb51-4"><a href="vectors_arrays_series.html#cb51-4" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;e&quot;</span>,repl<span class="op">=</span><span class="st">&quot;E&quot;</span>)</span>
+<span id="cb51-5"><a href="vectors_arrays_series.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    I don&#39;t nEEd a rEgEx for this!</span></span>
+<span id="cb51-6"><a href="vectors_arrays_series.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
+<p>On the other hand, here are a few examples that remove dollar signs. We generally have two options to recognize symbols that happen to be metacharacters.</p>
+<ol style="list-style-type: decimal">
+<li>We can <em>escape</em> the dollar sign. That means you need to put a backslash (i.e. <code>\</code>) before the dollar sign. The backslash is a metacharacter looks at the character coming after it, and it either removes the special meaning from a metacharacter, or adds special meaning to a literal character.</li>
+<li>Alternatively, we can tell the function to ignore regular expressions. <code>gsub()</code> can take <code>fixed=TRUE</code>, and <code>.str.replace()</code> can take <code>regex=False</code>.</li>
+</ol>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="vectors_arrays_series.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Python</span></span>
+<span id="cb52-2"><a href="vectors_arrays_series.html#cb52-2" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;$100, $200&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;$&quot;</span>,repl<span class="op">=</span><span class="st">&quot;&quot;</span>,regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb52-3"><a href="vectors_arrays_series.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    100, 200</span></span>
+<span id="cb52-4"><a href="vectors_arrays_series.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span>
+<span id="cb52-5"><a href="vectors_arrays_series.html#cb52-5" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;$100, $200&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;\$&quot;</span>,repl<span class="op">=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb52-6"><a href="vectors_arrays_series.html#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    100, 200</span></span>
+<span id="cb52-7"><a href="vectors_arrays_series.html#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="vectors_arrays_series.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in R</span></span>
+<span id="cb53-2"><a href="vectors_arrays_series.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;$&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">fixed=</span><span class="cn">TRUE</span>)</span>
+<span id="cb53-3"><a href="vectors_arrays_series.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;100, 200&quot;</span></span>
+<span id="cb53-4"><a href="vectors_arrays_series.html#cb53-4" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(<span class="fu">c</span>(<span class="st">&quot;$100, $200&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">$&quot;</span>)</span>
+<span id="cb53-5"><a href="vectors_arrays_series.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;100, 200&quot;</span></span></code></pre></div>
+</div>
+<div id="the-trouble-with-backslashes-escape-sequences" class="section level3 hasAnchor" number="3.9.2">
+<h3><span class="header-section-number">3.9.2</span> The Trouble With Backslashes: Escape Sequences<a href="vectors_arrays_series.html#the-trouble-with-backslashes-escape-sequences" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You might have noticed above and gotten confused–sometimes in Python and in R, we need <em>two</em> backslashes instead of <em>one</em>. This is because backslashes have another purpose that can complicate our using them to escape metacharacters. They also help us write untypeable characters, also known as <strong>escape sequences</strong>. We need to be able to do this even if we aren’t using regular expressions.</p>
+<p>For instance, consider the way we type the “newline” character. Even though it is understood by the computer as one character, it takes us two keystrokes to write it with our keyboard. <code>\</code> is one character, and <code>n</code> is another, but together they are one!</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="vectors_arrays_series.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="co">#in R</span></span>
+<span id="cb54-2"><a href="vectors_arrays_series.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="vectors_arrays_series.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="co">#in Python</span></span>
+<span id="cb55-2"><a href="vectors_arrays_series.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 1</span></span></code></pre></div>
+<p><code>str</code>s in Python and <code>character</code> <code>vectors</code> in R will look for these combinations by default. When we specify regular expressions with strings, the backslashes will be used first for this purpose. Their regular expression purpose is a second priority.</p>
+<p>The reason we used <code>\\$</code> in the above example is to escape the second backslash. <code>\$</code> is not a special character, but Python and R will handle it differently. Python will not recognize it, and it won’t complain that it didn’t. On the other hand, R will throw an error that it can’t recognize it.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="vectors_arrays_series.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="st">&#39;\$&#39;</span>) <span class="co"># in Python, not special</span></span>
+<span id="cb56-2"><a href="vectors_arrays_series.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="vectors_arrays_series.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">&#39;\$&#39;</span>) <span class="co"># R gets confused</span></span>
+<span id="cb57-2"><a href="vectors_arrays_series.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: &#39;\$&#39; is an unrecognized escape in character string starting &quot;&#39;\$&quot;</span></span></code></pre></div>
+<p>There is another way to deal with this issue–<strong>raw strings!</strong> Raw strings make life easier because they do not interpret backslashes as the beginning of escape sequences. You can make them in R and Python by putting an “r” in front of the quotation marks. However, it is slightly more complicated in R because you need a delimiter pair inside the quotation marks–for more information type <code>?Quotes</code> in your R console.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="vectors_arrays_series.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(<span class="vs">r&#39;\n&#39;</span>) <span class="co"># in Python </span></span>
+<span id="cb58-2"><a href="vectors_arrays_series.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="vectors_arrays_series.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(r<span class="st">&#39;{\$}&#39;</span>) <span class="co"># in R</span></span>
+<span id="cb59-2"><a href="vectors_arrays_series.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+</div>
+<div id="more-examples-of-using-regular-expressions" class="section level3 hasAnchor" number="3.9.3">
+<h3><span class="header-section-number">3.9.3</span> More Examples of Using Regular Expressions<a href="vectors_arrays_series.html#more-examples-of-using-regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Regular expressions that match many different types of characters are often very useful–these are called <strong>character classes.</strong> For example, <code>.</code> represents any character except a newline, <code>\d</code> represents any digit, and <code>\s</code> represents any whitespace character. You can sometimes capitalize the letters in the regular expression to get the opposite pattern.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="vectors_arrays_series.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anonymize phone numbers in R</span></span>
+<span id="cb60-2"><a href="vectors_arrays_series.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> r<span class="st">&quot;{\d}&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;X&quot;</span>, <span class="at">x =</span> <span class="st">&quot;(202)555-0191&quot;</span>)</span>
+<span id="cb60-3"><a href="vectors_arrays_series.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(XXX)XXX-XXXX&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="vectors_arrays_series.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove everything that isn&#39;t a number in Python</span></span>
+<span id="cb61-2"><a href="vectors_arrays_series.html#cb61-2" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;$100&quot;</span>]).<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;\D&quot;</span>,repl<span class="op">=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb61-3"><a href="vectors_arrays_series.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    100</span></span>
+<span id="cb61-4"><a href="vectors_arrays_series.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
+<p>Many character classes feature an opening and closing square brackets. For instance, <code>[1-5]</code> matches any digit between <span class="math inline">\(1\)</span> and <span class="math inline">\(5\)</span> (inclusive), <code>[aeiouy]</code> matches any lowercase vowel, and <code>[\^\-]</code> matches either <code>^</code> or <code>-</code> (we had to escape these two metacharacters because we are only interested in the literal pattern).</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="vectors_arrays_series.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove vowels in R</span></span>
+<span id="cb62-2"><a href="vectors_arrays_series.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;[aeiouy]&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb62-3"><a href="vectors_arrays_series.html#cb62-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="st">&quot;Can you still read this?&quot;</span>)</span>
+<span id="cb62-4"><a href="vectors_arrays_series.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Cn  stll rd ths?&quot;</span></span></code></pre></div>
+<p>Concatenating two patterns, one after another, forms a more specific pattern to be matched.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="vectors_arrays_series.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert date formats in Python</span></span>
+<span id="cb63-2"><a href="vectors_arrays_series.html#cb63-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">&quot;2021-10-23&quot;</span>,<span class="st">&quot;2021:10:23&quot;</span>])</span>
+<span id="cb63-3"><a href="vectors_arrays_series.html#cb63-3" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.replace(pat<span class="op">=</span><span class="st">&quot;[:\-]&quot;</span>,repl<span class="op">=</span><span class="st">&quot;/&quot;</span>)</span>
+<span id="cb63-4"><a href="vectors_arrays_series.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    2021/10/23</span></span>
+<span id="cb63-5"><a href="vectors_arrays_series.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    2021/10/23</span></span>
+<span id="cb63-6"><a href="vectors_arrays_series.html#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: object</span></span></code></pre></div>
+<p>If you would like one pattern or another to appear, you can use the <strong>alternation operator</strong> <code>|</code>.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="vectors_arrays_series.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one or the other in Python</span></span>
+<span id="cb64-2"><a href="vectors_arrays_series.html#cb64-2" aria-hidden="true" tabindex="-1"></a>pd.Series([<span class="st">&quot;this&quot;</span>,<span class="st">&quot;that&quot;</span>]).<span class="bu">str</span>.contains(pat<span class="op">=</span><span class="st">&quot;this|that&quot;</span>)</span>
+<span id="cb64-3"><a href="vectors_arrays_series.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    True</span></span>
+<span id="cb64-4"><a href="vectors_arrays_series.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    True</span></span>
+<span id="cb64-5"><a href="vectors_arrays_series.html#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: bool</span></span></code></pre></div>
+<p>In addition to concatenation, alternation, and grouping, there are more general ways to <em>quantify</em> how many times the desired pattern will appear. <code>?</code> means zero or one time, <code>*</code> means zero or more, <code>+</code> will mean one or more, and there are a variety of ways to be even more specific with curly braces (e.g. <code>{3,17}</code> means anywhere from three to seventeen times).</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="vectors_arrays_series.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># detect double o&#39;s in R</span></span>
+<span id="cb65-2"><a href="vectors_arrays_series.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grepl</span>(<span class="at">pattern =</span> <span class="st">&quot;o{2}&quot;</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;look&quot;</span>,<span class="st">&quot;book&quot;</span>,<span class="st">&quot;box&quot;</span>, <span class="st">&quot;hellooo&quot;</span>))</span>
+<span id="cb65-3"><a href="vectors_arrays_series.html#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  TRUE  TRUE FALSE  TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="vectors_arrays_series.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># detects phone number formats in Python</span></span>
+<span id="cb66-2"><a href="vectors_arrays_series.html#cb66-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">&quot;(202)555-0191&quot;</span>,<span class="st">&quot;202-555-0191&quot;</span>])</span>
+<span id="cb66-3"><a href="vectors_arrays_series.html#cb66-3" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.contains(pat<span class="op">=</span><span class="vs">r&quot;\(\d</span><span class="sc">{3}</span><span class="vs">\)\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{4}</span><span class="vs">&quot;</span>)</span>
+<span id="cb66-4"><a href="vectors_arrays_series.html#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     True</span></span>
+<span id="cb66-5"><a href="vectors_arrays_series.html#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    False</span></span>
+<span id="cb66-6"><a href="vectors_arrays_series.html#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: bool</span></span></code></pre></div>
+<p>Notice in the double “o” example, the word with three matched. To describe that not being desirable requires the ability to <em>look ahead</em> of the match, to the next character, and evaluate that. You can look ahead, or behind, and make assertions about what patterns are required or disallowed.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Lookaround Regex</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>(?=pattern)</code></td>
+<td>Positive looking ahead for <code>pattern</code></td>
+</tr>
+<tr class="even">
+<td><code>(?!pattern)</code></td>
+<td>Negative looking ahead for <code>pattern</code></td>
+</tr>
+<tr class="odd">
+<td><code>(?&lt;=pattern)</code></td>
+<td>Positive looking behind for <code>pattern</code></td>
+</tr>
+<tr class="even">
+<td><code>(?&lt;!pattern)</code></td>
+<td>Negative looking behind for <code>pattern</code></td>
+</tr>
+</tbody>
+</table>
+<p>After <code>oo</code> we specify <code>(?!o)</code> to disallow a third, trailing <code>o</code>.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="vectors_arrays_series.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exactly two &quot;o&quot;s in Python?</span></span>
+<span id="cb67-2"><a href="vectors_arrays_series.html#cb67-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">&quot;look&quot;</span>,<span class="st">&quot;book&quot;</span>,<span class="st">&quot;box&quot;</span>, <span class="st">&quot;hellooo&quot;</span>])</span>
+<span id="cb67-3"><a href="vectors_arrays_series.html#cb67-3" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.contains(pat<span class="op">=</span><span class="st">&quot;oo(?!o)&quot;</span>)</span>
+<span id="cb67-4"><a href="vectors_arrays_series.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0     True</span></span>
+<span id="cb67-5"><a href="vectors_arrays_series.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1     True</span></span>
+<span id="cb67-6"><a href="vectors_arrays_series.html#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    False</span></span>
+<span id="cb67-7"><a href="vectors_arrays_series.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 3     True</span></span>
+<span id="cb67-8"><a href="vectors_arrays_series.html#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="co">## dtype: bool</span></span></code></pre></div>
+<p>However, this does not successfully remove <code>"hellooo"</code> because it will match on the <em>last</em> two “o”s of the word. To prevent this, we can prepend a <code>(?&lt;!o)</code>, which disallows a leading “o”, as well. In R, we also have to specify <code>perl=TRUE</code> to use Perl-compatible regular expressions.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="vectors_arrays_series.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exactly two &quot;o&quot;s in R</span></span>
+<span id="cb68-2"><a href="vectors_arrays_series.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="at">pattern =</span> <span class="st">&quot;(?&lt;!o)oo(?!o)&quot;</span>, </span>
+<span id="cb68-3"><a href="vectors_arrays_series.html#cb68-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;look&quot;</span>,<span class="st">&quot;book&quot;</span>,<span class="st">&quot;box&quot;</span>, <span class="st">&quot;hellooo&quot;</span>), <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb68-4"><a href="vectors_arrays_series.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 2</span></span></code></pre></div>
+<p>We also mention <em>anchoring.</em> If you only want to find a pattern at the beginning of text, use <code>^</code>. If you only want to find a pattern at the end of text, use <code>$</code>. Below we use <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html"><code>.str.extract()</code></a>, whose documentation makes reference to <em>capture groups.</em> Capture groups are just regular expressions grouped inside parentheses (e.g. <code>(this)</code>).</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="vectors_arrays_series.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract emails with Pandas</span></span>
+<span id="cb69-2"><a href="vectors_arrays_series.html#cb69-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">&quot;my email is fake@aol.com&quot;</span>, <span class="st">&quot;fake2@aol.com is hidden&quot;</span>])</span>
+<span id="cb69-3"><a href="vectors_arrays_series.html#cb69-3" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.extract(<span class="vs">r&quot;.( [a-z]+@[a-z]+\.com$)&quot;</span>)</span>
+<span id="cb69-4"><a href="vectors_arrays_series.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co">##                0</span></span>
+<span id="cb69-5"><a href="vectors_arrays_series.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0   fake@aol.com</span></span>
+<span id="cb69-6"><a href="vectors_arrays_series.html#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1            NaN</span></span></code></pre></div>
+</div>
+</div>
+<div id="exercises-1" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> Exercises<a href="vectors_arrays_series.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-questions-1" class="section level3 hasAnchor" number="3.10.1">
+<h3><span class="header-section-number">3.10.1</span> R Questions<a href="vectors_arrays_series.html#r-questions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Let’s flip some coins! Generate a thousand flips of a fair coin. Use <code>rbinom</code>, and let heads be coded as <code>1</code> and tails coded as <code>0</code>.</p>
+<ul>
+<li>Assign the thousand raw coin flips to a variable <code>flips</code>. Make sure the elements are integers, and make sure you flip a “fair” coin (<span class="math inline">\(p=.5\)</span>).</li>
+<li>Create a length <code>1000</code> <code>logical</code> <code>vector</code> called <code>isHeads</code>. Whenever you get a heads, make sure the corresponding element is <code>TRUE</code> and <code>FALSE</code> otherwise.</li>
+<li>Create a variable called <code>numHeads</code> by tallying up the number of heads.</li>
+<li>Calculate the percent of time that the number changes in <code>flips</code>. Assign your number to <code>acceptanceRate</code>. Try to write only one line of code to do this.</li>
+</ul></li>
+<li><p>Compute the elements of the tenth order Taylor approximation to <span class="math inline">\(\exp(3)\)</span> and store them in <code>taylorElems</code>. Do not sum them. Use only one expression, and do not use any loop. The approximation is,<br />
+<span class="math display">\[
+1 + 3 + 3^2/2! + 3^3/3! + \cdots 3^{10}/10!
+\]</span>
+You want to store each of those eleven numbers separately in a <code>numeric</code> <code>vector</code>.</p></li>
+<li><p>Do the following.</p>
+<ul>
+<li>Create a vector called <code>nums</code> that contains all consecutive integers from <span class="math inline">\(-100\)</span> to <span class="math inline">\(100\)</span>.</li>
+<li>Create a <code>logical</code> <code>vector</code> that has the same length as the above, and contains <code>TRUE</code> whenever an element of the above is even, and <code>FALSE</code> otherwise. Call it <code>myLogicals</code>.</li>
+<li>Assign the total number of <code>TRUE</code>s to <code>totalEven</code>.</li>
+<li>Create a <code>vector</code> called <code>evens</code> of all even numbers from the above <code>vector</code>.</li>
+<li>Create a <code>vector</code> called <code>reverse</code> that holds the reversed elements of <code>nums</code>.</li>
+</ul></li>
+<li><p>Let’s say we wanted to calculate the following sum <span class="math inline">\(\sum_{i=1}^N x_i\)</span>. If <span class="math inline">\(N\)</span> is large, or most of the <span class="math inline">\(x_i\)</span>s are large, then we might bump up against the largest allowable number. This is the problem of <em>overflow</em>. The biggest integer and biggest floating point can be recovered by typing <code>.Machine$integer.max</code> and <code>.Machine$double.xmax</code>, respectively.</p>
+<ul>
+<li>Assign <code>sumThese</code> to <code>exp(rep(1000,10))</code>. Are they finite? Can you sum them? If everything is all good, assign <code>TRUE</code> to <code>allGood</code>.</li>
+<li>Theoretically, is the logarithm of the sum less than <code>.Machine$double.xmax</code>? Assign <code>TRUE</code> or <code>FALSE</code> to <code>noOverflowIssue</code></li>
+<li>Assign the <em>naive</em> log-sum of these to <code>naiveLogSum</code>. Is the naive log sum finite?</li>
+<li>Compute <code>betterSum</code>, one that doesn’t overflow, using the <em>log-sum-exp</em> trick.</li>
+</ul>
+<p><span class="math display">\[
+\log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m =
+\]</span>
+<span class="math inline">\(m\)</span> is usually chosen to be <span class="math inline">\(\max_i \log x_i\)</span>. This is the same formula as above, which is nice. You can use the same code to combat both overflow and underflow.</p>
+<ul>
+<li>If you’re writing code, and you have a bunch of very large numbers, is it better to store those numbers, or store the logarithm of those numbers? Assign your answer to <code>whichBetter</code>. Use either the phrase <code>"logs"</code> or <code>"nologs"</code>.</li>
+</ul></li>
+<li><p>Say you have a <code>vector</code> of prices of some financial asset:</p></li>
+</ol>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="vectors_arrays_series.html#cb70-1" aria-hidden="true" tabindex="-1"></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">100.10</span>, <span class="fl">95.98</span>, <span class="fl">100.01</span>, <span class="fl">99.87</span>)</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use the natural logarithm and convert this vector into a vector of <em>log returns</em>. Call the variable <code>logReturns</code>. If <span class="math inline">\(p_t\)</span> is the price at time <span class="math inline">\(t\)</span>, the log return ending at time <span class="math inline">\(t\)</span> is
+<span class="math display">\[\begin{equation}
+r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
+\end{equation}\]</span></p></li>
+<li><p>Do the same for <em>arithmetic returns</em>. These are regular percent changes if you scale by <span class="math inline">\(100\)</span>. Call the variable <code>arithReturns</code>. The mathematical formula you need is
+<span class="math display">\[\begin{equation}
+a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100
+\end{equation}\]</span></p></li>
+</ol>
+<ol start="6" style="list-style-type: decimal">
+<li>Consider the <strong>mixture density</strong> <span class="math inline">\(f(y) = \int f(y \mid x) f(x) dx\)</span> where</li>
+</ol>
+<p><span class="math display">\[\begin{equation}
+Y \mid X = x \sim \text{Normal}(0, x^2)
+\end{equation}\]</span>
+and</p>
+<p><span class="math display">\[\begin{equation}
+X \sim \text{half-Cauchy}(0, 1).
+\end{equation}\]</span>
+This distribution is a special case of a prior distribution that is used in Bayesian statistics <span class="citation">(<a href="#ref-horseshoe" role="doc-biblioref">Carvalho, Polson, and Scott 2009</a>)</span>. Note that the second parameter of the Normal distribution is its variance, not its standard deviation.</p>
+<p>Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:</p>
+<p><span class="math display">\[\begin{equation}
+\mathbb{P}[|Y| &gt; 1] = \int_{y : |y| &gt; 1} f(y)dy = \int_{y : |y| &gt; 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
+\end{equation}\]</span></p>
+<p>The following steps will demonstrate how you can use the <strong>Monte-Carlo</strong> <span class="citation">(<a href="#ref-monte-carlo-stat-methods" role="doc-biblioref">Robert and Casella 2005</a>)</span> method to approximate this probability.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Simulate <span class="math inline">\(X_1, \ldots, X_{5000}\)</span> from a <span class="math inline">\(\text{half-Cauchy}(0, 1)\)</span> and call these samples <code>xSamps</code>. Hint: you can simulate from a <span class="math inline">\(t\)</span> distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.</p></li>
+<li><p>Simulate <span class="math inline">\(Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}\)</span> and call the samples <code>ySamps</code>.</p></li>
+<li><p>Calculate the approximate probability using <code>ySamps</code> and call it <code>approxProbDev1</code>.</p></li>
+<li><p>Why is simply “ignoring” <code>xSamps</code> (i.e. not using it in the averaging part of the computation), the samples you condition on, “equivalent” to “integrating out <span class="math inline">\(x\)</span>”? Store a string response as a length <span class="math inline">\(1\)</span> character vector called <code>integratingOutResp</code>.</p></li>
+<li><p>Calculate another <strong>Rao-Blackwellized</strong> Monte Carlo estimate of <span class="math inline">\(\mathbb{P}[|Y| &gt; 1]\)</span> from <code>xSamps</code>. Call it <code>approxProbDev2</code>. Hint: <span class="math inline">\(\mathbb{P}[|Y| &gt; 1] = \mathbb{E}[\mathbb{P}(|Y| &gt; 1 \mid X) ]\)</span>. Calculate <span class="math inline">\(\mathbb{P}(|Y| &gt; 1 \mid X=x)\)</span> with pencil and paper, notice it is a function in <span class="math inline">\(x\)</span>, apply that function to each of <code>xSamps</code>, and average all of it together.</p></li>
+<li><p>Are you able to calculate an exact solution to <span class="math inline">\(\mathbb{P}[|Y| &gt; 1]\)</span>?</p></li>
+</ol>
+<ol start="7" style="list-style-type: decimal">
+<li>Store the ordered uppercase letters of the alphabet in a length <span class="math inline">\(26\)</span> <code>character</code> <code>vector</code> called <code>myUpcaseLetters</code>. Do not hardcode this. Use a function, along with the variable <code>letters</code>.</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create a new vector called <code>withReplacements</code> that’s the same as the previous <code>vector</code>, but replace all vowels with <code>"---"</code>. Again, do not hardcode this. Find a function that searches for patterns and performs a replacement whenever that pattern is found.</p></li>
+<li><p>Create a length <span class="math inline">\(26\)</span> logical vector that is <code>TRUE</code> whenever an element of <code>letters</code> is a consonant, and <code>FALSE</code> everywhere else. Call it <code>consonant</code>.</p></li>
+</ol>
+</div>
+<div id="python-questions-1" class="section level3 hasAnchor" number="3.10.2">
+<h3><span class="header-section-number">3.10.2</span> Python Questions<a href="vectors_arrays_series.html#python-questions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Let’s flip some coins (again)! Generate a thousand flips of a fair coin. Use <code>np.random.binomial</code>, and let heads be coded as <code>1</code> and tails coded as <code>0</code>.</p>
+<ul>
+<li>Assign the thousand raw coin flips to a variable <code>flips</code>. Make sure the elements are integers, and make sure you flip a “fair” coin (<span class="math inline">\(p=.5\)</span>).</li>
+<li>Create a length <code>1000</code> <code>list</code> of <code>bool</code>s called <code>is_heads</code>. Whenever you get a heads, make sure the corresponding element is <code>True</code> and <code>False</code> otherwise.</li>
+<li>Create a variable called <code>num_heads</code> by tallying up the number of heads.</li>
+<li>Calculate the percent of time that the number changes in <code>flips</code>. Assign your number to <code>acceptance_rate</code>. Try to write only one line of code to do this.</li>
+</ul></li>
+<li><p>Create a Numpy <code>array</code> containing the numbers <span class="math inline">\(1/2, 1/4, 1/8, \ldots, 1/1024\)</span> Make sure to call it <code>my_array</code>.</p></li>
+<li><p>Do the following.</p>
+<ul>
+<li>Create a <code>np.array</code> called <code>nums</code> that contains one hundred equally-spaced numbers starting from <span class="math inline">\(-100\)</span> and going to <span class="math inline">\(100\)</span> (inclusive).</li>
+<li>Create a <code>bool</code> <code>np.array</code> that has the same length as the above, and contains <code>TRUE</code> whenever an element of the above is less than ten units away from <span class="math inline">\(0\)</span>, and <code>FALSE</code> otherwise. Call it <code>my_logicals</code>.</li>
+<li>Assign the total number of <code>True</code>s to <code>total_close</code>.</li>
+<li>Create a <code>np.array</code> called <code>evens</code> of all even numbers from the above <code>np.array</code> (even numbers are necessarily integers).</li>
+<li>Create a <code>np.array</code> called <code>reverse</code> that holds the reversed elements of <code>nums</code>.</li>
+</ul></li>
+<li><p>Let’s say we wanted to calculate the following sum <span class="math inline">\(\sum_{i=1}^N x_i\)</span>. We run into problems when this sum is close to <span class="math inline">\(0\)</span>, too. This is the problem of <em>underflow</em>. The smallest positive floating point can be recovered by typing <code>np.nextafter(np.float64(0),np.float64(1))</code>.</p>
+<ul>
+<li>Assign <code>sum_these</code> to the length ten array <span class="math inline">\((e^{-1000}, \ldots, e^{-1000})\)</span>. Use <code>np.exp(np.repeat(-1000,10))</code>. Are the elements nonzero? Can you sum them? Is the sum correct? If everything is all good, assign <code>True</code> to <code>all_good</code>.</li>
+<li>Theoretically, for which range of positive numbers is the logarithm of the number farther from <span class="math inline">\(0\)</span> than the number itself? Assign the lower bound to <code>lower_bound</code>, and the upper bound to <code>upper_bound</code>. Hint: <code>lower_bound</code> is <span class="math inline">\(0\)</span> because we’re only looking at positive numbers, and because the logarithm is <span class="math inline">\(-\infty\)</span>.</li>
+<li>Assign the <em>naive</em> log-sum of <code>sum_these</code> to <code>naive_log_sum</code>. Is the naive log sum finite on your computer? Should it be?</li>
+<li>Compute <code>better_sum</code>, one that doesn’t underflow, using the <em>log-sum-exp</em> trick. This one should be bounded away from <span class="math inline">\(-\infty\)</span>.</li>
+</ul>
+<p><span class="math display">\[
+\log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m =
+\]</span>
+<span class="math inline">\(m\)</span> is usually chosen to be <span class="math inline">\(\max_i \log x_i\)</span></p>
+<ul>
+<li>If you’re writing code, and you have a bunch of very small positive numbers (e.g. probabilities, densities, etc.), is it better to store those small numbers, or store the logarithm of those numbers? Assign your answer to <code>which_better</code>. Use either the phrase <code>"logs"</code> or <code>"nologs"</code>.</li>
+</ul></li>
+<li><p>Use <code>pd.read_csv</code> to correctly read in <code>"2013-10_Citi_Bike_trip_data_20K.csv"</code> as a data frame called <code>my_df</code>. Make sure to read <code>autograding_tips.html</code>.</p>
+<ul>
+<li><p>Extract the <code>"starttime"</code> column into a separate <code>Series</code> called <code>s_times</code>.</p></li>
+<li><p>Extract date strings of those elements into a <code>Series</code> called <code>date_strings</code>.</p></li>
+<li><p>Extract time strings of those elements into a <code>Series</code> called <code>time_strings</code>.</p></li>
+</ul></li>
+<li><p>We will make use of the <strong>Monte Carlo</strong> method below. It is a technique to approximate expectations and probabilities. If <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(X_1, \ldots, X_n\)</span> is a random sample drawn from the distribution of interest, then
+<span class="math display">\[\begin{equation}
+\mathbb{P}(X &gt; 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i &gt; 6).
+\end{equation}\]</span>
+If you haven’t seen an <strong>indicator function</strong> before, it is defined as</p></li>
+</ol>
+<p><span class="math display">\[\begin{equation}
+\mathbf{1}(X_i &gt; 6)
+=
+\begin{cases}
+1 &amp; X_i &gt; 6 \\
+0 &amp; X_i \le 6
+\end{cases}.
+\end{equation}\]</span></p>
+<p>If you wanted to visualize it, <span class="math inline">\(\mathbf{1}(x &gt; 6)\)</span> looks like this.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-67"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-67-1.png" alt="An Indicator Function" width="50%" />
+<p class="caption">
+Figure 3.1: An Indicator Function
+</p>
+</div>
+<p>So, the sum in this expression is just a count of the number of elements that are greater than <span class="math inline">\(6\)</span>.</p>
+<pre><code>+ Evaluate exactly the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$. Assign it to the variable `exact_exceedance_prob` in Python.
+
++ Simulate $1e3$ times from a standard normal distribution (mean 0 and variance 1). Call the samples `stand_norm_samps`.
+
++ Calculate a Monte Carlo estimate of $\mathbb{P}(X &gt; 6)$ from these samples. Call it `approx_exceedance_prob1`.
+
++ Simulate $1e3$ times from a normal distribution with mean $5$ and standard deviation $6$. Call the samples `norm_samps`. Don&#39;t use the old samples in any way.
+
++ Calculate a Monte Carlo estimate of $\mathbb{P}(X &gt; 6)$ from these new `norm_samps`. Call it `approx_exceedance_prob2`.</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Alternatively, we can approximate expectations using the same technique as above. If <span class="math inline">\(\mathbb{E}[g(X)]\)</span> exists, <span class="math inline">\(n\)</span> is a large number, and <span class="math inline">\(W_1, \ldots, W_n\)</span> is a random sample drawn from the distribution of interest, then</li>
+</ol>
+<p><span class="math display">\[\begin{equation}
+\mathbb{E}[g(W)] \approx \frac{1}{n}\sum_{i=1}^n g(W_i).
+\end{equation}\]</span></p>
+<p>Here’s a new distribution. It is a <strong>mixture distribution</strong>, specifically a <strong>finite mixture of normal distributions</strong>: <span class="math inline">\(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\)</span> where</p>
+<p><span class="math display">\[\begin{equation}
+Y \mid X=0 \sim \text{Normal}(0, 2) \\
+Y \mid X=1 \sim \text{Normal}(10, 2)
+\end{equation}\]</span>
+and</p>
+<p><span class="math display">\[\begin{equation}
+X \sim \text{Bernoulli}(.5).
+\end{equation}\]</span></p>
+<p>Both <span class="math inline">\(f(y \mid X=0)\)</span> and <span class="math inline">\(f(y \mid X=1)\)</span> are bell-curved, and <span class="math inline">\(f(y)\)</span> looks like this</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
+<img src="r_and_python_book_files/figure-html/unnamed-chunk-68-1.png" alt="The Marginal Density of Y" width="50%" />
+<p class="caption">
+Figure 3.2: The Marginal Density of Y
+</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Evaluate exactly <span class="math inline">\(\mathbb{E}[Y] = \mathbb{E}[ \mathbb{E}(Y \mid X) ]\)</span>. Assign it to the variable <code>exact_mean</code> in Python.</p></li>
+<li><p>Simulate <span class="math inline">\(1e3\)</span> times from the Bernoulli distribution. Call the samples <code>bernoulli_flips</code></p></li>
+<li><p>Simulate <span class="math inline">\(Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}\)</span> and call the samples <code>cond_norm_samps</code>.</p></li>
+<li><p>Calculate a Monte Carlo estimate of <span class="math inline">\(\mathbb{E}[Y]\)</span> from <code>cond_norm_samps</code>. Call it <code>approx_ave_1</code>. Why is simply “ignoring” <code>bernoulli_flips</code>, the samples you condition on, “equivalent” to “integrating them out?”</p></li>
+<li><p>Calculate a <strong>Rao-Blackwellized</strong> Monte Carlo estimate of <span class="math inline">\(\mathbb{E}[Y]\)</span> from <code>bernoulli_flips</code>. Call it <code>approx_ave_2</code>. Hint: <span class="math inline">\(\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]\)</span>. Calculate <span class="math inline">\(\mathbb{E}(Y \mid X_i)\)</span> exactly, and evaluate that function on each <span class="math inline">\(X_i\)</span> sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-horseshoe" class="csl-entry">
+Carvalho, Carlos M., Nicholas G. Polson, and James G. Scott. 2009. <span>“Handling Sparsity via the Horseshoe.”</span> In <em>Proceedings of the Twelth International Conference on Artificial Intelligence and Statistics</em>, edited by David van Dyk and Max Welling, 5:73–80. Proceedings of Machine Learning Research. Hilton Clearwater Beach Resort, Clearwater Beach, Florida USA: PMLR. <a href="https://proceedings.mlr.press/v5/carvalho09a.html">https://proceedings.mlr.press/v5/carvalho09a.html</a>.
+</div>
+<div id="ref-harris2020array" class="csl-entry">
+Harris, Charles R., K. Jarrod Millman, Stéfan J. van der Walt, Ralf Gommers, Pauli Virtanen, David Cournapeau, Eric Wieser, et al. 2020. <span>“Array Programming with <span>NumPy</span>.”</span> <em>Nature</em> 585 (7825): 357–62. <a href="https://doi.org/10.1038/s41586-020-2649-2">https://doi.org/10.1038/s41586-020-2649-2</a>.
+</div>
+<div id="ref-pythonregexprs" class="csl-entry">
+López, Félix. 2014. <em>Mastering Python Regular Expressions : Leverage Regular Expressions in Python Even for the Most Complex Features</em>. Birmingham, UK: Packt Pub.
+</div>
+<div id="ref-monte-carlo-stat-methods" class="csl-entry">
+Robert, Christian P., and George Casella. 2005. <em>Monte Carlo Statistical Methods (Springer Texts in Statistics)</em>. Berlin, Heidelberg: Springer-Verlag.
+</div>
+<div id="ref-rfords" class="csl-entry">
+Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 1st ed. O’Reilly Media, Inc.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>The dollar sign is useful if you only want to find certain patterns that finish a line. It takes the characters preceding it, and says, only look for that pattern if it comes at the end of a string.<a href="vectors_arrays_series.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="basic-types.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="numpy-ndarrays-versus-rs-matrix-and-array-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/tbrown122387/r_and_python_book/edit/master/03-vectors_and_arrays.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

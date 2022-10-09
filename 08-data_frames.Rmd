@@ -262,7 +262,7 @@ This question deals with looking at historical prices of the S\&P500 Index. This
 
   - Read in the data file `"gspc.csv"` as a `data.frame` and call the variable `gspc`.
   - Use [`.set_index()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html) to change the index of `gspc` to its `"Index"` column. Store the new `DataFrame` as `gspc_good_idx`.
-  - Add a column to `gspc_good_idx` called `log_returns`. Calculate them from the column `GSPC.Adjusted`. Make sure to scale them by $100$ and put an `np.nan` in the first element where you don't have a return. 
+  - Recall the formula for *log returns* provided in exercises of chapter \@ref(r-vectors-versus-numpy-arrays-and-pandas-series). Add a column to `gspc_good_idx` called `log_returns`. Calculate them from the column `GSPC.Adjusted`. Make sure to scale them by $100$ and put an `np.nan` in the first element where you don't have a return. 
   - Extract all the returns that are available for the year 2021, and store them as a `Series` called `this_year_returns`.
   - Add a column to `gspc_good_idx` containing the *drawdown* time series. Call this column `drawdown`. To calculate drawdown at a given date, subtract that date's price from the running maximum price that is current at that date. Use only adjusted close prices for this calculation.  
   - Add a column to `gspc_good_idx` containing the percent drawdown time series. Call this column `perc_drawdown`. Use the previous column, but make this number a percent of the corresponding running maximum. 
