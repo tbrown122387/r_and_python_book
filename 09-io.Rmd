@@ -214,6 +214,14 @@ head data/oring_out.csv -n3
 
 Alternatively you may choose to store your data in a **serialized** form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that's usually more memory efficient. 
 
+::: {.rmd-details data-latex=""}
+Recall that a common reason for writing out data is to save your progress. When you want to save your progress, it is important to ask yourself: "is it better to save my progress as a serialized object, or as a raw text file?" 
+
+When making this decision, consider *versatility.* On the one hand, raw text files are more versatile and can be used in more places. On the other hand, versatility is often bug prone. 
+
+For example, suppose you want to save a cleaned up `data.frame`. Are you sure you will remember to store that column of strings as `character` and not a `factor`? Does any code that uses this `data.frame` require that this column be in this format?
+:::
+
 For instance, let's save the object `d` in a file called `oring.rds`. 
 
 ```{r, collapse = TRUE}
