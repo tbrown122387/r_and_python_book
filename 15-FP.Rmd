@@ -76,7 +76,7 @@ myHundredthMean <- mean(myDF[,100])
 You will need one line of code for each column in the data frame! For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
 ::: {.rmd-details data-latex=""}
-"Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).
+"Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET\index{WET}](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET\index{WET}).
 :::
 
 Instead, prefer the use of `sapply()` in this situation. The "s" in `sapply()` stands for "simplified." In this bit of code `mean()` is called on each column of the data frame. `sapply()` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
@@ -223,7 +223,7 @@ Next, `cbind()`ing them all together can be done as follows. `do.call()` will ca
 
 ```{r, collapse = TRUE}
 do.call(cbind, dfs) # DRY! :)
-# cbind(df1,df2,df3,df4) # WET! :(
+# cbind(df1,df2,df3,df4) # WET\index{WET}! :(
 ```
 
 What if we wanted to `merge()` all these data sets together? After all, the `id` column appears to be repeating itself, and some data from `d2` isn't lining up.
