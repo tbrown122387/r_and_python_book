@@ -274,7 +274,7 @@ head data/oring_out2.csv -n3
 
 ### Serialization in Python
 
-Serialization functionality is readily available in Python, just like it is in R. In Python, the [`pickle`](https://docs.python.org/3/library/pickle.html) and `cPickle` libraries\index{libraries} are probably the most commonly used. Serializing objects with these libraries\index{libraries} is known as *pickling* an object. 
+Serialization functionality is readily available in Python, just like it is in R. In Python, the [`pickle`](https://docs.python.org/3/library/pickle.html) and `cPickle` libraries\index{libraries} are probably the most commonly used. Serializing objects with these libraries\index{libraries} is known as *pickling\index{pickling}* an object. 
 
 Pandas has a [`.to_pickle()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_pickle.html) wrapper method attached to every `DataFrame`. Once the pickled object is saved, the file can be read back into Python with [`pd.read_pickle()`](https://pandas.pydata.org/docs/reference/api/pandas.read_pickle.html#pandas.read_pickle). These functions are extremely convenient, because they call all the required `pickle` code and hide a decent amount of complexity. 
 
@@ -288,7 +288,7 @@ d_is_back.head(2)
 ```
 
 ::: {.rmd-caution data-latex=""}
-Unfortunately, `"oring.pickle"` is much larger (1,676 bytes) than the original text file `"o-ring-erosion-only.data"` (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like `d_is_back.to_pickle("data/oring.zip")` it will become smaller. 
+Unfortunately, `"oring.pickle"` is much larger (1,676 bytes) than the original text file `"o-ring-erosion-only.data"` (322 bytes). This is for two reasons. First, the original data set is small, so the overhead of pickling\index{pickling} this object is relatively pronounced, and second, we are not taking advantage of any compression. If you use something like `d_is_back.to_pickle("data/oring.zip")` it will become smaller. 
 ::: 
 
 In Python, unlike in R, it is more difficult to serialize all of the objects you currently have in memory. It is possible, but it will likely require the use of a third-party library. 
