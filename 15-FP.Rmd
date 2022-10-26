@@ -76,7 +76,7 @@ myHundredthMean <- mean(myDF[,100])
 You will need one line of code for each column in the data frame! For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
 ::: {.rmd-details data-latex=""}
-"Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET\index{WET}](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET\index{WET}).
+"Don't repeat yourself" (DRY\index{DRY}) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY\index{DRY} is the opposite of [WET\index{WET}](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET\index{WET}).
 :::
 
 Instead, prefer the use of `sapply()` in this situation. The "s" in `sapply()` stands for "simplified." In this bit of code `mean()` is called on each column of the data frame. `sapply()` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
@@ -199,7 +199,7 @@ Unlike the other examples of functions that take other functions as inputs, `Red
 
 Let's start with an example: "combining" data sets. In section \@ref(reshaping-and-combining-data-sets) we talked about several different ways of combining data sets. We discussed stacking data sets on top of one another with `rbind()` (c.f. subsection \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), stacking them side-by-side with `cbind()` (also in \@ref(stacking-data-sets-and-placing-them-shoulder-to-shoulder)), and intelligently joining them together with `merge()` (c.f. \@ref(merging-or-joining-data-sets)). 
 
-Now consider the task of combining *many* data sets. How can we combine three or more data sets into one? Also, how do we write DRY code and abide by the DRY principle? As the name of the subsection suggests, we can use either `Reduce()` or `do.call()` as a higher-order function. Just like the aforementioned `*apply()` functions, they take in either `cbind()`, `rbind()`, or `merge()` as a function input. Which one do we pick, though? The answer to that question deals with *how many arguments our lower-order function takes.* 
+Now consider the task of combining *many* data sets. How can we combine three or more data sets into one? Also, how do we write DRY\index{DRY} code and abide by the DRY\index{DRY} principle? As the name of the subsection suggests, we can use either `Reduce()` or `do.call()` as a higher-order function. Just like the aforementioned `*apply()` functions, they take in either `cbind()`, `rbind()`, or `merge()` as a function input. Which one do we pick, though? The answer to that question deals with *how many arguments our lower-order function takes.* 
 
 Take a look at the documentation to `rbind()`. Its first argument is `...`, which is the [dot-dot-dot](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Dot_002ddot_002ddot) symbol. This means `rbind()` can take a varying number of `data.frame`s to stack on top of each other. In other words, `rbind()` is **variadic**.
 
@@ -207,7 +207,7 @@ On the other hand, take a look at the documentation of `merge()`. It only takes 
 
 This is the difference between `Reduce()` and `do.call()`. `do.call()` calls a function once on many arguments, so its function must be able to handle many arguments. On the other hand, `Reduce()` calls a binary function many times on pairs of arguments. `Reduce()`'s function argument gets called on the first two elements, then on the first output and the third element, then on the second output and fourth element, and so on. 
 
-Here is an initial example that makes use of four data sets `d1.csv`, `d2.csv`, `d3.csv`, and `d4.csv`. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste `read.csv` calls, but that would violate the DRY principle. Instead, let's use `lapply()` an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
+Here is an initial example that makes use of four data sets `d1.csv`, `d2.csv`, `d3.csv`, and `d4.csv`. To start, ask yourself how we would read all of these in. There is a temptation to copy and paste `read.csv` calls, but that would violate the DRY\index{DRY} principle. Instead, let's use `lapply()` an anonymous function that constructs a file path string, and then uses it to read in the data set the string refers to.
 
 ```{r, collapse = TRUE}
 numDataSets <- 4
@@ -222,7 +222,7 @@ Notice how the above code would only need to be changed by one character if we w
 Next, `cbind()`ing them all together can be done as follows. `do.call()` will call the function only once. `cbind()` takes many arguments at once, so this works. This code is even better than the above code in that if `dfs` becomes longer, or changes at all, *nothing* will need to be changed. 
 
 ```{r, collapse = TRUE}
-do.call(cbind, dfs) # DRY! :)
+do.call(cbind, dfs) # DRY\index{DRY}! :)
 # cbind(df1,df2,df3,df4) # WET\index{WET}! :(
 ```
 
@@ -231,7 +231,7 @@ What if we wanted to `merge()` all these data sets together? After all, the `id`
 ```{r, collapse=TRUE}
 Reduce(merge, dfs)
 ```
-Again, this is very DRY code. Nothing would need to be changed if `dfs` grew. Furthermore, trying to `do.call()` the `merge()` function wouldn't work because it can only take two data sets at a time. 
+Again, this is very DRY\index{DRY} code. Nothing would need to be changed if `dfs` grew. Furthermore, trying to `do.call()` the `merge()` function wouldn't work because it can only take two data sets at a time. 
 
 
 
