@@ -1,4 +1,4 @@
-# R `vector`s versus Numpy `array`s and Pandas' `Series` 
+# R `vector`s versus Numpy `array`s and Pandas' `Series\index{Series}` 
 
 This section is for describing the data types that let us store collections of elements that all **share the same type**. Data is very commonly stored in this fashion, so this section is quite important. Once we have one of these collection objects in a program, we will be interested in learning how to extract and modify different elements in the collection, as well as how to use the entire collection in an efficient calculation.
 
@@ -48,12 +48,12 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
-Another option for storing a homogeneous collection of elements in Python is a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the Pandas library. The benefit of these is that they play nicely with Pandas' data frames (more information about Pandas' data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information ).
+Another option for storing a homogeneous collection of elements in Python is a [`Series\index{Series}` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series\index{Series}.html#pandas-series) from the Pandas library. The benefit of these is that they play nicely with Pandas' data frames (more information about Pandas' data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series\index{Series}-as-generalized-NumPy-array) for more information ).
 
 ```{python, collapse = TRUE}
 import pandas as pd
-first = pd.Series([2, 4, 6])
-second = pd.Series([2, 4, 6], index = ['a','b','c'])
+first = pd.Series\index{Series}([2, 4, 6])
+second = pd.Series\index{Series}([2, 4, 6], index = ['a','b','c'])
 print(first[0])
 print(second['c'])
 ```
@@ -108,34 +108,34 @@ np.char.upper(a)
 ```
 
 
-Then there are the `Series` objects from Pandas. Ufuncs continue to work in the same way on `Series` objects, and they [respect common index values](https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html).
+Then there are the `Series\index{Series}` objects from Pandas. Ufuncs continue to work in the same way on `Series\index{Series}` objects, and they [respect common index values](https://jakevdp.github.io/PythonDataScienceHandbook/03.03-operations-in-pandas.html).
 
 ```{python, collapse = TRUE}
-s1 = pd.Series(np.repeat(100,3))
-s2 = pd.Series(np.repeat(10,3))
+s1 = pd.Series\index{Series}(np.repeat(100,3))
+s2 = pd.Series\index{Series}(np.repeat(10,3))
 s1 + s2
 ```
 
-If you feel more comfortable, and you want to coerce these `Series` objects to Numpy arrays before working with them, you can do that. For example, the following works. 
+If you feel more comfortable, and you want to coerce these `Series\index{Series}` objects to Numpy arrays before working with them, you can do that. For example, the following works. 
 
 ```{python, collapse = TRUE}
-s = pd.Series(np.linspace(-1,1,5))
+s = pd.Series\index{Series}(np.linspace(-1,1,5))
 np.exp(s.to_numpy())
 ```
 
-In addition, `Series` objects possess many extra [attributes and methods](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series). 
+In addition, `Series\index{Series}` objects possess many extra [attributes and methods](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series\index{Series}.html#pandas-series). 
 
 ```{python, collapse = TRUE}
-ints = pd.Series(np.arange(10))
+ints = pd.Series\index{Series}(np.arange(10))
 ints.abs()
 ints.mean()
 ints.floordiv(2)
 ```
 
-`Series` objects that have [text data](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#working-with-text-data) are a little bit different. For one, you have to access the `.str` attribute of the `Series` before calling any [vectorized methods](https://jakevdp.github.io/PythonDataScienceHandbook/03.10-working-with-strings.html). Here are some examples. 
+`Series\index{Series}` objects that have [text data](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#working-with-text-data) are a little bit different. For one, you have to access the `.str` attribute of the `Series\index{Series}` before calling any [vectorized methods](https://jakevdp.github.io/PythonDataScienceHandbook/03.10-working-with-strings.html). Here are some examples. 
 
 ```{python}
-s = pd.Series(['a','b','c','33'])
+s = pd.Series\index{Series}(['a','b','c','33'])
 s.dtype
 s.str.isdigit()
 s.str.replace('a', 'z')
@@ -180,13 +180,13 @@ one_through_ten
 one_through_ten[one_through_ten > 3] # bigger than three
 ```
 
-## Indexing Pandas' Series
+## Indexing Pandas' Series\index{Series}
 
-At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas' Series objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.
+At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas' Series\index{Series} objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series\index{Series}.html). The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.
 
 ```{python, collapse=TRUE}
 import pandas as pd
-one_through_ten = pd.Series(np.arange(1, 11))
+one_through_ten = pd.Series\index{Series}(np.arange(1, 11))
 one_through_ten[np.array([2,3])]
 one_through_ten[1:10:2] # evens
 one_through_ten[::-1] # reversed
@@ -196,7 +196,7 @@ one_through_ten[one_through_ten > 3] # bigger than three
 one_through_ten.sum()
 ```
 
-However, [Pandas' Series have `.loc` and `.iloc` methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing). We won't talk much about these two methods now, but they will become very important when we start to discuss Pandas' data frames in section \@ref(data-frames-in-python).
+However, [Pandas' Series\index{Series} have `.loc` and `.iloc` methods](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#different-choices-for-indexing). We won't talk much about these two methods now, but they will become very important when we start to discuss Pandas' data frames in section \@ref(data-frames-in-python).
 
 ```{python, collapse=TRUE}
 one_through_ten.iloc[2]
@@ -233,12 +233,12 @@ c
 d
 ```
 
-It's the same story with Pandas' Series objects. You're usually making a "shallow" copy.
+It's the same story with Pandas' Series\index{Series} objects. You're usually making a "shallow" copy.
 
 ```{python, collapse = TRUE}
 # in python
 import pandas as pd
-s1 = pd.Series(np.array([100.0,200.0,300.0]))
+s1 = pd.Series\index{Series}(np.array([100.0,200.0,300.0]))
 s2 = s1
 s3 = s1.view()
 s4 = s1[:]
@@ -264,11 +264,11 @@ c
 ```
 
 
-Use [`pandas.Series.copy`](https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html#pandas-series-copy) with Pandas' Series objects. Make sure not to set the `deep` argument to `False`. Otherwise you'll get a shallow copy.
+Use [`pandas.Series\index{Series}.copy`](https://pandas.pydata.org/docs/reference/api/pandas.Series\index{Series}.copy.html#pandas-series-copy) with Pandas' Series\index{Series} objects. Make sure not to set the `deep` argument to `False`. Otherwise you'll get a shallow copy.
 
 ```{python, collapse = TRUE}
 # in python
-s1 = pd.Series(np.array([1,2,3]))
+s1 = pd.Series\index{Series}(np.array([1,2,3]))
 s2 = s1.copy()
 s3 = s1.copy(deep=False)
 s1[0] = 999
@@ -361,7 +361,7 @@ Be careful of using extreme values to stand in for what should be an `NA`. Be aw
 
 ## An Introduction to Regular Expressions
 
-We have already talked a little about how to work with text data in this book. Regarding Python, section \@ref(vectorization-in-python) mentioned that Pandas `Series` objects have a [`.str` accessor attribute](https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods) that has plenty of special methods that will work on string data. The same tools can be used whether or not these `Series` objects are contained in a Pandas `DataFrame`. 
+We have already talked a little about how to work with text data in this book. Regarding Python, section \@ref(vectorization-in-python) mentioned that Pandas `Series\index{Series}` objects have a [`.str` accessor attribute](https://pandas.pydata.org/pandas-docs/version/1.3/user_guide/text.html#string-methods) that has plenty of special methods that will work on string data. The same tools can be used whether or not these `Series\index{Series}` objects are contained in a Pandas `DataFrame`. 
 
 Regarding R, `character` `vector`s were first mentioned in section \@ref(overview-of-r). There are many functions that operate on these, too, regardless of whether they are held in a `data.frame`. The functions might be a little harder to find because they aren't methods, so pressing `<Tab>` and using your GUI's autocomplete feature doesn't reveal them as easily.
 
@@ -381,7 +381,7 @@ If it is a literal character, then the character is the *literal* pattern. For e
 
 On the other hand, if I asked you to remove `$`s from price or salary data, you might have a little more difficulty. This is because `$` is a *metacharacter* in regular expressions, and so it has a special meaning.^[The dollar sign is useful if you only want to find certain patterns that finish a line. It takes the characters preceding it, and says, only look for that pattern if it comes at the end of a string.] In the examples below, if `$` is interpreted as a regular expression, the pattern will not be found at all, despite the prevalence of *literal* dollar signs. 
 
-There are a few functions in R that perform find-and-replace, but in this case, I use `gsub()`. In Pandas, I can use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html), to do this. Here are the examples that find patterns that are described by literal characters. 
+There are a few functions in R that perform find-and-replace, but in this case, I use `gsub()`. In Pandas, I can use [`.str.replace()`](https://pandas.pydata.org/docs/reference/api/pandas.Series\index{Series}.str.replace.html), to do this. Here are the examples that find patterns that are described by literal characters. 
 
 ```{r, collapse = TRUE}
 # in R
@@ -392,7 +392,7 @@ gsub(pattern = "e", replacement = "E",
 ```{python, collapse = TRUE}
 # in Python
 import pandas as pd
-s = pd.Series(["I don't need a regex for this!"])
+s = pd.Series\index{Series}(["I don't need a regex for this!"])
 s.str.replace(pat="e",repl="E")
 ```
 
@@ -404,8 +404,8 @@ On the other hand, here are a few examples that remove dollar signs. We generall
 
 ```{python, collapse = TRUE}
 # in Python
-pd.Series(["$100, $200"]).str.replace(pat="$",repl="",regex=False)
-pd.Series(["$100, $200"]).str.replace(pat="\$",repl="")
+pd.Series\index{Series}(["$100, $200"]).str.replace(pat="$",repl="",regex=False)
+pd.Series\index{Series}(["$100, $200"]).str.replace(pat="\$",repl="")
 ```
 
 ```{r, collapse = TRUE}
@@ -464,7 +464,7 @@ gsub(pattern = r"{\d}", replacement = "X", x = "(202)555-0191")
 
 ```{python, collapse=TRUE}
 # remove everything that isn't a number in Python
-pd.Series(["$100"]).str.replace(pat="\D",repl="")
+pd.Series\index{Series}(["$100"]).str.replace(pat="\D",repl="")
 ```
 
 Many character classes feature an opening and closing square brackets. For instance, `[1-5]` matches any digit between $1$ and $5$ (inclusive), `[aeiouy]` matches any lowercase vowel, and `[\^\-]` matches either `^` or `-` (we had to escape these two metacharacters because we are only interested in the literal pattern).
@@ -478,7 +478,7 @@ Concatenating two patterns, one after another, forms a more specific pattern to 
 
 ```{python, collapse=TRUE}
 # convert date formats in Python
-s = pd.Series(["2021-10-23","2021:10:23"])
+s = pd.Series\index{Series}(["2021-10-23","2021:10:23"])
 s.str.replace(pat="[:\-]",repl="/")
 ```
 
@@ -486,7 +486,7 @@ If you would like one pattern or another to appear, you can use the **alternatio
 
 ```{python, collapse=TRUE}
 # one or the other in Python
-pd.Series(["this","that"]).str.contains(pat="this|that")
+pd.Series\index{Series}(["this","that"]).str.contains(pat="this|that")
 ```
 
 In addition to concatenation, alternation, and grouping, there are more general ways to *quantify* how many times the desired pattern will appear. `?` means zero or one time, `*` means zero or more, `+` will mean one or more, and there are a variety of ways to be even more specific with curly braces (e.g. `{3,17}` means anywhere from three to seventeen times).
@@ -498,7 +498,7 @@ grepl(pattern = "o{2}", x = c("look","book","box", "hellooo"))
 
 ```{python, collapse=TRUE}
 # detects phone number formats in Python
-s = pd.Series(["(202)555-0191","202-555-0191"])
+s = pd.Series\index{Series}(["(202)555-0191","202-555-0191"])
 s.str.contains(pat=r"\(\d{3}\)\d{3}-\d{4}")
 ```
 
@@ -515,7 +515,7 @@ After `oo` we specify `(?!o)` to disallow a third, trailing `o`.
 
 ```{python, collapse=TRUE}
 # exactly two "o"s in Python?
-s = pd.Series(["look","book","box", "hellooo"])
+s = pd.Series\index{Series}(["look","book","box", "hellooo"])
 s.str.contains(pat="oo(?!o)")
 ```
 
@@ -526,11 +526,11 @@ However, this does not successfully remove `"hellooo"` because it will match on 
 grep(pattern = "(?<!o)oo(?!o)", 
      x = c("look","book","box", "hellooo"), perl = TRUE)
 ```
-We also mention *anchoring.* If you only want to find a pattern at the beginning of text, use `^`. If you only want to find a pattern at the end of text, use `$`. Below we use [`.str.extract()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html), whose documentation makes reference to *capture groups.* Capture groups are just regular expressions grouped inside parentheses (e.g. `(this)`).
+We also mention *anchoring.* If you only want to find a pattern at the beginning of text, use `^`. If you only want to find a pattern at the end of text, use `$`. Below we use [`.str.extract()`](https://pandas.pydata.org/docs/reference/api/pandas.Series\index{Series}.str.extract.html), whose documentation makes reference to *capture groups.* Capture groups are just regular expressions grouped inside parentheses (e.g. `(this)`).
 
 ```{python, collapse=TRUE}
 # extract emails with Pandas
-s = pd.Series(["my email is fake@aol.com", "fake2@aol.com is hidden"])
+s = pd.Series\index{Series}(["my email is fake@aol.com", "fake2@aol.com is hidden"])
 s.str.extract(r".( [a-z]+@[a-z]+\.com$)")
 ```
 
@@ -671,11 +671,11 @@ The following steps will demonstrate how you can use the **Monte-Carlo** [@monte
 
 5. Use `pd.read_csv` to correctly read in `"2013-10_Citi_Bike_trip_data_20K.csv"` as a data frame called `my_df`. Make sure to read `autograding_tips.html`.
   
-    + Extract the `"starttime"` column into a separate `Series` called `s_times`.
+    + Extract the `"starttime"` column into a separate `Series\index{Series}` called `s_times`.
   
-    + Extract date strings of those elements into a `Series` called `date_strings`.
+    + Extract date strings of those elements into a `Series\index{Series}` called `date_strings`.
   
-    + Extract time strings of those elements into a `Series` called `time_strings`.
+    + Extract time strings of those elements into a `Series\index{Series}` called `time_strings`.
 
 6. We will make use of the **Monte Carlo** method below. It is a technique to approximate expectations and probabilities. If $n$ is a large number, and $X_1, \ldots, X_n$ is a random sample drawn from the distribution of interest, then 
 \begin{equation} 

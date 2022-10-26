@@ -90,21 +90,21 @@ Finally, be mindful of how different functions read in external data sets. When 
 
 Pandas provides two options for storing categorical data. They are both very similar to R's `factor`s. You may use either 
 
-  1. a Pandas `Series` with a special `dtype`, or 
+  1. a Pandas `Series\index{Series}` with a special `dtype`, or 
   2. a Pandas `Categorical` container.
   
-Pandas' `Series` were discussed earlier in sections \@ref(overview-of-python) and \@ref(vectorization-in-python). These were containers that forced every element to share the same `dtype`. Here, we specify `dtype="category"` in `pd.Series()`.
+Pandas' `Series\index{Series}` were discussed earlier in sections \@ref(overview-of-python) and \@ref(vectorization-in-python). These were containers that forced every element to share the same `dtype`. Here, we specify `dtype="category"` in `pd.Series\index{Series}()`.
 
 ```{python, collapse = TRUE}
 import pandas as pd
-szn_s = pd.Series(["autumn", "summer", "summer"], dtype = "category") 
+szn_s = pd.Series\index{Series}(["autumn", "summer", "summer"], dtype = "category") 
 szn_s.cat.categories
 szn_s.cat.ordered
 szn_s.dtype
 type(szn_s)
 ```
 
-The second option is to use Pandas' `Categorical` containers. They are quite similar, so the choice is subtle. Like `Series` containers, they also force all of their elements to share the same shared `dtype`.
+The second option is to use Pandas' `Categorical` containers. They are quite similar, so the choice is subtle. Like `Series\index{Series}` containers, they also force all of their elements to share the same shared `dtype`.
 
 ```{python, collapse = TRUE}
 szn_c = pd.Categorical(["autumn", "summer", "summer"])
@@ -128,7 +128,7 @@ szn_c2 = pd.Categorical(["autumn", "summer", "summer"],
 In Pandas, just like in R, you need to be very careful about what the `categories` (c.f `levels`) are. If you are using ordinal data, they need to be specified in the correct order. If you are using small data sets, be cognizant of whether all the categories show up in the data--otherwise they will not be correctly inferred. 
 :::
 
-With Pandas' `Series` it's more difficult to specify a nondefault `dtype`. One option is to change them after the object has been created. 
+With Pandas' `Series\index{Series}` it's more difficult to specify a nondefault `dtype`. One option is to change them after the object has been created. 
 
 ```{python, collapse = TRUE}
 szn_s = szn_s.cat.set_categories(
@@ -140,20 +140,20 @@ szn_s = szn_s.cat.add_categories(["fall", "winter"])
 szn_s.cat.categories
 ```
 
-Another option is to create the `dtype` before you create the `Series`, and pass it into `pd.Series()`.
+Another option is to create the `dtype` before you create the `Series\index{Series}`, and pass it into `pd.Series\index{Series}()`.
 
 ```{python, collapse = TRUE}
 cat_type = pd.CategoricalDtype(
   categories=["autumn", "summer", "spring", "winter"],
   ordered=True)
-responses = pd.Series(
+responses = pd.Series\index{Series}(
   ["autumn", "summer", "summer"], 
   dtype = cat_type)
 responses
 ```
 
 
-Just like in R, you can convert numerical data into categorical. The function even has the same name as in R: [`pd.cut()`](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#series-creation). Depending on the type of the input, [it will return either a `Series` or a `Categorical`](https://pandas.pydata.org/docs/reference/api/pandas.cut.html).
+Just like in R, you can convert numerical data into categorical. The function even has the same name as in R: [`pd.cut()`](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#series-creation). Depending on the type of the input, [it will return either a `Series\index{Series}` or a `Categorical`](https://pandas.pydata.org/docs/reference/api/pandas.cut.html).
 
 ```{python, collapse = TRUE}
 import numpy as np
@@ -163,8 +163,8 @@ type_of_day = pd.cut(stock_returns,
                       bins = [-np.inf, 0, np.inf], 
                       labels = ['bad day', 'good day']) 
 type(type_of_day)
-# Series in means Series out
-type_of_day2 = pd.cut(pd.Series(stock_returns), 
+# Series\index{Series} in means Series\index{Series} out
+type_of_day2 = pd.cut(pd.Series\index{Series}(stock_returns), 
                       bins = [-np.inf, 0, np.inf], 
                       labels = ['bad day', 'good day']) 
 type(type_of_day2)

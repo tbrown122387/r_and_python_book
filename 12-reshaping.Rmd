@@ -52,7 +52,7 @@ car_data = car_data.sort_values(by='clean_MSRP', ascending = False)
 car_data[["Make", "Model", "MSRP", "clean_MSRP"]].head(5)
 ```
 
-Pandas' `DataFrame`s and `Series` have a [`.replace()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series` column before we used it. After the string was processed, we converted it to a `Series` of `float`s with the `astype()` method. 
+Pandas' `DataFrame`s and `Series\index{Series}` have a [`.replace()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method. We use this to remove dollar signs and commas from the MSRP column. Note that we had to access the `.str` attribute of the `Series\index{Series}` column before we used it. After the string was processed, we converted it to a `Series\index{Series}` of `float`s with the `astype()` method. 
 
 Finally, sorting the overall data frame could have been done with the same approach as the code we used in R (i.e. raw subsetting by row indexes), but there is a built-in method called [`sort_values()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sort_values.html) that will do it for us. 
 
@@ -97,7 +97,7 @@ stacked.iloc[:3,:3]
 (stacked != real_estate).sum().sum()
 ```
 
-Take note of the extra square brackets when we create `test`. If you use `real_estate.iloc[0,]` instead, it will return a `Series` with all the elements coerced to the same type, and this won't `pd.concat()` properly with the rest of the data! 
+Take note of the extra square brackets when we create `test`. If you use `real_estate.iloc[0,]` instead, it will return a `Series\index{Series}` with all the elements coerced to the same type, and this won't `pd.concat()` properly with the rest of the data! 
 
 ## Merging or Joining Data Sets
 
