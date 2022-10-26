@@ -48,21 +48,21 @@ An [environment](https://cran.r-project.org/doc/manuals/R-lang.html#Environment-
 Formally, each environment is pair of two things: a **frame** and an **enclosure**. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you've heard of a *linked list* in a computer science class, it's the same thing. 
 ::: 
 
-Moreover, all of these environments are connected in a chain-like structure.  To see what environments are loaded on your machine, and what order they were loaded in, use the `search()` function. This displays the [**search path**](https://cran.r-project.org/doc/manuals/R-lang.html#Search-path), or the ordered sequence of all of your environments.
+Moreover, all of these environments are connected in a chain-like structure.  To see what environments are loaded on your machine, and what order they were loaded in, use the `search()` function. This displays the [**search path\index{search path}**](https://cran.r-project.org/doc/manuals/R-lang.html#Search-path), or the ordered sequence of all of your environments.
 
-Alternatively, if you're using RStudio, the search path, and the contents of each of its environments, are displayed in the "Environment" window. You can choose which environment you'd like to look at by selecting it from the drop-down menu. This allows you to see all of the variables in that particular environment. The **global environment** (i.e. `".GlobalEnv"`) is displayed by default, because that is where you store all the objects you are creating in the console.
+Alternatively, if you're using RStudio, the search path\index{search path}, and the contents of each of its environments, are displayed in the "Environment" window. You can choose which environment you'd like to look at by selecting it from the drop-down menu. This allows you to see all of the variables in that particular environment. The **global environment** (i.e. `".GlobalEnv"`) is displayed by default, because that is where you store all the objects you are creating in the console.
 
 ```{r rstudiodisp, fig.cap='The Environment Window in RStudio', out.width='80%', fig.align='center', echo=F}
 knitr::include_graphics("pics/environments_display_rstudio.png")
 ```
 
-When you call `library(thePackage)`, the package has an environment created for it, and it is *inserted between the global environment, and the most recently loaded package.* When you want to access an object by name, R will first search the global environment, and then it will traverse the environments in the search path in order. These has a few important implications.
+When you call `library(thePackage)`, the package has an environment created for it, and it is *inserted between the global environment, and the most recently loaded package.* When you want to access an object by name, R will first search the global environment, and then it will traverse the environments in the search path\index{search path} in order. These has a few important implications.
 
  - First, **don't define variables in the global environment that are already named in another environment.** There are many variables that come pre-loaded in the `base` package (to see them, type `ls("package:base")`), and if you like using a lot of packages, you're increasing the number of names you should avoid using. 
 
  - Second, **don't `library()` in a package unless you need it, and if you do, be aware of all the names it will mask it packages you loaded in before**. The good news is that `library` will often print warnings letting you know which names have been masked. The bad news is that it's somewhat out of your control--if you need two packages, then they might have a shared name, and the only thing you can do about it is watch the ordering you load them in.
  
- - Third, don't use `library()` inside code that is `source()`'d in other files. For example, if you attach a package to the search path from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
+ - Third, don't use `library()` inside code that is `source()`'d in other files. For example, if you attach a package to the search path\index{search path} from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
 
 All is not lost if there is a name conflict. The variables haven't disappeared. It's just slightly more difficult to refer to them. For instance, if I load in `Hmisc` [@hmisc], I get the warning warning that `format.pval` and `units` are now masked because they were names that were in `"package:base"`. I can still refer to these masked variables with the double colon operator (`::`).
 
@@ -99,7 +99,7 @@ To describe the difference between these three approaches, as well as to highlig
  
 With these definitions, we can define `import`ing. According to the [Python documentation](https://docs.python.org/3/reference/import.html#the-import-system), "[t]he import statement combines two operations; it searches for the named module, then it binds the results of that search to a name in the local scope." 
 
-The sequence of places Python looks for a module is called the search path. This is not the same as R's search path, though. In Python, the search path is a list of places to look for *modules*, not a list of places to look for variables. To see it, `import sys`, then type `sys.path`.
+The sequence of places Python looks for a module is called the search path\index{search path}. This is not the same as R's search path\index{search path}, though. In Python, the search path\index{search path} is a list of places to look for *modules*, not a list of places to look for variables. To see it, `import sys`, then type `sys.path`.
 
 After a module is found, the variable names inside it become available to the `import`ing module. These variables are available in the global scope, but the names you use to access them will depend on what kind of `import` statement you used. From there, you are using the same scoping rules that we described in \@ref(function-scope-in-python), which means the LEGB acronym still applies. 
 
@@ -181,7 +181,7 @@ What are important differences in the package installation procedures of R and P
 
 What are important similarities and differences in the package loading procedures of R and Python? Select all that apply. 
 
-  - R and Python both have a search path.
+  - R and Python both have a search path\index{search path}.
   - R's `::` operator is very similar to Python's `.` operator because they can both help access variable names inside packages.
   - Python namespaces are unlike R environments in that they are not arranged into a sorted list.
   - `library(package)` in R is similar to `from package import *` in Python because it will allow you to refer to all variables in `package` without qualification.
