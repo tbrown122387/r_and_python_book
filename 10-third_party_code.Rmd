@@ -5,23 +5,23 @@ Before using third-party code, it must first be installed. After it is installed
 
 ## Installing Packages In R 
 
-In R, there are thousands of free, user-created **packages** [@r_for_everyone]. You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). You can also download packages from other publishing platforms like [Bioconductor](https://www.bioconductor.org/), or [Github](https://github.com/). Installing from CRAN is more commonplace, and extremely easy to do. Just use the `install.packages()` function. This can be run inside your R console, so there is no need to type things into the command line.
+In R, there are thousands of free, user-created **packages\index{packages}** [@r_for_everyone]. You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). You can also download packages\index{packages} from other publishing platforms like [Bioconductor](https://www.bioconductor.org/), or [Github](https://github.com/). Installing from CRAN is more commonplace, and extremely easy to do. Just use the `install.packages\index{packages}()` function. This can be run inside your R console, so there is no need to type things into the command line.
 
 ```{r, eval = FALSE}
-install.packages("thePackage")
+install.packages\index{packages}("thePackage")
 ```
 
 ## Installing Packages In Python 
 
-In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.
+In Python, installing packages\index{packages} is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.
 
-If you followed the suggestions provided in earlier in the text, then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/). Point-and-click interfaces are made available as well. 
+If you followed the suggestions provided in earlier in the text, then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages\index{packages}/). Point-and-click interfaces are made available as well. 
 
 ```{bash, eval=FALSE}
 conda install the_package
 ```
 
-There are some packages that will not be available using this method. For more information on that situation, see [here.](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#install-non-conda-packages)
+There are some packages\index{packages} that will not be available using this method. For more information on that situation, see [here.](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#install-non-conda-packages\index{packages})
 
 ## Loading Packages In R 
 
@@ -30,7 +30,7 @@ After they are installed on your machine, third-party code will need to be "load
 Loading in a package is relatively simple in R, however complications can arise when different variables share the same name. This happens relatively often because
 
 - it's easy to create a variable in the global environment that has the same name as another object you don't know about, and
-- different packages you load in sometimes share names accidentally.
+- different packages\index{packages} you load in sometimes share names accidentally.
 
 Starting off with the basics, here's how to load in a package of third-party code. Just type the following into your R console.
 
@@ -58,11 +58,11 @@ knitr::include_graphics("pics/environments_display_rstudio.png")
 
 When you call `library(thePackage)`, the package has an environment created for it, and it is *inserted between the global environment, and the most recently loaded package.* When you want to access an object by name, R will first search the global environment, and then it will traverse the environments in the search path\index{search path} in order. These has a few important implications.
 
- - First, **don't define variables in the global environment that are already named in another environment.** There are many variables that come pre-loaded in the `base` package (to see them, type `ls("package:base")`), and if you like using a lot of packages, you're increasing the number of names you should avoid using. 
+ - First, **don't define variables in the global environment that are already named in another environment.** There are many variables that come pre-loaded in the `base` package (to see them, type `ls("package:base")`), and if you like using a lot of packages\index{packages}, you're increasing the number of names you should avoid using. 
 
- - Second, **don't `library()` in a package unless you need it, and if you do, be aware of all the names it will mask it packages you loaded in before**. The good news is that `library` will often print warnings letting you know which names have been masked. The bad news is that it's somewhat out of your control--if you need two packages, then they might have a shared name, and the only thing you can do about it is watch the ordering you load them in.
+ - Second, **don't `library()` in a package unless you need it, and if you do, be aware of all the names it will mask it packages\index{packages} you loaded in before**. The good news is that `library` will often print warnings letting you know which names have been masked. The bad news is that it's somewhat out of your control--if you need two packages\index{packages}, then they might have a shared name, and the only thing you can do about it is watch the ordering you load them in.
  
- - Third, don't use `library()` inside code that is `source()`'d in other files. For example, if you attach a package to the search path\index{search path} from within a function you defined, anybody that uses your function loses control over the order of packages that get attached. 
+ - Third, don't use `library()` inside code that is `source()`'d in other files. For example, if you attach a package to the search path\index{search path} from within a function you defined, anybody that uses your function loses control over the order of packages\index{packages} that get attached. 
 
 All is not lost if there is a name conflict. The variables haven't disappeared. It's just slightly more difficult to refer to them. For instance, if I load in `Hmisc` [@hmisc], I get the warning warning that `format.pval` and `units` are now masked because they were names that were in `"package:base"`. I can still refer to these masked variables with the double colon operator (`::`).
 
@@ -93,7 +93,7 @@ To describe the difference between these three approaches, as well as to highlig
 
  - A Python [**`module`**](https://docs.python.org/3/tutorial/modules\index{modules}.html) is a `.py` file, separate from the one you are currently editing, with function and/or object definitions in it.^[The scripts you write are modules\index{modules}. They usually come with the intention of being run from start to finish. Other non-script modules\index{modules} are just a bag of definitions to be used in other places.]
  
- - A [package](https://docs.python.org/3/tutorial/modules\index{modules}.html#packages) is a group of modules\index{modules}.^[Sometimes a package is called a *library* but I will avoid this terminology.] 
+ - A [package](https://docs.python.org/3/tutorial/modules\index{modules}.html#packages\index{packages}) is a group of modules\index{modules}.^[Sometimes a package is called a *library* but I will avoid this terminology.] 
  
  - A [**namespace**](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) is "a mapping from names to objects."
  
@@ -110,14 +110,14 @@ The same thing can happen when you use third-party code.
 
   - In R, you have to worry about the order of `library()` and `require()` calls, because there is potential *masking* going on. 
   - If you don't want to worry about masking, don't use `library()` or `require()`, and just refer to variables using the `::` operator (e.g. `coolPackage::specialFunc()`).
-  - In Python, loading packages using either the `import package` format or the `import package as p` format means you do not need to worry about the order of imports because you will be forced to qualify variable names (e.g. `package.func()` or `p.func()`).
+  - In Python, loading packages\index{packages} using either the `import package` format or the `import package as p` format means you do not need to worry about the order of imports because you will be forced to qualify variable names (e.g. `package.func()` or `p.func()`).
   - In Python, if you load third-party code using either `from package import foo` or `from package import *`, you won't have to qualify variable names, but imported objects will overwrite any variables that happen to have the same name as something you're importing. 
 
 The way variable names are stored are only slightly different between R and Python. 
 
  - Python namespaces are similar to R environments in that they hold name-value pairs; however
  - Python namespaces are unlike R environments in that they are not arranged into a sorted list.
- - Also, Python modules\index{modules} may be organized into a nested or tree-like structure, whereas R packages will always have a flat structure.
+ - Also, Python modules\index{modules} may be organized into a nested or tree-like structure, whereas R packages\index{packages} will always have a flat structure.
 ::: 
 
 
@@ -172,8 +172,8 @@ dir(__builtins__) #built-in stuff
 
 What are important differences in the package installation procedures of R and Python? Select all that apply. 
 
-  - Installing R packages can be done from within R, while installing packages in Python can be done in the command line.
-  - Installing R packages can usually be done with the same function `install.packages()`, while installing packages in Python can be done with a variety of package installers such as `pip install` and `conda install`.
+  - Installing R packages\index{packages} can be done from within R, while installing packages\index{packages} in Python can be done in the command line.
+  - Installing R packages\index{packages} can usually be done with the same function `install.packages\index{packages}()`, while installing packages\index{packages} in Python can be done with a variety of package installers such as `pip install` and `conda install`.
   - There is only one package repository for R, but many for Python.
   - There is only one package repository for Python, but many for R.
 
@@ -182,10 +182,10 @@ What are important differences in the package installation procedures of R and P
 What are important similarities and differences in the package loading procedures of R and Python? Select all that apply. 
 
   - R and Python both have a search path\index{search path}.
-  - R's `::` operator is very similar to Python's `.` operator because they can both help access variable names inside packages.
+  - R's `::` operator is very similar to Python's `.` operator because they can both help access variable names inside packages\index{packages}.
   - Python namespaces are unlike R environments in that they are not arranged into a sorted list.
   - `library(package)` in R is similar to `from package import *` in Python because it will allow you to refer to all variables in `package` without qualification.
-  - Python packages might have `sub-modules\index{modules}` whereas R's packages do not.
+  - Python packages\index{packages} might have `sub-modules\index{modules}` whereas R's packages\index{packages} do not.
 
 3.
 
