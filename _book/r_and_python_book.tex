@@ -7,8 +7,8 @@
   krantz2]{krantz}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -35,14 +35,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={An Introduction to R and Python For Data Analysis: A Side By Side Approach},
-  pdfauthor={Taylor R. Brown},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -117,6 +109,7 @@
 \renewcommand{\floatpagefraction}{0.75}
 
 \renewenvironment{quote}{\begin{VF}}{\end{VF}}
+\usepackage{hyperref}
 \let\oldhref\href
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 
@@ -181,11 +174,19 @@
 
 
 \frontmatter
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={An Introduction to R and Python For Data Analysis: A Side By Side Approach},
+  pdfauthor={Taylor R. Brown},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{An Introduction to R and Python For Data Analysis: A Side By Side Approach}
 \author{Taylor R. Brown}
@@ -213,8 +214,8 @@ To Clare
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\listoftables
 \listoffigures
+\listoftables
 \hypertarget{welcome}{%
 \chapter*{Welcome}\label{welcome}}
 
@@ -693,7 +694,7 @@ Think about which option you prefer. What are the benefits of using separate typ
     Assign the output of \texttt{options()\$digits} to \texttt{numDigitsEnd}
   \end{itemize}
 \item
-  Floating points are weird. What gets stored might not be what you want. \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html\#Why-doesn_0027t-R-think-these-numbers-are-equal_003f}{``The only numbers that can be represented exactly in R's numeric type are integers and fractions whose denominator is a power of 2.''}
+  Floating points are weird. What gets stored might not be what you want. \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html\#Why-doesn_0027t-R-think-these-numbers-are-equal_003f}{``The only numbers that can be represented exactly in R's numeric type are integers and fractions whose denominator is a power of 2.''} As a consequence, you should never test strict equality (i.e.~using \texttt{==}) between two floating points.
 
   \begin{itemize}
   \tightlist
@@ -817,7 +818,7 @@ There are five ways to create numpy arrays (\href{https://numpy.org/doc/stable/u
 \NormalTok{np.arange(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \CommentTok{\#\# array([ 1,  3,  5,  7,  9, 11])}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
-\CommentTok{\#\# array([{-}0.60722846, {-}0.73013497, {-}0.22706565])}
+\CommentTok{\#\# array([0.60874908, 0.5616381 , 1.51475038])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1576,15 +1577,15 @@ In addition to concatenation, alternation, and grouping, there are more general 
 Notice in the double ``o'' example, the word with three matched. To describe that not being desirable requires the ability to \emph{look ahead} of the match, to the next character, and evaluate that. You can look ahead, or behind, and make assertions about what patterns are required or disallowed.
 
 \begin{longtable}[]{@{}ll@{}}
-\toprule
+\toprule()
 Lookaround Regex & Meaning \\
-\midrule
+\midrule()
 \endhead
 \texttt{(?=pattern)} & Positive looking ahead for \texttt{pattern} \\
 \texttt{(?!pattern)} & Negative looking ahead for \texttt{pattern} \\
 \texttt{(?\textless{}=pattern)} & Positive looking behind for \texttt{pattern} \\
 \texttt{(?\textless{}!pattern)} & Negative looking behind for \texttt{pattern} \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 After \texttt{oo} we specify \texttt{(?!o)} to disallow a third, trailing \texttt{o}.
@@ -1649,6 +1650,53 @@ We also mention \emph{anchoring.} If you only want to find a pattern at the begi
     Calculate the percent of time that the number changes in \texttt{flips}. Assign your number to \texttt{acceptanceRate}. Try to write only one line of code to do this.
   \end{itemize}
 \item
+  Compute the elements of the tenth order Taylor approximation to \(\exp(3)\) and store them in \texttt{taylorElems}. Do not sum them. Use only one expression, and do not use any loop. The approximation is,\\
+  \[
+  1 + 3 + 3^2/2! + 3^3/3! + \cdots 3^{10}/10!
+  \]
+  You want to store each of those eleven numbers separately in a \texttt{numeric} \texttt{vector}.
+\item
+  Do the following.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Create a vector called \texttt{nums} that contains all consecutive integers from \(-100\) to \(100\).
+  \item
+    Create a \texttt{logical} \texttt{vector} that has the same length as the above, and contains \texttt{TRUE} whenever an element of the above is even, and \texttt{FALSE} otherwise. Call it \texttt{myLogicals}.
+  \item
+    Assign the total number of \texttt{TRUE}s to \texttt{totalEven}.
+  \item
+    Create a \texttt{vector} called \texttt{evens} of all even numbers from the above \texttt{vector}.
+  \item
+    Create a \texttt{vector} called \texttt{reverse} that holds the reversed elements of \texttt{nums}.
+  \end{itemize}
+\item
+  Let's say we wanted to calculate the following sum \(\sum_{i=1}^N x_i\). If \(N\) is large, or most of the \(x_i\)s are large, then we might bump up against the largest allowable number. This is the problem of \emph{overflow}. The biggest integer and biggest floating point can be recovered by typing \texttt{.Machine\$integer.max} and \texttt{.Machine\$double.xmax}, respectively.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Assign \texttt{sumThese} to \texttt{exp(rep(1000,10))}. Are they finite? Can you sum them? If everything is all good, assign \texttt{TRUE} to \texttt{allGood}.
+  \item
+    Theoretically, is the logarithm of the sum less than \texttt{.Machine\$double.xmax}? Assign \texttt{TRUE} or \texttt{FALSE} to \texttt{noOverflowIssue}
+  \item
+    Assign the \emph{naive} log-sum of these to \texttt{naiveLogSum}. Is the naive log sum finite?
+  \item
+    Compute \texttt{betterSum}, one that doesn't overflow, using the \emph{log-sum-exp} trick.
+  \end{itemize}
+
+  \[
+   \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
+   \]
+  \(m\) is usually chosen to be \(\max_i \log x_i\). This is the same formula as above, which is nice. You can use the same code to combat both overflow and underflow.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If you're writing code, and you have a bunch of very large numbers, is it better to store those numbers, or store the logarithm of those numbers? Assign your answer to \texttt{whichBetter}. Use either the phrase \texttt{"logs"} or \texttt{"nologs"}.
+  \end{itemize}
+\item
   Say you have a \texttt{vector} of prices of some financial asset:
 \end{enumerate}
 
@@ -1661,7 +1709,7 @@ We also mention \emph{anchoring.} If you only want to find a pattern at the begi
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \item
-  Convert this vector into a vector of \emph{log returns}. Call the variable \texttt{logReturns}. If \(p_t\) is the price at time \(t\), the log return ending at time \(t\) is
+  Use the natural logarithm and convert this vector into a vector of \emph{log returns}. Call the variable \texttt{logReturns}. If \(p_t\) is the price at time \(t\), the log return ending at time \(t\) is
   \begin{equation} 
   r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
   \end{equation}
@@ -1674,10 +1722,10 @@ We also mention \emph{anchoring.} If you only want to find a pattern at the begi
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
+\setcounter{enumi}{5}
 \tightlist
 \item
-  Consider another \textbf{mixture density} \(f(y) = \int f(y \mid x) f(x) dx\) where
+  Consider the \textbf{mixture density} \(f(y) = \int f(y \mid x) f(x) dx\) where
 \end{enumerate}
 
 \begin{equation} 
@@ -1688,13 +1736,15 @@ and
 \begin{equation} 
 X \sim \text{half-Cauchy}(0, 1).
 \end{equation}
-This distribution is a special case of a prior distribution that is used in Bayesian statistics \citep{horseshoe}.
+This distribution is a special case of a prior distribution that is used in Bayesian statistics \citep{horseshoe}. Note that the second parameter of the Normal distribution is its variance, not its standard deviation.
 
 Suppose further that you are interested in calculating the probability that one of these random variables ends up being too far from the median:
 
 \begin{equation} 
 \mathbb{P}[|Y| > 1] = \int_{y : |y| > 1} f(y)dy = \int_{y : |y| > 1} \int_{-\infty}^\infty  f(y \mid x) f(x) dx dy.
 \end{equation}
+
+The following steps will demonstrate how you can use the \textbf{Monte-Carlo} \citep{monte-carlo-stat-methods} method to approximate this probability.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -1705,7 +1755,7 @@ Suppose further that you are interested in calculating the probability that one 
 \item
   Calculate the approximate probability using \texttt{ySamps} and call it \texttt{approxProbDev1}.
 \item
-  Why is simply ``ignoring'' \texttt{xSamps}, the samples you condition on, ``equivalent'' to ``integrating out \(x\)''? Store a string response as a length \(1\) character vector called \texttt{integratingOutResp}.
+  Why is simply ``ignoring'' \texttt{xSamps} (i.e.~not using it in the averaging part of the computation), the samples you condition on, ``equivalent'' to ``integrating out \(x\)''? Store a string response as a length \(1\) character vector called \texttt{integratingOutResp}.
 \item
   Calculate another \textbf{Rao-Blackwellized} Monte Carlo estimate of \(\mathbb{P}[|Y| > 1]\) from \texttt{xSamps}. Call it \texttt{approxProbDev2}. Hint: \(\mathbb{P}[|Y| > 1] = \mathbb{E}[\mathbb{P}(|Y| > 1 \mid X) ]\). Calculate \(\mathbb{P}(|Y| > 1 \mid X=x)\) with pencil and paper, notice it is a function in \(x\), apply that function to each of \texttt{xSamps}, and average all of it together.
 \item
@@ -1714,7 +1764,7 @@ Suppose further that you are interested in calculating the probability that one 
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
+\setcounter{enumi}{6}
 \tightlist
 \item
   Store the ordered uppercase letters of the alphabet in a length \(26\) \texttt{character} \texttt{vector} called \texttt{myUpcaseLetters}. Do not hardcode this. Use a function, along with the variable \texttt{letters}.
@@ -1748,25 +1798,61 @@ Suppose further that you are interested in calculating the probability that one 
     Calculate the percent of time that the number changes in \texttt{flips}. Assign your number to \texttt{acceptance\_rate}. Try to write only one line of code to do this.
   \end{itemize}
 \item
+  Create a Numpy \texttt{array} containing the numbers \(1/2, 1/4, 1/8, \ldots, 1/1024\) Make sure to call it \texttt{my\_array}.
+\item
+  Do the following.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Create a \texttt{np.array} called \texttt{nums} that contains one hundred equally-spaced numbers starting from \(-100\) and going to \(100\) (inclusive).
+  \item
+    Create a \texttt{bool} \texttt{np.array} that has the same length as the above, and contains \texttt{TRUE} whenever an element of the above is less than ten units away from \(0\), and \texttt{FALSE} otherwise. Call it \texttt{my\_logicals}.
+  \item
+    Assign the total number of \texttt{True}s to \texttt{total\_close}.
+  \item
+    Create a \texttt{np.array} called \texttt{evens} of all even numbers from the above \texttt{np.array} (even numbers are necessarily integers).
+  \item
+    Create a \texttt{np.array} called \texttt{reverse} that holds the reversed elements of \texttt{nums}.
+  \end{itemize}
+\item
+  Let's say we wanted to calculate the following sum \(\sum_{i=1}^N x_i\). We run into problems when this sum is close to \(0\), too. This is the problem of \emph{underflow}. The smallest positive floating point can be recovered by typing \texttt{np.nextafter(np.float64(0),np.float64(1))}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Assign \texttt{sum\_these} to the length ten array \((e^{-1000}, \ldots, e^{-1000})\). Use \texttt{np.exp(np.repeat(-1000,10))}. Are the elements nonzero? Can you sum them? Is the sum correct? If everything is all good, assign \texttt{True} to \texttt{all\_good}.
+  \item
+    Theoretically, for which range of positive numbers is the logarithm of the number farther from \(0\) than the number itself? Assign the lower bound to \texttt{lower\_bound}, and the upper bound to \texttt{upper\_bound}. Hint: \texttt{lower\_bound} is \(0\) because we're only looking at positive numbers, and because the logarithm is \(-\infty\).
+  \item
+    Assign the \emph{naive} log-sum of \texttt{sum\_these} to \texttt{naive\_log\_sum}. Is the naive log sum finite on your computer? Should it be?
+  \item
+    Compute \texttt{better\_sum}, one that doesn't underflow, using the \emph{log-sum-exp} trick. This one should be bounded away from \(-\infty\).
+  \end{itemize}
+
+  \[
+   \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
+   \]
+  \(m\) is usually chosen to be \(\max_i \log x_i\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If you're writing code, and you have a bunch of very small positive numbers (e.g.~probabilities, densities, etc.), is it better to store those small numbers, or store the logarithm of those numbers? Assign your answer to \texttt{which\_better}. Use either the phrase \texttt{"logs"} or \texttt{"nologs"}.
+  \end{itemize}
+\item
   Use \texttt{pd.read\_csv} to correctly read in \texttt{"2013-10\_Citi\_Bike\_trip\_data\_20K.csv"} as a data frame called \texttt{my\_df}. Make sure to read \texttt{autograding\_tips.html}.
-\end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
+  \begin{itemize}
+  \item
+    Extract the \texttt{"starttime"} column into a separate \texttt{Series} called \texttt{s\_times}.
+  \item
+    Extract date strings of those elements into a \texttt{Series} called \texttt{date\_strings}.
+  \item
+    Extract time strings of those elements into a \texttt{Series} called \texttt{time\_strings}.
+  \end{itemize}
 \item
-  extract the \texttt{"starttime"} column into a separate \texttt{Series} called \texttt{s\_times}
-\item
-  extract date strings of those elements into a \texttt{Series} called \texttt{date\_strings}
-\item
-  extract time strings of those elements into a \texttt{Series} called \texttt{time\_strings}
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  We will make use of the \textbf{Monte Carlo} \citep{monte-carlo-stat-methods} method below. It is a technique to approximate expectations and probabilities. If \(n\) is a large number, and \(X_1, \ldots, X_n\) is a random sample drawn from the distribution of interest, then
+  We will make use of the \textbf{Monte Carlo} method below. It is a technique to approximate expectations and probabilities. If \(n\) is a large number, and \(X_1, \ldots, X_n\) is a random sample drawn from the distribution of interest, then
   \begin{equation} 
   \mathbb{P}(X > 6) \approx \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i > 6).
   \end{equation}
@@ -1786,51 +1872,37 @@ If you wanted to visualize it, \(\mathbf{1}(x > 6)\) looks like this.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-69-1} 
+{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-67-1} 
 
 }
 
-\caption{An Indicator Function}\label{fig:unnamed-chunk-69}
+\caption{An Indicator Function}\label{fig:unnamed-chunk-67}
 \end{figure}
 
 So, the sum in this expression is just a count of the number of elements that are greater than \(6\).
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  Evaluate exactly the probability that a normal random variable with mean \(5\) and standard deviation \(6\) is greater than \(6\). Assign it to the variable \texttt{exact\_exceedance\_prob} in Python.
-\item
-  Simulate \(1e3\) times from a standard normal distribution (mean 0 and variance 1). Call the samples \texttt{stand\_norm\_samps}
-\item
-  Calculate a Monte Carlo estimate of \(\mathbb{P}(X > 6)\) from these samples. Call it \texttt{approx\_exceedance\_prob1}.
-\end{enumerate}
+\begin{verbatim}
++ Evaluate exactly the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$. Assign it to the variable `exact_exceedance_prob` in Python.
+
++ Simulate $1e3$ times from a standard normal distribution (mean 0 and variance 1). Call the samples `stand_norm_samps`.
+
++ Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these samples. Call it `approx_exceedance_prob1`.
+
++ Simulate $1e3$ times from a normal distribution with mean $5$ and standard deviation $6$. Call the samples `norm_samps`. Don't use the old samples in any way.
+
++ Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these new `norm_samps`. Call it `approx_exceedance_prob2`.
+\end{verbatim}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
+\setcounter{enumi}{6}
 \tightlist
 \item
-  Simulate \(1e3\) times from a normal distribution with mean \(5\) and standard deviation \(6\). Call the samples \texttt{norm\_samps}. Don't use the old samples in any way.
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{3}
-\tightlist
-\item
-  Calculate a Monte Carlo estimate of \(\mathbb{P}(X > 6)\) from these new \texttt{norm\_samps}. Call it \texttt{approx\_exceedance\_prob2}.
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
-\tightlist
-\item
-  Alternatively, we can approximate expectations. If \(\mathbb{E}[f(X)]\) exists, \(n\) is a large number, and \(W_1, \ldots, W_n\) is a random sample drawn from the distribution of interest, then
+  Alternatively, we can approximate expectations using the same technique as above. If \(\mathbb{E}[g(X)]\) exists, \(n\) is a large number, and \(W_1, \ldots, W_n\) is a random sample drawn from the distribution of interest, then
 \end{enumerate}
 
 \begin{equation} 
-\mathbb{E}[f(W)] \approx \frac{1}{n}\sum_{i=1}^n f(W_i).
+\mathbb{E}[g(W)] \approx \frac{1}{n}\sum_{i=1}^n g(W_i).
 \end{equation}
 
 Here's a new distribution. It is a \textbf{mixture distribution}, specifically a \textbf{finite mixture of normal distributions}: \(f(y) = f(y \mid X=1)P(X=1) + f(y \mid X=0)P(X=0)\) where
@@ -1849,17 +1921,17 @@ Both \(f(y \mid X=0)\) and \(f(y \mid X=1)\) are bell-curved, and \(f(y)\) looks
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-70-1} 
+{\centering \includegraphics[width=0.5\linewidth]{r_and_python_book_files/figure-latex/unnamed-chunk-68-1} 
 
 }
 
-\caption{The Marginal Density of Y}\label{fig:unnamed-chunk-70}
+\caption{The Marginal Density of Y}\label{fig:unnamed-chunk-68}
 \end{figure}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \item
-  Evaluate exactly \(\mathbb{E}[Y]\). Assign it to the variable \texttt{exact\_mean} in Python.
+  Evaluate exactly \(\mathbb{E}[Y] = \mathbb{E}[ \mathbb{E}(Y \mid X) ]\). Assign it to the variable \texttt{exact\_mean} in Python.
 \item
   Simulate \(1e3\) times from the Bernoulli distribution. Call the samples \texttt{bernoulli\_flips}
 \item
@@ -2123,7 +2195,7 @@ A formula for the sample covariance is
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
 \item
-  Create a \texttt{matrix} called \texttt{P} that has one hundred rows, one hundred columns, all of its elements positive, \(1/10\) on every diagonal element, and all rows summing to one. This matrix is called \textbf{stochastic} and it describes how a Markov chain moves randomly through time.
+  Create a \texttt{matrix} called \texttt{P} that has one hundred rows, one hundred columns, all of its elements nonnegative, \(1/10\) on every diagonal element, and all rows summing to one. This matrix is called \textbf{stochastic} and it describes how a Markov chain moves randomly through time.
 \item
   Create a \texttt{matrix} called \texttt{X} that has one thousand rows, four columns, has every element set to either \(0\) or \(1\), has its first column set to all \(1\)s, has the second column set to \(1\) in the second \(250\) elements and \(0\) elsewhere, has the third column set to \(1\) in the third \(250\) spots and \(0\) elsewhere, and has the fourth column set to \(1\) in the last \(250\) spots and \(0\) elsewhere. In other words, it looks something like
 \end{enumerate}
@@ -2162,13 +2234,13 @@ where \(\mathbf{1}_{250}\) and \(\mathbf{0}_{250}\) are length \(250\) column ve
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
 \end{equation}
 
-Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider:
+Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider.
 
 \begin{itemize}
 \item
-  inverting very large matrices with either \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html}{\texttt{np.linalg.solve}} or \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html}{\texttt{np.linalg.inv}} becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
+  Inverting very large matrices with either \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html}{\texttt{np.linalg.solve}} or \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html}{\texttt{np.linalg.inv}} becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
 \item
-  recall from the last lab that exponentiating numbers close to \(-\infty\) risks numerical underflow. It's better to prefer evaluating log densities. There are also \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html}{special functions that evaluate log determinants} that are less likely to underflow/overflow, too!
+  Recall from the last lab that exponentiating numbers close to \(-\infty\) risks numerical underflow. It's better to prefer evaluating log densities (base \(e\), the natural logarithm). There are also \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html}{special functions that evaluate log determinants} that are less likely to underflow/overflow, too!
 \end{itemize}
 
 Complete the following problems. \textbf{Do not use pre-made functions such as \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html}{\texttt{scipy.stats.norm}} and \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html}{\texttt{scipy.stats.multivariate\_normal}} in your submission, but you may use them to check your work. Use only ``standard'' functions and Numpy n-dimensional arrays.} Use the following definitions for \(\mathbf{x}\) and \(\mathbf{m}\):
@@ -2276,6 +2348,7 @@ From the example below, you can see that we've been introduced to lists already.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{another\_list }\OperatorTok{=}\NormalTok{ [np.array([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]), }\StringTok{"May 5th, 2021"}\NormalTok{, }\VariableTok{True}\NormalTok{, [}\DecValTok{42}\NormalTok{,}\DecValTok{42}\NormalTok{]]}
 \NormalTok{another\_list[}\DecValTok{2}\NormalTok{]}
 \CommentTok{\#\# True}
@@ -2365,9 +2438,27 @@ Personally, I don't use dictionaries as much as lists. If I have a dictionary, I
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Consider the data sets \texttt{"adult.data"}, \texttt{"car.data"}, \texttt{"hungarian.data"}, \texttt{"iris.data"}, \texttt{"long-beach-va.data"} and \texttt{"switzerland.data"} \citep{misc_heart_disease_45}, \citep{misc_iris_53}, \citep{misc_adult_2} and \citep{misc_car_evaluation_19} hosted by \citep{uci_data}. Read all of these in and store them all as a \texttt{list} of \texttt{data.frame}s. Call the list \texttt{listDfs}.
+\item
+  Here are two lists in R:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l1 }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{first=}\StringTok{"a"}\NormalTok{, }\AttributeTok{second=}\DecValTok{1}\NormalTok{)}
+\NormalTok{l2 }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{first=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{second =} \StringTok{"statistics"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Make a new \texttt{list} that is these two lists above ``squished together.'' It has to be length \(4\), and each element is one of the elements of \texttt{l1} and \texttt{l2}. Call this list \texttt{l3}. Make sure to delete all the ``tags'' or ``names'' of these four elements.
+\item
+  Extract the third element of \texttt{l3} as a length one \texttt{list} and assign it to the name \texttt{l4}.
+\item
+  Extract the third element of \texttt{l3} as a \texttt{vector} and assign it to the name \texttt{v1}.
 \end{enumerate}
 
 \hypertarget{python-questions-3}{%
@@ -2375,9 +2466,27 @@ Personally, I don't use dictionaries as much as lists. If I have a dictionary, I
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Read in \texttt{car.data} with \texttt{pd.read\_csv()}, and use a \texttt{DataFrame} method to convert that to a \texttt{dict}. Store your answer as \texttt{car\_dict}.
+\item
+  Here are two \texttt{dict}s in Python:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d1 }\OperatorTok{=}\NormalTok{ \{ }\StringTok{"first"}\NormalTok{ : }\StringTok{"a"}\NormalTok{, }\StringTok{"second"}\NormalTok{ : }\DecValTok{1}\NormalTok{\}}
+\NormalTok{d2 }\OperatorTok{=}\NormalTok{ \{ }\StringTok{"first"}\NormalTok{ : [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{], }\StringTok{"second"}\NormalTok{ : }\StringTok{"statistics"}\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Make a new \texttt{list} that is these two \texttt{dict}s above ``squished together'' (why can't it be another \texttt{dict}?) It has to be length \(4\), and each value is one of the values of \(d1\) and \(d2\). Call this list \texttt{my\_list}.
+\item
+  Use a list comprehension to create a list called \texttt{special\_list} of all numbers starting from zero, up to (and including) one million, but don't include numbers that are divisible by any prime number less than seven.
+\item
+  Assign the average of all elements in the above list to the variable \texttt{special\_ave}.
 \end{enumerate}
 
 \hypertarget{functions}{%
@@ -2893,7 +3002,7 @@ Let's revisit the above code, but bring everything out of a function. Python is 
 \BuiltInTok{print}\NormalTok{(arg }\KeywordTok{is}\NormalTok{ a)}
 \CommentTok{\#\# False}
 \BuiltInTok{print}\NormalTok{(}\BuiltInTok{id}\NormalTok{(a), }\BuiltInTok{id}\NormalTok{(arg)) }\CommentTok{\# different!\textasciigrave{}}
-\CommentTok{\#\# 139815570920800 139815570920832}
+\CommentTok{\#\# 140297560458592 140297560458624}
 \BuiltInTok{print}\NormalTok{(a)}
 \CommentTok{\#\# 1}
 \end{Highlighting}
@@ -3603,7 +3712,7 @@ Suppose you are creating a \emph{classifier} whose job it is to predict labels. 
 \hypertarget{data-frames}{%
 \chapter{Data Frames}\label{data-frames}}
 
-The rectangular array (e.g.~an Excel spreadsheet ) of information is what many think of when they hear the word ``data.'' Each column contains elements of a shared data type, and these data types can vary from column to column.\index{data frame}
+The rectangular array of information (e.g.~an Excel spreadsheet ) is what many think of when they hear the word ``data.'' Each column contains elements of a shared data type, and these data types can vary from column to column.\index{data frame}
 
 There is a type for this in R and Python: a data frame. It might even be the most common way that data is stored in both R and Python programs because many functions that read in data from an external source return objects of this type (e.g.~\texttt{read.csv()} in R and \texttt{pd.read\_csv()} in Python).
 
@@ -3928,9 +4037,9 @@ Modifying data inside a data frame looks quite similar to extracting data. You'l
 \KeywordTok{del}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}petal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.length  sepal.width  petal.width  species  col\_ones}
-\CommentTok{\#\# 149    999.266237  {-}996.657617          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 148    997.754535  {-}999.644772          0.2  SETOSA!       1.0}
-\CommentTok{\#\# 147      4.700000  {-}998.888384          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 149    998.754705  {-}998.754039          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 148    999.664928  {-}997.516306          0.2  SETOSA!       1.0}
+\CommentTok{\#\# 147      4.700000  {-}999.069372          0.2  SETOSA!       1.0}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3942,9 +4051,9 @@ You can also use the \href{https://pandas.pydata.org/pandas-docs/stable/referenc
 \KeywordTok{del}\NormalTok{ iris\_data[}\StringTok{\textquotesingle{}sepal.length\textquotesingle{}}\NormalTok{]}
 \NormalTok{iris\_data.head(}\DecValTok{3}\NormalTok{)}
 \CommentTok{\#\#      sepal.width  petal.width  species  col\_ones  new\_col\_name}
-\CommentTok{\#\# 149  {-}996.657617          0.2  SETOSA!       1.0             0}
-\CommentTok{\#\# 148  {-}999.644772          0.2  SETOSA!       1.0             1}
-\CommentTok{\#\# 147  {-}998.888384          0.2  SETOSA!       1.0             2}
+\CommentTok{\#\# 149  {-}998.754039          0.2  SETOSA!       1.0             0}
+\CommentTok{\#\# 148  {-}997.516306          0.2  SETOSA!       1.0             1}
+\CommentTok{\#\# 147  {-}999.069372          0.2  SETOSA!       1.0             2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3974,7 +4083,7 @@ Consider the data set \texttt{"original\_rt\_snippets.txt"} \citep{SocherEtAl201
 \item
   create a \texttt{vector} called \texttt{dictionary} that contains the following phrases: ``charming'',``fantasy'', ``hate'', and ``boring''.
 \item
-  Construct a \texttt{data.frame} with four columns called \texttt{bagOfWords} that contains the number of appearances of each word in the dictionary. Match the exact phrases. Label the columns of this \texttt{data.frame} with the phrases you're searching for. Try to write code that is easy to modify if you decide to change the set of phrases in your dictionary.
+  Construct a \texttt{data.frame} with four columns called \texttt{bagOfWords} that contains the number of appearances of each word in the dictionary. Match the exact phrases. For simplicity, don't worry about the case of letters or using regular expressions (c.f. section \ref{an-introduction-to-regular-expressions}). Label the columns of this \texttt{data.frame} with the phrases you're searching for. Try to write code that is easy to modify if you decide to change the set of phrases in your dictionary.
 \item
   Create a \texttt{data.frame} with four columns called \texttt{termFrequency}. Each element should correspond with the count from the previous \texttt{data.frame}. Instead of the count, each element should be \(\log(1 + \text{count})\).
 \item
@@ -4053,7 +4162,7 @@ This question deals with looking at historical prices of the S\&P500 Index. This
 \item
   Use \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html}{\texttt{.set\_index()}} to change the index of \texttt{gspc} to its \texttt{"Index"} column. Store the new \texttt{DataFrame} as \texttt{gspc\_good\_idx}.
 \item
-  Add a column to \texttt{gspc\_good\_idx} called \texttt{log\_returns}. Calculate them from the column \texttt{GSPC.Adjusted}. Make sure to scale them by \(100\) and put an \texttt{np.nan} in the first element where you don't have a return.
+  Recall the formula for \emph{log returns} provided in exercises of chapter \ref{r-vectors-versus-numpy-arrays-and-pandas-series}. Add a column to \texttt{gspc\_good\_idx} called \texttt{log\_returns}. Calculate them from the column \texttt{GSPC.Adjusted}. Make sure to scale them by \(100\) and put an \texttt{np.nan} in the first element where you don't have a return.
 \item
   Extract all the returns that are available for the year 2021, and store them as a \texttt{Series} called \texttt{this\_year\_returns}.
 \item
@@ -4077,8 +4186,6 @@ Please include the following code in your submission.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#\%pip install tensorflow}
-\CommentTok{\#\%pip install tensorflow\_datasets}
 \ImportTok{import}\NormalTok{ tensorflow\_datasets }\ImportTok{as}\NormalTok{ tfds}
 \ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
@@ -4087,7 +4194,7 @@ Please include the following code in your submission.
 \end{Highlighting}
 \end{Shaded}
 
-Many of you will need to install \texttt{tensorflow} and \texttt{tensorflow\_datasets} before you're able to \texttt{import} it. If that's so, please read section \ref{installing-packages-in-python} for more information on how to install packages. On my machine, I was able to install it with the commented out line, however, that may not be the case for you. After it is installed, please comment out all lines in your script that attempt to install packages. They will not work on the Gradescope server.
+Many of you will need to install \texttt{tensorflow} and \texttt{tensorflow\_datasets} before you're able to \texttt{import} it. If that's so, please read section \ref{installing-packages-in-python} for more information on how to install packages.
 
 \begin{itemize}
 \tightlist
@@ -4442,6 +4549,15 @@ The above will not print anything to the R console, but we can use a text editor
 
 Alternatively you may choose to store your data in a \textbf{serialized} form. With this approach, you are still saving your data in a more permanent way to your hard drive, but it is stored in format that's usually more memory efficient.
 
+\begin{rmd-details}
+Recall that a common reason for writing out data is to save your progress. When you want to save your progress, it is important to ask yourself: ``is it better to save my progress as a serialized object, or as a raw text file?''
+
+When making this decision, consider \emph{versatility.} On the one hand, raw text files are more versatile and can be used in more places. On the other hand, versatility is often bug prone.
+
+For example, suppose you want to save a cleaned up \texttt{data.frame}. Are you sure you will remember to store that column of strings as \texttt{character} and not a \texttt{factor}? Does any code that uses this \texttt{data.frame} require that this column be in this format?
+
+\end{rmd-details}
+
 For instance, let's save the object \texttt{d} in a file called \texttt{oring.rds}.
 
 \begin{Shaded}
@@ -4780,7 +4896,7 @@ In the example below, we import the entire \texttt{numpy} package in a way that 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np }\CommentTok{\# import all of numpy}
 \NormalTok{np.random.normal(size}\OperatorTok{=}\DecValTok{4}\NormalTok{)}
-\CommentTok{\#\# array([ 0.7212574 , {-}0.99120654, {-}0.06727749, {-}1.01739191])}
+\CommentTok{\#\# array([{-}0.61461946,  0.77477326, {-}1.39826058, {-}0.58426638])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4792,7 +4908,7 @@ As a second example, suppose we were interested in the \href{https://docs.scipy.
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
 \NormalTok{stats.norm().rvs(size}\OperatorTok{=}\DecValTok{4}\NormalTok{)}
-\CommentTok{\#\# array([ 0.96185404, {-}0.47949807, {-}0.74075652, {-}0.35814739])}
+\CommentTok{\#\# array([ 0.43157525, {-}0.43308396, {-}0.33478351,  0.61724302])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4804,7 +4920,7 @@ Finally, we can import the function directly, and refer to it with only one lett
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ normal }\ImportTok{as}\NormalTok{ n}
 \NormalTok{n(size}\OperatorTok{=}\DecValTok{4}\NormalTok{)}
-\CommentTok{\#\# array([{-}1.06710333, {-}0.83851323,  0.74953555, {-}0.5886097 ])}
+\CommentTok{\#\# array([{-}1.2197469 , {-}2.49463229, {-}1.04528684,  0.39691898])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5194,6 +5310,8 @@ We can plot all three functions. The area under the \(p(x)\) and \(q(x)\) curves
 
 \caption{Visualizing Our Three Functions}\label{fig:unnamed-chunk-188}
 \end{figure}
+
+Note that this algorithm allows for other proposal distributions. The only requirement of a proposal distribution is that its range of possible values must subsume the range of possible values of the target.
 
 \begin{itemize}
 \tightlist
@@ -6371,11 +6489,11 @@ If you want to make figures that are more elaborate, just keep calling different
 
 \CommentTok{\# first subplot}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x, label}\OperatorTok{=}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot some data on the axes.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2959ff7278\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f9990fd1ba8\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}quadratic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Plot more data }
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2959ff7390\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f9990fd1cc0\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].plot(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}cubic\textquotesingle{}}\NormalTok{)  }\CommentTok{\# ... and some more.}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2959ff76d8\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f9990fdf048\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{\textquotesingle{}x label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add an x{-}label to the axes.}
 \CommentTok{\#\# Text(0.5, 0, \textquotesingle{}x label\textquotesingle{})}
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{\textquotesingle{}y label\textquotesingle{}}\NormalTok{)  }\CommentTok{\# Add a y{-}label to the axes.}
@@ -6385,11 +6503,11 @@ If you want to make figures that are more elaborate, just keep calling different
 \NormalTok{myAxes[}\DecValTok{0}\NormalTok{].legend()  }\CommentTok{\# Add a legend.}
 
 \CommentTok{\# second subplot}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f295a087080\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f99906642b0\textgreater{}}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].plot(x,np.sin(x), label}\OperatorTok{=}\StringTok{\textquotesingle{}sine wave\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f2959ff7ef0\textgreater{}]}
+\CommentTok{\#\# [\textless{}matplotlib.lines.Line2D object at 0x7f9990fdf828\textgreater{}]}
 \NormalTok{myAxes[}\DecValTok{1}\NormalTok{].legend()}
-\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f295a018080\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.legend.Legend object at 0x7f99910a9400\textgreater{}}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -6426,7 +6544,7 @@ If you already have Pandas \texttt{import}ed, you can make good-looking plots in
 \CommentTok{\#\# }
 \CommentTok{\#\# [5 rows x 7 columns]}
 \NormalTok{df[}\StringTok{\textquotesingle{}GSPC.Adjusted\textquotesingle{}}\NormalTok{].plot()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f2959fe10b8\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f9990cf0d68\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6438,7 +6556,7 @@ Choosing among nondefault plot types can be done in a variety of ways. You can e
 \NormalTok{df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{].plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].plot.hist()}
 \CommentTok{\# same as df[\textquotesingle{}returns\textquotesingle{}].hist()}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f2959fe10b8\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f9990cf0d68\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6450,7 +6568,7 @@ The following code is an example of creating a ``lag plot,'' which is simply a s
 \begin{Highlighting}[]
 \ImportTok{from}\NormalTok{ pandas.plotting }\ImportTok{import}\NormalTok{ lag\_plot}
 \NormalTok{lag\_plot(df[}\StringTok{\textquotesingle{}returns\textquotesingle{}}\NormalTok{])}
-\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f2959fe10b8\textgreater{}}
+\CommentTok{\#\# \textless{}matplotlib.axes.\_subplots.AxesSubplot object at 0x7f9990cf0d68\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6853,7 +6971,7 @@ If you look at the definition of a generic function, let's take \texttt{plot()} 
 \begin{verbatim}
 ## function (x, y, ...) 
 ## UseMethod("plot")
-## <bytecode: 0x5593304effe0>
+## <bytecode: 0x55c2744e60e0>
 ## <environment: namespace:base>
 \end{verbatim}
 
