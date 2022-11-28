@@ -12,7 +12,7 @@ We will not go into this too deeply, but it is important to know how how code wo
 
 Here are a few abstract concepts that will help thinking about OOP. They are not mutually exclusive, and they aren't unique to OOP, but understanding these words will help you understand the purpose of OOP. Later on, when we start looking at code examples, I will alert you to when these concepts are coming into play. 
 
-- **Composition**\index{object-oriented programming!composition} refers to the idea when one type of object *contains* an object of another type. For example, a linear model object could hold onto estimated regression coefficients, residuals, etc.
+- **Composition**\index{object-oriented programming!composition} refers to the idea when one type of object *contains* an object of another type. For example, a linear model object could hold on to estimated regression coefficients, residuals, etc.
 
 - **Inheritance**\index{object-oriented programming!inheritance} takes place when an object can be considered to be of another type(s). For example, an analysis of variance linear regression model might be a special case of a general linear model. 
 
@@ -371,7 +371,7 @@ plot(aDF)
 
 Because `aDF` has its `class` set to `data.frame`, this causes `plot()` to try to find a `plot.data.frame()` method. If this method was not found, R would attempt to find/use a `plot.default()` method. If no default method existed, an error would be thrown. 
 
-As another example, we can play around with objects created with the `ecdf()` function. This function computes an *empirical cumulative distribution function*, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input^[It's defined as $\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)$.]
+As another example, we can play around with objects created with the `ecdf()` function. This function computes an *empirical cumulative distribution function*, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input^[It's defined as $\hat{F}(x) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(X_i \le x)$.].
 
 
 ```{r, collapse = TRUE, out.width="80%", fig.cap = "Plotting an Empirical Cumulative Distribution Function", fig.align='center'}
@@ -441,10 +441,10 @@ Much more information about S4 classes can be obtained by reading [Chapter 15 in
 ### Using S4 objects
 
 One CRAN package that uses S4 is the [Matrix package.](
-https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf) S4 objects are also extremely popular in packages hosted on [Bioconductor](https://www.bioconductor.org/). 
+https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf) Here is a short and simple code example. 
 
 ::: {.rmd-details data-latex=""}
-Bioconductor is kind of like CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided [here](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
+S4 objects are also extremely popular in packages hosted on [Bioconductor](https://www.bioconductor.org/). Bioconductor is similar to CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided [here](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
 ::: 
 
 ```{r, collapse = TRUE}
@@ -476,7 +476,7 @@ setClass("RunningCI",
          contains = "RunningMean")
 ```
 
-Here, unlike in S3 class's, we actually have to define a class with `setClass()`. In the parlance of S4, `slots=` are a class' data members, and `contains=` signals that one class inherits from another (even though it kind of sounds like *composition*).
+Here, unlike in S3 class's, we actually have to define a class with `setClass()`. In the parlance of S4, `slots=` are a class' data members, and `contains=` signals that one class inherits from another (even though "contains" kind of sounds like it's suggesting *composition*).
 
 New objects can be created with the `new()` function after this is accomplished.
 
@@ -727,11 +727,11 @@ mod.get_coeffs()
 
 2.
 
-Reconsider the above question that asked you to write a class called `LinearRegression`. 
+Reconsider the above question that asked you to write a class called `SimpleLinReg`. 
 
-  - Write a new class called `LinearRegression2` that preserves all of the existing functionality of `LinearRegression`. Do this in a way that does not excessively copy and paste code from `LinearRegression`.
+  - Write a new class called `LinearRegression2` that preserves all of the existing functionality of `SimpleLinReg`. Do this in a way that does not excessively copy and paste code from `SimpleLinReg`.
   - Give your new class a method called `.visualize()` that takes no arguments and plots the most recent data, the data most recently provided to `.fit()`, in a scatterplot with the estimated regression line superimposed.
-  - Unfortunately, `LinearRegression().fit(x,y).get_coeffs()` will not return estimated regression coefficients. Give your new class this functionality. In other words, make `LinearRegression2().fit(x,y).get_coeffs()` spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the `self` keyword.
+  - Unfortunately, `SimpleLinReg().fit(x,y).get_coeffs()` will not return estimated regression coefficients. Give your new class this functionality. In other words, make `LinearRegression2().fit(x,y).get_coeffs()` spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the `self` keyword.
 
 3.
 
@@ -832,5 +832,5 @@ w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
   - `initialize()` will set the stored function values equal to the function objects passed in.
   - The functions performing random sampling should only take a single argument referring to the number of samples desired. 
   - The evaluation functions should take a `vector` as an input and return a `vector` as an output. 
-  - Write a method called `computeApproxExpec` that computes the importance sampling estimate of $\int x p(x) dx$.
+  - Write a method called `computeApproxExpec` that computes and returns the importance sampling estimate of $\int x p(x) dx$. Have this method take an integer argument that represents the number of desired samples to use for the computation.
   - Is it better to make this code object-oriented, or would you prefer a simple function that spits out the answer? Why?

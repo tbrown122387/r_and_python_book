@@ -91,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -104,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -448,7 +448,7 @@ div.csl-indent {
 <hr />
 <p>Here are a few abstract concepts that will help thinking about OOP. They are not mutually exclusive, and they aren’t unique to OOP, but understanding these words will help you understand the purpose of OOP. Later on, when we start looking at code examples, I will alert you to when these concepts are coming into play.</p>
 <ul>
-<li><p><strong>Composition</strong> refers to the idea when one type of object <em>contains</em> an object of another type. For example, a linear model object could hold onto estimated regression coefficients, residuals, etc.</p></li>
+<li><p><strong>Composition</strong> refers to the idea when one type of object <em>contains</em> an object of another type. For example, a linear model object could hold on to estimated regression coefficients, residuals, etc.</p></li>
 <li><p><strong>Inheritance</strong> takes place when an object can be considered to be of another type(s). For example, an analysis of variance linear regression model might be a special case of a general linear model.</p></li>
 <li><p><strong>Polymorphism</strong> is the idea that the programmer can use the same code on objects of different types. For example, built-in functions in both R and Python can work on arguments of a wide variety of different types.</p></li>
 <li><p><strong>Encapsulation</strong> is another word for complexity hiding. Do you have to understand every line of code in a package you’re using? No, because a lot of details are purposefully hidden from you.</p></li>
@@ -680,7 +680,7 @@ We might consider taking advantage of a recursive formula for the sample means.<
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="an-introduction-to-object-oriented-programming.html#cb245-1" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
 <pre><code>## function (x, y, ...) 
 ## UseMethod(&quot;plot&quot;)
-## &lt;bytecode: 0x55a6feb10b38&gt;
+## &lt;bytecode: 0x55ce760b0a48&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p><code>UseMethod()</code> performs method dispatch. Which methods can be dispatched to? To see that, use the <code>methods()</code> function.</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="an-introduction-to-object-oriented-programming.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">methods</span>(plot))</span></code></pre></div>
@@ -708,7 +708,7 @@ Figure 14.1: A Scatterplot Matrix
 </p>
 </div>
 <p>Because <code>aDF</code> has its <code>class</code> set to <code>data.frame</code>, this causes <code>plot()</code> to try to find a <code>plot.data.frame()</code> method. If this method was not found, R would attempt to find/use a <code>plot.default()</code> method. If no default method existed, an error would be thrown.</p>
-<p>As another example, we can play around with objects created with the <code>ecdf()</code> function. This function computes an <em>empirical cumulative distribution function</em>, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a></p>
+<p>As another example, we can play around with objects created with the <code>ecdf()</code> function. This function computes an <em>empirical cumulative distribution function</em>, which takes a real number as an input, and outputs the proportion of observations that are less than or equal to that input<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>.</p>
 <div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="an-introduction-to-object-oriented-programming.html#cb250-1" aria-hidden="true" tabindex="-1"></a>myECDF <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
 <span id="cb250-2"><a href="an-introduction-to-object-oriented-programming.html#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.object</span>(myECDF)</span>
 <span id="cb250-3"><a href="an-introduction-to-object-oriented-programming.html#cb250-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
@@ -762,9 +762,9 @@ Figure 14.2: Plotting an Empirical Cumulative Distribution Function
 </div>
 <div id="using-s4-objects" class="section level3 hasAnchor" number="14.2.5">
 <h3><span class="header-section-number">14.2.5</span> Using S4 objects<a href="an-introduction-to-object-oriented-programming.html#using-s4-objects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>One CRAN package that uses S4 is the <a href="https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf">Matrix package.</a> S4 objects are also extremely popular in packages hosted on <a href="https://www.bioconductor.org/">Bioconductor</a>.</p>
+<p>One CRAN package that uses S4 is the <a href="https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf">Matrix package.</a> Here is a short and simple code example.</p>
 <div class="rmd-details">
-<p>Bioconductor is kind of like CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided <a href="https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html">here</a>.</p>
+<p>S4 objects are also extremely popular in packages hosted on <a href="https://www.bioconductor.org/">Bioconductor</a>. Bioconductor is similar to CRAN, but its software has a much more specific focus on bioinformatics. To download packages from Bioconductor, you can check out the installation instructions provided <a href="https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html">here</a>.</p>
 </div>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="an-introduction-to-object-oriented-programming.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
 <span id="cb254-2"><a href="an-introduction-to-object-oriented-programming.html#cb254-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">Matrix</span>(<span class="dv">10</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">4</span>, <span class="dv">7</span>)</span>
@@ -796,7 +796,7 @@ Figure 14.2: Plotting an Empirical Cumulative Distribution Function
 <span id="cb255-4"><a href="an-introduction-to-object-oriented-programming.html#cb255-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;RunningCI&quot;</span>,</span>
 <span id="cb255-5"><a href="an-introduction-to-object-oriented-programming.html#cb255-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">slots =</span> <span class="fu">list</span>(<span class="at">knownVar =</span> <span class="st">&quot;numeric&quot;</span>),</span>
 <span id="cb255-6"><a href="an-introduction-to-object-oriented-programming.html#cb255-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">contains =</span> <span class="st">&quot;RunningMean&quot;</span>)</span></code></pre></div>
-<p>Here, unlike in S3 class’s, we actually have to define a class with <code>setClass()</code>. In the parlance of S4, <code>slots=</code> are a class’ data members, and <code>contains=</code> signals that one class inherits from another (even though it kind of sounds like <em>composition</em>).</p>
+<p>Here, unlike in S3 class’s, we actually have to define a class with <code>setClass()</code>. In the parlance of S4, <code>slots=</code> are a class’ data members, and <code>contains=</code> signals that one class inherits from another (even though “contains” kind of sounds like it’s suggesting <em>composition</em>).</p>
 <p>New objects can be created with the <code>new()</code> function after this is accomplished.</p>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="an-introduction-to-object-oriented-programming.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;RunningMean&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>)</span>
 <span id="cb256-2"><a href="an-introduction-to-object-oriented-programming.html#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="fu">new</span>(<span class="st">&quot;RunningCI&quot;</span>, <span class="at">n =</span> 0L, <span class="at">currentXbar =</span> <span class="dv">0</span>, <span class="at">knownVar =</span> <span class="fl">1.0</span>)</span></code></pre></div>
@@ -1021,11 +1021,11 @@ The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="m
 <ol start="2" style="list-style-type: decimal">
 <li></li>
 </ol>
-<p>Reconsider the above question that asked you to write a class called <code>LinearRegression</code>.</p>
+<p>Reconsider the above question that asked you to write a class called <code>SimpleLinReg</code>.</p>
 <ul>
-<li>Write a new class called <code>LinearRegression2</code> that preserves all of the existing functionality of <code>LinearRegression</code>. Do this in a way that does not excessively copy and paste code from <code>LinearRegression</code>.</li>
+<li>Write a new class called <code>LinearRegression2</code> that preserves all of the existing functionality of <code>SimpleLinReg</code>. Do this in a way that does not excessively copy and paste code from <code>SimpleLinReg</code>.</li>
 <li>Give your new class a method called <code>.visualize()</code> that takes no arguments and plots the most recent data, the data most recently provided to <code>.fit()</code>, in a scatterplot with the estimated regression line superimposed.</li>
-<li>Unfortunately, <code>LinearRegression().fit(x,y).get_coeffs()</code> will not return estimated regression coefficients. Give your new class this functionality. In other words, make <code>LinearRegression2().fit(x,y).get_coeffs()</code> spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the <code>self</code> keyword.</li>
+<li>Unfortunately, <code>SimpleLinReg().fit(x,y).get_coeffs()</code> will not return estimated regression coefficients. Give your new class this functionality. In other words, make <code>LinearRegression2().fit(x,y).get_coeffs()</code> spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the <code>self</code> keyword.</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li></li>
@@ -1121,7 +1121,7 @@ w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
 <li><code>initialize()</code> will set the stored function values equal to the function objects passed in.</li>
 <li>The functions performing random sampling should only take a single argument referring to the number of samples desired.</li>
 <li>The evaluation functions should take a <code>vector</code> as an input and return a <code>vector</code> as an output.</li>
-<li>Write a method called <code>computeApproxExpec</code> that computes the importance sampling estimate of <span class="math inline">\(\int x p(x) dx\)</span>.</li>
+<li>Write a method called <code>computeApproxExpec</code> that computes and returns the importance sampling estimate of <span class="math inline">\(\int x p(x) dx\)</span>. Have this method take an integer argument that represents the number of desired samples to use for the computation.</li>
 <li>Is it better to make this code object-oriented, or would you prefer a simple function that spits out the answer? Why?</li>
 </ul>
 
