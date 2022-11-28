@@ -106,7 +106,9 @@ There are other functions that operate on one or more `matrix` objects in more i
 
 ### R Questions
 
-1. Consider the following data set. Let $N = 20$ be the number of rows. For $i=1,\ldots,N$, define $\mathbf{x}_i \in \mathbb{R}^4$ as the data in row $i$.
+1. 
+
+Consider the following data set. Let $N = 20$ be the number of rows. For $i=1,\ldots,N$, define $\mathbf{x}_i \in \mathbb{R}^4$ as the data in row $i$.
 
 ```{r}
 d <- matrix(c(
@@ -134,20 +136,24 @@ d <- matrix(c(
 
 For the following problems, make sure to only use the transpose function `t()`, matrix multiplication (i.e. `%*%`), and scalar multiplication/division. You may use other functions in interactive mode to check your work, but please do not use them in your submission.
 
-  a. Calculate the sample mean $\bar{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i$. Check your work with `colMeans()`, **but don't use that function in your submitted code.** Assign it to the variable `xbar`. Make sure it is a $4 \times 1$ `matrix` object.
+    a. Calculate the sample mean $\bar{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i$. Check your work with `colMeans()`, **but don't use that function in your submitted code.** Assign it to the variable `xbar`. Make sure it is a $4 \times 1$ `matrix` object.
   
-  b. Calculate the $4 \times 4$ sample covariance of the following data. Call the variable `mySampCov`, and make sure it is also a `matrix` object. 
+    b. Calculate the $4 \times 4$ sample covariance of the following data. Call the variable `mySampCov`, and make sure it is also a `matrix` object. 
   
-  A formula for the sample covariance is 
-\begin{equation} 
-\frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
-\end{equation}
-**You can check your work with `cov()`, but don't use it in your submitted code.**
+    A formula for the sample covariance is 
+    \begin{equation} 
+    \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
+    \end{equation}
+    **You can check your work with `cov()`, but don't use it in your submitted code.**
 
 
-2. Create a `matrix` called `P` that has one hundred rows, one hundred columns, all of its elements nonnegative, $1/10$ on every diagonal element, and all rows summing to one. This matrix is called **stochastic** and it describes how a Markov chain moves randomly through time. 
+2. 
 
-3. Create a `matrix` called `X` that has one thousand rows, four columns, has every element set to either $0$ or $1$, has its first column set to all $1$s, has the second column set to $1$ in the second $250$ elements and $0$ elsewhere, has the third column set to $1$ in the third $250$ spots and $0$ elsewhere, and has the fourth column set to $1$ in the last $250$ spots and $0$ elsewhere. In other words, it looks something like
+Create a `matrix` called `P` that has one hundred rows, one hundred columns, all of its elements nonnegative, $1/10$ on every diagonal element, and all rows summing to one. This matrix is called **stochastic** and it describes how a Markov chain moves randomly through time. 
+
+3. 
+
+Create a `matrix` called `X` that has one thousand rows, four columns, has every element set to either $0$ or $1$, has its first column set to all $1$s, has the second column set to $1$ in the second $250$ elements and $0$ elsewhere, has the third column set to $1$ in the third $250$ spots and $0$ elsewhere, and has the fourth column set to $1$ in the last $250$ spots and $0$ elsewhere. In other words, it looks something like
   
 \begin{equation} 
   \begin{bmatrix}
@@ -159,17 +165,19 @@ For the following problems, make sure to only use the transpose function `t()`, 
 \end{equation}
 where $\mathbf{1}_{250}$ and $\mathbf{0}_{250}$ are length $250$ column vectors with all of their elements set to $1$ or $0$, respectively.
 
-  a. Compute the **projection (or hat) matrix** $\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal$. Make it a `matrix` and call it `H`. 
+    a. Compute the **projection (or hat) matrix** $\mathbf{H} := \mathbf{X}\left(\mathbf{X}^\intercal \mathbf{X}\right)^{-1} \mathbf{X}^\intercal$. Make it a `matrix` and call it `H`. 
   
-  b. An **exchangeable** covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten $100 \times 100$ **exchangeable** covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,.01,.02, ..., .09.$  Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $10$ matrices you have. Name this array `myCovMats`
+    b. An **exchangeable** covariance matrix for a random vector is a covariance matrix that has all the same variances, and all the same covariances. In other words, it has two unique elements: the diagonal elements should be the same, and the off-diagonals should be the same. In R, generate ten $100 \times 100$ **exchangeable** covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,.01,.02, ..., .09.$  Store these ten covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $10$ matrices you have. Name this array `myCovMats`
   
-  c. In R, generate one hundred $10 \times 10$ **exchangeable** covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,0.0009090909, ..., 0.0890909091, .09.$  Store these $100$ covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $100$ matrices you have. Name this array `myCovMats2`
+    c. In R, generate one hundred $10 \times 10$ **exchangeable** covariance matrices, each with $2$ as the variance, and have the possible covariances take values in the collection $0,0.0009090909, ..., 0.0890909091, .09.$  Store these $100$ covariance matrices in a three-dimensional array. The first index should be each matrix's row index, the second should be the column index of each matrix, and the third index should be the "layer" or "slice" indicating which of the $100$ matrices you have. Name this array `myCovMats2`
 
 
 ### Python Questions
 
 
-1. Let $\mathbf{X}$ be an $n \times 1$ random vector. It has a multivariate normal distribution with mean vector $\mathbf{m}$ and positive definite covariance matrix $\mathbf{C}$ if its probability density function can be written as 
+1. 
+
+Let $\mathbf{X}$ be an $n \times 1$ random vector. It has a multivariate normal distribution with mean vector $\mathbf{m}$ and positive definite covariance matrix $\mathbf{C}$ if its probability density function can be written as 
 
 \begin{equation} 
 f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C} \right)^{-1/2}\exp\left[- \frac{1}{2} (\mathbf{x}- \mathbf{m})^\intercal \mathbf{C}^{-1} (\mathbf{x}- \mathbf{m}) \right]
@@ -178,9 +186,9 @@ f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C}
 
 Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider. 
 
-  + Inverting very large matrices with either [`np.linalg.solve`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) or [`np.linalg.inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html) becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
+    + Inverting very large matrices with either [`np.linalg.solve`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) or [`np.linalg.inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html) becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
   
-  + Recall from the last lab that exponentiating numbers close to $-\infty$ risks numerical underflow. It's better to prefer evaluating log densities (base $e$, the natural logarithm). There are also [special functions that evaluate log determinants](https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html) that are less likely to underflow/overflow, too!  
+    + Recall from the last lab that exponentiating numbers close to $-\infty$ risks numerical underflow. It's better to prefer evaluating log densities (base $e$, the natural logarithm). There are also [special functions that evaluate log determinants](https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html) that are less likely to underflow/overflow, too!  
   
 Complete the following problems. **Do not use pre-made functions such as [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) and [`scipy.stats.multivariate_normal`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html) in your submission, but you may use them to check your work. Use only "standard" functions and Numpy n-dimensional arrays.** Use the following definitions for $\mathbf{x}$ and $\mathbf{m}$:
 
@@ -190,14 +198,16 @@ x = np.array([1.1, .9, 1.0]).reshape((3,1))
 m = np.ones(3).reshape((3,1))
 ```
   
-  a. Let $\mathbf{C} =  \begin{bmatrix} 10 & 0 & 0 \\ 0 & 10 & 0 \\ 0 & 0 & 10 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens1`. Can you do this without defining a numpy array for $\mathbf{C}$?
+    a. Let $\mathbf{C} =  \begin{bmatrix} 10 & 0 & 0 \\ 0 & 10 & 0 \\ 0 & 0 & 10 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens1`. Can you do this without defining a numpy array for $\mathbf{C}$?
   
-  b. Let $\mathbf{C} =  \begin{bmatrix} 10 & 0 & 0 \\ 0 & 11 & 0 \\ 0 & 0 & 12 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens2`. Can you do this without defining a numpy array for $\mathbf{C}$?
+    b. Let $\mathbf{C} =  \begin{bmatrix} 10 & 0 & 0 \\ 0 & 11 & 0 \\ 0 & 0 & 12 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens2`. Can you do this without defining a numpy array for $\mathbf{C}$?
   
-  c. Let $\mathbf{C} =  \begin{bmatrix} 10 & -.9 & -.9 \\ -.9 & 11 & -.9 \\ -.9 & -.9 & 12 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens3`. Can you do this without defining a numpy array for $\mathbf{C}$?
+    c. Let $\mathbf{C} =  \begin{bmatrix} 10 & -.9 & -.9 \\ -.9 & 11 & -.9 \\ -.9 & -.9 & 12 \end{bmatrix}$. Evaluate and assign the log density to a `float`-like called `log_dens3`. Can you do this without defining a numpy array for $\mathbf{C}$?
   
 
-2. Consider this [wine data set](https://archive.ics.uci.edu/ml/datasets/Wine+Quality) from [@wine_data] hosted by [@uci_data]. Read it in with the following code. Note that you might need to use `os.chdir()` first.
+2. 
+
+Consider this [wine data set](https://archive.ics.uci.edu/ml/datasets/Wine+Quality) from [@wine_data] hosted by [@uci_data]. Read it in with the following code. Note that you might need to use `os.chdir()` first.
 
 ```{python, eval = FALSE}
 import pandas as pd
@@ -205,12 +215,12 @@ d = pd.read_csv("winequality-red.csv", sep = ";")
 d.head()
 ```
 
-  a. Create the **design matrix** (denoted mathematically by $\mathbf{X}$) by removing the `"quality"` column, and subtracting the column mean from each element. Call the variable `X`, and make sure that it is a Numpy `ndarray`, not a Pandas `DataFrame`. 
+    a. Create the **design matrix** (denoted mathematically by $\mathbf{X}$) by removing the `"quality"` column, and subtracting the column mean from each element. Call the variable `X`, and make sure that it is a Numpy `ndarray`, not a Pandas `DataFrame`. 
   
-  b. Compute the **spectral decomposition** of $\mathbf{X}^\intercal \mathbf{X}$. In other words, find "special" matrices^[Do not worry too much about the properties of these matrices for this problem] $\mathbf{V}$ and $\boldsymbol{\Lambda}$ such that $\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal$. Note that the *eigenvectors* are stored as columns in a matrix $\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 & \cdots & \mathbf{V}_{11}\end{bmatrix}$, and the scalar *eigenvalues* are stored as diagonal elements $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})$. Store the eigenvectors in an `ndarray` called `eig_vecs`, and store the eigenvalues in a Numpy `array` called `eig_vals`. Hint: use [`np.linalg.eig()`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html). Also, if you're rusty with your linear algebra, don't worry too much about refreshing your memory about what eigenvectors and eigenvalues are. 
+    b. Compute the **spectral decomposition** of $\mathbf{X}^\intercal \mathbf{X}$. In other words, find "special" matrices^[Do not worry too much about the properties of these matrices for this problem] $\mathbf{V}$ and $\boldsymbol{\Lambda}$ such that $\mathbf{X}^\intercal \mathbf{X} = \mathbf{V} \boldsymbol{\Lambda} \mathbf{V}^\intercal$. Note that the *eigenvectors* are stored as columns in a matrix $\mathbf{V} := \begin{bmatrix} \mathbf{V}_1 & \cdots & \mathbf{V}_{11}\end{bmatrix}$, and the scalar *eigenvalues* are stored as diagonal elements $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_{11})$. Store the eigenvectors in an `ndarray` called `eig_vecs`, and store the eigenvalues in a Numpy `array` called `eig_vals`. Hint: use [`np.linalg.eig()`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html). Also, if you're rusty with your linear algebra, don't worry too much about refreshing your memory about what eigenvectors and eigenvalues are. 
 
-  c. Compute the **singular value decomposition** of $\mathbf{X}$. In other words, find "special"^[Again, do not worry too much about the properties of these matrices for this problem.] matrices $\mathbf{U}$, $\mathbf{\Sigma}$, and $\mathbf{V}$ such that $\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal$. Use [`np.linalg.svd`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html), and don't worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two $\mathbf{V}$ matrices should be the same, and the elements of $\boldsymbol{\Sigma}$ should be the square roots of the elements of $\boldsymbol{\Lambda}$. Store the eigenvectors as columns in an `ndarray` called `eig_vecs_v2`, and store the singular values (diagonal elements of $\boldsymbol{\Sigma}$) in a Numpy `array` called `sing_vals`. 
+    c. Compute the **singular value decomposition** of $\mathbf{X}$. In other words, find "special"^[Again, do not worry too much about the properties of these matrices for this problem.] matrices $\mathbf{U}$, $\mathbf{\Sigma}$, and $\mathbf{V}$ such that $\mathbf{X} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\intercal$. Use [`np.linalg.svd`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html), and don't worry too much about the mathematical details. These two decompositions are related. If you do it correctly, the two $\mathbf{V}$ matrices should be the same, and the elements of $\boldsymbol{\Sigma}$ should be the square roots of the elements of $\boldsymbol{\Lambda}$. Store the eigenvectors as columns in an `ndarray` called `eig_vecs_v2`, and store the singular values (diagonal elements of $\boldsymbol{\Sigma}$) in a Numpy `array` called `sing_vals`. 
   
-  d. Compute the **first principal component** vector, and call it `first_pc_v1`. The mathematical formula is $\mathbf{X} \mathbf{U}_1$ where $\mathbf{U}_1$ is the eigenvector associated with the largest eigenvalue $\lambda_1$. This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors. 
+    d. Compute the **first principal component** vector, and call it `first_pc_v1`. The mathematical formula is $\mathbf{X} \mathbf{U}_1$ where $\mathbf{U}_1$ is the eigenvector associated with the largest eigenvalue $\lambda_1$. This can be thought of as, in a sense, the most informative predictor that you can create by averaging together all other predictors. 
 
   

@@ -562,29 +562,30 @@ and the *residuals (or errors)*
 \end{equation}
 
 Write a function called `getLinModEstimates()` that takes in two arguments in the following order:
-  a. the `vector` of response data $\mathbf{y}$
-  b. the `matrix` of predictors $\mathbf{X}$.
+
+    + the `vector` of response data $\mathbf{y}$
+    + the `matrix` of predictors $\mathbf{X}$.
 
 Have it return a named `list` with three outputs inside:
   
-  a. the coefficient estimates as a `vector`, 
-  b. a `vector` of fitted values, and
-  c. a `vector` of residuals. 
+    + the coefficient estimates as a `vector`, 
+    + a `vector` of fitted values, and
+    + a `vector` of residuals. 
 
-  The three elements of the returned list should have the names `coefficients`, `fitVals`, and `residuals`.
+The three elements of the returned list should have the names `coefficients`, `fitVals`, and `residuals`.
 
 
 2. 
 
 Write a function called `monteCarlo` that
 
-  - takes as an input a function `sim(n)` that simulates `n` scalar variables,   
-  - takes as an input a function that evaluates $f(x)$ on each random variable sample and that ideally takes in all of the random variables as a `vector`, and
-  - returns a function that takes one integer-valued argument (`num_sims`) and outputs a length one `vector`. 
+    + takes as an input a function `sim(n)` that simulates `n` scalar variables,   
+    + takes as an input a function that evaluates $f(x)$ on each random variable sample and that ideally takes in all of the random variables as a `vector`, and
+    + returns a function that takes one integer-valued argument (`num_sims`) and outputs a length one `vector`. 
 
-  Assume `sim(n)` only has one argument: `n`, which is the number of simulations desired. `sim(n)`'s output should be a length `n` `vector`. 
+Assume `sim(n)` only has one argument: `n`, which is the number of simulations desired. `sim(n)`'s output should be a length `n` `vector`. 
 
-  The output of this returned function should be a Monte Carlo estimate of the expectation: $\mathbb{E}[f(X)] \approx \frac{1}{n}\sum_{i=1}^n f(X^i)$.
+The output of this returned function should be a Monte Carlo estimate of the expectation: $\mathbb{E}[f(X)] \approx \frac{1}{n}\sum_{i=1}^n f(X^i)$.
   
 
 3. 
@@ -615,15 +616,15 @@ x_{n+1} = x_{n} - \frac{f'(x_n)}{f''(x_{n})}.
 Under appropriate regularity conditions for $f$, after many iterations of the above recursion, when $\tilde{n}$ is very large, $x_{\tilde{n}}$ will be nearly the same as $x_{\tilde{n}-1}$, and $x_{\tilde{n}}$ is pretty close to  $\text{argmin}_x f(x)$. In other words, $x_{\tilde{n}}$ is the minimizer of $f$, and a root of $f'$.
 
 
-  - Write a function called `f` that takes a `float` `x` and returns $(x-42)^2 - 33$. 
-  - Write a function called `f_prime` that takes a `float` and returns the derivative of the above.
-  - Write a function called `f_dub_prime` that takes a `float` and returns an evaluation of the second derivative of $f$.
-  - Theoretically, what is the minimizer of $f$? Assign your answer to the variable `best_x`.
-  - Write a function called `minimize()` that takes three arguments, and performs **ten iterations** of Newton's algorithm, after which it returns $x_{10}$. Don't be afraid of copy/pasting ten or so lines of code. We haven't learned loops yet, so that's fine. The ordered arguments are:
-    * the function that evaluates the derivative of the function you're interested in,
-    * the function that evaluates the second derivative of your objective function,
-    * an initial guess of the minimizer.
-  - Test your function by plugging in the above functions, and use a starting point of $10$. Assign the output to a variable called `x_ten`. 
+    a. Write a function called `f` that takes a `float` `x` and returns $(x-42)^2 - 33$. 
+    b. Write a function called `f_prime` that takes a `float` and returns the derivative of the above.
+    c. Write a function called `f_dub_prime` that takes a `float` and returns an evaluation of the second derivative of $f$.
+    d. Theoretically, what is the minimizer of $f$? Assign your answer to the variable `best_x`.
+    e. Write a function called `minimize()` that takes three arguments, and performs **ten iterations** of Newton's algorithm, after which it returns $x_{10}$. Don't be afraid of copy/pasting ten or so lines of code. We haven't learned loops yet, so that's fine. The ordered arguments are:
+      * the function that evaluates the derivative of the function you're interested in,
+      * the function that evaluates the second derivative of your objective function,
+      * an initial guess of the minimizer.
+    f. Test your function by plugging in the above functions, and use a starting point of $10$. Assign the output to a variable called `x_ten`. 
   
   
 2.

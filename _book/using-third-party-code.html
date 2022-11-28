@@ -446,13 +446,13 @@ div.csl-indent {
 <div id="installing-packages-in-r" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Installing Packages In R<a href="using-third-party-code.html#installing-packages-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In R, there are thousands of free, user-created <strong>packages</strong> <span class="citation">(<a href="#ref-r_for_everyone" role="doc-biblioref">Lander 2017</a>)</span>. You can download most of these from the <a href="https://cran.r-project.org/"><em>Comprehensive R Archive Network</em></a>. You can also download packages from other publishing platforms like <a href="https://www.bioconductor.org/">Bioconductor</a>, or <a href="https://github.com/">Github</a>. Installing from CRAN is more commonplace, and extremely easy to do. Just use the <code>install.packages()</code> function. This can be run inside your R console, so there is no need to type things into the command line.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="using-third-party-code.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;thePackage&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="using-third-party-code.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;thePackage&quot;</span>)</span></code></pre></div>
 </div>
 <div id="installing-packages-in-python" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Installing Packages In Python<a href="using-third-party-code.html#installing-packages-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn’t surprising, because Python is used more extensively than R in fields other than data science.</p>
 <p>If you followed the suggestions provided in earlier in the text, then you installed Anaconda. This means you will usually be using the <a href="https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/"><code>conda</code> command</a>. Point-and-click interfaces are made available as well.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb173-1"><a href="using-third-party-code.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install the_package</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb210-1"><a href="using-third-party-code.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install the_package</span></code></pre></div>
 <p>There are some packages that will not be available using this method. For more information on that situation, see <a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#install-non-conda-packages">here.</a></p>
 </div>
 <div id="loading-packages-in-r" class="section level2 hasAnchor" number="10.3">
@@ -464,7 +464,7 @@ div.csl-indent {
 <li>different packages you load in sometimes share names accidentally.</li>
 </ul>
 <p>Starting off with the basics, here’s how to load in a package of third-party code. Just type the following into your R console.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="using-third-party-code.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thePackage)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="using-third-party-code.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thePackage)</span></code></pre></div>
 <p>You can also use the <code>require()</code> function, which has slightly different behavior when the requested package is not found.</p>
 <p>To understand this more deeply, we need to talk about <strong>environments</strong> again. We discussed these before in <a href="functions.html#more-details-on-rs-user-defined-functions">6.3</a>, but only in the context of user-defined functions. When we load in a package with <code>library()</code>, we make its contents available by putting it all in an environment for that package.</p>
 <p>An <a href="https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects">environment</a> holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in R pre-loaded have their own environment.</p>
@@ -486,25 +486,25 @@ Figure 10.1: The Environment Window in RStudio
 <li><p>Third, don’t use <code>library()</code> inside code that is <code>source()</code>’d in other files. For example, if you attach a package to the search path from within a function you defined, anybody that uses your function loses control over the order of packages that get attached.</p></li>
 </ul>
 <p>All is not lost if there is a name conflict. The variables haven’t disappeared. It’s just slightly more difficult to refer to them. For instance, if I load in <code>Hmisc</code> <span class="citation">(<a href="#ref-hmisc" role="doc-biblioref">Harrell Jr, Charles Dupont, and others. 2021</a>)</span>, I get the warning warning that <code>format.pval</code> and <code>units</code> are now masked because they were names that were in <code>"package:base"</code>. I can still refer to these masked variables with the double colon operator (<code>::</code>).</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="using-third-party-code.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb175-2"><a href="using-third-party-code.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this now refers to Hmisc&#39;s format.pval </span></span>
-<span id="cb175-3"><a href="using-third-party-code.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="co"># because it was loaded more recently</span></span>
-<span id="cb175-4"><a href="using-third-party-code.html#cb175-4" aria-hidden="true" tabindex="-1"></a>format.pval </span>
-<span id="cb175-5"><a href="using-third-party-code.html#cb175-5" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span>format.pval <span class="co"># in this case is the same as above</span></span>
-<span id="cb175-6"><a href="using-third-party-code.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="co"># the below code is the only way </span></span>
-<span id="cb175-7"><a href="using-third-party-code.html#cb175-7" aria-hidden="true" tabindex="-1"></a><span class="co"># you can get base&#39;s format.pval now</span></span>
-<span id="cb175-8"><a href="using-third-party-code.html#cb175-8" aria-hidden="true" tabindex="-1"></a>base<span class="sc">::</span>format.pval  </span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="using-third-party-code.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb212-2"><a href="using-third-party-code.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this now refers to Hmisc&#39;s format.pval </span></span>
+<span id="cb212-3"><a href="using-third-party-code.html#cb212-3" aria-hidden="true" tabindex="-1"></a><span class="co"># because it was loaded more recently</span></span>
+<span id="cb212-4"><a href="using-third-party-code.html#cb212-4" aria-hidden="true" tabindex="-1"></a>format.pval </span>
+<span id="cb212-5"><a href="using-third-party-code.html#cb212-5" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span>format.pval <span class="co"># in this case is the same as above</span></span>
+<span id="cb212-6"><a href="using-third-party-code.html#cb212-6" aria-hidden="true" tabindex="-1"></a><span class="co"># the below code is the only way </span></span>
+<span id="cb212-7"><a href="using-third-party-code.html#cb212-7" aria-hidden="true" tabindex="-1"></a><span class="co"># you can get base&#39;s format.pval now</span></span>
+<span id="cb212-8"><a href="using-third-party-code.html#cb212-8" aria-hidden="true" tabindex="-1"></a>base<span class="sc">::</span>format.pval  </span></code></pre></div>
 </div>
 <div id="loading-packages-in-python" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Loading Packages In Python<a href="using-third-party-code.html#loading-packages-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In Python, you use the <code>import</code> statement to access objects defined in another file. It is slightly more complicated than R’s <code>library()</code> function, but it is also more flexible. To make the contents of a package called, say, <code>the_package</code> available, type <em>one of the following</em> inside a Python session.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb176-1"><a href="using-third-party-code.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> the_package</span>
-<span id="cb176-2"><a href="using-third-party-code.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> the_package <span class="im">as</span> tp </span>
-<span id="cb176-3"><a href="using-third-party-code.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> the_package <span class="im">import</span> <span class="op">*</span></span></code></pre></div>
-<p>To describe the difference between these three approaches, as well as to highlight the important takeaways and compare them with the important takeaways in the last section, we need to discuss what a Python module is, what a package is, and what a Python namespace is.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb213-1"><a href="using-third-party-code.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> the_package</span>
+<span id="cb213-2"><a href="using-third-party-code.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> the_package <span class="im">as</span> tp </span>
+<span id="cb213-3"><a href="using-third-party-code.html#cb213-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> the_package <span class="im">import</span> <span class="op">*</span></span></code></pre></div>
+<p>To describe the difference between these three approaches, as well as to highlight the important takeaways and compare them with the important takeaways in the last section, we need to discuss what a Python module is, what a package is, and what a Python namespace is.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></p>
 <ul>
-<li><p>A Python <a href="https://docs.python.org/3/tutorial/modules.html"><strong><code>module</code></strong></a> is a <code>.py</code> file, separate from the one you are currently editing, with function and/or object definitions in it.<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p></li>
-<li><p>A <a href="https://docs.python.org/3/tutorial/modules.html#packages">package</a> is a group of modules.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a></p></li>
+<li><p>A Python <a href="https://docs.python.org/3/tutorial/modules.html"><strong><code>module</code></strong></a> is a <code>.py</code> file, separate from the one you are currently editing, with function and/or object definitions in it.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p></li>
+<li><p>A <a href="https://docs.python.org/3/tutorial/modules.html#packages">package</a> is a group of modules.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p></li>
 <li><p>A <a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces"><strong>namespace</strong></a> is “a mapping from names to objects.”</p></li>
 </ul>
 <p>With these definitions, we can define <code>import</code>ing. According to the <a href="https://docs.python.org/3/reference/import.html#the-import-system">Python documentation</a>, “[t]he import statement combines two operations; it searches for the named module, then it binds the results of that search to a name in the local scope.”</p>
@@ -529,26 +529,26 @@ Figure 10.1: The Environment Window in RStudio
 <div id="importing-examples" class="section level3 hasAnchor" number="10.4.1">
 <h3><span class="header-section-number">10.4.1</span> <code>import</code>ing Examples<a href="using-third-party-code.html#importing-examples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb177-1"><a href="using-third-party-code.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
-<span id="cb177-2"><a href="using-third-party-code.html#cb177-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb177-3"><a href="using-third-party-code.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.61461946,  0.77477326, -1.39826058, -0.58426638])</span></span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb214-1"><a href="using-third-party-code.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></span>
+<span id="cb214-2"><a href="using-third-party-code.html#cb214-2" aria-hidden="true" tabindex="-1"></a>np.random.normal(size<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb214-3"><a href="using-third-party-code.html#cb214-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-0.61461946,  0.77477326, -1.39826058, -0.58426638])</span></span></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">14</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb178-1"><a href="using-third-party-code.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb178-2"><a href="using-third-party-code.html#cb178-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb178-3"><a href="using-third-party-code.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.43157525, -0.43308396, -0.33478351,  0.61724302])</span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb215-1"><a href="using-third-party-code.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb215-2"><a href="using-third-party-code.html#cb215-2" aria-hidden="true" tabindex="-1"></a>stats.norm().rvs(size<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb215-3"><a href="using-third-party-code.html#cb215-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([ 0.43157525, -0.43308396, -0.33478351,  0.61724302])</span></span></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb179-1"><a href="using-third-party-code.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
-<span id="cb179-2"><a href="using-third-party-code.html#cb179-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb179-3"><a href="using-third-party-code.html#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.2197469 , -2.49463229, -1.04528684,  0.39691898])</span></span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb216-1"><a href="using-third-party-code.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</span>
+<span id="cb216-2"><a href="using-third-party-code.html#cb216-2" aria-hidden="true" tabindex="-1"></a>n(size<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb216-3"><a href="using-third-party-code.html#cb216-3" aria-hidden="true" tabindex="-1"></a><span class="co">## array([-1.2197469 , -2.49463229, -1.04528684,  0.39691898])</span></span></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb180-1"><a href="using-third-party-code.html#cb180-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span> <span class="co"># now you can&#39;t use n as a function </span></span>
-<span id="cb180-2"><a href="using-third-party-code.html#cb180-2" aria-hidden="true" tabindex="-1"></a>n()   </span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb217-1"><a href="using-third-party-code.html#cb217-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span> <span class="co"># now you can&#39;t use n as a function </span></span>
+<span id="cb217-2"><a href="using-third-party-code.html#cb217-2" aria-hidden="true" tabindex="-1"></a>n()   </span></code></pre></div>
 <p>This is very bad, because now you cannot use the <code>n()</code> function that was imported from the <code>numpy.random</code> sub-module earlier. In other words, it is longer <em>callable</em>. The error message from the above code will be something like <code>TypeError: 'int' object is not callable</code>.</p>
 <p>Use the <code>dir()</code> function to see what is available inside a module. Here are a few examples. Type them into your own machine to see what they output.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb181-1"><a href="using-third-party-code.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(np) <span class="co"># numpy stuff</span></span>
-<span id="cb181-2"><a href="using-third-party-code.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(__builtins__) <span class="co">#built-in stuff</span></span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb218-1"><a href="using-third-party-code.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(np) <span class="co"># numpy stuff</span></span>
+<span id="cb218-2"><a href="using-third-party-code.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(__builtins__) <span class="co">#built-in stuff</span></span></code></pre></div>
 </div>
 </div>
 <div id="exercises-8" class="section level2 hasAnchor" number="10.5">
@@ -557,49 +557,39 @@ Figure 10.1: The Environment Window in RStudio
 <li></li>
 </ol>
 <p>What are important differences in the package installation procedures of R and Python? Select all that apply.</p>
-<ul>
-<li>Installing R packages can be done from within R, while installing packages in Python can be done in the command line.</li>
-<li>Installing R packages can usually be done with the same function <code>install.packages()</code>, while installing packages in Python can be done with a variety of package installers such as <code>pip install</code> and <code>conda install</code>.</li>
-<li>There is only one package repository for R, but many for Python.</li>
-<li>There is only one package repository for Python, but many for R.</li>
-</ul>
+<pre><code>a. Installing R packages can be done from within R, while installing packages in Python can be done in the command line.
+b. Installing R packages can usually be done with the same function `install.packages()`, while installing packages in Python can be done with a variety of package installers such as `pip install` and `conda install`.
+c. There is only one package repository for R, but many for Python.
+d. There is only one package repository for Python, but many for R.</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li></li>
 </ol>
 <p>What are important similarities and differences in the package loading procedures of R and Python? Select all that apply.</p>
-<ul>
-<li>R and Python both have a search path.</li>
-<li>R’s <code>::</code> operator is very similar to Python’s <code>.</code> operator because they can both help access variable names inside packages.</li>
-<li>Python namespaces are unlike R environments in that they are not arranged into a sorted list.</li>
-<li><code>library(package)</code> in R is similar to <code>from package import *</code> in Python because it will allow you to refer to all variables in <code>package</code> without qualification.</li>
-<li>Python packages might have <code>sub-modules</code> whereas R’s packages do not.</li>
-</ul>
+<pre><code>a. R and Python both have a search path.
+b. R&#39;s `::` operator is very similar to Python&#39;s `.` operator because they can both help access variable names inside packages.
+c. Python namespaces are unlike R environments in that they are not arranged into a sorted list.
+d. `library(package)` in R is similar to `from package import *` in Python because it will allow you to refer to all variables in `package` without qualification.
+e. Python packages might have `sub-modules` whereas R&#39;s packages do not.</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li></li>
 </ol>
 <p>In Python, which of the following is, generally speaking, the best way to <code>import</code>?</p>
-<ul>
-<li><code>import the_package</code></li>
-<li><code>from the_package import *</code></li>
-<li><code>import the_package as tp</code></li>
-</ul>
+<pre><code>+ `import the_package`
++ `from the_package import *`
++ `import the_package as tp`</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li></li>
 </ol>
 <p>In Python, which of the following is, generally speaking, the worst way to <code>import</code>?</p>
-<ul>
-<li><code>import the_package</code></li>
-<li><code>from the_package import *</code></li>
-<li><code>import the_package as tp</code></li>
-</ul>
+<pre><code>+ `import the_package`
++ `from the_package import *`
++ `import the_package as tp`</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li></li>
 </ol>
 <p>In R, if you want to use a function <code>func()</code> from <code>package</code>, do you always have to use <code>library(package)</code> or <code>require(package)</code> first?</p>
-<ul>
-<li>yes, otherwise <code>func()</code> won’t be available.</li>
-<li>no, you can just use <code>package::func()</code> without calling any function that performs pre-loading.</li>
-</ul>
+<pre><code>+ Yes, otherwise `func()` won&#39;t be available.
++ No, you can just use `package::func()` without calling any function that performs pre-loading.</code></pre>
 
 </div>
 </div>
@@ -614,10 +604,10 @@ Lander, Jared P. 2017. <em>R for Everyone: Advanced Analytics and Graphics (2nd 
 </div>
 <div class="footnotes">
 <hr />
-<ol start="17">
-<li id="fn17"><p>I am avoiding any mention of <em>R’s</em> namespaces and modules. These are things that exist, but they are different from Python’s namespaces and modules, and are not within the scope of this text.<a href="using-third-party-code.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p>The scripts you write are modules. They usually come with the intention of being run from start to finish. Other non-script modules are just a bag of definitions to be used in other places.<a href="using-third-party-code.html#fnref18" class="footnote-back">↩︎</a></p></li>
-<li id="fn19"><p>Sometimes a package is called a <em>library</em> but I will avoid this terminology.<a href="using-third-party-code.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<ol start="15">
+<li id="fn15"><p>I am avoiding any mention of <em>R’s</em> namespaces and modules. These are things that exist, but they are different from Python’s namespaces and modules, and are not within the scope of this text.<a href="using-third-party-code.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>The scripts you write are modules. They usually come with the intention of being run from start to finish. Other non-script modules are just a bag of definitions to be used in other places.<a href="using-third-party-code.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>Sometimes a package is called a <em>library</em> but I will avoid this terminology.<a href="using-third-party-code.html#fnref17" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
