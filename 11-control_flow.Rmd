@@ -198,11 +198,11 @@ Note that this algorithm allows for other proposal distributions. The only requi
 
 **Algorithm 1**:  Accept-Reject Sampling (One Step)
 
-i) Find $M$ such that $M > \frac{f(x)}{q(x)}$ for all possible $x$ (the smaller the better).
+  i. Find $M$ such that $M > \frac{f(x)}{q(x)}$ for all possible $x$ (the smaller the better).
   ii. Sample $X$ from $q(x)$.
   iii. Sample $Y \mid X$ from $\text{Bernoulli}\left(\frac{f(X)}{q(X)M}\right)$.
   iv. If $Y = 1$, then return $X$.
-v) Otherwise, return nothing.
+  v. Otherwise, return nothing.
 
 
 3.
@@ -219,11 +219,11 @@ Write a function called `kernReg(xPred,xData,yData,kernFunc)` that computes the 
 \end{equation} 
 where $x$ is the point you're trying to get a prediction for. 
 
-    + Your function should return one floating point number. 
-    + The input `xPred` will be a floating point number.
-    + The input `xData` is a one-dimensional `vector` of numerical data of independent variables. 
-    + The input `yData` is a one-dimensional `vector` of numerical data of dependent variables.
-    + `kernFunc` is a function that accepts a `numeric` `vector` and returns a floating point. It's vectorized.
+  + Your function should return one floating point number. 
+  + The input `xPred` will be a floating point number.
+  + The input `xData` is a one-dimensional `vector` of numerical data of independent variables. 
+  + The input `yData` is a one-dimensional `vector` of numerical data of dependent variables.
+  + `kernFunc` is a function that accepts a `numeric` `vector` and returns a floating point. It's vectorized.
     
 Below is some code that will help you test your predictions. The kernel function, `gaussKernel()`, implements the Gaussian kernel function $K(z) = \exp[-z^2/2]/\sqrt{2\pi}$. Notice the creation of `preds` was commented out. Use a `for` loop to generate predictions for all elements of `xTest` and store them in the vector `preds`. 
     

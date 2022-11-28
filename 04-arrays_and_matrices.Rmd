@@ -138,13 +138,11 @@ For the following problems, make sure to only use the transpose function `t()`, 
 
   a) Calculate the sample mean $\bar{\mathbf{x}} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i$. Check your work with `colMeans()`, **but don't use that function in your submitted code.** Assign it to the variable `xbar`. Make sure it is a $4 \times 1$ `matrix` object.
   
-  b) Calculate the $4 \times 4$ sample covariance of the following data. Call the variable `mySampCov`, and make sure it is also a `matrix` object. 
-  
-    A formula for the sample covariance is 
-    \begin{equation} 
-    \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
-    \end{equation}
-    **You can check your work with `cov()`, but don't use it in your submitted code.**
+  b) Calculate the $4 \times 4$ sample covariance of the following data. Call the variable `mySampCov`, and make sure it is also a `matrix` object. **You can check your work with `cov()`, but don't use it in your submitted code.** A formula for the sample covariance is 
+  \begin{equation} 
+  \frac{1}{N-1} \sum_{i=1}^N (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^\intercal
+  \end{equation}
+
 
 
 2. 
@@ -186,9 +184,9 @@ f(\mathbf{x}; \mathbf{m}, \mathbf{C}) = (2\pi)^{-n/2}\text{det}\left( \mathbf{C}
 
 Evaluating this density should be done with care. There is no one function that is optimal for all situations. Here are a couple quick things to consider. 
 
-    + Inverting very large matrices with either [`np.linalg.solve`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) or [`np.linalg.inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html) becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
+  + Inverting very large matrices with either [`np.linalg.solve`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) or [`np.linalg.inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.inv.html) becomes very slow if the covariance matrix is high-dimensional. If you have special assumptions about the structure of the covariance matrix, use it! Also, it's a good idea to be aware of what happens when you try to invert noninvertible matrices. For instance, can you rely on errors to be thrown, or will it return a bogus answer?
   
-    + Recall from the last lab that exponentiating numbers close to $-\infty$ risks numerical underflow. It's better to prefer evaluating log densities (base $e$, the natural logarithm). There are also [special functions that evaluate log determinants](https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html) that are less likely to underflow/overflow, too!  
+  + Recall from the last lab that exponentiating numbers close to $-\infty$ risks numerical underflow. It's better to prefer evaluating log densities (base $e$, the natural logarithm). There are also [special functions that evaluate log determinants](https://numpy.org/doc/stable/reference/generated/numpy.linalg.slogdet.html) that are less likely to underflow/overflow, too!  
   
 Complete the following problems. **Do not use pre-made functions such as [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) and [`scipy.stats.multivariate_normal`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.multivariate_normal.html) in your submission, but you may use them to check your work. Use only "standard" functions and Numpy n-dimensional arrays.** Use the following definitions for $\mathbf{x}$ and $\mathbf{m}$:
 

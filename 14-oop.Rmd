@@ -707,11 +707,11 @@ The formulas for the estimated slope (i.e. $\hat{\beta}_1$) and the estimated in
 Create a class that performs simple linear regression. 
 
 
-    + Name it `SimpleLinReg`.
-    + Its `.__init__()` method should not take any additional parameters. It should set two data attributes/members `est_intercept` and `est_slope`, to `np.nan`. 
-    + Give it a `.fit()` method that takes in two 1-dimensional Numpy arrays. The first should be the array of independent values, and the second should be the set of dependent values.
-    + `.fit(x,y)` should not `return` anything, but it should store two data attributes/members: `est_intercept` and `est_slope`. Every time `.fit()` is called, it will re-calculate the coefficient/parameter estimates.
-    + Give it a `.get_coeffs()` method. It should not make any changes to the data attributes/members of the class. It should simply `return` a Numpy array with the parameter estimates inside. Make the first element the estimated intercept, and the second element the estimated slope. If no such coefficients have been estimated at the time of its calling, it should return the same size array but with the initial `np.nan`s inside.
+  + Name it `SimpleLinReg`.
+  + Its `.__init__()` method should not take any additional parameters. It should set two data attributes/members `est_intercept` and `est_slope`, to `np.nan`. 
+  + Give it a `.fit()` method that takes in two 1-dimensional Numpy arrays. The first should be the array of independent values, and the second should be the set of dependent values.
+  + `.fit(x,y)` should not `return` anything, but it should store two data attributes/members: `est_intercept` and `est_slope`. Every time `.fit()` is called, it will re-calculate the coefficient/parameter estimates.
+  + Give it a `.get_coeffs()` method. It should not make any changes to the data attributes/members of the class. It should simply `return` a Numpy array with the parameter estimates inside. Make the first element the estimated intercept, and the second element the estimated slope. If no such coefficients have been estimated at the time of its calling, it should return the same size array but with the initial `np.nan`s inside.
 
 After you've finished writing your first class, you can bask in the glory and run the following test code:
 
@@ -729,9 +729,9 @@ mod.get_coeffs()
 
 Reconsider the above question that asked you to write a class called `SimpleLinReg`. 
 
-    + Write a new class called `LinearRegression2` that preserves all of the existing functionality of `SimpleLinReg`. Do this in a way that does not excessively copy and paste code from `SimpleLinReg`.
-    + Give your new class a method called `.visualize()` that takes no arguments and plots the most recent data, the data most recently provided to `.fit()`, in a scatterplot with the estimated regression line superimposed.
-    + Unfortunately, `SimpleLinReg().fit(x,y).get_coeffs()` will not return estimated regression coefficients. Give your new class this functionality. In other words, make `LinearRegression2().fit(x,y).get_coeffs()` spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the `self` keyword.
+  + Write a new class called `LinearRegression2` that preserves all of the existing functionality of `SimpleLinReg`. Do this in a way that does not excessively copy and paste code from `SimpleLinReg`.
+  + Give your new class a method called `.visualize()` that takes no arguments and plots the most recent data, the data most recently provided to `.fit()`, in a scatterplot with the estimated regression line superimposed.
+  + Unfortunately, `SimpleLinReg().fit(x,y).get_coeffs()` will not return estimated regression coefficients. Give your new class this functionality. In other words, make `LinearRegression2().fit(x,y).get_coeffs()` spit out regression coefficients. Hint: the solution should only require one extra line of code, and it should involve the `self` keyword.
 
 3.
 
@@ -756,11 +756,11 @@ P_t = \left(1 - \frac{P_{t-1} + W}{P_{t-1} + W+V} \right)(P_{t-1} + W)
 \end{equation}
 for $t \ge 1$.
 
-    + Write a class called `TVIKalman` (TVI stands for time-varying intercept). 
-    + Have `TVIKalman` take two floating points in to its `.__init__()` method in this order: `V` and `W`. These two numbers are positive, and are the variance parameters of the model. Store these two numbers. Also, store $0$ and $W+V$ as members/attributes called `filter_mean` and `filter_variance`, respectively.
-    + Give `TVIKalman` another method: `.update(yt)`. This function should not return anything, but it should update the filtering distribution's mean and variance numbers, `filter_mean` and `filter_variance`, given a new data point. 
-    + Give `TVIKalman` another method: `.get_confidence_interval()`. It should not take any arguments, and it should return a length two Numpy array. The ordered elements of that array should be $M_t$ plus and minus two standard deviations--a standard deviation at time $t$ is $\sqrt{P_t}$.
-    + Create a `DataFrame` called `results` with the three columns called `yt`, `lower`, and `upper`. The last two columns should be a sequence of confidence intervals given to you by the method you wrote. The first column should contain the following data: `[-1.7037539, -0.5966818, -0.7061919, -0.1226606, -0.5431923]`. Plot all three columns in a single line plot. Initialize your Kalman Filter object with both `V` and `W` set equal to $.5$.
+  + Write a class called `TVIKalman` (TVI stands for time-varying intercept). 
+  + Have `TVIKalman` take two floating points in to its `.__init__()` method in this order: `V` and `W`. These two numbers are positive, and are the variance parameters of the model. Store these two numbers. Also, store $0$ and $W+V$ as members/attributes called `filter_mean` and `filter_variance`, respectively.
+  + Give `TVIKalman` another method: `.update(yt)`. This function should not return anything, but it should update the filtering distribution's mean and variance numbers, `filter_mean` and `filter_variance`, given a new data point. 
+  + Give `TVIKalman` another method: `.get_confidence_interval()`. It should not take any arguments, and it should return a length two Numpy array. The ordered elements of that array should be $M_t$ plus and minus two standard deviations--a standard deviation at time $t$ is $\sqrt{P_t}$.
+  + Create a `DataFrame` called `results` with the three columns called `yt`, `lower`, and `upper`. The last two columns should be a sequence of confidence intervals given to you by the method you wrote. The first column should contain the following data: `[-1.7037539, -0.5966818, -0.7061919, -0.1226606, -0.5431923]`. Plot all three columns in a single line plot. Initialize your Kalman Filter object with both `V` and `W` set equal to $.5$.
 
 
 
@@ -806,9 +806,9 @@ t = \frac{\bar{X}}{S/\sqrt{n}}
 \end{equation}
 and you reject the null hypothesis if $|t| > t_{n-1,\alpha/2}$. This is **Student's T-Test** [@student1908probable]. Here $S^2 = \sum_i(X_i - \bar{X})^2 / (n-1)$ is the sample variance, and $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a t-distribution with $n-1$ degrees of freedom.
 
-    + Write a function called `doTTest()` that performs the above hypothesis test. It should accept two parameters: `dataVec` (a `vector` of data) and `significanceLevel` (which is $\alpha$). Have the second parameter default to `.05`.
-    + Have it return an S3 object created from a `list`. The `class` of this `list` should be `"TwoSidedTTest"`. The elements in the `list` should be named `decision` and `testStat`. The `decision` object should be either `"reject"` or `"fail to reject"`. The test stat should be equal to the calculation you made above for $t$.
-    + Create a `summary` method for this new class you created: `TwoSidedTTest`. 
+  + Write a function called `doTTest()` that performs the above hypothesis test. It should accept two parameters: `dataVec` (a `vector` of data) and `significanceLevel` (which is $\alpha$). Have the second parameter default to `.05`.
+  + Have it return an S3 object created from a `list`. The `class` of this `list` should be `"TwoSidedTTest"`. The elements in the `list` should be named `decision` and `testStat`. The `decision` object should be either `"reject"` or `"fail to reject"`. The test stat should be equal to the calculation you made above for $t$.
+  + Create a `summary` method for this new class you created: `TwoSidedTTest`. 
 
 10.
 
@@ -826,11 +826,11 @@ In practice it is beneficial to use log-densities, because it will avoid underfl
 w^i = \exp[ \log \tilde{w}^i - m] \bigg/ \sum_j \exp[\log \tilde{w}^j - m].
 \end{equation}
 
-    + Create an R6 class called `ImpSamp` that performs importance sampling.
-    + It should store function data values `qSamp`, `logQEval`, and `logFEval`.
-    + Give it an `initialize()` method that takes in three arguments: `logFEvalFunc`, `qSampFunc` and `logQEvalFunc`. 
-    + `initialize()` will set the stored function values equal to the function objects passed in.
-    + The functions performing random sampling should only take a single argument referring to the number of samples desired. 
-    + The evaluation functions should take a `vector` as an input and return a `vector` as an output. 
-    + Write a method called `computeApproxExpec` that computes and returns the importance sampling estimate of $\int x p(x) dx$. Have this method take an integer argument that represents the number of desired samples to use for the computation.
-    + Is it better to make this code object-oriented, or would you prefer a simple function that spits out the answer? Why?
+  + Create an R6 class called `ImpSamp` that performs importance sampling.
+  + It should store function data values `qSamp`, `logQEval`, and `logFEval`.
+  + Give it an `initialize()` method that takes in three arguments: `logFEvalFunc`, `qSampFunc` and `logQEvalFunc`. 
+  + `initialize()` will set the stored function values equal to the function objects passed in.
+  + The functions performing random sampling should only take a single argument referring to the number of samples desired. 
+  + The evaluation functions should take a `vector` as an input and return a `vector` as an output. 
+  + Write a method called `computeApproxExpec` that computes and returns the importance sampling estimate of $\int x p(x) dx$. Have this method take an integer argument that represents the number of desired samples to use for the computation.
+  + Is it better to make this code object-oriented, or would you prefer a simple function that spits out the answer? Why?

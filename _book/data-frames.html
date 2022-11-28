@@ -456,22 +456,22 @@ div.csl-indent {
 <div id="data-frames-in-r" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Data Frames in R<a href="data-frames.html#data-frames-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s consider as an example Fisher’s “Iris” data set <span class="citation">(<a href="#ref-misc_iris_53" role="doc-biblioref">Fisher 1988</a>)</span> hosted by <span class="citation">(<a href="#ref-uci_data" role="doc-biblioref">Dua and Graff 2017</a>)</span>. We will read this data set in from a comma separated file (more information on input/output can be found in chapter <a href="input-and-output.html#input-and-output">9</a>). This file can be downloaded from this link: <a href="https://archive.ics.uci.edu/ml/datasets/iris">https://archive.ics.uci.edu/ml/datasets/iris</a>.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-frames.html#cb139-1" aria-hidden="true" tabindex="-1"></a>irisData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/iris.csv&quot;</span>, <span class="at">header =</span> F)</span>
-<span id="cb139-2"><a href="data-frames.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData, <span class="dv">3</span>)</span>
-<span id="cb139-3"><a href="data-frames.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    V1  V2  V3  V4          V5</span></span>
-<span id="cb139-4"><a href="data-frames.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 5.1 3.5 1.4 0.2 Iris-setosa</span></span>
-<span id="cb139-5"><a href="data-frames.html#cb139-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 4.9 3.0 1.4 0.2 Iris-setosa</span></span>
-<span id="cb139-6"><a href="data-frames.html#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 4.7 3.2 1.3 0.2 Iris-setosa</span></span>
-<span id="cb139-7"><a href="data-frames.html#cb139-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(irisData)</span>
-<span id="cb139-8"><a href="data-frames.html#cb139-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;list&quot;</span></span>
-<span id="cb139-9"><a href="data-frames.html#cb139-9" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(irisData) <span class="co"># we&#39;ll talk more about classes later</span></span>
-<span id="cb139-10"><a href="data-frames.html#cb139-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
-<span id="cb139-11"><a href="data-frames.html#cb139-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(irisData)</span>
-<span id="cb139-12"><a href="data-frames.html#cb139-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 150   5</span></span>
-<span id="cb139-13"><a href="data-frames.html#cb139-13" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(irisData)</span>
-<span id="cb139-14"><a href="data-frames.html#cb139-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 150</span></span>
-<span id="cb139-15"><a href="data-frames.html#cb139-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(irisData)</span>
-<span id="cb139-16"><a href="data-frames.html#cb139-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="data-frames.html#cb132-1" aria-hidden="true" tabindex="-1"></a>irisData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/iris.csv&quot;</span>, <span class="at">header =</span> F)</span>
+<span id="cb132-2"><a href="data-frames.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData, <span class="dv">3</span>)</span>
+<span id="cb132-3"><a href="data-frames.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    V1  V2  V3  V4          V5</span></span>
+<span id="cb132-4"><a href="data-frames.html#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 5.1 3.5 1.4 0.2 Iris-setosa</span></span>
+<span id="cb132-5"><a href="data-frames.html#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 4.9 3.0 1.4 0.2 Iris-setosa</span></span>
+<span id="cb132-6"><a href="data-frames.html#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 4.7 3.2 1.3 0.2 Iris-setosa</span></span>
+<span id="cb132-7"><a href="data-frames.html#cb132-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(irisData)</span>
+<span id="cb132-8"><a href="data-frames.html#cb132-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;list&quot;</span></span>
+<span id="cb132-9"><a href="data-frames.html#cb132-9" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(irisData) <span class="co"># we&#39;ll talk more about classes later</span></span>
+<span id="cb132-10"><a href="data-frames.html#cb132-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;data.frame&quot;</span></span>
+<span id="cb132-11"><a href="data-frames.html#cb132-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(irisData)</span>
+<span id="cb132-12"><a href="data-frames.html#cb132-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 150   5</span></span>
+<span id="cb132-13"><a href="data-frames.html#cb132-13" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(irisData)</span>
+<span id="cb132-14"><a href="data-frames.html#cb132-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 150</span></span>
+<span id="cb132-15"><a href="data-frames.html#cb132-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(irisData)</span>
+<span id="cb132-16"><a href="data-frames.html#cb132-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span></code></pre></div>
 <p>There are some exceptions, but most data sets can be stored as a <code>data.frame</code>. These kinds of two-dimensional data sets are quite common. Any particular row is often an observation on one experimental unit (e.g. person, place or thing). Looking at a particular column gives you one kind of measurement stored for all observations.</p>
 <div class="rmd-caution">
 <p>Do not rely on the default arguments of <code>read.csv()</code> or <code>read.table()</code>! After you read in a data frame, always check to make sure that</p>
@@ -486,80 +486,80 @@ div.csl-indent {
 </div>
 <p><a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Data-frame-objects">A <code>data.frame</code> is a special case of a <code>list</code></a>. Every element of the list is a column. Columns can be <code>vector</code>s or <code>factor</code>s, and they can all be of a different type. This is one of the biggest differences between data frames and <code>matrix</code>s. They are both two-dimensional, but a <code>matrix</code> needs elements to be all the same type. Unlike a general <code>list</code>, a <code>data.frame</code> requires all of its columns to have the same number of elements. In other words, the <code>data.frame</code> is not a “<em>ragged</em>” list.</p>
 <p>Often times you will need to extract pieces of information from a <code>data.frame</code>. This can be done in many ways. If the columns have names, you can use the <code>$</code> operator to access a single column. Accessing a single column might be followed up by creating a new vector. You can also use the <code>[</code> operator to access multiple columns by name.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="data-frames.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(irisData) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>, </span>
-<span id="cb140-2"><a href="data-frames.html#cb140-2" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;petal.length&quot;</span>,<span class="st">&quot;petal.width&quot;</span>, </span>
-<span id="cb140-3"><a href="data-frames.html#cb140-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;species&quot;</span>)</span>
-<span id="cb140-4"><a href="data-frames.html#cb140-4" aria-hidden="true" tabindex="-1"></a>firstCol <span class="ot">&lt;-</span> irisData<span class="sc">$</span>sepal.length</span>
-<span id="cb140-5"><a href="data-frames.html#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(firstCol)</span>
-<span id="cb140-6"><a href="data-frames.html#cb140-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5.1 4.9 4.7 4.6 5.0 5.4</span></span>
-<span id="cb140-7"><a href="data-frames.html#cb140-7" aria-hidden="true" tabindex="-1"></a>firstTwoCols <span class="ot">&lt;-</span> irisData[<span class="fu">c</span>(<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>)] </span>
-<span id="cb140-8"><a href="data-frames.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(firstTwoCols, <span class="dv">3</span>)</span>
-<span id="cb140-9"><a href="data-frames.html#cb140-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   sepal.length sepal.width</span></span>
-<span id="cb140-10"><a href="data-frames.html#cb140-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          5.1         3.5</span></span>
-<span id="cb140-11"><a href="data-frames.html#cb140-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          4.9         3.0</span></span>
-<span id="cb140-12"><a href="data-frames.html#cb140-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          4.7         3.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-frames.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(irisData) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>, </span>
+<span id="cb133-2"><a href="data-frames.html#cb133-2" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;petal.length&quot;</span>,<span class="st">&quot;petal.width&quot;</span>, </span>
+<span id="cb133-3"><a href="data-frames.html#cb133-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;species&quot;</span>)</span>
+<span id="cb133-4"><a href="data-frames.html#cb133-4" aria-hidden="true" tabindex="-1"></a>firstCol <span class="ot">&lt;-</span> irisData<span class="sc">$</span>sepal.length</span>
+<span id="cb133-5"><a href="data-frames.html#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(firstCol)</span>
+<span id="cb133-6"><a href="data-frames.html#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5.1 4.9 4.7 4.6 5.0 5.4</span></span>
+<span id="cb133-7"><a href="data-frames.html#cb133-7" aria-hidden="true" tabindex="-1"></a>firstTwoCols <span class="ot">&lt;-</span> irisData[<span class="fu">c</span>(<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>)] </span>
+<span id="cb133-8"><a href="data-frames.html#cb133-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(firstTwoCols, <span class="dv">3</span>)</span>
+<span id="cb133-9"><a href="data-frames.html#cb133-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   sepal.length sepal.width</span></span>
+<span id="cb133-10"><a href="data-frames.html#cb133-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          5.1         3.5</span></span>
+<span id="cb133-11"><a href="data-frames.html#cb133-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          4.9         3.0</span></span>
+<span id="cb133-12"><a href="data-frames.html#cb133-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          4.7         3.2</span></span></code></pre></div>
 <p>The <code>[</code> operator is also useful for selecting rows and columns by index numbers, or by some logical criteria.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="data-frames.html#cb141-1" aria-hidden="true" tabindex="-1"></a>topLeft <span class="ot">&lt;-</span> irisData[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># first row, first col</span></span>
-<span id="cb141-2"><a href="data-frames.html#cb141-2" aria-hidden="true" tabindex="-1"></a>topLeft</span>
-<span id="cb141-3"><a href="data-frames.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5.1</span></span>
-<span id="cb141-4"><a href="data-frames.html#cb141-4" aria-hidden="true" tabindex="-1"></a>firstThreeRows <span class="ot">&lt;-</span> irisData[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,] <span class="co"># rows 1-3, all cols</span></span>
-<span id="cb141-5"><a href="data-frames.html#cb141-5" aria-hidden="true" tabindex="-1"></a>firstThreeRows</span>
-<span id="cb141-6"><a href="data-frames.html#cb141-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   sepal.length sepal.width petal.length petal.width     species</span></span>
-<span id="cb141-7"><a href="data-frames.html#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          5.1         3.5          1.4         0.2 Iris-setosa</span></span>
-<span id="cb141-8"><a href="data-frames.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          4.9         3.0          1.4         0.2 Iris-setosa</span></span>
-<span id="cb141-9"><a href="data-frames.html#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          4.7         3.2          1.3         0.2 Iris-setosa</span></span>
-<span id="cb141-10"><a href="data-frames.html#cb141-10" aria-hidden="true" tabindex="-1"></a><span class="co"># rows where species column is setosa</span></span>
-<span id="cb141-11"><a href="data-frames.html#cb141-11" aria-hidden="true" tabindex="-1"></a>setosaOnly <span class="ot">&lt;-</span> irisData[irisData<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>,] </span>
-<span id="cb141-12"><a href="data-frames.html#cb141-12" aria-hidden="true" tabindex="-1"></a>setosaOnly[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb141-13"><a href="data-frames.html#cb141-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   sepal.width petal.length petal.width     species</span></span>
-<span id="cb141-14"><a href="data-frames.html#cb141-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 1         3.5          1.4         0.2 Iris-setosa</span></span>
-<span id="cb141-15"><a href="data-frames.html#cb141-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 2         3.0          1.4         0.2 Iris-setosa</span></span>
-<span id="cb141-16"><a href="data-frames.html#cb141-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 3         3.2          1.3         0.2 Iris-setosa</span></span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="data-frames.html#cb134-1" aria-hidden="true" tabindex="-1"></a>topLeft <span class="ot">&lt;-</span> irisData[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># first row, first col</span></span>
+<span id="cb134-2"><a href="data-frames.html#cb134-2" aria-hidden="true" tabindex="-1"></a>topLeft</span>
+<span id="cb134-3"><a href="data-frames.html#cb134-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5.1</span></span>
+<span id="cb134-4"><a href="data-frames.html#cb134-4" aria-hidden="true" tabindex="-1"></a>firstThreeRows <span class="ot">&lt;-</span> irisData[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,] <span class="co"># rows 1-3, all cols</span></span>
+<span id="cb134-5"><a href="data-frames.html#cb134-5" aria-hidden="true" tabindex="-1"></a>firstThreeRows</span>
+<span id="cb134-6"><a href="data-frames.html#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   sepal.length sepal.width petal.length petal.width     species</span></span>
+<span id="cb134-7"><a href="data-frames.html#cb134-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          5.1         3.5          1.4         0.2 Iris-setosa</span></span>
+<span id="cb134-8"><a href="data-frames.html#cb134-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          4.9         3.0          1.4         0.2 Iris-setosa</span></span>
+<span id="cb134-9"><a href="data-frames.html#cb134-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          4.7         3.2          1.3         0.2 Iris-setosa</span></span>
+<span id="cb134-10"><a href="data-frames.html#cb134-10" aria-hidden="true" tabindex="-1"></a><span class="co"># rows where species column is setosa</span></span>
+<span id="cb134-11"><a href="data-frames.html#cb134-11" aria-hidden="true" tabindex="-1"></a>setosaOnly <span class="ot">&lt;-</span> irisData[irisData<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>,] </span>
+<span id="cb134-12"><a href="data-frames.html#cb134-12" aria-hidden="true" tabindex="-1"></a>setosaOnly[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb134-13"><a href="data-frames.html#cb134-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   sepal.width petal.length petal.width     species</span></span>
+<span id="cb134-14"><a href="data-frames.html#cb134-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 1         3.5          1.4         0.2 Iris-setosa</span></span>
+<span id="cb134-15"><a href="data-frames.html#cb134-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 2         3.0          1.4         0.2 Iris-setosa</span></span>
+<span id="cb134-16"><a href="data-frames.html#cb134-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 3         3.2          1.3         0.2 Iris-setosa</span></span></code></pre></div>
 <p>In the code above, <code>irisData$species == "Iris-setosa"</code> creates a logical vector (try it!) using the vectorized <code>==</code> operator. The <code>[</code> operator selects the rows for which the corresponding element of this logical vector is <code>TRUE</code>.</p>
 <div class="rmd-details">
 <p>Be careful: depending on how you use the square brackets, you can either get a <code>data.frame</code> or a <code>vector.</code> As an example, try both <code>class(irisData[,1])</code> and <code>class(irisData[,c(1,2)])</code>.</p>
 </div>
 <p>In R, <code>data.frame</code>s might have row names. You can get and set this character <code>vector</code> with the <code>rownames()</code> function. You can access rows by name using the square bracket operator.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="data-frames.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(irisData))</span>
-<span id="cb142-2"><a href="data-frames.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot;</span></span>
-<span id="cb142-3"><a href="data-frames.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(irisData) <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rownames</span>(irisData)) <span class="sc">+</span> <span class="dv">1000</span></span>
-<span id="cb142-4"><a href="data-frames.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(irisData))</span>
-<span id="cb142-5"><a href="data-frames.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;1001&quot; &quot;1002&quot; &quot;1003&quot; &quot;1004&quot; &quot;1005&quot; &quot;1006&quot;</span></span>
-<span id="cb142-6"><a href="data-frames.html#cb142-6" aria-hidden="true" tabindex="-1"></a>irisData[<span class="st">&quot;1002&quot;</span>,]</span>
-<span id="cb142-7"><a href="data-frames.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      sepal.length sepal.width petal.length petal.width     species</span></span>
-<span id="cb142-8"><a href="data-frames.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002          4.9           3          1.4         0.2 Iris-setosa</span></span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-frames.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(irisData))</span>
+<span id="cb135-2"><a href="data-frames.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot;</span></span>
+<span id="cb135-3"><a href="data-frames.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(irisData) <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rownames</span>(irisData)) <span class="sc">+</span> <span class="dv">1000</span></span>
+<span id="cb135-4"><a href="data-frames.html#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(irisData))</span>
+<span id="cb135-5"><a href="data-frames.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;1001&quot; &quot;1002&quot; &quot;1003&quot; &quot;1004&quot; &quot;1005&quot; &quot;1006&quot;</span></span>
+<span id="cb135-6"><a href="data-frames.html#cb135-6" aria-hidden="true" tabindex="-1"></a>irisData[<span class="st">&quot;1002&quot;</span>,]</span>
+<span id="cb135-7"><a href="data-frames.html#cb135-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      sepal.length sepal.width petal.length petal.width     species</span></span>
+<span id="cb135-8"><a href="data-frames.html#cb135-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002          4.9           3          1.4         0.2 Iris-setosa</span></span></code></pre></div>
 <p>Code that modifies data usually looks quite similar to code extracting data. You’ll notice a lot of the same symbols (e.g. <code>$</code>, <code>[</code>, etc.), but the (<code>&lt;-</code>) will point in the other direction.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-frames.html#cb143-1" aria-hidden="true" tabindex="-1"></a>irisData<span class="sc">$</span>columnOfOnes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(irisData))</span>
-<span id="cb143-2"><a href="data-frames.html#cb143-2" aria-hidden="true" tabindex="-1"></a>irisData[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#delete first col</span></span>
-<span id="cb143-3"><a href="data-frames.html#cb143-3" aria-hidden="true" tabindex="-1"></a>irisData[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">mean =</span> <span class="dv">999</span>)</span>
-<span id="cb143-4"><a href="data-frames.html#cb143-4" aria-hidden="true" tabindex="-1"></a>irisData[,<span class="st">&#39;sepal.width&#39;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">nrow</span>(irisData), <span class="at">mean =</span> <span class="sc">-</span><span class="dv">999</span>)</span>
-<span id="cb143-5"><a href="data-frames.html#cb143-5" aria-hidden="true" tabindex="-1"></a>irisData[irisData<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SETOSA!&quot;</span></span>
-<span id="cb143-6"><a href="data-frames.html#cb143-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData, <span class="dv">3</span>)</span>
-<span id="cb143-7"><a href="data-frames.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      sepal.width petal.length petal.width species columnOfOnes</span></span>
-<span id="cb143-8"><a href="data-frames.html#cb143-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1001   -997.4055          1.4         0.2 SETOSA!            1</span></span>
-<span id="cb143-9"><a href="data-frames.html#cb143-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002   -998.3754          1.4         0.2 SETOSA!            1</span></span>
-<span id="cb143-10"><a href="data-frames.html#cb143-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1003  -1001.1025          1.3         0.2 SETOSA!            1</span></span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="data-frames.html#cb136-1" aria-hidden="true" tabindex="-1"></a>irisData<span class="sc">$</span>columnOfOnes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(irisData))</span>
+<span id="cb136-2"><a href="data-frames.html#cb136-2" aria-hidden="true" tabindex="-1"></a>irisData[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#delete first col</span></span>
+<span id="cb136-3"><a href="data-frames.html#cb136-3" aria-hidden="true" tabindex="-1"></a>irisData[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">mean =</span> <span class="dv">999</span>)</span>
+<span id="cb136-4"><a href="data-frames.html#cb136-4" aria-hidden="true" tabindex="-1"></a>irisData[,<span class="st">&#39;sepal.width&#39;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">nrow</span>(irisData), <span class="at">mean =</span> <span class="sc">-</span><span class="dv">999</span>)</span>
+<span id="cb136-5"><a href="data-frames.html#cb136-5" aria-hidden="true" tabindex="-1"></a>irisData[irisData<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;SETOSA!&quot;</span></span>
+<span id="cb136-6"><a href="data-frames.html#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisData, <span class="dv">3</span>)</span>
+<span id="cb136-7"><a href="data-frames.html#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      sepal.width petal.length petal.width species columnOfOnes</span></span>
+<span id="cb136-8"><a href="data-frames.html#cb136-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1001   -999.1582          1.4         0.2 SETOSA!            1</span></span>
+<span id="cb136-9"><a href="data-frames.html#cb136-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1002   -999.2797          1.4         0.2 SETOSA!            1</span></span>
+<span id="cb136-10"><a href="data-frames.html#cb136-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1003   -998.2343          1.3         0.2 SETOSA!            1</span></span></code></pre></div>
 </div>
 <div id="data-frames-in-python" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Data Frames in Python<a href="data-frames.html#data-frames-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Pandas library in Python has data frames that are modeled after R’s <span class="citation">(<a href="#ref-pandas_guy" role="doc-biblioref">McKinney 2017</a>)</span>.</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="data-frames.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb144-2"><a href="data-frames.html#cb144-2" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/iris.csv&quot;</span>, header <span class="op">=</span> <span class="va">None</span>)</span>
-<span id="cb144-3"><a href="data-frames.html#cb144-3" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
-<span id="cb144-4"><a href="data-frames.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="co">##      0    1    2    3            4</span></span>
-<span id="cb144-5"><a href="data-frames.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  5.1  3.5  1.4  0.2  Iris-setosa</span></span>
-<span id="cb144-6"><a href="data-frames.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  4.9  3.0  1.4  0.2  Iris-setosa</span></span>
-<span id="cb144-7"><a href="data-frames.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 2  4.7  3.2  1.3  0.2  Iris-setosa</span></span>
-<span id="cb144-8"><a href="data-frames.html#cb144-8" aria-hidden="true" tabindex="-1"></a>iris_data.shape</span>
-<span id="cb144-9"><a href="data-frames.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="co">## (150, 5)</span></span>
-<span id="cb144-10"><a href="data-frames.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(iris_data) <span class="co"># num rows</span></span>
-<span id="cb144-11"><a href="data-frames.html#cb144-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 150</span></span>
-<span id="cb144-12"><a href="data-frames.html#cb144-12" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(iris_data.columns) <span class="co"># num columns</span></span>
-<span id="cb144-13"><a href="data-frames.html#cb144-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 5</span></span>
-<span id="cb144-14"><a href="data-frames.html#cb144-14" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(iris_data.dtypes)[:<span class="dv">3</span>]</span>
-<span id="cb144-15"><a href="data-frames.html#cb144-15" aria-hidden="true" tabindex="-1"></a><span class="co">## [dtype(&#39;float64&#39;), dtype(&#39;float64&#39;), dtype(&#39;float64&#39;)]</span></span>
-<span id="cb144-16"><a href="data-frames.html#cb144-16" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(iris_data.dtypes)[<span class="dv">3</span>:]</span>
-<span id="cb144-17"><a href="data-frames.html#cb144-17" aria-hidden="true" tabindex="-1"></a><span class="co">## [dtype(&#39;float64&#39;), dtype(&#39;O&#39;)]</span></span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb137-1"><a href="data-frames.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb137-2"><a href="data-frames.html#cb137-2" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> pd.read_csv(<span class="st">&quot;data/iris.csv&quot;</span>, header <span class="op">=</span> <span class="va">None</span>)</span>
+<span id="cb137-3"><a href="data-frames.html#cb137-3" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
+<span id="cb137-4"><a href="data-frames.html#cb137-4" aria-hidden="true" tabindex="-1"></a><span class="co">##      0    1    2    3            4</span></span>
+<span id="cb137-5"><a href="data-frames.html#cb137-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0  5.1  3.5  1.4  0.2  Iris-setosa</span></span>
+<span id="cb137-6"><a href="data-frames.html#cb137-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1  4.9  3.0  1.4  0.2  Iris-setosa</span></span>
+<span id="cb137-7"><a href="data-frames.html#cb137-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 2  4.7  3.2  1.3  0.2  Iris-setosa</span></span>
+<span id="cb137-8"><a href="data-frames.html#cb137-8" aria-hidden="true" tabindex="-1"></a>iris_data.shape</span>
+<span id="cb137-9"><a href="data-frames.html#cb137-9" aria-hidden="true" tabindex="-1"></a><span class="co">## (150, 5)</span></span>
+<span id="cb137-10"><a href="data-frames.html#cb137-10" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(iris_data) <span class="co"># num rows</span></span>
+<span id="cb137-11"><a href="data-frames.html#cb137-11" aria-hidden="true" tabindex="-1"></a><span class="co">## 150</span></span>
+<span id="cb137-12"><a href="data-frames.html#cb137-12" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(iris_data.columns) <span class="co"># num columns</span></span>
+<span id="cb137-13"><a href="data-frames.html#cb137-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 5</span></span>
+<span id="cb137-14"><a href="data-frames.html#cb137-14" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(iris_data.dtypes)[:<span class="dv">3</span>]</span>
+<span id="cb137-15"><a href="data-frames.html#cb137-15" aria-hidden="true" tabindex="-1"></a><span class="co">## [dtype(&#39;float64&#39;), dtype(&#39;float64&#39;), dtype(&#39;float64&#39;)]</span></span>
+<span id="cb137-16"><a href="data-frames.html#cb137-16" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(iris_data.dtypes)[<span class="dv">3</span>:]</span>
+<span id="cb137-17"><a href="data-frames.html#cb137-17" aria-hidden="true" tabindex="-1"></a><span class="co">## [dtype(&#39;float64&#39;), dtype(&#39;O&#39;)]</span></span></code></pre></div>
 <p>The structure is very similar to that of R’s data frame. It’s two dimensional, and you can <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html">access columns and rows by name or number.</a> Each column is a <code>Series</code> object, and each column can have a different <code>dtype</code>, which is analogous to R’s situation. Again, because the elements need to be the same type along columns only, this is a big difference between 2-d Numpy <code>ndarray</code>s and <code>DataFrame</code>s (c.f. R’s <code>matrix</code> versus R’s <code>data.frame</code>).</p>
 <div class="rmd-caution">
 <p>Again, do not rely on the default arguments of <code>pd.read_csv()</code>! After you read in a data set, always check that</p>
@@ -573,102 +573,102 @@ div.csl-indent {
 </ol>
 </div>
 <p>Square brackets are a little different in Python than they are in R. Just like in R, you can access columns by name with square brackets, and you can also access rows. Unlike R, though, you don’t have to specify both rows and columns every time you use the square brackets.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb145-1"><a href="data-frames.html#cb145-1" aria-hidden="true" tabindex="-1"></a>iris_data.columns <span class="op">=</span> [<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>, <span class="st">&quot;petal.length&quot;</span>, </span>
-<span id="cb145-2"><a href="data-frames.html#cb145-2" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;petal.width&quot;</span>, <span class="st">&quot;species&quot;</span>]</span>
-<span id="cb145-3"><a href="data-frames.html#cb145-3" aria-hidden="true" tabindex="-1"></a>first_col <span class="op">=</span> iris_data[<span class="st">&#39;sepal.length&#39;</span>]</span>
-<span id="cb145-4"><a href="data-frames.html#cb145-4" aria-hidden="true" tabindex="-1"></a>first_col.head()</span>
-<span id="cb145-5"><a href="data-frames.html#cb145-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    5.1</span></span>
-<span id="cb145-6"><a href="data-frames.html#cb145-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    4.9</span></span>
-<span id="cb145-7"><a href="data-frames.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    4.7</span></span>
-<span id="cb145-8"><a href="data-frames.html#cb145-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    4.6</span></span>
-<span id="cb145-9"><a href="data-frames.html#cb145-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 4    5.0</span></span>
-<span id="cb145-10"><a href="data-frames.html#cb145-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: sepal.length, dtype: float64</span></span>
-<span id="cb145-11"><a href="data-frames.html#cb145-11" aria-hidden="true" tabindex="-1"></a>first_two_cols <span class="op">=</span> iris_data[[<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>]]</span>
-<span id="cb145-12"><a href="data-frames.html#cb145-12" aria-hidden="true" tabindex="-1"></a>first_two_cols.head(<span class="dv">3</span>)</span>
-<span id="cb145-13"><a href="data-frames.html#cb145-13" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width</span></span>
-<span id="cb145-14"><a href="data-frames.html#cb145-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.1          3.5</span></span>
-<span id="cb145-15"><a href="data-frames.html#cb145-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           4.9          3.0</span></span>
-<span id="cb145-16"><a href="data-frames.html#cb145-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 2           4.7          3.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb138-1"><a href="data-frames.html#cb138-1" aria-hidden="true" tabindex="-1"></a>iris_data.columns <span class="op">=</span> [<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>, <span class="st">&quot;petal.length&quot;</span>, </span>
+<span id="cb138-2"><a href="data-frames.html#cb138-2" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;petal.width&quot;</span>, <span class="st">&quot;species&quot;</span>]</span>
+<span id="cb138-3"><a href="data-frames.html#cb138-3" aria-hidden="true" tabindex="-1"></a>first_col <span class="op">=</span> iris_data[<span class="st">&#39;sepal.length&#39;</span>]</span>
+<span id="cb138-4"><a href="data-frames.html#cb138-4" aria-hidden="true" tabindex="-1"></a>first_col.head()</span>
+<span id="cb138-5"><a href="data-frames.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 0    5.1</span></span>
+<span id="cb138-6"><a href="data-frames.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 1    4.9</span></span>
+<span id="cb138-7"><a href="data-frames.html#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 2    4.7</span></span>
+<span id="cb138-8"><a href="data-frames.html#cb138-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 3    4.6</span></span>
+<span id="cb138-9"><a href="data-frames.html#cb138-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 4    5.0</span></span>
+<span id="cb138-10"><a href="data-frames.html#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: sepal.length, dtype: float64</span></span>
+<span id="cb138-11"><a href="data-frames.html#cb138-11" aria-hidden="true" tabindex="-1"></a>first_two_cols <span class="op">=</span> iris_data[[<span class="st">&quot;sepal.length&quot;</span>, <span class="st">&quot;sepal.width&quot;</span>]]</span>
+<span id="cb138-12"><a href="data-frames.html#cb138-12" aria-hidden="true" tabindex="-1"></a>first_two_cols.head(<span class="dv">3</span>)</span>
+<span id="cb138-13"><a href="data-frames.html#cb138-13" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width</span></span>
+<span id="cb138-14"><a href="data-frames.html#cb138-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.1          3.5</span></span>
+<span id="cb138-15"><a href="data-frames.html#cb138-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           4.9          3.0</span></span>
+<span id="cb138-16"><a href="data-frames.html#cb138-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 2           4.7          3.2</span></span></code></pre></div>
 <div class="rmd-details">
 <p>Notice that <code>iris_data['sepal.length']</code> returns a <code>Series</code> and <code>iris_data[["sepal.length", "sepal.width"]]</code> returns a Pandas <code>DataFrame</code>. This behavior is similar to what happened in R. For more details, click <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#indexing-selection">here</a>.</p>
 </div>
 <p>You can select columns and rows by number with the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html"><code>.iloc</code> method</a>. <code>iloc</code> is (probably) short for “integer location.”</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="data-frames.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify rows/cols by number</span></span>
-<span id="cb146-2"><a href="data-frames.html#cb146-2" aria-hidden="true" tabindex="-1"></a>top_left <span class="op">=</span> iris_data.iloc[<span class="dv">0</span>,<span class="dv">0</span>]</span>
-<span id="cb146-3"><a href="data-frames.html#cb146-3" aria-hidden="true" tabindex="-1"></a>top_left</span>
-<span id="cb146-4"><a href="data-frames.html#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 5.1</span></span>
-<span id="cb146-5"><a href="data-frames.html#cb146-5" aria-hidden="true" tabindex="-1"></a>first_three_rows_without_last_col <span class="op">=</span> iris_data.iloc[:<span class="dv">3</span>,:<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb146-6"><a href="data-frames.html#cb146-6" aria-hidden="true" tabindex="-1"></a>first_three_rows_without_last_col</span>
-<span id="cb146-7"><a href="data-frames.html#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width  petal.length  petal.width</span></span>
-<span id="cb146-8"><a href="data-frames.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.1          3.5           1.4          0.2</span></span>
-<span id="cb146-9"><a href="data-frames.html#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           4.9          3.0           1.4          0.2</span></span>
-<span id="cb146-10"><a href="data-frames.html#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 2           4.7          3.2           1.3          0.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb139-1"><a href="data-frames.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify rows/cols by number</span></span>
+<span id="cb139-2"><a href="data-frames.html#cb139-2" aria-hidden="true" tabindex="-1"></a>top_left <span class="op">=</span> iris_data.iloc[<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb139-3"><a href="data-frames.html#cb139-3" aria-hidden="true" tabindex="-1"></a>top_left</span>
+<span id="cb139-4"><a href="data-frames.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 5.1</span></span>
+<span id="cb139-5"><a href="data-frames.html#cb139-5" aria-hidden="true" tabindex="-1"></a>first_three_rows_without_last_col <span class="op">=</span> iris_data.iloc[:<span class="dv">3</span>,:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb139-6"><a href="data-frames.html#cb139-6" aria-hidden="true" tabindex="-1"></a>first_three_rows_without_last_col</span>
+<span id="cb139-7"><a href="data-frames.html#cb139-7" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width  petal.length  petal.width</span></span>
+<span id="cb139-8"><a href="data-frames.html#cb139-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.1          3.5           1.4          0.2</span></span>
+<span id="cb139-9"><a href="data-frames.html#cb139-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           4.9          3.0           1.4          0.2</span></span>
+<span id="cb139-10"><a href="data-frames.html#cb139-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 2           4.7          3.2           1.3          0.2</span></span></code></pre></div>
 <p>Selecting columns by anything besides integer number can be done with the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html"><code>.loc()</code> method</a>. You should generally prefer this method to access columns because accessing things by <em>name</em> instead of <em>number</em> is more readable. Here are some examples.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb147-1"><a href="data-frames.html#cb147-1" aria-hidden="true" tabindex="-1"></a>sepal_w_to_pedal_w <span class="op">=</span> iris_data.loc[:,<span class="st">&#39;sepal.width&#39;</span>:<span class="st">&#39;petal.width&#39;</span>]</span>
-<span id="cb147-2"><a href="data-frames.html#cb147-2" aria-hidden="true" tabindex="-1"></a>sepal_w_to_pedal_w.head()</span>
-<span id="cb147-3"><a href="data-frames.html#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.width  petal.length  petal.width</span></span>
-<span id="cb147-4"><a href="data-frames.html#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0          3.5           1.4          0.2</span></span>
-<span id="cb147-5"><a href="data-frames.html#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1          3.0           1.4          0.2</span></span>
-<span id="cb147-6"><a href="data-frames.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2          3.2           1.3          0.2</span></span>
-<span id="cb147-7"><a href="data-frames.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 3          3.1           1.5          0.2</span></span>
-<span id="cb147-8"><a href="data-frames.html#cb147-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 4          3.6           1.4          0.2</span></span>
-<span id="cb147-9"><a href="data-frames.html#cb147-9" aria-hidden="true" tabindex="-1"></a>setosa_only <span class="op">=</span> iris_data.loc[iris_data[<span class="st">&#39;species&#39;</span>] <span class="op">==</span> <span class="st">&quot;Iris-setosa&quot;</span>,]</span>
-<span id="cb147-10"><a href="data-frames.html#cb147-10" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t need the redundant column anymore</span></span>
-<span id="cb147-11"><a href="data-frames.html#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> setosa_only[<span class="st">&#39;species&#39;</span>]</span>
-<span id="cb147-12"><a href="data-frames.html#cb147-12" aria-hidden="true" tabindex="-1"></a>setosa_only.head(<span class="dv">3</span>)</span>
-<span id="cb147-13"><a href="data-frames.html#cb147-13" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width  petal.length  petal.width</span></span>
-<span id="cb147-14"><a href="data-frames.html#cb147-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.1          3.5           1.4          0.2</span></span>
-<span id="cb147-15"><a href="data-frames.html#cb147-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           4.9          3.0           1.4          0.2</span></span>
-<span id="cb147-16"><a href="data-frames.html#cb147-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 2           4.7          3.2           1.3          0.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb140-1"><a href="data-frames.html#cb140-1" aria-hidden="true" tabindex="-1"></a>sepal_w_to_pedal_w <span class="op">=</span> iris_data.loc[:,<span class="st">&#39;sepal.width&#39;</span>:<span class="st">&#39;petal.width&#39;</span>]</span>
+<span id="cb140-2"><a href="data-frames.html#cb140-2" aria-hidden="true" tabindex="-1"></a>sepal_w_to_pedal_w.head()</span>
+<span id="cb140-3"><a href="data-frames.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.width  petal.length  petal.width</span></span>
+<span id="cb140-4"><a href="data-frames.html#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="co">## 0          3.5           1.4          0.2</span></span>
+<span id="cb140-5"><a href="data-frames.html#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 1          3.0           1.4          0.2</span></span>
+<span id="cb140-6"><a href="data-frames.html#cb140-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 2          3.2           1.3          0.2</span></span>
+<span id="cb140-7"><a href="data-frames.html#cb140-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 3          3.1           1.5          0.2</span></span>
+<span id="cb140-8"><a href="data-frames.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 4          3.6           1.4          0.2</span></span>
+<span id="cb140-9"><a href="data-frames.html#cb140-9" aria-hidden="true" tabindex="-1"></a>setosa_only <span class="op">=</span> iris_data.loc[iris_data[<span class="st">&#39;species&#39;</span>] <span class="op">==</span> <span class="st">&quot;Iris-setosa&quot;</span>,]</span>
+<span id="cb140-10"><a href="data-frames.html#cb140-10" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t need the redundant column anymore</span></span>
+<span id="cb140-11"><a href="data-frames.html#cb140-11" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> setosa_only[<span class="st">&#39;species&#39;</span>]</span>
+<span id="cb140-12"><a href="data-frames.html#cb140-12" aria-hidden="true" tabindex="-1"></a>setosa_only.head(<span class="dv">3</span>)</span>
+<span id="cb140-13"><a href="data-frames.html#cb140-13" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width  petal.length  petal.width</span></span>
+<span id="cb140-14"><a href="data-frames.html#cb140-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.1          3.5           1.4          0.2</span></span>
+<span id="cb140-15"><a href="data-frames.html#cb140-15" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           4.9          3.0           1.4          0.2</span></span>
+<span id="cb140-16"><a href="data-frames.html#cb140-16" aria-hidden="true" tabindex="-1"></a><span class="co">## 2           4.7          3.2           1.3          0.2</span></span></code></pre></div>
 <p>Notice we used a <code>slice</code> (i.e. <code>'sepal.width':'pedal.width'</code>) to access many columns by only referring to the left-most and the right-most. Unlike slicing with numbers, <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#slicing-ranges">the right end is included</a>. Also note that this does not work with the regular square bracket operator (i.e. <code>iris_data['sepal.width':'pedal.width']</code>). The second example filters out the rows where the <code>"species"</code> column elements are equal to <code>"Iris-setosa"</code>.</p>
 <p>Each <code>DataFrame</code> in Pandas comes with an <code>.index</code> attribute. This is analogous to a row name in R, but it’s much more flexible because the index can take on a variety of types. This can help us highlight the difference between <code>.loc</code> and <code>.iloc</code>. Recall that <code>.loc</code> was <em>label-based selection.</em> Labels don’t necessarily have to be strings. Consider the following example.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb148-1"><a href="data-frames.html#cb148-1" aria-hidden="true" tabindex="-1"></a>iris_data.index</span>
-<span id="cb148-2"><a href="data-frames.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co"># reverse the index</span></span>
-<span id="cb148-3"><a href="data-frames.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="co">## RangeIndex(start=0, stop=150, step=1)</span></span>
-<span id="cb148-4"><a href="data-frames.html#cb148-4" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.set_index(iris_data.index[::<span class="op">-</span><span class="dv">1</span>]) </span>
-<span id="cb148-5"><a href="data-frames.html#cb148-5" aria-hidden="true" tabindex="-1"></a>iris_data.iloc[<span class="op">-</span><span class="dv">2</span>:,:<span class="dv">3</span>] <span class="co"># top is now bottom</span></span>
-<span id="cb148-6"><a href="data-frames.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width  petal.length</span></span>
-<span id="cb148-7"><a href="data-frames.html#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           6.2          3.4           5.4</span></span>
-<span id="cb148-8"><a href="data-frames.html#cb148-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.9          3.0           5.1</span></span>
-<span id="cb148-9"><a href="data-frames.html#cb148-9" aria-hidden="true" tabindex="-1"></a>iris_data.loc[<span class="dv">0</span>] <span class="co"># last row has 0 index</span></span>
-<span id="cb148-10"><a href="data-frames.html#cb148-10" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.length               5.9</span></span>
-<span id="cb148-11"><a href="data-frames.html#cb148-11" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.width                  3</span></span>
-<span id="cb148-12"><a href="data-frames.html#cb148-12" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.length               5.1</span></span>
-<span id="cb148-13"><a href="data-frames.html#cb148-13" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.width                1.8</span></span>
-<span id="cb148-14"><a href="data-frames.html#cb148-14" aria-hidden="true" tabindex="-1"></a><span class="co">## species         Iris-virginica</span></span>
-<span id="cb148-15"><a href="data-frames.html#cb148-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: 0, dtype: object</span></span>
-<span id="cb148-16"><a href="data-frames.html#cb148-16" aria-hidden="true" tabindex="-1"></a>iris_data.iloc[<span class="dv">0</span>] <span class="co"># first row with big index </span></span>
-<span id="cb148-17"><a href="data-frames.html#cb148-17" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.length            5.1</span></span>
-<span id="cb148-18"><a href="data-frames.html#cb148-18" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.width             3.5</span></span>
-<span id="cb148-19"><a href="data-frames.html#cb148-19" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.length            1.4</span></span>
-<span id="cb148-20"><a href="data-frames.html#cb148-20" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.width             0.2</span></span>
-<span id="cb148-21"><a href="data-frames.html#cb148-21" aria-hidden="true" tabindex="-1"></a><span class="co">## species         Iris-setosa</span></span>
-<span id="cb148-22"><a href="data-frames.html#cb148-22" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: 149, dtype: object</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="data-frames.html#cb141-1" aria-hidden="true" tabindex="-1"></a>iris_data.index</span>
+<span id="cb141-2"><a href="data-frames.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="co"># reverse the index</span></span>
+<span id="cb141-3"><a href="data-frames.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="co">## RangeIndex(start=0, stop=150, step=1)</span></span>
+<span id="cb141-4"><a href="data-frames.html#cb141-4" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.set_index(iris_data.index[::<span class="op">-</span><span class="dv">1</span>]) </span>
+<span id="cb141-5"><a href="data-frames.html#cb141-5" aria-hidden="true" tabindex="-1"></a>iris_data.iloc[<span class="op">-</span><span class="dv">2</span>:,:<span class="dv">3</span>] <span class="co"># top is now bottom</span></span>
+<span id="cb141-6"><a href="data-frames.html#cb141-6" aria-hidden="true" tabindex="-1"></a><span class="co">##    sepal.length  sepal.width  petal.length</span></span>
+<span id="cb141-7"><a href="data-frames.html#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 1           6.2          3.4           5.4</span></span>
+<span id="cb141-8"><a href="data-frames.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="co">## 0           5.9          3.0           5.1</span></span>
+<span id="cb141-9"><a href="data-frames.html#cb141-9" aria-hidden="true" tabindex="-1"></a>iris_data.loc[<span class="dv">0</span>] <span class="co"># last row has 0 index</span></span>
+<span id="cb141-10"><a href="data-frames.html#cb141-10" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.length               5.9</span></span>
+<span id="cb141-11"><a href="data-frames.html#cb141-11" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.width                  3</span></span>
+<span id="cb141-12"><a href="data-frames.html#cb141-12" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.length               5.1</span></span>
+<span id="cb141-13"><a href="data-frames.html#cb141-13" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.width                1.8</span></span>
+<span id="cb141-14"><a href="data-frames.html#cb141-14" aria-hidden="true" tabindex="-1"></a><span class="co">## species         Iris-virginica</span></span>
+<span id="cb141-15"><a href="data-frames.html#cb141-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: 0, dtype: object</span></span>
+<span id="cb141-16"><a href="data-frames.html#cb141-16" aria-hidden="true" tabindex="-1"></a>iris_data.iloc[<span class="dv">0</span>] <span class="co"># first row with big index </span></span>
+<span id="cb141-17"><a href="data-frames.html#cb141-17" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.length            5.1</span></span>
+<span id="cb141-18"><a href="data-frames.html#cb141-18" aria-hidden="true" tabindex="-1"></a><span class="co">## sepal.width             3.5</span></span>
+<span id="cb141-19"><a href="data-frames.html#cb141-19" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.length            1.4</span></span>
+<span id="cb141-20"><a href="data-frames.html#cb141-20" aria-hidden="true" tabindex="-1"></a><span class="co">## petal.width             0.2</span></span>
+<span id="cb141-21"><a href="data-frames.html#cb141-21" aria-hidden="true" tabindex="-1"></a><span class="co">## species         Iris-setosa</span></span>
+<span id="cb141-22"><a href="data-frames.html#cb141-22" aria-hidden="true" tabindex="-1"></a><span class="co">## Name: 149, dtype: object</span></span></code></pre></div>
 <p><code>iris_data.loc[0]</code> selects the <code>0</code>th index. The second line reversed the indexes, so this is actually the last row. If you want the first row, use <code>iris_data.iloc[0]</code>.</p>
 <!-- [`DataFrame`s have a huge amount  many useful attributes and methods, too.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#) -->
 <p>Modifying data inside a data frame looks quite similar to extracting data. You’ll recognize a lot of the methods mentioned earlier.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="data-frames.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb149-2"><a href="data-frames.html#cb149-2" aria-hidden="true" tabindex="-1"></a>n_rows <span class="op">=</span> iris_data.shape[<span class="dv">0</span>]</span>
-<span id="cb149-3"><a href="data-frames.html#cb149-3" aria-hidden="true" tabindex="-1"></a>iris_data[<span class="st">&#39;col_ones&#39;</span>] <span class="op">=</span> np.repeat(<span class="fl">1.0</span>, n_rows)</span>
-<span id="cb149-4"><a href="data-frames.html#cb149-4" aria-hidden="true" tabindex="-1"></a>iris_data.iloc[:<span class="dv">2</span>,<span class="dv">0</span>] <span class="op">=</span>  np.random.normal(loc<span class="op">=</span><span class="dv">999</span>, size<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb149-5"><a href="data-frames.html#cb149-5" aria-hidden="true" tabindex="-1"></a>rand_nums <span class="op">=</span> np.random.normal(loc<span class="op">=-</span><span class="dv">999</span>, size<span class="op">=</span>n_rows)</span>
-<span id="cb149-6"><a href="data-frames.html#cb149-6" aria-hidden="true" tabindex="-1"></a>iris_data.loc[:,<span class="st">&#39;sepal.width&#39;</span>] <span class="op">=</span> rand_nums</span>
-<span id="cb149-7"><a href="data-frames.html#cb149-7" aria-hidden="true" tabindex="-1"></a>setosa_rows <span class="op">=</span> iris_data[<span class="st">&#39;species&#39;</span>] <span class="op">==</span> <span class="st">&quot;Iris-setosa&quot;</span></span>
-<span id="cb149-8"><a href="data-frames.html#cb149-8" aria-hidden="true" tabindex="-1"></a>iris_data.loc[setosa_rows, <span class="st">&#39;species&#39;</span>] <span class="op">=</span> <span class="st">&quot;SETOSA!&quot;</span></span>
-<span id="cb149-9"><a href="data-frames.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> iris_data[<span class="st">&#39;petal.length&#39;</span>]</span>
-<span id="cb149-10"><a href="data-frames.html#cb149-10" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
-<span id="cb149-11"><a href="data-frames.html#cb149-11" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.width  species  col_ones</span></span>
-<span id="cb149-12"><a href="data-frames.html#cb149-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    999.067710  -999.263677          0.2  SETOSA!       1.0</span></span>
-<span id="cb149-13"><a href="data-frames.html#cb149-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    997.961094  -998.461749          0.2  SETOSA!       1.0</span></span>
-<span id="cb149-14"><a href="data-frames.html#cb149-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -997.471740          0.2  SETOSA!       1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="data-frames.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb142-2"><a href="data-frames.html#cb142-2" aria-hidden="true" tabindex="-1"></a>n_rows <span class="op">=</span> iris_data.shape[<span class="dv">0</span>]</span>
+<span id="cb142-3"><a href="data-frames.html#cb142-3" aria-hidden="true" tabindex="-1"></a>iris_data[<span class="st">&#39;col_ones&#39;</span>] <span class="op">=</span> np.repeat(<span class="fl">1.0</span>, n_rows)</span>
+<span id="cb142-4"><a href="data-frames.html#cb142-4" aria-hidden="true" tabindex="-1"></a>iris_data.iloc[:<span class="dv">2</span>,<span class="dv">0</span>] <span class="op">=</span>  np.random.normal(loc<span class="op">=</span><span class="dv">999</span>, size<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb142-5"><a href="data-frames.html#cb142-5" aria-hidden="true" tabindex="-1"></a>rand_nums <span class="op">=</span> np.random.normal(loc<span class="op">=-</span><span class="dv">999</span>, size<span class="op">=</span>n_rows)</span>
+<span id="cb142-6"><a href="data-frames.html#cb142-6" aria-hidden="true" tabindex="-1"></a>iris_data.loc[:,<span class="st">&#39;sepal.width&#39;</span>] <span class="op">=</span> rand_nums</span>
+<span id="cb142-7"><a href="data-frames.html#cb142-7" aria-hidden="true" tabindex="-1"></a>setosa_rows <span class="op">=</span> iris_data[<span class="st">&#39;species&#39;</span>] <span class="op">==</span> <span class="st">&quot;Iris-setosa&quot;</span></span>
+<span id="cb142-8"><a href="data-frames.html#cb142-8" aria-hidden="true" tabindex="-1"></a>iris_data.loc[setosa_rows, <span class="st">&#39;species&#39;</span>] <span class="op">=</span> <span class="st">&quot;SETOSA!&quot;</span></span>
+<span id="cb142-9"><a href="data-frames.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> iris_data[<span class="st">&#39;petal.length&#39;</span>]</span>
+<span id="cb142-10"><a href="data-frames.html#cb142-10" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
+<span id="cb142-11"><a href="data-frames.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.length  sepal.width  petal.width  species  col_ones</span></span>
+<span id="cb142-12"><a href="data-frames.html#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="co">## 149    998.466061  -997.684822          0.2  SETOSA!       1.0</span></span>
+<span id="cb142-13"><a href="data-frames.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 148    999.782826  -998.551744          0.2  SETOSA!       1.0</span></span>
+<span id="cb142-14"><a href="data-frames.html#cb142-14" aria-hidden="true" tabindex="-1"></a><span class="co">## 147      4.700000  -999.055959          0.2  SETOSA!       1.0</span></span></code></pre></div>
 <p>You can also use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html"><code>.assign()</code> method</a> to create a new column. This method does not modify the data frame in place. It returns a new <code>DataFrame</code> with the additional column.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="data-frames.html#cb150-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.assign(new_col_name <span class="op">=</span> np.arange(n_rows))</span>
-<span id="cb150-2"><a href="data-frames.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> iris_data[<span class="st">&#39;sepal.length&#39;</span>]</span>
-<span id="cb150-3"><a href="data-frames.html#cb150-3" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
-<span id="cb150-4"><a href="data-frames.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.width  petal.width  species  col_ones  new_col_name</span></span>
-<span id="cb150-5"><a href="data-frames.html#cb150-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 149  -999.263677          0.2  SETOSA!       1.0             0</span></span>
-<span id="cb150-6"><a href="data-frames.html#cb150-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 148  -998.461749          0.2  SETOSA!       1.0             1</span></span>
-<span id="cb150-7"><a href="data-frames.html#cb150-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 147  -997.471740          0.2  SETOSA!       1.0             2</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="data-frames.html#cb143-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="op">=</span> iris_data.assign(new_col_name <span class="op">=</span> np.arange(n_rows))</span>
+<span id="cb143-2"><a href="data-frames.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> iris_data[<span class="st">&#39;sepal.length&#39;</span>]</span>
+<span id="cb143-3"><a href="data-frames.html#cb143-3" aria-hidden="true" tabindex="-1"></a>iris_data.head(<span class="dv">3</span>)</span>
+<span id="cb143-4"><a href="data-frames.html#cb143-4" aria-hidden="true" tabindex="-1"></a><span class="co">##      sepal.width  petal.width  species  col_ones  new_col_name</span></span>
+<span id="cb143-5"><a href="data-frames.html#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="co">## 149  -997.684822          0.2  SETOSA!       1.0             0</span></span>
+<span id="cb143-6"><a href="data-frames.html#cb143-6" aria-hidden="true" tabindex="-1"></a><span class="co">## 148  -998.551744          0.2  SETOSA!       1.0             1</span></span>
+<span id="cb143-7"><a href="data-frames.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 147  -999.055959          0.2  SETOSA!       1.0             2</span></span></code></pre></div>
 <div class="rmd-caution">
 <p>Above we were assigning Numpy arrays to columns of a <code>DataFrame</code>. Be careful when you’re assigning <code>Series</code> objects. You’ll see in the documentation that <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#basics">“Pandas aligns all AXES when setting Series and <code>DataFrame</code> from <code>.loc</code>, and <code>.iloc</code>.”</a>.</p>
 </div>
@@ -736,11 +736,11 @@ div.csl-indent {
 </ol>
 <p>In this question we’ll look at <a href="https://www.tensorflow.org/datasets/catalog/radon">some data on radon measurements</a> <span class="citation">(<a href="#ref-GelmanHill:2007" role="doc-biblioref">Gelman and Hill 2007</a>)</span>. Instead of reading in a text file, we will load the data into Python using the <a href="https://www.tensorflow.org/datasets"><code>tensorflow_datasets</code> module</a> <span class="citation">(<a href="#ref-TFDS" role="doc-biblioref"><span>“<span>TensorFlow Datasets</span>, a Collection of Ready-to-Use Datasets”</span> 2021</a>)</span>.</p>
 <p>Please include the following code in your submission.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="data-frames.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_datasets <span class="im">as</span> tfds</span>
-<span id="cb151-2"><a href="data-frames.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb151-3"><a href="data-frames.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb151-4"><a href="data-frames.html#cb151-4" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> tfds.load(<span class="st">&quot;radon&quot;</span>)</span>
-<span id="cb151-5"><a href="data-frames.html#cb151-5" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.DataFrame(tfds.as_dataframe(d[<span class="st">&#39;train&#39;</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="data-frames.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_datasets <span class="im">as</span> tfds</span>
+<span id="cb144-2"><a href="data-frames.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb144-3"><a href="data-frames.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb144-4"><a href="data-frames.html#cb144-4" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> tfds.load(<span class="st">&quot;radon&quot;</span>)</span>
+<span id="cb144-5"><a href="data-frames.html#cb144-5" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> pd.DataFrame(tfds.as_dataframe(d[<span class="st">&#39;train&#39;</span>]))</span></code></pre></div>
 <p>Many of you will need to install <code>tensorflow</code> and <code>tensorflow_datasets</code> before you’re able to <code>import</code> it. If that’s so, please read section <a href="using-third-party-code.html#installing-packages-in-python">10.2</a> for more information on how to install packages.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Assign to <code>worst_row</code> the row of <code>d</code> that is associated the highest recorded level of radon. Make sure it a <code>DataFrame</code>.</li>
