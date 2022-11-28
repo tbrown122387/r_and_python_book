@@ -815,7 +815,7 @@ and you reject the null hypothesis if $|t| > t_{n-1,\alpha/2}$. This is **Studen
 Suppose you have a target density $p(x)$ that you are only able to evaluate up to a normalizing constant. In other words, suppose that for some $c > 0$, $p(x) = f(x) / c$, and you are only able to evaluate $f(\cdot)$. Your goal is that you would like to be able to approximate the expected value of $p(x)$ (i.e. $\int x p(x) dx$) using some proposal distribution $q(x)$. $q(x)$ is flexible in that you can sample from it, and you can evaluate it. We will use **importance sampling** [@impsamping1] [@impsamping2] to achieve this.^[Note that this is a similar setup to the accept-reject sampling problem we had earlier, and this algorithm is closely-related with the Monte Carlo algorithm we used in the exercises of chapter 3.]
 
 **Algorithm 1**:  Importance Sampling 
-  i. Sample $X^1, \ldots, X^n$ from $q(x)$,
+i) Sample $X^1, \ldots, X^n$ from $q(x)$,
   ii. For each sample $x^i$, calculate an unnormalized weight $\tilde{w}^i:= \frac{f(x^i)}{q(x^i)}$,
   iii. Calculate the normalized weights $w^i = \tilde{w}^i \bigg/ \sum_j \tilde{w}^j$.
   iv. Calculate the weighted average $\sum_{i=1}^n w^i x^i$.

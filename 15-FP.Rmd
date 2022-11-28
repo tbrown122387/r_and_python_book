@@ -652,8 +652,8 @@ Write a function decorator called `@log_dens_eval(left_bound, right_bound)`. Whe
 
 The Split-Apply-Combine strategy might be useful in writing code for a tree-based model [@trees]. We won't discuss how these models are estimated, but we will write a function that generates another function that is able to generate predictions by stratifying the input/predictor/feature space.
 
-    a. Import the data `"winequality-red.csv"`, call it `wine`, and remove all columns except for `fixed acidity`, `volatile acidity`, and `quality`.
-    b. Write a function called `generate_pred_func(fixed_cutoff, vol_cutoff, dataset)`. 
+  a) Import the data `"winequality-red.csv"`, call it `wine`, and remove all columns except for `fixed acidity`, `volatile acidity`, and `quality`.
+  b) Write a function called `generate_pred_func(fixed_cutoff, vol_cutoff, dataset)`. 
       + The `dataset` argument should be a Pandas `DataFrame` that has three columns called `fixed acidity`, `volatile acidity`, and `quality`.
       + The `fixed_cutoff` argument should be a floating point number that separates `fixed acidity` into two regions.
       + The `vol_cutoff` argument should be a floating point number that separates `volatile acidity` into two regions. 
@@ -672,12 +672,12 @@ Let's predict what type of activity some is doing based on measurements taken fr
 
 Consider the data files `"X_train.txt"` and `"y_train.txt"` from [@Anguita2013APD], which is available from the UCI Machine Learning Repository [@uci_data]. The first data set consists of recorded movements from a cell phone, and the second data set consists of activity labels of people. Labels $1$ through $6$ correspond to walking, walking upstairs, walking downstairs, sitting, standing and laying, respectively. 
 
-    a. Read in `"X_train.txt"` as a `DataFrame` called `x_train`.
-    b. Read in `"y_train.txt"` as a `DataFrame` called `y_train`
-    c. Define a function called `standardize(arr)` that takes in an array-like and returns a standardized version of the array-like. Do this by subtracting from each element the overall mean and dividing each element by the standard deviation (use the length as a denominator, not length minus $1$).
-    d. Apply `standardize()` to each column and transform `x_train` by replacing all of its column by their standardized versions. Make sure to overwrite `x_train`. Do this in one line of code. 
-    e. Write a function called `euclid_dist(arr1, arr2)` that calculates Euclidean distance between two points/array-likes. 
-    f. What is the most common label among the 5 rows that are closest to the first row? Assign your answer to `my_predict`. Assume that the two data sets you imported have the same order. Don't include the first row in these $5$ *nearest neighbors*. Take care not to modify `x_train` or `y_train`. 
+  a) Read in `"X_train.txt"` as a `DataFrame` called `x_train`.
+  b) Read in `"y_train.txt"` as a `DataFrame` called `y_train`
+  c) Define a function called `standardize(arr)` that takes in an array-like and returns a standardized version of the array-like. Do this by subtracting from each element the overall mean and dividing each element by the standard deviation (use the length as a denominator, not length minus $1$).
+  d) Apply `standardize()` to each column and transform `x_train` by replacing all of its column by their standardized versions. Make sure to overwrite `x_train`. Do this in one line of code. 
+  e) Write a function called `euclid_dist(arr1, arr2)` that calculates Euclidean distance between two points/array-likes. 
+  f) What is the most common label among the 5 rows that are closest to the first row? Assign your answer to `my_predict`. Assume that the two data sets you imported have the same order. Don't include the first row in these $5$ *nearest neighbors*. Take care not to modify `x_train` or `y_train`. 
 
 
 ### R Questions
@@ -696,18 +696,18 @@ $$
 g(x) = \frac{1}{\sqrt{2\pi}} \exp\left[ -\frac{x ^2 }{2}     \right] \tag{2}.
 $$
 
-    a. Write a function called `fTwoArgs(x,y)` that takes two arguments, and returns the value of the above density in equation (1) at those two points. 
-    b. Write a function called `fOneArg(vec)` that takes one argument: a length two `vector`. It should return a density in equation (1) evaluated at that point. 
-    c. Write a function called `gOneArg(x)` that evaluates the density in (2). 
-    d. Generate two sequences called `xPoints` and `yPoints`. Have them contain the twenty equally-spaced numbers going from $-3$ to $3$, inclusive.
-    e. Use `expand.grid()` to create a `data.frame` called `myGrid`. It should have two columns, and it should contain in its rows every possible pair of two points from the above sequences. The "x" coordinates should be in the first column. 
-    f. Use `mapply()` to evaluate the bivariate density on every grid point. Store your results in a `vector` `mEvals`.
-    g. Use `apply()` to evaluate the bivariate density on every grid point. Store your results in a `vector` `aEvals`.
-    h. Use `sapply()` to evaluate the univariate density on every element of `xPoints`. Store your results in a `vector` `sEvals`.
-    i. Use `vapply` to evaluate the univariate density on every element of `xPoints`. Store your results in `vector` `vEvals`.
-    j. Use `lapply` to evaluate the univariate density on every element of `xPoints`. Store your results in a `list` `lEvals`.
-    k. Generate two plots of the bivariate density. For one, use `persp()`. For the other, use `contour()`. Feel free to revive the code you used in Chapter 13's Exercise 1.
-    l. Generate a third plot of the univariate density. Feel free to revive the code you used in Chapter 13's Exercises.
+  a) Write a function called `fTwoArgs(x,y)` that takes two arguments, and returns the value of the above density in equation (1) at those two points. 
+  b) Write a function called `fOneArg(vec)` that takes one argument: a length two `vector`. It should return a density in equation (1) evaluated at that point. 
+  c) Write a function called `gOneArg(x)` that evaluates the density in (2). 
+  d) Generate two sequences called `xPoints` and `yPoints`. Have them contain the twenty equally-spaced numbers going from $-3$ to $3$, inclusive.
+  e) Use `expand.grid()` to create a `data.frame` called `myGrid`. It should have two columns, and it should contain in its rows every possible pair of two points from the above sequences. The "x" coordinates should be in the first column. 
+  f) Use `mapply()` to evaluate the bivariate density on every grid point. Store your results in a `vector` `mEvals`.
+  g) Use `apply()` to evaluate the bivariate density on every grid point. Store your results in a `vector` `aEvals`.
+  h) Use `sapply()` to evaluate the univariate density on every element of `xPoints`. Store your results in a `vector` `sEvals`.
+  i) Use `vapply` to evaluate the univariate density on every element of `xPoints`. Store your results in `vector` `vEvals`.
+  j) Use `lapply` to evaluate the univariate density on every element of `xPoints`. Store your results in a `list` `lEvals`.
+  k) Generate two plots of the bivariate density. For one, use `persp()`. For the other, use `contour()`. Feel free to revive the code you used in Chapter 13's Exercise 1.
+  l) Generate a third plot of the univariate density. Feel free to revive the code you used in Chapter 13's Exercises.
   
 2.
 
@@ -722,9 +722,9 @@ Write a function that reads in all of the data sets contained in any given folde
 
 Consider the Militarized Interstate Disputes (v5.0) [@mid5] data sets again: `"MIDA 5.0.csv"`, `"MIDB 5.0.csv"`, `"MIDI 5.0.csv"`, and `"MIDIP 5.0.csv"`.
 
-    a. Read these data sets in as a `list` of `data.frame`s. Call it `dfList`.
-    b. Use `lapply()` and `do.call()` to calculate the biggest column average for all of these data sets. Store this average as `biggestAve`. Store the name of the column that had this biggest average as `whichBiggestAve`. Don't worry about storing which data set this column mean was found in. 
-    c. Use `Reduce()` and `lapply()` to, once again, calculate the biggest column average. Store this number as `biggestAve2`
+  a) Read these data sets in as a `list` of `data.frame`s. Call it `dfList`.
+  b) Use `lapply()` and `do.call()` to calculate the biggest column average for all of these data sets. Store this average as `biggestAve`. Store the name of the column that had this biggest average as `whichBiggestAve`. Don't worry about storing which data set this column mean was found in. 
+  c) Use `Reduce()` and `lapply()` to, once again, calculate the biggest column average. Store this number as `biggestAve2`
 
 
 
@@ -802,5 +802,6 @@ Consider the Militarized Interstate Disputes (v5.0) [@mid5] data sets again: `"M
 <!-- 3. verbal, open-ended wuestion about what happens when you make a typo in a variable name? R versus Python? -->
 
 <!-- 4. try to think of the most complicated program that uses two functions that both use (and modify) globals -->
+
 
 

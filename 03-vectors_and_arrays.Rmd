@@ -546,10 +546,10 @@ s.str.extract(r".( [a-z]+@[a-z]+\.com$)")
 
 Let's flip some coins! Generate a thousand flips of a fair coin. Use `rbinom`, and let heads be coded as `1` and tails coded as `0`. 
 
-    a. Assign the thousand raw coin flips to a variable `flips`. Make sure the elements are integers, and make sure you flip a "fair" coin ($p=.5$).
-    b. Create a length `1000` `logical` `vector` called `isHeads`. Whenever you get a heads, make sure the corresponding element is `TRUE` and `FALSE` otherwise.
-    c. Create a variable called `numHeads` by tallying up the number of heads. 
-    d. Calculate the percent of time that the number changes in `flips`. Assign your number to `acceptanceRate`. Try to write only one line of code to do this.
+  a) Assign the thousand raw coin flips to a variable `flips`. Make sure the elements are integers, and make sure you flip a "fair" coin ($p=.5$).
+  b) Create a length `1000` `logical` `vector` called `isHeads`. Whenever you get a heads, make sure the corresponding element is `TRUE` and `FALSE` otherwise.
+  c) Create a variable called `numHeads` by tallying up the number of heads. 
+  d) Calculate the percent of time that the number changes in `flips`. Assign your number to `acceptanceRate`. Try to write only one line of code to do this.
 
 2. 
 
@@ -563,26 +563,26 @@ You want to store each of those eleven numbers separately in a `numeric` `vector
 
 Do the following.
 
-    a. Create a vector called `nums` that contains all consecutive integers from $-100$ to $100$. 
-    b. Create a `logical` `vector`  that has the same length as the above, and contains `TRUE` whenever an element of the above is even, and `FALSE` otherwise. Call it `myLogicals`.
-    c. Assign the total number of `TRUE`s to `totalEven`.
-    d. Create a `vector` called `evens` of all even numbers from the above `vector`.
-    e. Create a `vector` called `reverse` that holds the reversed elements of `nums`.
+  a) Create a vector called `nums` that contains all consecutive integers from $-100$ to $100$. 
+  b) Create a `logical` `vector`  that has the same length as the above, and contains `TRUE` whenever an element of the above is even, and `FALSE` otherwise. Call it `myLogicals`.
+  c) Assign the total number of `TRUE`s to `totalEven`.
+  d) Create a `vector` called `evens` of all even numbers from the above `vector`.
+  e) Create a `vector` called `reverse` that holds the reversed elements of `nums`.
 
 4. 
 
 Let's say we wanted to calculate the following sum $\sum_{i=1}^N x_i$. If $N$ is large, or most of the $x_i$s are large, then we might bump up against the largest allowable number. This is the problem of *overflow*. The biggest integer and biggest floating point can be recovered by typing `.Machine$integer.max` and `.Machine$double.xmax`, respectively.
 
-    a. Assign `sumThese` to `exp(rep(1000,10))`. Are they finite? Can you sum them? If everything is all good, assign `TRUE` to `allGood`.
-    b. Theoretically, is the logarithm of the sum less than `.Machine$double.xmax`? Assign `TRUE` or `FALSE` to `noOverflowIssue`.
-    c. Assign the *naive* log-sum of these to `naiveLogSum`. Is the naive log sum finite?
-    d. Compute `betterSum`, one that doesn't overflow, using the *log-sum-exp* trick: 
+  a) Assign `sumThese` to `exp(rep(1000,10))`. Are they finite? Can you sum them? If everything is all good, assign `TRUE` to `allGood`.
+  b) Theoretically, is the logarithm of the sum less than `.Machine$double.xmax`? Assign `TRUE` or `FALSE` to `noOverflowIssue`.
+  c) Assign the *naive* log-sum of these to `naiveLogSum`. Is the naive log sum finite?
+  d) Compute `betterSum`, one that doesn't overflow, using the *log-sum-exp* trick: 
     
     $$
     \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m  
     $$
     $m$ is usually chosen to be $\max_i \log x_i$. This is the same formula as above, which is nice. You can use the same code to combat both overflow and underflow.
-    e. If you're writing code, and you have a bunch of very large numbers, is it better to store those numbers, or store the logarithm of those numbers? Assign your answer to `whichBetter`. Use either the phrase `"logs"` or `"nologs"`.
+  e) If you're writing code, and you have a bunch of very large numbers, is it better to store those numbers, or store the logarithm of those numbers? Assign your answer to `whichBetter`. Use either the phrase `"logs"` or `"nologs"`.
 
 
 
@@ -594,12 +594,12 @@ Say you have a `vector` of prices of some financial asset:
 prices <- c(100.10, 95.98, 100.01, 99.87)
 ```
   
-    a. Use the natural logarithm and convert this vector into a vector of *log returns*. Call the variable `logReturns`. If $p_t$ is the price at time $t$, the log return ending at time $t$ is 
+  a) Use the natural logarithm and convert this vector into a vector of *log returns*. Call the variable `logReturns`. If $p_t$ is the price at time $t$, the log return ending at time $t$ is 
 \begin{equation} 
 r_t = \log \left( \frac{p_t}{p_{t-1}} \right) = \log p_t - \log p_{t-1}
 \end{equation}
 
-    b. Do the same for *arithmetic returns*. These are regular percent changes if you scale by $100$. Call the variable `arithReturns`. The mathematical formula you need is 
+  b) Do the same for *arithmetic returns*. These are regular percent changes if you scale by $100$. Call the variable `arithReturns`. The mathematical formula you need is 
 \begin{equation} 
 a_t = \left( \frac{p_t - p_{t-1} }{p_{t-1}} \right) \times 100 
 \end{equation}
@@ -627,26 +627,26 @@ Suppose further that you are interested in calculating the probability that one 
 
 The following steps will demonstrate how you can use the **Monte-Carlo** [@monte-carlo-stat-methods] method to approximate this probability.
 
-    a. Simulate $X_1, \ldots, X_{5000}$ from a $\text{half-Cauchy}(0, 1)$ and call these samples `xSamps`. Hint: you can simulate from a $t$ distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.
+  a) Simulate $X_1, \ldots, X_{5000}$ from a $\text{half-Cauchy}(0, 1)$ and call these samples `xSamps`. Hint: you can simulate from a $t$ distribution with one degree of freedom to sample from a Cauchy. Once you have regular Cauchy samples, take the absolute value of each one.
   
-    b. Simulate $Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}$ and call the samples `ySamps`. 
+  b) Simulate $Y_1 \mid X_1, \ldots, Y_{5000} \mid X_{5000}$ and call the samples `ySamps`. 
   
-    c. Calculate the approximate probability using `ySamps` and call it `approxProbDev1`.
+  c) Calculate the approximate probability using `ySamps` and call it `approxProbDev1`.
   
-    d. Why is simply "ignoring" `xSamps` (i.e. not using it in the averaging part of the computation), the samples you condition on, "equivalent" to "integrating out $x$"? Store a string response as a length $1$ character vector called `integratingOutResp`.
+  d) Why is simply "ignoring" `xSamps` (i.e. not using it in the averaging part of the computation), the samples you condition on, "equivalent" to "integrating out $x$"? Store a string response as a length $1$ character vector called `integratingOutResp`.
   
-    e. Calculate another **Rao-Blackwellized** Monte Carlo estimate of $\mathbb{P}[|Y| > 1]$ from `xSamps`. Call it `approxProbDev2`. Hint: $\mathbb{P}[|Y| > 1] = \mathbb{E}[\mathbb{P}(|Y| > 1 \mid X) ]$. Calculate $\mathbb{P}(|Y| > 1 \mid X=x)$ with pencil and paper, notice it is a function in $x$, apply that function to each of `xSamps`, and average all of it together.
+  e) Calculate another **Rao-Blackwellized** Monte Carlo estimate of $\mathbb{P}[|Y| > 1]$ from `xSamps`. Call it `approxProbDev2`. Hint: $\mathbb{P}[|Y| > 1] = \mathbb{E}[\mathbb{P}(|Y| > 1 \mid X) ]$. Calculate $\mathbb{P}(|Y| > 1 \mid X=x)$ with pencil and paper, notice it is a function in $x$, apply that function to each of `xSamps`, and average all of it together.
   
-    f. Are you able to calculate an exact solution to $\mathbb{P}[|Y| > 1]$?
+  f) Are you able to calculate an exact solution to $\mathbb{P}[|Y| > 1]$?
 
 
 7. 
 
 Store the ordered uppercase letters of the alphabet in a length $26$ `character` `vector` called `myUpcaseLetters`. Do not hardcode this. Use a function, along with the variable `letters`.
   
-    a. Create a new vector called `withReplacements` that's the same as the previous `vector`, but replace all vowels with `"---"`. Again, do not hardcode this. Find a function that searches for patterns and performs a replacement whenever that pattern is found.
+  a) Create a new vector called `withReplacements` that's the same as the previous `vector`, but replace all vowels with `"---"`. Again, do not hardcode this. Find a function that searches for patterns and performs a replacement whenever that pattern is found.
   
-    b. Create a length $26$ logical vector that is `TRUE` whenever an element of `letters` is a consonant, and `FALSE` everywhere else. Call it `consonant`.
+  b) Create a length $26$ logical vector that is `TRUE` whenever an element of `letters` is a consonant, and `FALSE` everywhere else. Call it `consonant`.
 
 
 
@@ -656,10 +656,10 @@ Store the ordered uppercase letters of the alphabet in a length $26$ `character`
 
 Let's flip some coins (again)! Generate a thousand flips of a fair coin. Use `np.random.binomial`, and let heads be coded as `1` and tails coded as `0`. 
 
-    a. Assign the thousand raw coin flips to a variable `flips`. Make sure the elements are integers, and make sure you flip a "fair" coin ($p=.5$).
-    b. Create a length `1000` `list` of `bool`s called `is_heads`. Whenever you get a heads, make sure the corresponding element is `True` and `False` otherwise.
-    c. Create a variable called `num_heads` by tallying up the number of heads. 
-    d.  Calculate the percent of time that the number changes in `flips`. Assign your number to `acceptance_rate`. Try to write only one line of code to do this.
+  a) Assign the thousand raw coin flips to a variable `flips`. Make sure the elements are integers, and make sure you flip a "fair" coin ($p=.5$).
+  b) Create a length `1000` `list` of `bool`s called `is_heads`. Whenever you get a heads, make sure the corresponding element is `True` and `False` otherwise.
+  c) Create a variable called `num_heads` by tallying up the number of heads. 
+  d)  Calculate the percent of time that the number changes in `flips`. Assign your number to `acceptance_rate`. Try to write only one line of code to do this.
 
 
 2. 
@@ -670,34 +670,34 @@ Create a Numpy `array` containing the numbers $1/2, 1/4, 1/8, \ldots, 1/1024$ Ma
 
 Do the following:
 
-    a. Create a `np.array` called `nums` that contains one hundred equally-spaced numbers starting from $-100$ and going to $100$ (inclusive).
-    b. Create a `bool` `np.array`  that has the same length as the above, and contains `TRUE` whenever an element of the above is less than ten units away from $0$, and `FALSE` otherwise. Call it `my_logicals`.
-    c. Assign the total number of `True`s to `total_close`.
-    d. Create a `np.array` called `evens` of all even numbers from the above `np.array` (even numbers are necessarily integers).
-    e. Create a `np.array` called `reverse` that holds the reversed elements of `nums`.
+  a) Create a `np.array` called `nums` that contains one hundred equally-spaced numbers starting from $-100$ and going to $100$ (inclusive).
+  b) Create a `bool` `np.array`  that has the same length as the above, and contains `TRUE` whenever an element of the above is less than ten units away from $0$, and `FALSE` otherwise. Call it `my_logicals`.
+  c) Assign the total number of `True`s to `total_close`.
+  d) Create a `np.array` called `evens` of all even numbers from the above `np.array` (even numbers are necessarily integers).
+  e) Create a `np.array` called `reverse` that holds the reversed elements of `nums`.
 
 4. 
 
 Let's say we wanted to calculate the following sum $\sum_{i=1}^N x_i$. We run into problems when this sum is close to $0$, too. This is the problem of *underflow*. The smallest positive floating point can be recovered by typing `np.nextafter(np.float64(0),np.float64(1))`.
 
-    a. Assign `sum_these` to the length ten array $(e^{-1000}, \ldots, e^{-1000})$. Use ` np.exp(np.repeat(-1000,10))`. Are the elements nonzero? Can you sum them? Is the sum correct? If everything is all good, assign `True` to `all_good`.
-    b. Theoretically, for which range of positive numbers is the logarithm of the number farther from $0$ than the number itself? Assign the lower bound to `lower_bound`, and the upper bound to `upper_bound`. Hint: `lower_bound` is $0$ because we're only looking at positive numbers, and because the logarithm is $-\infty$.
-    c. Assign the *naive* log-sum of `sum_these` to `naive_log_sum`. Is the naive log sum finite on your computer? Should it be?
-    d. Compute `better_sum`, one that doesn't underflow, using the *log-sum-exp* trick. This one should be bounded away from $-\infty$.
+  a) Assign `sum_these` to the length ten array $(e^{-1000}, \ldots, e^{-1000})$. Use ` np.exp(np.repeat(-1000,10))`. Are the elements nonzero? Can you sum them? Is the sum correct? If everything is all good, assign `True` to `all_good`.
+  b) Theoretically, for which range of positive numbers is the logarithm of the number farther from $0$ than the number itself? Assign the lower bound to `lower_bound`, and the upper bound to `upper_bound`. Hint: `lower_bound` is $0$ because we're only looking at positive numbers, and because the logarithm is $-\infty$.
+  c) Assign the *naive* log-sum of `sum_these` to `naive_log_sum`. Is the naive log sum finite on your computer? Should it be?
+  d) Compute `better_sum`, one that doesn't underflow, using the *log-sum-exp* trick. This one should be bounded away from $-\infty$.
     
     $$
     \log\left( \sum_{i=1}^{10} x_i \right) = \log\left( \sum_{i=1}^{10} \exp[ \log(x_i) - m] \right) + m = 
     $$
     $m$ is usually chosen to be $\max_i \log x_i$
-    e. If you're writing code, and you have a bunch of very small positive numbers (e.g. probabilities, densities, etc.), is it better to store those small numbers, or store the logarithm of those numbers? Assign your answer to `which_better`. Use either the phrase `"logs"` or `"nologs"`.
+  e) If you're writing code, and you have a bunch of very small positive numbers (e.g. probabilities, densities, etc.), is it better to store those small numbers, or store the logarithm of those numbers? Assign your answer to `which_better`. Use either the phrase `"logs"` or `"nologs"`.
 
 5. 
 
 Use `pd.read_csv` to correctly read in `"2013-10_Citi_Bike_trip_data_20K.csv"` as a data frame called `my_df`. Make sure to read `autograding_tips.html`.
   
-    a. Extract the `"starttime"` column into a separate `Series` called `s_times`.
-    b. Extract date strings of those elements into a `Series` called `date_strings`.
-    c. Extract time strings of those elements into a `Series` called `time_strings`.
+  a) Extract the `"starttime"` column into a separate `Series` called `s_times`.
+  b) Extract date strings of those elements into a `Series` called `date_strings`.
+  c) Extract time strings of those elements into a `Series` called `time_strings`.
 
 6. 
 
@@ -727,15 +727,15 @@ plot(leX, leX > 6, type = "l", xlab = "x", ylab = "1(x>6)")
 So, the sum in this expression is just a count of the number of elements that are greater than $6$. 
 
 
-    a. Evaluate exactly the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$. Assign it to the variable `exact_exceedance_prob` in Python.
+  a) Evaluate exactly the probability that a normal random variable with mean $5$ and standard deviation $6$ is greater than $6$. Assign it to the variable `exact_exceedance_prob` in Python.
   
-    b. Simulate $1e3$ times from a standard normal distribution (mean 0 and variance 1). Call the samples `stand_norm_samps`.
+  b) Simulate $1e3$ times from a standard normal distribution (mean 0 and variance 1). Call the samples `stand_norm_samps`.
   
-    c. Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these samples. Call it `approx_exceedance_prob1`.
+  c) Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these samples. Call it `approx_exceedance_prob1`.
   
-    d. Simulate $1e3$ times from a normal distribution with mean $5$ and standard deviation $6$. Call the samples `norm_samps`. Don't use the old samples in any way.
+  d) Simulate $1e3$ times from a normal distribution with mean $5$ and standard deviation $6$. Call the samples `norm_samps`. Don't use the old samples in any way.
 
-    e. Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these new `norm_samps`. Call it `approx_exceedance_prob2`.
+  e) Calculate a Monte Carlo estimate of $\mathbb{P}(X > 6)$ from these new `norm_samps`. Call it `approx_exceedance_prob2`.
 
 
 7. 
@@ -766,15 +766,15 @@ plot(leX, .5*dnorm(leX, 0, sqrt(2)) + .5*dnorm(leX, 10, sqrt(2)), type = "l", xl
 ```
 
 
-    a. Evaluate exactly $\mathbb{E}[Y] = \mathbb{E}[ \mathbb{E}(Y \mid X) ]$. Assign it to the variable `exact_mean` in Python.
+  a) Evaluate exactly $\mathbb{E}[Y] = \mathbb{E}[ \mathbb{E}(Y \mid X) ]$. Assign it to the variable `exact_mean` in Python.
   
-    b. Simulate $1e3$ times from the Bernoulli distribution. Call the samples `bernoulli_flips`
+  b) Simulate $1e3$ times from the Bernoulli distribution. Call the samples `bernoulli_flips`
 
-    c. Simulate $Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}$ and call the samples `cond_norm_samps`. 
+  c) Simulate $Y_1 \mid X_1, \ldots, Y_{1000} \mid X_{1000}$ and call the samples `cond_norm_samps`. 
   
-    d. Calculate a Monte Carlo estimate of $\mathbb{E}[Y]$ from `cond_norm_samps`. Call it `approx_ave_1`. Why is simply "ignoring" `bernoulli_flips`, the samples you condition on, "equivalent" to "integrating them out?" 
+  d) Calculate a Monte Carlo estimate of $\mathbb{E}[Y]$ from `cond_norm_samps`. Call it `approx_ave_1`. Why is simply "ignoring" `bernoulli_flips`, the samples you condition on, "equivalent" to "integrating them out?" 
   
-    e. Calculate a **Rao-Blackwellized** Monte Carlo estimate of $\mathbb{E}[Y]$ from `bernoulli_flips`. Call it `approx_ave_2`. Hint: $\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]$. Calculate $\mathbb{E}(Y \mid X_i)$ exactly, and evaluate that function on each $X_i$ sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.
+  e) Calculate a **Rao-Blackwellized** Monte Carlo estimate of $\mathbb{E}[Y]$ from `bernoulli_flips`. Call it `approx_ave_2`. Hint: $\mathbb{E}[Y] = \mathbb{E}[\mathbb{E}(Y \mid X) ]$. Calculate $\mathbb{E}(Y \mid X_i)$ exactly, and evaluate that function on each $X_i$ sample, and then average them together. Rao-Blackwellization is a variance-reduction technique that allows you come up with lower-variance estimates given a fixed computational budget.
   
   
 

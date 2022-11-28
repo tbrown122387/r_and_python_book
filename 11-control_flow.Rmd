@@ -80,7 +80,7 @@ r
 my_length = 9
 r = []
 for i in range(my_length):
-    r.append(i)
+  r)append(i)
 r
 ```
 
@@ -193,16 +193,16 @@ legend("topright", c("p(x)","f(x)", "q(x)"), col = c("black", "red", "green"), p
 
 Note that this algorithm allows for other proposal distributions. The only requirement of a proposal distribution is that its range of possible values must subsume the range of possible values of the target. 
 
-    a. Write a function called `arSamp(n)` that samples from $p(x)$ using accept-reject sampling. It should take a single argument that is equal to the number of samples desired. Below is one step of the accept-reject algorithm. You will need to do many iterations of this. The number of iterations will be random, because some of these proposals will not be accepted. 
+  a) Write a function called `arSamp(n)` that samples from $p(x)$ using accept-reject sampling. It should take a single argument that is equal to the number of samples desired. Below is one step of the accept-reject algorithm. You will need to do many iterations of this. The number of iterations will be random, because some of these proposals will not be accepted. 
 
 
 **Algorithm 1**:  Accept-Reject Sampling (One Step)
 
-  i. Find $M$ such that $M > \frac{f(x)}{q(x)}$ for all possible $x$ (the smaller the better).
+i) Find $M$ such that $M > \frac{f(x)}{q(x)}$ for all possible $x$ (the smaller the better).
   ii. Sample $X$ from $q(x)$.
   iii. Sample $Y \mid X$ from $\text{Bernoulli}\left(\frac{f(X)}{q(X)M}\right)$.
   iv. If $Y = 1$, then return $X$.
-  v. Otherwise, return nothing.
+v) Otherwise, return nothing.
 
 
 3.
@@ -244,10 +244,10 @@ lines(xTest, preds, col = "red")
 
 Suppose you go to the casino with $10$ dollars. You decide that your policy is to play until you go broke, or until you triple your money. The only game you play costs $\$1$ to play. If you lose, you lose that dollar. If you win, you get another $\$1$ in addition to getting your money back. 
 
-    a. Write a function called `sim_night(p)` that simulates your night of gambling. Have it return a Pandas `Series` with the running balance of money you have over the course of a night. For example, if you lose $10$ games in a row, and go home early, the returned `Series` contains $9, \ldots, 1,0$. This function will only take one input, `p`, which is the probability of winning any/every game you play. 
-    b. Use a `for` loop to call your function $5000$ times with probability `p=.5`. Each time, store the number of games played. Store them all in a Numpy `array` or Pandas `Series` called `simulated_durations`.
-    c. Take the average of `simulated_durations`. This is your Monte Carlo estimate of the expected duration. How does it compare with what you think it should be theoretically?
-    d. Perform the same analysis to estimate the expected duration when $p=.7$. Store your answer as a `float` called `expec_duration`.
+  a) Write a function called `sim_night(p)` that simulates your night of gambling. Have it return a Pandas `Series` with the running balance of money you have over the course of a night. For example, if you lose $10$ games in a row, and go home early, the returned `Series` contains $9, \ldots, 1,0$. This function will only take one input, `p`, which is the probability of winning any/every game you play. 
+  b) Use a `for` loop to call your function $5000$ times with probability `p=.5`. Each time, store the number of games played. Store them all in a Numpy `array` or Pandas `Series` called `simulated_durations`.
+  c) Take the average of `simulated_durations`. This is your Monte Carlo estimate of the expected duration. How does it compare with what you think it should be theoretically?
+  d) Perform the same analysis to estimate the expected duration when $p=.7$. Store your answer as a `float` called `expec_duration`.
 
 2.
 
@@ -262,10 +262,10 @@ my_data = pd.read_csv("sim_data.csv", header=None).values.flatten()
 This question will demonstrate how to implement **The Bootstrap** [@bootstrap], which is a popular nonparametric approach to understand the distribution of a statistic of interest. The main idea is to calculate your statistic over and over again on *bootstrapped* data sets, which are data sets randomly chosen, with replacement, from your original data set `my_data`. Each bootstrapped data set is of the same size as the original data set, and each bootstrapped data set will yield one statistic. Collect all of these random statistics, and it is a good approximation to the statistic's theoretical distribution. 
 
 
-    a. Calculate the mean of this data set and store it as a floating point number called `sample_mean`.
-    b. Calculate $5,000$ bootstrap sample means. Store them in a Numpy `array` called `bootstrapped_means`. Use a `for` loop, and inside the loop, sample with replacement $1000$ times from the length $1000$ data set. You can use the function `np.random.choice()` to accomplish this. 
-    c. Calculate the sample mean of these bootstrapped means. This is a good estimate of the *theoretical* mean/expectation of the sample mean. Call it `mean_of_means`.
-    d. Calculate the sample variance of these bootstrapped means. This is a good estimate of the *theoretical* variance of the sample mean. Call it `var_of_means`.
+  a) Calculate the mean of this data set and store it as a floating point number called `sample_mean`.
+  b) Calculate $5,000$ bootstrap sample means. Store them in a Numpy `array` called `bootstrapped_means`. Use a `for` loop, and inside the loop, sample with replacement $1000$ times from the length $1000$ data set. You can use the function `np.random.choice()` to accomplish this. 
+  c) Calculate the sample mean of these bootstrapped means. This is a good estimate of the *theoretical* mean/expectation of the sample mean. Call it `mean_of_means`.
+  d) Calculate the sample variance of these bootstrapped means. This is a good estimate of the *theoretical* variance of the sample mean. Call it `var_of_means`.
   
 3.
 
