@@ -1,6 +1,6 @@
 # An Introduction to Functional Programming
 
-**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)), so how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(functions).
+**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP---another way to organize programs---in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)). So how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(functions).
 
 Neither R nor Python is a purely functional language. For us, FP is a style that we can choose to let guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use a more object-oriented style, or neither. Some people tend to prefer one style to other styles, and others prefer to decide which to use depending on the task at hand. 
 
@@ -17,9 +17,9 @@ More specifically, a functional programming style takes advantage of **first-cla
     
 Side-effects are changes made to non-temporary variables, to the "state" of the program. 
 
-We discussed (1) in the beginning of chapter \@ref(functions). If you have not used any other programming languages before, you might even take (1) for granted. However, if you have written C code before, you might remember how difficult it is to use functions as inputs to other functions! 
+We discussed (1) in the beginning of chapter \@ref(functions). If you have not used any other programming languages before, you might even take (1) for granted. However, using first-class functions can be difficult in other languages not mentioned in this text. 
 
-There is more to say about point (2). This means you should keep your functions as *modular* as possible, unless you want your overall program to be much more difficult to understand. FP stipulates that
+There is more to say about definition (2). This means you should keep your functions as *modular* as possible, unless you want your overall program to be much more difficult to understand. FP stipulates that
 
 - **ideally functions will not refer to non-local variables;**
 
@@ -32,8 +32,6 @@ Unfortunately, violating the first of these three criteria is very easy to do in
 Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-captured-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two symbols are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
 
 Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python)), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
-
------------------------------------
 
 This chapter avoids the philosophical discussion of FP. Instead, it takes the applied approach, and provides instructions on how to use FP in your own programs. I try to give examples of *how* you can use FP, and *when* these tools are especially suitable. 
 
