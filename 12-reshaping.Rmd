@@ -102,7 +102,7 @@ Take note of the extra square brackets when we create `test`. If you use `real_e
 ## Merging or Joining Data Sets
 
 
-If you have two different data sets that provide information about the same experimental units, you can put the two data sets together using a **`merge`** (aka **`join`**) operation. In R, you can use the [`merge()` function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge). In Python, you can use the [`.merge()` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas-dataframe-merge).
+If you have two different data sets that provide information about the same experimental units, you can put the two data sets together using a **`merge`** (aka **`join`**) operation.\index{merge!merging in R}\index{join|see{merge}} In R, you can use the [`merge()` function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge). In Python, you can use the [`.merge()` method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html#pandas-dataframe-merge).
 
 
 Merging (or joining) data sets is not the same as placing them shoulder to shoulder. Placing data sets shoulder to shoulder will not reorder the rows of your data and the operation requires that both input data sets have the same number of rows to start off with. On the other hand, merging data takes care to match rows together in an intelligent way, and it can handle situations of missing or duplicate matches. In both cases, the resulting data set is wider, but with merging, the output might end contain either more or fewer rows. 
@@ -162,7 +162,7 @@ le_merge = baby1.merge(baby2,
 le_merge.iloc[:5,3:]
 ```
 
-You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where Pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging). 
+You can see it's slightly more concise in Python. If you are familiar with SQL, you might have heard of inner and outer joins. This is where Pandas [takes some of its argument names from](https://pandas.pydata.org/pandas-docs/version/0.15/merging.html#database-style-dataframe-joining-merging).\index{merge!merging in Python} 
 
 Finally, if both data sets have multiple values in the column you're joining on, the result can have more rows than either table. This is because *every possible match* shows up. 
 

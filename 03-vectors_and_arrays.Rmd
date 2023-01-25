@@ -37,7 +37,7 @@ Sometimes you will be interested in setting the seed on your own because it is a
 
 ## Overview of Python
 
-If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy `array`. Numpy is a highly-regarded third party library [@harris2020array] for Python. Its `array` objects store elements of the same type, just as R's `vector`s do.\index{Numpy array (Python)}
+If you want to store many elements of the same type (and size) in Python, you will probably need a Numpy `array`. Numpy is a highly-regarded third party library [@harris2020array] for Python. Its `array` objects store elements of the same type, just as R's `vector`s do.\index{Numpy arrays in Python}
 
 There are five ways to create numpy arrays ([source](https://numpy.org/doc/stable/user/basics.creation.html)). Here are some examples that complement the examples from above.
 
@@ -48,7 +48,7 @@ np.arange(1,12,2)
 np.random.normal(size=3)
 ```
 
-Another option for storing a homogeneous collection of elements in Python is a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the Pandas\index{Pandas} library. The benefit of these is that they play nicely with Pandas' data frames (more information about Pandas' data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information ).
+Another option for storing a homogeneous collection of elements in Python is a [`Series` object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas-series) from the Pandas\index{Pandas} library\index{Pandas series}. The benefit of these is that they play nicely with Pandas' data frames (more information about Pandas' data frames can be found in \@ref(data-frames-in-python)), and that they have more flexibility with accessing elements by name ( see [here](https://jakevdp.github.io/PythonDataScienceHandbook/03.01-introducing-pandas-objects.html#Series-as-generalized-NumPy-array) for more information ).
 
 ```{python, collapse = TRUE}
 import pandas as pd
@@ -82,7 +82,7 @@ This makes sense most of the time, but sometimes recycling can be tricky. Notice
 
 ## Vectorization in Python
 
-The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or "ufuncs" for short\index{vectorization!universal functions|see{ufuncs}}. Some ufuncs can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by its name (e.g. `np.sum()` instead of `+`). Mixing and matching is allowed, too.
+The Python's Numpy library makes extensive use of vectorization as well. Vectorization in Numpy is accomplished with [**universal functions**](https://numpy.org/doc/stable/reference/ufuncs.html), or "ufuncs" for short\index{vectorization!universal functions}. Some ufuncs can be invoked using the same syntax as in R (e.g. `+`). You can also refer to function by its name (e.g. `np.sum()` instead of `+`). Mixing and matching is allowed, too.
 
 Ufuncs are called *unary* if they take in one array, and *binary* if they take in two. At the moment, there are [fewer than $100$ available](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs), all performing either mathematical operations, boolean-emitting comparisons, or bit-twiddling operations. For an exhaustive list of Numpy's universal functions, [click here.](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs) Here are some code examples.
 
@@ -145,7 +145,7 @@ String operations can be a big game changer, and we discuss text processing stra
 
 ## Indexing Vectors in R
 
-It is very common to want to extract or modify a subset of elements in a vector. There are a few ways to do this. All of the ways I discuss will involve the square bracket operator (i.e. `[]`). Feel free to retrieve the documentation by typing `?'['`.
+It is very common to want to extract or modify a subset of elements in a vector.\index{indexing!indexing vectors in R} There are a few ways to do this. All of the ways I discuss will involve the square bracket operator (i.e. `[]`). Feel free to retrieve the documentation by typing `?'['`.
 
 ```{R, collapse = TRUE}
 allElements <- 1:6
@@ -166,7 +166,7 @@ sillyVec['favorite']
 
 ## Indexing Numpy arrays
 
-[Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in R. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
+[Indexing Numpy arrays](https://numpy.org/doc/stable/user/basics.indexing.html) is very similar to indexing vectors in R\index{indexing!indexing Numpy arrays}. You use the square brackets, and you can do it with logical arrays or index arrays. There are some important differences, though. 
 
 For one, indexing is 0-based in Python. The `0`th element is the first element of an array. Another key difference is that the `-` isn't used to remove elements like it is in R, but rather to count backwards. Third, using one or two `:` inside square brackets is more flexible in Python. This is syntactic sugar for using the `slice()` function, which is similar to R's `seq()` function. 
 
@@ -182,7 +182,7 @@ one_through_ten[one_through_ten > 3] # bigger than three
 
 ## Indexing Pandas' Series
 
-At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas' Series objects. They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.
+At a minimum, there is little that is new that you *need* to learn to go from Numpy arrays to Pandas' Series objects.\index{indexing!indexing Pandas series} They still have the `[]` operator, and [many methods are shared across these two types](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). The following is almost equivalent to the code above, and the only apparent difference is that the results are printed a little differently.
 
 ```{python, collapse=TRUE}
 import pandas as pd
@@ -218,7 +218,7 @@ b[1] <- 999
 a # still the same!
 ```
 
-With Numpy arrays in Python, ["shallow copies" can be created by simple assignment, or by explicitly constructing a **view**](https://numpy.org/devdocs/user/quickstart.html#copies-and-views). In the code below, `a`, `b`, `c`, and `d` all share the same data. If you modify one, you change all the others. This can make the program more confusing, but on the other hand, it can also improve computational efficiency. 
+With Numpy arrays in Python, ["shallow copies" can be created by simple assignment, or by explicitly constructing a **view**](https://numpy.org/devdocs/user/quickstart.html#copies-and-views). In the code below, `a`, `b`, `c`, and `d` all share the same data. If you modify one, you change all the others.\index{copy!view in Python} This can make the program more confusing, but on the other hand, it can also improve computational efficiency. 
 
 ```{python, collapse = TRUE}
 # in python
@@ -233,7 +233,7 @@ c
 d
 ```
 
-It's the same story with Pandas' Series objects. You're usually making a "shallow" copy.
+It's the same story with Pandas' Series objects. You're usually making a "shallow" copy.\index{copy!shallow copy}
 
 ```{python, collapse = TRUE}
 # in python
@@ -250,7 +250,7 @@ s4
 ```
 
 
-If you want a "deep copy" in Python, you usually want a function or method called `copy()`. Use `np.copy` or [`np.ndarray.copy`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.copy.html#numpy-ndarray-copy) when you have a Numpy array.
+If you want a "deep copy" in Python, you usually want a function or method called `copy()`. Use `np.copy` or [`np.ndarray.copy`](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.copy.html#numpy-ndarray-copy) when you have a Numpy array.\index{copy!deep copy}
 
 ```{python, collapse = TRUE}
 # in python
@@ -280,7 +280,7 @@ s3
  
 ### How R and Python Handle Missing Values
 
-R has `NULL`,  `NaN`, and `NA`. Python has `None` and `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not. 
+R has `NULL`,  `NaN`, and `NA`. Python has `None` and `np.nan`. If your eyes are glazing over already and you're thinking "they all look like the same"--they are not.\index{missing data} 
 
 R's `NULL` and Python's `None` are similar. Both represent "nothingness." This is *not* the same as `0`, or an empty string, or `FALSE`/`False`. This is commonly used to detect if a user fails to pass in an argument to a function, or if a function fails to "return" (more information on functions can be found in section \@ref(functions)) anything meaningful. 
 
@@ -367,7 +367,7 @@ Regarding R, `character` `vector`s were first mentioned in section \@ref(overvie
 
 Suppose you're interested in replacing lowercase letters with uppercase ones, removing certain characters from text, or counting the number of times a certain expression appears. Up until now, as long as you can find a function or method that performs the task, you were doing just fine. If you need to do something with text data, there's probably a function for it. 
 
-Notice what all of these tasks have in common--they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase "a"s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this section is primarily concerned with discussing **regular expressions,** which are a tool that help you describe the patterns in text [@rfords] [@pythonregexprs].
+Notice what all of these tasks have in common--they all require the ability to find patterns. When your patterns are easy to describe (e.g. find all lowercase "a"s), then all is well. What can make matters more complicated, however, is when the patterns are more difficult to describe (e.g. find all valid email addresses). That is why this section is primarily concerned with discussing **regular expressions,** which are a tool that help you describe the patterns in text [@rfords] [@pythonregexprs]\index{regular expressions}.
 
 
 ### Literal Characters versus Metacharacters
@@ -526,7 +526,7 @@ However, this does not successfully remove `"hellooo"` because it will match on 
 grep(pattern = "(?<!o)oo(?!o)", 
      x = c("look","book","box", "hellooo"), perl = TRUE)
 ```
-We also mention *anchoring.* If you only want to find a pattern at the beginning of text, use `^`. If you only want to find a pattern at the end of text, use `$`. Below we use [`.str.extract()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html), whose documentation makes reference to *capture groups.* Capture groups are just regular expressions grouped inside parentheses (e.g. `(this)`).
+We also mention *anchoring.* If you only want to find a pattern at the beginning of text, use `^`. If you only want to find a pattern at the end of text, use `$`. Below we use [`.str.extract()`](https://pandas.pydata.org/docs/reference/api/pandas.Series.str.extract.html), whose documentation makes reference to *capture groups.*\index{capture groups} Capture groups are just regular expressions grouped inside parentheses (e.g. `(this)`).
 
 ```{python, collapse=TRUE}
 # extract emails with Pandas

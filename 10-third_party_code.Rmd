@@ -5,7 +5,7 @@ Before using third-party code, it must first be installed. After it is installed
 
 ## Installing Packages In R 
 
-In R, there are thousands of free, user-created **packages** [@r_for_everyone]. You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). You can also download packages from other publishing platforms like [Bioconductor](https://www.bioconductor.org/), or [Github](https://github.com/). Installing from CRAN is more commonplace, and extremely easy to do. Just use the `install.packages()` function. This can be run inside your R console, so there is no need to type things into the command line.
+In R, there are thousands of free, user-created **packages** [@r_for_everyone].\index{packages!packages in R} You can download most of these from the [*Comprehensive R Archive Network*](https://cran.r-project.org/). You can also download packages from other publishing platforms like [Bioconductor](https://www.bioconductor.org/), or [Github](https://github.com/). Installing from CRAN is more commonplace, and extremely easy to do. Just use the `install.packages()` function. This can be run inside your R console, so there is no need to type things into the command line.
 
 ```{r, eval = FALSE}
 install.packages("thePackage")
@@ -13,7 +13,7 @@ install.packages("thePackage")
 
 ## Installing Packages In Python 
 
-In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.
+In Python, installing packages is more complicated. Commands must be written in the command line, and there are multiple package managers. This isn't surprising, because Python is used more extensively than R in fields other than data science.\index{packages!packages in Python}
 
 If you followed the suggestions provided in earlier in the text, then you installed Anaconda. This means you will usually be using the [`conda` command](https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/). Point-and-click interfaces are made available as well. 
 
@@ -42,13 +42,13 @@ You can also use the `require()` function, which has slightly different behavior
 
 To understand this more deeply, we need to talk about **environments** again. We discussed these before in  \@ref(more-details-on-rs-user-defined-functions), but only in the context of user-defined functions. When we load in a package with `library()`, we make its contents available by putting it all in an environment for that package. 
 
-An [environment](https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects) holds the names of objects. There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in R pre-loaded have their own environment. 
+An [environment](https://cran.r-project.org/doc/manuals/R-lang.html#Environment-objects) holds the names of objects.\index{environments in R} There are usually several environments, and each holds a different set of functions and variables. All the variables you define are in an environment, every package you load in gets its own environment, and all the functions that come in R pre-loaded have their own environment. 
 
 ::: {.rmd-details data-latex=""}
 Formally, each environment is pair of two things: a **frame** and an **enclosure**. The frame is the set of symbol-value pairs, and the enclosure is a pointer to the parent environment. If you've heard of a *linked list* in a computer science class, it's the same thing. 
 ::: 
 
-Moreover, all of these environments are connected in a chain-like structure.  To see what environments are loaded on your machine, and what order they were loaded in, use the `search()` function. This displays the [**search path**](https://cran.r-project.org/doc/manuals/R-lang.html#Search-path), or the ordered sequence of all of your environments.
+Moreover, all of these environments are connected in a chain-like structure.  To see what environments are loaded on your machine, and what order they were loaded in, use the `search()` function. This displays the [**search path**](https://cran.r-project.org/doc/manuals/R-lang.html#Search-path), or the ordered sequence of all of your environments.\index{search path!search path in R}
 
 Alternatively, if you're using RStudio, the search path, and the contents of each of its environments, are displayed in the "Environment" window. You can choose which environment you'd like to look at by selecting it from the drop-down menu. This allows you to see all of the variables in that particular environment. The **global environment** (i.e. `".GlobalEnv"`) is displayed by default, because that is where you store all the objects you are creating in the console.
 
@@ -91,15 +91,15 @@ from the_package import *
 
 To describe the difference between these three approaches, as well as to highlight the important takeaways and compare them with the important takeaways in the last section, we need to discuss what a Python module is, what a package is, and what a Python namespace is.^[I am avoiding any mention of *R's* namespaces and modules. These are things that exist, but they are different from Python's namespaces and modules, and are not within the scope of this text.] 
 
- - A Python [**`module`**](https://docs.python.org/3/tutorial/modules.html) is a `.py` file, separate from the one you are currently editing, with function and/or object definitions in it.^[The scripts you write are modules. They usually come with the intention of being run from start to finish. Other non-script modules are just a bag of definitions to be used in other places.]
+ - A Python [**`module`**](https://docs.python.org/3/tutorial/modules.html) is a `.py` file,\index{modules in Python} separate from the one you are currently editing, with function and/or object definitions in it.^[The scripts you write are modules. They usually come with the intention of being run from start to finish. Other non-script modules are just a bag of definitions to be used in other places.]
  
- - A [package](https://docs.python.org/3/tutorial/modules.html#packages) is a group of modules.^[Sometimes a package is called a *library* but I will avoid this terminology.] 
+ - A [package](https://docs.python.org/3/tutorial/modules.html#packages) is a group of modules.^[Sometimes a package is called a *library* but I will avoid this terminology.]\index{packages!packages in Python} 
  
- - A [**namespace**](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) is "a mapping from names to objects."
+ - A [**namespace**](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) is "a mapping from names to objects."\index{namespace in Python}
  
 With these definitions, we can define `import`ing. According to the [Python documentation](https://docs.python.org/3/reference/import.html#the-import-system), "[t]he import statement combines two operations; it searches for the named module, then it binds the results of that search to a name in the local scope." 
 
-The sequence of places Python looks for a module is called the search path. This is not the same as R's search path, though. In Python, the search path is a list of places to look for *modules*, not a list of places to look for variables. To see it, `import sys`, then type `sys.path`.
+The sequence of places Python looks for a module is called the search path. This is not the same as R's search path, though. In Python, the search path is a list of places to look for *modules*, not a list of places to look for variables. To see it, `import sys`, then type `sys.path`.\index{search path!search path in Python}
 
 After a module is found, the variable names inside it become available to the `import`ing module. These variables are available in the global scope, but the names you use to access them will depend on what kind of `import` statement you used. From there, you are using the same scoping rules that we described in \@ref(function-scope-in-python), which means the LEGB acronym still applies. 
 
@@ -113,7 +113,7 @@ The same thing can happen when you use third-party code.
   - In Python, loading packages using either the `import package` format or the `import package as p` format means you do not need to worry about the order of imports because you will be forced to qualify variable names (e.g. `package.func()` or `p.func()`).
   - In Python, if you load third-party code using either `from package import foo` or `from package import *`, you won't have to qualify variable names, but imported objects will overwrite any variables that happen to have the same name as something you're importing. 
 
-The way variable names are stored are only slightly different between R and Python. 
+The way variable names are stored are only slightly different between R and Python.\index{namespace in Python} 
 
  - Python namespaces are similar to R environments in that they hold name-value pairs; however
  - Python namespaces are unlike R environments in that they are not arranged into a sorted list.

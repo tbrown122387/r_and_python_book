@@ -1,6 +1,6 @@
 # Functions
 
-This text has already covered how to *use* functions that come to us pre-made. At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python. 
+This text has already covered how to *use* functions that come to us pre-made.\index{functions} At least we have discussed how to use them in a one-off way--just write the name of the function, write some parentheses after that name, and then plug in any requisite arguments by writing them in a comma-separated way between those two parentheses. This is how it works in both R and Python. 
 
 In this section we take a look at how to *define* our own functions. This will not only help us to understand pre-made functions, but it will also be useful if we need some extra functionality that isn't already provided to us. 
 
@@ -12,7 +12,7 @@ Writing our own functions is also useful for "packaging up" computations. The ut
 
 ## Defining R Functions
 
-To create a function in R, we need another function called `function()`. We give the output of `function()` a name in the same way we give names to any other variable in R, by using the assignment operator `<-` \index{assigntment operator!assignment operator in R}. Here's an example of a toy function called `addOne()`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
+To create a function in R, we need another function called `function()`.\index{functions!creating functions in R} We give the output of `function()` a name in the same way we give names to any other variable in R, by using the assignment operator `<-` \index{assignment operator!assignment operator in R}. Here's an example of a toy function called `addOne()`. Here `myInput` is a placeholder that refers to whatever the user of the function ends up plugging in. 
 
 ```{r, collapse = TRUE}
 addOne <- function(myInput){  # define the function
@@ -39,7 +39,7 @@ If you are interested in writing a function, I recommend that you first write th
 
 ## Defining Python Functions
 
-To create a function in Python, we use the `def` statement (instead of the `function()` function in R). The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in R. 
+To create a function in Python, we use the `def` statement (instead of the `function()` function in R).\index{functions!creating functions in Python} The desired name of the function comes next. After that, the formal parameters come, comma-separated inside parentheses, just like in R. 
 
 Defining a function in Python is a little more concise. There is no assignment operator like there is in R, there are no curly braces, and `return` isn't a function like it is in R, so there is no need to use parentheses after it. There is one syntactic addition, though--we need a colon (`:`) at the end of the first line of the definition. 
 
@@ -95,7 +95,7 @@ body(addNumber)
 Every function you create also has a *parent environment*^[Primitive functions are functions that contain no R code and are internally implemented in C. These are the only type of function in R that don't have a parent environment.]. You can get/set this using the `environment()` function. Environments help a function know which variables it is allowed to use and how to use them. The parent environment of a function is where the function was *created*, and it contains variables outside of the body that the function can also use. The rules of which variables a function can use are called *scoping*. When you create functions in R, you are primarily using **lexical scoping**. This is discussed in more detail in section \@ref(function-scope-in-r).
 
 ::: {.rmd-details data-latex=""}
-There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.
+There is a lot more information about environments that isn't provided in this text. For instance, a user-defined function also has [binding, execution, and calling environments associated with it](http://adv-r.had.co.nz/Environments.html#function-envs), and environments are used in creating package namespaces, which are important when two packages each have a function with the same name.\index{environments in R}
 :::
 
 
@@ -147,7 +147,7 @@ Don't worry if the notation `add_number.__code__` looks strange. The dot (`.`) o
 
 ## Function Scope in R
 
-R uses **lexical scoping**. This means, in R, 
+R uses **lexical scoping**. This means, in R, \index{scope!function scope in R}
 
   1. functions can use *local* variables that are defined inside themselves,  
   2. functions can use *global* variables defined in the environment where the function itself was *defined* in, and
@@ -225,24 +225,24 @@ ls(environment(myFunc)) # list all data attached to this function
 myFunc()
 ```
 
-We use this property all the time when we create functions that return other functions. This is discussed in more detail in chapter \@ref(an-introduction-to-functional-programming). In the above example, `outerFuncV2()`, the function that returned another function, is called a *function factory*. 
+We use this property all the time when we create functions that return other functions. This is discussed in more detail in chapter \@ref(an-introduction-to-functional-programming). In the above example, `outerFuncV2()`, the function that returned another function, is called a *function factory*.\index{functions!function factory}
 
 
 ::: {.rmd-details data-latex=""}
-Sometimes people will refer to R's functions as **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with. 
+Sometimes people will refer to R's functions as **closures** to emphasize that they are capturing variables from the parent environment in which they were created, to emphasize the data that they are bundled with.\index{closures in R} 
 :::
 
 
 
 ## Function Scope in Python
 
-Python uses **lexical scoping** just like R. This means, in Python, 
+Python uses **lexical scoping** just like R.\index{scope!function scope in Python} This means, in Python, 
 
   1. functions can use *local* variables that are defined inside themselves,  
   2. functions have an order of preference for which variable to prefer in the case of a name clash, and 
   3. functions can sometimes use variables defined outside itself, but that ability depends on where the function and variable were *defined*, not where the function was *called*.
 
-Regarding characteristics (2) and (3), there is a famous acronym that describes the rules Python follows when finding and choosing variables: **LEGB**.
+Regarding characteristics (2) and (3), there is a famous acronym that describes the rules Python follows when finding and choosing variables: **LEGB**.\index{scope!LEGB in Python}
 
 - L: Local, 
 - E: Enclosing, 
@@ -332,7 +332,7 @@ print(f(a))
 print(a)
 ```
 
-The function `f` has an argument called `arg`. When `f(a)` is performed, changes are made to a *copy* of `a`. When a function constructs a copy of all input variables inside its body, this is called **pass-by-value** semantics. This copy is a temporary intermediate value that only serves as a starting point for the function to produce a return value of `2`.
+The function `f` has an argument called `arg`. When `f(a)` is performed, changes are made to a *copy* of `a`. When a function constructs a copy of all input variables inside its body, this is called **pass-by-value** semantics.\index{pass-by-value} This copy is a temporary intermediate value that only serves as a starting point for the function to produce a return value of `2`.
 
 `arg` could have been called `a`, and the same behavior will take place. However, giving these two things different names is helpful to remind you and others that R copies its arguments.
 
@@ -341,7 +341,7 @@ It is still possible to modify `a`, but I don't recommend doing this either. I w
 
 ### Passing By Assignment In Python
 
-The story is more complicated in Python. Python functions have **pass-by-assignment** semantics. This is something that is very unique to Python. What this means is that your ability to modify the arguments of a function depends on 
+The story is more complicated in Python. Python functions have **pass-by-assignment** semantics.\index{pass-by-assignment} This is something that is very unique to Python. What this means is that your ability to modify the arguments of a function depends on 
 
 - what the type of the argument is, and
 - what you're trying to do to it. 
@@ -357,7 +357,7 @@ print(f(a))
 print(a)
 ```
 
-In this case, `a` is not modified. That is because `a` is an `int`. `int`s are **immutable** in Python, which means that their [value](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types) cannot be changed after they are created, either inside or outside of the function's scope. However, consider the case when `a` is a `list`, which is a **mutable** type. A mutable type is one that can have its value changed after its created. 
+In this case, `a` is not modified. That is because `a` is an `int`. `int`s are **immutable** in Python, which means that their [value](https://docs.python.org/3/reference/datamodel.html#objects-values-and-types) cannot be changed after they are created, either inside or outside of the function's scope. However, consider the case when `a` is a `list`, which is a **mutable** type. A mutable type is one that can have its value changed after its created.\index{mutable in Python}
 
 ```{python, collapse=TRUE}
 a = [999]
@@ -434,11 +434,11 @@ Why did the third example produce unexpected results? The difference is in the l
 
 ## Accessing and Modifying Captured Variables
 
-In the last section, we were talking about variables that were passed in as function arguments. Here we are talking about variables that are **captured**. They are not passed in as variables, but they are still used inside a function. In general, even though it is possible to access and modify non-local captured variables in both languages, it is not a good idea. 
+In the last section, we were talking about variables that were passed in as function arguments. Here we are talking about variables that are **captured**.\index{capturing variables} They are not passed in as variables, but they are still used inside a function. In general, even though it is possible to access and modify non-local captured variables in both languages, it is not a good idea. 
 
 ### Accessing Captured Variables in R
 
-As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." R has **dynamic lookup**, meaning code inside a function will only try to access a referred-to variable when the function is *running*, not when it is defined.
+As Hadley Wickham writes in [his book](https://adv-r.hadley.nz/functions.html#dynamic-lookup), "[l]exical scoping determines where, but not when to look for values." R has **dynamic lookup**,\index{dynamic lookup} meaning code inside a function will only try to access a referred-to variable when the function is *running*, not when it is defined.
 
 Consider the R code below. The `dataReadyForModeling()` function is created in the global environment, and the global environment contains a Boolean variable called `dataAreClean`. 
 
@@ -512,7 +512,7 @@ print(makeATwo(a))
 print(a)
 ```
 
-In the program above, `makeATwo()` copies `a` into `arg`. It then assigns `2` to that copy. **Then it takes that `2` and writes it to the global `a` variable in the parent environment.** It does this using R's super assignment operator `<<-`\index{assigntment operator!super assignment operator in R}. Regardless of the inputs passed in to this function, it will always assign exactly `2` to `a`, no matter what. 
+In the program above, `makeATwo()` copies `a` into `arg`. It then assigns `2` to that copy. **Then it takes that `2` and writes it to the global `a` variable in the parent environment.** It does this using R's super assignment operator `<<-`\index{assignment operator!super assignment operator in R}. Regardless of the inputs passed in to this function, it will always assign exactly `2` to `a`, no matter what. 
 
 This is problematic because you are pre-occupying your mind with one function: `makeATwo()`. Whenever you write code that depends on `a` (or on things that depend on `a`, or on things that depended on things that depend on `a`, or ...), you'll have to repeatedly interrupt your train of thought to *try* and remember if what you're doing is going to be okay with the current and future `makeATwo()` call sites. 
 
@@ -522,7 +522,7 @@ This is problematic because you are pre-occupying your mind with one function: `
 There is something in Python that is similar to R's super assignment operator (`<<-`). It is the `global` keyword. This keyword will let you modify global variables from inside a function. 
 
 ::: {.rmd-details data-latex=""}
-The upside to the `global` keyword is that it makes hunting for **side effects** relatively easy (A function's side effects are changes it makes to non-local variables). Yes, this keyword should be used sparingly, even more sparingly than merely referring to global variables, but if you are ever debugging, and you want to hunt down places where variables are surprisingly being changed, you can hit `Ctrl-F` and search for the phrase "global."
+The upside to the `global` keyword is that it makes hunting for **side effects**\index{side effects} relatively easy (A function's side effects are changes it makes to non-local variables). Yes, this keyword should be used sparingly, even more sparingly than merely referring to global variables, but if you are ever debugging, and you want to hunt down places where variables are surprisingly being changed, you can hit `Ctrl-F` and search for the phrase "global."
 :::
 
 ```{python, collapse = TRUE}

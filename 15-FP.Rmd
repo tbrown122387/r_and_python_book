@@ -1,10 +1,10 @@
 # An Introduction to Functional Programming
 
-**Functional Programming (FP)** is another way of thinking about how to organize programs. We talked about OOP---another way to organize programs---in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)). So how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(functions).
+**Functional Programming (FP)**\index{functions!functional programming} is another way of thinking about how to organize programs. We talked about OOP---another way to organize programs---in the last chapter (chapter \@ref(an-introduction-to-object-oriented-programming)). So how do OOP and FP differ? To put it simply, FP focuses on functions instead of objects. Because we are talking a lot about functions in this chapter, we will assume you have read and understood section \@ref(functions).
 
 Neither R nor Python is a purely functional language. For us, FP is a style that we can choose to let guide us, or that we can disregard. You can choose to employ a more functional style, or you can choose to use a more object-oriented style, or neither. Some people tend to prefer one style to other styles, and others prefer to decide which to use depending on the task at hand. 
 
-More specifically, a functional programming style takes advantage of **first-class functions** and favors functions that are **pure**. 
+More specifically, a functional programming style takes advantage of **first-class functions**\index{functions!first-class functions} and favors functions that are **pure**.\index{functions!pure functions} 
 
 1. **First-class functions** are [@struc_and_interp] functions that 
     - can be passed as arguments to other functions, 
@@ -27,11 +27,11 @@ There is more to say about definition (2). This means you should keep your funct
 
 - **ideally functions will not modify their arguments.**
     
-Unfortunately, violating the first of these three criteria is very easy to do in both of our languages. Recall our conversation about *dynamic lookup* in subsection \@ref(accessing-and-modifying-captured-variables). Both R and Python use dynamic lookup, which means you can't reliably control *when* functions look for variables. Typos in variable names easily go undiscovered, and modified global variables can potentially wreak havoc on your overall program. 
+Unfortunately, violating the first of these three criteria is very easy to do in both of our languages. Recall our conversation about *dynamic lookup* in subsection \@ref(accessing-and-modifying-captured-variables). Both R and Python use dynamic lookup,\index{dynamic lookup} which means you can't reliably control *when* functions look for variables. Typos in variable names easily go undiscovered, and modified global variables can potentially wreak havoc on your overall program. 
 
 Fortunately it is difficult to modify global variables inside functions in both R and Python. This was also discussed in subsection  \@ref(accessing-and-modifying-captured-variables). In Python, you need to make use of the `global` keyword (mentioned in section \@ref(passing-by-assignment-in-python)), and in R, you need to use the rare super assignment operator (it looks like `<<-`, and it was mentioned in \@ref(passing-by-value-in-r)). Because these two symbols are so rare, they can serve as signals to viewers of your code about when and where (in which functions) global variables are being modified.
 
-Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics (mentioned in section \@ref(passing-by-assignment-in-python)), and R generally can't modify its arguments at all because it has *pass-by-value* semantics \@ref(passing-by-value-in-r).
+Last, violating the third criterion is easy in Python and difficult in R. This was discussed earlier in \@ref(modifying-a-functions-arguments). Python can mutate/change arguments that have a mutable type because it has *pass-by-assignment* semantics\index{pass-by-assignment} (mentioned in section \@ref(passing-by-assignment-in-python)), and R generally can't modify its arguments at all because it has *pass-by-value*\index{pass-by-value} semantics \@ref(passing-by-value-in-r).\index{mutable in Python}
 
 This chapter avoids the philosophical discussion of FP. Instead, it takes the applied approach, and provides instructions on how to use FP in your own programs. I try to give examples of *how* you can use FP, and *when* these tools are especially suitable. 
 
@@ -74,7 +74,7 @@ myHundredthMean <- mean(myDF[,100])
 You will need one line of code for each column in the data frame! For data frames with a lot of columns, this becomes quite tedious. You should also ask yourself what happens to you and your collaborators when the data frame changes even slightly, or if you want to apply a different function to its columns. Third, the results are not stored in a single container. You are making it difficult on yourself if you want to use these variables in subsequent pieces of code.
 
 ::: {.rmd-details data-latex=""}
-"Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).
+"Don't repeat yourself" (DRY) is an idea that's been around for a while and is widely accepted [@hunt2000pragmatic]. DRY is the opposite of [WET](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself#WET).\index{DRY code|see{WET code}}\index{WET code|see{DRY code}}
 :::
 
 Instead, prefer the use of `sapply()` in this situation. The "s" in `sapply()` stands for "simplified." In this bit of code `mean()` is called on each column of the data frame. `sapply()` applies the function over columns, instead of rows, because data frames are internally a `list` of columns. 
@@ -551,7 +551,7 @@ vec_spline(my_inputs)[:4]
 # alternatively output = list(map(spline, my_inputs)) from last time
 ```
 
-The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use **[function decorators](https://www.python.org/dev/peps/pep-0318/).** You can *decorate* a function by using the `@` operator [@Lutz13]. 
+The above code doesn't just demonstrate how to return functions from a function. It is also an example of using functions as function inputs. When a function takes in and spits out functions, there is an alternative way to use it that is unique to Python. You can use **[function decorators](https://www.python.org/dev/peps/pep-0318/).**\index{functions!function decorators} You can *decorate* a function by using the `@` operator [@Lutz13]. 
 
 If you decorate a function, it is equivalent to passing that function in to a function factory (aka outer function). That function will take the function you defined, alter it, and then give it back to you with the same name that you chose in the first place. 
 
