@@ -465,9 +465,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb136-5" title="5">irisData[irisData<span class="op">$</span>species <span class="op">==</span><span class="st"> &quot;Iris-setosa&quot;</span>, <span class="st">&#39;species&#39;</span>] &lt;-<span class="st"> &quot;SETOSA!&quot;</span></a>
 <a class="sourceLine" id="cb136-6" title="6"><span class="kw">head</span>(irisData, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb136-7" title="7"><span class="co">##      sepal.width petal.length petal.width species columnOfOnes</span></a>
-<a class="sourceLine" id="cb136-8" title="8"><span class="co">## 1001   -998.2038          1.4         0.2 SETOSA!            1</span></a>
-<a class="sourceLine" id="cb136-9" title="9"><span class="co">## 1002   -999.3457          1.4         0.2 SETOSA!            1</span></a>
-<a class="sourceLine" id="cb136-10" title="10"><span class="co">## 1003  -1000.4145          1.3         0.2 SETOSA!            1</span></a></code></pre></div>
+<a class="sourceLine" id="cb136-8" title="8"><span class="co">## 1001   -998.9036          1.4         0.2 SETOSA!            1</span></a>
+<a class="sourceLine" id="cb136-9" title="9"><span class="co">## 1002   -997.3385          1.4         0.2 SETOSA!            1</span></a>
+<a class="sourceLine" id="cb136-10" title="10"><span class="co">## 1003   -999.6752          1.3         0.2 SETOSA!            1</span></a></code></pre></div>
 </div>
 <div id="data-frames-in-python" class="section level2 hasAnchor">
 <h2><span class="header-section-number">8.2</span> Data Frames in Python<a href="data-frames.html#data-frames-in-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -587,17 +587,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb142-9" title="9"><span class="kw">del</span> iris_data[<span class="st">&#39;petal.length&#39;</span>]</a>
 <a class="sourceLine" id="cb142-10" title="10">iris_data.head(<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb142-11" title="11"><span class="co">##      sepal.length  sepal.width  petal.width  species  col_ones</span></a>
-<a class="sourceLine" id="cb142-12" title="12"><span class="co">## 149    998.293628  -999.013251          0.2  SETOSA!       1.0</span></a>
-<a class="sourceLine" id="cb142-13" title="13"><span class="co">## 148    997.896949  -998.876715          0.2  SETOSA!       1.0</span></a>
-<a class="sourceLine" id="cb142-14" title="14"><span class="co">## 147      4.700000  -999.761228          0.2  SETOSA!       1.0</span></a></code></pre></div>
+<a class="sourceLine" id="cb142-12" title="12"><span class="co">## 149    999.146739  -998.446586          0.2  SETOSA!       1.0</span></a>
+<a class="sourceLine" id="cb142-13" title="13"><span class="co">## 148    998.005821  -999.015224          0.2  SETOSA!       1.0</span></a>
+<a class="sourceLine" id="cb142-14" title="14"><span class="co">## 147      4.700000  -999.803985          0.2  SETOSA!       1.0</span></a></code></pre></div>
 <p>You can also use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html"><code>.assign()</code> method</a> to create a new column. This method does not modify the data frame in place. It returns a new <code>DataFrame</code> with the additional column.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb143-1" title="1">iris_data <span class="op">=</span> iris_data.assign(new_col_name <span class="op">=</span> np.arange(n_rows))</a>
 <a class="sourceLine" id="cb143-2" title="2"><span class="kw">del</span> iris_data[<span class="st">&#39;sepal.length&#39;</span>]</a>
 <a class="sourceLine" id="cb143-3" title="3">iris_data.head(<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb143-4" title="4"><span class="co">##      sepal.width  petal.width  species  col_ones  new_col_name</span></a>
-<a class="sourceLine" id="cb143-5" title="5"><span class="co">## 149  -999.013251          0.2  SETOSA!       1.0             0</span></a>
-<a class="sourceLine" id="cb143-6" title="6"><span class="co">## 148  -998.876715          0.2  SETOSA!       1.0             1</span></a>
-<a class="sourceLine" id="cb143-7" title="7"><span class="co">## 147  -999.761228          0.2  SETOSA!       1.0             2</span></a></code></pre></div>
+<a class="sourceLine" id="cb143-5" title="5"><span class="co">## 149  -998.446586          0.2  SETOSA!       1.0             0</span></a>
+<a class="sourceLine" id="cb143-6" title="6"><span class="co">## 148  -999.015224          0.2  SETOSA!       1.0             1</span></a>
+<a class="sourceLine" id="cb143-7" title="7"><span class="co">## 147  -999.803985          0.2  SETOSA!       1.0             2</span></a></code></pre></div>
 <div class="rmd-caution">
 <p>Above we were assigning Numpy arrays to columns of a <code>DataFrame</code>. Be careful when you’re assigning <code>Series</code> objects. You’ll see in the documentation that <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#basics">“Pandas aligns all AXES when setting Series and <code>DataFrame</code> from <code>.loc</code>, and <code>.iloc</code>.”</a>.</p>
 </div>
