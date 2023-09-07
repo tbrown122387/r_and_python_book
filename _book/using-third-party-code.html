@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   <meta property="og:type" content="book" />
-  
+  <meta property="og:image" content="/pics/cover.png" />
   
   <meta name="github-repo" content="tbrown122387/r_and_python_book" />
 
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Chapter 10 Using Third-Party Code | An Introduction to R and Python For Data Analysis: A Side By Side Approach" />
   
   
-  
+  <meta name="twitter:image" content="/pics/cover.png" />
 
 <meta name="author" content="Taylor R. Brown" />
 
@@ -460,17 +460,17 @@ Figure 10.1: The Environment Window in RStudio
 <p>In the example below, we import the entire <code>numpy</code> package in a way that lets us refer to it as <code>np</code>. This reduces the amount of typing that is required of us, but it also protects against variable name clashing. We then use the <code>normal()</code> function to simulate normal random variables. This function is in the <a href="https://numpy.org/doc/stable/reference/random/index.html?highlight=random#module-numpy.random"><code>random</code> sub-module</a>, which is a sub-module in <code>numpy</code> that collects all of the pseudorandom number generation functionality together.</p>
 <div class="sourceCode" id="cb172"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb172-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># import all of numpy</span></a>
 <a class="sourceLine" id="cb172-2" title="2">np.random.normal(size<span class="op">=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb172-3" title="3"><span class="co">## array([ 0.60879827,  0.78455817, -0.53606282, -0.8028822 ])</span></a></code></pre></div>
+<a class="sourceLine" id="cb172-3" title="3"><span class="co">## array([ 1.13752606,  0.02427165, -0.67441418, -1.15638819])</span></a></code></pre></div>
 <p>This is one use of the dot operator (<code>.</code>). It is also used to access attributes and methods of objects (more information on that will come later in chapter <a href="an-introduction-to-object-oriented-programming.html#an-introduction-to-object-oriented-programming">14</a>). <code>normal</code> is <em>inside of</em> <code>random</code>, which it itself inside of <code>np</code>.</p>
 <p>As a second example, suppose we were interested in the <a href="https://docs.scipy.org/doc/scipy/reference/tutorial/stats.html"><code>stats</code> sub-module</a> found inside the <code>scipy</code> package. We could import all of <code>scipy</code>, but just like the above example, that would mean we would need to consistently refer to a variable’s module, the sub-module, and the variable name. For long programs, this can become tedious if we had to type <code>scipy.stats.norm</code> over and over again. Instead, let’s import the sub-module (or sub-package) and ignore the rest of <code>scipy</code>.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb173-1" title="1"><span class="im">from</span> scipy <span class="im">import</span> stats</a>
 <a class="sourceLine" id="cb173-2" title="2">stats.norm().rvs(size<span class="op">=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb173-3" title="3"><span class="co">## array([ 0.73038359, -0.05493564, -0.98528647,  0.5885919 ])</span></a></code></pre></div>
+<a class="sourceLine" id="cb173-3" title="3"><span class="co">## array([-0.62569571, -0.47612874,  0.66793311,  0.5159338 ])</span></a></code></pre></div>
 <p>So we don’t have to type <code>scipy</code> every time we use something in <code>scipy.stats</code>.</p>
 <p>Finally, we can import the function directly, and refer to it with only one letter. This is highly discouraged, though. We are much more likely to accidentally use the name <code>n</code> twice. Further, <code>n</code> is not a very descriptive name, which means it could be difficult to understand what your program is doing later.</p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb174-1" title="1"><span class="im">from</span> numpy.random <span class="im">import</span> normal <span class="im">as</span> n</a>
 <a class="sourceLine" id="cb174-2" title="2">n(size<span class="op">=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb174-3" title="3"><span class="co">## array([ 1.99655492, -0.63750214, -0.07684799, -0.45665323])</span></a></code></pre></div>
+<a class="sourceLine" id="cb174-3" title="3"><span class="co">## array([ 1.46457414, -1.29378662,  0.08334262, -0.28578175])</span></a></code></pre></div>
 <p>Keep in mind, you’re always at risk of accidentally re-using names, even if you aren’t <code>import</code>ing anything. For example, consider the following code.</p>
 <div class="sourceCode" id="cb175"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb175-1" title="1">n <span class="op">=</span> <span class="dv">3</span> <span class="co"># now you can&#39;t use n as a function </span></a>
 <a class="sourceLine" id="cb175-2" title="2">n()   </a></code></pre></div>
